@@ -13,13 +13,13 @@ interface BlogCardProps {
 export default function BlogCard({ data }: BlogCardProps) {
   return (
     <Link href={`/${data.slug}`}>
-      <div className="ease overflow-hidden rounded-2xl border-2 border-stone-100 bg-white shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl dark:border-stone-800">
+      <div className="ease overflow-hidden rounded-2xl bg-white p-8 shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl dark:border-stone-800">
         <BlurImage
           src={data.image!}
           alt={data.title ?? "Blog Competition"}
           width={500}
           height={400}
-          className="h-64 w-full object-cover"
+          className="h-64 w-full rounded-2xl object-cover"
           placeholder="blur"
           blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
         />
