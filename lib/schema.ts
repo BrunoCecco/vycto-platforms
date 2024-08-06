@@ -11,6 +11,7 @@ import {
   timestamp,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
+import { color } from "framer-motion";
 
 export const users = pgTable("users", {
   id: text("id")
@@ -111,6 +112,7 @@ export const sites = pgTable(
       "https://public.blob.vercel-storage.com/eEZHAoPTOBSYGBE3/JRajRyC-PhBHEinQkupt02jqfKacBVHLWJq7Iy.png",
     ),
     font: text("font").default("font-cal").notNull(),
+    color: text("color").default("gray").notNull(),
     image: text("image").default(
       "https://public.blob.vercel-storage.com/eEZHAoPTOBSYGBE3/hxfcV5V-eInX3jbVUhjAt1suB7zB88uGd1j20b.png",
     ),
@@ -138,8 +140,8 @@ export const sites = pgTable(
   },
 );
 
-export const posts = pgTable(
-  "posts",
+export const competitions = pgTable(
+  "competitions",
   {
     id: text("id")
       .primaryKey()
@@ -179,13 +181,13 @@ export const posts = pgTable(
   },
 );
 
-export const postsRelations = relations(posts, ({ one }) => ({
-  site: one(sites, { references: [sites.id], fields: [posts.siteId] }),
-  user: one(users, { references: [users.id], fields: [posts.userId] }),
+export const competitionsRelations = relations(competitions, ({ one }) => ({
+  site: one(sites, { references: [sites.id], fields: [competitions.siteId] }),
+  user: one(users, { references: [users.id], fields: [competitions.userId] }),
 }));
 
 export const sitesRelations = relations(sites, ({ one, many }) => ({
-  posts: many(posts),
+  competitions: many(competitions),
   user: one(users, { references: [users.id], fields: [sites.userId] }),
 }));
 
@@ -201,9 +203,9 @@ export const userRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
   sites: many(sites),
-  posts: many(posts),
+  competitions: many(competitions),
 }));
 
 export type SelectSite = typeof sites.$inferSelect;
-export type SelectPost = typeof posts.$inferSelect;
+export type SelectCompetition = typeof competitions.$inferSelect;
 export type SelectExample = typeof examples.$inferSelect;

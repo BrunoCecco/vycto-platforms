@@ -1,6 +1,6 @@
 /* 
     This was the migration script we used to migrate from
-    our old database to the new Vercel Postgres database.
+    our old database to the new Vercel Competitiongres database.
     It's not needed anymore, but I'm keeping it here for
     posterity.
 */
@@ -13,27 +13,27 @@ export async function GET() {
   //  const usersResult = await db.query.users.findMany();
   //  const accountsResult = await db.query.accounts.findMany();
   //  const sitesResult = await db.query.sites.findMany();
-  //  const postsResult = await db.query.posts.findMany();;
+  //  const competitionsResult = await db.query.competitions.findMany();;
   //  const examplesResult = await db.query.examples.findMany();;
 
   //  fs.writeFileSync("users.json", JSON.stringify(usersResult));
   //  fs.writeFileSync("accounts.json", JSON.stringify(accountsResult));
   //   fs.writeFileSync("sites.json", JSON.stringify(sitesResult));
-  //   fs.writeFileSync("posts.json", JSON.stringify(postsResult));
+  //   fs.writeFileSync("competitions.json", JSON.stringify(competitionsResult));
   //   fs.writeFileSync("examples.json", JSON.stringify(examplesResult));
 
   // Upload data to new database
   //   const parsedUsers = JSON.parse(fs.readFileSync("users.json", "utf8"));
   //   const parsedAccounts = JSON.parse(fs.readFileSync("accounts.json", "utf8"));
   //   const parsedSites = JSON.parse(fs.readFileSync("sites.json", "utf8"));
-  //   const parsedPosts = JSON.parse(fs.readFileSync("posts.json", "utf8"));
+  //   const parsedCompetitions = JSON.parse(fs.readFileSync("competitions.json", "utf8"));
   //   const parsedExamples = JSON.parse(fs.readFileSync("examples.json", "utf8"));
 
   //   const response = await Promise.all([
   //     db.insert(users).values(parsedUsers),
   //     db.insert(accounts).values(parsedAccounts),
   //     db.insert(sites).values(parsedSites),
-  //     db.insert(posts).values(parsedPosts),
+  //     db.insert(competitions).values(parsedCompetitions),
   //     db.insert(examples).values(parsedExamples)
   //   ]);
 

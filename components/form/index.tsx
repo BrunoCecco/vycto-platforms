@@ -10,6 +10,7 @@ import DomainStatus from "./domain-status";
 import DomainConfiguration from "./domain-configuration";
 import Uploader from "./uploader";
 import va from "@vercel/analytics";
+import { useState } from "react";
 
 export default function Form({
   title,
@@ -34,6 +35,7 @@ export default function Form({
   const { id } = useParams() as { id?: string };
   const router = useRouter();
   const { update } = useSession();
+
   return (
     <form
       action={async (data: FormData) => {
@@ -84,6 +86,13 @@ export default function Form({
               <option value="font-work">Work Sans</option>
             </select>
           </div>
+        ) : inputAttrs.name === "color" ? (
+          <input
+            type="color"
+            name="color"
+            defaultValue={inputAttrs.defaultValue}
+            className="h-12 w-12 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+          />
         ) : inputAttrs.name === "subdomain" ? (
           <div className="flex w-full max-w-md">
             <input

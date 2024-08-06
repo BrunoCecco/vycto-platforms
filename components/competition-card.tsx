@@ -1,20 +1,20 @@
 import BlurImage from "@/components/blur-image";
-import type { SelectPost, SelectSite } from "@/lib/schema";
+import type { SelectCompetition, SelectSite } from "@/lib/schema";
 import { placeholderBlurhash, random } from "@/lib/utils";
 import { BarChart, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
-export default function PostCard({
+export default function CompetitionCard({
   data,
 }: {
-  data: SelectPost & { site: SelectSite | null };
+  data: SelectCompetition & { site: SelectSite | null };
 }) {
   const url = `${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.slug}`;
 
   return (
     <div className="relative rounded-lg border border-stone-200 pb-10 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
       <Link
-        href={`/post/${data.id}`}
+        href={`/competition/${data.id}`}
         className="flex flex-col overflow-hidden rounded-lg"
       >
         <div className="relative h-44 overflow-hidden">

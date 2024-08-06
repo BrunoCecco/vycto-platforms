@@ -183,8 +183,8 @@ export const sites = pgTable(
   },
 );
 
-export const posts = pgTable(
-  "Post",
+export const competitions = pgTable(
+  "Competition",
   {
     id: text("id")
       .primaryKey()
@@ -214,23 +214,23 @@ export const posts = pgTable(
   },
   (table) => {
     return {
-      siteIdIdx: index("Post_siteId_idx").on(table.siteId),
-      userIdIdx: index("Post_userId_idx").on(table.userId),
-      slugSiteIdKey: uniqueIndex("Post_slug_siteId_key").on(
+      siteIdIdx: index("Competition_siteId_idx").on(table.siteId),
+      userIdIdx: index("Competition_userId_idx").on(table.userId),
+      slugSiteIdKey: uniqueIndex("Competition_slug_siteId_key").on(
         table.slug,
         table.siteId,
       ),
       userFk: foreignKey({
         columns: [table.userId],
         foreignColumns: [users.id],
-        name: "Post_userId_fkey",
+        name: "Competition_userId_fkey",
       })
         .onDelete("cascade")
         .onUpdate("cascade"),
       siteFk: foreignKey({
         columns: [table.siteId],
         foreignColumns: [sites.id],
-        name: "Post_siteId_fkey",
+        name: "Competition_siteId_fkey",
       })
         .onDelete("cascade")
         .onUpdate("cascade"),
@@ -238,13 +238,13 @@ export const posts = pgTable(
   },
 );
 
-export const postsRelations = relations(posts, ({ one }) => ({
-  site: one(sites, { references: [sites.id], fields: [posts.siteId] }),
-  user: one(users, { references: [users.id], fields: [posts.userId] }),
+export const competitionsRelations = relations(competitions, ({ one }) => ({
+  site: one(sites, { references: [sites.id], fields: [competitions.siteId] }),
+  user: one(users, { references: [users.id], fields: [competitions.userId] }),
 }));
 
 export const sitesRelations = relations(sites, ({ one, many }) => ({
-  posts: many(posts),
+  competitions: many(competitions),
   user: one(users, { references: [users.id], fields: [sites.userId] }),
 }));
 
@@ -260,9 +260,9 @@ export const userRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
   sites: many(sites),
-  posts: many(posts),
+  competitions: many(competitions),
 }));
 
 export type SelectSite = typeof sites.$inferSelect;
-export type SelectPost = typeof posts.$inferSelect;
+export type SelectCompetition = typeof competitions.$inferSelect;
 export type SelectExample = typeof examples.$inferSelect;

@@ -1,21 +1,27 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { updatePost, updatePostMetadata } from "@/lib/actions";
+import { updateCompetition, updateCompetitionMetadata } from "@/lib/actions";
 import { Editor as NovelEditor } from "novel";
 import TextareaAutosize from "react-textarea-autosize";
 import { cn } from "@/lib/utils";
 import LoadingDots from "./icons/loading-dots";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
-import type { SelectPost } from "@/lib/schema";
+import type { SelectCompetition } from "@/lib/schema";
 
-type PostWithSite = SelectPost & { site: { subdomain: string | null } | null };
+type CompetitionWithSite = SelectCompetition & {
+  site: { subdomain: string | null } | null;
+};
 
-export default function Editor({ post }: { post: PostWithSite }) {
+export default function Editor({
+  competition,
+}: {
+  competition: CompetitionWithSite;
+}) {
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
-  const [data, setData] = useState<PostWithSite>(post);
+  const [data, setData] = useState<CompetitionWithSite>(competition);
   const [hydrated, setHydrated] = useState(false);
 
   const url = process.env.NEXT_PUBLIC_VERCEL_ENV
@@ -28,7 +34,7 @@ export default function Editor({ post }: { post: PostWithSite }) {
       if (e.metaKey && e.key === "s") {
         e.preventDefault();
         startTransitionSaving(async () => {
-          await updatePost(data);
+          await updateCompetition(data);
         });
       }
     };
@@ -60,16 +66,18 @@ export default function Editor({ post }: { post: PostWithSite }) {
             console.log(data.published, typeof data.published);
             formData.append("published", String(!data.published));
             startTransitionPublishing(async () => {
-              await updatePostMetadata(formData, post.id, "published").then(
-                () => {
-                  toast.success(
-                    `Successfully ${
-                      data.published ? "unpublished" : "published"
-                    } your post.`,
-                  );
-                  setData((prev) => ({ ...prev, published: !prev.published }));
-                },
-              );
+              await updateCompetitionMetadata(
+                formData,
+                competition.id,
+                "published",
+              ).then(() => {
+                toast.success(
+                  `Successfully ${
+                    data.published ? "unpublished" : "published"
+                  } your competition.`,
+                );
+                setData((prev) => ({ ...prev, published: !prev.published }));
+              });
             });
           }}
           className={cn(
@@ -91,21 +99,21 @@ export default function Editor({ post }: { post: PostWithSite }) {
         <input
           type="text"
           placeholder="Title"
-          defaultValue={post?.title || ""}
+          defaultValue={competition?.title || ""}
           autoFocus
           onChange={(e) => setData({ ...data, title: e.target.value })}
           className="dark:placeholder-text-600 border-none px-0 font-cal text-3xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
         />
         <TextareaAutosize
           placeholder="Description"
-          defaultValue={post?.description || ""}
+          defaultValue={competition?.description || ""}
           onChange={(e) => setData({ ...data, description: e.target.value })}
           className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
         />
       </div>
       <NovelEditor
         className="relative block"
-        defaultValue={post?.content || undefined}
+        defaultValue={competition?.content || undefined}
         onUpdate={(editor) => {
           setData((prev) => ({
             ...prev,
@@ -114,14 +122,14 @@ export default function Editor({ post }: { post: PostWithSite }) {
         }}
         onDebouncedUpdate={() => {
           if (
-            data.title === post.title &&
-            data.description === post.description &&
-            data.content === post.content
+            data.title === competition.title &&
+            data.description === competition.description &&
+            data.content === competition.content
           ) {
             return;
           }
           startTransitionSaving(async () => {
-            await updatePost(data);
+            await updateCompetition(data);
           });
         }}
       />

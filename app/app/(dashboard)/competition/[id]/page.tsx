@@ -3,14 +3,19 @@ import { notFound, redirect } from "next/navigation";
 import Editor from "@/components/editor";
 import db from "@/lib/db";
 
-export default async function PostPage({ params }: { params: { id: string } }) {
+export default async function CompetitionPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const session = await getSession();
   if (!session) {
     redirect("/login");
   }
 
-  const data = await db.query.posts.findFirst({
-    where: (posts, { eq }) => eq(posts.id, decodeURIComponent(params.id)),
+  const data = await db.query.competitions.findFirst({
+    where: (competitions, { eq }) =>
+      eq(competitions.id, decodeURIComponent(params.id)),
     with: {
       site: {
         columns: {
@@ -23,5 +28,5 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     notFound();
   }
 
-  return <Editor post={data} />;
+  return <Editor competition={data} />;
 }

@@ -6,7 +6,7 @@ import { sql } from "@vercel/postgres";
 
 export const runtime = "edge";
 
-export default async function PostOG({
+export default async function CompetitionOG({
   params,
 }: {
   params: { domain: string; slug: string };
@@ -19,16 +19,16 @@ export default async function PostOG({
     : null;
 
   const response = await sql`
-  SELECT post.title, post.description, post.image, "user".name as "authorName", "user".image as "authorImage"
-  FROM "Post" AS post 
-  INNER JOIN "Site" AS site ON post."siteId" = site.id 
+  SELECT competition.title, competition.description, competition.image, "user".name as "authorName", "user".image as "authorImage"
+  FROM "Competition" AS competition 
+  INNER JOIN "Site" AS site ON competition."siteId" = site.id 
   INNER JOIN "User" AS "user" ON site."userId" = "user".id 
   WHERE 
     (
         site.subdomain = ${subdomain}
         OR site."customDomain" = ${domain}
     )
-    AND post.slug = ${slug}
+    AND competition.slug = ${slug}
   LIMIT 1;
 `;
 

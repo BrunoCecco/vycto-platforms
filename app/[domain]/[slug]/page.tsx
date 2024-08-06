@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
-import { getPostData, getSiteData } from "@/lib/fetchers";
+import { getCompetitionData, getSiteData } from "@/lib/fetchers";
 import BlogCard from "@/components/blog-card";
 import BlurImage from "@/components/blur-image";
 import MDX from "@/components/mdx";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
 import db from "@/lib/db";
-import { posts, sites } from "@/lib/schema";
+import { competitions, sites } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 
 export async function generateMetadata({
@@ -17,7 +17,7 @@ export async function generateMetadata({
   const slug = decodeURIComponent(params.slug);
 
   const [data, siteData] = await Promise.all([
-    getPostData(domain, slug),
+    getCompetitionData(domain, slug),
     getSiteData(domain),
   ]);
   if (!data || !siteData) {
@@ -49,19 +49,19 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const allPosts = await db
+  const allCompetitions = await db
     .select({
-      slug: posts.slug,
+      slug: competitions.slug,
       site: {
         subdomain: sites.subdomain,
         customDomain: sites.customDomain,
       },
     })
-    .from(posts)
-    .leftJoin(sites, eq(posts.siteId, sites.id))
-    .where(eq(sites.subdomain, "demo")); // feel free to remove this filter if you want to generate paths for all posts
+    .from(competitions)
+    .leftJoin(sites, eq(competitions.siteId, sites.id))
+    .where(eq(sites.subdomain, "demo")); // feel free to remove this filter if you want to generate paths for all competitions
 
-  const allPaths = allPosts
+  const allPaths = allCompetitions
     .flatMap(({ site, slug }) => [
       site?.subdomain && {
         domain: `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
@@ -77,14 +77,14 @@ export async function generateStaticParams() {
   return allPaths;
 }
 
-export default async function SitePostPage({
+export default async function SiteCompetitionPage({
   params,
 }: {
   params: { domain: string; slug: string };
 }) {
   const domain = decodeURIComponent(params.domain);
   const slug = decodeURIComponent(params.slug);
-  const data = await getPostData(domain, slug);
+  const data = await getCompetitionData(domain, slug);
 
   if (!data) {
     notFound();
@@ -137,7 +137,7 @@ export default async function SitePostPage({
       </div>
       <div className="relative m-auto mb-10 h-80 w-full max-w-screen-lg overflow-hidden md:mb-20 md:h-150 md:w-5/6 md:rounded-2xl lg:w-2/3">
         <BlurImage
-          alt={data.title ?? "Post image"}
+          alt={data.title ?? "Competition image"}
           width={1200}
           height={630}
           className="h-full w-full object-cover"
@@ -149,7 +149,7 @@ export default async function SitePostPage({
 
       <MDX source={data.mdxSource} />
 
-      {data.adjacentPosts.length > 0 && (
+      {data.adjacentCompetitions.length > 0 && (
         <div className="relative mb-20 mt-10 sm:mt-20">
           <div
             className="absolute inset-0 flex items-center"
@@ -164,9 +164,9 @@ export default async function SitePostPage({
           </div>
         </div>
       )}
-      {data.adjacentPosts && (
+      {data.adjacentCompetitions && (
         <div className="mx-5 mb-20 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:mx-auto xl:grid-cols-3">
-          {data.adjacentPosts.map((data: any, index: number) => (
+          {data.adjacentCompetitions.map((data: any, index: number) => (
             <BlogCard key={index} data={data} />
           ))}
         </div>

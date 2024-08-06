@@ -11,9 +11,15 @@ import { put } from "@vercel/blob";
 import { eq } from "drizzle-orm";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
-import { withPostAuth, withSiteAuth } from "./auth";
+import { withCompetitionAuth, withSiteAuth } from "./auth";
 import db from "./db";
-import { SelectPost, SelectSite, posts, sites, users } from "./schema";
+import {
+  SelectCompetition,
+  SelectSite,
+  competitions,
+  sites,
+  users,
+} from "./schema";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -209,18 +215,18 @@ export const deleteSite = withSiteAuth(
   },
 );
 
-export const getSiteFromPostId = async (postId: string) => {
-  const post = await db.query.posts.findFirst({
-    where: eq(posts.id, postId),
+export const getSiteFromCompetitionId = async (competitionId: string) => {
+  const competition = await db.query.competitions.findFirst({
+    where: eq(competitions.id, competitionId),
     columns: {
       siteId: true,
     },
   });
 
-  return post?.siteId;
+  return competition?.siteId;
 };
 
-export const createPost = withSiteAuth(
+export const createCompetition = withSiteAuth(
   async (_: FormData, site: SelectSite) => {
     const session = await getSession();
     if (!session?.user.id) {
@@ -230,7 +236,7 @@ export const createPost = withSiteAuth(
     }
 
     const [response] = await db
-      .insert(posts)
+      .insert(competitions)
       .values({
         siteId: site.id,
         userId: session.user.id,
@@ -238,16 +244,16 @@ export const createPost = withSiteAuth(
       .returning();
 
     revalidateTag(
-      `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-posts`,
+      `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-competitions`,
     );
-    site.customDomain && revalidateTag(`${site.customDomain}-posts`);
+    site.customDomain && revalidateTag(`${site.customDomain}-competitions`);
 
     return response;
   },
 );
 
 // creating a separate function for this because we're not using FormData
-export const updatePost = async (data: SelectPost) => {
+export const updateCompetition = async (data: SelectCompetition) => {
   const session = await getSession();
   if (!session?.user.id) {
     return {
@@ -255,41 +261,41 @@ export const updatePost = async (data: SelectPost) => {
     };
   }
 
-  const post = await db.query.posts.findFirst({
-    where: eq(posts.id, data.id),
+  const competition = await db.query.competitions.findFirst({
+    where: eq(competitions.id, data.id),
     with: {
       site: true,
     },
   });
 
-  if (!post || post.userId !== session.user.id) {
+  if (!competition || competition.userId !== session.user.id) {
     return {
-      error: "Post not found",
+      error: "Competition not found",
     };
   }
 
   try {
     const [response] = await db
-      .update(posts)
+      .update(competitions)
       .set({
         title: data.title,
         description: data.description,
         content: data.content,
       })
-      .where(eq(posts.id, data.id))
+      .where(eq(competitions.id, data.id))
       .returning();
 
     revalidateTag(
-      `${post.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-posts`,
+      `${competition.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-competitions`,
     );
     revalidateTag(
-      `${post.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${post.slug}`,
+      `${competition.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${competition.slug}`,
     );
 
     // if the site has a custom domain, we need to revalidate those tags too
-    post.site?.customDomain &&
-      (revalidateTag(`${post.site?.customDomain}-posts`),
-      revalidateTag(`${post.site?.customDomain}-${post.slug}`));
+    competition.site?.customDomain &&
+      (revalidateTag(`${competition.site?.customDomain}-competitions`),
+      revalidateTag(`${competition.site?.customDomain}-${competition.slug}`));
 
     return response;
   } catch (error: any) {
@@ -299,10 +305,10 @@ export const updatePost = async (data: SelectPost) => {
   }
 };
 
-export const updatePostMetadata = withPostAuth(
+export const updateCompetitionMetadata = withCompetitionAuth(
   async (
     formData: FormData,
-    post: SelectPost & {
+    competition: SelectCompetition & {
       site: SelectSite;
     },
     key: string,
@@ -321,36 +327,36 @@ export const updatePostMetadata = withPostAuth(
 
         const blurhash = await getBlurDataURL(url);
         response = await db
-          .update(posts)
+          .update(competitions)
           .set({
             image: url,
             imageBlurhash: blurhash,
           })
-          .where(eq(posts.id, post.id))
+          .where(eq(competitions.id, competition.id))
           .returning()
           .then((res) => res[0]);
       } else {
         response = await db
-          .update(posts)
+          .update(competitions)
           .set({
             [key]: key === "published" ? value === "true" : value,
           })
-          .where(eq(posts.id, post.id))
+          .where(eq(competitions.id, competition.id))
           .returning()
           .then((res) => res[0]);
       }
 
       revalidateTag(
-        `${post.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-posts`,
+        `${competition.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-competitions`,
       );
       revalidateTag(
-        `${post.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${post.slug}`,
+        `${competition.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${competition.slug}`,
       );
 
       // if the site has a custom domain, we need to revalidate those tags too
-      post.site?.customDomain &&
-        (revalidateTag(`${post.site?.customDomain}-posts`),
-        revalidateTag(`${post.site?.customDomain}-${post.slug}`));
+      competition.site?.customDomain &&
+        (revalidateTag(`${competition.site?.customDomain}-competitions`),
+        revalidateTag(`${competition.site?.customDomain}-${competition.slug}`));
 
       return response;
     } catch (error: any) {
@@ -367,14 +373,14 @@ export const updatePostMetadata = withPostAuth(
   },
 );
 
-export const deletePost = withPostAuth(
-  async (_: FormData, post: SelectPost) => {
+export const deleteCompetition = withCompetitionAuth(
+  async (_: FormData, competition: SelectCompetition) => {
     try {
       const [response] = await db
-        .delete(posts)
-        .where(eq(posts.id, post.id))
+        .delete(competitions)
+        .where(eq(competitions.id, competition.id))
         .returning({
-          siteId: posts.siteId,
+          siteId: competitions.siteId,
         });
 
       return response;

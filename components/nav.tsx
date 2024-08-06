@@ -21,7 +21,7 @@ import {
   useSelectedLayoutSegments,
 } from "next/navigation";
 import { ReactNode, useEffect, useMemo, useState } from "react";
-import { getSiteFromPostId } from "@/lib/actions";
+import { getSiteFromCompetitionId } from "@/lib/actions";
 import Image from "next/image";
 
 const externalLinks = [
@@ -69,8 +69,8 @@ export default function Nav({ children }: { children: ReactNode }) {
   const [siteId, setSiteId] = useState<string | null>();
 
   useEffect(() => {
-    if (segments[0] === "post" && id) {
-      getSiteFromPostId(id).then((id) => {
+    if (segments[0] === "competition" && id) {
+      getSiteFromCompetitionId(id).then((id) => {
         setSiteId(id);
       });
     }
@@ -85,7 +85,7 @@ export default function Nav({ children }: { children: ReactNode }) {
           icon: <ArrowLeft width={18} />,
         },
         {
-          name: "Posts",
+          name: "Competitions",
           href: `/site/${id}`,
           isActive: segments.length === 2,
           icon: <Newspaper width={18} />,
@@ -103,22 +103,22 @@ export default function Nav({ children }: { children: ReactNode }) {
           icon: <Settings width={18} />,
         },
       ];
-    } else if (segments[0] === "post" && id) {
+    } else if (segments[0] === "competition" && id) {
       return [
         {
-          name: "Back to All Posts",
+          name: "Back to All Competitions",
           href: siteId ? `/site/${siteId}` : "/sites",
           icon: <ArrowLeft width={18} />,
         },
         {
           name: "Editor",
-          href: `/post/${id}`,
+          href: `/competition/${id}`,
           isActive: segments.length === 2,
           icon: <Edit3 width={18} />,
         },
         {
           name: "Settings",
-          href: `/post/${id}/settings`,
+          href: `/competition/${id}/settings`,
           isActive: segments.includes("settings"),
           icon: <Settings width={18} />,
         },
@@ -160,7 +160,7 @@ export default function Nav({ children }: { children: ReactNode }) {
       <button
         className={`fixed z-20 ${
           // left align for Editor, right align for other pages
-          segments[0] === "post" && segments.length === 2 && !showSidebar
+          segments[0] === "competition" && segments.length === 2 && !showSidebar
             ? "left-5 top-5"
             : "right-5 top-7"
         } sm:hidden`}

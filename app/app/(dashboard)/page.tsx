@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Sites from "@/components/sites";
 import OverviewStats from "@/components/overview-stats";
-import Posts from "@/components/posts";
+import Competitions from "@/components/competitions";
 import Link from "next/link";
 import PlaceholderCard from "@/components/placeholder-card";
 import OverviewSitesCTA from "@/components/overview-sites-cta";
@@ -40,7 +40,7 @@ export default function Overview() {
 
       <div className="flex flex-col space-y-6">
         <h1 className="font-cal text-3xl font-bold dark:text-white">
-          Recent Posts
+          Recent Competitions
         </h1>
         <Suspense
           fallback={
@@ -51,7 +51,7 @@ export default function Overview() {
             </div>
           }
         >
-          <Posts limit={8} />
+          <Competitions limit={8} />
         </Suspense>
       </div>
     </div>
