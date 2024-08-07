@@ -6,7 +6,6 @@ interface CompetitionCardProps {
   title: string;
   sponsor: string;
   timeLeft: string;
-  playButtonText: string;
 }
 
 const CompetitionCard: FC<CompetitionCardProps> = ({
