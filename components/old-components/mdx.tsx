@@ -3,7 +3,7 @@
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote";
 import { replaceLinks } from "@/lib/remark-plugins";
 import { Tweet } from "react-tweet";
-import BlurImage from "@/components/blur-image";
+import BlurImage from "@/components/old-components/blur-image";
 import styles from "./mdx.module.css";
 import type { SelectCompetition } from "@/lib/schema";
 

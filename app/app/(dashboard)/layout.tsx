@@ -1,6 +1,6 @@
 import { ReactNode, Suspense } from "react";
-import Profile from "@/components/profile";
-import Nav from "@/components/nav";
+import Profile from "@/components/old-components/profile";
+import Nav from "@/components/old-components/nav";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (

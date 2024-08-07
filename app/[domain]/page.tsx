@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import BlurImage from "@/components/blur-image";
+import BlurImage from "@/components/old-components/blur-image";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
-import BlogCard from "@/components/blog-card";
+import BlogCard from "@/components/old-components/blog-card";
 import { getCompetitionsForSite, getSiteData } from "@/lib/fetchers";
 import Image from "next/image";
 import db from "@/lib/db";

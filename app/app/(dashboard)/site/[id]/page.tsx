@@ -1,7 +1,7 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
-import Competitions from "@/components/competitions";
-import CreateCompetitionButton from "@/components/create-competition-button";
+import Competitions from "@/components/old-components/competitions";
+import CreateCompetitionButton from "@/components/old-components/create-competition-button";
 import db from "@/lib/db";
 
 export default async function SiteCompetitions({

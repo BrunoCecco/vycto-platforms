@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { getCompetitionData, getSiteData } from "@/lib/fetchers";
-import BlogCard from "@/components/blog-card";
-import BlurImage from "@/components/blur-image";
-import MDX from "@/components/mdx";
+import BlogCard from "@/components/old-components/blog-card";
+import BlurImage from "@/components/old-components/blur-image";
+import MDX from "@/components/old-components/mdx";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
 import db from "@/lib/db";
 import { competitions, sites } from "@/lib/schema";

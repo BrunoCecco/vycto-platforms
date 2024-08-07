@@ -1,6 +1,6 @@
 import { getSession } from "@/lib/auth";
 import CreateSiteButton from "./create-site-button";
-import CreateSiteModal from "./modal/create-site";
+import CreateSiteModal from "../modal/create-site";
 import Link from "next/link";
 import db from "@/lib/db";
 import { sites } from "@/lib/schema";

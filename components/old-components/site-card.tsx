@@ -1,4 +1,4 @@
-import BlurImage from "@/components/blur-image";
+import BlurImage from "@/components/old-components/blur-image";
 import type { SelectSite } from "@/lib/schema";
 import { placeholderBlurhash, random } from "@/lib/utils";
 import { BarChart, ExternalLink } from "lucide-react";
