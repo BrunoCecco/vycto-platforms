@@ -24,7 +24,7 @@ const leaderboardData = [
 const Leaderboard = () => {
   return (
     <div className="container mx-auto border border-gray-200 bg-white p-4">
-      <div className="flex w-full items-center justify-between p-6">
+      <div className="flex w-full flex-col-reverse justify-between gap-4 p-6 md:flex-row md:items-center">
         <div className="flex items-center gap-4">
           <Image
             src="/logo.png"
