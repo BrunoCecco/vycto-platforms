@@ -5,14 +5,14 @@ interface CompetitionCardProps {
   imageSrc: string;
   title: string;
   sponsor: string;
-  timeLeft: string;
+  statusInfo: string;
 }
 
 const CompetitionCard: FC<CompetitionCardProps> = ({
   imageSrc,
   title,
   sponsor,
-  timeLeft,
+  statusInfo,
 }) => {
   return (
     <div className="w-80 overflow-hidden rounded-xl border bg-white p-4 shadow-lg">
@@ -55,7 +55,7 @@ const CompetitionCard: FC<CompetitionCardProps> = ({
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="text-sm text-green-600">{timeLeft}</p>
+        <p className="text-sm text-green-600">{statusInfo}</p>
         <button className="w-24 rounded-full bg-green-700 p-2 text-white hover:bg-green-600">
           Play
         </button>

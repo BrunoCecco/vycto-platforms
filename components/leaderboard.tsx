@@ -18,7 +18,14 @@ const leaderboardData = [
     totalPoints: 1400,
     latestSubmission: "View",
   },
-  // Add more data as needed
+  {
+    id: 3,
+    name: "john_doe",
+    profilePic: "/logo.png",
+    rank: 2,
+    totalPoints: 1100,
+    latestSubmission: "View",
+  },
 ];
 
 const Leaderboard = () => {
