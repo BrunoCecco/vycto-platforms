@@ -1,5 +1,6 @@
 import CompetitionCard from "@/components/competitionCard";
 import { InlineSnippet } from "@/components/form/domain-configuration";
+import Leaderboard from "@/components/leaderboard";
 import Image from "next/image";
 
 export default function HomePage() {
@@ -20,6 +21,7 @@ export default function HomePage() {
           timeLeft="24 hours left"
         />
       </div>
+      <Leaderboard />
     </div>
   );
 }

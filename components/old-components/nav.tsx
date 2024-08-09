@@ -70,9 +70,9 @@ export default function Nav({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (segments[0] === "competition" && id) {
-      getSiteFromCompetitionId(id).then((id) => {
-        setSiteId(id);
-      });
+      // getSiteFromCompetitionId(id).then((id) => {
+      //   setSiteId(id);
+      // });
     }
   }, [segments, id]);
 

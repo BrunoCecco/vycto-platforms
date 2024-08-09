@@ -31,9 +31,10 @@ export default async function Competitions({
 
   return competitions.length > 0 ? (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {competitions.map((competition) => (
-        <CompetitionCard key={competition.id} data={competition} />
-      ))}
+      {competitions &&
+        competitions.map((competition: any) => (
+          <CompetitionCard key={competition.id} data={competition} />
+        ))}
     </div>
   ) : (
     <div className="flex flex-col items-center space-x-4">

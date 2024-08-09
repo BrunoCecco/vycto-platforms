@@ -216,6 +216,7 @@ export const deleteSite = withSiteAuth(
 );
 
 export const getSiteFromCompetitionId = async (competitionId: string) => {
+  console.log("Getting site from competition ID: ", competitionId);
   const competition = await db.query.competitions.findFirst({
     where: eq(competitions.id, competitionId),
     columns: {

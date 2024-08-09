@@ -24,6 +24,7 @@ export default async function CompetitionPage({
       },
     },
   });
+
   if (!data || data.userId !== session.user.id) {
     notFound();
   }
