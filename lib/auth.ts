@@ -22,11 +22,11 @@ export const authOptions: NextAuthOptions = {
       from: process.env.EMAIL_FROM,
     }),
   ],
-  // pages: {
-  //   signIn: `/login`,
-  //   verifyRequest: `/login`,
-  //   error: "/login", // Error code passed in query string as ?error=
-  // },
+  pages: {
+    signIn: `/login`,
+    verifyRequest: `/login`,
+    error: "/login", // Error code passed in query string as ?error=
+  },
   adapter: DrizzleAdapter(db, {
     usersTable: users,
     accountsTable: accounts,
@@ -50,6 +50,18 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
+    signIn: async ({ user, account, profile, email, credentials }) => {
+      if (email?.verificationRequest === true) {
+        return "/verify";
+      }
+      const isAllowedToSignIn = true;
+      if (isAllowedToSignIn) {
+        return true;
+      } else {
+        // Return false to display a default error message
+        return false;
+      }
+    },
     jwt: async ({ token, user }) => {
       if (user) {
         token.user = user;

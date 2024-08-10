@@ -23,15 +23,13 @@ const GuessScore: FC = () => {
         <div className="flex w-full items-center justify-between gap-4 py-4 md:justify-around md:px-4">
           <div className="flex flex-col items-center gap-4 text-gray-500">
             <div className="flex items-center gap-4 md:gap-8">
-              <MinusCircle
-                onClick={() => setScoreHome(scoreHome - 1)}
-                className="cursor-pointer"
-              />
+              <button onClick={() => setScoreHome(Math.max(scoreHome - 1, 0))}>
+                <MinusCircle />
+              </button>
               <div>{scoreHome}</div>
-              <PlusCircle
-                onClick={() => setScoreHome(scoreHome + 1)}
-                className="cursor-pointer"
-              />
+              <button onClick={() => setScoreHome(Math.max(scoreHome + 1, 0))}>
+                <PlusCircle />
+              </button>
             </div>
             <p className="text-sm font-semibold">Real Madrid</p>
           </div>
@@ -45,15 +43,13 @@ const GuessScore: FC = () => {
 
           <div className="flex flex-col items-center gap-4 text-gray-500">
             <div className="flex items-center gap-4 md:gap-8">
-              <MinusCircle
-                onClick={() => setScoreAway(scoreAway - 1)}
-                className="cursor-pointer"
-              />
+              <button onClick={() => setScoreAway(Math.max(scoreAway - 1, 0))}>
+                <MinusCircle />
+              </button>
               <div>{scoreAway}</div>
-              <PlusCircle
-                onClick={() => setScoreAway(scoreAway + 1)}
-                className="cursor-pointer"
-              />
+              <button onClick={() => setScoreAway(Math.max(scoreAway + 1, 0))}>
+                <PlusCircle />
+              </button>
             </div>
             <p className="text-sm font-semibold ">Chelsea</p>
           </div>
