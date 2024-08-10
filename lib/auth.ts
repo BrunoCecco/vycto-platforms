@@ -1,10 +1,11 @@
 import { getServerSession, Theme, type NextAuthOptions } from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
 import db from "./db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { Adapter } from "next-auth/adapters";
 import { accounts, sessions, users, verificationTokens } from "./schema";
-import EmailProvider from "next-auth/providers/email";
+import EmailProvider, {
+  SendVerificationRequestParams,
+} from "next-auth/providers/email";
 import { createTransport } from "nodemailer";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
@@ -14,18 +15,18 @@ export const authOptions: NextAuthOptions = {
       server: {
         host: process.env.EMAIL_SERVER_HOST as string,
         port: parseInt(process.env.EMAIL_SERVER_PORT!) || 465,
+        secure: true,
         auth: {
           user: process.env.EMAIL_SERVER_USER,
           pass: process.env.EMAIL_SERVER_PASSWORD,
         },
       },
       from: process.env.EMAIL_FROM,
+      sendVerificationRequest: sendVerificationRequest,
     }),
   ],
   pages: {
     signIn: `/login`,
-    verifyRequest: `/login`,
-    error: "/login", // Error code passed in query string as ?error=
   },
   adapter: DrizzleAdapter(db, {
     usersTable: users,
@@ -50,18 +51,6 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
-    signIn: async ({ user, account, profile, email, credentials }) => {
-      if (email?.verificationRequest === true) {
-        return "/verify";
-      }
-      const isAllowedToSignIn = true;
-      if (isAllowedToSignIn) {
-        return true;
-      } else {
-        // Return false to display a default error message
-        return false;
-      }
-    },
     jwt: async ({ token, user }) => {
       if (user) {
         token.user = user;
@@ -150,20 +139,9 @@ export function withCompetitionAuth(action: any) {
   };
 }
 
-async function sendVerificationRequest(params: {
-  identifier: string;
-  url: string;
-  token: string;
-  baseUrl: string;
-  provider: {
-    server: any;
-    from: string;
-  };
-  theme: Theme;
-}) {
+async function sendVerificationRequest(params: SendVerificationRequestParams) {
   const { identifier, url, provider, theme } = params;
   const { host } = new URL(url);
-  // NOTE: You are not required to use `nodemailer`, use whatever you want.
   const transport = createTransport(provider.server);
   const result = await transport.sendMail({
     to: identifier,
