@@ -241,6 +241,9 @@ export const createCompetition = withSiteAuth(
       .values({
         siteId: site.id,
         userId: session.user.id,
+        admin: session.user.id,
+        startDate: new Date(), // tbd
+        endDate: new Date(),
       })
       .returning();
 

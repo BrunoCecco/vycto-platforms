@@ -18,9 +18,7 @@ export const users = pgTable("users", {
     .primaryKey()
     .$defaultFn(() => createId()),
   name: text("name"),
-  // if you are using Github OAuth, you can get rid of the username attribute (that is for Twitter OAuth)
   username: text("username"),
-  gh_username: text("gh_username"),
   email: text("email").notNull().unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
@@ -132,6 +130,10 @@ export const sites = pgTable(
       onDelete: "cascade",
       onUpdate: "cascade",
     }),
+    admin: text("admin").references(() => users.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
   },
   (table) => {
     return {
@@ -162,12 +164,18 @@ export const competitions = pgTable(
     updatedAt: timestamp("updatedAt", { mode: "date" })
       .notNull()
       .$onUpdate(() => new Date()),
+    startDate: timestamp("startDate", { mode: "date" }).notNull(),
+    endDate: timestamp("endDate", { mode: "date" }).notNull(),
     published: boolean("published").default(false).notNull(),
     siteId: text("siteId").references(() => sites.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
     }),
     userId: text("userId").references(() => users.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+    admin: text("admin").references(() => users.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
     }),
@@ -184,11 +192,13 @@ export const competitions = pgTable(
 export const competitionsRelations = relations(competitions, ({ one }) => ({
   site: one(sites, { references: [sites.id], fields: [competitions.siteId] }),
   user: one(users, { references: [users.id], fields: [competitions.userId] }),
+  admin: one(users, { references: [users.id], fields: [competitions.admin] }),
 }));
 
 export const sitesRelations = relations(sites, ({ one, many }) => ({
   competitions: many(competitions),
   user: one(users, { references: [users.id], fields: [sites.userId] }),
+  admin: one(users, { references: [users.id], fields: [sites.admin] }),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({

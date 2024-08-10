@@ -25,6 +25,9 @@ export default function LoginButton({ email }: { email: string }) {
         setLoading(true);
         signIn("email", {
           email,
+          //   authorizationParams: {
+          //     username: email,
+          //   },
         });
       }}
       className={`${
