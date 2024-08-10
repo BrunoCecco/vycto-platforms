@@ -10,20 +10,16 @@ const MatchOutcome: FC = () => {
         <PointsBadge points={5} />
 
         {/* Match Info */}
-        <div className="text-center">
-          <h2 className="text-xl font-semibold text-gray-800">
-            Real Madrid vs Chelsea
-          </h2>
-          <p className="text-sm text-gray-500">
-            Pick the winner to score points
-          </p>
-        </div>
+        <h2 className="text-lg font-semibold text-gray-800 md:text-xl">
+          Real Madrid vs Chelsea
+        </h2>
+        <p className="text-sm text-gray-500">Pick the winner to score points</p>
 
         {/* Teams */}
         <div className="flex w-full items-center justify-between py-4 md:justify-around md:px-4">
           {/* Real Madrid */}
           <div className="text-center">
-            <div className="relative h-24 w-32 overflow-hidden rounded-lg border">
+            <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
               <Image
                 src="/teamBadge.jpg"
                 alt="Real Madrid"
@@ -37,12 +33,14 @@ const MatchOutcome: FC = () => {
 
           {/* VS */}
           <div className="text-center">
-            <span className="text-2xl font-bold text-gray-600">VS</span>
+            <div className="rounded-full border-2 border-blue-600 p-2 text-sm font-bold italic text-blue-600 md:text-xl">
+              VS
+            </div>
           </div>
 
           {/* Chelsea */}
           <div className="text-center">
-            <div className="relative h-24 w-32 overflow-hidden rounded-lg border">
+            <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
               <Image
                 src="/teamBadge.jpg"
                 alt="Chelsea"

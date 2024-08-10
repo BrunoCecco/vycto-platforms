@@ -4,6 +4,7 @@ import db from "@/lib/db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { Adapter } from "next-auth/adapters";
 import { accounts, sessions, users, verificationTokens } from "@/lib/schema";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
