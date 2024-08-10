@@ -1,10 +1,9 @@
-import CompetitionCard from "@/components/competitionCard";
 import CurrentCompetitions from "@/components/currentCompetitions";
-import { InlineSnippet } from "@/components/form/domain-configuration";
 import Leaderboard from "@/components/leaderboard";
 import PastCompetitions from "@/components/pastCompetitions";
+import MatchOutcome from "@/components/questions/matchOutcome";
 import TrueFalse from "@/components/questions/trueFalse";
-import Image from "next/image";
+import WhatMinute from "@/components/questions/whatMinute";
 
 export default function HomePage() {
   return (
@@ -14,6 +13,8 @@ export default function HomePage() {
       <PastCompetitions />
       <Leaderboard />
       <TrueFalse />
+      <WhatMinute />
+      <MatchOutcome />
     </div>
   );
 }

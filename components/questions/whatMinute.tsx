@@ -1,8 +1,10 @@
+"use client";
 import Image from "next/image";
 import { FC } from "react";
+import Slider from "../slider";
 import PointsBadge from "../pointsBadge";
 
-const TrueFalse: FC = () => {
+const WhatMinute: FC = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="relative h-full rounded-lg bg-white p-6 shadow-xl">
@@ -24,23 +26,18 @@ const TrueFalse: FC = () => {
 
         {/* Question */}
         <h2 className="mb-1 text-center text-xl font-semibold text-gray-800">
-          Antoine Griezmann will score a goal
+          What minute will Atletico score vs Inter?
         </h2>
-        <p className="mb-6 text-center text-gray-500">
-          Select correctly to score points
+        <p className="text-center text-gray-500">
+          The closer you get, the more points you score
         </p>
 
-        <div className="flex justify-around">
-          <button className="mx-2 w-32 rounded-full border-2 border-red-500 bg-green-500 p-2 font-semibold italic text-white shadow-lg hover:bg-green-600">
-            True
-          </button>
-          <button className="mx-2 w-32 rounded-full border-2 border-gray-300 bg-white p-2 font-semibold italic text-gray-500 shadow-lg hover:bg-gray-100">
-            False
-          </button>
+        <div className="flex items-center justify-center">
+          <Slider />
         </div>
       </div>
     </div>
   );
 };
 
-export default TrueFalse;
+export default WhatMinute;
