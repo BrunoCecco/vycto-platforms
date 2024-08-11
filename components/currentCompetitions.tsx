@@ -1,23 +1,20 @@
 import { FC } from "react";
-import CompetitionCard from "./competitionCard"; // Assuming your CompetitionCard is in the same directory
+import CompetitionCard from "./competitionCard";
 
-const CurrentCompetitions: FC = () => {
-  const competitions = [
-    {
-      imageSrc: "/atletiCurrent.jpg",
-      title: "Atletico vs Inter",
-      sponsor: "Tanqueray",
-      statusInfo: "24 hours left",
-    },
-    {
-      imageSrc: "/atletiCurrent.jpg",
-      title: "Atletico vs Athletic",
-      sponsor: "Tanqueray",
-      statusInfo: "24 hours left",
-    },
-    // Add more competition objects here if needed
-  ];
+interface Competition {
+  imageSrc: string;
+  title: string;
+  sponsor: string;
+  statusInfo: string;
+}
 
+interface CurrentCompetitionsProps {
+  competitions: Competition[];
+}
+
+const CurrentCompetitions: FC<CurrentCompetitionsProps> = ({
+  competitions,
+}) => {
   return (
     <div className="md:px-8">
       <h2 className="py-4 text-2xl font-semibold text-gray-800">
