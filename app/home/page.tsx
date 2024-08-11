@@ -3,6 +3,8 @@ import Leaderboard from "@/components/leaderboard";
 import PastCompetitions from "@/components/pastCompetitions";
 import GuessScore from "@/components/questions/guessScore";
 import MatchOutcome from "@/components/questions/matchOutcome";
+import PlayerGoals from "@/components/questions/playerGoals";
+import PlayerSelection from "@/components/questions/playerSelection";
 import TrueFalse from "@/components/questions/trueFalse";
 import WhatMinute from "@/components/questions/whatMinute";
 
@@ -17,6 +19,8 @@ export default function HomePage() {
       <WhatMinute />
       <MatchOutcome />
       <GuessScore />
+      <PlayerGoals />
+      <PlayerSelection />
     </div>
   );
 }
