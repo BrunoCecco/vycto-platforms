@@ -15,6 +15,19 @@ export default async function SiteSettingsIndex({
   return (
     <div className="flex flex-col space-y-6">
       <Form
+        title="Sponsor Admin"
+        description="The admin from the sponsor - they will be given access to edit the site."
+        helpText="Please make sure the email is correct."
+        inputAttrs={{
+          name: "admin",
+          type: "text",
+          defaultValue: data?.admin!,
+          placeholder: "johndoe@gmail.com",
+        }}
+        handleSubmit={updateSite}
+      />
+
+      <Form
         title="Name"
         description="The name of your site. This will be used as the meta title on Google as well."
         helpText="Please use 32 characters maximum."

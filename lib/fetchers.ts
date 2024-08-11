@@ -160,3 +160,18 @@ async function getMdxSource(competitionContents: string) {
 
   return mdxSource;
 }
+
+export async function getUserData(email: string) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.users.findFirst({
+        where: eq(users.email, email),
+      });
+    },
+    [`${email}-user`],
+    {
+      revalidate: 900,
+      tags: [`${email}-user`],
+    },
+  )();
+}

@@ -130,9 +130,9 @@ export const sites = pgTable(
       onDelete: "cascade",
       onUpdate: "cascade",
     }),
-    admin: text("admin").references(() => users.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
+    admin: text("admin").references(() => users.email, {
+      onDelete: "no action",
+      onUpdate: "no action",
     }),
   },
   (table) => {
@@ -175,9 +175,9 @@ export const competitions = pgTable(
       onDelete: "cascade",
       onUpdate: "cascade",
     }),
-    admin: text("admin").references(() => users.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
+    admin: text("admin").references(() => users.email, {
+      onDelete: "no action",
+      onUpdate: "no action",
     }),
   },
   (table) => {
@@ -192,13 +192,16 @@ export const competitions = pgTable(
 export const competitionsRelations = relations(competitions, ({ one }) => ({
   site: one(sites, { references: [sites.id], fields: [competitions.siteId] }),
   user: one(users, { references: [users.id], fields: [competitions.userId] }),
-  admin: one(users, { references: [users.id], fields: [competitions.admin] }),
+  siteadmin: one(users, {
+    references: [users.email],
+    fields: [competitions.admin],
+  }),
 }));
 
 export const sitesRelations = relations(sites, ({ one, many }) => ({
   competitions: many(competitions),
   user: one(users, { references: [users.id], fields: [sites.userId] }),
-  admin: one(users, { references: [users.id], fields: [sites.admin] }),
+  siteadmin: one(users, { references: [users.email], fields: [sites.admin] }),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({

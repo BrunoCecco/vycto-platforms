@@ -11,9 +11,12 @@ export default async function Sites({ limit }: { limit?: number }) {
   }
 
   const sites = await db.query.sites.findMany({
-    // either sites.userId === session.user.id or sites.admin === session.user.id
+    // either sites.userId === session.user.id or sites.admin === session.user.email
     where: (sites, { or, eq }) =>
-      or(eq(sites.userId, session.user.id), eq(sites.admin, session.user.id)),
+      or(
+        eq(sites.userId, session.user.id),
+        eq(sites.admin, session.user.email),
+      ),
     orderBy: (sites, { asc }) => asc(sites.createdAt),
     ...(limit ? { limit } : {}),
   });
