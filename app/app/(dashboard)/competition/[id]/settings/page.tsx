@@ -18,7 +18,10 @@ export default async function CompetitionSettings({
     where: (competitions, { eq }) =>
       eq(competitions.id, decodeURIComponent(params.id)),
   });
-  if (!data || data.userId !== session.user.id) {
+  if (
+    !data ||
+    (data.userId !== session.user.id && data.admin != session.user.email)
+  ) {
     notFound();
   }
   return (

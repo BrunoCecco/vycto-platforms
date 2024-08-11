@@ -25,7 +25,11 @@ export default async function CompetitionPage({
     },
   });
 
-  if (!data || data.userId !== session.user.id) {
+  if (
+    !data ||
+    (data.userId !== session.user.id &&
+      data.admin != session.user.email)
+  ) {
     notFound();
   }
 

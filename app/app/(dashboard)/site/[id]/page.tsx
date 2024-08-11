@@ -17,7 +17,10 @@ export default async function SiteCompetitions({
     where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
   });
 
-  if (!data || data.userId !== session.user.id) {
+  if (
+    !data ||
+    (data.userId !== session.user.id && data.admin != session.user.email)
+  ) {
     notFound();
   }
 

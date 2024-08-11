@@ -99,7 +99,12 @@ export function withSiteAuth(action: any) {
       where: (sites, { eq }) => eq(sites.id, siteId),
     });
 
-    if (!site || site.userId !== session.user.id) {
+    console.log(site, "site");
+
+    if (
+      !site ||
+      (site.userId !== session.user.id && site.admin != session.user.email)
+    ) {
       return {
         error: "Not authorized",
       };
@@ -129,7 +134,11 @@ export function withCompetitionAuth(action: any) {
       },
     });
 
-    if (!competition || competition.userId !== session.user.id) {
+    if (
+      !competition ||
+      (competition.userId !== session.user.id &&
+        competition.admin != session.user.email)
+    ) {
       return {
         error: "Competition not found",
       };
