@@ -18,6 +18,7 @@ export default function CreateSiteModal() {
     name: "",
     subdomain: "",
     description: "",
+    admin: "",
   });
 
   useEffect(() => {
@@ -96,7 +97,7 @@ export default function CreateSiteModal() {
             </div>
           </div>
         </div>
-
+        {/* 
         <div className="flex flex-col space-y-2">
           <label
             htmlFor="description"
@@ -111,6 +112,23 @@ export default function CreateSiteModal() {
             onChange={(e) => setData({ ...data, description: e.target.value })}
             maxLength={140}
             rows={3}
+            className="w-full rounded-md border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black  focus:outline-none focus:ring-black dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700 dark:focus:ring-white"
+          />
+        </div> */}
+
+        <div className="flex flex-col space-y-2">
+          <label
+            htmlFor="adminEmail"
+            className="text-sm font-medium text-stone-500"
+          >
+            Sponsor Admin Email
+          </label>
+          <textarea
+            name="admin"
+            placeholder="johndoe@mail.com"
+            value={data.admin}
+            onChange={(e) => setData({ ...data, admin: e.target.value })}
+            maxLength={40}
             className="w-full rounded-md border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black  focus:outline-none focus:ring-black dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700 dark:focus:ring-white"
           />
         </div>

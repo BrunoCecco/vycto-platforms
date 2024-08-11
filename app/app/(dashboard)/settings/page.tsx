@@ -16,14 +16,14 @@ export default async function SettingsPage() {
           Settings
         </h1>
         <Form
-          title="Name"
-          description="Your name on this app."
+          title="Username"
+          description="Your username displayed on leaderboards."
           helpText="Please use 32 characters maximum."
           inputAttrs={{
-            name: "name",
+            name: "username",
             type: "text",
-            defaultValue: session.user.name!,
-            placeholder: "Brendon Urie",
+            defaultValue: session.user.username!,
+            placeholder: "user123",
             maxLength: 32,
           }}
           handleSubmit={editUser}

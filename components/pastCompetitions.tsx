@@ -26,7 +26,7 @@ const PastCompetitions: FC = () => {
           👏
         </span>
       </h2>
-      <div className="flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+      <div className="flex flex-col space-y-4 sm:flex-row md:space-x-4 md:space-y-0">
         {competitions.map((competition, index) => (
           <CompetitionCard
             key={index}

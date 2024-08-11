@@ -2,7 +2,6 @@
 
 import LoadingDots from "@/components/icons/loading-dots";
 import { cn } from "@/lib/utils";
-import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
@@ -10,7 +9,7 @@ import DomainStatus from "./domain-status";
 import DomainConfiguration from "./domain-configuration";
 import Uploader from "./uploader";
 import va from "@vercel/analytics";
-import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Form({
   title,

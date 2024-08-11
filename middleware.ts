@@ -39,13 +39,19 @@ export default async function middleware(req: NextRequest) {
   }`;
 
   // rewrites for app pages
-  if (hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
+  if (hostname.includes(`${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)) {
     const session = await getToken({ req });
     console.log(session, "session", req.url, hostname);
     if (!session && path !== "/login" && path !== "/verify") {
       return NextResponse.redirect(new URL("/login", req.url));
-    } else if (session && (path == "/login" || path == "/verify")) {
-      return NextResponse.redirect(new URL("/", req.url));
+    } else if (
+      session &&
+      (path == "/login" || path == "/verify") &&
+      hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+    ) {
+      return NextResponse.redirect(new URL(hostname, req.url));
+    } else if (session) {
+      return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
     }
     return NextResponse.rewrite(
       new URL(`/app${path === "/" ? "" : path}`, req.url),

@@ -36,6 +36,7 @@ export const createSite = async (formData: FormData) => {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const subdomain = formData.get("subdomain") as string;
+  const admin = formData.get("admin") as string;
 
   try {
     const [response] = await db
@@ -45,6 +46,7 @@ export const createSite = async (formData: FormData) => {
         description,
         subdomain,
         userId: session.user.id,
+        admin: admin || session.user.id,
       })
       .returning();
 

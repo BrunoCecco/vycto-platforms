@@ -61,6 +61,16 @@ export default function Editor({
           {isPendingSaving ? "Saving..." : "Saved"}
         </div>
         <button
+          className="rounded-lg bg-stone-400 px-2 py-1 text-sm text-white hover:opacity-75 dark:bg-stone-800 dark:text-stone-500"
+          onClick={() => {
+            startTransitionSaving(async () => {
+              await updateCompetition(data);
+            });
+          }}
+        >
+          Save (Ctrl + S)
+        </button>
+        <button
           onClick={() => {
             const formData = new FormData();
             console.log(data.published, typeof data.published);
