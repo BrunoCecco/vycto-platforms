@@ -286,14 +286,56 @@ export const userAnswers = pgTable(
   },
 );
 
-export const competitionsRelations = relations(competitions, ({ one }) => ({
-  site: one(sites, { references: [sites.id], fields: [competitions.siteId] }),
-  user: one(users, { references: [users.id], fields: [competitions.userId] }),
-  siteadmin: one(users, {
-    references: [users.email],
-    fields: [competitions.admin],
+export const competitionsRelations = relations(
+  competitions,
+  ({ one, many }) => ({
+    site: one(sites, { references: [sites.id], fields: [competitions.siteId] }),
+    user: one(users, { references: [users.id], fields: [competitions.userId] }),
+    siteadmin: one(users, {
+      references: [users.email],
+      fields: [competitions.admin],
+    }),
+    questions: many(questions),
+  }),
+);
+
+export const questionsRelations = relations(questions, ({ one, many }) => ({
+  questionType: one(questionType, {
+    references: [questionType.id],
+    fields: [questions.questionTypeId],
+  }),
+  competition: one(competitions, {
+    references: [competitions.id],
+    fields: [questions.competitionId],
+  }),
+  answers: many(userAnswers),
+}));
+
+export const userAnswersRelations = relations(userAnswers, ({ one }) => ({
+  user: one(users, { references: [users.id], fields: [userAnswers.userId] }),
+  competition: one(competitions, {
+    references: [competitions.id],
+    fields: [userAnswers.competitionId],
+  }),
+  question: one(questions, {
+    references: [questions.id],
+    fields: [userAnswers.questionId],
   }),
 }));
+
+export const userCompetitionsRelations = relations(
+  userCompetitions,
+  ({ one }) => ({
+    user: one(users, {
+      references: [users.id],
+      fields: [userCompetitions.userId],
+    }),
+    competition: one(competitions, {
+      references: [competitions.id],
+      fields: [userCompetitions.competitionId],
+    }),
+  }),
+);
 
 export const sitesRelations = relations(sites, ({ one, many }) => ({
   competitions: many(competitions),
