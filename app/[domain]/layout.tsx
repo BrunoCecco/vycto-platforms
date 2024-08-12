@@ -57,34 +57,6 @@ export async function generateMetadata({
   };
 }
 
-function darkenHexColor(hex: string, percent: number): string {
-  // Remove the hash (#) if present
-  hex = hex.replace(/^#/, "");
-
-  // Parse the hex string into RGB components
-  let r = parseInt(hex.substring(0, 2), 16);
-  let g = parseInt(hex.substring(2, 4), 16);
-  let b = parseInt(hex.substring(4, 6), 16);
-
-  // Calculate the new RGB values
-  r = Math.floor(r * (1 - percent / 100));
-  g = Math.floor(g * (1 - percent / 100));
-  b = Math.floor(b * (1 - percent / 100));
-
-  // Ensure the values are within the 0-255 range
-  r = Math.max(0, Math.min(255, r));
-  g = Math.max(0, Math.min(255, g));
-  b = Math.max(0, Math.min(255, b));
-
-  // Convert the RGB values back to hex
-  let newHex =
-    "#" +
-    r.toString(16).padStart(2, "0") +
-    g.toString(16).padStart(2, "0") +
-    b.toString(16).padStart(2, "0");
-  return newHex;
-}
-
 export default async function SiteLayout({
   params,
   children,
@@ -112,7 +84,7 @@ export default async function SiteLayout({
     <div
       className={fontMapper[data.font]}
       style={{
-        backgroundColor: data.color ?? "green",
+        backgroundColor: data.color1 ?? "green",
       }}
     >
       <div className="ease left-0 right-0 top-0 z-30 flex transition-all duration-150 dark:bg-black dark:text-white">
@@ -128,7 +100,7 @@ export default async function SiteLayout({
             </div>
             <div
               className="pt-1font-title ml-3 rounded-full bg-blue-200 px-8 py-2 pt-1 font-title font-medium text-white"
-              style={{ backgroundColor: darkenHexColor(data.color, 40) }}
+              style={{ backgroundColor: data.color2 }}
             >
               play
             </div>

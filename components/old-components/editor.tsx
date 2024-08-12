@@ -72,7 +72,7 @@ export default function Editor({
         </button>
         <button
           onClick={() => {
-            const formData = new FormData();            
+            const formData = new FormData();
             formData.append("published", String(!data.published));
             startTransitionPublishing(async () => {
               await updateCompetitionMetadata(
@@ -120,28 +120,6 @@ export default function Editor({
           className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
         />
       </div>
-      <NovelEditor
-        className="relative block"
-        defaultValue={competition?.content || undefined}
-        onUpdate={(editor) => {
-          setData((prev) => ({
-            ...prev,
-            content: editor?.storage.markdown.getMarkdown(),
-          }));
-        }}
-        onDebouncedUpdate={() => {
-          if (
-            data.title === competition.title &&
-            data.description === competition.description &&
-            data.content === competition.content
-          ) {
-            return;
-          }
-          startTransitionSaving(async () => {
-            await updateCompetition(data);
-          });
-        }}
-      />
     </div>
   );
 }

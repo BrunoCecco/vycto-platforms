@@ -55,6 +55,45 @@ export default async function CompetitionSettings({
           handleSubmit={updateCompetitionMetadata}
         />
 
+        <Form
+          title="Competition Sponsor"
+          description="The sponsor/brand for this competition."
+          helpText="Please enter the name of the sponsor/brand."
+          inputAttrs={{
+            name: "sponsor",
+            type: "text",
+            defaultValue: data?.sponsor!,
+            placeholder: "sponsor",
+          }}
+          handleSubmit={updateCompetitionMetadata}
+        />
+
+        <Form
+          title="Start Date"
+          description="The starting date of the competition"
+          helpText="Please enter the start date of the competition"
+          inputAttrs={{
+            name: "startDate",
+            type: "date",
+            defaultValue: data?.startDate!.toString(),
+            placeholder: "Start Date",
+          }}
+          handleSubmit={updateCompetitionMetadata}
+        />
+
+        <Form
+          title="End Date"
+          description="The end date of this competition."
+          helpText="Please enter the end date."
+          inputAttrs={{
+            name: "endDate",
+            type: "date",
+            defaultValue: data?.endDate!.toString(),
+            placeholder: "End Date",
+          }}
+          handleSubmit={updateCompetitionMetadata}
+        />
+
         <DeleteCompetitionForm competitionName={data?.title!} />
       </div>
     </div>

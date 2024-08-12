@@ -1,7 +1,14 @@
 import { unstable_cache } from "next/cache";
 import db from "./db";
 import { and, desc, eq, not } from "drizzle-orm";
-import { competitions, sites, users } from "./schema";
+import {
+  questions,
+  userAnswers,
+  userCompetitions,
+  competitions,
+  sites,
+  users,
+} from "./schema";
 import { serialize } from "next-mdx-remote/serialize";
 import { replaceExamples, replaceTweets } from "@/lib/remark-plugins";
 
@@ -157,6 +164,70 @@ async function getMdxSource(competitionContents: string) {
   });
 
   return mdxSource;
+}
+
+export async function getQuestionsForCompetition(competitionId: string) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.questions.findMany({
+        where: eq(questions.competitionId, competitionId),
+        orderBy: desc(questions.id),
+      });
+    },
+    [`${competitionId}-questions`],
+    {
+      revalidate: 900,
+      tags: [`${competitionId}-questions`],
+    },
+  )();
+}
+
+export async function getAnswersForUser(userId: string) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.userAnswers.findMany({
+        where: eq(userAnswers.userId, userId),
+      });
+    },
+    [`${userId}-answers`],
+    {
+      revalidate: 900,
+      tags: [`${userId}-answers`],
+    },
+  )();
+}
+
+export async function getCompetitionsForUser(userId: string, siteId: string) {
+  // userCompetitions is a join table between users and competitions
+  // where we store the userId and competitionId
+  return await unstable_cache(
+    async () => {
+      return await db
+        .select({
+          competition: competitions,
+          site: sites,
+        })
+        .from(userCompetitions)
+        .leftJoin(
+          competitions,
+          eq(competitions.id, userCompetitions.competitionId),
+        )
+        .leftJoin(sites, eq(sites.id, competitions.siteId))
+        .where(
+          and(
+            eq(userCompetitions.userId, userId),
+            eq(sites.id, siteId),
+            eq(competitions.published, true),
+          ),
+        )
+        .orderBy(desc(competitions.createdAt));
+    },
+    [`${userId}-competitions`],
+    {
+      revalidate: 900,
+      tags: [`${userId}-competitions`],
+    },
+  )();
 }
 
 export async function getUserData(email: string) {

@@ -109,7 +109,9 @@ export const sites = pgTable(
       "https://public.blob.vercel-storage.com/eEZHAoPTOBSYGBE3/JRajRyC-PhBHEinQkupt02jqfKacBVHLWJq7Iy.png",
     ),
     font: text("font").default("font-cal").notNull(),
-    color: text("color").default("gray").notNull(),
+    color1: text("color1").default("gray").notNull(),
+    color2: text("color2").default("gray").notNull(),
+    color3: text("color3").default("gray").notNull(),
     image: text("image").default(
       "https://public.blob.vercel-storage.com/eEZHAoPTOBSYGBE3/hxfcV5V-eInX3jbVUhjAt1suB7zB88uGd1j20b.png",
     ),
@@ -149,6 +151,7 @@ export const competitions = pgTable(
       .$defaultFn(() => createId()),
     title: text("title"),
     description: text("description"),
+    content: text("content"),
     sponsor: text("sponsor"),
     slug: text("slug")
       .notNull()

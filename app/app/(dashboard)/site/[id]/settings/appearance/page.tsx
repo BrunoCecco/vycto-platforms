@@ -51,9 +51,31 @@ export default async function SiteSettingsAppearance({
         description="The theme colour for your site."
         helpText="Please select a colour."
         inputAttrs={{
-          name: "color",
+          name: "color1",
           type: "select",
-          defaultValue: data?.color!,
+          defaultValue: data?.color1!,
+        }}
+        handleSubmit={updateSite}
+      />
+      <Form
+        title="Secondary Colour"
+        description="The secondary colour for your site."
+        helpText="Please select a colour."
+        inputAttrs={{
+          name: "color2",
+          type: "select",
+          defaultValue: data?.color2!,
+        }}
+        handleSubmit={updateSite}
+      />
+      <Form
+        title="Tertiary Colour"
+        description="The tertiary colour for your site."
+        helpText="Please select a colour."
+        inputAttrs={{
+          name: "color3",
+          type: "select",
+          defaultValue: data?.color3!,
         }}
         handleSubmit={updateSite}
       />
