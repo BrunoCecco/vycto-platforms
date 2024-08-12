@@ -27,7 +27,7 @@ export default async function Profile() {
           className="h-6 w-6 rounded-full"
         />
         <span className="truncate text-sm font-medium">
-          {session.user.name}
+          {session.user.name ?? session.user.username ?? session.user.email}
         </span>
       </Link>
       <LogoutButton />

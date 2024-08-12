@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { getCompetitionUsers } from "@/lib/fetchers";
 
 const leaderboardData = [
   {
@@ -28,19 +29,25 @@ const leaderboardData = [
   },
 ];
 
-const Leaderboard = () => {
+const Leaderboard = async ({ competition }: { competition: string }) => {
+  const data = await getCompetitionUsers(competition);
+
+  console.log(data);
+
   return (
-    <div className="container mx-auto border border-gray-200 bg-white p-4">
-      <div className="flex w-full flex-col-reverse justify-between gap-4 p-6 sm:flex-row md:items-center">
+    <div className="container mx-auto w-5/6 rounded-2xl border border-gray-200 bg-white p-4 md:w-3/4">
+      <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row md:items-center md:py-6">
         <div className="flex items-center gap-4">
-          <Image
-            src="/logo.png"
-            alt="Brand Logo"
-            width={40}
-            height={40}
-            className="overflow-hidden rounded-full"
-          />
-          <h1 className="text-2xl font-bold text-gray-800">
+          <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
+            <Image
+              src="/logo.png"
+              alt="Brand Logo"
+              fill={true}
+              objectFit="cover"
+              className="overflow-hidden rounded-full"
+            />
+          </div>
+          <h1 className="text-lg font-bold text-gray-800 md:text-2xl">
             Leaderboard - August 2024
           </h1>
         </div>
@@ -52,19 +59,19 @@ const Leaderboard = () => {
         <table className="min-w-full rounded-xl">
           <thead className="pb-4">
             <tr className="pb-4">
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+              <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Name
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+              <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Rank
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+              <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Total Points
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+              <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Last Submission
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+              <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Rank
               </th>
             </tr>
@@ -72,24 +79,26 @@ const Leaderboard = () => {
           <tbody>
             {leaderboardData.map((user) => (
               <tr key={user.id} className="border-b">
-                <td className="flex items-center space-x-3 px-6 py-4">
-                  <Image
-                    className="rounded-full"
-                    src={user.profilePic}
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                  />
+                <td className="flex items-center space-x-3 py-4">
+                  <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
+                    <Image
+                      src={user.profilePic}
+                      alt="Profile"
+                      fill={true}
+                      objectFit="cover"
+                      className="overflow-hidden rounded-full"
+                    />
+                  </div>
                   <span className="font-bold text-gray-900">@{user.name}</span>
                 </td>
-                <td className="px-6 py-4 text-gray-900">{user.rank}</td>
-                <td className="px-6 py-4 text-gray-900">{user.totalPoints}</td>
-                <td className="px-6 py-4">
+                <td className="py-4 text-gray-900">{user.rank}</td>
+                <td className="py-4 text-gray-900">{user.totalPoints}</td>
+                <td className="py-4">
                   <button className="w-24 rounded-full bg-blue-100 p-2 text-purple-800 hover:bg-blue-300">
                     View
                   </button>
                 </td>
-                <td className="px-6 py-4">
+                <td className="py-4">
                   <div
                     className="flex h-2 items-center justify-center rounded-full bg-purple-800 text-white"
                     style={{ width: 100 - user.rank + "%" }}

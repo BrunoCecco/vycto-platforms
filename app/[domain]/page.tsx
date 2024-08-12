@@ -92,6 +92,36 @@ export default async function SiteHomePage({
   return (
     <>
       <div className="mx-5 max-w-screen-xl pb-20 lg:mx-24 2xl:mx-auto">
+        <div className="ease left-0 right-0 top-0 z-30 flex transition-all duration-150 dark:bg-black dark:text-white">
+          <div className="mx-auto flex h-full max-w-screen-xl items-center justify-center space-x-5 p-10 sm:p-20">
+            <Link href="/" className="flex items-center justify-center">
+              <div className="">
+                <Image
+                  alt={data.name || ""}
+                  height={80}
+                  src={data.logo || ""}
+                  width={200}
+                />
+              </div>
+              <div
+                className="pt-1font-title ml-3 rounded-full bg-blue-200 px-8 py-2 pt-1 font-title font-medium text-white"
+                style={{ backgroundColor: data.color2 }}
+              >
+                play
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        <div className="mx-auto flex h-full max-w-screen-xl items-center justify-center space-x-5 p-10 pt-0 sm:p-20 sm:pt-0">
+          <Image
+            alt={"Banner image"}
+            width={1200}
+            height={630}
+            className="h-full w-full object-cover"
+            src={data.image ?? "/placeholder.png"}
+          />
+        </div>
         <FanZone
           bannerImages={bannerImages}
           currentCompetitions={currentCompetitions}

@@ -197,35 +197,17 @@ export async function getAnswersForUser(userId: string) {
   )();
 }
 
-export async function getCompetitionsForUser(userId: string, siteId: string) {
-  // userCompetitions is a join table between users and competitions
-  // where we store the userId and competitionId
+export async function getCompetitionUsers(competitionId: string) {
   return await unstable_cache(
     async () => {
-      return await db
-        .select({
-          competition: competitions,
-          site: sites,
-        })
-        .from(userCompetitions)
-        .leftJoin(
-          competitions,
-          eq(competitions.id, userCompetitions.competitionId),
-        )
-        .leftJoin(sites, eq(sites.id, competitions.siteId))
-        .where(
-          and(
-            eq(userCompetitions.userId, userId),
-            eq(sites.id, siteId),
-            eq(competitions.published, true),
-          ),
-        )
-        .orderBy(desc(competitions.createdAt));
+      return await db.query.userCompetitions.findMany({
+        where: eq(userCompetitions.competitionId, competitionId),
+      });
     },
-    [`${userId}-competitions`],
+    [`${competitionId}-users`],
     {
       revalidate: 900,
-      tags: [`${userId}-competitions`],
+      tags: [`${competitionId}-users`],
     },
   )();
 }

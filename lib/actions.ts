@@ -324,6 +324,15 @@ export const updateCompetitionMetadata = withCompetitionAuth(
 
     try {
       let response;
+      if (key === "endDate") {
+        const startDate = new Date(competition.startDate);
+        const endDate = new Date(value);
+        if (endDate < startDate) {
+          return {
+            error: "End date must be after start date",
+          };
+        }
+      }
       if (key === "image") {
         const file = formData.get("image") as File;
         const filename = `${nanoid()}.${file.type.split("/")[1]}`;
