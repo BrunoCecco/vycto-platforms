@@ -11,7 +11,6 @@ import {
   timestamp,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
-import { color } from "framer-motion";
 
 export const users = pgTable("users", {
   id: text("id")
@@ -185,6 +184,104 @@ export const competitions = pgTable(
       siteIdIdx: index().on(table.siteId),
       userIdIdx: index().on(table.userId),
       slugSiteIdKey: uniqueIndex().on(table.slug, table.siteId),
+    };
+  },
+);
+
+export const userCompetitions = pgTable(
+  "userCompetitions",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    competitionId: text("competitionId")
+      .notNull()
+      .references(() => competitions.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    points: integer("points").default(0),
+  },
+  (table) => {
+    return {
+      compositePk: primaryKey({
+        columns: [table.userId, table.competitionId],
+      }),
+    };
+  },
+);
+
+export const questionType = pgTable("questionType", {
+  id: serial("id").primaryKey(), // auto-incrementing primary key
+  type: text("type"),
+});
+
+export const questions = pgTable(
+  "questions",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    competitionId: text("competitionId")
+      .notNull()
+      .references(() => competitions.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    question: text("question"),
+    questionTypeId: integer("questionTypeId").references(
+      () => questionType.id,
+      {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      },
+    ),
+    answer1: text("answer1"),
+    answer2: text("answer2"),
+    answer3: text("answer3"),
+    answer4: text("answer4"),
+    correctAnswer: text("correctAnswer"),
+    image1: text("image1"),
+    image2: text("image2"),
+    image3: text("image3"),
+    image4: text("image4"),
+    points: integer("points").default(1),
+  },
+  (table) => {
+    return {
+      competitionIdIdx: index().on(table.competitionId),
+    };
+  },
+);
+
+export const userAnswers = pgTable(
+  "answers",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    competitionId: text("competitionId")
+      .notNull()
+      .references(() => competitions.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    questionId: text("questionId")
+      .notNull()
+      .references(() => questions.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    answer: text("answer"),
+  },
+  (table) => {
+    return {
+      compositePk: primaryKey({
+        columns: [table.userId, table.competitionId, table.questionId],
+      }),
     };
   },
 );
