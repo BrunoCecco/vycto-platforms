@@ -1,5 +1,9 @@
 import { notFound } from "next/navigation";
-import { getCompetitionData, getSiteData } from "@/lib/fetchers";
+import {
+  getCompetitionData,
+  getCompetitionUsers,
+  getSiteData,
+} from "@/lib/fetchers";
 import BlogCard from "@/components/old-components/blog-card";
 import BlurImage from "@/components/old-components/blur-image";
 import MDX from "@/components/old-components/mdx";
@@ -8,6 +12,9 @@ import db from "@/lib/db";
 import { competitions, sites } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import Leaderboard from "@/components/leaderboard";
+import { enterUserToCompetition } from "@/lib/actions";
+import { getSession } from "@/lib/auth";
+import EnterCompetitionButton from "@/components/old-components/enter-competition-button";
 
 export async function generateMetadata({
   params,
@@ -85,7 +92,9 @@ export default async function SiteCompetitionPage({
 }) {
   const domain = decodeURIComponent(params.domain);
   const slug = decodeURIComponent(params.slug);
+  const session = await getSession();
   const data = await getCompetitionData(domain, slug);
+  const users = await getCompetitionUsers(data!.id);
 
   if (!data) {
     notFound();
@@ -94,6 +103,15 @@ export default async function SiteCompetitionPage({
   return (
     <>
       <div className="flex flex-col items-center justify-center">
+        {session?.user && !users.find((u) => u.userId === session.user.id) ? (
+          <EnterCompetitionButton
+            userId={session.user.id}
+            username={session.user.username}
+            competitionId={data.id}
+          />
+        ) : (
+          <div>Competition Entered</div>
+        )}
         <div className="relative m-auto my-4 w-5/6 max-w-screen-lg md:my-12 lg:w-2/3">
           <BlurImage
             alt={data.title ?? "Competition image"}
@@ -139,7 +157,7 @@ export default async function SiteCompetitionPage({
         </div> */}
       </div>
 
-      <Leaderboard competition={data.id} />
+      <Leaderboard users={users} />
 
       {/* <MDX source={data.mdxSource} /> */}
 

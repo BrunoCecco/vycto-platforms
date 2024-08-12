@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { getCompetitionUsers } from "@/lib/fetchers";
 
 const leaderboardData = [
   {
@@ -29,10 +28,8 @@ const leaderboardData = [
   },
 ];
 
-const Leaderboard = async ({ competition }: { competition: string }) => {
-  const data = await getCompetitionUsers(competition);
-
-  console.log(data);
+const Leaderboard = async ({ users }: { users: any }) => {
+  const sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
 
   return (
     <div className="container mx-auto w-5/6 rounded-2xl border border-gray-200 bg-white p-4 md:w-3/4">
@@ -77,22 +74,24 @@ const Leaderboard = async ({ competition }: { competition: string }) => {
             </tr>
           </thead>
           <tbody>
-            {leaderboardData.map((user) => (
-              <tr key={user.id} className="border-b">
+            {sortedUsers.map((user: any, index: number) => (
+              <tr key={user.userId} className="border-b">
                 <td className="flex items-center space-x-3 py-4">
                   <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
                     <Image
-                      src={user.profilePic}
+                      src={"/logo.png"}
                       alt="Profile"
                       fill={true}
                       objectFit="cover"
                       className="overflow-hidden rounded-full"
                     />
                   </div>
-                  <span className="font-bold text-gray-900">@{user.name}</span>
+                  <span className="font-bold text-gray-900">
+                    @{user.username}
+                  </span>
                 </td>
-                <td className="py-4 text-gray-900">{user.rank}</td>
-                <td className="py-4 text-gray-900">{user.totalPoints}</td>
+                <td className="py-4 text-gray-900">{index + 1}</td>
+                <td className="py-4 text-gray-900">{user.points}</td>
                 <td className="py-4">
                   <button className="w-24 rounded-full bg-blue-100 p-2 text-purple-800 hover:bg-blue-300">
                     View
@@ -101,7 +100,7 @@ const Leaderboard = async ({ competition }: { competition: string }) => {
                 <td className="py-4">
                   <div
                     className="flex h-2 items-center justify-center rounded-full bg-purple-800 text-white"
-                    style={{ width: 100 - user.rank + "%" }}
+                    style={{ width: 100 - index + 1 + "%" }}
                   ></div>
                 </td>
               </tr>

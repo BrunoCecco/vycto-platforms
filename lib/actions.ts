@@ -18,6 +18,7 @@ import {
   SelectSite,
   competitions,
   sites,
+  userCompetitions,
   users,
 } from "./schema";
 
@@ -441,5 +442,28 @@ export const editUser = async (
         error: error.message,
       };
     }
+  }
+};
+
+export const enterUserToCompetition = async (
+  userId: string,
+  username: string,
+  competitionId: string,
+) => {
+  try {
+    const [response] = await db
+      .insert(userCompetitions)
+      .values({
+        userId,
+        username,
+        competitionId,
+      })
+      .returning();
+
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
   }
 };
