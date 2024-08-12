@@ -39,7 +39,10 @@ export default async function middleware(req: NextRequest) {
   }`;
 
   // rewrites for app pages
-  if (hostname.includes(`${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)) {
+  if (
+    hostname.includes(`${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
+    hostname != process.env.NEXT_PUBLIC_ROOT_DOMAIN
+  ) {
     const session = await getToken({ req });
     console.log(session, "session", req.url, hostname);
     if (!session && path !== "/login" && path !== "/verify") {

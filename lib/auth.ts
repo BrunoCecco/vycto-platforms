@@ -99,8 +99,6 @@ export function withSiteAuth(action: any) {
       where: (sites, { eq }) => eq(sites.id, siteId),
     });
 
-    console.log(site, "site");
-
     if (
       !site ||
       (site.userId !== session.user.id && site.admin != session.user.email)

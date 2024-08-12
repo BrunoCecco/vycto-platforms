@@ -72,8 +72,7 @@ export default function Editor({
         </button>
         <button
           onClick={() => {
-            const formData = new FormData();
-            console.log(data.published, typeof data.published);
+            const formData = new FormData();            
             formData.append("published", String(!data.published));
             startTransitionPublishing(async () => {
               await updateCompetitionMetadata(

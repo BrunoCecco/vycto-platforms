@@ -10,8 +10,6 @@ export async function getSiteData(domain: string) {
     ? domain.replace(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`, "")
     : null;
 
-  console.log(sites);
-
   return await unstable_cache(
     async () => {
       return await db.query.sites.findFirst({

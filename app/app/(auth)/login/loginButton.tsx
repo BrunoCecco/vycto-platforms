@@ -29,7 +29,6 @@ export default function LoginButton({ email }: { email: string }) {
           signIn("email", {
             email,
           }).then((res) => {
-            console.log(res);
             if (res?.ok && !res?.error) {
               setMessage("Email sent - check your inbox!");
             } else {
