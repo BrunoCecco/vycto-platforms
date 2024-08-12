@@ -54,41 +54,6 @@ export default async function SiteHomePage({
     notFound();
   }
 
-  const bannerImages = {
-    logoPlaySrc: "/logoPlay.png",
-    bannerSrc: "/banner.jpg",
-  };
-
-  const currentCompetitions = [
-    {
-      imageSrc: "/atletiCurrent.jpg",
-      title: "Atletico vs Inter",
-      sponsor: "Tanqueray",
-      statusInfo: "24 hours left",
-    },
-    {
-      imageSrc: "/atletiCurrent.jpg",
-      title: "Atletico vs Athletic",
-      sponsor: "Tanqueray",
-      statusInfo: "24 hours left",
-    },
-  ];
-
-  const pastCompetitions = [
-    {
-      imageSrc: "/atletiPast.jpg",
-      title: "Atletico vs Alaves",
-      sponsor: "Tanqueray",
-      statusInfo: "2.72K participants",
-    },
-    {
-      imageSrc: "/atletiPast.jpg",
-      title: "Atletico vs Inter Miami",
-      sponsor: "Tanqueray",
-      statusInfo: "902 participants",
-    },
-  ];
-
   return (
     <>
       <div className="mx-5 max-w-screen-xl pb-20 lg:mx-24 2xl:mx-auto">
@@ -123,9 +88,12 @@ export default async function SiteHomePage({
           />
         </div>
         <FanZone
-          bannerImages={bannerImages}
-          currentCompetitions={currentCompetitions}
-          pastCompetitions={pastCompetitions}
+          currentCompetitions={competitions.filter(
+            (competition: any) => new Date(competition.endDate) > new Date(),
+          )}
+          pastCompetitions={competitions.filter(
+            (competition: any) => new Date(competition.endDate) < new Date(),
+          )}
         />
         <TrueFalse />
         <WhatMinute />
@@ -133,7 +101,7 @@ export default async function SiteHomePage({
         <GuessScore />
         <PlayerGoals />
         <PlayerSelection />
-        {competitions.length > 0 ? (
+        {/* {competitions.length > 0 ? (
           <div className="grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
             {competitions &&
               competitions.map((metadata: any, index: number) => (
@@ -160,7 +128,7 @@ export default async function SiteHomePage({
               No competitions yet.
             </p>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

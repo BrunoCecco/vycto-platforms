@@ -1,36 +1,51 @@
 import { FC } from "react";
-import FanZoneBanner from "./fanZoneBanner";
-import CurrentCompetitions from "./currentCompetitions";
-import PastCompetitions from "./pastCompetitions";
+import Competitions from "./competitions";
 
 interface FanZoneProps {
-  bannerImages: {
-    logoPlaySrc: string;
-    bannerSrc: string;
-  };
   currentCompetitions: {
-    imageSrc: string;
-    title: string;
-    sponsor: string;
-    statusInfo: string;
+    title: string | null;
+    sponsor: string | null;
+    description: string | null;
+    slug: string;
+    image: string | null;
+    imageBlurhash: string | null;
+    createdAt: Date;
+    startDate: string;
+    endDate: string;
   }[];
   pastCompetitions: {
-    imageSrc: string;
-    title: string;
-    sponsor: string;
-    statusInfo: string;
+    title: string | null;
+    sponsor: string | null;
+    description: string | null;
+    slug: string;
+    image: string | null;
+    imageBlurhash: string | null;
+    createdAt: Date;
+    startDate: string;
+    endDate: string;
   }[];
 }
 
 const FanZone: FC<FanZoneProps> = ({
-  bannerImages,
   currentCompetitions,
   pastCompetitions,
 }) => {
   return (
     <>
-      <CurrentCompetitions competitions={currentCompetitions} />
-      <PastCompetitions competitions={pastCompetitions} />
+      <h2 className="py-4 text-2xl font-semibold text-gray-800">
+        Current Competitions{" "}
+        <span role="img" aria-label="fire">
+          🔥
+        </span>
+      </h2>
+      <Competitions competitions={currentCompetitions} />
+      <h2 className="py-4 text-2xl font-semibold text-gray-800">
+        Past Competitions{" "}
+        <span role="img" aria-label="fire">
+          👏
+        </span>
+      </h2>
+      <Competitions competitions={pastCompetitions} />
     </>
   );
 };

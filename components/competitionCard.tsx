@@ -1,28 +1,59 @@
 import Image from "next/image";
 import { FC } from "react";
+import BlurImage from "./old-components/blur-image";
+import { placeholderBlurhash, random } from "@/lib/utils";
+import { getCompetitionUsers } from "@/lib/fetchers";
+import Link from "next/link";
 
 interface CompetitionCardProps {
-  imageSrc: string;
-  title: string;
-  sponsor: string;
-  statusInfo: string;
+  title: string | null;
+  sponsor: string | null;
+  description: string | null;
+  slug: string;
+  image: string | null;
+  imageBlurhash: string | null;
+  createdAt: Date;
+  startDate: string;
+  endDate: string;
 }
 
-const CompetitionCard: FC<CompetitionCardProps> = ({
-  imageSrc,
+const CompetitionCard: FC<CompetitionCardProps> = async ({
   title,
   sponsor,
-  statusInfo,
+  description,
+  slug,
+  image,
+  imageBlurhash,
+  createdAt,
+  startDate,
+  endDate,
 }) => {
+  const users = await getCompetitionUsers(slug);
+
+  let status;
+  if (new Date(startDate) > new Date()) {
+    const days = Math.ceil(
+      (new Date(startDate).getTime() - new Date().getTime()) /
+        (1000 * 60 * 60 * 24),
+    );
+    status = days + " Days to go";
+  } else if (new Date(endDate) < new Date()) {
+    status = users.length + " Participants";
+  } else {
+    status = "Live";
+  }
+
   return (
     <div className="w-80 overflow-hidden rounded-xl border bg-white p-4 shadow-lg">
       <div className="relative h-40 w-full">
-        <Image
-          src={imageSrc}
-          alt={title}
+        <BlurImage
+          alt={title ?? "Card thumbnail"}
           layout="fill"
           objectFit="cover"
           className="rounded-xl"
+          src={image ?? "/placeholder.png"}
+          placeholder="blur"
+          blurDataURL={imageBlurhash ?? placeholderBlurhash}
         />
       </div>
 
@@ -55,10 +86,8 @@ const CompetitionCard: FC<CompetitionCardProps> = ({
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="text-sm text-green-600">{statusInfo}</p>
-        <button className="w-24 rounded-full bg-green-700 p-2 text-white hover:bg-green-600">
-          Play
-        </button>
+        <p className="text-sm text-green-600">{status}</p>
+        <Link href={slug}>Play</Link>
       </div>
     </div>
   );

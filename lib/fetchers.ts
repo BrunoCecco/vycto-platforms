@@ -51,6 +51,9 @@ export async function getCompetitionsForSite(domain: string) {
           image: competitions.image,
           imageBlurhash: competitions.imageBlurhash,
           createdAt: competitions.createdAt,
+          sponsor: competitions.sponsor,
+          startDate: competitions.startDate,
+          endDate: competitions.endDate,
         })
         .from(competitions)
         .leftJoin(sites, eq(competitions.siteId, sites.id))
