@@ -1,3 +1,12 @@
+export enum QuestionType {
+  GuessScore = "GuessScore",
+  MatchOutcome = "MatchOutcome",
+  PlayerGoals = "PlayerGoals",
+  PlayerSelection = "PlayerSelection",
+  TrueFalse = "TrueFalse",
+  WhatMinute = "WhatMinute",
+}
+
 export type DomainVerificationStatusProps =
   | "Valid Configuration"
   | "Invalid Configuration"

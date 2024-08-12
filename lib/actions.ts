@@ -245,8 +245,8 @@ export const createCompetition = withSiteAuth(
         userId: session.user.id,
         sponsor: site.name,
         admin: session.user.email,
-        startDate: new Date(), // tbd
-        endDate: new Date(),
+        startDate: new Date().toISOString(),
+        endDate: new Date().toISOString(),
       })
       .returning();
 

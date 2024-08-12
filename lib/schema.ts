@@ -166,8 +166,8 @@ export const competitions = pgTable(
     updatedAt: timestamp("updatedAt", { mode: "date" })
       .notNull()
       .$onUpdate(() => new Date()),
-    startDate: timestamp("startDate", { mode: "date" }).defaultNow().notNull(),
-    endDate: timestamp("endDate", { mode: "date" }).defaultNow().notNull(),
+    startDate: text("startDate").notNull().default(new Date().toISOString()),
+    endDate: text("endDate").notNull().default(new Date().toISOString()),
     published: boolean("published").default(false).notNull(),
     siteId: text("siteId").references(() => sites.id, {
       onDelete: "cascade",

@@ -92,7 +92,6 @@ export default async function SiteHomePage({
   return (
     <>
       <div className="mx-5 max-w-screen-xl pb-20 lg:mx-24 2xl:mx-auto">
-        <h1 className="text-2xl font-bold">Component Showcase</h1>
         <FanZone
           bannerImages={bannerImages}
           currentCompetitions={currentCompetitions}

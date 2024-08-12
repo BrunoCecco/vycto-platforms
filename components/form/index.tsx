@@ -85,11 +85,12 @@ export default function Form({
               <option value="font-work">Work Sans</option>
             </select>
           </div>
-        ) : inputAttrs.name === "color" ? (
+        ) : inputAttrs.name === "color1" ||
+          inputAttrs.name === "color2" ||
+          inputAttrs.name === "color3" ? (
           <input
+            {...inputAttrs}
             type="color"
-            name="color"
-            defaultValue={inputAttrs.defaultValue}
             className="h-12 w-12 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
           />
         ) : inputAttrs.name === "subdomain" ? (
@@ -125,7 +126,8 @@ export default function Form({
         ) : inputAttrs.name === "startDate" || inputAttrs.name === "endDate" ? (
           <input
             {...inputAttrs}
-            type="time"
+            type="date"
+            min={new Date().toISOString().split("T")[0]}
             required
             className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
           />

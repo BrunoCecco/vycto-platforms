@@ -75,7 +75,7 @@ export default async function CompetitionSettings({
           inputAttrs={{
             name: "startDate",
             type: "date",
-            defaultValue: data?.startDate!.toString(),
+            defaultValue: data?.startDate!,
             placeholder: "Start Date",
           }}
           handleSubmit={updateCompetitionMetadata}
@@ -88,7 +88,7 @@ export default async function CompetitionSettings({
           inputAttrs={{
             name: "endDate",
             type: "date",
-            defaultValue: data?.endDate!.toString(),
+            defaultValue: data?.endDate!,
             placeholder: "End Date",
           }}
           handleSubmit={updateCompetitionMetadata}

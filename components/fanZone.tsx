@@ -29,10 +29,6 @@ const FanZone: FC<FanZoneProps> = ({
 }) => {
   return (
     <>
-      <FanZoneBanner
-        logoPlaySrc={bannerImages.logoPlaySrc}
-        bannerSrc={bannerImages.bannerSrc}
-      />
       <CurrentCompetitions competitions={currentCompetitions} />
       <PastCompetitions competitions={pastCompetitions} />
     </>
