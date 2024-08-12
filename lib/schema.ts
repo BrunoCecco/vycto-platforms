@@ -149,7 +149,7 @@ export const competitions = pgTable(
       .$defaultFn(() => createId()),
     title: text("title"),
     description: text("description"),
-    content: text("content"),
+    sponsor: text("sponsor"),
     slug: text("slug")
       .notNull()
       .$defaultFn(() => createId()),
