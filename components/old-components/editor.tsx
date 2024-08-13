@@ -1,14 +1,18 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { updateCompetition, updateCompetitionMetadata } from "@/lib/actions";
-import { Editor as NovelEditor } from "novel";
+import {
+  createQuestion,
+  updateCompetition,
+  updateCompetitionMetadata,
+} from "@/lib/actions";
 import TextareaAutosize from "react-textarea-autosize";
 import { cn } from "@/lib/utils";
 import LoadingDots from "../icons/loading-dots";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import type { SelectCompetition } from "@/lib/schema";
+import { QuestionType } from "@/lib/types";
 
 type CompetitionWithSite = SelectCompetition & {
   site: { subdomain: string | null } | null;
@@ -21,6 +25,7 @@ export default function Editor({
 }) {
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
+  const [questions, setQuestions] = useState<any[]>([]);
   const [data, setData] = useState<CompetitionWithSite>(competition);
   const [hydrated, setHydrated] = useState(false);
 
@@ -43,6 +48,29 @@ export default function Editor({
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [data, startTransitionSaving]);
+
+  const createQuestions = async () => {
+    try {
+      // promise all the questions
+      await Promise.all(
+        questions.map(async (question) => {
+          await createQuestion(
+            question.competitionId,
+            question.type,
+            question.question,
+            question.correctAnswer,
+            question.answer1,
+            question.answer2,
+            question.points,
+          );
+        }),
+      );
+      toast.success("Successfully saved questions.");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to save questions.");
+    }
+  };
 
   return (
     <div className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg dark:border-stone-700">
@@ -120,6 +148,111 @@ export default function Editor({
           className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
         />
       </div>
+      {/* Select type of question using QuestionType enum*/}
+      <select
+        className="w-full rounded-lg border border-stone-200 p-2 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-500"
+        onChange={(e) => {
+          // get question type integer value
+          const selectedType = e.target.value as QuestionType;
+          setQuestions((prev: any) => [
+            ...prev,
+            {
+              competitionId: data.id,
+              type: selectedType,
+              answer1: "true",
+              answer2: "false",
+              points: 5,
+            },
+          ]);
+        }}
+      >
+        <option value={QuestionType.TrueFalse}>True or False</option>
+        <option value={QuestionType.WhatMinute}>What Minute</option>
+        <option value={QuestionType.MatchOutcome}>Match Outcome</option>
+        <option value={QuestionType.GuessScore}>Guess Score</option>
+        <option value={QuestionType.PlayerGoals}>Player Goals</option>
+        <option value={QuestionType.PlayerSelection}>Player Selection</option>
+      </select>
+      <div className="mt-8 flex flex-col space-y-3">
+        {questions.map((question, index) => (
+          <div key={index} className="flex flex-col space-y-3">
+            <div className="flex items-center justify-between gap-4">
+              <div className="text-stone-400 dark:text-stone-500">
+                {question.type === QuestionType.TrueFalse && "True or False"}
+                {question.type === QuestionType.WhatMinute && "What Minute"}
+                {question.type === QuestionType.MatchOutcome && "Match Outcome"}
+                {question.type === QuestionType.GuessScore && "Guess Score"}
+                {question.type === QuestionType.PlayerGoals && "Player Goals"}
+                {question.type === QuestionType.PlayerSelection &&
+                  "Player Selection"}
+              </div>
+              <button
+                className="rounded-lg bg-stone-400 px-2 py-1 text-sm text-white hover:opacity-75 dark:bg-stone-800 dark:text-stone-500"
+                onClick={() => {
+                  setQuestions((prev) => {
+                    const updatedQuestions = [...prev];
+                    updatedQuestions.splice(index, 1);
+                    return updatedQuestions;
+                  });
+                }}
+              >
+                Remove
+              </button>
+            </div>
+            <input
+              type="text"
+              placeholder="Question"
+              onChange={(e) => {
+                setQuestions((prev) => {
+                  const updatedQuestions = [...prev];
+                  updatedQuestions[index].question = e.target.value;
+                  return updatedQuestions;
+                });
+              }}
+              className="dark:placeholder-text-600 rounded-2xl font-cal text-xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+            />
+            <input
+              type="number"
+              placeholder="Points"
+              onChange={(e) => {
+                setQuestions((prev) => {
+                  const updatedQuestions = [...prev];
+                  updatedQuestions[index].points = parseInt(e.target.value);
+                  return updatedQuestions;
+                });
+              }}
+              className="dark:placeholder-text-600 rounded-2xl font-cal text-xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+            />
+
+            {question.type === QuestionType.TrueFalse && (
+              <div className="flex w-full items-center space-x-3">
+                <div className="text-stone-400 dark:text-stone-500">
+                  Correct Answer:
+                </div>
+                <select
+                  className="rounded-lg border border-stone-200 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-500"
+                  onChange={(e) => {
+                    setQuestions((prev) => {
+                      const updatedQuestions = [...prev];
+                      updatedQuestions[index].correctAnswer = e.target.value;
+                      return updatedQuestions;
+                    });
+                  }}
+                >
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <button
+        className="rounded-lg bg-stone-400 px-2 py-1 text-sm text-white hover:opacity-75 dark:bg-stone-800 dark:text-stone-500"
+        onClick={createQuestions}
+      >
+        Save Questions
+      </button>
     </div>
   );
 }

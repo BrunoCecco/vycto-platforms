@@ -22,6 +22,7 @@ import MatchOutcome from "@/components/questions/matchOutcome";
 import GuessScore from "@/components/questions/guessScore";
 import PlayerGoals from "@/components/questions/playerGoals";
 import PlayerSelection from "@/components/questions/playerSelection";
+import { QuestionType } from "@/lib/types";
 
 export async function generateMetadata({
   params,
@@ -181,7 +182,7 @@ export default async function SiteCompetitionPage({
       <div className="mx-auto my-8 flex w-full flex-col justify-center gap-8 ">
         {questions &&
           questions.map((question: any, index: number) => {
-            if (question.type === 0) {
+            if (question.type === QuestionType.TrueFalse) {
               return (
                 <TrueFalse
                   key={index}
@@ -192,15 +193,15 @@ export default async function SiteCompetitionPage({
                   }}
                 />
               );
-            } else if (question.type === 1) {
+            } else if (question.type === QuestionType.WhatMinute) {
               return <WhatMinute key={index} />;
-            } else if (question.type === 2) {
+            } else if (question.type === QuestionType.MatchOutcome) {
               return <MatchOutcome key={index} />;
-            } else if (question.type === 3) {
+            } else if (question.type === QuestionType.GuessScore) {
               return <GuessScore key={index} />;
-            } else if (question.type === 4) {
+            } else if (question.type === QuestionType.PlayerGoals) {
               return <PlayerGoals key={index} />;
-            } else if (question.type === 5) {
+            } else if (question.type === QuestionType.PlayerSelection) {
               return <PlayerSelection key={index} />;
             }
           })}

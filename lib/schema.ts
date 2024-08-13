@@ -215,11 +215,6 @@ export const userCompetitions = pgTable(
   },
 );
 
-export const questionType = pgTable("questionType", {
-  id: serial("id").primaryKey(), // auto-incrementing primary key
-  type: text("type"),
-});
-
 export const questions = pgTable(
   "questions",
   {
@@ -233,10 +228,7 @@ export const questions = pgTable(
         onUpdate: "cascade",
       }),
     question: text("question"),
-    type: integer("type").references(() => questionType.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    }),
+    type: text("type"),
     answer1: text("answer1"),
     answer2: text("answer2"),
     answer3: text("answer3"),
@@ -295,10 +287,6 @@ export const competitionsRelations = relations(
 );
 
 export const questionsRelations = relations(questions, ({ one, many }) => ({
-  questionType: one(questionType, {
-    references: [questionType.id],
-    fields: [questions.type],
-  }),
   competition: one(competitions, {
     references: [competitions.id],
     fields: [questions.competitionId],

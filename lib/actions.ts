@@ -21,7 +21,6 @@ import {
   sites,
   userCompetitions,
   users,
-  questionType,
   userAnswers,
 } from "./schema";
 import { QuestionType } from "./types";
@@ -476,38 +475,33 @@ export const enterUserToCompetition = async (
 export const createQuestion = async (
   competitionId: string,
   question: string,
-  type: number,
+  type: string,
   answer1: string,
-  answer2: string,
-  answer3: string,
-  answer4: string,
   correctAnswer: string,
-  image1: string,
-  image2: string,
-  image3: string,
-  image4: string,
   points: number,
+  answer2?: string,
+  answer3?: string,
+  answer4?: string,
+  image1?: string,
+  image2?: string,
+  image3?: string,
+  image4?: string,
 ) => {
   try {
-    const [response] = await db
+    const response = await db
       .insert(questions)
       .values({
         competitionId,
         question,
         type,
         answer1,
-        answer2,
-        answer3,
-        answer4,
         correctAnswer,
-        image1,
-        image2,
-        image3,
-        image4,
         points,
       })
-      .returning();
+      .returning()
+      .then((res) => res[0]);
 
+    console.log("Created question: ", response);
     return response;
   } catch (error: any) {
     return {
