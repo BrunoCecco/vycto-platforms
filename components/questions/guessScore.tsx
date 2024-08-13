@@ -5,7 +5,7 @@ import { FC, useState } from "react";
 import PointsBadge from "../pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
 
-const GuessScore: FC = () => {
+const GuessScore = () => {
   const [scoreHome, setScoreHome] = useState(0);
   const [scoreAway, setScoreAway] = useState(0);
 

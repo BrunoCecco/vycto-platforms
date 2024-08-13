@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import {
+  getAnswersForUser,
   getCompetitionData,
   getCompetitionUsers,
   getQuestionsForCompetition,
@@ -103,6 +104,7 @@ export default async function SiteCompetitionPage({
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
   const questions = await getQuestionsForCompetition(data!.id);
+  const answers = await getAnswersForUser(session?.user.id!, data!.id);
   let users;
 
   if (session && data) {
@@ -112,7 +114,6 @@ export default async function SiteCompetitionPage({
       data.id,
     );
     users = await getCompetitionUsers(data!.id);
-    console.log(users, "users");
   }
 
   if (!data) {
@@ -182,28 +183,29 @@ export default async function SiteCompetitionPage({
       <div className="mx-auto my-8 flex w-full flex-col justify-center gap-8 ">
         {questions &&
           questions.map((question: any, index: number) => {
-            if (question.type === QuestionType.TrueFalse) {
-              return (
-                <TrueFalse
-                  key={index}
-                  question={question}
-                  points={question.points}
-                  handleAnswer={async (answer: string) => {
-                    await answerQuestion(session!.user.id, answer, question.id);
-                  }}
-                />
-              );
-            } else if (question.type === QuestionType.WhatMinute) {
-              return <WhatMinute key={index} />;
-            } else if (question.type === QuestionType.MatchOutcome) {
-              return <MatchOutcome key={index} />;
-            } else if (question.type === QuestionType.GuessScore) {
-              return <GuessScore key={index} />;
-            } else if (question.type === QuestionType.PlayerGoals) {
-              return <PlayerGoals key={index} />;
-            } else if (question.type === QuestionType.PlayerSelection) {
-              return <PlayerSelection key={index} />;
-            }
+            // if (question.type === QuestionType.TrueFalse) {
+            return (
+              <TrueFalse
+                key={index}
+                {...question}
+                userId={session?.user.id!}
+                answer={
+                  answers.find((a) => a.questionId === question.id).answer
+                }
+              />
+            );
+            // );
+            // } else if (question.type === QuestionType.WhatMinute) {
+            //   return <WhatMinute key={index} />;
+            // } else if (question.type === QuestionType.MatchOutcome) {
+            //   return <MatchOutcome key={index} />;
+            // } else if (question.type === QuestionType.GuessScore) {
+            //   return <GuessScore key={index} />;
+            // } else if (question.type === QuestionType.PlayerGoals) {
+            //   return <PlayerGoals key={index} />;
+            // } else if (question.type === QuestionType.PlayerSelection) {
+            //   return <PlayerSelection key={index} />;
+            // }
           })}
         {/* <WhatMinute />
         <MatchOutcome />

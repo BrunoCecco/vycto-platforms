@@ -4,7 +4,7 @@ import { FC } from "react";
 import Slider from "../slider";
 import PointsBadge from "../pointsBadge";
 
-const WhatMinute: FC = () => {
+const WhatMinute = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="relative h-full rounded-lg bg-white p-6 shadow-xl">

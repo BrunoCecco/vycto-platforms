@@ -186,13 +186,12 @@ export async function getQuestionsForCompetition(competitionId: string) {
 }
 
 export async function getAnswersForUser(userId: string, competitionId: string) {
-  // get userAnswers for a specific user and competition by joining the userAnswers table with the questions table
   return await unstable_cache(
     async () => {
       return await db
         .select({
-          userAnswer: userAnswers,
-          question: questions,
+          answer: userAnswers.answer,
+          questionId: userAnswers.questionId,
         })
         .from(userAnswers)
         .leftJoin(questions, eq(questions.id, userAnswers.questionId))

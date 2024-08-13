@@ -54,15 +54,17 @@ export default function Editor({
       // promise all the questions
       await Promise.all(
         questions.map(async (question) => {
-          await createQuestion(
-            question.competitionId,
-            question.type,
-            question.question,
-            question.correctAnswer,
-            question.answer1,
-            question.answer2,
-            question.points,
-          );
+          var formData = new FormData();
+          formData.append("competitionId", data.id);
+          formData.append("question", question.question);
+          formData.append("type", question.type);
+          formData.append("answer1", question.answer1);
+          formData.append("answer2", question.answer2);
+          formData.append("points", question.points);
+          if (question.correctAnswer) {
+            formData.append("correctAnswer", question.correctAnswer);
+          }
+          await createQuestion(formData);
         }),
       );
       toast.success("Successfully saved questions.");

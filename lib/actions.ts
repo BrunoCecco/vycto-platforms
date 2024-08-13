@@ -472,22 +472,22 @@ export const enterUserToCompetition = async (
   }
 };
 
-export const createQuestion = async (
-  competitionId: string,
-  question: string,
-  type: string,
-  answer1: string,
-  correctAnswer: string,
-  points: number,
-  answer2?: string,
-  answer3?: string,
-  answer4?: string,
-  image1?: string,
-  image2?: string,
-  image3?: string,
-  image4?: string,
-) => {
+export const createQuestion = async (formData: FormData) => {
   try {
+    const competitionId = formData.get("competitionId") as string;
+    const question = formData.get("question") as string;
+    const type = formData.get("type") as QuestionType;
+    const answer1 = formData.get("answer1") as string;
+    const correctAnswer = formData.get("correctAnswer") as string;
+    const points = parseInt(formData.get("points") as string);
+    const answer2 = formData.get("answer2") as string;
+    const answer3 = formData.get("answer3") as string;
+    const answer4 = formData.get("answer4") as string;
+    const image1 = formData.get("image1") as string;
+    const image2 = formData.get("image2") as string;
+    const image3 = formData.get("image3") as string;
+    const image4 = formData.get("image4") as string;
+
     const response = await db
       .insert(questions)
       .values({
@@ -497,6 +497,13 @@ export const createQuestion = async (
         answer1,
         correctAnswer,
         points,
+        answer2,
+        answer3,
+        answer4,
+        image1,
+        image2,
+        image3,
+        image4,
       })
       .returning()
       .then((res) => res[0]);
@@ -510,12 +517,12 @@ export const createQuestion = async (
   }
 };
 
-export const answerQuestion = async (
-  userId: string,
-  questionId: string,
-  answer: string,
-) => {
+export const answerQuestion = async (formData: FormData) => {
   try {
+    const userId = formData.get("userId") as string;
+    const questionId = formData.get("questionId") as string;
+    const answer = formData.get("answer") as string;
+
     const [response] = await db
       .insert(userAnswers)
       .values({

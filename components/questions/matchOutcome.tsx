@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FC } from "react";
 import PointsBadge from "../pointsBadge";
 
-const MatchOutcome: FC = () => {
+const MatchOutcome = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:w-1/2 md:p-10">
