@@ -233,13 +233,10 @@ export const questions = pgTable(
         onUpdate: "cascade",
       }),
     question: text("question"),
-    questionTypeId: integer("questionTypeId").references(
-      () => questionType.id,
-      {
-        onDelete: "cascade",
-        onUpdate: "cascade",
-      },
-    ),
+    type: integer("type").references(() => questionType.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
     answer1: text("answer1"),
     answer2: text("answer2"),
     answer3: text("answer3"),
@@ -306,7 +303,7 @@ export const competitionsRelations = relations(
 export const questionsRelations = relations(questions, ({ one, many }) => ({
   questionType: one(questionType, {
     references: [questionType.id],
-    fields: [questions.questionTypeId],
+    fields: [questions.type],
   }),
   competition: one(competitions, {
     references: [competitions.id],

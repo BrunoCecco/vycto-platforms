@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import {
   getCompetitionData,
   getCompetitionUsers,
+  getQuestionsForCompetition,
   getSiteData,
 } from "@/lib/fetchers";
 import BlogCard from "@/components/old-components/blog-card";
@@ -100,6 +101,7 @@ export default async function SiteCompetitionPage({
   const slug = decodeURIComponent(params.slug);
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
+  const questions = await getQuestionsForCompetition(data!.id);
   let users;
 
   if (session && data) {
@@ -177,7 +179,28 @@ export default async function SiteCompetitionPage({
       </div>
 
       <div className="mx-auto my-8 flex w-full flex-col justify-center gap-8 ">
-        <TrueFalse />
+        {questions &&
+          questions.map((question: any, index: number) => {
+            if (question.type === 0) {
+              return (
+                <TrueFalse
+                  key={index}
+                  question={question}
+                  points={question.points}
+                />
+              );
+            } else if (question.type === 1) {
+              return <WhatMinute key={index} />;
+            } else if (question.type === 2) {
+              return <MatchOutcome key={index} />;
+            } else if (question.type === 3) {
+              return <GuessScore key={index} />;
+            } else if (question.type === 4) {
+              return <PlayerGoals key={index} />;
+            } else if (question.type === 5) {
+              return <PlayerSelection key={index} />;
+            }
+          })}
         <WhatMinute />
         <MatchOutcome />
         <GuessScore />

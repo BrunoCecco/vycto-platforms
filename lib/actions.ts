@@ -476,7 +476,7 @@ export const enterUserToCompetition = async (
 export const createQuestion = async (
   competitionId: string,
   question: string,
-  questionTypeId: number,
+  type: number,
   answer1: string,
   answer2: string,
   answer3: string,
@@ -494,7 +494,7 @@ export const createQuestion = async (
       .values({
         competitionId,
         question,
-        questionTypeId,
+        type,
         answer1,
         answer2,
         answer3,
