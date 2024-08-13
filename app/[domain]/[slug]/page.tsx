@@ -103,8 +103,10 @@ export default async function SiteCompetitionPage({
   const slug = decodeURIComponent(params.slug);
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
-  const questions = await getQuestionsForCompetition(data!.id);
-  const answers = await getAnswersForUser(session?.user.id!, data!.id);
+  if (data) {
+    const questions = await getQuestionsForCompetition(data.id);
+    const answers = await getAnswersForUser(session?.user.id!, data.id);
+  }
   let users;
 
   if (session && data) {
