@@ -190,7 +190,7 @@ export default async function SiteCompetitionPage({
                 {...question}
                 userId={session?.user.id!}
                 answer={
-                  answers.find((a) => a.questionId === question.id).answer
+                  answers.find((a) => a.questionId === question.id)!.answer
                 }
               />
             );
