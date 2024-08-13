@@ -518,7 +518,6 @@ export const createQuestion = async (
 
 export const answerQuestion = async (
   userId: string,
-  competitionId: string,
   questionId: string,
   answer: string,
 ) => {
@@ -527,7 +526,6 @@ export const answerQuestion = async (
       .insert(userAnswers)
       .values({
         userId,
-        competitionId,
         questionId,
         answer,
       })

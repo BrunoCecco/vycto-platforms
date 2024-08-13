@@ -4,9 +4,11 @@ import PointsBadge from "../pointsBadge";
 const TrueFalse = ({
   question,
   points = 5,
+  handleAnswer,
 }: {
   question: string;
   points: number;
+  handleAnswer: (answer: string) => void;
 }) => {
   return (
     <div className="flex items-center justify-center">
@@ -36,10 +38,16 @@ const TrueFalse = ({
         </p>
 
         <div className="flex justify-around">
-          <button className="mx-2 w-32 rounded-full border-2 border-red-500 bg-green-500 p-2 font-semibold italic text-white shadow-lg hover:bg-green-600">
+          <button
+            className="mx-2 w-32 rounded-full border-2 border-red-500 bg-green-500 p-2 font-semibold italic text-white shadow-lg hover:bg-green-600"
+            onClick={() => handleAnswer("true")}
+          >
             True
           </button>
-          <button className="mx-2 w-32 rounded-full border-2 border-gray-300 bg-white p-2 font-semibold italic text-gray-500 shadow-lg hover:bg-gray-100">
+          <button
+            className="mx-2 w-32 rounded-full border-2 border-gray-300 bg-white p-2 font-semibold italic text-gray-500 shadow-lg hover:bg-gray-100"
+            onClick={() => handleAnswer("false")}
+          >
             False
           </button>
         </div>

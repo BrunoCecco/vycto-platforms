@@ -185,17 +185,28 @@ export async function getQuestionsForCompetition(competitionId: string) {
   )();
 }
 
-export async function getAnswersForUser(userId: string) {
+export async function getAnswersForUser(userId: string, competitionId: string) {
+  // get userAnswers for a specific user and competition by joining the userAnswers table with the questions table
   return await unstable_cache(
     async () => {
-      return await db.query.userAnswers.findMany({
-        where: eq(userAnswers.userId, userId),
-      });
+      return await db
+        .select({
+          userAnswer: userAnswers,
+          question: questions,
+        })
+        .from(userAnswers)
+        .leftJoin(questions, eq(questions.id, userAnswers.questionId))
+        .where(
+          and(
+            eq(userAnswers.userId, userId),
+            eq(questions.competitionId, competitionId),
+          ),
+        );
     },
-    [`${userId}-answers`],
+    [`${userId}-${competitionId}-answers`],
     {
       revalidate: 900,
-      tags: [`${userId}-answers`],
+      tags: [`${userId}-${competitionId}-answers`],
     },
   )();
 }

@@ -13,7 +13,7 @@ import db from "@/lib/db";
 import { competitions, sites } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import Leaderboard from "@/components/leaderboard";
-import { enterUserToCompetition } from "@/lib/actions";
+import { answerQuestion, enterUserToCompetition } from "@/lib/actions";
 import { getSession } from "@/lib/auth";
 import EnterCompetitionButton from "@/components/old-components/enter-competition-button";
 import TrueFalse from "@/components/questions/trueFalse";
@@ -187,6 +187,9 @@ export default async function SiteCompetitionPage({
                   key={index}
                   question={question}
                   points={question.points}
+                  handleAnswer={async (answer: string) => {
+                    await answerQuestion(session!.user.id, answer, question.id);
+                  }}
                 />
               );
             } else if (question.type === 1) {
@@ -201,11 +204,11 @@ export default async function SiteCompetitionPage({
               return <PlayerSelection key={index} />;
             }
           })}
-        <WhatMinute />
+        {/* <WhatMinute />
         <MatchOutcome />
         <GuessScore />
         <PlayerGoals />
-        <PlayerSelection />
+        <PlayerSelection /> */}
       </div>
 
       <Leaderboard users={users} />

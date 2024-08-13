@@ -264,12 +264,6 @@ export const userAnswers = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    competitionId: text("competitionId")
-      .notNull()
-      .references(() => competitions.id, {
-        onDelete: "cascade",
-        onUpdate: "cascade",
-      }),
     questionId: text("questionId")
       .notNull()
       .references(() => questions.id, {
@@ -281,7 +275,7 @@ export const userAnswers = pgTable(
   (table) => {
     return {
       compositePk: primaryKey({
-        columns: [table.userId, table.competitionId, table.questionId],
+        columns: [table.userId, table.questionId],
       }),
     };
   },
@@ -314,10 +308,6 @@ export const questionsRelations = relations(questions, ({ one, many }) => ({
 
 export const userAnswersRelations = relations(userAnswers, ({ one }) => ({
   user: one(users, { references: [users.id], fields: [userAnswers.userId] }),
-  competition: one(competitions, {
-    references: [competitions.id],
-    fields: [userAnswers.competitionId],
-  }),
   question: one(questions, {
     references: [questions.id],
     fields: [userAnswers.questionId],

@@ -10,12 +10,12 @@ export default function HomePage() {
   return (
     <div className="min-h-screen space-y-12 bg-green-100 p-8">
       <h1 className="text-2xl font-bold">Component Showcase</h1>
-      <TrueFalse />
+      {/* <TrueFalse />
       <WhatMinute />
       <MatchOutcome />
       <GuessScore />
       <PlayerGoals />
-      <PlayerSelection />
+      <PlayerSelection /> */}
     </div>
   );
 }
