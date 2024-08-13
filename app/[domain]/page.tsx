@@ -95,12 +95,6 @@ export default async function SiteHomePage({
             (competition: any) => new Date(competition.endDate) < new Date(),
           )}
         />
-        <TrueFalse />
-        <WhatMinute />
-        <MatchOutcome />
-        <GuessScore />
-        <PlayerGoals />
-        <PlayerSelection />
         {/* {competitions.length > 0 ? (
           <div className="grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
             {competitions &&

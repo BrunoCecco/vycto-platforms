@@ -87,7 +87,12 @@ const CompetitionCard: FC<CompetitionCardProps> = async ({
 
       <div className="flex items-center justify-between">
         <p className="text-sm text-green-600">{status}</p>
-        <Link href={slug}>Play</Link>
+        <Link
+          href={slug}
+          className="w-24 rounded-full bg-green-700 p-2 text-center text-white hover:bg-green-600"
+        >
+          Play
+        </Link>
       </div>
     </div>
   );

@@ -15,6 +15,12 @@ import Leaderboard from "@/components/leaderboard";
 import { enterUserToCompetition } from "@/lib/actions";
 import { getSession } from "@/lib/auth";
 import EnterCompetitionButton from "@/components/old-components/enter-competition-button";
+import TrueFalse from "@/components/questions/trueFalse";
+import WhatMinute from "@/components/questions/whatMinute";
+import MatchOutcome from "@/components/questions/matchOutcome";
+import GuessScore from "@/components/questions/guessScore";
+import PlayerGoals from "@/components/questions/playerGoals";
+import PlayerSelection from "@/components/questions/playerSelection";
 
 export async function generateMetadata({
   params,
@@ -94,7 +100,17 @@ export default async function SiteCompetitionPage({
   const slug = decodeURIComponent(params.slug);
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
-  const users = await getCompetitionUsers(data!.id);
+  let users;
+
+  if (session && data) {
+    await enterUserToCompetition(
+      session.user.id,
+      session.user.username,
+      data.id,
+    );
+    users = await getCompetitionUsers(data!.id);
+    console.log(users, "users");
+  }
 
   if (!data) {
     notFound();
@@ -102,8 +118,10 @@ export default async function SiteCompetitionPage({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center">
-        {session?.user && !users.find((u) => u.userId === session.user.id) ? (
+      <div className="flex flex-col items-center justify-center pt-8">
+        {session?.user &&
+        users &&
+        !users.find((u) => u.userId === session.user.id) ? (
           <EnterCompetitionButton
             userId={session.user.id}
             username={session.user.username}
@@ -124,8 +142,9 @@ export default async function SiteCompetitionPage({
           />
         </div>
         <div className="m-auto w-full text-center md:w-7/12">
-          <p className="m-auto mb-4 w-10/12 text-sm font-light text-stone-500 md:text-base dark:text-stone-400">
-            {data.startDate} - {data.endDate}
+          <p className="m-auto mb-4 w-10/12 text-sm font-light text-white md:text-base dark:text-stone-300">
+            {new Date(data.startDate).toLocaleDateString()} -{" "}
+            {new Date(data.endDate).toLocaleDateString()}
           </p>
           <h1 className="mb-4 font-title text-lg font-bold text-stone-800 md:text-2xl dark:text-white">
             Competition: {data.title}
@@ -155,6 +174,15 @@ export default async function SiteCompetitionPage({
             </span>
           </div>
         </div> */}
+      </div>
+
+      <div className="mx-auto my-8 flex w-full flex-col justify-center gap-8 ">
+        <TrueFalse />
+        <WhatMinute />
+        <MatchOutcome />
+        <GuessScore />
+        <PlayerGoals />
+        <PlayerSelection />
       </div>
 
       <Leaderboard users={users} />
