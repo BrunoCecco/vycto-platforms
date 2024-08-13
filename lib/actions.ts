@@ -17,10 +17,15 @@ import {
   SelectCompetition,
   SelectSite,
   competitions,
+  questions,
   sites,
   userCompetitions,
   users,
+  questionType,
+  userAnswers,
 } from "./schema";
+import { QuestionType } from "./types";
+import { PgInteger } from "drizzle-orm/pg-core";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -457,6 +462,74 @@ export const enterUserToCompetition = async (
         userId,
         username,
         competitionId,
+      })
+      .returning();
+
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const createQuestion = async (
+  competitionId: string,
+  question: string,
+  questionTypeId: number,
+  answer1: string,
+  answer2: string,
+  answer3: string,
+  answer4: string,
+  correctAnswer: string,
+  image1: string,
+  image2: string,
+  image3: string,
+  image4: string,
+  points: number,
+) => {
+  try {
+    const [response] = await db
+      .insert(questions)
+      .values({
+        competitionId,
+        question,
+        questionTypeId,
+        answer1,
+        answer2,
+        answer3,
+        answer4,
+        correctAnswer,
+        image1,
+        image2,
+        image3,
+        image4,
+        points,
+      })
+      .returning();
+
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const answerQuestion = async (
+  userId: string,
+  competitionId: string,
+  questionId: string,
+  answer: string,
+) => {
+  try {
+    const [response] = await db
+      .insert(userAnswers)
+      .values({
+        userId,
+        competitionId,
+        questionId,
+        answer,
       })
       .returning();
 
