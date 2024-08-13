@@ -103,11 +103,13 @@ export default async function SiteCompetitionPage({
   const slug = decodeURIComponent(params.slug);
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
-  if (data) {
-    const questions = await getQuestionsForCompetition(data.id);
-    const answers = await getAnswersForUser(session?.user.id!, data.id);
-  }
+  let questions;
+  let answers: any;
   let users;
+  if (data) {
+    questions = await getQuestionsForCompetition(data.id);
+    answers = await getAnswersForUser(session?.user.id!, data!.id);
+  }
 
   if (session && data) {
     await enterUserToCompetition(
@@ -192,7 +194,7 @@ export default async function SiteCompetitionPage({
                 {...question}
                 userId={session?.user.id!}
                 answer={
-                  answers.find((a) => a.questionId === question.id)!.answer
+                  answers.find((a: any) => a.questionId === question.id)!.answer
                 }
               />
             );
