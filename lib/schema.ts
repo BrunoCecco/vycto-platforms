@@ -273,6 +273,28 @@ export const userAnswers = pgTable(
   },
 );
 
+export const rewards = pgTable(
+  "rewards",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    title: text("title"),
+    description: text("description"),
+    image: text("image"),
+    value: integer("value").default(0),
+    competitionId: text("competitionId").references(() => competitions.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+  },
+  (table) => {
+    return {
+      siteIdIdx: index().on(table.competitionId),
+    };
+  },
+);
+
 export const competitionsRelations = relations(
   competitions,
   ({ one, many }) => ({
@@ -283,6 +305,8 @@ export const competitionsRelations = relations(
       fields: [competitions.admin],
     }),
     questions: many(questions),
+    userCompetitions: many(userCompetitions),
+    rewards: many(rewards),
   }),
 );
 

@@ -69,9 +69,9 @@ export default async function CompetitionSettings({
         />
 
         <Form
-          title="Start Date"
-          description="The starting date of the competition"
-          helpText="Please enter the start date of the competition"
+          title="Date"
+          description="The date of the competition"
+          helpText="Please enter the date of the competition"
           inputAttrs={{
             name: "date",
             type: "date",
