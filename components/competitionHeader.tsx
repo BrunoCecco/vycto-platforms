@@ -1,7 +1,10 @@
+"use client";
+
 import BlurImage from "@/components/old-components/blur-image";
 import MDX from "@/components/old-components/mdx";
 import EnterCompetitionButton from "@/components/old-components/enter-competition-button";
 import Image from "next/image";
+import TabSelector from "./tabSelector";
 
 interface CompetitionHeaderProps {
   session: any;
@@ -20,7 +23,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
   //     users.find((u: { userId: any }) => u.userId === session.user.id);
 
   return (
-    <div className="flex w-1/2 flex-col items-center justify-center rounded-lg bg-white p-4 shadow-lg">
+    <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white px-10 py-6 shadow-lg md:w-3/4 md:p-14 lg:w-3/5">
       {/* keep this comment {session?.user && users && !isUserInCompetition ? (
         <EnterCompetitionButton
           userId={session.user.id}
@@ -32,7 +35,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
       )} */}
 
       {/* Placeholder for Image or Graphic */}
-      <div className="mb-4 h-80 w-full overflow-hidden rounded-lg">
+      <div className="mb-4 w-full overflow-hidden rounded-xl">
         <Image
           src={data.image ?? "/placeholder.png"}
           alt={data.title ?? "Competition image"}
@@ -45,13 +48,23 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
       </div>
 
       {/* Text section */}
-      <div className="mt-4 text-center">
-        <h1 className="text-3xl font-bold text-stone-800 dark:text-white">
+      <div className="mt-8 text-center font-bold text-stone-800">
+        <h1 className="text-2xl md:text-3xl dark:text-white">
           Competicion: {data.title}
         </h1>
-        <p className="text-xl text-stone-600 dark:text-stone-400">
-          by {data.site?.name}
+        <p className="pt-4 text-xl dark:text-stone-400">
+          by <span className="text-green-500">{data.site?.name}</span>
         </p>
+      </div>
+
+      {/* Banner */}
+      <div className="relative mt-8 h-32 w-full">
+        <Image
+          src={"/banner.jpg"}
+          alt="Players Banner"
+          layout="fill"
+          objectFit="contain"
+        />
       </div>
       {/* Uncomment if needed */}
       {/* <div className="my-8">
