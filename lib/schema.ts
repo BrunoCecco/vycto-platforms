@@ -149,6 +149,7 @@ export const competitions = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => createId()),
+    eventId: text("eventId"), // sports api event id
     title: text("title"),
     description: text("description"),
     content: text("content"),
@@ -166,8 +167,7 @@ export const competitions = pgTable(
     updatedAt: timestamp("updatedAt", { mode: "date" })
       .notNull()
       .$onUpdate(() => new Date()),
-    startDate: text("startDate").notNull().default(new Date().toISOString()),
-    endDate: text("endDate").notNull().default(new Date().toISOString()),
+    date: text("date").notNull().default(new Date().toISOString()),
     published: boolean("published").default(false).notNull(),
     siteId: text("siteId").references(() => sites.id, {
       onDelete: "cascade",

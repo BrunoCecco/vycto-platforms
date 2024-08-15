@@ -73,27 +73,13 @@ export default async function CompetitionSettings({
           description="The starting date of the competition"
           helpText="Please enter the start date of the competition"
           inputAttrs={{
-            name: "startDate",
+            name: "date",
             type: "date",
-            defaultValue: data?.startDate!,
-            placeholder: "Start Date",
+            defaultValue: data?.date!,
+            placeholder: "Date",
           }}
           handleSubmit={updateCompetitionMetadata}
         />
-
-        <Form
-          title="End Date"
-          description="The end date of this competition."
-          helpText="Please enter the end date."
-          inputAttrs={{
-            name: "endDate",
-            type: "date",
-            defaultValue: data?.endDate!,
-            placeholder: "End Date",
-          }}
-          handleSubmit={updateCompetitionMetadata}
-        />
-
         <DeleteCompetitionForm competitionName={data?.title!} />
       </div>
     </div>

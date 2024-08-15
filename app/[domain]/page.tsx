@@ -89,10 +89,12 @@ export default async function SiteHomePage({
         </div>
         <FanZone
           currentCompetitions={competitions.filter(
-            (competition: any) => new Date(competition.endDate) > new Date(),
+            (competition: any) =>
+              new Date(competition.date).getTime() >= Date.now(),
           )}
           pastCompetitions={competitions.filter(
-            (competition: any) => new Date(competition.endDate) < new Date(),
+            (competition: any) =>
+              new Date(competition.date).getTime() < Date.now(),
           )}
         />
         {/* {competitions.length > 0 ? (

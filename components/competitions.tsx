@@ -9,8 +9,7 @@ interface Competition {
   image: string | null;
   imageBlurhash: string | null;
   createdAt: Date;
-  startDate: string;
-  endDate: string;
+  date: string;
 }
 
 interface CompetitionsProps {

@@ -10,8 +10,7 @@ interface FanZoneProps {
     image: string | null;
     imageBlurhash: string | null;
     createdAt: Date;
-    startDate: string;
-    endDate: string;
+    date: string;
   }[];
   pastCompetitions: {
     title: string | null;
@@ -21,8 +20,7 @@ interface FanZoneProps {
     image: string | null;
     imageBlurhash: string | null;
     createdAt: Date;
-    startDate: string;
-    endDate: string;
+    date: string;
   }[];
 }
 

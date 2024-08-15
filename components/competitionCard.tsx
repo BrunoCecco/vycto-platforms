@@ -13,8 +13,7 @@ interface CompetitionCardProps {
   image: string | null;
   imageBlurhash: string | null;
   createdAt: Date;
-  startDate: string;
-  endDate: string;
+  date: string;
 }
 
 const CompetitionCard: FC<CompetitionCardProps> = async ({
@@ -25,19 +24,17 @@ const CompetitionCard: FC<CompetitionCardProps> = async ({
   image,
   imageBlurhash,
   createdAt,
-  startDate,
-  endDate,
+  date,
 }) => {
   const users = await getCompetitionUsers(slug);
 
   let status;
-  if (new Date(startDate) > new Date()) {
+  if (new Date(date) > new Date()) {
     const days = Math.ceil(
-      (new Date(startDate).getTime() - new Date().getTime()) /
-        (1000 * 60 * 60 * 24),
+      (new Date(date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24),
     );
     status = days + " Days to go";
-  } else if (new Date(endDate) < new Date()) {
+  } else if (new Date(date) < new Date()) {
     status = users.length + " Participants";
   } else {
     status = "Live";
