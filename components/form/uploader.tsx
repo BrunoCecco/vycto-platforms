@@ -9,9 +9,12 @@ export default function Uploader({
   name,
 }: {
   defaultValue: string | null;
-  name: "image" | "logo";
+  name: "image" | "logo" | "rewardImage";
 }) {
-  const aspectRatio = name === "image" ? "aspect-video" : "aspect-square";
+  const aspectRatio =
+    name === "image" || name === "rewardImage"
+      ? "aspect-video"
+      : "aspect-square";
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [data, setData] = useState({

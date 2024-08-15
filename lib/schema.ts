@@ -169,6 +169,9 @@ export const competitions = pgTable(
       .$onUpdate(() => new Date()),
     date: text("date").notNull().default(new Date().toISOString()),
     published: boolean("published").default(false).notNull(),
+    rewardTitle: text("rewardTitle"),
+    rewardDescription: text("rewardDescription"),
+    rewardImage: text("rewardImage"),
     siteId: text("siteId").references(() => sites.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
@@ -273,28 +276,6 @@ export const userAnswers = pgTable(
   },
 );
 
-export const rewards = pgTable(
-  "rewards",
-  {
-    id: text("id")
-      .primaryKey()
-      .$defaultFn(() => createId()),
-    title: text("title"),
-    description: text("description"),
-    image: text("image"),
-    value: text("value"),
-    competitionId: text("competitionId").references(() => competitions.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    }),
-  },
-  (table) => {
-    return {
-      siteIdIdx: index().on(table.competitionId),
-    };
-  },
-);
-
 export const competitionsRelations = relations(
   competitions,
   ({ one, many }) => ({
@@ -306,7 +287,6 @@ export const competitionsRelations = relations(
     }),
     questions: many(questions),
     userCompetitions: many(userCompetitions),
-    rewards: many(rewards),
   }),
 );
 
@@ -371,4 +351,3 @@ export type SelectAccount = typeof accounts.$inferSelect;
 export type SelectUserCompetition = typeof userCompetitions.$inferSelect;
 export type SelectQuestion = typeof questions.$inferSelect;
 export type SelectUserAnswer = typeof userAnswers.$inferSelect;
-export type SelectReward = typeof rewards.$inferSelect;

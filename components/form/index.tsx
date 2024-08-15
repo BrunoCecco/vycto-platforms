@@ -68,7 +68,9 @@ export default function Form({
         <p className="text-sm text-stone-500 dark:text-stone-400">
           {description}
         </p>
-        {inputAttrs.name === "image" || inputAttrs.name === "logo" ? (
+        {inputAttrs.name === "image" ||
+        inputAttrs.name === "logo" ||
+        inputAttrs.name === "rewardImage" ? (
           <Uploader
             defaultValue={inputAttrs.defaultValue}
             name={inputAttrs.name}
