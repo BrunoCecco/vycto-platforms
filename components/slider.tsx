@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 import { Range } from "react-range";
 
-const Slider = () => {
-  const [values, setValues] = useState([63]);
+interface SliderProps {
+  initialValue?: number;
+  onChange: (value: number) => void;
+}
+
+const Slider: FC<SliderProps> = ({ initialValue = 0, onChange }) => {
+  const [values, setValues] = useState([initialValue]);
   const MIN = 0;
   const MAX = 90;
+
+  const handleChange = (newValues: number[]) => {
+    setValues(newValues);
+    onChange(newValues[0]);
+  };
 
   return (
     <div className="w-full px-4 py-6">
@@ -15,7 +25,7 @@ const Slider = () => {
           min={MIN}
           max={MAX}
           values={values}
-          onChange={(values) => setValues(values)}
+          onChange={handleChange}
           renderTrack={({ props, children }) => (
             <div
               {...props}

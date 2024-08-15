@@ -1,43 +1,36 @@
 "use client";
-import { useState } from "react";
+import { useState, FC } from "react";
 import Image from "next/image";
 import PointsBadge from "../pointsBadge";
 
-const PlayerSelection = () => {
-  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+interface Player {
+  name: string;
+  position: string;
+  image: string;
+}
 
-  const players = [
-    {
-      name: "Giannis Antetokounmpo",
-      position: "Small Forward",
-      image: "/player.png",
-    },
-    {
-      name: "Damian Lillard",
-      position: "Point Guard",
-      image: "/player.png",
-    },
-    {
-      name: "Brook Lopez",
-      position: "Centre",
-      image: "/player.png",
-    },
-    {
-      name: "Khris Middleton",
-      position: "Shooting Guard",
-      image: "/player.png",
-    },
-  ];
+interface PlayerSelectionProps {
+  question: string;
+  points: number;
+  players: Player[];
+}
+
+const PlayerSelection: FC<PlayerSelectionProps> = ({
+  question,
+  points,
+  players,
+}) => {
+  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
 
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:w-1/2 md:p-10">
         {/* Points Badge */}
-        <PointsBadge points={5} />
+        <PointsBadge points={points} />
 
         {/* Question */}
         <h2 className="mb-2 text-center text-xl font-semibold text-gray-800">
-          Who will score the 1st point?
+          {question}
         </h2>
         <p className="mb-6 text-center text-gray-500">
           Select the correct answer

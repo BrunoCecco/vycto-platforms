@@ -22,6 +22,7 @@ import PlayerGoals from "@/components/questions/playerGoals";
 import PlayerSelection from "@/components/questions/playerSelection";
 import { QuestionType } from "@/lib/types";
 import CompetitionHeader from "@/components/competitionHeader";
+import TabSelector from "@/components/tabSelector";
 
 export async function generateMetadata({
   params,

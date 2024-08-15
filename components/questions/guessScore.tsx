@@ -1,11 +1,16 @@
-"use client";
-
 import Image from "next/image";
 import { FC, useState } from "react";
 import PointsBadge from "../pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
 
-const GuessScore = () => {
+// Define the types for the props
+interface GuessScoreProps {
+  homeTeam: string;
+  awayTeam: string;
+  points: number;
+}
+
+const GuessScore: FC<GuessScoreProps> = ({ homeTeam, awayTeam, points }) => {
   const [scoreHome, setScoreHome] = useState(0);
   const [scoreAway, setScoreAway] = useState(0);
 
@@ -13,7 +18,7 @@ const GuessScore = () => {
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:w-1/2 md:p-10">
         {/* Points Badge */}
-        <PointsBadge points={5} />
+        <PointsBadge points={points} />
 
         <h2 className="mb-12 text-xl font-semibold text-gray-800">
           Guess the score 🔥
@@ -27,11 +32,11 @@ const GuessScore = () => {
                 <MinusCircle />
               </button>
               <div>{scoreHome}</div>
-              <button onClick={() => setScoreHome(Math.max(scoreHome + 1, 0))}>
+              <button onClick={() => setScoreHome(scoreHome + 1)}>
                 <PlusCircle />
               </button>
             </div>
-            <p className="text-sm font-semibold">Real Madrid</p>
+            <p className="text-sm font-semibold">{homeTeam}</p>
           </div>
 
           {/* VS */}
@@ -47,11 +52,11 @@ const GuessScore = () => {
                 <MinusCircle />
               </button>
               <div>{scoreAway}</div>
-              <button onClick={() => setScoreAway(Math.max(scoreAway + 1, 0))}>
+              <button onClick={() => setScoreAway(scoreAway + 1)}>
                 <PlusCircle />
               </button>
             </div>
-            <p className="text-sm font-semibold ">Chelsea</p>
+            <p className="text-sm font-semibold">{awayTeam}</p>
           </div>
         </div>
       </div>

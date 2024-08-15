@@ -1,9 +1,15 @@
-"use client";
-import { useState } from "react";
+import { FC } from "react";
 
-const GoalSelector = () => {
-  const [selected, setSelected] = useState("2 goals");
+// Define the types for the props
+interface GoalSelectorProps {
+  selectedOption: string;
+  setSelectedOption: (option: string) => void;
+}
 
+const GoalSelector: FC<GoalSelectorProps> = ({
+  selectedOption,
+  setSelectedOption,
+}) => {
   const options = ["0 goals", "1 goal", "2 goals", "Hattrick!"];
 
   return (
@@ -12,11 +18,11 @@ const GoalSelector = () => {
         <div
           key={option}
           className={`md:text-md cursor-pointer rounded-lg px-4 py-3 text-sm ${
-            selected === option
+            selectedOption === option
               ? "bg-white font-semibold text-blue-600 shadow-md"
               : ""
           }`}
-          onClick={() => setSelected(option)}
+          onClick={() => setSelectedOption(option)}
         >
           {option}
         </div>
