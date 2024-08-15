@@ -66,6 +66,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
           objectFit="contain"
         />
       </div>
+      <TabSelector />
       {/* Uncomment if needed */}
       {/* <div className="my-8">
         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
