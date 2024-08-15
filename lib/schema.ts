@@ -282,7 +282,7 @@ export const rewards = pgTable(
     title: text("title"),
     description: text("description"),
     image: text("image"),
-    value: integer("value").default(0),
+    value: text("value"),
     competitionId: text("competitionId").references(() => competitions.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
@@ -364,3 +364,11 @@ export const userRelations = relations(users, ({ many }) => ({
 export type SelectSite = typeof sites.$inferSelect;
 export type SelectCompetition = typeof competitions.$inferSelect;
 export type SelectExample = typeof examples.$inferSelect;
+export type SelectUser = typeof users.$inferSelect;
+export type SelectSession = typeof sessions.$inferSelect;
+export type SelectVerificationToken = typeof verificationTokens.$inferSelect;
+export type SelectAccount = typeof accounts.$inferSelect;
+export type SelectUserCompetition = typeof userCompetitions.$inferSelect;
+export type SelectQuestion = typeof questions.$inferSelect;
+export type SelectUserAnswer = typeof userAnswers.$inferSelect;
+export type SelectReward = typeof rewards.$inferSelect;

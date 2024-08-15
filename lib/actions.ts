@@ -22,6 +22,8 @@ import {
   userCompetitions,
   users,
   userAnswers,
+  rewards,
+  SelectReward,
 } from "./schema";
 import { QuestionType } from "./types";
 import { PgInteger } from "drizzle-orm/pg-core";
@@ -529,3 +531,70 @@ export const answerQuestion = async (formData: FormData) => {
     };
   }
 };
+
+export const createReward = async (competitionId: string) => {
+  try {
+    const response = await db
+      .insert(rewards)
+      .values({
+        id: "",
+        title: "",
+        description: "",
+        value: "",
+        competitionId,
+      })
+      .returning()
+      .then((res) => res[0]);
+
+    console.log("Created reward: ", response);
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const updateRewardMetadata = withCompetitionAuth(
+  async (formData: FormData, reward: SelectReward, key: string) => {
+    const value = formData.get(key) as string;
+
+    try {
+      let response;
+      if (key === "image") {
+        const file = formData.get("image") as File;
+        const filename = `${nanoid()}.${file.type.split("/")[1]}`;
+
+        const { url } = await put(filename, file, {
+          access: "public",
+        });
+
+        response = await db
+          .update(rewards)
+          .set({
+            image: url,
+          })
+          .where(eq(rewards.id, reward.id))
+          .returning()
+          .then((res) => res[0]);
+      } else {
+        response = await db
+          .update(rewards)
+          .set({
+            [key]: value,
+          })
+          .where(eq(rewards.id, reward.id))
+          .returning()
+          .then((res) => res[0]);
+      }
+
+      revalidateTag(`${reward.competitionId}-rewards`);
+
+      return response;
+    } catch (error: any) {
+      return {
+        error: error.message,
+      };
+    }
+  },
+);
