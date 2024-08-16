@@ -18,7 +18,7 @@ const QuestionBuilder = ({
 
   useEffect(() => {
     const initialQuestionData = initialQuestions.map(
-      (question: SelectQuestion) => {
+      (question: SelectQuestion, index: number) => {
         if (question.type === QuestionType.PlayerSelection) {
           return (
             <EditPlayerSelection
@@ -34,7 +34,7 @@ const QuestionBuilder = ({
             />
           );
         } else {
-          return <div></div>;
+          return <div key={index}></div>;
         }
       },
     );

@@ -8,7 +8,7 @@ import {
 } from "@/lib/domains";
 import { getBlurDataURL } from "@/lib/utils";
 import { put } from "@vercel/blob";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
 import { withCompetitionAuth, withSiteAuth } from "./auth";
@@ -518,7 +518,28 @@ export const answerQuestion = async (formData: FormData) => {
     const questionId = formData.get("questionId") as string;
     const answer = formData.get("answer") as string;
 
-    const [response] = await db
+    // first check if the user has already answered this question
+    const existingAnswer = await db.query.userAnswers.findFirst({
+      where: and(
+        eq(userAnswers.userId, userId),
+        eq(userAnswers.questionId, questionId),
+      ),
+    });
+
+    if (existingAnswer) {
+      const response = await db
+        .update(userAnswers)
+        .set({
+          answer,
+        })
+        .where(eq(userAnswers.userId, existingAnswer.userId))
+        .returning()
+        .then((res) => res[0]);
+
+      return response;
+    }
+
+    const response = await db
       .insert(userAnswers)
       .values({
         userId,

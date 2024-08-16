@@ -6,16 +6,10 @@ import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
 
 const EditWhatMinute = ({ question }: { question: SelectQuestion }) => {
-  const [sliderValue, setSliderValue] = useState(0);
   const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState("What minute?");
   const [points, setPoints] = useState(0);
-
-  const handleSliderChange = (value: number) => {
-    setSliderValue(value);
-    console.log("Slider value:", value);
-  };
 
   const handleQuestionClick = () => {
     setIsEditingQuestion(true);
@@ -68,7 +62,7 @@ const EditWhatMinute = ({ question }: { question: SelectQuestion }) => {
         {/* Placeholder for Image or Graphic */}
         <div className="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-100">
           <Image
-            src={"/trueFalse.jpg"}
+            src={question.image1 ?? "/trueFalse.jpg"}
             alt="Question Image"
             layout="responsive"
             width={500}
@@ -103,7 +97,11 @@ const EditWhatMinute = ({ question }: { question: SelectQuestion }) => {
         </p>
 
         <div className="flex items-center justify-center">
-          <Slider initialValue={sliderValue} onChange={handleSliderChange} />
+          <Slider
+            initialValue={question.answer1 || "0"}
+            questionId={question.id}
+            question={question}
+          />
         </div>
 
         {/* Save Button */}

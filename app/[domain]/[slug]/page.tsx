@@ -130,20 +130,32 @@ export default async function SiteCompetitionPage({
       <div className="mx-auto my-8 flex w-full flex-col justify-center gap-8 ">
         {questions &&
           questions.map((question: any, index: number) => {
-            // if (question.type === QuestionType.TrueFalse) {
-            return (
-              <TrueFalse
-                key={index}
-                {...question}
-                userId={session?.user.id!}
-                answer={
-                  answers.find((a: any) => a.questionId === question.id)!.answer
-                }
-              />
-            );
-            // );
-            // } else if (question.type === QuestionType.WhatMinute) {
-            //   return <WhatMinute key={index} />;
+            if (question.type === QuestionType.TrueFalse) {
+              return (
+                <TrueFalse
+                  key={index}
+                  {...question}
+                  userId={session?.user.id!}
+                  answer={
+                    answers.find((a: any) => a.questionId === question.id)!
+                      .answer
+                  }
+                />
+              );
+            } else if (question.type === QuestionType.WhatMinute) {
+              console.log(question);
+              return (
+                <WhatMinute
+                  key={index}
+                  {...question}
+                  userId={session?.user.id!}
+                  answer={
+                    answers.find((a: any) => a.questionId === question.id)
+                      ?.answer
+                  }
+                />
+              );
+            }
             // } else if (question.type === QuestionType.MatchOutcome) {
             //   return <MatchOutcome key={index} />;
             // } else if (question.type === QuestionType.GuessScore) {
