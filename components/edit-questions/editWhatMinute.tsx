@@ -3,8 +3,9 @@ import Image from "next/image";
 import { FC, useState } from "react";
 import Slider from "../slider";
 import PointsBadge from "../pointsBadge";
+import { SelectQuestion } from "@/lib/schema";
 
-const EditWhatMinute: FC = () => {
+const EditWhatMinute = ({ question }: { question: SelectQuestion }) => {
   const [sliderValue, setSliderValue] = useState(0);
   const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);

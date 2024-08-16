@@ -461,43 +461,49 @@ export const enterUserToCompetition = async (
   }
 };
 
-export const createQuestion = async (formData: FormData) => {
+export const createQuestion = async ({
+  competitionId,
+  type,
+}: {
+  competitionId: string;
+  type: QuestionType;
+}) => {
   try {
-    const competitionId = formData.get("competitionId") as string;
-    const question = formData.get("question") as string;
-    const type = formData.get("type") as QuestionType;
-    const answer1 = formData.get("answer1") as string;
-    const correctAnswer = formData.get("correctAnswer") as string;
-    const points = parseInt(formData.get("points") as string);
-    const answer2 = formData.get("answer2") as string;
-    const answer3 = formData.get("answer3") as string;
-    const answer4 = formData.get("answer4") as string;
-    const image1 = formData.get("image1") as string;
-    const image2 = formData.get("image2") as string;
-    const image3 = formData.get("image3") as string;
-    const image4 = formData.get("image4") as string;
-
     const response = await db
       .insert(questions)
       .values({
         competitionId,
-        question,
         type,
-        answer1,
-        correctAnswer,
-        points,
-        answer2,
-        answer3,
-        answer4,
-        image1,
-        image2,
-        image3,
-        image4,
       })
       .returning()
       .then((res) => res[0]);
 
     console.log("Created question: ", response);
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const updateQuestionMetadata = async (
+  formData: FormData,
+  question: any,
+  key: string,
+) => {
+  const value = formData.get(key) as string;
+
+  try {
+    const response = await db
+      .update(questions)
+      .set({
+        [key]: value,
+      })
+      .where(eq(questions.id, question.id))
+      .returning()
+      .then((res) => res[0]);
+
     return response;
   } catch (error: any) {
     return {

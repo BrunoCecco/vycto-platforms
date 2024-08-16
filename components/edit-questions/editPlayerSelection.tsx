@@ -1,7 +1,8 @@
 "use client";
-import { useState, FC } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import PointsBadge from "../pointsBadge";
+import { SelectQuestion } from "@/lib/schema";
 
 interface Player {
   name: string;
@@ -9,7 +10,7 @@ interface Player {
   image: string;
 }
 
-const EditPlayerSelection: FC = () => {
+const EditPlayerSelection = ({ question }: { question: SelectQuestion }) => {
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
@@ -74,6 +75,7 @@ const EditPlayerSelection: FC = () => {
               value={points}
               onChange={handlePointsInputChange}
               onBlur={handleInputBlur}
+              min={0}
               autoFocus
               className="w-20 text-center text-xl font-semibold text-gray-800"
             />

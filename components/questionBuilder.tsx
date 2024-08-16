@@ -2,19 +2,40 @@
 import { useState } from "react";
 import EditPlayerSelection from "./edit-questions/editPlayerSelection";
 import EditWhatMinute from "./edit-questions/editWhatMinute";
+import { createQuestion } from "@/lib/actions";
+import { QuestionType } from "@/lib/types";
+import { SelectQuestion } from "@/lib/schema";
 
-const QuestionBuilder = () => {
+const QuestionBuilder = ({ competitionId }: { competitionId: string }) => {
   const [questions, setQuestions] = useState<JSX.Element[]>([]);
   const [showOptionsIndex, setShowOptionsIndex] = useState<number | null>(null);
 
-  const handleAddQuestion = (questionType: string, index: number | null) => {
+  const handleAddQuestion = async (
+    questionType: QuestionType,
+    index: number | null,
+  ) => {
     setShowOptionsIndex(null);
 
+    const question = await createQuestion({
+      competitionId,
+      type: questionType,
+    });
+
     let newQuestion: JSX.Element;
-    if (questionType === "EditPlayerSelection") {
-      newQuestion = <EditPlayerSelection key={questions.length} />;
-    } else if (questionType === "EditWhatMinute") {
-      newQuestion = <EditWhatMinute key={questions.length} />;
+    if (questionType === "PlayerSelection") {
+      newQuestion = (
+        <EditPlayerSelection
+          key={questions.length}
+          question={question as SelectQuestion}
+        />
+      );
+    } else if (questionType === "WhatMinute") {
+      newQuestion = (
+        <EditWhatMinute
+          key={questions.length}
+          question={question as SelectQuestion}
+        />
+      );
     } else {
       return;
     }
@@ -39,13 +60,15 @@ const QuestionBuilder = () => {
       {showOptionsIndex === index && (
         <div className="absolute z-10 mt-2 w-72 rounded-lg bg-white shadow-lg">
           <button
-            onClick={() => handleAddQuestion("EditPlayerSelection", index)}
+            onClick={() =>
+              handleAddQuestion(QuestionType.PlayerSelection, index)
+            }
             className="block w-full px-4 py-2 text-left hover:bg-gray-100"
           >
             Add Player Selection Question
           </button>
           <button
-            onClick={() => handleAddQuestion("EditWhatMinute", index)}
+            onClick={() => handleAddQuestion(QuestionType.WhatMinute, index)}
             className="block w-full px-4 py-2 text-left hover:bg-gray-100"
           >
             Add What Minute Question
