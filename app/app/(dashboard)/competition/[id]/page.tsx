@@ -2,6 +2,7 @@ import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import Editor from "@/components/old-components/editor";
 import db from "@/lib/db";
+import { getQuestionsForCompetition } from "@/lib/fetchers";
 
 export default async function CompetitionPage({
   params,
@@ -27,11 +28,12 @@ export default async function CompetitionPage({
 
   if (
     !data ||
-    (data.userId !== session.user.id &&
-      data.admin != session.user.email)
+    (data.userId !== session.user.id && data.admin != session.user.email)
   ) {
     notFound();
   }
 
-  return <Editor competition={data} />;
+  const initialQuestions = await getQuestionsForCompetition(data.id);
+
+  return <Editor competition={data} initialQuestions={initialQuestions} />;
 }

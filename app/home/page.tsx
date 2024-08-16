@@ -52,7 +52,7 @@ export default function HomePage() {
         Here is the question builder. When you select a question you can click
         on points, question etc to edit.
       </h1>
-      <QuestionBuilder competitionId={"id"} />
+      {/* <QuestionBuilder competitionId={"id"} /> */}
       <h1 className="text-2xl font-bold">
         All questions below have data passed in from props. Should be easier to
         populate now by setting props from DB data. If needed, answers can now

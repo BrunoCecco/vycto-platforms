@@ -169,19 +169,19 @@ async function getMdxSource(competitionContents: string) {
 }
 
 export async function getQuestionsForCompetition(competitionId: string) {
-  return await unstable_cache(
-    async () => {
-      return await db.query.questions.findMany({
-        where: eq(questions.competitionId, competitionId),
-        orderBy: desc(questions.id),
-      });
-    },
-    [`${competitionId}-questions`],
-    {
-      revalidate: 900,
-      tags: [`${competitionId}-questions`],
-    },
-  )();
+  // return await unstable_cache(
+  //   async () => {
+  return await db.query.questions.findMany({
+    where: eq(questions.competitionId, competitionId),
+    orderBy: desc(questions.id),
+  });
+  // },
+  //   [`${competitionId}-questions`],
+  //   {
+  //     revalidate: 900,
+  //     tags: [`${competitionId}-questions`],
+  //   },
+  // )();
 }
 
 export async function getAnswersForUser(userId: string, competitionId: string) {

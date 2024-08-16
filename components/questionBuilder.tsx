@@ -1,14 +1,47 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditPlayerSelection from "./edit-questions/editPlayerSelection";
 import EditWhatMinute from "./edit-questions/editWhatMinute";
 import { createQuestion } from "@/lib/actions";
 import { QuestionType } from "@/lib/types";
 import { SelectQuestion } from "@/lib/schema";
 
-const QuestionBuilder = ({ competitionId }: { competitionId: string }) => {
+const QuestionBuilder = ({
+  competitionId,
+  initialQuestions,
+}: {
+  competitionId: string;
+  initialQuestions: SelectQuestion[];
+}) => {
   const [questions, setQuestions] = useState<JSX.Element[]>([]);
   const [showOptionsIndex, setShowOptionsIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const initialQuestionData = initialQuestions.map(
+      (question: SelectQuestion) => {
+        if (question.type === QuestionType.PlayerSelection) {
+          return (
+            <EditPlayerSelection
+              key={question.id}
+              question={question as SelectQuestion}
+            />
+          );
+        } else if (question.type === QuestionType.WhatMinute) {
+          return (
+            <EditWhatMinute
+              key={question.id}
+              question={question as SelectQuestion}
+            />
+          );
+        } else {
+          return <div></div>;
+        }
+      },
+    );
+    if (initialQuestionData && initialQuestionData.length > 0) {
+      setQuestions(initialQuestionData);
+    }
+  }, [initialQuestions]);
 
   const handleAddQuestion = async (
     questionType: QuestionType,

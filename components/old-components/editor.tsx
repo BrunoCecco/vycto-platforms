@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import LoadingDots from "../icons/loading-dots";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
-import type { SelectCompetition } from "@/lib/schema";
+import type { SelectCompetition, SelectQuestion } from "@/lib/schema";
 import QuestionBuilder from "../questionBuilder";
 
 type CompetitionWithSite = SelectCompetition & {
@@ -20,8 +20,10 @@ type CompetitionWithSite = SelectCompetition & {
 
 export default function Editor({
   competition,
+  initialQuestions,
 }: {
   competition: CompetitionWithSite;
+  initialQuestions: SelectQuestion[];
 }) {
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
@@ -123,7 +125,10 @@ export default function Editor({
           className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
         />
       </div>
-      <QuestionBuilder competitionId={competition.id} />
+      <QuestionBuilder
+        competitionId={competition.id}
+        initialQuestions={initialQuestions}
+      />
     </div>
   );
 }
