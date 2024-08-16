@@ -22,14 +22,14 @@ const QuestionBuilder = ({ competitionId }: { competitionId: string }) => {
     });
 
     let newQuestion: JSX.Element;
-    if (questionType === "PlayerSelection") {
+    if (questionType === QuestionType.PlayerSelection) {
       newQuestion = (
         <EditPlayerSelection
           key={questions.length}
           question={question as SelectQuestion}
         />
       );
-    } else if (questionType === "WhatMinute") {
+    } else if (questionType === QuestionType.WhatMinute) {
       newQuestion = (
         <EditWhatMinute
           key={questions.length}
