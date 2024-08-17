@@ -47,19 +47,26 @@ const GameStats: FC<GameStatsProps> = ({
         {/* Statistics */}
         <div className="flex justify-between text-center text-gray-600">
           <div>
-            <p className="font-semibold text-green-600">{totalPoints} / 100</p>
+            <p className="pb-2 font-semibold text-green-600">
+              {totalPoints} / 100
+            </p>
             <p className="text-xs">total points</p>
           </div>
+          <div className="h-12 border-r border-green-600" />
           <div>
-            <p className="font-semibold text-green-600">{percentile}</p>
+            <p className="pb-2 font-semibold text-green-600">{percentile}</p>
             <p className="text-xs">percentile</p>
           </div>
+          <div className="h-12 border-r border-green-600" />
           <div>
-            <p className="font-semibold text-green-600">{rank}</p>
+            <p className="pb-2 font-semibold text-green-600">{rank}</p>
             <p className="text-xs">rank</p>
           </div>
+          <div className="h-12 border-r border-green-600" />
           <div>
-            <p className="font-semibold text-green-600">{bonusPoints} pt</p>
+            <p className="pb-2 font-semibold text-green-600">
+              {bonusPoints} pt
+            </p>
             <p className="text-xs">
               bonus{" "}
               <span role="img" aria-label="fire">
