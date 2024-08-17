@@ -1,33 +1,46 @@
 "use client";
 import Image from "next/image";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Slider from "../slider";
 import { useState } from "react";
 import PointsBadge from "../pointsBadge";
 import GoalSelector from "../goalSelector";
+import { answerQuestion } from "@/lib/actions";
 
-interface PlayerGoalsProps {
-  question: string;
-  imageSrc: string;
-  points: number;
-}
-
-const PlayerGoals: FC<PlayerGoalsProps> = ({ question, imageSrc, points }) => {
+const PlayerGoals = ({ ...props }) => {
   const [selectedOption, setSelectedOption] = useState("");
-  const goalOptions = ["0 goals", "1 goal", "2 goals", "Hattrick!", "4 goals"];
+  const goalOptions = [
+    props.answer1,
+    props.answer2,
+    props.answer3,
+    props.answer4,
+  ];
+
+  useEffect(() => {
+    const updateAnswer = async () => {
+      const formData = new FormData();
+      formData.append("answer", selectedOption);
+      formData.append("questionId", props.questionId);
+      formData.append("competitionId", props.competitionId);
+      formData.append("userId", props.userId);
+      await answerQuestion(formData);
+    };
+    if (selectedOption != "") {
+      updateAnswer();
+    }
+  }, [selectedOption]);
 
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:w-1/2 md:p-10">
         {/* Points Badge */}
-        <PointsBadge points={points} />
+        <PointsBadge points={props.points} />
 
         {/* Placeholder for Image or Graphic */}
         <div className="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-100">
           <Image
-            src={imageSrc}
+            src={props.image1 ?? "/placeholder.png"}
             alt="True or False Image"
-            layout="responsive"
             width={500}
             height={200}
             objectFit="cover"
@@ -37,7 +50,7 @@ const PlayerGoals: FC<PlayerGoalsProps> = ({ question, imageSrc, points }) => {
 
         {/* Question */}
         <h2 className="mb-1 text-center text-xl font-semibold text-gray-800">
-          {question}
+          {props.question}
         </h2>
         <p className="text-center text-gray-500">
           Select correctly to score points

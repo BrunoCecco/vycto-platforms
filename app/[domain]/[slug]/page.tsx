@@ -9,7 +9,12 @@ import {
 import BlogCard from "@/components/old-components/blog-card";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
 import db from "@/lib/db";
-import { competitions, SelectUserCompetition, sites } from "@/lib/schema";
+import {
+  competitions,
+  SelectQuestion,
+  SelectUserCompetition,
+  sites,
+} from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import Leaderboard from "@/components/leaderboard";
 import {
@@ -137,6 +142,80 @@ export default async function SiteCompetitionPage({
     notFound();
   }
 
+  const getQuestionType = (
+    type: QuestionType,
+    question: SelectQuestion,
+    userId: string,
+    index: number,
+    answer: string,
+    disabled: boolean,
+  ) => {
+    switch (type) {
+      case QuestionType.TrueFalse:
+        return (
+          <TrueFalse
+            key={index}
+            {...question}
+            userId={userId}
+            answer={answer}
+            disabled={disabled}
+          />
+        );
+      case QuestionType.WhatMinute:
+        return (
+          <WhatMinute
+            key={index}
+            {...question}
+            userId={userId}
+            answer={answer}
+            disabled={disabled}
+          />
+        );
+      case QuestionType.PlayerSelection:
+        return (
+          <PlayerSelection
+            key={index}
+            {...question}
+            userId={userId}
+            answer={answer}
+            disabled={disabled}
+          />
+        );
+      case QuestionType.MatchOutcome:
+        return (
+          <MatchOutcome
+            key={index}
+            {...question}
+            userId={userId}
+            answer={answer}
+            disabled={disabled}
+          />
+        );
+      case QuestionType.GuessScore:
+        return (
+          <GuessScore
+            key={index}
+            {...question}
+            userId={userId}
+            answer={answer}
+            disabled={disabled}
+          />
+        );
+      case QuestionType.PlayerGoals:
+        return (
+          <PlayerGoals
+            key={index}
+            {...question}
+            userId={userId}
+            answer={answer}
+            disabled={disabled}
+          />
+        );
+      default:
+        return;
+    }
+  };
+
   return (
     <>
       <div className="flex justify-center">
@@ -145,65 +224,20 @@ export default async function SiteCompetitionPage({
       <div className="mx-auto my-8 flex w-full flex-col justify-center gap-8 ">
         {questions &&
           questions.map((question: any, index: number) => {
-            if (question.type === QuestionType.TrueFalse) {
-              return (
-                <TrueFalse
-                  key={index}
-                  {...question}
-                  userId={session?.user.id!}
-                  answer={
-                    answers.find((a: any) => a.questionId === question.id)!
-                      .answer
-                  }
-                  disabled={
-                    userComp && "submitted" in userComp && userComp.submitted
-                  }
-                />
-              );
-            } else if (question.type === QuestionType.WhatMinute) {
-              console.log(question);
-              return (
-                <WhatMinute
-                  key={index}
-                  {...question}
-                  userId={session?.user.id!}
-                  answer={
-                    answers.find((a: any) => a.questionId === question.id)
-                      ?.answer
-                  }
-                  disabled={
-                    userComp && "submitted" in userComp && userComp.submitted
-                  }
-                />
-              );
-            } else if (question.type === QuestionType.PlayerSelection) {
-              return (
-                <PlayerSelection
-                  key={index}
-                  {...question}
-                  userId={session?.user.id!}
-                  answer={
-                    answers.find((a: any) => a.questionId === question.id)
-                      ?.answer
-                  }
-                  disabled={
-                    userComp && "submitted" in userComp && userComp.submitted
-                  }
-                />
-              );
-            }
-            // } else if (question.type === QuestionType.MatchOutcome) {
-            //   return <MatchOutcome key={index} />;
-            // } else if (question.type === QuestionType.GuessScore) {
-            //   return <GuessScore key={index} />;
-            // } else if (question.type === QuestionType.PlayerGoals) {
-            //   return <PlayerGoals key={index} />;
+            const answer = answers?.find(
+              (a: any) => a.questionId === question.id,
+            );
+            const disabled =
+              userComp && "submitted" in userComp && userComp.submitted;
+            return getQuestionType(
+              question.type,
+              question,
+              session?.user.id!,
+              index,
+              answer?.answer,
+              disabled || false,
+            );
           })}
-        {/* <WhatMinute />
-        <MatchOutcome />
-        <GuessScore />
-        <PlayerGoals />
-        <PlayerSelection /> */}
       </div>
 
       <div className="mb-4">

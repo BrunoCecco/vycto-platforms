@@ -8,6 +8,7 @@ import { SelectQuestion } from "@/lib/schema";
 import EditMatchOutcome from "./edit-questions/editMatchOutcome";
 import EditGuessScore from "./edit-questions/editGuessScore";
 import EditPlayerGoals from "./edit-questions/editPlayerGoals";
+import EditTrueFalse from "./edit-questions/editTrueFalse";
 
 interface IQuestion {
   id: string;
@@ -87,7 +88,13 @@ const QuestionBuilder = ({
           />
         );
       case QuestionType.TrueFalse:
-        return null;
+        return (
+          <EditTrueFalse
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
       default:
         return;
     }
@@ -179,6 +186,12 @@ const QuestionBuilder = ({
             className="block w-full px-4 py-2 text-left hover:bg-gray-100"
           >
             Add Player Goals Question
+          </button>
+          <button
+            onClick={() => handleAddQuestion(QuestionType.TrueFalse, index)}
+            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+          >
+            Add True/False Question
           </button>
         </div>
       )}

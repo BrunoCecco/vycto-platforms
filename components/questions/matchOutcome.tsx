@@ -1,38 +1,22 @@
-import { useState, FC } from "react";
+"use client";
+import { useState, FC, useEffect } from "react";
 import Image from "next/image";
 import PointsBadge from "../pointsBadge";
+import { answerQuestion } from "@/lib/actions";
+import Submit from "./submit";
 
-// Define the types for the props
-interface Team {
-  name: string;
-  image: string;
-  position: string;
-}
-
-interface MatchOutcomeProps {
-  question: string;
-  points: number;
-  homeTeam: Team;
-  awayTeam: Team;
-}
-
-const MatchOutcome: FC<MatchOutcomeProps> = ({
-  question,
-  points,
-  homeTeam,
-  awayTeam,
-}) => {
-  const [selectedOutcome, setSelectedOutcome] = useState<string | null>(null);
+const MatchOutcome = ({ ...props }) => {
+  const [selectedOutcome, setSelectedOutcome] = useState(props.answer || "");
 
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:w-1/2 md:p-10">
         {/* Points Badge */}
-        <PointsBadge points={points} />
+        <PointsBadge points={props.points} />
 
         {/* Match Info */}
         <h2 className="text-lg font-semibold text-gray-800 md:text-xl">
-          {question}
+          {props.question}
         </h2>
         <p className="text-sm text-gray-500">Pick the winner to score points</p>
 
@@ -41,22 +25,28 @@ const MatchOutcome: FC<MatchOutcomeProps> = ({
           {/* Home Team */}
           <div
             className={`cursor-pointer text-center ${
-              selectedOutcome === homeTeam.name ? "opacity-100" : "opacity-50"
+              selectedOutcome === props.answer1 ? "opacity-100" : "opacity-50"
             }`}
-            onClick={() => setSelectedOutcome(homeTeam.name)}
+            onClick={() => setSelectedOutcome(props.answer1)}
           >
-            <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
-              <Image
-                src={homeTeam.image}
-                alt={homeTeam.name}
-                layout="fill"
-                objectFit="cover"
-              />
-            </div>
+            <Submit
+              userId={props.userId}
+              questionId={props.id}
+              competitionId={props.competitionId}
+              answer={props.answer1}
+            >
+              <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
+                <Image
+                  src={props.image1}
+                  alt={props.answer1}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
+            </Submit>
             <p className="text-sm font-semibold text-gray-700">
-              {homeTeam.name}
+              {props.answer1}
             </p>
-            <p className="text-xs text-gray-500">{homeTeam.position}</p>
           </div>
 
           {/* VS */}
@@ -69,22 +59,16 @@ const MatchOutcome: FC<MatchOutcomeProps> = ({
           {/* Away Team */}
           <div
             className={`cursor-pointer text-center ${
-              selectedOutcome === awayTeam.name ? "opacity-100" : "opacity-50"
+              selectedOutcome === props.answer2 ? "opacity-100" : "opacity-50"
             }`}
-            onClick={() => setSelectedOutcome(awayTeam.name)}
+            onClick={() => setSelectedOutcome(props.answer2)}
           >
             <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
-              <Image
-                src={awayTeam.image}
-                alt={awayTeam.name}
-                layout="fill"
-                objectFit="cover"
-              />
+              <Image src={props.image2} alt={props.answer2} objectFit="cover" />
             </div>
             <p className="text-sm font-semibold text-gray-700">
-              {awayTeam.name}
+              {props.answer2}
             </p>
-            <p className="text-xs text-gray-500">{awayTeam.position}</p>
           </div>
         </div>
 
@@ -92,7 +76,7 @@ const MatchOutcome: FC<MatchOutcomeProps> = ({
         <div className="flex justify-center">
           <button
             className={`w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 ${
-              selectedOutcome === "Draw" ? "opacity-100" : "opacity-50"
+              selectedOutcome === props.answer3 ? "opacity-100" : "opacity-50"
             }`}
             onClick={() => setSelectedOutcome("Draw")}
           >

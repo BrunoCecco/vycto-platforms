@@ -1,16 +1,10 @@
+"use client";
 import Image from "next/image";
 import { FC, useState } from "react";
 import PointsBadge from "../pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
 
-// Define the types for the props
-interface GuessScoreProps {
-  homeTeam: string;
-  awayTeam: string;
-  points: number;
-}
-
-const GuessScore: FC<GuessScoreProps> = ({ homeTeam, awayTeam, points }) => {
+const GuessScore = ({ ...props }) => {
   const [scoreHome, setScoreHome] = useState(0);
   const [scoreAway, setScoreAway] = useState(0);
 
@@ -18,7 +12,7 @@ const GuessScore: FC<GuessScoreProps> = ({ homeTeam, awayTeam, points }) => {
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:w-1/2 md:p-10">
         {/* Points Badge */}
-        <PointsBadge points={points} />
+        <PointsBadge points={props.points} />
 
         <h2 className="mb-12 text-xl font-semibold text-gray-800">
           Guess the score 🔥
@@ -36,7 +30,7 @@ const GuessScore: FC<GuessScoreProps> = ({ homeTeam, awayTeam, points }) => {
                 <PlusCircle />
               </button>
             </div>
-            <p className="text-sm font-semibold">{homeTeam}</p>
+            <p className="text-sm font-semibold">{props.answer1}</p>
           </div>
 
           {/* VS */}
@@ -56,7 +50,7 @@ const GuessScore: FC<GuessScoreProps> = ({ homeTeam, awayTeam, points }) => {
                 <PlusCircle />
               </button>
             </div>
-            <p className="text-sm font-semibold">{awayTeam}</p>
+            <p className="text-sm font-semibold">{props.answer2}</p>
           </div>
         </div>
       </div>
