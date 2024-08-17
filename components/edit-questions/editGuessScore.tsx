@@ -2,18 +2,28 @@
 import { useState } from "react";
 import PointsBadge from "../pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
+import { SelectQuestion } from "@/lib/schema";
+import { updateQuestionMetadata } from "@/lib/actions";
+import { toast } from "sonner";
 
-const EditGuessScore = () => {
-  const [scoreHome, setScoreHome] = useState(0);
-  const [scoreAway, setScoreAway] = useState(0);
-
+const EditGuessScore = ({
+  question,
+  removeQuestion,
+}: {
+  question: SelectQuestion;
+  removeQuestion: (id: string) => void;
+}) => {
   const [isEditingHome, setIsEditingHome] = useState(false);
   const [isEditingAway, setIsEditingAway] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
 
-  const [homeTeam, setHomeTeam] = useState("Home Team");
-  const [awayTeam, setAwayTeam] = useState("Away Team");
-  const [points, setPoints] = useState(0);
+  const [homeTeam, setHomeTeam] = useState(question.answer1 || "Home Team");
+  const [awayTeam, setAwayTeam] = useState(question.answer2 || "Away Team");
+  const [points, setPoints] = useState(question.points || 0);
+
+  const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
+    question.correctAnswer || "",
+  );
 
   const handleInputChange =
     (setValue: (value: string) => void) =>
@@ -27,7 +37,26 @@ const EditGuessScore = () => {
 
   const handleRemove = async () => {
     if (!confirm("Are you sure you want to remove this question?")) return;
-    // removeQuestion(question.id);
+    removeQuestion(question.id);
+  };
+
+  const updateQuestion = async (key: string, value: string) => {
+    const formData = new FormData();
+    formData.append(key, value);
+    console.log("formData", key, value);
+    await updateQuestionMetadata(formData, question, key);
+    toast.success("Question updated successfully");
+  };
+
+  const handleInputBlur = async (key: string, value: string) => {
+    setIsEditingPoints(false);
+    await updateQuestion(key, value);
+  };
+
+  const handleCorrectAnswerInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setEditedCorrectAnswer(e.target.value);
   };
 
   return (
@@ -38,9 +67,10 @@ const EditGuessScore = () => {
           {isEditingPoints ? (
             <input
               type="number"
+              name="points"
               value={points}
               onChange={handlePointsChange}
-              onBlur={() => setIsEditingPoints(false)}
+              onBlur={() => handleInputBlur("points", points.toString())}
               autoFocus
               className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
             />
@@ -59,20 +89,17 @@ const EditGuessScore = () => {
         <div className="flex w-full items-center justify-between gap-4 py-4 md:justify-around md:px-4">
           <div className="flex flex-col items-center gap-4 text-gray-500">
             <div className="flex items-center gap-4 md:gap-8">
-              <button onClick={() => setScoreHome(Math.max(scoreHome - 1, 0))}>
-                <MinusCircle />
-              </button>
-              <div>{scoreHome}</div>
-              <button onClick={() => setScoreHome(scoreHome + 1)}>
-                <PlusCircle />
-              </button>
+              <MinusCircle />
+              <div>0</div>
+              <PlusCircle />
             </div>
             {isEditingHome ? (
               <input
                 type="text"
+                name="answer1"
                 value={homeTeam}
-                onChange={handleInputChange(setHomeTeam)}
-                onBlur={() => setIsEditingHome(false)}
+                onChange={(e) => setHomeTeam(e.target.value)}
+                onBlur={() => handleInputBlur("answer1", homeTeam)}
                 autoFocus
                 className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
               />
@@ -95,20 +122,17 @@ const EditGuessScore = () => {
 
           <div className="flex flex-col items-center gap-4 text-gray-500">
             <div className="flex items-center gap-4 md:gap-8">
-              <button onClick={() => setScoreAway(Math.max(scoreAway - 1, 0))}>
-                <MinusCircle />
-              </button>
-              <div>{scoreAway}</div>
-              <button onClick={() => setScoreAway(scoreAway + 1)}>
-                <PlusCircle />
-              </button>
+              <MinusCircle />
+              <div>0</div>
+              <PlusCircle />
             </div>
             {isEditingAway ? (
               <input
                 type="text"
+                name="answer2"
                 value={awayTeam}
-                onChange={handleInputChange(setAwayTeam)}
-                onBlur={() => setIsEditingAway(false)}
+                onChange={(e) => setAwayTeam(e.target.value)}
+                onBlur={() => handleInputBlur("answer2", awayTeam)}
                 autoFocus
                 className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
               />
@@ -130,9 +154,9 @@ const EditGuessScore = () => {
           </label>
           <input
             type="text"
-            // value={question.correctAnswer || editedCorrectAnswer}
-            // onChange={handleCorrectAnswerInputChange}
-            // onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
+            value={question.correctAnswer || editedCorrectAnswer}
+            onChange={handleCorrectAnswerInputChange}
+            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
             placeholder="0 - 0"
             autoFocus
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"

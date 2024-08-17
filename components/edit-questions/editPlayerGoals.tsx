@@ -2,32 +2,43 @@
 import { useState } from "react";
 import PointsBadge from "../pointsBadge";
 import GoalSelector from "../goalSelector";
+import { SelectQuestion } from "@/lib/schema";
+import { updateQuestionMetadata } from "@/lib/actions";
+import { toast } from "sonner";
 
-const EditPlayerGoals = () => {
-  const [selectedOption, setSelectedOption] = useState("");
+const EditPlayerGoals = ({
+  question,
+  removeQuestion,
+}: {
+  question: SelectQuestion;
+  removeQuestion: (id: string) => void;
+}) => {
   const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
-  const [question, setQuestion] = useState(
-    "How many goals will the player score?",
+  const [editedQuestion, setEditedQuestion] = useState(
+    question.question || "How many goals will the player score?",
   );
-  const [points, setPoints] = useState(0);
+  const [points, setPoints] = useState(question.points || 0);
   const [options, setOptions] = useState([
-    "0 goals",
-    "1 goal",
-    "2 goals",
-    "Hattrick!",
+    question.answer1 || "0 goals",
+    question.answer2 || "1 goal",
+    question.answer3 || "2 goals",
+    question.answer4 || "Hattrick!",
   ]);
   const [newOption, setNewOption] = useState("");
+  const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
+    question.correctAnswer || "",
+  );
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuestion(e.target.value);
+    setEditedQuestion(e.target.value);
   };
 
   const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPoints(parseInt(e.target.value) || 0);
   };
 
-  const handleOptionChange = (index: number, value: string) => {
+  const handleOptionChange = async (index: number, value: string) => {
     const updatedOptions = [...options];
     updatedOptions[index] = value;
     setOptions(updatedOptions);
@@ -47,7 +58,26 @@ const EditPlayerGoals = () => {
 
   const handleRemove = async () => {
     if (!confirm("Are you sure you want to remove this question?")) return;
-    // removeQuestion(question.id);
+    removeQuestion(question.id);
+  };
+
+  const updateQuestion = async (key: string, value: string) => {
+    const formData = new FormData();
+    formData.append(key, value);
+    console.log("formData", key, value);
+    await updateQuestionMetadata(formData, question, key);
+    toast.success("Question updated successfully");
+  };
+
+  const handleInputBlur = async (key: string, value: string) => {
+    setIsEditingPoints(false);
+    await updateQuestion(key, value);
+  };
+
+  const handleCorrectAnswerInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setEditedCorrectAnswer(e.target.value);
   };
 
   return (
@@ -58,9 +88,10 @@ const EditPlayerGoals = () => {
           {isEditingPoints ? (
             <input
               type="number"
+              name="points"
               value={points}
               onChange={handlePointsChange}
-              onBlur={() => setIsEditingPoints(false)}
+              onBlur={() => handleInputBlur("points", points.toString())}
               autoFocus
               className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
             />
@@ -81,9 +112,10 @@ const EditPlayerGoals = () => {
           {isEditingQuestion ? (
             <input
               type="text"
-              value={question}
+              name="question"
+              value={editedQuestion}
               onChange={handleQuestionChange}
-              onBlur={() => setIsEditingQuestion(false)}
+              onBlur={() => handleInputBlur("question", editedQuestion)}
               autoFocus
               className="w-full border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
             />
@@ -92,7 +124,7 @@ const EditPlayerGoals = () => {
               className="cursor-pointer border-2 text-xl font-semibold text-gray-800"
               onClick={() => setIsEditingQuestion(true)}
             >
-              {question}
+              {editedQuestion}
             </h2>
           )}
         </div>
@@ -106,8 +138,10 @@ const EditPlayerGoals = () => {
             <div key={index} className="mb-2 flex items-center">
               <input
                 type="text"
+                name={"anwer" + (index + 1)}
                 value={option}
                 onChange={(e) => handleOptionChange(index, e.target.value)}
+                onBlur={() => handleInputBlur("answer" + (index + 1), option)}
                 className="mr-2 border-b-2 border-gray-300 text-center"
               />
               <button
@@ -118,21 +152,23 @@ const EditPlayerGoals = () => {
               </button>
             </div>
           ))}
-          <div className="flex items-center">
-            <input
-              type="text"
-              value={newOption}
-              onChange={(e) => setNewOption(e.target.value)}
-              placeholder="Add new option"
-              className="mr-2 border-b-2 border-gray-300 text-center"
-            />
-            <button
-              onClick={handleAddOption}
-              className="ml-2 rounded bg-blue-500 px-2 py-1 text-white"
-            >
-              Add
-            </button>
-          </div>
+          {options?.length < 4 && (
+            <div className="flex items-center">
+              <input
+                type="text"
+                value={newOption}
+                onChange={(e) => setNewOption(e.target.value)}
+                placeholder="Add new option"
+                className="mr-2 border-b-2 border-gray-300 text-center"
+              />
+              <button
+                onClick={handleAddOption}
+                className="ml-2 rounded bg-blue-500 px-2 py-1 text-white"
+              >
+                Add
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Save Button */}

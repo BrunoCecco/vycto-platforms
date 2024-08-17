@@ -20,7 +20,7 @@ const EditWhatMinute = ({
     question.question ?? "What minute?",
   );
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
-    question.correctAnswer ?? "0",
+    question.correctAnswer ?? "",
   );
   const [points, setPoints] = useState(question.points ?? 0);
   const [image, setImage] = useState(question.image1 ?? "/trueFalse.jpg");
@@ -133,6 +133,7 @@ const EditWhatMinute = ({
             initialValue={question.answer1 || "0"}
             questionId={question.id}
             question={question}
+            disabled={false}
           />
         </div>
 

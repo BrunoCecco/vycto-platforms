@@ -2,23 +2,27 @@
 import { useState } from "react";
 import Image from "next/image";
 import PointsBadge from "../pointsBadge";
+import { SelectQuestion } from "@/lib/schema";
+import { updateQuestionMetadata } from "@/lib/actions";
+import { toast } from "sonner";
 
-const EditMatchOutcome = () => {
-  const [selectedOutcome, setSelectedOutcome] = useState<string | null>(null);
-
+const EditMatchOutcome = ({
+  question,
+  removeQuestion,
+}: {
+  question: SelectQuestion;
+  removeQuestion: (id: string) => void;
+}) => {
   const [isEditingHome, setIsEditingHome] = useState(false);
   const [isEditingAway, setIsEditingAway] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
 
-  const [homeTeam, setHomeTeam] = useState("Real Madrid");
-  const [awayTeam, setAwayTeam] = useState("Chelsea");
-  const [points, setPoints] = useState(0);
-
-  const handleInputChange =
-    (setValue: (value: string) => void) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(e.target.value);
-    };
+  const [homeTeam, setHomeTeam] = useState(question.answer1 || "Real Madrid");
+  const [awayTeam, setAwayTeam] = useState(question.answer2 || "Chelsea");
+  const [points, setPoints] = useState(question.points || 0);
+  const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
+    question.correctAnswer || "",
+  );
 
   const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPoints(parseInt(e.target.value) || 0);
@@ -26,7 +30,26 @@ const EditMatchOutcome = () => {
 
   const handleRemove = async () => {
     if (!confirm("Are you sure you want to remove this question?")) return;
-    // removeQuestion(question.id);
+    removeQuestion(question.id);
+  };
+
+  const updateQuestion = async (key: string, value: string) => {
+    const formData = new FormData();
+    formData.append(key, value);
+    console.log("formData", key, value);
+    await updateQuestionMetadata(formData, question, key);
+    toast.success("Question updated successfully");
+  };
+
+  const handleInputBlur = async (key: string, value: string) => {
+    setIsEditingPoints(false);
+    await updateQuestion(key, value);
+  };
+
+  const handleCorrectAnswerInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setEditedCorrectAnswer(e.target.value);
   };
 
   return (
@@ -39,7 +62,7 @@ const EditMatchOutcome = () => {
               type="number"
               value={points}
               onChange={handlePointsChange}
-              onBlur={() => setIsEditingPoints(false)}
+              onBlur={() => handleInputBlur("points", points.toString())}
               autoFocus
               className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
             />
@@ -59,12 +82,7 @@ const EditMatchOutcome = () => {
         {/* Teams */}
         <div className="flex w-full items-center justify-between py-4 md:justify-around md:px-4">
           {/* Home Team */}
-          <div
-            className={`cursor-pointer text-center ${
-              selectedOutcome === homeTeam ? "opacity-100" : "opacity-50"
-            }`}
-            onClick={() => setSelectedOutcome(homeTeam)}
-          >
+          <div className={`text-center`}>
             <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
               <Image
                 src="/real-madrid.jpg" // Replace with the appropriate image path
@@ -76,9 +94,10 @@ const EditMatchOutcome = () => {
             {isEditingHome ? (
               <input
                 type="text"
+                name="answer1"
                 value={homeTeam}
-                onChange={handleInputChange(setHomeTeam)}
-                onBlur={() => setIsEditingHome(false)}
+                onChange={(e) => setHomeTeam(e.target.value)}
+                onBlur={() => handleInputBlur("answer1", homeTeam)}
                 autoFocus
                 className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
               />
@@ -102,12 +121,7 @@ const EditMatchOutcome = () => {
           </div>
 
           {/* Away Team */}
-          <div
-            className={`cursor-pointer text-center ${
-              selectedOutcome === awayTeam ? "opacity-100" : "opacity-50"
-            }`}
-            onClick={() => setSelectedOutcome(awayTeam)}
-          >
+          <div className={`text-center`}>
             <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
               <Image
                 src="/chelsea.jpg" // Replace with the appropriate image path
@@ -119,9 +133,10 @@ const EditMatchOutcome = () => {
             {isEditingAway ? (
               <input
                 type="text"
+                name="answer2"
                 value={awayTeam}
-                onChange={handleInputChange(setAwayTeam)}
-                onBlur={() => setIsEditingAway(false)}
+                onChange={(e) => setAwayTeam(e.target.value)}
+                onBlur={() => handleInputBlur("answer2", awayTeam)}
                 autoFocus
                 className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
               />
@@ -140,14 +155,11 @@ const EditMatchOutcome = () => {
 
         {/* Draw Button */}
         <div className="flex justify-center">
-          <button
-            className={`w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 ${
-              selectedOutcome === "Draw" ? "opacity-100" : "opacity-50"
-            }`}
-            onClick={() => setSelectedOutcome("Draw")}
+          <div
+            className={`w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-center text-sm font-semibold text-blue-600`}
           >
             Draw
-          </button>
+          </div>
         </div>
 
         {/* Save Button */}
@@ -157,9 +169,9 @@ const EditMatchOutcome = () => {
           </label>
           <input
             type="text"
-            // value={question.correctAnswer || editedCorrectAnswer}
-            // onChange={handleCorrectAnswerInputChange}
-            // onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
+            value={question.correctAnswer || editedCorrectAnswer}
+            onChange={handleCorrectAnswerInputChange}
+            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
             placeholder="Chelsea"
             autoFocus
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"

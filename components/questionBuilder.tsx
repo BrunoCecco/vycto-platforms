@@ -5,6 +5,9 @@ import EditWhatMinute from "./edit-questions/editWhatMinute";
 import { createQuestion, deleteQuestion } from "@/lib/actions";
 import { QuestionType } from "@/lib/types";
 import { SelectQuestion } from "@/lib/schema";
+import EditMatchOutcome from "./edit-questions/editMatchOutcome";
+import EditGuessScore from "./edit-questions/editGuessScore";
+import EditPlayerGoals from "./edit-questions/editPlayerGoals";
 
 interface IQuestion {
   id: string;
@@ -25,31 +28,11 @@ const QuestionBuilder = ({
   useEffect(() => {
     const initialQuestionData = initialQuestions.map(
       (question: SelectQuestion, index: number) => {
-        if (question.type === QuestionType.PlayerSelection) {
-          return {
-            id: question.id,
-            type: question.type,
-            element: (
-              <EditPlayerSelection
-                key={question.id}
-                question={question as SelectQuestion}
-                removeQuestion={handleRemoveQuestion}
-              />
-            ),
-          };
-        } else {
-          return {
-            id: question.id,
-            type: question.type,
-            element: (
-              <EditWhatMinute
-                key={question.id}
-                question={question as SelectQuestion}
-                removeQuestion={handleRemoveQuestion}
-              />
-            ),
-          };
-        }
+        return {
+          id: question.id,
+          type: question.type,
+          element: getQuestionElement(question, question.type as QuestionType),
+        };
       },
     );
     if (initialQuestionData && initialQuestionData.length > 0) {
@@ -61,9 +44,59 @@ const QuestionBuilder = ({
     console.log(questions);
   }, [questions]);
 
+  const getQuestionElement = (question: SelectQuestion, type: QuestionType) => {
+    switch (type) {
+      case QuestionType.PlayerSelection:
+        return (
+          <EditPlayerSelection
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.WhatMinute:
+        return (
+          <EditWhatMinute
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.MatchOutcome:
+        return (
+          <EditMatchOutcome
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.GuessScore:
+        return (
+          <EditGuessScore
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.PlayerGoals:
+        return (
+          <EditPlayerGoals
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.TrueFalse:
+        return null;
+      default:
+        return;
+    }
+  };
+
   const handleRemoveQuestion = async (id: string) => {
     const newQuestions = [...questions];
     const index = newQuestions.findIndex((question) => question.id === id);
+    console.log("index", index);
     if (index === -1) return;
     newQuestions.splice(index, 1);
     setQuestions(newQuestions);
@@ -84,26 +117,8 @@ const QuestionBuilder = ({
 
     if (!question) return;
 
-    let newQuestion: JSX.Element;
-    if (questionType === QuestionType.PlayerSelection) {
-      newQuestion = (
-        <EditPlayerSelection
-          key={questions.length}
-          question={question as SelectQuestion}
-          removeQuestion={handleRemoveQuestion}
-        />
-      );
-    } else if (questionType === QuestionType.WhatMinute) {
-      newQuestion = (
-        <EditWhatMinute
-          key={questions.length}
-          question={question as SelectQuestion}
-          removeQuestion={handleRemoveQuestion}
-        />
-      );
-    } else {
-      return;
-    }
+    let newQuestion = getQuestionElement(question, questionType);
+    if (!newQuestion) return;
 
     if (index === null) {
       setQuestions([
@@ -124,13 +139,15 @@ const QuestionBuilder = ({
   const renderAddButton = (index: number | null) => (
     <div className="flex justify-center p-8">
       <button
-        onClick={() => setShowOptionsIndex(index)}
+        onClick={() =>
+          setShowOptionsIndex(showOptionsIndex === index ? null : index)
+        }
         className="flex items-center justify-center rounded-full bg-blue-500 p-4 text-white hover:bg-blue-600"
       >
-        Add Question
+        {showOptionsIndex === index ? "Cancel" : "Add Question"}
       </button>
       {showOptionsIndex === index && (
-        <div className="absolute z-10 mt-2 w-72 rounded-lg bg-white shadow-lg">
+        <div className="absolute z-10 mt-10 w-72 rounded-lg bg-white shadow-lg">
           <button
             onClick={() =>
               handleAddQuestion(QuestionType.PlayerSelection, index)
@@ -144,6 +161,24 @@ const QuestionBuilder = ({
             className="block w-full px-4 py-2 text-left hover:bg-gray-100"
           >
             Add What Minute Question
+          </button>
+          <button
+            onClick={() => handleAddQuestion(QuestionType.MatchOutcome, index)}
+            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+          >
+            Add Match Outcome Question
+          </button>
+          <button
+            onClick={() => handleAddQuestion(QuestionType.GuessScore, index)}
+            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+          >
+            Add Guess Score Question
+          </button>
+          <button
+            onClick={() => handleAddQuestion(QuestionType.PlayerGoals, index)}
+            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+          >
+            Add Player Goals Question
           </button>
         </div>
       )}
