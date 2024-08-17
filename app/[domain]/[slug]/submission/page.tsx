@@ -9,15 +9,10 @@ import {
 import BlogCard from "@/components/old-components/blog-card";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
 import db from "@/lib/db";
-import { competitions, SelectUserCompetition, sites } from "@/lib/schema";
+import { competitions, sites } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import Leaderboard from "@/components/leaderboard";
-import {
-  answerQuestion,
-  calculateUserPoints,
-  enterUserToCompetition,
-  submitAnswers,
-} from "@/lib/actions";
+import { answerQuestion, enterUserToCompetition } from "@/lib/actions";
 import { getSession } from "@/lib/auth";
 import TrueFalse from "@/components/questions/trueFalse";
 import WhatMinute from "@/components/questions/whatMinute";
@@ -27,79 +22,8 @@ import PlayerGoals from "@/components/questions/playerGoals";
 import PlayerSelection from "@/components/questions/playerSelection";
 import { QuestionType } from "@/lib/types";
 import CompetitionHeader from "@/components/competitionHeader";
-import TabSelector from "@/components/tabSelector";
-import SubmitAnswersForm from "@/components/form/submit-answers-form";
-import Link from "next/link";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { domain: string; slug: string };
-}) {
-  const domain = decodeURIComponent(params.domain);
-  const slug = decodeURIComponent(params.slug);
-
-  const [data, siteData] = await Promise.all([
-    getCompetitionData(domain, slug),
-    getSiteData(domain),
-  ]);
-  if (!data || !siteData) {
-    return null;
-  }
-  const { title, description } = data;
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      creator: "@vercel",
-    },
-    // Optional: Set canonical URL to custom domain if it exists
-    // ...(params.domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
-    //   siteData.customDomain && {
-    //     alternates: {
-    //       canonical: `https://${siteData.customDomain}/${params.slug}`,
-    //     },
-    //   }),
-  };
-}
-
-export async function generateStaticParams() {
-  const allCompetitions = await db
-    .select({
-      slug: competitions.slug,
-      site: {
-        subdomain: sites.subdomain,
-        customDomain: sites.customDomain,
-      },
-    })
-    .from(competitions)
-    .leftJoin(sites, eq(competitions.siteId, sites.id));
-
-  const allPaths = allCompetitions
-    .flatMap(({ site, slug }) => [
-      site?.subdomain && {
-        domain: `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
-        slug,
-      },
-      site?.customDomain && {
-        domain: site.customDomain,
-        slug,
-      },
-    ])
-    .filter(Boolean);
-
-  return allPaths;
-}
-
-export default async function SiteCompetitionPage({
+export default async function SubmissionPage({
   params,
 }: {
   params: { domain: string; slug: string };
@@ -108,28 +32,21 @@ export default async function SiteCompetitionPage({
   const slug = decodeURIComponent(params.slug);
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
+
   let questions;
   let answers: any;
   let users;
-  let userComp: SelectUserCompetition | undefined | { error: string };
   if (data) {
     questions = await getQuestionsForCompetition(data.id);
     answers = await getAnswersForUser(session?.user.id!, data!.id);
   }
-  console.log("pointsss");
-  if (data && new Date(data.date).getTime() < Date.now()) {
-    // calculate points
-    const points = await calculateUserPoints(session?.user.id!, data!.id);
-    console.log(points, "points");
-  }
 
   if (session && data) {
-    userComp = await enterUserToCompetition(
+    await enterUserToCompetition(
       session.user.id,
       session.user.username || session.user.name || session.user.email,
       data.id,
     );
-    console.log(userComp, "userComp");
     users = await getCompetitionUsers(data!.id);
   }
 
@@ -155,9 +72,6 @@ export default async function SiteCompetitionPage({
                     answers.find((a: any) => a.questionId === question.id)!
                       .answer
                   }
-                  disabled={
-                    userComp && "submitted" in userComp && userComp.submitted
-                  }
                 />
               );
             } else if (question.type === QuestionType.WhatMinute) {
@@ -171,9 +85,6 @@ export default async function SiteCompetitionPage({
                     answers.find((a: any) => a.questionId === question.id)
                       ?.answer
                   }
-                  disabled={
-                    userComp && "submitted" in userComp && userComp.submitted
-                  }
                 />
               );
             } else if (question.type === QuestionType.PlayerSelection) {
@@ -185,9 +96,6 @@ export default async function SiteCompetitionPage({
                   answer={
                     answers.find((a: any) => a.questionId === question.id)
                       ?.answer
-                  }
-                  disabled={
-                    userComp && "submitted" in userComp && userComp.submitted
                   }
                 />
               );
@@ -204,22 +112,6 @@ export default async function SiteCompetitionPage({
         <GuessScore />
         <PlayerGoals />
         <PlayerSelection /> */}
-      </div>
-
-      <div className="mb-4">
-        {userComp && "submitted" in userComp && userComp.submitted ? (
-          <Link
-            href={`/competitions/${data.id}/submission`}
-            className="mx-auto flex h-8 w-32 items-center justify-center space-x-2 rounded-md border border-green-600 bg-green-600 text-sm text-white transition-all hover:bg-white hover:text-green-600 focus:outline-none sm:h-10 dark:hover:bg-transparent"
-          >
-            View submission
-          </Link>
-        ) : (
-          <SubmitAnswersForm
-            userId={session?.user.id!}
-            competitionId={data.id}
-          />
-        )}
       </div>
 
       <Leaderboard users={users} />

@@ -444,6 +444,18 @@ export const enterUserToCompetition = async (
   competitionId: string,
 ) => {
   try {
+    // first check if the user is already in the competition
+    const existingUser = await db.query.userCompetitions.findFirst({
+      where: and(
+        eq(userCompetitions.userId, userId),
+        eq(userCompetitions.competitionId, competitionId),
+      ),
+    });
+
+    if (existingUser) {
+      return existingUser;
+    }
+
     const [response] = await db
       .insert(userCompetitions)
       .values({
@@ -451,6 +463,29 @@ export const enterUserToCompetition = async (
         username,
         competitionId,
       })
+      .returning();
+
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const submitAnswers = async (userId: string, competitionId: string) => {
+  try {
+    const [response] = await db
+      .update(userCompetitions)
+      .set({
+        submitted: true,
+      })
+      .where(
+        and(
+          eq(userCompetitions.userId, userId),
+          eq(userCompetitions.competitionId, competitionId),
+        ),
+      )
       .returning();
 
     return response;

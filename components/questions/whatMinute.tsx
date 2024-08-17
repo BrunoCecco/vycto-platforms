@@ -30,12 +30,15 @@ const WhatMinute = ({ ...props }) => {
         <p className="text-center text-gray-500">
           The closer you get, the more points you score
         </p>
+        {props.disabled}
+        {"disabled"}
 
         <div className="flex items-center justify-center">
           <Slider
             initialValue={props.answer}
             userId={props.userId}
             questionId={props.id}
+            disabled={props.disabled}
           />
         </div>
         {props.correctAnswer?.length > 0 ? (

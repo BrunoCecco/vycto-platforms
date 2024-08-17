@@ -9,11 +9,13 @@ const Slider = ({
   questionId,
   initialValue,
   question,
+  disabled,
 }: {
   userId?: string;
   questionId: string;
   initialValue: string;
   question?: SelectQuestion;
+  disabled: boolean;
 }) => {
   const [values, setValues] = useState([parseInt(initialValue) || 0]);
   const MIN = 0;
@@ -70,12 +72,14 @@ const Slider = ({
             step={1}
             min={MIN}
             max={MAX}
+            disabled={disabled}
             values={values}
             onChange={handleChange}
             onFinalChange={() => formRef.current?.requestSubmit()}
             renderTrack={({ props, children }) => (
               <div
                 {...props}
+                key={questionId + "-track"}
                 className="h-2 w-full rounded-full bg-gray-200"
                 style={{ position: "relative" }}
               >
@@ -93,6 +97,7 @@ const Slider = ({
             renderThumb={({ props }) => (
               <div
                 {...props}
+                key={questionId + "-thumb"}
                 className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-gray-200 shadow-md"
                 style={{
                   display: "flex",

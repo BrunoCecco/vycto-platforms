@@ -208,6 +208,7 @@ export const userCompetitions = pgTable(
         onUpdate: "cascade",
       }),
     points: integer("points").default(0),
+    submitted: boolean("submitted").default(false),
   },
   (table) => {
     return {

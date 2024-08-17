@@ -9,17 +9,20 @@ const PlayerComponent = ({
   image,
   selectedPlayer,
   setSelectedPlayer,
+  disabled,
 }: {
   name: string;
   image: string;
   selectedPlayer: string | null;
   setSelectedPlayer: (player: string) => void;
+  disabled?: boolean;
 }) => {
   return (
     <button
       className={`cursor-pointer rounded-lg border-2 p-2 shadow-sm transition duration-200 ${
         selectedPlayer === name ? "border-yellow-500" : "border-transparent"
       }`}
+      disabled={disabled}
       type="submit"
       onClick={() => setSelectedPlayer(name)}
     >
@@ -71,6 +74,7 @@ const PlayerSelection = ({ ...props }) => {
               image={props.image1}
               selectedPlayer={selectedPlayer}
               setSelectedPlayer={setSelectedPlayer}
+              disabled={props.disabled}
             />
           </Submit>
           <Submit
@@ -84,6 +88,7 @@ const PlayerSelection = ({ ...props }) => {
               image={props.image2}
               selectedPlayer={selectedPlayer}
               setSelectedPlayer={setSelectedPlayer}
+              disabled={props.disabled}
             />
           </Submit>
           <Submit
@@ -97,6 +102,7 @@ const PlayerSelection = ({ ...props }) => {
               image={props.image3}
               selectedPlayer={selectedPlayer}
               setSelectedPlayer={setSelectedPlayer}
+              disabled={props.disabled}
             />
           </Submit>
           <Submit
@@ -110,6 +116,7 @@ const PlayerSelection = ({ ...props }) => {
               image={props.image4}
               selectedPlayer={selectedPlayer}
               setSelectedPlayer={setSelectedPlayer}
+              disabled={props.disabled}
             />
           </Submit>
         </div>
