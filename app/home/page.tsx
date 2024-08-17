@@ -1,7 +1,8 @@
 "use client";
+import EditGuessScore from "@/components/edit-questions/editGuessScore";
+import EditMatchOutcome from "@/components/edit-questions/editMatchOutcome";
+import EditPlayerGoals from "@/components/edit-questions/editPlayerGoals";
 import EditPlayerSelection from "@/components/edit-questions/editPlayerSelection";
-import EditWhatMinute from "@/components/edit-questions/editWhatMinute";
-import FanZone from "@/components/fanZone";
 import QuestionBuilder from "@/components/questionBuilder";
 import GuessScore from "@/components/questions/guessScore";
 import MatchOutcome from "@/components/questions/matchOutcome";
@@ -52,7 +53,10 @@ export default function HomePage() {
         Here is the question builder. When you select a question you can click
         on points, question etc to edit.
       </h1>
-      {/* <QuestionBuilder competitionId={"id"} /> */}
+      {/* <EditGuessScore />
+      <EditMatchOutcome />
+      <EditPlayerGoals /> */}
+      {/* <QuestionBuilder competitionId={"id"} initialQuestions={[]} /> */}
       <h1 className="text-2xl font-bold">
         All questions below have data passed in from props. Should be easier to
         populate now by setting props from DB data. If needed, answers can now

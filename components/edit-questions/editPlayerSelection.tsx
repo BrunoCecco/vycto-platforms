@@ -1,17 +1,10 @@
 "use client";
-import { useState } from "react";
-import Image from "next/image";
-import PointsBadge from "../pointsBadge";
-import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
+import { SelectQuestion } from "@/lib/schema";
+import { useState } from "react";
 import { toast } from "sonner";
 import Uploader from "../old-components/uploader";
-
-interface Player {
-  name: string;
-  position: string;
-  image: string;
-}
+import PointsBadge from "../pointsBadge";
 
 const PlayerComponent = ({
   questionId,
@@ -153,7 +146,7 @@ const EditPlayerSelection = ({
 
   return (
     <div className="flex items-center justify-center">
-      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:w-1/2 md:p-10">
+      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
@@ -186,7 +179,7 @@ const EditPlayerSelection = ({
             />
           ) : (
             <h2
-              className="cursor-pointer text-xl font-semibold text-gray-800"
+              className="cursor-pointer border-2 text-xl font-semibold text-gray-800"
               onClick={handleQuestionClick}
             >
               {question.question ?? editedQuestion}

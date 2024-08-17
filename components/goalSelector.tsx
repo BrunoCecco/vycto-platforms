@@ -4,14 +4,14 @@ import { FC } from "react";
 interface GoalSelectorProps {
   selectedOption: string;
   setSelectedOption: (option: string) => void;
+  options: string[]; // New prop for the list of options
 }
 
 const GoalSelector: FC<GoalSelectorProps> = ({
   selectedOption,
   setSelectedOption,
+  options, // Destructure options from props
 }) => {
-  const options = ["0 goals", "1 goal", "2 goals", "Hattrick!"];
-
   return (
     <div className="flex items-center justify-between rounded-lg bg-gray-200 p-2">
       {options.map((option) => (
