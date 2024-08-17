@@ -3,6 +3,7 @@ import EditGuessScore from "@/components/edit-questions/editGuessScore";
 import EditMatchOutcome from "@/components/edit-questions/editMatchOutcome";
 import EditPlayerGoals from "@/components/edit-questions/editPlayerGoals";
 import EditPlayerSelection from "@/components/edit-questions/editPlayerSelection";
+import GameStats from "@/components/gameStats";
 import QuestionBuilder from "@/components/questionBuilder";
 import GuessScore from "@/components/questions/guessScore";
 import MatchOutcome from "@/components/questions/matchOutcome";
@@ -48,11 +49,17 @@ const players = [
 export default function HomePage() {
   return (
     <div className="min-h-screen space-y-12 bg-green-100 p-8">
-      <h1 className="text-2xl font-bold">Playground</h1>
-      <h1 className="text-2xl font-bold">
-        Here is the question builder. When you select a question you can click
-        on points, question etc to edit.
-      </h1>
+      <h1 className="text-2xl font-bold">Development Playground</h1>
+      <GameStats
+        competitionTitle="Atletico vs Inter"
+        username="nicolascastr0"
+        submissionDate="09 May 2024"
+        submissionTime="15:42"
+        totalPoints={67.61}
+        percentile="Top 4%"
+        rank="33rd"
+        bonusPoints={0.5}
+      />
       {/* <EditGuessScore />
       <EditMatchOutcome />
       <EditPlayerGoals /> */}
