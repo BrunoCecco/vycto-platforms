@@ -21,7 +21,7 @@ import {
   sites,
   userCompetitions,
   users,
-  userAnswers,
+  answers,
 } from "./schema";
 import { QuestionType } from "./types";
 
@@ -461,6 +461,30 @@ export const enterUserToCompetition = async (
   }
 };
 
+export const calculateUserPoints = async (
+  userId: string,
+  competitionId: string,
+) => {
+  // join questions with answers on questionId and count for each userId how many answers are equal to correctAnswer
+  const userPoints = await db.query.answers.findMany({
+    where: and(
+      eq(answers.userId, userId),
+      eq(answers.competitionId, competitionId),
+    ),
+    with: {
+      question: true,
+    },
+  });
+
+  return userPoints.reduce((acc, answer) => {
+    if (answer.question.correctAnswer === answer.answer) {
+      const points = answer.question.points || 0;
+      return acc + points;
+    }
+    return acc;
+  }, 0);
+};
+
 export const createQuestion = async ({
   competitionId,
   type,
@@ -534,23 +558,26 @@ export const answerQuestion = async (formData: FormData) => {
   try {
     const userId = formData.get("userId") as string;
     const questionId = formData.get("questionId") as string;
+    const competitionId = formData.get("competitionId") as string;
     const answer = formData.get("answer") as string;
 
     // first check if the user has already answered this question
-    const existingAnswer = await db.query.userAnswers.findFirst({
+    const existingAnswer = await db.query.answers.findFirst({
       where: and(
-        eq(userAnswers.userId, userId),
-        eq(userAnswers.questionId, questionId),
+        eq(answers.userId, userId),
+        eq(answers.questionId, questionId),
       ),
     });
 
     if (existingAnswer) {
       const response = await db
-        .update(userAnswers)
+        .update(answers)
         .set({
           answer,
         })
-        .where(eq(userAnswers.userId, existingAnswer.userId))
+        .where(
+          and(eq(answers.userId, userId), eq(answers.questionId, questionId)),
+        )
         .returning()
         .then((res) => res[0]);
 
@@ -558,10 +585,11 @@ export const answerQuestion = async (formData: FormData) => {
     }
 
     const response = await db
-      .insert(userAnswers)
+      .insert(answers)
       .values({
         userId,
         questionId,
+        competitionId,
         answer,
       })
       .returning();

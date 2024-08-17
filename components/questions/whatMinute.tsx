@@ -4,6 +4,7 @@ import Slider from "../slider";
 import PointsBadge from "../pointsBadge";
 
 const WhatMinute = ({ ...props }) => {
+  console.log(props);
   return (
     <div className="flex items-center justify-center">
       <div className="relative h-full rounded-lg bg-white p-6 shadow-xl">
@@ -37,6 +38,11 @@ const WhatMinute = ({ ...props }) => {
             questionId={props.id}
           />
         </div>
+        {props.correctAnswer?.length > 0 ? (
+          <div className="mt-2 text-center font-semibold text-green-600">
+            Correct answer: {props.correctAnswer}
+          </div>
+        ) : null}
       </div>
     </div>
   );

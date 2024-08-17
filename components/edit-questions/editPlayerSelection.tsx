@@ -168,7 +168,7 @@ const EditPlayerSelection = ({
             />
           ) : (
             <div className="cursor-pointer" onClick={handlePointsClick}>
-              <PointsBadge points={question.points ?? points} />
+              <PointsBadge points={points} />
             </div>
           )}
         </div>

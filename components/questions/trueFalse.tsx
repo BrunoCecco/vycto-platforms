@@ -51,13 +51,28 @@ const TrueFalse = ({ ...props }) => {
         </p>
 
         <div className="flex justify-around">
-          <Submit userId={props.userId} questionId={props.id} answer="True">
+          <Submit
+            userId={props.userId}
+            competitionId={props.competitionId}
+            questionId={props.id}
+            answer="True"
+          >
             <Button selected={props.answer == "True"}>True</Button>
           </Submit>
-          <Submit userId={props.userId} questionId={props.id} answer="False">
+          <Submit
+            userId={props.userId}
+            competitionId={props.competitionId}
+            questionId={props.id}
+            answer="False"
+          >
             <Button selected={props.answer == "False"}>False</Button>
           </Submit>
         </div>
+        {props.correctAnswer?.length > 0 ? (
+          <div className="mt-2 text-center font-semibold text-green-600">
+            Correct answer: {props.correctAnswer}
+          </div>
+        ) : null}
       </div>
     </div>
   );

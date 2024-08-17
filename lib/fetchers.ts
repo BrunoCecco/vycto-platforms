@@ -3,7 +3,7 @@ import db from "./db";
 import { and, desc, eq, not } from "drizzle-orm";
 import {
   questions,
-  userAnswers,
+  answers,
   userCompetitions,
   competitions,
   sites,
@@ -189,14 +189,14 @@ export async function getAnswersForUser(userId: string, competitionId: string) {
     async () => {
       return await db
         .select({
-          answer: userAnswers.answer,
-          questionId: userAnswers.questionId,
+          answer: answers.answer,
+          questionId: answers.questionId,
         })
-        .from(userAnswers)
-        .leftJoin(questions, eq(questions.id, userAnswers.questionId))
+        .from(answers)
+        .leftJoin(questions, eq(questions.id, answers.questionId))
         .where(
           and(
-            eq(userAnswers.userId, userId),
+            eq(answers.userId, userId),
             eq(questions.competitionId, competitionId),
           ),
         );

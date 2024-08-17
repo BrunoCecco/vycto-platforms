@@ -63,6 +63,7 @@ const PlayerSelection = ({ ...props }) => {
           <Submit
             userId={props.userId}
             questionId={props.id}
+            competitionId={props.competitionId}
             answer={props.answer1}
           >
             <PlayerComponent
@@ -75,6 +76,7 @@ const PlayerSelection = ({ ...props }) => {
           <Submit
             userId={props.userId}
             questionId={props.id}
+            competitionId={props.competitionId}
             answer={props.answer2}
           >
             <PlayerComponent
@@ -87,6 +89,7 @@ const PlayerSelection = ({ ...props }) => {
           <Submit
             userId={props.userId}
             questionId={props.id}
+            competitionId={props.competitionId}
             answer={props.answer3}
           >
             <PlayerComponent
@@ -99,6 +102,7 @@ const PlayerSelection = ({ ...props }) => {
           <Submit
             userId={props.userId}
             questionId={props.id}
+            competitionId={props.competitionId}
             answer={props.answer4}
           >
             <PlayerComponent
@@ -109,6 +113,11 @@ const PlayerSelection = ({ ...props }) => {
             />
           </Submit>
         </div>
+        {props.correctAnswer?.length > 0 ? (
+          <div className="mt-2 text-center font-semibold text-green-600">
+            Correct answer: {props.correctAnswer}
+          </div>
+        ) : null}
       </div>
     </div>
   );

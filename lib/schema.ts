@@ -250,7 +250,7 @@ export const questions = pgTable(
   },
 );
 
-export const userAnswers = pgTable(
+export const answers = pgTable(
   "answers",
   {
     userId: text("userId")
@@ -262,6 +262,12 @@ export const userAnswers = pgTable(
     questionId: text("questionId")
       .notNull()
       .references(() => questions.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    competitionId: text("competitionId")
+      .notNull()
+      .references(() => competitions.id, {
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
@@ -295,14 +301,18 @@ export const questionsRelations = relations(questions, ({ one, many }) => ({
     references: [competitions.id],
     fields: [questions.competitionId],
   }),
-  answers: many(userAnswers),
+  answers: many(answers),
 }));
 
-export const userAnswersRelations = relations(userAnswers, ({ one }) => ({
-  user: one(users, { references: [users.id], fields: [userAnswers.userId] }),
+export const answersRelations = relations(answers, ({ one }) => ({
+  user: one(users, { references: [users.id], fields: [answers.userId] }),
   question: one(questions, {
     references: [questions.id],
-    fields: [userAnswers.questionId],
+    fields: [answers.questionId],
+  }),
+  competition: one(competitions, {
+    references: [competitions.id],
+    fields: [answers.competitionId],
   }),
 }));
 
@@ -350,4 +360,4 @@ export type SelectVerificationToken = typeof verificationTokens.$inferSelect;
 export type SelectAccount = typeof accounts.$inferSelect;
 export type SelectUserCompetition = typeof userCompetitions.$inferSelect;
 export type SelectQuestion = typeof questions.$inferSelect;
-export type SelectUserAnswer = typeof userAnswers.$inferSelect;
+export type SelectAnswer = typeof answers.$inferSelect;

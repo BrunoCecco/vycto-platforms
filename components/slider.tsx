@@ -32,6 +32,7 @@ const Slider = ({
         <span className="text-sm text-gray-600">{MIN}</span>
         <form
           ref={formRef}
+          id={questionId}
           className="flex w-full flex-col items-center justify-center"
           action={async (data: FormData) => {
             if (userId != undefined) {
@@ -39,16 +40,33 @@ const Slider = ({
               await answerQuestion(data);
             } else {
               // editing question so we have to updatequestionmetadata
+              console.log("Updating question metadata", data);
               const formData = new FormData();
               formData.append("answer1", values[0].toString());
               await updateQuestionMetadata(formData, question, "answer1");
             }
           }}
         >
-          <input type="hidden" name="userId" value={userId} />
-          <input type="hidden" name="questionId" value={questionId} />
-          <input type="hidden" name="answer" value={values[0]} />
+          <input
+            id={`${questionId}-userId`}
+            type="hidden"
+            name="userId"
+            value={userId}
+          />
+          <input
+            id={`${questionId}-questionId`}
+            type="hidden"
+            name="questionId"
+            value={questionId}
+          />
+          <input
+            id={`${questionId}-answer`}
+            type="hidden"
+            name="answer"
+            value={values[0]}
+          />
           <Range
+            label={`${questionId}-range`}
             step={1}
             min={MIN}
             max={MAX}

@@ -177,10 +177,9 @@ export default function Uploader({
             </p>
             <span className="sr-only">Photo upload</span>
           </div>
-          {data[name] && (
-            // eslint-disable-next-line @next/next/no-img-element
+          {data[name] != null && (
             <img
-              src={data[name]}
+              src={data[name] as string}
               alt="Preview"
               className="h-full w-full rounded-md object-cover"
             />
