@@ -28,7 +28,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
       {session?.user && users && !isUserInCompetition ? (
         <EnterCompetitionButton
           userId={session.user.id}
-          username={session.user.username}
+          username={session.user.username || session.user.email || "User"}
           competitionId={data.id}
         />
       ) : (

@@ -5,9 +5,11 @@ import Submit from "./submit";
 const Button = ({
   children,
   selected,
+  disabled,
 }: {
   children: React.ReactNode;
   selected: boolean;
+  disabled: boolean;
 }) => {
   return (
     <button
@@ -17,6 +19,7 @@ const Button = ({
         backgroundColor: selected ? "blue" : "white",
         color: selected ? "white" : "blue",
       }}
+      disabled={disabled}
     >
       {children}
     </button>
@@ -57,7 +60,9 @@ const TrueFalse = ({ ...props }) => {
             questionId={props.id}
             answer="True"
           >
-            <Button selected={props.answer == "True"}>True</Button>
+            <Button selected={props.answer == "True"} disabled={props.disabled}>
+              True
+            </Button>
           </Submit>
           <Submit
             userId={props.userId}
@@ -65,7 +70,12 @@ const TrueFalse = ({ ...props }) => {
             questionId={props.id}
             answer="False"
           >
-            <Button selected={props.answer == "False"}>False</Button>
+            <Button
+              selected={props.answer == "False"}
+              disabled={props.disabled}
+            >
+              False
+            </Button>
           </Submit>
         </div>
         {props.correctAnswer?.length > 0 ? (
