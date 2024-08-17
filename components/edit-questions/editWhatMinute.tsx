@@ -1,12 +1,11 @@
 "use client";
-import Image from "next/image";
-import { FC, useEffect, useState } from "react";
-import Slider from "../slider";
-import PointsBadge from "../pointsBadge";
+import { updateQuestionMetadata } from "@/lib/actions";
 import { SelectQuestion } from "@/lib/schema";
-import { deleteQuestion, updateQuestionMetadata } from "@/lib/actions";
+import { useState } from "react";
 import { toast } from "sonner";
 import Uploader from "../old-components/uploader";
+import PointsBadge from "../pointsBadge";
+import Slider from "../slider";
 
 const EditWhatMinute = ({
   question,
@@ -118,7 +117,7 @@ const EditWhatMinute = ({
             />
           ) : (
             <h2
-              className="cursor-pointer text-xl font-semibold text-gray-800"
+              className="cursor-pointer border-2 text-xl font-semibold text-gray-800"
               onClick={handleQuestionClick}
             >
               {editedQuestion}

@@ -14,6 +14,7 @@ interface PlayerGoalsProps {
 
 const PlayerGoals: FC<PlayerGoalsProps> = ({ question, imageSrc, points }) => {
   const [selectedOption, setSelectedOption] = useState("");
+  const goalOptions = ["0 goals", "1 goal", "2 goals", "Hattrick!", "4 goals"];
 
   return (
     <div className="flex items-center justify-center">
@@ -46,6 +47,7 @@ const PlayerGoals: FC<PlayerGoalsProps> = ({ question, imageSrc, points }) => {
           <GoalSelector
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
+            options={goalOptions}
           />
         </div>
       </div>
