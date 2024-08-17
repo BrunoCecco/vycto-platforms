@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Slider from "../slider";
 import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
-import { deleteQuestion } from "@/lib/actions";
+import { deleteQuestion, updateQuestionMetadata } from "@/lib/actions";
 
 const EditWhatMinute = ({
   question,
@@ -15,8 +15,18 @@ const EditWhatMinute = ({
 }) => {
   const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
-  const [editedQuestion, setEditedQuestion] = useState("What minute?");
-  const [points, setPoints] = useState(0);
+  const [editedQuestion, setEditedQuestion] = useState(
+    question.question ?? "What minute?",
+  );
+  const [points, setPoints] = useState(question.points ?? 0);
+
+  const updateQuestion = async (key: string, value: string) => {
+    alert(`Question saved: ${editedQuestion}, Points: ${points}`);
+    const formData = new FormData();
+    formData.append(key, value);
+    console.log("formData", key, value);
+    await updateQuestionMetadata(formData, question, key);
+  };
 
   const handleQuestionClick = () => {
     setIsEditingQuestion(true);
@@ -36,13 +46,10 @@ const EditWhatMinute = ({
     setPoints(Number(e.target.value));
   };
 
-  const handleInputBlur = () => {
+  const handleInputBlur = async (key: string, value: string) => {
     setIsEditingQuestion(false);
     setIsEditingPoints(false);
-  };
-
-  const handleSave = () => {
-    alert(`Question saved: ${editedQuestion}, Points: ${points}`);
+    await updateQuestion(key, value);
   };
 
   const handleRemove = async () => {
@@ -60,7 +67,7 @@ const EditWhatMinute = ({
               type="number"
               value={points}
               onChange={handlePointsInputChange}
-              onBlur={handleInputBlur}
+              onBlur={() => handleInputBlur("points", points.toString())}
               autoFocus
               className="w-20 text-center text-xl font-semibold text-gray-800"
             />
@@ -91,7 +98,7 @@ const EditWhatMinute = ({
               type="text"
               value={editedQuestion}
               onChange={handleQuestionInputChange}
-              onBlur={handleInputBlur}
+              onBlur={() => handleInputBlur("question", editedQuestion)}
               autoFocus
               className="w-full text-center text-xl font-semibold text-gray-800"
             />
@@ -118,12 +125,6 @@ const EditWhatMinute = ({
 
         {/* Save Button */}
         <div className="mt-4 flex items-center justify-center gap-4">
-          <button
-            onClick={handleSave}
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-          >
-            Save
-          </button>
           <button
             onClick={handleRemove}
             className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
