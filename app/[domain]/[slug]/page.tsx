@@ -155,6 +155,18 @@ export default async function SiteCompetitionPage({
                   }
                 />
               );
+            } else if (question.type === QuestionType.PlayerSelection) {
+              return (
+                <PlayerSelection
+                  key={index}
+                  {...question}
+                  userId={session?.user.id!}
+                  answer={
+                    answers.find((a: any) => a.questionId === question.id)
+                      ?.answer
+                  }
+                />
+              );
             }
             // } else if (question.type === QuestionType.MatchOutcome) {
             //   return <MatchOutcome key={index} />;
@@ -162,9 +174,6 @@ export default async function SiteCompetitionPage({
             //   return <GuessScore key={index} />;
             // } else if (question.type === QuestionType.PlayerGoals) {
             //   return <PlayerGoals key={index} />;
-            // } else if (question.type === QuestionType.PlayerSelection) {
-            //   return <PlayerSelection key={index} />;
-            // }
           })}
         {/* <WhatMinute />
         <MatchOutcome />

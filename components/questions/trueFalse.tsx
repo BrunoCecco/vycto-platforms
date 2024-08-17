@@ -1,6 +1,27 @@
 import Image from "next/image";
 import PointsBadge from "../pointsBadge";
-import SubmitButton from "./submitButton";
+import Submit from "./submit";
+
+const Button = ({
+  children,
+  selected,
+}: {
+  children: React.ReactNode;
+  selected: boolean;
+}) => {
+  return (
+    <button
+      type="submit"
+      className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 hover:bg-blue-50"
+      style={{
+        backgroundColor: selected ? "blue" : "white",
+        color: selected ? "white" : "blue",
+      }}
+    >
+      {children}
+    </button>
+  );
+};
 
 const TrueFalse = ({ ...props }) => {
   return (
@@ -30,18 +51,20 @@ const TrueFalse = ({ ...props }) => {
         </p>
 
         <div className="flex justify-around">
-          <SubmitButton
+          <Submit
             userId={props.userId}
             questionId={props.id}
             answer="True"
-            selected={props.answer == "True"}
-          />
-          <SubmitButton
+          >
+            <Button selected={props.answer == "True"}>True</Button>
+          </Submit>
+          <Submit
             userId={props.userId}
             questionId={props.id}
             answer="False"
-            selected={props.answer == "False"}
-          />
+          >
+            <Button selected={props.answer == "False"}>False</Button>
+          </Submit>
         </div>
       </div>
     </div>

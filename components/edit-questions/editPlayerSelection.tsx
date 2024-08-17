@@ -253,7 +253,6 @@ const EditPlayerSelection = ({
             </div>
           ))} */}
         </div>
-
         <div className="mt-4 flex items-center justify-center gap-4">
           <button
             onClick={handleRemove}
