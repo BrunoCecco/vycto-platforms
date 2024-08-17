@@ -10,7 +10,13 @@ interface Player {
   image: string;
 }
 
-const EditPlayerSelection = ({ question }: { question: SelectQuestion }) => {
+const EditPlayerSelection = ({
+  question,
+  removeQuestion,
+}: {
+  question: SelectQuestion;
+  removeQuestion: (id: string) => void;
+}) => {
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
@@ -62,6 +68,11 @@ const EditPlayerSelection = ({ question }: { question: SelectQuestion }) => {
 
   const handleSave = () => {
     alert(`Question saved: ${editedQuestion}, Points: ${points}`);
+  };
+
+  const handleRemove = async () => {
+    if (!confirm("Are you sure you want to remove this question?")) return;
+    removeQuestion(question.id);
   };
 
   return (
@@ -156,12 +167,18 @@ const EditPlayerSelection = ({ question }: { question: SelectQuestion }) => {
         </div>
 
         {/* Save Button */}
-        <div className="mt-4 flex justify-center">
+        <div className="mt-4 flex items-center justify-center gap-4">
           <button
             onClick={handleSave}
             className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
           >
             Save
+          </button>
+          <button
+            onClick={handleRemove}
+            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+          >
+            Remove
           </button>
         </div>
       </div>

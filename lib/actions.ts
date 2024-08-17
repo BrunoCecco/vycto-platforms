@@ -481,9 +481,7 @@ export const createQuestion = async ({
     console.log("Created question: ", response);
     return response;
   } catch (error: any) {
-    return {
-      error: error.message,
-    };
+    console.log("Error creating question: ", error.message);
   }
 };
 
@@ -501,6 +499,22 @@ export const updateQuestionMetadata = async (
         [key]: value,
       })
       .where(eq(questions.id, question.id))
+      .returning()
+      .then((res) => res[0]);
+
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const deleteQuestion = async (questionId: string) => {
+  try {
+    const response = await db
+      .delete(questions)
+      .where(eq(questions.id, questionId))
       .returning()
       .then((res) => res[0]);
 

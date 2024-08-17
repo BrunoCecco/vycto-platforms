@@ -2,9 +2,15 @@
 import { useEffect, useState } from "react";
 import EditPlayerSelection from "./edit-questions/editPlayerSelection";
 import EditWhatMinute from "./edit-questions/editWhatMinute";
-import { createQuestion } from "@/lib/actions";
+import { createQuestion, deleteQuestion } from "@/lib/actions";
 import { QuestionType } from "@/lib/types";
 import { SelectQuestion } from "@/lib/schema";
+
+interface IQuestion {
+  id: string;
+  type: QuestionType;
+  element: JSX.Element;
+}
 
 const QuestionBuilder = ({
   competitionId,
@@ -13,35 +19,57 @@ const QuestionBuilder = ({
   competitionId: string;
   initialQuestions: SelectQuestion[];
 }) => {
-  const [questions, setQuestions] = useState<JSX.Element[]>([]);
+  const [questions, setQuestions] = useState<IQuestion[]>([]);
   const [showOptionsIndex, setShowOptionsIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const initialQuestionData = initialQuestions.map(
       (question: SelectQuestion, index: number) => {
         if (question.type === QuestionType.PlayerSelection) {
-          return (
-            <EditPlayerSelection
-              key={question.id}
-              question={question as SelectQuestion}
-            />
-          );
-        } else if (question.type === QuestionType.WhatMinute) {
-          return (
-            <EditWhatMinute
-              key={question.id}
-              question={question as SelectQuestion}
-            />
-          );
+          return {
+            id: question.id,
+            type: question.type,
+            element: (
+              <EditPlayerSelection
+                key={question.id}
+                question={question as SelectQuestion}
+                removeQuestion={handleRemoveQuestion}
+              />
+            ),
+          };
         } else {
-          return <div key={index}></div>;
+          return {
+            id: question.id,
+            type: question.type,
+            element: (
+              <EditWhatMinute
+                key={question.id}
+                question={question as SelectQuestion}
+                removeQuestion={handleRemoveQuestion}
+              />
+            ),
+          };
         }
       },
     );
     if (initialQuestionData && initialQuestionData.length > 0) {
-      setQuestions(initialQuestionData);
+      setQuestions(initialQuestionData as IQuestion[]);
     }
   }, [initialQuestions]);
+
+  useEffect(() => {
+    console.log(questions);
+  }, [questions]);
+
+  const handleRemoveQuestion = async (id: string) => {
+    const newQuestions = [...questions];
+    const index = newQuestions.findIndex((question) => question.id === id);
+    if (index === -1) return;
+    newQuestions.splice(index, 1);
+    setQuestions(newQuestions);
+
+    await deleteQuestion(id);
+  };
 
   const handleAddQuestion = async (
     questionType: QuestionType,
@@ -54,12 +82,15 @@ const QuestionBuilder = ({
       type: questionType,
     });
 
+    if (!question) return;
+
     let newQuestion: JSX.Element;
     if (questionType === QuestionType.PlayerSelection) {
       newQuestion = (
         <EditPlayerSelection
           key={questions.length}
           question={question as SelectQuestion}
+          removeQuestion={handleRemoveQuestion}
         />
       );
     } else if (questionType === QuestionType.WhatMinute) {
@@ -67,6 +98,7 @@ const QuestionBuilder = ({
         <EditWhatMinute
           key={questions.length}
           question={question as SelectQuestion}
+          removeQuestion={handleRemoveQuestion}
         />
       );
     } else {
@@ -74,10 +106,17 @@ const QuestionBuilder = ({
     }
 
     if (index === null) {
-      setQuestions((prev) => [...prev, newQuestion]);
+      setQuestions([
+        ...questions,
+        { id: question.id, type: questionType, element: newQuestion },
+      ]);
     } else {
       const newQuestions = [...questions];
-      newQuestions.splice(index, 0, newQuestion);
+      newQuestions.splice(index, 0, {
+        id: question.id,
+        type: questionType,
+        element: newQuestion,
+      });
       setQuestions(newQuestions);
     }
   };
@@ -114,9 +153,9 @@ const QuestionBuilder = ({
   return (
     <div className="p-6">
       {renderAddButton(0)}
-      {questions.map((QuestionComponent, index) => (
+      {questions.map((question, index) => (
         <div key={index}>
-          {QuestionComponent}
+          {question.element}
           {renderAddButton(index + 1)}
         </div>
       ))}

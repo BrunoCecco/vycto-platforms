@@ -4,8 +4,15 @@ import { FC, useState } from "react";
 import Slider from "../slider";
 import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
+import { deleteQuestion } from "@/lib/actions";
 
-const EditWhatMinute = ({ question }: { question: SelectQuestion }) => {
+const EditWhatMinute = ({
+  question,
+  removeQuestion,
+}: {
+  question: SelectQuestion;
+  removeQuestion: (id: string) => void;
+}) => {
   const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState("What minute?");
@@ -36,6 +43,11 @@ const EditWhatMinute = ({ question }: { question: SelectQuestion }) => {
 
   const handleSave = () => {
     alert(`Question saved: ${editedQuestion}, Points: ${points}`);
+  };
+
+  const handleRemove = async () => {
+    if (!confirm("Are you sure you want to remove this question?")) return;
+    removeQuestion(question.id);
   };
 
   return (
@@ -105,12 +117,18 @@ const EditWhatMinute = ({ question }: { question: SelectQuestion }) => {
         </div>
 
         {/* Save Button */}
-        <div className="mt-4 flex justify-center">
+        <div className="mt-4 flex items-center justify-center gap-4">
           <button
             onClick={handleSave}
             className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
           >
             Save
+          </button>
+          <button
+            onClick={handleRemove}
+            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+          >
+            Remove
           </button>
         </div>
       </div>
