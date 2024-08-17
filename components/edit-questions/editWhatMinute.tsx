@@ -6,6 +6,7 @@ import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
 import { deleteQuestion, updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
+import Uploader from "../old-components/uploader";
 
 const EditWhatMinute = ({
   question,
@@ -19,7 +20,11 @@ const EditWhatMinute = ({
   const [editedQuestion, setEditedQuestion] = useState(
     question.question ?? "What minute?",
   );
+  const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
+    question.correctAnswer ?? "0",
+  );
   const [points, setPoints] = useState(question.points ?? 0);
+  const [image, setImage] = useState(question.image1 ?? "/trueFalse.jpg");
 
   const updateQuestion = async (key: string, value: string) => {
     const formData = new FormData();
@@ -43,6 +48,12 @@ const EditWhatMinute = ({
     setEditedQuestion(e.target.value);
   };
 
+  const handleCorrectAnswerInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setEditedCorrectAnswer(e.target.value);
+  };
+
   const handlePointsInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPoints(Number(e.target.value));
   };
@@ -56,6 +67,11 @@ const EditWhatMinute = ({
   const handleRemove = async () => {
     if (!confirm("Are you sure you want to remove this question?")) return;
     removeQuestion(question.id);
+  };
+
+  const handleImageChange = async (key: string, value: string) => {
+    setImage(value);
+    await updateQuestion(key, value);
   };
 
   return (
@@ -80,15 +96,12 @@ const EditWhatMinute = ({
         </div>
 
         {/* Placeholder for Image or Graphic */}
-        <div className="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-100">
-          <Image
-            src={question.image1 ?? "/trueFalse.jpg"}
-            alt="Question Image"
-            layout="responsive"
-            width={500}
-            height={200}
-            objectFit="cover"
-            className="rounded-lg"
+        <div className="mb-4 w-full rounded-md">
+          <Uploader
+            id={question.id}
+            defaultValue={image}
+            name="image1"
+            upload={handleImageChange}
           />
         </div>
 
@@ -125,7 +138,19 @@ const EditWhatMinute = ({
         </div>
 
         {/* Save Button */}
-        <div className="mt-4 flex items-center justify-center gap-4">
+        <div className="mt-4 flex flex-col items-center justify-center gap-4">
+          <label htmlFor="correctAnswer" className="text-center">
+            Correct Answer:
+          </label>
+          <input
+            type="text"
+            value={question.correctAnswer || editedCorrectAnswer}
+            onChange={handleCorrectAnswerInputChange}
+            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
+            placeholder="Correct Answer"
+            autoFocus
+            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
+          />
           <button
             onClick={handleRemove}
             className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"

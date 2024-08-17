@@ -13,7 +13,7 @@ const WhatMinute = ({ ...props }) => {
         {/* Placeholder for Image or Graphic */}
         <div className="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-100">
           <Image
-            src={props.image ?? "/placeholder.png"}
+            src={props.image1 ?? "/placeholder.png"}
             alt="Question Image"
             width={500}
             height={200}

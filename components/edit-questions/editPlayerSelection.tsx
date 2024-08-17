@@ -5,6 +5,7 @@ import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
+import Uploader from "../old-components/uploader";
 
 interface Player {
   name: string;
@@ -13,17 +14,23 @@ interface Player {
 }
 
 const PlayerComponent = ({
+  questionId,
+  index,
   name,
   image,
   selectedPlayer,
   setSelectedPlayer,
   handlePlayerNameChange,
+  handleImageChange,
 }: {
+  questionId: string;
+  index: number;
   name: string;
   image: string;
   selectedPlayer: string | null;
   setSelectedPlayer: (player: string) => void;
   handlePlayerNameChange: (newName: string) => void;
+  handleImageChange: (key: string, value: string) => void;
 }) => {
   return (
     <div
@@ -31,16 +38,11 @@ const PlayerComponent = ({
         selectedPlayer === name ? "border-yellow-500" : "border-transparent"
       }`}
     >
-      <Image
-        src={image || "/player.png"}
-        alt={name}
-        layout="responsive"
-        width={128}
-        height={96}
-        objectFit="cover"
-        className={`rounded-md ${
-          selectedPlayer !== name ? "opacity-50" : "opacity-100"
-        }`}
+      <Uploader
+        id={questionId}
+        defaultValue={image}
+        name={"image" + index}
+        upload={handleImageChange}
       />
       <div className="mt-2 text-center">
         <input
@@ -67,6 +69,9 @@ const EditPlayerSelection = ({
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
     question.question ?? "Which player will score first?",
+  );
+  const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
+    question.correctAnswer ?? "",
   );
   const [points, setPoints] = useState(question.points ?? 0);
   const [answer1, setAnswer1] = useState(question.answer1 ?? "");
@@ -104,6 +109,12 @@ const EditPlayerSelection = ({
     setPoints(Number(e.target.value));
   };
 
+  const handleCorrectAnswerInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setEditedCorrectAnswer(e.target.value);
+  };
+
   // const handlePlayerNameChange = (index: number, newName: string) => {
   //   const updatedPlayers = [...players];
   //   updatedPlayers[index].name = newName;
@@ -125,6 +136,19 @@ const EditPlayerSelection = ({
   const handleRemove = async () => {
     if (!confirm("Are you sure you want to remove this question?")) return;
     removeQuestion(question.id);
+  };
+
+  const handleImageChange = async (key: string, value: string) => {
+    if (key === "image1") {
+      setImage1(value);
+    } else if (key === "image2") {
+      setImage2(value);
+    } else if (key === "image3") {
+      setImage3(value);
+    } else if (key === "image4") {
+      setImage4(value);
+    }
+    await updateQuestion(key, value);
   };
 
   return (
@@ -176,6 +200,8 @@ const EditPlayerSelection = ({
         {/* Editable Player Options */}
         <div className="grid grid-cols-2 gap-4">
           <PlayerComponent
+            questionId={question.id}
+            index={1}
             name={answer1}
             image={image1}
             selectedPlayer={selectedPlayer}
@@ -183,8 +209,11 @@ const EditPlayerSelection = ({
             handlePlayerNameChange={(newName: string) =>
               handleInputBlur("answer1", newName)
             }
+            handleImageChange={handleImageChange}
           />
           <PlayerComponent
+            questionId={question.id}
+            index={2}
             name={answer2}
             image={image2}
             selectedPlayer={selectedPlayer}
@@ -192,8 +221,11 @@ const EditPlayerSelection = ({
             handlePlayerNameChange={(newName: string) =>
               handleInputBlur("answer2", newName)
             }
+            handleImageChange={handleImageChange}
           />
           <PlayerComponent
+            questionId={question.id}
+            index={3}
             name={answer3}
             image={image3}
             selectedPlayer={selectedPlayer}
@@ -201,8 +233,11 @@ const EditPlayerSelection = ({
             handlePlayerNameChange={(newName: string) =>
               handleInputBlur("answer3", newName)
             }
+            handleImageChange={handleImageChange}
           />
           <PlayerComponent
+            questionId={question.id}
+            index={4}
             name={answer4}
             image={image4}
             selectedPlayer={selectedPlayer}
@@ -210,6 +245,7 @@ const EditPlayerSelection = ({
             handlePlayerNameChange={(newName: string) =>
               handleInputBlur("answer4", newName)
             }
+            handleImageChange={handleImageChange}
           />
           {/* {players.map((player, index) => (
             <div
@@ -253,7 +289,19 @@ const EditPlayerSelection = ({
             </div>
           ))} */}
         </div>
-        <div className="mt-4 flex items-center justify-center gap-4">
+        <div className="mt-4 flex flex-col items-center justify-center gap-4">
+          <label htmlFor="correctAnswer" className="text-gray-500">
+            Correct Answer:
+          </label>
+          <input
+            type="text"
+            value={question.correctAnswer || editedCorrectAnswer}
+            onChange={handleCorrectAnswerInputChange}
+            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
+            placeholder="Correct Answer"
+            autoFocus
+            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
+          />
           <button
             onClick={handleRemove}
             className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"

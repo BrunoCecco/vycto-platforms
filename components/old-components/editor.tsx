@@ -50,7 +50,7 @@ export default function Editor({
   }, [data, startTransitionSaving]);
 
   return (
-    <div className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg dark:border-stone-700">
+    <div className="max-w-screen relative min-h-[500px] w-full border-stone-200 p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg dark:border-stone-700">
       <div className="absolute right-5 top-5 mb-5 flex items-center space-x-3">
         {data.published && (
           <a

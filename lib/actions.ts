@@ -474,6 +474,10 @@ export const createQuestion = async ({
       .values({
         competitionId,
         type,
+        answer1: "answer1",
+        answer2: "answer2",
+        answer3: "answer3",
+        answer4: "answer4",
       })
       .returning()
       .then((res) => res[0]);

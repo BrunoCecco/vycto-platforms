@@ -4,11 +4,19 @@ import { useState, useCallback, useMemo, ChangeEvent } from "react";
 import { toast } from "sonner";
 import LoadingDots from "@/components/icons/loading-dots";
 
-export default function Uploader() {
-  const [data, setData] = useState<{
-    image: string | null;
-  }>({
-    image: null,
+export default function Uploader({
+  id,
+  defaultValue,
+  name,
+  upload,
+}: {
+  id: string;
+  defaultValue: string | null;
+  name: string;
+  upload: (name: string, value: string) => void;
+}) {
+  const [data, setData] = useState({
+    [name]: defaultValue,
   });
   const [file, setFile] = useState<File | null>(null);
 
@@ -24,7 +32,10 @@ export default function Uploader() {
           setFile(file);
           const reader = new FileReader();
           reader.onload = (e) => {
-            setData((prev) => ({ ...prev, image: e.target?.result as string }));
+            setData((prev) => ({
+              ...prev,
+              [name]: e.target?.result as string,
+            }));
           };
           reader.readAsDataURL(file);
         }
@@ -36,8 +47,9 @@ export default function Uploader() {
   const [saving, setSaving] = useState(false);
 
   const saveDisabled = useMemo(() => {
-    return !data.image || saving;
-  }, [data.image, saving]);
+    // if object data is empty, return true
+    return !data[name] || saving;
+  }, [data[name], saving]);
 
   return (
     <form
@@ -70,6 +82,7 @@ export default function Uploader() {
                 </div>
               </div>,
             );
+            upload(name, url);
           } else {
             const error = await res.text();
             toast.error(error);
@@ -79,14 +92,14 @@ export default function Uploader() {
       }}
     >
       <div>
-        <div className="mb-4 space-y-1">
+        {/* <div className="mb-4 space-y-1">
           <h2 className="text-xl font-semibold">Upload a file</h2>
           <p className="text-sm text-gray-500">
             Accepted formats: .png, .jpg, .gif, .mp4
           </p>
-        </div>
+        </div> */}
         <label
-          htmlFor="image-upload"
+          htmlFor={`${id}-upload-${name}`}
           className="group relative mt-2 flex h-72 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50"
         >
           <div
@@ -121,7 +134,7 @@ export default function Uploader() {
                   reader.onload = (e) => {
                     setData((prev) => ({
                       ...prev,
-                      image: e.target?.result as string,
+                      [name]: e.target?.result as string,
                     }));
                   };
                   reader.readAsDataURL(file);
@@ -133,7 +146,7 @@ export default function Uploader() {
             className={`${
               dragActive ? "border-2 border-black" : ""
             } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-md px-10 transition-all ${
-              data.image
+              data[name]
                 ? "bg-white/80 opacity-0 hover:opacity-100 hover:backdrop-blur-md"
                 : "bg-white opacity-100 hover:bg-gray-50"
             }`}
@@ -164,10 +177,10 @@ export default function Uploader() {
             </p>
             <span className="sr-only">Photo upload</span>
           </div>
-          {data.image && (
+          {data[name] && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={data.image}
+              src={data[name]}
               alt="Preview"
               className="h-full w-full rounded-md object-cover"
             />
@@ -175,7 +188,7 @@ export default function Uploader() {
         </label>
         <div className="mt-1 flex rounded-md shadow-sm">
           <input
-            id="image-upload"
+            id={`${id}-upload-${name}`}
             name="image"
             type="file"
             accept="image/*"

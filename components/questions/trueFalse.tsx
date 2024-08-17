@@ -33,7 +33,7 @@ const TrueFalse = ({ ...props }) => {
         {/* Placeholder for Image or Graphic */}
         <div className="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-100">
           <Image
-            src={"/trueFalse.jpg"}
+            src={props.image1 ?? "/placeholder.png"}
             alt="True or False Image"
             width={500}
             height={200}
@@ -51,18 +51,10 @@ const TrueFalse = ({ ...props }) => {
         </p>
 
         <div className="flex justify-around">
-          <Submit
-            userId={props.userId}
-            questionId={props.id}
-            answer="True"
-          >
+          <Submit userId={props.userId} questionId={props.id} answer="True">
             <Button selected={props.answer == "True"}>True</Button>
           </Submit>
-          <Submit
-            userId={props.userId}
-            questionId={props.id}
-            answer="False"
-          >
+          <Submit userId={props.userId} questionId={props.id} answer="False">
             <Button selected={props.answer == "False"}>False</Button>
           </Submit>
         </div>
