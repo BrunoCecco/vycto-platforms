@@ -5,6 +5,7 @@ import Slider from "../slider";
 import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
 import { deleteQuestion, updateQuestionMetadata } from "@/lib/actions";
+import { toast } from "sonner";
 
 const EditWhatMinute = ({
   question,
@@ -21,11 +22,11 @@ const EditWhatMinute = ({
   const [points, setPoints] = useState(question.points ?? 0);
 
   const updateQuestion = async (key: string, value: string) => {
-    alert(`Question saved: ${editedQuestion}, Points: ${points}`);
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);
     await updateQuestionMetadata(formData, question, key);
+    toast.success("Question updated successfully");
   };
 
   const handleQuestionClick = () => {
@@ -100,7 +101,7 @@ const EditWhatMinute = ({
               onChange={handleQuestionInputChange}
               onBlur={() => handleInputBlur("question", editedQuestion)}
               autoFocus
-              className="w-full text-center text-xl font-semibold text-gray-800"
+              className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
             />
           ) : (
             <h2

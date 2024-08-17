@@ -3,12 +3,57 @@ import { useState } from "react";
 import Image from "next/image";
 import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
+import { updateQuestionMetadata } from "@/lib/actions";
+import { toast } from "sonner";
 
 interface Player {
   name: string;
   position: string;
   image: string;
 }
+
+const PlayerComponent = ({
+  name,
+  image,
+  selectedPlayer,
+  setSelectedPlayer,
+  handlePlayerNameChange,
+}: {
+  name: string;
+  image: string;
+  selectedPlayer: string | null;
+  setSelectedPlayer: (player: string) => void;
+  handlePlayerNameChange: (newName: string) => void;
+}) => {
+  return (
+    <div
+      className={`cursor-pointer rounded-lg border-2 p-2 shadow-sm transition duration-200 ${
+        selectedPlayer === name ? "border-yellow-500" : "border-transparent"
+      }`}
+    >
+      <Image
+        src={image || "/player.png"}
+        alt={name}
+        layout="responsive"
+        width={128}
+        height={96}
+        objectFit="cover"
+        className={`rounded-md ${
+          selectedPlayer !== name ? "opacity-50" : "opacity-100"
+        }`}
+      />
+      <div className="mt-2 text-center">
+        <input
+          type="text"
+          defaultValue={name}
+          placeholder="Player Name"
+          onBlur={(e) => handlePlayerNameChange(e.target.value)}
+          className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
+        />
+      </div>
+    </div>
+  );
+};
 
 const EditPlayerSelection = ({
   question,
@@ -21,15 +66,25 @@ const EditPlayerSelection = ({
   const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
-    "Who is the best player?",
+    question.question ?? "Which player will score first?",
   );
-  const [points, setPoints] = useState(0);
-  const [players, setPlayers] = useState<Player[]>([
-    { name: "Player 1", position: "Forward", image: "/player.png" },
-    { name: "Player 2", position: "Midfielder", image: "/player.png" },
-    { name: "Player 3", position: "Defender", image: "/player.png" },
-    { name: "Player 4", position: "Goalkeeper", image: "/player.png" },
-  ]);
+  const [points, setPoints] = useState(question.points ?? 0);
+  const [answer1, setAnswer1] = useState(question.answer1 ?? "");
+  const [answer2, setAnswer2] = useState(question.answer2 ?? "");
+  const [answer3, setAnswer3] = useState(question.answer3 ?? "");
+  const [answer4, setAnswer4] = useState(question.answer4 ?? "");
+  const [image1, setImage1] = useState(question.image1 ?? "");
+  const [image2, setImage2] = useState(question.image2 ?? "");
+  const [image3, setImage3] = useState(question.image3 ?? "");
+  const [image4, setImage4] = useState(question.image4 ?? "");
+
+  const updateQuestion = async (key: string, value: string) => {
+    const formData = new FormData();
+    formData.append(key, value);
+    console.log("formData", key, value);
+    await updateQuestionMetadata(formData, question, key);
+    toast.success("Question updated successfully");
+  };
 
   const handleQuestionClick = () => {
     setIsEditingQuestion(true);
@@ -49,25 +104,22 @@ const EditPlayerSelection = ({
     setPoints(Number(e.target.value));
   };
 
-  const handlePlayerNameChange = (index: number, newName: string) => {
-    const updatedPlayers = [...players];
-    updatedPlayers[index].name = newName;
-    setPlayers(updatedPlayers);
-  };
+  // const handlePlayerNameChange = (index: number, newName: string) => {
+  //   const updatedPlayers = [...players];
+  //   updatedPlayers[index].name = newName;
+  //   setPlayers(updatedPlayers);
+  // };
 
-  const handlePlayerPositionChange = (index: number, newPosition: string) => {
-    const updatedPlayers = [...players];
-    updatedPlayers[index].position = newPosition;
-    setPlayers(updatedPlayers);
-  };
+  // const handlePlayerPositionChange = (index: number, newPosition: string) => {
+  //   const updatedPlayers = [...players];
+  //   updatedPlayers[index].position = newPosition;
+  //   setPlayers(updatedPlayers);
+  // };
 
-  const handleInputBlur = () => {
+  const handleInputBlur = async (key: string, value: string) => {
     setIsEditingQuestion(false);
     setIsEditingPoints(false);
-  };
-
-  const handleSave = () => {
-    alert(`Question saved: ${editedQuestion}, Points: ${points}`);
+    await updateQuestion(key, value);
   };
 
   const handleRemove = async () => {
@@ -85,14 +137,14 @@ const EditPlayerSelection = ({
               type="number"
               value={points}
               onChange={handlePointsInputChange}
-              onBlur={handleInputBlur}
+              onBlur={() => handleInputBlur("points", points.toString())}
               min={0}
               autoFocus
               className="w-20 text-center text-xl font-semibold text-gray-800"
             />
           ) : (
             <div className="cursor-pointer" onClick={handlePointsClick}>
-              <PointsBadge points={points} />
+              <PointsBadge points={question.points ?? points} />
             </div>
           )}
         </div>
@@ -104,7 +156,7 @@ const EditPlayerSelection = ({
               type="text"
               value={editedQuestion}
               onChange={handleQuestionInputChange}
-              onBlur={handleInputBlur}
+              onBlur={() => handleInputBlur("question", editedQuestion)}
               autoFocus
               className="w-full text-center text-xl font-semibold text-gray-800"
             />
@@ -113,7 +165,7 @@ const EditPlayerSelection = ({
               className="cursor-pointer text-xl font-semibold text-gray-800"
               onClick={handleQuestionClick}
             >
-              {editedQuestion}
+              {question.question ?? editedQuestion}
             </h2>
           )}
         </div>
@@ -123,7 +175,43 @@ const EditPlayerSelection = ({
 
         {/* Editable Player Options */}
         <div className="grid grid-cols-2 gap-4">
-          {players.map((player, index) => (
+          <PlayerComponent
+            name={answer1}
+            image={image1}
+            selectedPlayer={selectedPlayer}
+            setSelectedPlayer={setSelectedPlayer}
+            handlePlayerNameChange={(newName: string) =>
+              handleInputBlur("answer1", newName)
+            }
+          />
+          <PlayerComponent
+            name={answer2}
+            image={image2}
+            selectedPlayer={selectedPlayer}
+            setSelectedPlayer={setSelectedPlayer}
+            handlePlayerNameChange={(newName: string) =>
+              handleInputBlur("answer2", newName)
+            }
+          />
+          <PlayerComponent
+            name={answer3}
+            image={image3}
+            selectedPlayer={selectedPlayer}
+            setSelectedPlayer={setSelectedPlayer}
+            handlePlayerNameChange={(newName: string) =>
+              handleInputBlur("answer3", newName)
+            }
+          />
+          <PlayerComponent
+            name={answer4}
+            image={image4}
+            selectedPlayer={selectedPlayer}
+            setSelectedPlayer={setSelectedPlayer}
+            handlePlayerNameChange={(newName: string) =>
+              handleInputBlur("answer4", newName)
+            }
+          />
+          {/* {players.map((player, index) => (
             <div
               key={index}
               className={`cursor-pointer rounded-lg border-2 p-2 shadow-sm transition duration-200 ${
@@ -163,17 +251,10 @@ const EditPlayerSelection = ({
                 />
               </div>
             </div>
-          ))}
+          ))} */}
         </div>
 
-        {/* Save Button */}
         <div className="mt-4 flex items-center justify-center gap-4">
-          <button
-            onClick={handleSave}
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-          >
-            Save
-          </button>
           <button
             onClick={handleRemove}
             className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
