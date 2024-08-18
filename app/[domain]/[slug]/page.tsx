@@ -121,7 +121,6 @@ export default async function SiteCompetitionPage({
     questions = await getQuestionsForCompetition(data.id);
     answers = await getAnswersForUser(session?.user.id!, data!.id);
   }
-  console.log("pointsss");
   if (data && new Date(data.date).getTime() < Date.now()) {
     // calculate points
     const points = await calculateUserPoints(session?.user.id!, data!.id);
@@ -134,7 +133,6 @@ export default async function SiteCompetitionPage({
       session.user.username || session.user.name || session.user.email,
       data.id,
     );
-    console.log(userComp, "userComp");
     users = await getCompetitionUsers(data!.id);
   }
 
@@ -212,7 +210,7 @@ export default async function SiteCompetitionPage({
           />
         );
       default:
-        return;
+        return null;
     }
   };
 
@@ -228,7 +226,7 @@ export default async function SiteCompetitionPage({
               (a: any) => a.questionId === question.id,
             );
             const disabled =
-              userComp && "submitted" in userComp && userComp.submitted;
+              userComp && "submitted" in userComp && userComp?.submitted;
             return getQuestionType(
               question.type,
               question,
@@ -242,12 +240,9 @@ export default async function SiteCompetitionPage({
 
       <div className="mb-4">
         {userComp && "submitted" in userComp && userComp.submitted ? (
-          <Link
-            href={`/competitions/${data.id}/submission`}
-            className="mx-auto flex h-8 w-32 items-center justify-center space-x-2 rounded-md border border-green-600 bg-green-600 text-sm text-white transition-all hover:bg-white hover:text-green-600 focus:outline-none sm:h-10 dark:hover:bg-transparent"
-          >
-            View submission
-          </Link>
+          <div className="mx-auto flex h-8 w-fit items-center justify-center space-x-2 rounded-md border border-green-600 bg-green-600 px-2 text-sm text-white sm:h-10">
+            Answers Submitted
+          </div>
         ) : (
           <SubmitAnswersForm
             userId={session?.user.id!}

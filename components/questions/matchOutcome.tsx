@@ -12,7 +12,7 @@ const MatchOutcome = ({ ...props }) => {
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:w-1/2 md:p-10">
         {/* Points Badge */}
-        <PointsBadge points={props.points} />
+        <PointsBadge points={props.points || 0} />
 
         {/* Match Info */}
         <h2 className="text-lg font-semibold text-gray-800 md:text-xl">
@@ -23,31 +23,34 @@ const MatchOutcome = ({ ...props }) => {
         {/* Teams */}
         <div className="flex w-full items-center justify-between py-4 md:justify-around md:px-4">
           {/* Home Team */}
-          <div
-            className={`cursor-pointer text-center ${
-              selectedOutcome === props.answer1 ? "opacity-100" : "opacity-50"
-            }`}
-            onClick={() => setSelectedOutcome(props.answer1)}
+          <Submit
+            userId={props.userId}
+            questionId={props.id}
+            competitionId={props.competitionId}
+            answer={props.answer1}
           >
-            <Submit
-              userId={props.userId}
-              questionId={props.id}
-              competitionId={props.competitionId}
-              answer={props.answer1}
+            <button
+              className={`text-center ${
+                selectedOutcome === props.answer1 ? "opacity-100" : "opacity-50"
+              }`}
+              disabled={props.disabled}
+              onClick={() => setSelectedOutcome(props.answer1)}
             >
               <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
                 <Image
-                  src={props.image1}
+                  src={props.image1 ?? "/placeholder.png"}
                   alt={props.answer1}
-                  layout="fill"
+                  width={500}
+                  height={200}
                   objectFit="cover"
+                  className="rounded-lg"
                 />
               </div>
-            </Submit>
-            <p className="text-sm font-semibold text-gray-700">
-              {props.answer1}
-            </p>
-          </div>
+              <p className="text-sm font-semibold text-gray-700">
+                {props.answer1}
+              </p>
+            </button>
+          </Submit>
 
           {/* VS */}
           <div className="text-center">
@@ -57,31 +60,55 @@ const MatchOutcome = ({ ...props }) => {
           </div>
 
           {/* Away Team */}
-          <div
-            className={`cursor-pointer text-center ${
-              selectedOutcome === props.answer2 ? "opacity-100" : "opacity-50"
-            }`}
-            onClick={() => setSelectedOutcome(props.answer2)}
+          <Submit
+            userId={props.userId}
+            questionId={props.id}
+            competitionId={props.competitionId}
+            answer={props.answer2}
           >
-            <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
-              <Image src={props.image2} alt={props.answer2} objectFit="cover" />
-            </div>
-            <p className="text-sm font-semibold text-gray-700">
-              {props.answer2}
-            </p>
-          </div>
+            <button
+              className={`text-center ${
+                selectedOutcome === props.answer2 ? "opacity-100" : "opacity-50"
+              }`}
+              disabled={props.disabled}
+              onClick={() => setSelectedOutcome(props.answer2)}
+            >
+              <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
+                <Image
+                  src={props.image2 ?? "/placeholder.png"}
+                  alt={props.answer2}
+                  width={500}
+                  height={200}
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
+              </div>
+              <p className="text-sm font-semibold text-gray-700">
+                {props.answer2}
+              </p>
+            </button>
+          </Submit>
         </div>
 
         {/* Draw Button */}
+
         <div className="flex justify-center">
-          <button
-            className={`w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 ${
-              selectedOutcome === props.answer3 ? "opacity-100" : "opacity-50"
-            }`}
-            onClick={() => setSelectedOutcome("Draw")}
+          <Submit
+            userId={props.userId}
+            questionId={props.id}
+            competitionId={props.competitionId}
+            answer="Draw"
           >
-            Draw
-          </button>
+            <button
+              className={`w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 ${
+                selectedOutcome == "Draw" ? "opacity-100" : "opacity-50"
+              }`}
+              disabled={props.disabled}
+              onClick={() => setSelectedOutcome("Draw")}
+            >
+              Draw
+            </button>
+          </Submit>
         </div>
       </div>
     </div>

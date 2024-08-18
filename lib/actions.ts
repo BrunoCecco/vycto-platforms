@@ -533,9 +533,9 @@ export const createQuestion = async ({
       .values({
         competitionId,
         type,
-        answer1: "answer1",
-        answer2: "answer2",
-        answer3: "answer3",
+        answer1: type === QuestionType.TrueFalse ? "True" : "answer1",
+        answer2: type === QuestionType.TrueFalse ? "False" : "answer2",
+        answer3: type === QuestionType.MatchOutcome ? "Draw" : "answer3",
         answer4: "answer4",
       })
       .returning()

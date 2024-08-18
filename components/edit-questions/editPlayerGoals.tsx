@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import PointsBadge from "../pointsBadge";
-import GoalSelector from "../goalSelector";
 import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";

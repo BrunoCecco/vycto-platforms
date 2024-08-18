@@ -36,6 +36,7 @@ const Slider = ({
           ref={formRef}
           id={questionId}
           className="flex w-full flex-col items-center justify-center"
+          aria-disabled={disabled}
           action={async (data: FormData) => {
             if (userId != undefined) {
               console.log("Answering question", data);

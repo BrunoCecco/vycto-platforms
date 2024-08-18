@@ -1,5 +1,6 @@
 "use client";
 import { answerQuestion } from "@/lib/actions";
+import { toast } from "sonner";
 
 const Submit = ({
   userId,
@@ -19,7 +20,8 @@ const Submit = ({
       className="flex items-center justify-center"
       action={async (data: FormData) => {
         await answerQuestion(data);
-      }}
+        toast.success("Answer updated!");
+      }}      
     >
       <input type="hidden" name="userId" value={userId} />
       <input type="hidden" name="questionId" value={questionId} />

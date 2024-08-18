@@ -6,6 +6,7 @@ import EnterCompetitionButton from "@/components/old-components/enter-competitio
 import Image from "next/image";
 import TabSelector from "./tabSelector";
 import { placeholderBlurhash } from "@/lib/utils";
+import { DateTime } from "luxon";
 
 interface CompetitionHeaderProps {
   session: any;
@@ -53,12 +54,14 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
         <h1 className="text-2xl md:text-3xl dark:text-white">
           Competicion: {data.title}
         </h1>
-        <p className="m-auto w-10/12 pt-4 text-sm font-light text-stone-800 md:text-base dark:text-stone-300">
-          {new Date(data.date).toLocaleDateString()}
-        </p>
-        <p className="pt-4 text-xl dark:text-stone-400">
+        <div className="m-auto w-10/12 pt-4 text-sm font-light text-stone-800 md:text-base dark:text-stone-300">
+          {DateTime.fromISO(data.date)
+            .setLocale("en-UK")
+            .toLocaleString(DateTime.DATE_FULL)}
+        </div>
+        <div className="pt-4 text-xl dark:text-stone-400">
           by <span className="text-green-500">{data.site?.name}</span>
-        </p>
+        </div>
       </div>
 
       {/* Banner */}

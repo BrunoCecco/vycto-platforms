@@ -3,10 +3,11 @@ import Image from "next/image";
 import { FC, useState } from "react";
 import PointsBadge from "../pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
+import Submit from "./submit";
 
 const GuessScore = ({ ...props }) => {
-  const [scoreHome, setScoreHome] = useState(0);
-  const [scoreAway, setScoreAway] = useState(0);
+  const [scoreHome, setScoreHome] = useState(props.answer?.split("-")[0] ?? 0);
+  const [scoreAway, setScoreAway] = useState(props.answer?.split("-")[1] ?? 0);
 
   return (
     <div className="flex items-center justify-center">
@@ -22,11 +23,17 @@ const GuessScore = ({ ...props }) => {
         <div className="flex w-full items-center justify-between gap-4 py-4 md:justify-around md:px-4">
           <div className="flex flex-col items-center gap-4 text-gray-500">
             <div className="flex items-center gap-4 md:gap-8">
-              <button onClick={() => setScoreHome(Math.max(scoreHome - 1, 0))}>
+              <button
+                onClick={() => setScoreHome(Math.max(scoreHome - 1, 0))}
+                disabled={props.disabled}
+              >
                 <MinusCircle />
               </button>
               <div>{scoreHome}</div>
-              <button onClick={() => setScoreHome(scoreHome + 1)}>
+              <button
+                onClick={() => setScoreHome(scoreHome + 1)}
+                disabled={props.disabled}
+              >
                 <PlusCircle />
               </button>
             </div>
@@ -42,17 +49,37 @@ const GuessScore = ({ ...props }) => {
 
           <div className="flex flex-col items-center gap-4 text-gray-500">
             <div className="flex items-center gap-4 md:gap-8">
-              <button onClick={() => setScoreAway(Math.max(scoreAway - 1, 0))}>
+              <button
+                onClick={() => setScoreAway(Math.max(scoreAway - 1, 0))}
+                disabled={props.disabled}
+              >
                 <MinusCircle />
               </button>
               <div>{scoreAway}</div>
-              <button onClick={() => setScoreAway(scoreAway + 1)}>
+              <button
+                onClick={() => setScoreAway(scoreAway + 1)}
+                disabled={props.disabled}
+              >
                 <PlusCircle />
               </button>
             </div>
             <p className="text-sm font-semibold">{props.answer2}</p>
           </div>
         </div>
+
+        <Submit
+          userId={props.userId}
+          questionId={props.id}
+          competitionId={props.competitionId}
+          answer={`${scoreHome}-${scoreAway}`}
+        >
+          <button
+            className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-white"
+            disabled={props.disabled}
+          >
+            Submit
+          </button>
+        </Submit>
       </div>
     </div>
   );

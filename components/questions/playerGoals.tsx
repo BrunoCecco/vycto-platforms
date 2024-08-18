@@ -1,14 +1,13 @@
 "use client";
 import Image from "next/image";
 import { FC, useEffect } from "react";
-import Slider from "../slider";
 import { useState } from "react";
 import PointsBadge from "../pointsBadge";
-import GoalSelector from "../goalSelector";
 import { answerQuestion } from "@/lib/actions";
+import Submit from "./submit";
 
 const PlayerGoals = ({ ...props }) => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState(props.answer || "");
   const goalOptions = [
     props.answer1,
     props.answer2,
@@ -57,11 +56,30 @@ const PlayerGoals = ({ ...props }) => {
         </p>
 
         <div className="flex items-center justify-center pt-3">
-          <GoalSelector
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-            options={goalOptions}
-          />
+          <div className="flex items-center justify-between rounded-lg bg-gray-200 p-2">
+            {goalOptions.map((option) => (
+              <Submit
+                key={option}
+                userId={props.userId}
+                competitionId={props.competitionId}
+                questionId={props.id}
+                answer={option}
+              >
+                <button
+                  key={option}
+                  disabled={props.disabled}
+                  className={`md:text-md rounded-lg px-4 py-3 text-sm ${
+                    selectedOption === option
+                      ? "bg-white font-semibold text-blue-600 shadow-md"
+                      : ""
+                  }`}
+                  onClick={() => setSelectedOption(option)}
+                >
+                  {option}
+                </button>
+              </Submit>
+            ))}
+          </div>
         </div>
       </div>
     </div>

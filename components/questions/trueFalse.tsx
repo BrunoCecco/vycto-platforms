@@ -1,25 +1,30 @@
+"use client";
 import Image from "next/image";
 import PointsBadge from "../pointsBadge";
 import Submit from "./submit";
+import { useState } from "react";
 
 const Button = ({
   children,
   selected,
   disabled,
+  onClick,
 }: {
   children: React.ReactNode;
   selected: boolean;
   disabled: boolean;
+  onClick: () => void;
 }) => {
   return (
     <button
       type="submit"
-      className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 hover:bg-blue-50"
+      className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 transition-all duration-200 hover:bg-blue-50 hover:opacity-75"
       style={{
         backgroundColor: selected ? "blue" : "white",
         color: selected ? "white" : "blue",
       }}
       disabled={disabled}
+      onClick={onClick}
     >
       {children}
     </button>
@@ -27,6 +32,8 @@ const Button = ({
 };
 
 const TrueFalse = ({ ...props }) => {
+  const [selected, setSelected] = useState(props.answer ?? "");
+
   return (
     <div className="flex items-center justify-center">
       <div className="relative h-full rounded-lg bg-white p-6 shadow-xl">
@@ -60,7 +67,11 @@ const TrueFalse = ({ ...props }) => {
             questionId={props.id}
             answer="True"
           >
-            <Button selected={props.answer == "True"} disabled={props.disabled}>
+            <Button
+              selected={selected == "True"}
+              disabled={props.disabled}
+              onClick={() => setSelected("True")}
+            >
               True
             </Button>
           </Submit>
@@ -71,8 +82,9 @@ const TrueFalse = ({ ...props }) => {
             answer="False"
           >
             <Button
-              selected={props.answer == "False"}
+              selected={selected == "False"}
               disabled={props.disabled}
+              onClick={() => setSelected("False")}
             >
               False
             </Button>
