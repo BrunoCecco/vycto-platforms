@@ -80,6 +80,11 @@ const GuessScore = ({ ...props }) => {
             Submit
           </button>
         </Submit>
+        {props.correctAnswer?.length > 0 ? (
+          <div className="mt-2 text-center font-semibold text-green-600">
+            Correct answer: {props.correctAnswer}
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
+import Uploader from "../old-components/uploader";
 
 const EditPlayerGoals = ({
   question,
@@ -28,6 +29,7 @@ const EditPlayerGoals = ({
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
     question.correctAnswer || "",
   );
+  const [image1, setImage1] = useState(question.image1 || "/placeholder.png");
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedQuestion(e.target.value);
@@ -79,6 +81,11 @@ const EditPlayerGoals = ({
     setEditedCorrectAnswer(e.target.value);
   };
 
+  const handleImageChange = async (key: string, value: string) => {
+    setImage1(value);
+    await updateQuestion(key, value);
+  };
+
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
@@ -102,8 +109,13 @@ const EditPlayerGoals = ({
         </div>
 
         {/* Placeholder for Image or Graphic */}
-        <div className="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-100">
-          {/* Placeholder for the image */}
+        <div className="mb-4 h-auto w-full overflow-hidden rounded-lg ">
+          <Uploader
+            id={question.id}
+            defaultValue={image1}
+            name={"image1"}
+            upload={handleImageChange}
+          />
         </div>
 
         {/* Editable Question */}
@@ -177,7 +189,10 @@ const EditPlayerGoals = ({
           </label>
           <input
             type="text"
-            placeholder="2 goals"
+            value={question.correctAnswer || editedCorrectAnswer}
+            onChange={handleCorrectAnswerInputChange}
+            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
+            placeholder="Correct Answer"
             autoFocus
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />

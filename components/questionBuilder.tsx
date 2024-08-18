@@ -144,12 +144,12 @@ const QuestionBuilder = ({
   };
 
   const renderAddButton = (index: number | null) => (
-    <div className="flex justify-center p-8">
+    <div className="flex justify-center">
       <button
         onClick={() =>
           setShowOptionsIndex(showOptionsIndex === index ? null : index)
         }
-        className="flex items-center justify-center rounded-full bg-blue-500 p-4 text-white hover:bg-blue-600"
+        className="flex items-center justify-center rounded-full bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
       >
         {showOptionsIndex === index ? "Cancel" : "Add Question"}
       </button>
@@ -199,10 +199,10 @@ const QuestionBuilder = ({
   );
 
   return (
-    <div className="p-6">
+    <div className="">
       {renderAddButton(0)}
       {questions.map((question, index) => (
-        <div key={index}>
+        <div key={index} className="flex flex-col gap-4">
           {question.element}
           {renderAddButton(index + 1)}
         </div>

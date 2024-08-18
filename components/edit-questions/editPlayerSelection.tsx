@@ -240,47 +240,6 @@ const EditPlayerSelection = ({
             }
             handleImageChange={handleImageChange}
           />
-          {/* {players.map((player, index) => (
-            <div
-              key={index}
-              className={`cursor-pointer rounded-lg border-2 p-2 shadow-sm transition duration-200 ${
-                selectedPlayer === player.name
-                  ? "border-yellow-500"
-                  : "border-transparent"
-              }`}
-              onClick={() => setSelectedPlayer(player.name)}
-            >
-              <Image
-                src={player.image}
-                alt={player.name}
-                layout="responsive"
-                width={128}
-                height={96}
-                objectFit="cover"
-                className={`rounded-md ${
-                  selectedPlayer !== player.name ? "opacity-50" : "opacity-100"
-                }`}
-              />
-              <div className="mt-2 text-center">
-                <input
-                  type="text"
-                  value={player.name}
-                  onChange={(e) =>
-                    handlePlayerNameChange(index, e.target.value)
-                  }
-                  className="text-center text-sm font-semibold text-gray-800"
-                />
-                <input
-                  type="text"
-                  value={player.position}
-                  onChange={(e) =>
-                    handlePlayerPositionChange(index, e.target.value)
-                  }
-                  className="text-center text-xs text-gray-500"
-                />
-              </div>
-            </div>
-          ))} */}
         </div>
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
           <label htmlFor="correctAnswer" className="text-gray-500">

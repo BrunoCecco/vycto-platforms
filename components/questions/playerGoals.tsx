@@ -55,7 +55,7 @@ const PlayerGoals = ({ ...props }) => {
           Select correctly to score points
         </p>
 
-        <div className="flex items-center justify-center pt-3">
+        <div className="flex flex-col items-center justify-center pt-3">
           <div className="flex items-center justify-between rounded-lg bg-gray-200 p-2">
             {goalOptions.map((option) => (
               <Submit
@@ -80,6 +80,11 @@ const PlayerGoals = ({ ...props }) => {
               </Submit>
             ))}
           </div>
+          {props.correctAnswer?.length > 0 ? (
+            <div className="mt-2 text-center font-semibold text-green-600">
+              Correct answer: {props.correctAnswer}
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

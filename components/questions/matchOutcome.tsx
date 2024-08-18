@@ -110,6 +110,11 @@ const MatchOutcome = ({ ...props }) => {
             </button>
           </Submit>
         </div>
+        {props.correctAnswer?.length > 0 ? (
+          <div className="mt-2 text-center font-semibold text-green-600">
+            Correct answer: {props.correctAnswer}
+          </div>
+        ) : null}
       </div>
     </div>
   );

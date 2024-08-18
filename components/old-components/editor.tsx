@@ -62,9 +62,6 @@ export default function Editor({
             <ExternalLink className="h-4 w-4" />
           </a>
         )}
-        <div className="rounded-lg bg-stone-100 px-2 py-1 text-sm text-stone-400 dark:bg-stone-800 dark:text-stone-500">
-          {isPendingSaving ? "Saving..." : "Saved"}
-        </div>
         <button
           className="rounded-lg bg-stone-400 px-2 py-1 text-sm text-white hover:opacity-75 dark:bg-stone-800 dark:text-stone-500"
           onClick={() => {
@@ -73,7 +70,7 @@ export default function Editor({
             });
           }}
         >
-          Save (Ctrl + S)
+          {isPendingSaving ? "Saving..." : "Save (CTRL + S)"}
         </button>
         <button
           onClick={() => {

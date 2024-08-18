@@ -5,6 +5,7 @@ import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
+import Uploader from "../old-components/uploader";
 
 const EditMatchOutcome = ({
   question,
@@ -23,6 +24,8 @@ const EditMatchOutcome = ({
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
     question.correctAnswer || "",
   );
+  const [image1, setImage1] = useState(question.image1 || "/placeholder.jpg");
+  const [image2, setImage2] = useState(question.image2 || "/placeholder.jpg");
 
   const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPoints(parseInt(e.target.value) || 0);
@@ -50,6 +53,16 @@ const EditMatchOutcome = ({
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setEditedCorrectAnswer(e.target.value);
+  };
+
+  const handleImage1Change = async (key: string, value: string) => {
+    setImage1(value);
+    await updateQuestion(key, value);
+  };
+
+  const handleImage2Change = async (key: string, value: string) => {
+    setImage2(value);
+    await updateQuestion(key, value);
   };
 
   return (
@@ -80,15 +93,15 @@ const EditMatchOutcome = ({
         <p className="text-sm text-gray-500">Pick the winner to score points</p>
 
         {/* Teams */}
-        <div className="flex w-full items-center justify-between py-4 md:justify-around md:px-4">
+        <div className="flex w-full flex-col items-center justify-between gap-4 py-4 md:justify-around md:px-4">
           {/* Home Team */}
-          <div className={`text-center`}>
-            <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
-              <Image
-                src="/real-madrid.jpg" // Replace with the appropriate image path
-                alt={homeTeam}
-                layout="fill"
-                objectFit="cover"
+          <div className={`w-full text-center`}>
+            <div className="relative mb-2 h-auto w-full overflow-hidden rounded-lg md:h-auto md:w-full">
+              <Uploader
+                id={question.id}
+                defaultValue={image1}
+                name={"image1"}
+                upload={handleImage1Change}
               />
             </div>
             {isEditingHome ? (
@@ -121,13 +134,13 @@ const EditMatchOutcome = ({
           </div>
 
           {/* Away Team */}
-          <div className={`text-center`}>
-            <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
-              <Image
-                src="/chelsea.jpg" // Replace with the appropriate image path
-                alt={awayTeam}
-                layout="fill"
-                objectFit="cover"
+          <div className={`w-full text-center`}>
+            <div className="relative mb-2 h-auto w-full overflow-hidden rounded-lg md:h-full md:w-full">
+              <Uploader
+                id={question.id}
+                defaultValue={image2}
+                name={"image2"}
+                upload={handleImage2Change}
               />
             </div>
             {isEditingAway ? (
