@@ -12,7 +12,7 @@ const TabSelector = () => {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`w-full pb-4 text-xl font-normal ${
+            className={`w-full pb-4 font-normal md:text-xl ${
               activeTab === tab
                 ? "border-b-2 border-green-600 text-green-600"
                 : "text-gray-700"

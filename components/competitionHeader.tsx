@@ -25,17 +25,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
     users.find((u: { userId: any }) => u.userId === session.user.id);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center rounded-lg bg-white px-10 py-6 shadow-lg md:w-3/4 md:p-14 lg:w-3/5">
-      {session?.user && users && !isUserInCompetition ? (
-        <EnterCompetitionButton
-          userId={session.user.id}
-          username={session.user.username || session.user.email || "User"}
-          competitionId={data.id}
-        />
-      ) : (
-        <div className="font-bold italic">Entered</div>
-      )}
-
+    <div className="flex w-full flex-col items-center justify-center p-8 md:w-3/4 md:p-14 lg:w-3/5">
       {/* Placeholder for Image or Graphic */}
       <div className="my-4 w-full overflow-hidden rounded-xl">
         <BlurImage
@@ -50,27 +40,36 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
       </div>
 
       {/* Text section */}
-      <div className="mt-8 text-center font-bold text-stone-800">
-        <h1 className="text-2xl md:text-3xl dark:text-white">
-          Competicion: {data.title}
+      <div className="text-center text-stone-800">
+        <h1 className="text-2xl font-bold md:text-3xl dark:text-white">
+          Competition: {data.title}
         </h1>
+        <div className="pt-2 text-xl dark:text-stone-400">
+          by <span className="text-green-500">{data.site?.name}</span>
+        </div>
         <div className="m-auto w-10/12 pt-4 text-sm font-light text-stone-800 md:text-base dark:text-stone-300">
           {DateTime.fromISO(data.date)
             .setLocale("en-UK")
             .toLocaleString(DateTime.DATE_FULL)}
         </div>
-        <div className="pt-4 text-xl dark:text-stone-400">
-          by <span className="text-green-500">{data.site?.name}</span>
-        </div>
+        {session?.user && users && !isUserInCompetition ? (
+          <EnterCompetitionButton
+            userId={session.user.id}
+            username={session.user.username || session.user.email || "User"}
+            competitionId={data.id}
+          />
+        ) : (
+          <div className="font-bold italic">Entered</div>
+        )}
       </div>
 
       {/* Banner */}
-      <div className="relative mt-8 h-32 w-full">
+      <div className="relative mt-4 h-14 w-full overflow-hidden rounded-lg md:h-32">
         <Image
           src={"/banner.jpg"}
           alt="Players Banner"
-          layout="fill"
-          objectFit="contain"
+          objectFit="cover"
+          fill={true}
         />
       </div>
       <TabSelector />

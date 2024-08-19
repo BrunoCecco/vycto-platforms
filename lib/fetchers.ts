@@ -8,6 +8,7 @@ import {
   competitions,
   sites,
   users,
+  SelectCompetition,
 } from "./schema";
 import { serialize } from "next-mdx-remote/serialize";
 import { replaceExamples, replaceTweets } from "@/lib/remark-plugins";
@@ -43,16 +44,10 @@ export async function getCompetitionsForSite(domain: string) {
 
   return await unstable_cache(
     async () => {
+      // select all competitions (all fields) for the site
       return await db
         .select({
-          title: competitions.title,
-          description: competitions.description,
-          slug: competitions.slug,
-          image: competitions.image,
-          imageBlurhash: competitions.imageBlurhash,
-          createdAt: competitions.createdAt,
-          sponsor: competitions.sponsor,
-          date: competitions.date,
+          competition: competitions,
         })
         .from(competitions)
         .leftJoin(sites, eq(competitions.siteId, sites.id))

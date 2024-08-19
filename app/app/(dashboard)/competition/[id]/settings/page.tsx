@@ -75,7 +75,7 @@ export default async function CompetitionSettings({
           inputAttrs={{
             name: "date",
             type: "date",
-            defaultValue: data?.date!,
+            defaultValue: new Date(data?.date!).toISOString().split("T")[0],
             placeholder: "Date",
           }}
           handleSubmit={updateCompetitionMetadata}

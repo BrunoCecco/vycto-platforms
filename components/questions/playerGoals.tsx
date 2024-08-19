@@ -56,7 +56,7 @@ const PlayerGoals = ({ ...props }) => {
         </p>
 
         <div className="flex flex-col items-center justify-center pt-3">
-          <div className="flex items-center justify-between rounded-lg bg-gray-200 p-2">
+          <div className="flex flex-wrap items-center justify-between rounded-lg bg-gray-200 p-2">
             {goalOptions.map((option) => (
               <Submit
                 key={option}
@@ -68,7 +68,7 @@ const PlayerGoals = ({ ...props }) => {
                 <button
                   key={option}
                   disabled={props.disabled}
-                  className={`md:text-md rounded-lg px-4 py-3 text-sm ${
+                  className={`rounded-lg px-4 py-3 text-sm text-sm ${
                     selectedOption === option
                       ? "bg-white font-semibold text-blue-600 shadow-md"
                       : ""

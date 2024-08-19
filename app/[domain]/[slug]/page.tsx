@@ -215,11 +215,9 @@ export default async function SiteCompetitionPage({
   };
 
   return (
-    <>
-      <div className="flex justify-center">
-        <CompetitionHeader session={session} users={users} data={data} />
-      </div>
-      <div className="mx-auto my-8 flex w-full flex-col justify-center gap-8 ">
+    <div className="bg-white">
+      <CompetitionHeader session={session} users={users} data={data} />
+      <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0 ">
         {questions &&
           questions.map((question: any, index: number) => {
             const answer = answers?.find(
@@ -236,9 +234,6 @@ export default async function SiteCompetitionPage({
               disabled || false,
             );
           })}
-      </div>
-
-      <div className="mb-4">
         {userComp && "submitted" in userComp && userComp.submitted ? (
           <div className="mx-auto flex h-8 w-fit items-center justify-center space-x-2 rounded-md border border-green-600 bg-green-600 px-2 text-sm text-white sm:h-10">
             Answers Submitted
@@ -275,6 +270,6 @@ export default async function SiteCompetitionPage({
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }

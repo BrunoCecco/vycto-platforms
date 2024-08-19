@@ -7,9 +7,9 @@ import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import DomainStatus from "./domain-status";
 import DomainConfiguration from "./domain-configuration";
-import Uploader from "./uploader";
 import va from "@vercel/analytics";
 import { useSession } from "next-auth/react";
+import Uploader from "../old-components/uploader";
 
 export default function Form({
   title,
@@ -72,8 +72,10 @@ export default function Form({
         inputAttrs.name === "logo" ||
         inputAttrs.name === "rewardImage" ? (
           <Uploader
+            id={inputAttrs.name}
             defaultValue={inputAttrs.defaultValue}
             name={inputAttrs.name}
+            upload={() => null}
           />
         ) : inputAttrs.name === "font" ? (
           <div className="flex max-w-sm items-center overflow-hidden rounded-lg border border-stone-600">

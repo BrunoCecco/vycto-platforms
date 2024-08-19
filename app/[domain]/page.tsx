@@ -45,10 +45,14 @@ export default async function SiteHomePage({
   params: { domain: string };
 }) {
   const domain = decodeURIComponent(params.domain);
-  const [data, competitions] = await Promise.all([
+  const [data, compData] = await Promise.all([
     getSiteData(domain),
     getCompetitionsForSite(domain),
   ]);
+
+  const competitions = compData.map(
+    (competition: any) => competition.competition,
+  );
 
   if (!data) {
     notFound();
