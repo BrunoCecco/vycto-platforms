@@ -14,11 +14,11 @@ import PlayerGoals from "@/components/questions/playerGoals";
 import PlayerSelection from "@/components/questions/playerSelection";
 import TrueFalse from "@/components/questions/trueFalse";
 import WhatMinute from "@/components/questions/whatMinute";
+import { SelectCompetition } from "@/lib/schema";
 
 export async function generateStaticParams() {
   const allSites = await db.query.sites.findMany({
     // feel free to remove this filter if you want to generate paths for all sites
-    where: (sites, { eq }) => eq(sites.subdomain, "demo"),
     columns: {
       subdomain: true,
       customDomain: true,
@@ -88,14 +88,19 @@ export default async function SiteHomePage({
           />
         </div>
         <FanZone
-          currentCompetitions={competitions.filter(
-            (competition: any) =>
-              new Date(competition.date).getTime() >= Date.now(),
-          )}
-          pastCompetitions={competitions.filter(
-            (competition: any) =>
-              new Date(competition.date).getTime() < Date.now(),
-          )}
+          siteData={data}
+          currentCompetitions={
+            competitions.filter(
+              (competition: any) =>
+                new Date(competition.date).getTime() >= Date.now(),
+            ) as SelectCompetition[]
+          }
+          pastCompetitions={
+            competitions.filter(
+              (competition: any) =>
+                new Date(competition.date).getTime() < Date.now(),
+            ) as SelectCompetition[]
+          }
         />
         {/* {competitions.length > 0 ? (
           <div className="grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:grid-cols-3">

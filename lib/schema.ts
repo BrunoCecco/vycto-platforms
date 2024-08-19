@@ -172,6 +172,9 @@ export const competitions = pgTable(
     rewardTitle: text("rewardTitle"),
     rewardDescription: text("rewardDescription"),
     rewardImage: text("rewardImage"),
+    color1: text("color1").default("gray").notNull(),
+    color2: text("color2").default("gray").notNull(),
+    color3: text("color3").default("gray").notNull(),
     siteId: text("siteId").references(() => sites.id, {
       onDelete: "cascade",
       onUpdate: "cascade",

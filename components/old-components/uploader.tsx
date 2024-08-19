@@ -188,7 +188,7 @@ export default function Uploader({
         <div className="mt-1 flex rounded-md shadow-sm">
           <input
             id={`${id}-upload-${name}`}
-            name="image"
+            name={name}
             type="file"
             accept="image/*"
             className="sr-only"

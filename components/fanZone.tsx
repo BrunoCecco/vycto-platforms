@@ -1,32 +1,15 @@
 import { FC } from "react";
 import Competitions from "./competitions";
+import { competitions, SelectCompetition, SelectSite } from "@/lib/schema";
 
-interface FanZoneProps {
-  currentCompetitions: {
-    title: string | null;
-    sponsor: string | null;
-    description: string | null;
-    slug: string;
-    image: string | null;
-    imageBlurhash: string | null;
-    createdAt: Date;
-    date: string;
-  }[];
-  pastCompetitions: {
-    title: string | null;
-    sponsor: string | null;
-    description: string | null;
-    slug: string;
-    image: string | null;
-    imageBlurhash: string | null;
-    createdAt: Date;
-    date: string;
-  }[];
-}
-
-const FanZone: FC<FanZoneProps> = ({
+const FanZone = ({
+  siteData,
   currentCompetitions,
   pastCompetitions,
+}: {
+  siteData: SelectSite;
+  currentCompetitions: SelectCompetition[];
+  pastCompetitions: SelectCompetition[];
 }) => {
   return (
     <>

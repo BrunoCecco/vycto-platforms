@@ -7,11 +7,9 @@ import { toast } from "sonner";
 export default function Uploader({
   defaultValue,
   name,
-  handleBlur,
 }: {
   defaultValue: string | null;
   name: string;
-  handleBlur?: (name: string, value: string) => void;
 }) {
   const aspectRatio =
     name === "image" || name === "rewardImage"
@@ -140,11 +138,6 @@ export default function Uploader({
           onChange={(e) => {
             const file = e.currentTarget.files && e.currentTarget.files[0];
             handleUpload(file);
-          }}
-          onBlur={() => {
-            if (handleBlur) {
-              handleBlur(name, data[name]!);
-            }
           }}
         />
       </div>

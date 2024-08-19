@@ -1,26 +1,16 @@
 import { FC } from "react";
 import CompetitionCard from "./competitionCard";
+import { SelectCompetition } from "@/lib/schema";
 
-interface Competition {
-  title: string | null;
-  sponsor: string | null;
-  description: string | null;
-  slug: string;
-  image: string | null;
-  imageBlurhash: string | null;
-  createdAt: Date;
-  date: string;
-}
-
-interface CompetitionsProps {
-  competitions: Competition[];
-}
-
-const Competitions: FC<CompetitionsProps> = ({ competitions }) => {
+const Competitions = ({
+  competitions,
+}: {
+  competitions: SelectCompetition[];
+}) => {
   return (
     <div className="flex flex-col space-y-4 sm:flex-row md:space-x-4 md:space-y-0">
-      {competitions.map((competition, index) => (
-        <CompetitionCard key={index} {...competition} />
+      {competitions.map((competition: SelectCompetition, index) => (
+        <CompetitionCard key={index} competition={competition} />
       ))}
     </div>
   );

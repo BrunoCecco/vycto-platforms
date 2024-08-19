@@ -2,39 +2,25 @@ import Image from "next/image";
 import { FC } from "react";
 import BlurImage from "./old-components/blur-image";
 import { placeholderBlurhash, random } from "@/lib/utils";
-import { getCompetitionUsers } from "@/lib/fetchers";
+import { getCompetitionUsers, getSiteData } from "@/lib/fetchers";
 import Link from "next/link";
+import { SelectCompetition } from "@/lib/schema";
 
-interface CompetitionCardProps {
-  title: string | null;
-  sponsor: string | null;
-  description: string | null;
-  slug: string;
-  image: string | null;
-  imageBlurhash: string | null;
-  createdAt: Date;
-  date: string;
-}
-
-const CompetitionCard: FC<CompetitionCardProps> = async ({
-  title,
-  sponsor,
-  description,
-  slug,
-  image,
-  imageBlurhash,
-  createdAt,
-  date,
+const CompetitionCard = async ({
+  competition,
+}: {
+  competition: SelectCompetition;
 }) => {
-  const users = await getCompetitionUsers(slug);
+  const users = await getCompetitionUsers(competition.slug);
 
   let status;
-  if (new Date(date) > new Date()) {
+  if (new Date(competition.date) > new Date()) {
     const days = Math.ceil(
-      (new Date(date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24),
+      (new Date(competition.date).getTime() - new Date().getTime()) /
+        (1000 * 60 * 60 * 24),
     );
     status = days + " Days to go";
-  } else if (new Date(date) < new Date()) {
+  } else if (new Date(competition.date) < new Date()) {
     status = users.length + " Participants";
   } else {
     status = "Live";
@@ -44,21 +30,23 @@ const CompetitionCard: FC<CompetitionCardProps> = async ({
     <div className="w-80 overflow-hidden rounded-xl border bg-white p-4 shadow-lg">
       <div className="relative h-40 w-full">
         <BlurImage
-          alt={title ?? "Card thumbnail"}
+          alt={competition.title ?? "Card thumbnail"}
           layout="fill"
           objectFit="cover"
           className="rounded-xl"
-          src={image ?? "/placeholder.png"}
+          src={competition.image ?? "/placeholder.png"}
           placeholder="blur"
-          blurDataURL={imageBlurhash ?? placeholderBlurhash}
+          blurDataURL={competition.imageBlurhash ?? placeholderBlurhash}
         />
       </div>
 
       {/* Title, sponser & profiles bit */}
       <div className="flex items-center justify-between py-2">
         <div>
-          <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
-          <p className="text-sm text-gray-600">{sponsor}</p>
+          <h2 className="text-lg font-semibold text-gray-800">
+            {competition.title}
+          </h2>
+          <p className="text-sm text-gray-600">{competition.sponsor}</p>
         </div>
         <div className="relative flex items-center">
           <div className="relative h-6 w-6">
@@ -83,10 +71,13 @@ const CompetitionCard: FC<CompetitionCardProps> = async ({
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="text-sm text-green-600">{status}</p>
+        <p className="text-sm" style={{ color: competition.color2 }}>
+          {status}
+        </p>
         <Link
-          href={slug}
-          className="w-24 rounded-full bg-green-700 p-2 text-center text-white hover:bg-green-600"
+          href={competition.slug}
+          className="w-24 rounded-full  p-2 text-center text-white"
+          style={{ backgroundColor: competition.color2 }}
         >
           Play
         </Link>
