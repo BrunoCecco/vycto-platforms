@@ -105,7 +105,7 @@ export async function generateStaticParams() {
   return allPaths;
 }
 
-export default async function SiteCompetitionPage({
+export default async function SubmissionPage({
   params,
 }: {
   params: { domain: string; slug: string };
@@ -134,8 +134,8 @@ export default async function SiteCompetitionPage({
       session.user.username || session.user.name || session.user.email,
       data.id,
     );
-    if (userComp && "submitted" in userComp && userComp.submitted) {
-      redirect(`/${domain}/${slug}/submission`);
+    if (!userComp || "submitted" in userComp == false || !userComp.submitted) {
+      redirect(`/${domain}/${slug}`);
     }
     users = await getCompetitionUsers(data!.id);
   }
@@ -222,6 +222,16 @@ export default async function SiteCompetitionPage({
     <div className="bg-white">
       <CompetitionHeader session={session} users={users} data={data} />
       <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0 ">
+        <GameStats
+          competitionTitle="Atletico vs Inter"
+          username="nicolascastr0"
+          submissionDate="09 May 2024"
+          submissionTime="15:42"
+          totalPoints={67.61}
+          percentile="Top 4%"
+          rank="33rd"
+          bonusPoints={0.5}
+        />
         {questions &&
           questions.map((question: any, index: number) => {
             const answer = answers?.find(
@@ -238,17 +248,6 @@ export default async function SiteCompetitionPage({
               disabled || false,
             );
           })}
-        {userComp && "submitted" in userComp && userComp.submitted ? (
-          <div className="mx-auto flex h-8 w-fit items-center justify-center space-x-2 rounded-md border border-green-600 bg-green-600 px-2 text-sm text-white sm:h-10">
-            Answers Submitted
-          </div>
-        ) : (
-          <SubmitAnswersForm
-            userId={session?.user.id!}
-            competitionId={data.id}
-            slug={slug}
-          />
-        )}
       </div>
 
       <Leaderboard users={users} />

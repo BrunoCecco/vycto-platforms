@@ -11,9 +11,11 @@ import va from "@vercel/analytics";
 export default function SubmitAnswersForm({
   userId,
   competitionId,
+  slug,
 }: {
   userId: string;
   competitionId: string;
+  slug: string;
 }) {
   const router = useRouter();
 
@@ -26,7 +28,7 @@ export default function SubmitAnswersForm({
           } else {
             va.track("Submitted Answers");
             router.refresh();
-            router.push(`/competitions/${competitionId}/submission`);
+            router.push(`${slug}/submission`);
             toast.success(`Successfully submitted answers!`);
           }
         })

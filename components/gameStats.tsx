@@ -24,7 +24,7 @@ const GameStats: FC<GameStatsProps> = ({
 }) => {
   return (
     <div className="flex justify-center">
-      <div className="flex h-80 flex-col justify-around rounded-lg border-2 px-12 py-4 shadow-sm md:w-1/2">
+      <div className="flex h-80 flex-col justify-around rounded-lg border-2 px-6 py-4 shadow-sm md:w-1/2">
         {/* Header */}
         <h2 className="text-center text-xl font-semibold text-blue-900">
           Competition: {competitionTitle}
@@ -34,35 +34,35 @@ const GameStats: FC<GameStatsProps> = ({
         <p className="text-center text-lg text-black">@{username}</p>
 
         {/* Submission Info */}
-        <div className="flex items-center justify-center text-gray-600">
+        <div className="flex flex-col items-center justify-center text-center text-gray-600">
           <p className="text-sm">
             Submitted Prediction: {submissionDate} – {submissionTime}
           </p>
-          <span className="ml-1" role="img" aria-label="tick">
+          {/* <span className="ml-1" role="img" aria-label="tick">
             ✅
-          </span>
+          </span> */}
           <Share className="ml-1 cursor-pointer text-gray-400 hover:text-gray-600" />
         </div>
 
         {/* Statistics */}
-        <div className="flex justify-between text-center text-gray-600">
+        <div className="flex flex-wrap items-center justify-between text-center text-sm text-gray-600">
           <div>
             <p className="pb-2 font-semibold text-green-600">
               {totalPoints} / 100
             </p>
             <p className="text-xs">total points</p>
           </div>
-          <div className="h-12 border-r border-green-600" />
+          <div className="h-6 border-r border-green-600" />
           <div>
             <p className="pb-2 font-semibold text-green-600">{percentile}</p>
             <p className="text-xs">percentile</p>
           </div>
-          <div className="h-12 border-r border-green-600" />
+          <div className="h-6 border-r border-green-600" />
           <div>
             <p className="pb-2 font-semibold text-green-600">{rank}</p>
             <p className="text-xs">rank</p>
           </div>
-          <div className="h-12 border-r border-green-600" />
+          <div className="h-6 border-r border-green-600" />
           <div>
             <p className="pb-2 font-semibold text-green-600">
               {bonusPoints} pt
