@@ -36,7 +36,7 @@ const TrueFalse = ({ ...props }) => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="relative h-full rounded-lg bg-white p-6 shadow-xl">
+      <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl md:w-1/2">
         {/* Points Badge */}
         <PointsBadge points={props.points} />
 

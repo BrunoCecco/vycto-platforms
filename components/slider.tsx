@@ -3,6 +3,7 @@ import { useState, FC, useRef } from "react";
 import { Range } from "react-range";
 import { answerQuestion, updateQuestionMetadata } from "@/lib/actions";
 import { SelectQuestion } from "@/lib/schema";
+import { toast } from "sonner";
 
 const Slider = ({
   userId,
@@ -41,12 +42,14 @@ const Slider = ({
             if (userId != undefined) {
               console.log("Answering question", data);
               await answerQuestion(data);
+              toast.success("Answer submitted!");
             } else {
               // editing question so we have to updatequestionmetadata
               console.log("Updating question metadata", data);
               const formData = new FormData();
               formData.append("answer1", values[0].toString());
               await updateQuestionMetadata(formData, question, "answer1");
+              toast.success("Answer submitted!");
             }
           }}
         >
