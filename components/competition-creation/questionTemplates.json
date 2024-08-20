@@ -1,0 +1,36 @@
+{
+  "MatchOutcome": {
+    "question": "What will the outcome be between <insert_team1> and <insert_team2>?",
+    "answers": ["<insert_team1>", "<insert_team2>", "Draw"]
+  },
+  "GuessScore": {
+    "question": "What will be the final score in the match between <insert_team1> and <insert_team2>?",
+    "answers": ["<insert_team1> win", "<insert_team2> win", "Draw", "Other"]
+  },
+  "PlayerGoals": {
+    "question": "Which player will score the most goals for <insert_team>?",
+    "answers": [
+      "<insert_player1>",
+      "<insert_player2>",
+      "<insert_player3>",
+      "<insert_player4>"
+    ]
+  },
+  "TrueFalse": {
+    "question": "Will <insert_team> win the match against <insert_opponent>?",
+    "answers": ["True", "False"]
+  },
+  "WhatMinute": {
+    "question": "In which minute will the first goal be scored in the match between <insert_team1> and <insert_team2>?",
+    "answers": ["0-15", "16-30", "31-45", "46+"]
+  },
+  "PlayerSelection": {
+    "question": "Who will be the Man of the Match in the match between <insert_team1> and <insert_team2>?",
+    "answers": [
+      "<insert_player1>",
+      "<insert_player2>",
+      "<insert_player3>",
+      "<insert_player4>"
+    ]
+  }
+}

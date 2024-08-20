@@ -15,6 +15,7 @@ import {
   FileCode,
   Github,
   Gift,
+  Wand,
 } from "lucide-react";
 import {
   useParams,
@@ -92,9 +93,15 @@ export default function Nav({ children }: { children: ReactNode }) {
           icon: <ArrowLeft width={18} />,
         },
         {
-          name: "Editor",
+          name: "Create",
           href: `/competition/${id}`,
           isActive: segments.length === 2,
+          icon: <Wand width={18} />,
+        },
+        {
+          name: "Editor",
+          href: `/competition/${id}/editor`,
+          isActive: segments.includes("editor"),
           icon: <Edit3 width={18} />,
         },
         {

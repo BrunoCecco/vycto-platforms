@@ -1,5 +1,6 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
+import Editor from "@/components/old-components/editor";
 import db from "@/lib/db";
 import { getQuestionsForCompetition } from "@/lib/fetchers";
 import CompetitionCreator from "@/components/competition-creation";
@@ -37,7 +38,7 @@ export default async function CompetitionPage({
 
   return (
     <div>
-      <CompetitionCreator />
+      <Editor competition={data} initialQuestions={initialQuestions} />
     </div>
   );
 }
