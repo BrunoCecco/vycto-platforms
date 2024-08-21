@@ -74,7 +74,7 @@ const EditTrueFalse = ({
 
   return (
     <div className="flex items-center justify-center">
-      <div className="relative h-full rounded-lg bg-white p-6 shadow-xl">
+      <div className="i relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (

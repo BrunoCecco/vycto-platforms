@@ -9,6 +9,14 @@ import {
   Player,
 } from "./questionService";
 import Image from "next/image";
+import { QuestionType } from "@/lib/types";
+import { SelectQuestion } from "@/lib/schema";
+import EditPlayerSelection from "../edit-questions/editPlayerSelection";
+import EditWhatMinute from "../edit-questions/editWhatMinute";
+import EditMatchOutcome from "../edit-questions/editMatchOutcome";
+import EditGuessScore from "../edit-questions/editGuessScore";
+import EditPlayerGoals from "../edit-questions/editPlayerGoals";
+import EditTrueFalse from "../edit-questions/editTrueFalse";
 
 interface PlayerTeam {
   id: number;
@@ -24,18 +32,38 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
 
   useEffect(() => {
     const generateQuestions = async () => {
+      const res = await axios.get(
+        `https://www.sofascore.com/api/v1/player/1/image`,
+        { responseType: "arraybuffer" },
+      );
+      const buffer = Buffer.from(res.data, "binary");
+
+      console.log(buffer);
+
       const response = await axios.get(
         `https://www.sofascore.com/api/v1/${selected.type}/${selected.id}`,
       );
       const data = response.data[selected.type];
 
+      // get current site url for competitionId
+      const url = window.location.href;
+      const competitionId = url.split("/").pop();
+
+      if (competitionId === undefined) {
+        console.error("Competition ID not found");
+        return;
+      }
+
       if (selected.type === "player") {
         setImageSrc(data.image);
-        const playerQuestions = await createPlayerQuestions(data.id);
+        const playerQuestions = await createPlayerQuestions(
+          data.id,
+          competitionId,
+        );
         setQuestions(playerQuestions);
       } else {
         console.log(data);
-        const teamQuestions = await createTeamQuestions(data.id);
+        const teamQuestions = await createTeamQuestions(data.id, competitionId);
         setQuestions(teamQuestions);
       }
     };
@@ -43,6 +71,64 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
     generateQuestions();
   }, [selected]);
 
+  const handleRemoveQuestion = (id: string) => {
+    setQuestions((prev) => prev.filter((q) => q.id !== id));
+  };
+
+  const getQuestionElement = (question: Question, type: QuestionType) => {
+    switch (type) {
+      case QuestionType.PlayerSelection:
+        return (
+          <EditPlayerSelection
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.WhatMinute:
+        return (
+          <EditWhatMinute
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.MatchOutcome:
+        return (
+          <EditMatchOutcome
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.GuessScore:
+        return (
+          <EditGuessScore
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.PlayerGoals:
+        return (
+          <EditPlayerGoals
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.TrueFalse:
+        return (
+          <EditTrueFalse
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      default:
+        return;
+    }
+  };
   return (
     <div
       style={{
@@ -80,75 +166,7 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
               boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <div>
-              <strong>Question:</strong> {q.question}
-            </div>
-            <div>
-              <strong>Points:</strong> {q.points}
-            </div>
-            <div>
-              <strong>Correct Answer:</strong> {q.correctAnswer}
-            </div>
-            <div>
-              <strong>Answer 1:</strong> {q.answer1}
-            </div>
-            <div>
-              <strong>Answer 2:</strong> {q.answer2}
-            </div>
-            <div>
-              <strong>Answer 3:</strong> {q.answer3}
-            </div>
-            <div>
-              <strong>Answer 4:</strong> {q.answer4}
-            </div>
-            {q.image1 && (
-              <div>
-                <strong>Image 1:</strong>
-                <Image
-                  src={q.image1!}
-                  alt="Image 1"
-                  width={100}
-                  height={100}
-                  objectFit="cover"
-                />
-              </div>
-            )}
-            {q.image2 && (
-              <div>
-                <strong>Image 2:</strong>
-                <Image
-                  src={q.image2}
-                  alt="Image 1"
-                  width={100}
-                  height={100}
-                  objectFit="cover"
-                />
-              </div>
-            )}
-            {q.image3 && (
-              <div>
-                <strong>Image 3:</strong>
-                <Image
-                  src={q.image3}
-                  alt="Image 1"
-                  width={100}
-                  height={100}
-                  objectFit="cover"
-                />
-              </div>
-            )}
-            {q.image4 && (
-              <div>
-                <strong>Image 4:</strong>
-                <Image
-                  src={q.image4}
-                  alt="Image 1"
-                  width={100}
-                  height={100}
-                  objectFit="cover"
-                />
-              </div>
-            )}
+            {getQuestionElement(q, q.type as QuestionType)}
           </li>
         ))}
       </ul>

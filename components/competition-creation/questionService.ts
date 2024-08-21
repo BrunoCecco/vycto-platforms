@@ -1,6 +1,7 @@
 // services/questionService.ts
 import axios from "axios";
 import questionTemplates from "./questionTemplates.json";
+import { createId } from "@paralleldrive/cuid2";
 
 export interface Player {
   id: number;
@@ -36,10 +37,13 @@ export interface Question {
   image3: string | null;
   image4: string | null;
   points: number;
+  id: string;
+  competitionId: string;
 }
 
 export const createTeamQuestions = async (
   teamId: number,
+  competitionId: string,
 ): Promise<Question[]> => {
   // Fetch team events
   const eventsResponse = await axios.get(
@@ -55,7 +59,11 @@ export const createTeamQuestions = async (
     (player: any) => player.player,
   );
 
-  const eventQuestions: Question[] = generateEventQuestions(nextEvent, players);
+  const eventQuestions: Question[] = generateEventQuestions(
+    nextEvent,
+    players,
+    competitionId,
+  );
 
   return eventQuestions;
 };
@@ -63,12 +71,15 @@ export const createTeamQuestions = async (
 const generateEventQuestions = (
   event: TeamEvent,
   players: Player[],
+  competitionId: string,
 ): Question[] => {
   const questions: Question[] = [];
 
   // 1. Match Outcome Question
   const matchOutcomeTemplate = questionTemplates.MatchOutcome;
   questions.push({
+    id: createId(),
+    competitionId: competitionId,
     question: matchOutcomeTemplate.question
       .replace("<insert_team1>", event.homeTeam.name)
       .replace("<insert_team2>", event.awayTeam.name),
@@ -94,6 +105,8 @@ const generateEventQuestions = (
   // 2. Guess the Score
   const guessScoreTemplate = questionTemplates.GuessScore;
   questions.push({
+    id: createId(),
+    competitionId: competitionId,
     question: guessScoreTemplate.question
       .replace("<insert_team1>", event.homeTeam.name)
       .replace("<insert_team2>", event.awayTeam.name),
@@ -120,6 +133,8 @@ const generateEventQuestions = (
   const playerGoalsTemplate = questionTemplates.PlayerGoals;
   const selectedPlayers = players.slice(0, 4);
   questions.push({
+    id: createId(),
+    competitionId: competitionId,
     question: playerGoalsTemplate.question.replace(
       "<insert_team>",
       event.homeTeam.name,
@@ -148,6 +163,8 @@ const generateEventQuestions = (
   // 4. True/False Question
   const trueFalseTemplate = questionTemplates.TrueFalse;
   questions.push({
+    id: createId(),
+    competitionId: competitionId,
     question: trueFalseTemplate.question
       .replace("<insert_team>", event.homeTeam.name)
       .replace("<insert_opponent>", event.awayTeam.name),
@@ -167,6 +184,8 @@ const generateEventQuestions = (
   // 5. What Minute Question
   const whatMinuteTemplate = questionTemplates.WhatMinute;
   questions.push({
+    id: createId(),
+    competitionId: competitionId,
     question: whatMinuteTemplate.question
       .replace("<insert_team1>", event.homeTeam.name)
       .replace("<insert_team2>", event.awayTeam.name),
@@ -186,6 +205,8 @@ const generateEventQuestions = (
   // 6. Player Selection Question (selecting random players)
   const playerSelectionTemplate = questionTemplates.PlayerSelection;
   questions.push({
+    id: createId(),
+    competitionId: competitionId,
     question: playerSelectionTemplate.question
       .replace("<insert_team1>", event.homeTeam.name)
       .replace("<insert_team2>", event.awayTeam.name),
@@ -215,16 +236,17 @@ const generateEventQuestions = (
 
 export const createPlayerQuestions = async (
   playerId: number,
+  competitionId: string,
 ): Promise<Question[]> => {
   // Fetch player information (including their team ID)
   const playerResponse = await axios.get(
     `https://www.sofascore.com/api/v1/player/${playerId}`,
   );
-  const player = playerResponse.data;
+  const player = playerResponse.data.player;
   const teamId = player.team.id;
 
   // Generate questions for the player's team
-  let teamQuestions = await createTeamQuestions(teamId);
+  let teamQuestions = await createTeamQuestions(teamId, competitionId);
 
   // Filter or adjust questions to focus more on the specific player
   teamQuestions = teamQuestions.map((q) => {

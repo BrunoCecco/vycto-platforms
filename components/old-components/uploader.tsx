@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, ChangeEvent } from "react";
 import { toast } from "sonner";
 import LoadingDots from "@/components/icons/loading-dots";
+import Image from "next/image";
 
 export default function Uploader({
   id,
@@ -59,8 +60,8 @@ export default function Uploader({
         setSaving(true);
         fetch("/api/upload", {
           method: "POST",
-          headers: { "content-type": file?.type || "application/octet-stream" },
-          body: file,
+          headers: { "content-type": file?.type || "application/json" },
+          body: file || data[name],
         }).then(async (res) => {
           if (res.status === 200) {
             const { url } = await res.json();
@@ -178,11 +179,14 @@ export default function Uploader({
             <span className="sr-only">Photo upload</span>
           </div>
           {data[name] != null && (
-            <img
-              src={data[name] as string}
-              alt="Preview"
-              className="h-full w-full rounded-md object-cover"
-            />
+            <div className="h-full w-full rounded-md">
+              <Image
+                src={data[name] as string}
+                alt="Preview"
+                fill={true}
+                className="h-full w-full object-contain"
+              />
+            </div>
           )}
         </label>
         <div className="mt-1 flex rounded-md shadow-sm">

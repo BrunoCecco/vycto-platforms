@@ -23,7 +23,7 @@ const EditWhatMinute = ({
     question.correctAnswer ?? "",
   );
   const [points, setPoints] = useState(question.points ?? 0);
-  const [image, setImage] = useState(question.image1 ?? "/trueFalse.jpg");
+  const [image, setImage] = useState(question.image1 ?? "/placeholder.png");
 
   const updateQuestion = async (key: string, value: string) => {
     const formData = new FormData();
@@ -75,7 +75,7 @@ const EditWhatMinute = ({
 
   return (
     <div className="flex items-center justify-center">
-      <div className="relative h-full rounded-lg bg-white p-6 shadow-xl">
+      <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
