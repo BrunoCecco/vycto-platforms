@@ -16,8 +16,8 @@ export default async function Sitemap() {
       url: `https://${domain}`,
       lastModified: new Date(),
     },
-    ...competitions.map(({ slug }) => ({
-      url: `https://${domain}/${slug}`,
+    ...competitions.map(({ competition }) => ({
+      url: `https://${domain}/${competition.slug}`,
       lastModified: new Date(),
     })),
   ];
