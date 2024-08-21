@@ -20,6 +20,10 @@ module.exports = {
       { hostname: "flag.vercel.app" },
       { hostname: "illustrations.popsy.co" },
       { hostname: "www.sofascore.com" },
+      { hostname: "api.sofascore.com" },
+      { hostname: "vyctorewards.com" },
+      { hostname: "vycto.com" },
+      { hostname: "app.vyctorewards.com" },
     ],
   },
 };

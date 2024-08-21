@@ -29,6 +29,7 @@ const PlayerComponent = ({
       <Image
         src={image || "/player.png"}
         alt={name}
+        unoptimized
         layout="responsive"
         width={128}
         height={96}

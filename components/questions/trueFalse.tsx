@@ -44,6 +44,7 @@ const TrueFalse = ({ ...props }) => {
         <div className="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-100">
           <Image
             src={props.image1 ?? "/placeholder.png"}
+            unoptimized
             alt="True or False Image"
             width={500}
             height={200}

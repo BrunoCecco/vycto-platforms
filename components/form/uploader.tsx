@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -119,11 +120,13 @@ export default function Uploader({
           <span className="sr-only">Photo upload</span>
         </div>
         {data[name] && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={data[name] as string}
+            unoptimized
             alt="Preview"
             className="h-full w-full rounded-md object-cover"
+            fill
+            sizes={`(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw`}
           />
         )}
       </label>

@@ -40,6 +40,7 @@ const MatchOutcome = ({ ...props }) => {
                 <Image
                   src={props.image1 ?? "/placeholder.png"}
                   alt={props.answer1}
+                  unoptimized={true}
                   width={500}
                   height={200}
                   objectFit="cover"
@@ -77,6 +78,7 @@ const MatchOutcome = ({ ...props }) => {
                 <Image
                   src={props.image2 ?? "/placeholder.png"}
                   alt={props.answer2}
+                  unoptimized
                   width={500}
                   height={200}
                   objectFit="cover"

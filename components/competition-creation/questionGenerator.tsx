@@ -35,7 +35,7 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
     setLoading(true);
     const generateQuestions = async () => {
       const response = await axios.get(
-        `https://www.sofascore.com/api/v1/${selected.type}/${selected.id}`,
+        `https://api.sofascore.com/api/v1/${selected.type}/${selected.id}`,
       );
       const data = response.data[selected.type];
 
@@ -53,65 +53,30 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
           data.id,
           competitionId,
         );
-        try {
-          const questionsWithImages = await Promise.all(
-            playerQuestions.map((q) => replaceImageUrls(q)),
-          );
-          // create questions in the database
-          await Promise.all(
-            questionsWithImages.map(async (q: SelectQuestion) => {
-              await createQuestion({
-                competitionId: q.competitionId,
-                type: q.type as QuestionType,
-                question: q,
-              });
-            }),
-          );
-          setQuestions(questionsWithImages);
-        } catch (e) {
-          console.error(e);
-          await Promise.all(
-            playerQuestions.map(async (q: SelectQuestion) => {
-              await createQuestion({
-                competitionId: q.competitionId,
-                type: q.type as QuestionType,
-                question: q,
-              });
-            }),
-          );
-          setQuestions(playerQuestions);
-        }
+        await Promise.all(
+          playerQuestions.map(async (q: SelectQuestion) => {
+            await createQuestion({
+              competitionId: q.competitionId,
+              type: q.type as QuestionType,
+              question: q,
+            });
+          }),
+        );
+        setQuestions(playerQuestions);
       } else {
         console.log(data);
         const teamQuestions = await createTeamQuestions(data.id, competitionId);
-        try {
-          const questionsWithImages = await Promise.all(
-            teamQuestions.map((q) => replaceImageUrls(q)),
-          );
-          // create questions in the database
-          await Promise.all(
-            questionsWithImages.map(async (q: SelectQuestion) => {
-              await createQuestion({
-                competitionId: q.competitionId,
-                type: q.type as QuestionType,
-                question: q,
-              });
-            }),
-          );
-          setQuestions(questionsWithImages);
-        } catch (e) {
-          console.error(e);
-          await Promise.all(
-            teamQuestions.map(async (q: SelectQuestion) => {
-              await createQuestion({
-                competitionId: q.competitionId,
-                type: q.type as QuestionType,
-                question: q,
-              });
-            }),
-          );
-          setQuestions(teamQuestions);
-        }
+
+        await Promise.all(
+          teamQuestions.map(async (q: SelectQuestion) => {
+            await createQuestion({
+              competitionId: q.competitionId,
+              type: q.type as QuestionType,
+              question: q,
+            });
+          }),
+        );
+        setQuestions(teamQuestions);
       }
       setLoading(false);
     };

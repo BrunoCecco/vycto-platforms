@@ -32,13 +32,13 @@ export const createTeamQuestions = async (
 ): Promise<SelectQuestion[]> => {
   // Fetch team events
   const eventsResponse = await axios.get(
-    `https://www.sofascore.com/api/v1/team/${teamId}/near-events`,
+    `https://api.sofascore.com/api/v1/team/${teamId}/near-events`,
   );
   const { nextEvent } = eventsResponse.data;
 
   // Fetch players for the team
   const playersResponse = await axios.get(
-    `https://www.sofascore.com/api/v1/team/${teamId}/players`,
+    `https://api.sofascore.com/api/v1/team/${teamId}/players`,
   );
   const players: Player[] = playersResponse.data.players.map(
     (player: any) => player.player,
@@ -90,8 +90,8 @@ const generateEventQuestions = (
     answer3: matchOutcomeTemplate.answers[2],
     answer4: null,
     correctAnswer: null,
-    image1: `https://www.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
-    image2: `https://www.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
+    image1: `https://api.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
+    image2: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
     image3: null,
     image4: null,
     points: 5,
@@ -117,8 +117,8 @@ const generateEventQuestions = (
     answer3: guessScoreTemplate.answers[2],
     answer4: guessScoreTemplate.answers[3],
     correctAnswer: null,
-    image1: `https://www.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
-    image2: `https://www.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
+    image1: `https://api.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
+    image2: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
     image3: null,
     image4: null,
     points: 5,
@@ -141,16 +141,16 @@ const generateEventQuestions = (
     answer4: selectedPlayers[3]?.name || null,
     correctAnswer: null,
     image1: selectedPlayers[0]
-      ? `https://www.sofascore.com/api/v1/player/${selectedPlayers[0].id}/image`
+      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[0].id}/image`
       : null,
     image2: selectedPlayers[1]
-      ? `https://www.sofascore.com/api/v1/player/${selectedPlayers[1].id}/image`
+      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[1].id}/image`
       : null,
     image3: selectedPlayers[2]
-      ? `https://www.sofascore.com/api/v1/player/${selectedPlayers[2].id}/image`
+      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[2].id}/image`
       : null,
     image4: selectedPlayers[3]
-      ? `https://www.sofascore.com/api/v1/player/${selectedPlayers[3].id}/image`
+      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[3].id}/image`
       : null,
     points: 5,
   });
@@ -169,8 +169,8 @@ const generateEventQuestions = (
     answer3: null,
     answer4: null,
     correctAnswer: null,
-    image1: `https://www.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
-    image2: `https://www.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
+    image1: `https://api.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
+    image2: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
     image3: null,
     image4: null,
     points: 5,
@@ -190,7 +190,7 @@ const generateEventQuestions = (
     answer3: whatMinuteTemplate.answers[2],
     answer4: whatMinuteTemplate.answers[3],
     correctAnswer: null,
-    image1: `https://www.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
+    image1: `https://api.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
     image2: null,
     image3: null,
     image4: null,
@@ -212,16 +212,16 @@ const generateEventQuestions = (
     answer4: selectedPlayers[3]?.name || null,
     correctAnswer: null,
     image1: selectedPlayers[0]
-      ? `https://www.sofascore.com/api/v1/player/${selectedPlayers[0].id}/image`
+      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[0].id}/image`
       : null,
     image2: selectedPlayers[1]
-      ? `https://www.sofascore.com/api/v1/player/${selectedPlayers[1].id}/image`
+      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[1].id}/image`
       : null,
     image3: selectedPlayers[2]
-      ? `https://www.sofascore.com/api/v1/player/${selectedPlayers[2].id}/image`
+      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[2].id}/image`
       : null,
     image4: selectedPlayers[3]
-      ? `https://www.sofascore.com/api/v1/player/${selectedPlayers[3].id}/image`
+      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[3].id}/image`
       : null,
     points: 5,
   });
@@ -235,7 +235,7 @@ export const createPlayerQuestions = async (
 ): Promise<SelectQuestion[]> => {
   // Fetch player information (including their team ID)
   const playerResponse = await axios.get(
-    `https://www.sofascore.com/api/v1/player/${playerId}`,
+    `https://api.sofascore.com/api/v1/player/${playerId}`,
   );
   const player = playerResponse.data.player;
   const teamId = player.team.id;
@@ -250,7 +250,7 @@ export const createPlayerQuestions = async (
         ...q,
         question: q.question?.replace("<insert_player>", player.name) || "",
         answer1: player.name,
-        image1: `https://www.sofascore.com/api/v1/player/${playerId}/image`,
+        image1: `https://api.sofascore.com/api/v1/player/${playerId}/image`,
       };
     }
     return q;

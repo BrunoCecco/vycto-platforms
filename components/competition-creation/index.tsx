@@ -11,7 +11,7 @@ const CompetitionCreator = () => {
   };
 
   return (
-    <div>
+    <div className="p-8 pt-12 sm:pt-0">
       <h1 className="mb-2 text-xl">Competition Creator</h1>
       <Search onSelect={handleSelect} />
       {selectedPlayerTeam && (

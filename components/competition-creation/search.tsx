@@ -21,7 +21,7 @@ const Search: React.FC<Props> = ({ onSelect }) => {
     const query = data.get("query") as string;
     if (query.length > 2) {
       const response = await axios.get(
-        `https://www.sofascore.com/api/v1/search/all?q=${query}&page=0`,
+        `https://api.sofascore.com/api/v1/search/all?q=${query}&page=0`,
       );
       const players = response.data.results.map((result: any) => ({
         name: result.entity.name,
@@ -51,7 +51,7 @@ const Search: React.FC<Props> = ({ onSelect }) => {
           type="text"
           name="query"
           placeholder="Search for a player or team..."
-          className="z-10 w-full flex-1 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+          className="z-10 w-full flex-1 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 "
         />
       </form>
       {results.length > 0 && (
@@ -64,7 +64,7 @@ const Search: React.FC<Props> = ({ onSelect }) => {
             >
               <div className="relative mr-2 h-8 w-8 overflow-hidden rounded-full">
                 <Image
-                  src={`https://www.sofascore.com/api/v1/${result.type}/${result.id}/image`}
+                  src={`https://api.sofascore.com/api/v1/${result.type}/${result.id}/image`}
                   alt={result.name}
                   fill={true}
                   unoptimized={true}

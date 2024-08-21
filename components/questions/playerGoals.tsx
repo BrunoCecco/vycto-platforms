@@ -41,6 +41,7 @@ const PlayerGoals = ({ ...props }) => {
             src={props.image1 ?? "/placeholder.png"}
             alt="True or False Image"
             width={500}
+            unoptimized
             height={200}
             objectFit="cover"
             className="rounded-lg"
