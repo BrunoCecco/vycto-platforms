@@ -7,10 +7,15 @@ import EmailProvider, {
   SendVerificationRequestParams,
 } from "next-auth/providers/email";
 import { createTransport } from "nodemailer";
+import AppleProvider from "next-auth/providers/apple";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
   providers: [
+    AppleProvider({
+      clientId: process.env.APPLE_CLIENT_ID!,
+      clientSecret: process.env.APPLE_CLIENT_SECRET!,
+    }),
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST as string,

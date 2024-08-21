@@ -29,7 +29,7 @@ const SelectUsername = () => {
             alt="Oakley Logo"
             className="h-20"
           />
-          <h1 className="mt-4 text-lg font-bold text-blue-700 md:text-xl">
+          <h1 className="mt-4 text-lg font-bold text-blue-700 md:text-2xl">
             Bravo 🎉 Let the Competition begin!
           </h1>
 

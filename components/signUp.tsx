@@ -1,4 +1,5 @@
 import Image from "next/image";
+// import { signIn } from "next-auth/react";
 
 const Signup = () => {
   return (
@@ -22,7 +23,10 @@ const Signup = () => {
           </h1>
 
           <div className="mt-6 flex w-full space-x-4">
-            <button className="flex w-1/2 items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-sm font-medium text-gray-700 shadow-sm">
+            <button
+              // onClick={() => signIn("apple")}
+              className="flex w-1/2 items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-sm font-medium text-gray-700 shadow-sm"
+            >
               <Image
                 src="/appleIcon.svg"
                 width={20}
