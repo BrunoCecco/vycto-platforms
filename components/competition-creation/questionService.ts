@@ -2,6 +2,8 @@
 import axios from "axios";
 import questionTemplates from "./questionTemplates.json";
 import { createId } from "@paralleldrive/cuid2";
+import { SelectQuestion } from "@/lib/schema";
+import { updateCompetitionMetadata } from "@/lib/actions";
 
 export interface Player {
   id: number;
@@ -24,27 +26,10 @@ export interface TeamEvent {
   };
 }
 
-export interface Question {
-  question: string;
-  type: string;
-  answer1: string | null;
-  answer2: string | null;
-  answer3: string | null;
-  answer4: string | null;
-  correctAnswer: string | null;
-  image1: string | null;
-  image2: string | null;
-  image3: string | null;
-  image4: string | null;
-  points: number;
-  id: string;
-  competitionId: string;
-}
-
 export const createTeamQuestions = async (
   teamId: number,
   competitionId: string,
-): Promise<Question[]> => {
+): Promise<SelectQuestion[]> => {
   // Fetch team events
   const eventsResponse = await axios.get(
     `https://www.sofascore.com/api/v1/team/${teamId}/near-events`,
@@ -59,7 +44,17 @@ export const createTeamQuestions = async (
     (player: any) => player.player,
   );
 
-  const eventQuestions: Question[] = generateEventQuestions(
+  // update competition date with nextEvent.startTimestamp
+  const formData = new FormData();
+  // iso string from timestamp
+  const isoStringDate = new Date(nextEvent.startTimestamp * 1000)
+    .toISOString()
+    .split("T")[0];
+  console.log(isoStringDate);
+  formData.append("date", isoStringDate);
+  await updateCompetitionMetadata(formData, competitionId, "date");
+
+  const eventQuestions: SelectQuestion[] = generateEventQuestions(
     nextEvent,
     players,
     competitionId,
@@ -72,8 +67,8 @@ const generateEventQuestions = (
   event: TeamEvent,
   players: Player[],
   competitionId: string,
-): Question[] => {
-  const questions: Question[] = [];
+): SelectQuestion[] => {
+  const questions: SelectQuestion[] = [];
 
   // 1. Match Outcome Question
   const matchOutcomeTemplate = questionTemplates.MatchOutcome;
@@ -195,7 +190,7 @@ const generateEventQuestions = (
     answer3: whatMinuteTemplate.answers[2],
     answer4: whatMinuteTemplate.answers[3],
     correctAnswer: null,
-    image1: null,
+    image1: `https://www.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
     image2: null,
     image3: null,
     image4: null,
@@ -237,7 +232,7 @@ const generateEventQuestions = (
 export const createPlayerQuestions = async (
   playerId: number,
   competitionId: string,
-): Promise<Question[]> => {
+): Promise<SelectQuestion[]> => {
   // Fetch player information (including their team ID)
   const playerResponse = await axios.get(
     `https://www.sofascore.com/api/v1/player/${playerId}`,
@@ -253,7 +248,7 @@ export const createPlayerQuestions = async (
     if (q.type === "PlayerGoals" || q.type === "PlayerSelection") {
       return {
         ...q,
-        question: q.question.replace("<insert_player>", player.name),
+        question: q.question?.replace("<insert_player>", player.name) || "",
         answer1: player.name,
         image1: `https://www.sofascore.com/api/v1/player/${playerId}/image`,
       };

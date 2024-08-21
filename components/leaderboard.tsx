@@ -40,6 +40,7 @@ const Leaderboard = async ({ users }: { users: any }) => {
               src="/logo.png"
               alt="Brand Logo"
               fill={true}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               objectFit="cover"
               className="overflow-hidden rounded-full"
             />
@@ -82,6 +83,7 @@ const Leaderboard = async ({ users }: { users: any }) => {
                       src={"/logo.png"}
                       alt="Profile"
                       fill={true}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       objectFit="cover"
                       className="overflow-hidden rounded-full"
                     />

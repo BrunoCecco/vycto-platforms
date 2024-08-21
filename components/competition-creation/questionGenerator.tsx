@@ -4,7 +4,6 @@ import axios from "axios";
 import {
   createTeamQuestions,
   createPlayerQuestions,
-  Question,
   TeamEvent,
   Player,
 } from "./questionService";
@@ -17,6 +16,7 @@ import EditMatchOutcome from "../edit-questions/editMatchOutcome";
 import EditGuessScore from "../edit-questions/editGuessScore";
 import EditPlayerGoals from "../edit-questions/editPlayerGoals";
 import EditTrueFalse from "../edit-questions/editTrueFalse";
+import { createQuestion } from "@/lib/actions";
 
 interface PlayerTeam {
   id: number;
@@ -27,10 +27,12 @@ interface PlayerTeam {
 }
 
 const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [imageSrc, setImageSrc] = useState<string | undefined>();
+  const [questions, setQuestions] = useState<SelectQuestion[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setQuestions([]);
+    setLoading(true);
     const generateQuestions = async () => {
       const res = await axios.get(
         `https://www.sofascore.com/api/v1/player/1/image`,
@@ -55,27 +57,86 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
       }
 
       if (selected.type === "player") {
-        setImageSrc(data.image);
         const playerQuestions = await createPlayerQuestions(
           data.id,
           competitionId,
         );
-        setQuestions(playerQuestions);
+        const questionsWithImages = await Promise.all(
+          playerQuestions.map((q) => replaceImageUrls(q)),
+        );
+        // create questions in the database
+        await Promise.all(
+          questionsWithImages.map(async (q: SelectQuestion) => {
+            await createQuestion({
+              competitionId: q.competitionId,
+              type: q.type as QuestionType,
+              question: q,
+            });
+          }),
+        );
+        setQuestions(questionsWithImages);
       } else {
         console.log(data);
         const teamQuestions = await createTeamQuestions(data.id, competitionId);
-        setQuestions(teamQuestions);
+        const questionsWithImages = await Promise.all(
+          teamQuestions.map((q) => replaceImageUrls(q)),
+        );
+        // create questions in the database
+        await Promise.all(
+          questionsWithImages.map(async (q: SelectQuestion) => {
+            await createQuestion({
+              competitionId: q.competitionId,
+              type: q.type as QuestionType,
+              question: q,
+            });
+          }),
+        );
+        setQuestions(questionsWithImages);
       }
+      setLoading(false);
     };
 
     generateQuestions();
   }, [selected]);
 
+  const getBlobImageUrl = async (url: string): Promise<string> => {
+    const response = await fetch("/api/upload-image-url", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ imageUrl: url }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to upload image");
+    }
+
+    const data = await response.json();
+    return data.url;
+  };
+
+  const replaceImageUrls = async (question: SelectQuestion) => {
+    if (question.image1) {
+      question.image1 = await getBlobImageUrl(question.image1);
+    }
+    if (question.image2) {
+      question.image2 = await getBlobImageUrl(question.image2);
+    }
+    if (question.image3) {
+      question.image3 = await getBlobImageUrl(question.image3);
+    }
+    if (question.image4) {
+      question.image4 = await getBlobImageUrl(question.image4);
+    }
+    return question;
+  };
+
   const handleRemoveQuestion = (id: string) => {
     setQuestions((prev) => prev.filter((q) => q.id !== id));
   };
 
-  const getQuestionElement = (question: Question, type: QuestionType) => {
+  const getQuestionElement = (question: SelectQuestion, type: QuestionType) => {
     switch (type) {
       case QuestionType.PlayerSelection:
         return (
@@ -130,46 +191,14 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
     }
   };
   return (
-    <div
-      style={{
-        border: "1px solid #eee",
-        borderRadius: "8px",
-        padding: "20px",
-        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      {imageSrc && (
-        <img
-          src={imageSrc}
-          alt={selected.name}
-          style={{
-            width: "150px",
-            height: "150px",
-            borderRadius: "50%",
-            marginBottom: "20px",
-            display: "block",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        />
-      )}
-      <h2 style={{ textAlign: "center" }}>Competition for {selected.name}</h2>
-      <ul style={{ listStyleType: "none", padding: 0 }}>
+    <div className="">
+      <h2 className="my-4 text-xl">Competition for {selected.name}</h2>
+      <div className="flex flex-col gap-8">
+        {loading && <div>Loading...</div>}
         {questions.map((q, idx) => (
-          <li
-            key={idx}
-            style={{
-              background: "#f9f9f9",
-              padding: "10px",
-              borderRadius: "5px",
-              marginBottom: "10px",
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            {getQuestionElement(q, q.type as QuestionType)}
-          </li>
+          <div key={idx}>{getQuestionElement(q, q.type as QuestionType)}</div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

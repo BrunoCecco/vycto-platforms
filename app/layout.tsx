@@ -6,16 +6,15 @@ import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import Script from "next/script";
 
-const title =
-  "Platforms Starter Kit – The all-in-one starter kit for building multi-tenant applications.";
+const title = "Vycto - Sports Sponsorship Activation & Gamification Platform";
 const description =
-  "The Platforms Starter Kit is a full-stack Next.js app with multi-tenancy and custom domain support. Built with Next.js App Router, Vercel Competitiongres and the Vercel Domains API.";
-const image = "https://vercel.pub/thumbnail.png";
+  "Gamifying Sports Sponsorships. We help sports brands activate on their sponsorship IP using gamification to generate real, tangible, measurable ROI.";
+const image = "/logo.png";
 
 export const metadata: Metadata = {
   title,
   description,
-  icons: ["https://vercel.pub/favicon.ico"],
+  icons: ["/favicon.ico"],
   openGraph: {
     title,
     description,
@@ -26,9 +25,7 @@ export const metadata: Metadata = {
     title,
     description,
     images: [image],
-    creator: "@vercel",
   },
-  metadataBase: new URL("https://vercel.pub"),
 };
 
 export default function RootLayout({
