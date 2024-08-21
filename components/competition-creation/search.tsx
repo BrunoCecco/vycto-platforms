@@ -67,6 +67,7 @@ const Search: React.FC<Props> = ({ onSelect }) => {
                   src={`https://www.sofascore.com/api/v1/${result.type}/${result.id}/image`}
                   alt={result.name}
                   fill={true}
+                  unoptimized={true}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
