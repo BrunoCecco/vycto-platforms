@@ -70,6 +70,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
           alt="Players Banner"
           objectFit="cover"
           fill={true}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
       <TabSelector />

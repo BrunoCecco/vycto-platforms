@@ -22,6 +22,7 @@ import {
   userCompetitions,
   users,
   answers,
+  SelectQuestion,
 } from "./schema";
 import { QuestionType } from "./types";
 
@@ -526,20 +527,39 @@ export const calculateUserPoints = async (
 export const createQuestion = async ({
   competitionId,
   type,
+  question,
 }: {
   competitionId: string;
   type: QuestionType;
+  question?: SelectQuestion;
 }) => {
   try {
     const response = await db
       .insert(questions)
       .values({
-        competitionId,
-        type,
-        answer1: type === QuestionType.TrueFalse ? "True" : "answer1",
-        answer2: type === QuestionType.TrueFalse ? "False" : "answer2",
-        answer3: type === QuestionType.MatchOutcome ? "Draw" : "answer3",
-        answer4: "answer4",
+        id: question?.id ?? nanoid(),
+        competitionId: competitionId ?? question?.competitionId,
+        type: type ?? question?.type,
+        answer1:
+          type === QuestionType.TrueFalse
+            ? "True"
+            : question?.answer1 ?? "answer1",
+        answer2:
+          type === QuestionType.TrueFalse
+            ? "False"
+            : question?.answer2 ?? "answer2",
+        answer3:
+          type === QuestionType.MatchOutcome
+            ? "Draw"
+            : question?.answer3 ?? "answer3",
+        answer4: question?.answer4 ?? "answer4",
+        correctAnswer: question?.correctAnswer ?? "",
+        points: question?.points ?? 0,
+        image1: question?.image1 ?? "",
+        image2: question?.image2 ?? "",
+        image3: question?.image3 ?? "",
+        image4: question?.image4 ?? "",
+        question: question?.question ?? "",
       })
       .returning()
       .then((res) => res[0]);

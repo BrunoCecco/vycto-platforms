@@ -179,11 +179,12 @@ export default function Uploader({
             <span className="sr-only">Photo upload</span>
           </div>
           {data[name] != null && (
-            <div className="h-full w-full rounded-md">
+            <div className="relative h-full w-full rounded-md">
               <Image
                 src={data[name] as string}
                 alt="Preview"
                 fill={true}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="h-full w-full object-contain"
               />
             </div>
