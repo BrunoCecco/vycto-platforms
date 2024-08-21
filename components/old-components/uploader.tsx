@@ -180,11 +180,11 @@ export default function Uploader({
           </div>
           {data[name] != null && (
             <div className="relative h-full w-full rounded-md">
-              <Image
+              <img
                 src={data[name] as string}
                 alt="Preview"
-                fill={true}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                // fill={true}
+                // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="h-full w-full object-contain"
               />
             </div>

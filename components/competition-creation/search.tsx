@@ -63,12 +63,13 @@ const Search: React.FC<Props> = ({ onSelect }) => {
               className="flex cursor-pointer items-center rounded-md p-2 transition-all hover:bg-stone-100 dark:hover:bg-stone-800"
             >
               <div className="relative mr-2 h-8 w-8 overflow-hidden rounded-full">
-                <Image
+                <img
                   src={`https://api.sofascore.com/api/v1/${result.type}/${result.id}/image`}
+                  className="h-full w-full object-cover"
                   alt={result.name}
-                  fill={true}
-                  unoptimized={true}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  //   fill={true}
+                  //   unoptimized={true}
+                  //   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
               <span>
