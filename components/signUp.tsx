@@ -11,7 +11,7 @@ const Signup = () => {
 
         <div className="mt-6 flex flex-col items-center">
           <Image
-            src="/teamBadge.jpg"
+            src="/oakley.jpg"
             width={200}
             height={200}
             alt="Oakley Logo"

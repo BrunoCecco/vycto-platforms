@@ -10,6 +10,7 @@ import MatchOutcome from "@/components/questions/matchOutcome";
 import PlayerGoals from "@/components/questions/playerGoals";
 import PlayerSelection from "@/components/questions/playerSelection";
 import WhatMinute from "@/components/questions/whatMinute";
+import SelectUsername from "@/components/selectUsername";
 import Signup from "@/components/signUp";
 
 const homeTeam = {
@@ -52,6 +53,7 @@ export default function HomePage() {
     <div className="min-h-screen space-y-12 bg-green-100">
       <h1 className="text-2xl font-bold">Development Playground</h1>
       <Signup />
+      <SelectUsername />
       <GameStats
         competitionTitle="Atletico vs Inter"
         username="nicolascastr0"
