@@ -5,8 +5,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Uploader from "../old-components/uploader";
 import PointsBadge from "../pointsBadge";
+import { MinusCircle, PlusCircle } from "lucide-react";
 
-const EditTrueFalse = ({
+const EditGeneralNumber = ({
   question,
   removeQuestion,
 }: {
@@ -15,11 +16,9 @@ const EditTrueFalse = ({
 }) => {
   const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
-  const [editedQuestion, setEditedQuestion] = useState(
-    question.question ?? "Griezmann will score",
-  );
+  const [editedQuestion, setEditedQuestion] = useState(question.question ?? "");
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
-    question.correctAnswer ?? "",
+    question.correctAnswer ?? 0,
   );
   const [points, setPoints] = useState(question.points ?? 0);
   const [image, setImage] = useState(question.image1 ?? "/placeholder.png");
@@ -124,15 +123,14 @@ const EditTrueFalse = ({
           )}
         </div>
         <p className="mb-4 text-center text-gray-500">
-          Select correctly to score points.
+          Answer correctly to score points.
         </p>
 
         <div className="flex justify-around gap-4 text-center">
-          <div className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 hover:bg-blue-50">
-            True
-          </div>
-          <div className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 hover:bg-blue-50">
-            False
+          <div className="flex items-center gap-4 md:gap-8">
+            <MinusCircle />
+            <div>0</div>
+            <PlusCircle />
           </div>
         </div>
 
@@ -142,10 +140,12 @@ const EditTrueFalse = ({
             Correct Answer:
           </label>
           <input
-            type="text"
+            type="number"
             value={question.correctAnswer || editedCorrectAnswer}
             onChange={handleCorrectAnswerInputChange}
-            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
+            onBlur={() =>
+              handleInputBlur("correctAnswer", editedCorrectAnswer.toString())
+            }
             placeholder="Correct Answer"
             autoFocus
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
@@ -162,4 +162,4 @@ const EditTrueFalse = ({
   );
 };
 
-export default EditTrueFalse;
+export default EditGeneralNumber;

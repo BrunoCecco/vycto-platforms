@@ -36,6 +36,7 @@ import TabSelector from "@/components/tabSelector";
 import SubmitAnswersForm from "@/components/form/submit-answers-form";
 import Link from "next/link";
 import GameStats from "@/components/gameStats";
+import GeneralNumber from "@/components/questions/generalNumber";
 
 export async function generateMetadata({
   params,
@@ -206,6 +207,16 @@ export default async function SubmissionPage({
       case QuestionType.PlayerGoals:
         return (
           <PlayerGoals
+            key={index}
+            {...question}
+            userId={userId}
+            answer={answer}
+            disabled={disabled}
+          />
+        );
+      case QuestionType.GeneralNumber:
+        return (
+          <GeneralNumber
             key={index}
             {...question}
             userId={userId}

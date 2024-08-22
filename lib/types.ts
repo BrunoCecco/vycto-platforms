@@ -5,6 +5,7 @@ export enum QuestionType {
   PlayerSelection = "PlayerSelection",
   TrueFalse = "TrueFalse",
   WhatMinute = "WhatMinute",
+  GeneralNumber = "GeneralNumber",
 }
 
 export type DomainVerificationStatusProps =

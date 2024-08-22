@@ -16,6 +16,7 @@ import EditMatchOutcome from "../edit-questions/editMatchOutcome";
 import EditGuessScore from "../edit-questions/editGuessScore";
 import EditPlayerGoals from "../edit-questions/editPlayerGoals";
 import EditTrueFalse from "../edit-questions/editTrueFalse";
+import EditGeneralNumber from "../edit-questions/editGeneralNumber";
 import { createQuestion } from "@/lib/actions";
 
 interface PlayerTeam {
@@ -166,6 +167,14 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
       case QuestionType.TrueFalse:
         return (
           <EditTrueFalse
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
+      case QuestionType.GeneralNumber:
+        return (
+          <EditGeneralNumber
             key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}

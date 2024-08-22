@@ -9,6 +9,7 @@ import EditMatchOutcome from "./edit-questions/editMatchOutcome";
 import EditGuessScore from "./edit-questions/editGuessScore";
 import EditPlayerGoals from "./edit-questions/editPlayerGoals";
 import EditTrueFalse from "./edit-questions/editTrueFalse";
+import EditGeneralNumber from "./edit-questions/editGeneralNumber";
 
 interface IQuestion {
   id: string;
@@ -95,6 +96,14 @@ const QuestionBuilder = ({
             removeQuestion={handleRemoveQuestion}
           />
         );
+      case QuestionType.GeneralNumber:
+        return (
+          <EditGeneralNumber
+            key={questions.length}
+            question={question}
+            removeQuestion={handleRemoveQuestion}
+          />
+        );
       default:
         return;
     }
@@ -155,6 +164,12 @@ const QuestionBuilder = ({
       </button>
       {showOptionsIndex === index && (
         <div className="absolute z-10 mt-10 w-72 rounded-lg bg-white shadow-lg">
+          <button
+            onClick={() => handleAddQuestion(QuestionType.GeneralNumber, index)}
+            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+          >
+            Add General Number Question
+          </button>
           <button
             onClick={() =>
               handleAddQuestion(QuestionType.PlayerSelection, index)
