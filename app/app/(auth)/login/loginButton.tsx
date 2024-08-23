@@ -24,18 +24,19 @@ export default function LoginButton({ email }: { email: string }) {
     <>
       <button
         disabled={loading}
-        onClick={() => {
-          setLoading(true);
-          signIn("email", {
-            email,
-          }).then((res) => {
-            if (res?.ok && !res?.error) {
-              setMessage("Email sent - check your inbox!");
-            } else {
-              setError("Error sending email - try again?");
-            }
-          });
-        }}
+        onClick={() => signIn("apple")}
+        // onClick={() => {
+        //   setLoading(true);
+        //   signIn("email", {
+        //     email,
+        //   }).then((res) => {
+        //     if (res?.ok && !res?.error) {
+        //       setMessage("Email sent - check your inbox!");
+        //     } else {
+        //       setError("Error sending email - try again?");
+        //     }
+        //   });
+        // }}
         className={`${
           loading
             ? "cursor-not-allowed bg-stone-50 dark:bg-stone-800"
