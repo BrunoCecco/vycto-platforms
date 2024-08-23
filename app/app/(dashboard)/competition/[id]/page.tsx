@@ -1,7 +1,6 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import db from "@/lib/db";
-import { getQuestionsForCompetition } from "@/lib/fetchers";
 import CompetitionCreator from "@/components/competition-creation";
 
 export default async function CompetitionPage({
@@ -32,8 +31,6 @@ export default async function CompetitionPage({
   ) {
     notFound();
   }
-
-  const initialQuestions = await getQuestionsForCompetition(data.id);
 
   return (
     <div>

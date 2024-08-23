@@ -50,7 +50,6 @@ export const createTeamQuestions = async (
   const isoStringDate = new Date(nextEvent.startTimestamp * 1000)
     .toISOString()
     .split("T")[0];
-  console.log(isoStringDate);
   formData.append("date", isoStringDate);
   await updateCompetitionMetadata(formData, competitionId, "date");
 

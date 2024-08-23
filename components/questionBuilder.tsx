@@ -11,12 +11,6 @@ import EditPlayerGoals from "./edit-questions/editPlayerGoals";
 import EditTrueFalse from "./edit-questions/editTrueFalse";
 import EditGeneralNumber from "./edit-questions/editGeneralNumber";
 
-interface IQuestion {
-  id: string;
-  type: QuestionType;
-  element: JSX.Element;
-}
-
 const QuestionBuilder = ({
   competitionId,
   initialQuestions,
@@ -24,23 +18,10 @@ const QuestionBuilder = ({
   competitionId: string;
   initialQuestions: SelectQuestion[];
 }) => {
-  const [questions, setQuestions] = useState<IQuestion[]>([]);
+  const [questions, setQuestions] = useState<SelectQuestion[]>(
+    initialQuestions || [],
+  );
   const [showOptionsIndex, setShowOptionsIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    const initialQuestionData = initialQuestions.map(
-      (question: SelectQuestion, index: number) => {
-        return {
-          id: question.id,
-          type: question.type,
-          element: getQuestionElement(question, question.type as QuestionType),
-        };
-      },
-    );
-    if (initialQuestionData && initialQuestionData.length > 0) {
-      setQuestions(initialQuestionData as IQuestion[]);
-    }
-  }, [initialQuestions]);
 
   const getQuestionElement = (question: SelectQuestion, type: QuestionType) => {
     switch (type) {
@@ -99,18 +80,12 @@ const QuestionBuilder = ({
   };
 
   const handleRemoveQuestion = async (id: string) => {
+    const newQuestions = [...initialQuestions];
+    const index = newQuestions.findIndex((question) => question.id === id);
+    if (index === -1) return;
+    newQuestions.splice(index, 1);
+    setQuestions(newQuestions);
     await deleteQuestion(id);
-    // refresh page
-    window.location.reload();
-
-    // const newQuestions = [...questions];
-    // console.log(newQuestions.map((question) => question.id));
-    // console.log(id);
-    // const index = newQuestions.findIndex((question) => question.id === id);
-    // console.log("index", index);
-    // if (index === -1) return;
-    // newQuestions.splice(index, 1);
-    // setQuestions(newQuestions);
   };
 
   const handleAddQuestion = async (
@@ -126,21 +101,11 @@ const QuestionBuilder = ({
 
     if (!question) return;
 
-    let newQuestion = getQuestionElement(question, questionType);
-    if (!newQuestion) return;
-
     if (index === null) {
-      setQuestions([
-        ...questions,
-        { id: question.id, type: questionType, element: newQuestion },
-      ]);
+      setQuestions([...questions, question]);
     } else {
       const newQuestions = [...questions];
-      newQuestions.splice(index, 0, {
-        id: question.id,
-        type: questionType,
-        element: newQuestion,
-      });
+      newQuestions.splice(index + 1, 0, question);
       setQuestions(newQuestions);
     }
   };
@@ -214,7 +179,7 @@ const QuestionBuilder = ({
           key={index + "editable" + question.id}
           className="flex flex-col gap-4"
         >
-          {question.element}
+          {getQuestionElement(question, question.type as QuestionType)}
         </div>
       ))}
     </div>

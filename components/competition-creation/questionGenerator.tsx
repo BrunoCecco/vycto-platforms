@@ -27,14 +27,18 @@ interface PlayerTeam {
   team?: string;
 }
 
-const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
+const QuestionCreator: React.FC<{ selected: PlayerTeam | null }> = ({
+  selected,
+}) => {
   const [questions, setQuestions] = useState<SelectQuestion[]>([]);
   const [loading, setLoading] = useState(false);
+  const [generated, setGenerated] = useState(false);
 
   useEffect(() => {
     setQuestions([]);
     setLoading(true);
     const generateQuestions = async () => {
+      if (!selected) return;
       const response = await axios.get(
         `https://api.sofascore.com/api/v1/${selected.type}/${selected.id}`,
       );
@@ -49,7 +53,7 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
         return;
       }
 
-      if (selected.type === "player") {
+      if (selected?.type === "player") {
         const playerQuestions = await createPlayerQuestions(
           data.id,
           competitionId,
@@ -65,7 +69,7 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
         );
         setQuestions(playerQuestions);
       } else {
-        console.log(data);
+        console.log("team");
         const teamQuestions = await createTeamQuestions(data.id, competitionId);
 
         await Promise.all(
@@ -82,7 +86,10 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
       setLoading(false);
     };
 
-    generateQuestions();
+    if (!generated && selected && selected.id) {
+      generateQuestions();
+      setGenerated(true);
+    }
   }, [selected]);
 
   const getBlobImageUrl = async (url: string): Promise<string> => {
@@ -127,7 +134,6 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
       case QuestionType.PlayerSelection:
         return (
           <EditPlayerSelection
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -135,7 +141,6 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
       case QuestionType.WhatMinute:
         return (
           <EditWhatMinute
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -143,7 +148,6 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
       case QuestionType.MatchOutcome:
         return (
           <EditMatchOutcome
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -151,7 +155,6 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
       case QuestionType.GuessScore:
         return (
           <EditGuessScore
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -159,7 +162,6 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
       case QuestionType.PlayerGoals:
         return (
           <EditPlayerGoals
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -167,7 +169,6 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
       case QuestionType.TrueFalse:
         return (
           <EditTrueFalse
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -175,7 +176,6 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
       case QuestionType.GeneralNumber:
         return (
           <EditGeneralNumber
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -185,15 +185,19 @@ const QuestionCreator: React.FC<{ selected: PlayerTeam }> = ({ selected }) => {
     }
   };
   return (
-    <div className="">
-      <h2 className="my-4 text-xl">Competition for {selected.name}</h2>
-      <div className="flex flex-col gap-8">
-        {loading && <div>Loading...</div>}
-        {questions.map((q, idx) => (
-          <div key={idx}>{getQuestionElement(q, q.type as QuestionType)}</div>
-        ))}
+    selected && (
+      <div className="">
+        <h2 className="my-4 text-xl">Competition for {selected.name}</h2>
+        <div className="flex flex-col gap-8">
+          {loading && <div>Loading...</div>}
+          {questions.map((q, idx) => (
+            <div key={idx + "editable"}>
+              {getQuestionElement(q, q.type as QuestionType)}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    )
   );
 };
 
