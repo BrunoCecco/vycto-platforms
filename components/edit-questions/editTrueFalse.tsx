@@ -1,7 +1,7 @@
 "use client";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { SelectQuestion } from "@/lib/schema";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Uploader from "../old-components/uploader";
 import PointsBadge from "../pointsBadge";
@@ -24,7 +24,14 @@ const EditTrueFalse = ({
   const [points, setPoints] = useState(question.points ?? 0);
   const [image, setImage] = useState(question.image1 ?? "/placeholder.png");
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const updateQuestion = async (key: string, value: string) => {
+    if (!mounted) return;
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);
@@ -83,7 +90,6 @@ const EditTrueFalse = ({
               value={points}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              autoFocus
               className="w-20 text-center text-xl font-semibold text-gray-800"
             />
           ) : (
@@ -111,7 +117,6 @@ const EditTrueFalse = ({
               value={editedQuestion}
               onChange={handleQuestionInputChange}
               onBlur={() => handleInputBlur("question", editedQuestion)}
-              autoFocus
               className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
             />
           ) : (
@@ -143,11 +148,10 @@ const EditTrueFalse = ({
           </label>
           <input
             type="text"
-            value={question.correctAnswer || editedCorrectAnswer}
+            value={editedCorrectAnswer}
             onChange={handleCorrectAnswerInputChange}
             onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
             placeholder="Correct Answer"
-            autoFocus
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
           <button

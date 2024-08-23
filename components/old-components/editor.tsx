@@ -6,7 +6,6 @@ import {
   updateCompetition,
   updateCompetitionMetadata,
 } from "@/lib/actions";
-import TextareaAutosize from "react-textarea-autosize";
 import { cn } from "@/lib/utils";
 import LoadingDots from "../icons/loading-dots";
 import { ExternalLink } from "lucide-react";
@@ -111,11 +110,10 @@ export default function Editor({
           type="text"
           placeholder="Title"
           defaultValue={competition?.title || ""}
-          autoFocus
           onChange={(e) => setData({ ...data, title: e.target.value })}
           className="dark:placeholder-text-600 border-none px-0 font-cal text-3xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
         />
-        <TextareaAutosize
+        <input
           placeholder="Description"
           defaultValue={competition?.description || ""}
           onChange={(e) => setData({ ...data, description: e.target.value })}

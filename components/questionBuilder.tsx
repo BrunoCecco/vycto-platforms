@@ -42,16 +42,11 @@ const QuestionBuilder = ({
     }
   }, [initialQuestions]);
 
-  useEffect(() => {
-    console.log(questions);
-  }, [questions]);
-
   const getQuestionElement = (question: SelectQuestion, type: QuestionType) => {
     switch (type) {
       case QuestionType.PlayerSelection:
         return (
           <EditPlayerSelection
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -59,7 +54,6 @@ const QuestionBuilder = ({
       case QuestionType.WhatMinute:
         return (
           <EditWhatMinute
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -67,7 +61,6 @@ const QuestionBuilder = ({
       case QuestionType.MatchOutcome:
         return (
           <EditMatchOutcome
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -75,7 +68,6 @@ const QuestionBuilder = ({
       case QuestionType.GuessScore:
         return (
           <EditGuessScore
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -83,7 +75,6 @@ const QuestionBuilder = ({
       case QuestionType.PlayerGoals:
         return (
           <EditPlayerGoals
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -91,7 +82,6 @@ const QuestionBuilder = ({
       case QuestionType.TrueFalse:
         return (
           <EditTrueFalse
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -99,7 +89,6 @@ const QuestionBuilder = ({
       case QuestionType.GeneralNumber:
         return (
           <EditGeneralNumber
-            key={questions.length}
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -110,14 +99,18 @@ const QuestionBuilder = ({
   };
 
   const handleRemoveQuestion = async (id: string) => {
-    const newQuestions = [...questions];
-    const index = newQuestions.findIndex((question) => question.id === id);
-    console.log("index", index);
-    if (index === -1) return;
-    newQuestions.splice(index, 1);
-    setQuestions(newQuestions);
-
     await deleteQuestion(id);
+    // refresh page
+    window.location.reload();
+
+    // const newQuestions = [...questions];
+    // console.log(newQuestions.map((question) => question.id));
+    // console.log(id);
+    // const index = newQuestions.findIndex((question) => question.id === id);
+    // console.log("index", index);
+    // if (index === -1) return;
+    // newQuestions.splice(index, 1);
+    // setQuestions(newQuestions);
   };
 
   const handleAddQuestion = async (
@@ -217,9 +210,11 @@ const QuestionBuilder = ({
     <div className="">
       {renderAddButton(0)}
       {questions.map((question, index) => (
-        <div key={index} className="flex flex-col gap-4">
+        <div
+          key={index + "editable" + question.id}
+          className="flex flex-col gap-4"
+        >
           {question.element}
-          {renderAddButton(index + 1)}
         </div>
       ))}
     </div>

@@ -4,7 +4,6 @@ import Slider from "../slider";
 import PointsBadge from "../pointsBadge";
 
 const WhatMinute = ({ ...props }) => {
-  console.log(props);
   return (
     <div className="flex items-center justify-center">
       <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl md:w-1/2">

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
@@ -30,6 +30,11 @@ const EditPlayerGoals = ({
     question.correctAnswer || "",
   );
   const [image1, setImage1] = useState(question.image1 || "/placeholder.png");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedQuestion(e.target.value);
@@ -63,6 +68,7 @@ const EditPlayerGoals = ({
   };
 
   const updateQuestion = async (key: string, value: string) => {
+    if (!mounted) return;
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);
@@ -98,7 +104,6 @@ const EditPlayerGoals = ({
               value={points}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              autoFocus
               className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
             />
           ) : (
@@ -127,7 +132,6 @@ const EditPlayerGoals = ({
               value={editedQuestion}
               onChange={handleQuestionChange}
               onBlur={() => handleInputBlur("question", editedQuestion)}
-              autoFocus
               className="w-full border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
             />
           ) : (
@@ -189,11 +193,10 @@ const EditPlayerGoals = ({
           </label>
           <input
             type="text"
-            value={question.correctAnswer || editedCorrectAnswer}
+            value={editedCorrectAnswer}
             onChange={handleCorrectAnswerInputChange}
             onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
             placeholder="Correct Answer"
-            autoFocus
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
           <button

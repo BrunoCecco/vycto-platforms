@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PointsBadge from "../pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
 import { SelectQuestion } from "@/lib/schema";
@@ -25,11 +25,11 @@ const EditGuessScore = ({
     question.correctAnswer || "",
   );
 
-  const handleInputChange =
-    (setValue: (value: string) => void) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(e.target.value);
-    };
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPoints(parseInt(e.target.value) || 0);
@@ -41,6 +41,7 @@ const EditGuessScore = ({
   };
 
   const updateQuestion = async (key: string, value: string) => {
+    if (!mounted) return;
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);
@@ -71,7 +72,6 @@ const EditGuessScore = ({
               value={points}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              autoFocus
               className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
             />
           ) : (
@@ -100,7 +100,6 @@ const EditGuessScore = ({
                 value={homeTeam}
                 onChange={(e) => setHomeTeam(e.target.value)}
                 onBlur={() => handleInputBlur("answer1", homeTeam)}
-                autoFocus
                 className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
               />
             ) : (
@@ -133,7 +132,6 @@ const EditGuessScore = ({
                 value={awayTeam}
                 onChange={(e) => setAwayTeam(e.target.value)}
                 onBlur={() => handleInputBlur("answer2", awayTeam)}
-                autoFocus
                 className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
               />
             ) : (
@@ -154,11 +152,10 @@ const EditGuessScore = ({
           </label>
           <input
             type="text"
-            value={question.correctAnswer || editedCorrectAnswer}
+            value={editedCorrectAnswer}
             onChange={handleCorrectAnswerInputChange}
             onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
             placeholder="0 - 0"
-            autoFocus
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
           <button

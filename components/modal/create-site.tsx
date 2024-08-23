@@ -63,7 +63,6 @@ export default function CreateSiteModal() {
             name="name"
             type="text"
             placeholder="My Awesome Site"
-            autoFocus
             value={data.name}
             onChange={(e) => setData({ ...data, name: e.target.value })}
             maxLength={32}

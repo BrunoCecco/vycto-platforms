@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import PointsBadge from "../pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
@@ -26,6 +26,11 @@ const EditMatchOutcome = ({
   );
   const [image1, setImage1] = useState(question.image1 || "/placeholder.jpg");
   const [image2, setImage2] = useState(question.image2 || "/placeholder.jpg");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPoints(parseInt(e.target.value) || 0);
@@ -37,6 +42,7 @@ const EditMatchOutcome = ({
   };
 
   const updateQuestion = async (key: string, value: string) => {
+    if (!mounted) return;
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);
@@ -76,7 +82,6 @@ const EditMatchOutcome = ({
               value={points}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              autoFocus
               className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
             />
           ) : (
@@ -111,7 +116,6 @@ const EditMatchOutcome = ({
                 value={homeTeam}
                 onChange={(e) => setHomeTeam(e.target.value)}
                 onBlur={() => handleInputBlur("answer1", homeTeam)}
-                autoFocus
                 className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
               />
             ) : (
@@ -150,7 +154,6 @@ const EditMatchOutcome = ({
                 value={awayTeam}
                 onChange={(e) => setAwayTeam(e.target.value)}
                 onBlur={() => handleInputBlur("answer2", awayTeam)}
-                autoFocus
                 className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
               />
             ) : (
@@ -182,11 +185,10 @@ const EditMatchOutcome = ({
           </label>
           <input
             type="text"
-            value={question.correctAnswer || editedCorrectAnswer}
+            value={editedCorrectAnswer}
             onChange={handleCorrectAnswerInputChange}
             onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
             placeholder="Chelsea"
-            autoFocus
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
           <button
