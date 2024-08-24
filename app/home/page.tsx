@@ -1,13 +1,13 @@
 "use client";
 import EditGuessScore from "@/components/edit-questions/editGuessScore";
 import EditMatchOutcome from "@/components/edit-questions/editMatchOutcome";
-import EditPlayerGoals from "@/components/edit-questions/editPlayerGoals";
+import EditGeneralSelection from "@/components/edit-questions/editGeneralSelection";
 import EditPlayerSelection from "@/components/edit-questions/editPlayerSelection";
 import GameStats from "@/components/gameStats";
 import QuestionBuilder from "@/components/questionBuilder";
 import GuessScore from "@/components/questions/guessScore";
 import MatchOutcome from "@/components/questions/matchOutcome";
-import PlayerGoals from "@/components/questions/playerGoals";
+import GeneralSelection from "@/components/questions/generalSelection";
 import PlayerSelection from "@/components/questions/playerSelection";
 import WhatMinute from "@/components/questions/whatMinute";
 import SelectUsername from "@/components/selectUsername";
@@ -66,7 +66,7 @@ export default function HomePage() {
       />
       {/* <EditGuessScore />
       <EditMatchOutcome />
-      <EditPlayerGoals /> */}
+      <EditGeneralSelection /> */}
       {/* <QuestionBuilder competitionId={"id"} initialQuestions={[]} /> */}
       <h1 className="text-2xl font-bold">
         All questions below have data passed in from props. Should be easier to
@@ -85,7 +85,7 @@ export default function HomePage() {
         awayTeam={awayTeam}
       />
       <GuessScore homeTeam="Real Madrid" awayTeam="Chelsea" points={5} />
-      <PlayerGoals
+      <GeneralSelection
         question="How many goals will Morata score?"
         imageSrc="/trueFalse.jpg"
         points={5}

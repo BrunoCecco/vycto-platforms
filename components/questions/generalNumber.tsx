@@ -4,6 +4,7 @@ import PointsBadge from "../pointsBadge";
 import Submit from "./submit";
 import { useState } from "react";
 import { MinusCircle, PlusCircle } from "lucide-react";
+import Input from "../input";
 
 const GeneralNumber = ({ ...props }) => {
   const [answer, setAnswer] = useState(props.answer ?? 0);
@@ -37,19 +38,13 @@ const GeneralNumber = ({ ...props }) => {
 
         <div className="flex flex-col items-center gap-4 text-gray-500">
           <div className="flex items-center gap-4 md:gap-8">
-            <button
-              onClick={() => setAnswer(Math.max(answer - 1, 0))}
-              disabled={props.disabled}
-            >
-              <MinusCircle />
-            </button>
-            <div>{answer}</div>
-            <button
-              onClick={() => setAnswer(answer + 1)}
-              disabled={props.disabled}
-            >
-              <PlusCircle />
-            </button>
+            <Input
+              type="number"
+              name="answer"
+              value={answer}
+              onChange={(e) => setAnswer(parseInt(e.target.value))}
+              className="w-20 text-center"
+            />
           </div>
           <p className="text-sm font-semibold">{props.answer2}</p>
         </div>

@@ -6,7 +6,7 @@ import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
 import Uploader from "../old-components/uploader";
 
-const EditPlayerGoals = ({
+const EditGeneralSelection = ({
   question,
   removeQuestion,
 }: {
@@ -211,4 +211,4 @@ const EditPlayerGoals = ({
   );
 };
 
-export default EditPlayerGoals;
+export default EditGeneralSelection;

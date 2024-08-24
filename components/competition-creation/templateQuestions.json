@@ -1,0 +1,232 @@
+{
+  "football": [
+    {
+      "type": "MatchOutcome",
+      "question": "What will the outcome be between <insert_team1> and <insert_team2>?",
+      "answers": ["<insert_team1>", "<insert_team2>", "Draw"]
+    },
+    {
+      "type": "GuessScore",
+      "question": "What will be the final score in the match between <insert_team1> and <insert_team2>?",
+      "answers": []
+    },
+    {
+      "type": "PlayerGoals",
+      "question": "Which player will score the most goals for <insert_team1>?",
+      "answers": [
+        "<insert_player1>",
+        "<insert_player2>",
+        "<insert_player3>",
+        "<insert_player4>"
+      ]
+    },
+    {
+      "type": "TrueFalse",
+      "question": "Will <insert_team1> win the match against <insert_team2>?",
+      "answers": ["True", "False"]
+    },
+    {
+      "type": "WhatMinute",
+      "question": "In which minute will the first goal be scored in the match between <insert_team1> and <insert_team2>?",
+      "answers": ["0-15", "16-30", "31-45", "46+"]
+    },
+    {
+      "type": "PlayerSelection",
+      "question": "Who will be the Man of the Match in the match between <insert_team1> and <insert_team2>?",
+      "answers": [
+        "<insert_player1>",
+        "<insert_player2>",
+        "<insert_player3>",
+        "<insert_player4>"
+      ]
+    },
+    {
+      "type": "GeneralNumber",
+      "question": "How many goals will be scored in the match between <insert_team1> and <insert_team2>?",
+      "answers": []
+    }
+  ],
+  "basketball": [
+    {
+      "type": "MatchOutcome",
+      "question": "Who will win the game between <insert_team1> and <insert_team2>?",
+      "answers": ["<insert_team1>", "<insert_team2>"]
+    },
+    {
+      "type": "GuessScore",
+      "question": "What will be the final score difference in the game between <insert_team1> and <insert_team2>?",
+      "answers": ["<insert_team1> win", "<insert_team2> win", "Draw", "Other"]
+    },
+    {
+      "type": "PlayerPoints",
+      "question": "Which player will score the most points for <insert_team1>?",
+      "answers": [
+        "<insert_player1>",
+        "<insert_player2>",
+        "<insert_player3>",
+        "<insert_player4>"
+      ]
+    },
+    {
+      "type": "TrueFalse",
+      "question": "Will <insert_team1> score over 100 points against <insert_opponent>?",
+      "answers": ["True", "False"]
+    },
+    {
+      "type": "GeneralSelection",
+      "question": "In which quarter will the most points be scored in the game between <insert_team1> and <insert_team2>?",
+      "answers": ["1st", "2nd", "3rd", "4th"]
+    },
+    {
+      "type": "PlayerSelection",
+      "question": "Who will be the MVP in the game between <insert_team1> and <insert_team2>?",
+      "answers": [
+        "<insert_player1>",
+        "<insert_player2>",
+        "<insert_player3>",
+        "<insert_player4>"
+      ]
+    },
+    {
+      "type": "GeneralNumber",
+      "question": "How many three-pointers will be made by <insert_team1> in the game?",
+      "answers": []
+    }
+  ],
+  "motorsport": [
+    {
+      "type": "GeneralSelection",
+      "question": "Who will win the race at <insert_circuit>?",
+      "answers": [
+        "<insert_driver1>",
+        "<insert_driver2>",
+        "<insert_driver3>",
+        "Other"
+      ]
+    },
+    {
+      "type": "PlayerSelection",
+      "question": "Which drivers will finish on the podium at <insert_circuit>?",
+      "answers": [
+        "<insert_driver1>",
+        "<insert_driver2>",
+        "<insert_driver3>",
+        "Other"
+      ]
+    },
+    {
+      "type": "GeneralSelection",
+      "question": "Which driver will set the fastest lap at <insert_circuit>?",
+      "answers": [
+        "<insert_driver1>",
+        "<insert_driver2>",
+        "<insert_driver3>",
+        "Other"
+      ]
+    },
+    {
+      "type": "TrueFalse",
+      "question": "Will <insert_driver> finish the race at <insert_circuit>?",
+      "answers": ["True", "False"]
+    },
+    {
+      "type": "GeneralSelection",
+      "question": "On which lap will the first pit stop occur at <insert_circuit>?",
+      "answers": ["1-10", "11-20", "21-30", "31+"]
+    },
+    {
+      "type": "PlayerSelection",
+      "question": "Who will be the Driver of the Day at <insert_circuit>?",
+      "answers": [
+        "<insert_driver1>",
+        "<insert_driver2>",
+        "<insert_driver3>",
+        "<insert_driver4>"
+      ]
+    },
+    {
+      "type": "GeneralNumber",
+      "question": "How many laps until <insert_driver> pits?",
+      "answers": []
+    }
+  ],
+  "tennis": [
+    {
+      "type": "MatchOutcome",
+      "question": "Who will win the match between <insert_player1> and <insert_player2>?",
+      "answers": ["<insert_team1>", "<insert_team2>"]
+    },
+    {
+      "type": "GuessScore",
+      "question": "What will be the final set score in the match between <insert_player1> and <insert_player2>?",
+      "answers": []
+    },
+    {
+      "type": "MatchOutcome",
+      "question": "Which player will hit the most aces in the match?",
+      "answers": ["<insert_team1>", "<insert_team2>", "Draw"]
+    },
+    {
+      "type": "TrueFalse",
+      "question": "Will <insert_team1> win the match against <insert_team2>?",
+      "answers": ["True", "False"]
+    },
+    {
+      "type": "GeneralSelection",
+      "question": "In which set will the match between <insert_team1> and <insert_team2> be decided?",
+      "answers": ["2nd", "3rd", "4th", "5th"]
+    },
+    {
+      "type": "PlayerSelection",
+      "question": "Who will be the Player of the Match in the match between <insert_team1> and <insert_team2>?",
+      "answers": ["<insert_team1>", "<insert_team2>"]
+    },
+    {
+      "type": "GeneralNumber",
+      "question": "How many aces will <insert_team1> serve in the match?",
+      "answers": []
+    }
+  ],
+  "mma": [
+    {
+      "type": "MatchOutcome",
+      "question": "Who will win the fight between <insert_team1> and <insert_team2>?",
+      "answers": ["<insert_team1>", "<insert_team2>", "Draw"]
+    },
+    {
+      "type": "GeneralSelection",
+      "question": "How will the fight between <insert_team1> and <insert_team2> be won?",
+      "answers": ["Knockout", "Submission", "Decision", "Other"]
+    },
+    {
+      "type": "GeneralSelection",
+      "question": "In which round will the fight between <insert_team1> and <insert_team2> end?",
+      "answers": ["1st", "2nd", "3rd", "Other"]
+    },
+    {
+      "type": "TrueFalse",
+      "question": "Will <insert_team1> win the fight against <insert_team2> by knockout?",
+      "answers": ["True", "False"]
+    },
+    {
+      "type": "GeneralSelection",
+      "question": "In which round will the first knockdown occur in the fight between <insert_team1> and <insert_team2>?",
+      "answers": ["1st", "2nd", "3rd", "Other"]
+    },
+    {
+      "type": "PlayerSelection",
+      "question": "Who will be awarded the Fight of the Night bonus in the event?",
+      "answers": [
+        "<insert_team1>",
+        "<insert_team2>",
+        "<insert_team3>",
+        "<insert_team4>"
+      ]
+    },
+    {
+      "type": "GeneralNumber",
+      "question": "How many takedowns will <insert_team1> complete in the fight?",
+      "answers": []
+    }
+  ]
+}

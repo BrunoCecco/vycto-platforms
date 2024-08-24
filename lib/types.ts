@@ -1,7 +1,7 @@
 export enum QuestionType {
   GuessScore = "GuessScore",
   MatchOutcome = "MatchOutcome",
-  PlayerGoals = "PlayerGoals",
+  GeneralSelection = "GeneralSelection",
   PlayerSelection = "PlayerSelection",
   TrueFalse = "TrueFalse",
   WhatMinute = "WhatMinute",

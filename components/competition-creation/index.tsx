@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import Search from "./search";
-import QuestionGenerator from "./questionGenerator";
+import SearchPage from "./searchPage";
 
 const CompetitionCreator = () => {
   const [selectedPlayerTeam, setSelectedPlayerTeam] = useState(null);
@@ -12,9 +11,7 @@ const CompetitionCreator = () => {
 
   return (
     <div className="p-8 pt-12 sm:pt-0">
-      <h1 className="mb-2 text-xl">Competition Creator</h1>
-      <Search onSelect={handleSelect} />
-      <QuestionGenerator selected={selectedPlayerTeam} />
+      <SearchPage />
     </div>
   );
 };

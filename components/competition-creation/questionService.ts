@@ -1,9 +1,10 @@
 // services/questionService.ts
 import axios from "axios";
-import questionTemplates from "./questionTemplates.json";
+import questionTemplates from "./templateQuestions.json";
 import { createId } from "@paralleldrive/cuid2";
 import { SelectQuestion } from "@/lib/schema";
 import { updateCompetitionMetadata } from "@/lib/actions";
+import { capitalize } from "@/lib/utils";
 
 export interface Player {
   id: number;
@@ -26,10 +27,19 @@ export interface TeamEvent {
   };
 }
 
-export const createTeamQuestions = async (
-  teamId: number,
-  competitionId: string,
-): Promise<SelectQuestion[]> => {
+export const createFootballQuestions = async ({
+  type,
+  playerId,
+  teamId,
+  name,
+  competitionId,
+}: {
+  type: string;
+  playerId: number | null;
+  teamId: number;
+  name: string;
+  competitionId: string;
+}): Promise<SelectQuestion[]> => {
   // Fetch team events
   const eventsResponse = await axios.get(
     `https://api.sofascore.com/api/v1/team/${teamId}/near-events`,
@@ -52,14 +62,56 @@ export const createTeamQuestions = async (
     .split("T")[0];
   formData.append("date", isoStringDate);
   await updateCompetitionMetadata(formData, competitionId, "date");
+  const formData1 = new FormData();
+  formData1.append("title", `Competition for ${capitalize(nextEvent.slug)}`);
+  await updateCompetitionMetadata(formData1, competitionId, "title");
 
-  const eventQuestions: SelectQuestion[] = generateEventQuestions(
-    nextEvent,
-    players,
-    competitionId,
-  );
+  const questions: SelectQuestion[] = [];
 
-  return eventQuestions;
+  questionTemplates.football.forEach((template) => {
+    questions.push({
+      id: createId(),
+      competitionId: competitionId,
+      question: template.question
+        .replace("<insert_team1>", nextEvent.homeTeam.name)
+        .replace("<insert_team2>", nextEvent.awayTeam.name)
+        .replace("<insert_player1>", name),
+      type: template.type,
+      answer1: template.answers[0]
+        ?.replace("<insert_team1>", nextEvent.homeTeam.name)
+        .replace("<insert_player1>", name),
+      answer2: template.answers[1]
+        ?.replace("<insert_team2>", nextEvent.awayTeam.name)
+        .replace("<insert_player2>", players[0].name),
+      answer3: template.answers[2]?.replace(
+        "<insert_player3>",
+        players[1].name,
+      ),
+      answer4: template.answers[3]?.replace(
+        "<insert_player4>",
+        players[2].name,
+      ),
+      correctAnswer: null,
+      image1:
+        template.type == "PlayerSelection"
+          ? `https://api.sofascore.com/api/v1/player/${playerId}/image`
+          : `https://api.sofascore.com/api/v1/team/${nextEvent.homeTeam?.id}/image`,
+      image2:
+        template.type == "PlayerSelection"
+          ? `https://api.sofascore.com/api/v1/player/${players[0].id}/image`
+          : `https://api.sofascore.com/api/v1/team/${nextEvent.awayTeam?.id}/image`,
+      image3:
+        template.type == "PlayerSelection"
+          ? `https://api.sofascore.com/api/v1/player/${players[1].id}/image`
+          : `https://api.sofascore.com/api/v1/team/${teamId}/image`,
+      image4:
+        template.type == "PlayerSelection"
+          ? `https://api.sofascore.com/api/v1/player/${players[2].id}/image`
+          : `https://api.sofascore.com/api/v1/team/${teamId}/image`,
+      points: 5,
+    });
+  });
+  return questions;
 };
 
 const generateEventQuestions = (
@@ -69,191 +121,74 @@ const generateEventQuestions = (
 ): SelectQuestion[] => {
   const questions: SelectQuestion[] = [];
 
-  // 1. Match Outcome Question
-  const matchOutcomeTemplate = questionTemplates.MatchOutcome;
-  questions.push({
-    id: createId(),
-    competitionId: competitionId,
-    question: matchOutcomeTemplate.question
-      .replace("<insert_team1>", event.homeTeam.name)
-      .replace("<insert_team2>", event.awayTeam.name),
-    type: "MatchOutcome",
-    answer1: matchOutcomeTemplate.answers[0].replace(
-      "<insert_team1>",
-      event.homeTeam.name,
-    ),
-    answer2: matchOutcomeTemplate.answers[1].replace(
-      "<insert_team2>",
-      event.awayTeam.name,
-    ),
-    answer3: matchOutcomeTemplate.answers[2],
-    answer4: null,
-    correctAnswer: null,
-    image1: `https://api.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
-    image2: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
-    image3: null,
-    image4: null,
-    points: 5,
+  questionTemplates.football.forEach((template) => {
+    questions.push({
+      id: createId(),
+      competitionId: competitionId,
+      question: template.question
+        .replace("<insert_team1>", event.homeTeam.name)
+        .replace("<insert_team2>", event.awayTeam.name)
+        .replace("<insert_player1>", event.awayTeam.name),
+      type: template.type,
+      answer1: template.answers[0].replace(
+        "<insert_team1>",
+        event.homeTeam.name,
+      ),
+      answer2: template.answers[1].replace(
+        "<insert_team2>",
+        event.awayTeam.name,
+      ),
+      answer3: template.answers[2],
+      answer4: template.answers[3],
+      correctAnswer: null,
+      image1: `https://api.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
+      image2: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
+      image3: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
+      image4: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
+      points: 5,
+    });
   });
-
-  // 2. Guess the Score
-  const guessScoreTemplate = questionTemplates.GuessScore;
-  questions.push({
-    id: createId(),
-    competitionId: competitionId,
-    question: guessScoreTemplate.question
-      .replace("<insert_team1>", event.homeTeam.name)
-      .replace("<insert_team2>", event.awayTeam.name),
-    type: "GuessScore",
-    answer1: guessScoreTemplate.answers[0].replace(
-      "<insert_team1>",
-      event.homeTeam.name,
-    ),
-    answer2: guessScoreTemplate.answers[1].replace(
-      "<insert_team2>",
-      event.awayTeam.name,
-    ),
-    answer3: guessScoreTemplate.answers[2],
-    answer4: guessScoreTemplate.answers[3],
-    correctAnswer: null,
-    image1: `https://api.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
-    image2: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
-    image3: null,
-    image4: null,
-    points: 5,
-  });
-
-  // 3. Player Goals (selecting random players)
-  const playerGoalsTemplate = questionTemplates.PlayerGoals;
-  const selectedPlayers = players.slice(0, 4);
-  questions.push({
-    id: createId(),
-    competitionId: competitionId,
-    question: playerGoalsTemplate.question.replace(
-      "<insert_team>",
-      event.homeTeam.name,
-    ),
-    type: "PlayerGoals",
-    answer1: selectedPlayers[0]?.name || null,
-    answer2: selectedPlayers[1]?.name || null,
-    answer3: selectedPlayers[2]?.name || null,
-    answer4: selectedPlayers[3]?.name || null,
-    correctAnswer: null,
-    image1: selectedPlayers[0]
-      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[0].id}/image`
-      : null,
-    image2: selectedPlayers[1]
-      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[1].id}/image`
-      : null,
-    image3: selectedPlayers[2]
-      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[2].id}/image`
-      : null,
-    image4: selectedPlayers[3]
-      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[3].id}/image`
-      : null,
-    points: 5,
-  });
-
-  // 4. True/False Question
-  const trueFalseTemplate = questionTemplates.TrueFalse;
-  questions.push({
-    id: createId(),
-    competitionId: competitionId,
-    question: trueFalseTemplate.question
-      .replace("<insert_team>", event.homeTeam.name)
-      .replace("<insert_opponent>", event.awayTeam.name),
-    type: "TrueFalse",
-    answer1: trueFalseTemplate.answers[0],
-    answer2: trueFalseTemplate.answers[1],
-    answer3: null,
-    answer4: null,
-    correctAnswer: null,
-    image1: `https://api.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
-    image2: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
-    image3: null,
-    image4: null,
-    points: 5,
-  });
-
-  // 5. What Minute Question
-  const whatMinuteTemplate = questionTemplates.WhatMinute;
-  questions.push({
-    id: createId(),
-    competitionId: competitionId,
-    question: whatMinuteTemplate.question
-      .replace("<insert_team1>", event.homeTeam.name)
-      .replace("<insert_team2>", event.awayTeam.name),
-    type: "WhatMinute",
-    answer1: whatMinuteTemplate.answers[0],
-    answer2: whatMinuteTemplate.answers[1],
-    answer3: whatMinuteTemplate.answers[2],
-    answer4: whatMinuteTemplate.answers[3],
-    correctAnswer: null,
-    image1: `https://api.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
-    image2: null,
-    image3: null,
-    image4: null,
-    points: 5,
-  });
-
-  // 6. Player Selection Question (selecting random players)
-  const playerSelectionTemplate = questionTemplates.PlayerSelection;
-  questions.push({
-    id: createId(),
-    competitionId: competitionId,
-    question: playerSelectionTemplate.question
-      .replace("<insert_team1>", event.homeTeam.name)
-      .replace("<insert_team2>", event.awayTeam.name),
-    type: "PlayerSelection",
-    answer1: selectedPlayers[0]?.name || null,
-    answer2: selectedPlayers[1]?.name || null,
-    answer3: selectedPlayers[2]?.name || null,
-    answer4: selectedPlayers[3]?.name || null,
-    correctAnswer: null,
-    image1: selectedPlayers[0]
-      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[0].id}/image`
-      : null,
-    image2: selectedPlayers[1]
-      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[1].id}/image`
-      : null,
-    image3: selectedPlayers[2]
-      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[2].id}/image`
-      : null,
-    image4: selectedPlayers[3]
-      ? `https://api.sofascore.com/api/v1/player/${selectedPlayers[3].id}/image`
-      : null,
-    points: 5,
-  });
-
   return questions;
 };
 
-export const createPlayerQuestions = async (
-  playerId: number,
-  competitionId: string,
-): Promise<SelectQuestion[]> => {
-  // Fetch player information (including their team ID)
-  const playerResponse = await axios.get(
-    `https://api.sofascore.com/api/v1/player/${playerId}`,
+export const createQuestions = async ({
+  entityId,
+  competitionId,
+  type,
+}: {
+  entityId: number;
+  competitionId: string;
+  type: string;
+}): Promise<SelectQuestion[]> => {
+  // Fetch entity information (including their team ID)
+  const response = await axios.get(
+    `https://api.sofascore.com/api/v1/${type}/${entityId}`,
   );
-  const player = playerResponse.data.player;
-  const teamId = player.team.id;
+  const entity = response.data[type];
+  const name = entity.name;
+  let playerId = null;
+  if (type === "player") {
+    playerId = entity.id;
+  }
+  const teamId = entity.team?.id || entity.id;
+  const sport = entity.team?.sport.name || entity.sport.name;
+  console.log("sport", sport, "type", type, "entity", entity, "teamId", teamId);
 
-  // Generate questions for the player's team
-  let teamQuestions = await createTeamQuestions(teamId, competitionId);
-
-  // Filter or adjust questions to focus more on the specific player
-  teamQuestions = teamQuestions.map((q) => {
-    if (q.type === "PlayerGoals" || q.type === "PlayerSelection") {
-      return {
-        ...q,
-        question: q.question?.replace("<insert_player>", player.name) || "",
-        answer1: player.name,
-        image1: `https://api.sofascore.com/api/v1/player/${playerId}/image`,
-      };
-    }
-    return q;
+  // Generate questions for the entity and sport
+  let questions: SelectQuestion[] = [];
+  //   switch (sport) {
+  //     case "football":
+  questions = await createFootballQuestions({
+    type,
+    playerId,
+    teamId,
+    name,
+    competitionId,
   });
+  //   break;
+  //     default:
+  //       questions = [];
+  //   }
 
-  return teamQuestions;
+  return questions;
 };

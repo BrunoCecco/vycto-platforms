@@ -10,7 +10,7 @@ import db from "@/lib/db";
 import FanZone from "@/components/fanZone";
 import GuessScore from "@/components/questions/guessScore";
 import MatchOutcome from "@/components/questions/matchOutcome";
-import PlayerGoals from "@/components/questions/playerGoals";
+import GeneralSelection from "@/components/questions/generalSelection";
 import PlayerSelection from "@/components/questions/playerSelection";
 import TrueFalse from "@/components/questions/trueFalse";
 import WhatMinute from "@/components/questions/whatMinute";

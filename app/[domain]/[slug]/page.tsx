@@ -28,7 +28,7 @@ import TrueFalse from "@/components/questions/trueFalse";
 import WhatMinute from "@/components/questions/whatMinute";
 import MatchOutcome from "@/components/questions/matchOutcome";
 import GuessScore from "@/components/questions/guessScore";
-import PlayerGoals from "@/components/questions/playerGoals";
+import GeneralSelection from "@/components/questions/generalSelection";
 import PlayerSelection from "@/components/questions/playerSelection";
 import { QuestionType } from "@/lib/types";
 import CompetitionHeader from "@/components/competitionHeader";
@@ -204,9 +204,9 @@ export default async function SiteCompetitionPage({
             disabled={disabled}
           />
         );
-      case QuestionType.PlayerGoals:
+      case QuestionType.GeneralSelection:
         return (
-          <PlayerGoals
+          <GeneralSelection
             key={index}
             {...question}
             userId={userId}

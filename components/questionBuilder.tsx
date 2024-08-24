@@ -7,7 +7,7 @@ import { QuestionType } from "@/lib/types";
 import { SelectQuestion } from "@/lib/schema";
 import EditMatchOutcome from "./edit-questions/editMatchOutcome";
 import EditGuessScore from "./edit-questions/editGuessScore";
-import EditPlayerGoals from "./edit-questions/editPlayerGoals";
+import EditGeneralSelection from "./edit-questions/editGeneralSelection";
 import EditTrueFalse from "./edit-questions/editTrueFalse";
 import EditGeneralNumber from "./edit-questions/editGeneralNumber";
 
@@ -53,9 +53,9 @@ const QuestionBuilder = ({
             removeQuestion={handleRemoveQuestion}
           />
         );
-      case QuestionType.PlayerGoals:
+      case QuestionType.GeneralSelection:
         return (
-          <EditPlayerGoals
+          <EditGeneralSelection
             question={question}
             removeQuestion={handleRemoveQuestion}
           />
@@ -99,15 +99,11 @@ const QuestionBuilder = ({
       type: questionType,
     });
 
+    console.log("question", question);
+
     if (!question) return;
 
-    if (index === null) {
-      setQuestions([...questions, question]);
-    } else {
-      const newQuestions = [...questions];
-      newQuestions.splice(index + 1, 0, question);
-      setQuestions(newQuestions);
-    }
+    setQuestions([question, ...questions]);
   };
 
   const renderAddButton = (index: number | null) => (
@@ -155,7 +151,9 @@ const QuestionBuilder = ({
             Add Guess Score Question
           </button>
           <button
-            onClick={() => handleAddQuestion(QuestionType.PlayerGoals, index)}
+            onClick={() =>
+              handleAddQuestion(QuestionType.GeneralSelection, index)
+            }
             className="block w-full px-4 py-2 text-left hover:bg-gray-100"
           >
             Add Player Goals Question

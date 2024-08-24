@@ -16,7 +16,9 @@ const EditGeneralNumber = ({
 }) => {
   const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
-  const [editedQuestion, setEditedQuestion] = useState(question.question ?? "");
+  const [editedQuestion, setEditedQuestion] = useState(
+    question.question || "Edit your question here",
+  );
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
     question.correctAnswer ?? 0,
   );
@@ -127,17 +129,6 @@ const EditGeneralNumber = ({
               {editedQuestion}
             </h2>
           )}
-        </div>
-        <p className="mb-4 text-center text-gray-500">
-          Answer correctly to score points.
-        </p>
-
-        <div className="flex justify-around gap-4 text-center">
-          <div className="flex items-center gap-4 md:gap-8">
-            <MinusCircle />
-            <div>0</div>
-            <PlusCircle />
-          </div>
         </div>
 
         {/* Save Button */}

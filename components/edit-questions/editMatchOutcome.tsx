@@ -24,8 +24,8 @@ const EditMatchOutcome = ({
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
     question.correctAnswer || "",
   );
-  const [image1, setImage1] = useState(question.image1 || "/placeholder.jpg");
-  const [image2, setImage2] = useState(question.image2 || "/placeholder.jpg");
+  const [image1, setImage1] = useState(question.image1 || "/placeholder.png");
+  const [image2, setImage2] = useState(question.image2 || "/placeholder.png");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

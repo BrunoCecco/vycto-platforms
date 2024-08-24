@@ -6,7 +6,7 @@ import PointsBadge from "../pointsBadge";
 import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
 
-const PlayerGoals = ({ ...props }) => {
+const GeneralSelection = ({ ...props }) => {
   const [selectedOption, setSelectedOption] = useState(props.answer || "");
   const goalOptions = [
     props.answer1,
@@ -92,4 +92,4 @@ const PlayerGoals = ({ ...props }) => {
   );
 };
 
-export default PlayerGoals;
+export default GeneralSelection;
