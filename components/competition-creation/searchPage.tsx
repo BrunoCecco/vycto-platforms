@@ -110,9 +110,9 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="flex min-h-screen justify-center">
+    <div className="flex min-h-screen">
       <div className="w-full space-y-4">
-        <h1 className="text-center text-2xl font-bold text-gray-800">
+        <h1 className="text-2xl font-bold text-gray-800">
           Competition Creator
         </h1>
         <form
@@ -122,7 +122,7 @@ export default function SearchPage() {
           <Input
             type="text"
             name="query"
-            placeholder="Search..."
+            placeholder="Search for an athlete or team you sponsor..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-grow"

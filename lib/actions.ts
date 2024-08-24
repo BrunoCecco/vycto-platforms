@@ -51,7 +51,7 @@ export const createSite = async (formData: FormData) => {
         description,
         subdomain,
         userId: session.user.id,
-        admin: admin || session.user.id,
+        admin: admin || session.user.email,
       })
       .returning();
 

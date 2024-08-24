@@ -7,7 +7,6 @@ import {
   getSiteData,
 } from "@/lib/fetchers";
 import BlogCard from "@/components/old-components/blog-card";
-import { placeholderBlurhash, toDateString } from "@/lib/utils";
 import db from "@/lib/db";
 import {
   competitions,

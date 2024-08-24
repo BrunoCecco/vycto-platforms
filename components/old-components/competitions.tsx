@@ -29,12 +29,50 @@ export default async function Competitions({
     ...(limit ? { limit } : {}),
   });
 
+  const pastCompetitions = competitions.filter(
+    (competition: any) =>
+      new Date(competition.date).getTime() < Date.now() &&
+      competition.published,
+  );
+
+  const currentCompetitions = competitions.filter(
+    (competition: any) =>
+      new Date(competition.date).getTime() >= Date.now() &&
+      competition.published,
+  );
+
+  const draftedCompetitions = competitions.filter(
+    (competition: any) => !competition.published,
+  );
+
   return competitions.length > 0 ? (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {competitions &&
-        competitions.map((competition: any) => (
+    <div>
+      {draftedCompetitions && draftedCompetitions?.length > 0 && (
+        <h1 className="my-4 font-cal text-2xl">Drafted Competitions</h1>
+      )}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {draftedCompetitions.map((competition: any) => (
           <CompetitionCard key={competition.id} data={competition} />
         ))}
+      </div>
+
+      {currentCompetitions && currentCompetitions?.length > 0 && (
+        <h1 className="my-4 font-cal text-2xl">Current Competitions</h1>
+      )}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {currentCompetitions.map((competition: any) => (
+          <CompetitionCard key={competition.id} data={competition} />
+        ))}
+      </div>
+
+      {pastCompetitions && pastCompetitions?.length > 0 && (
+        <h1 className="my-4 font-cal text-2xl">Past Competitions</h1>
+      )}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {pastCompetitions.map((competition: any) => (
+          <CompetitionCard key={competition.id} data={competition} />
+        ))}
+      </div>
     </div>
   ) : (
     <div className="flex flex-col items-center space-x-4">

@@ -1,19 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import BlurImage from "@/components/old-components/blur-image";
-import { placeholderBlurhash, toDateString } from "@/lib/utils";
-import BlogCard from "@/components/old-components/blog-card";
 import { getCompetitionsForSite, getSiteData } from "@/lib/fetchers";
 import Image from "next/image";
 import db from "@/lib/db";
 
 import FanZone from "@/components/fanZone";
-import GuessScore from "@/components/questions/guessScore";
-import MatchOutcome from "@/components/questions/matchOutcome";
-import GeneralSelection from "@/components/questions/generalSelection";
-import PlayerSelection from "@/components/questions/playerSelection";
-import TrueFalse from "@/components/questions/trueFalse";
-import WhatMinute from "@/components/questions/whatMinute";
 import { SelectCompetition } from "@/lib/schema";
 
 export async function generateStaticParams() {
@@ -106,6 +97,7 @@ export default async function SiteHomePage({
             ) as SelectCompetition[]
           }
         />
+
         {/* {competitions.length > 0 ? (
           <div className="grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
             {competitions &&

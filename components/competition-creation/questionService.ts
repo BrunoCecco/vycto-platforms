@@ -63,7 +63,10 @@ export const createFootballQuestions = async ({
   formData.append("date", isoStringDate);
   await updateCompetitionMetadata(formData, competitionId, "date");
   const formData1 = new FormData();
-  formData1.append("title", `Competition for ${capitalize(nextEvent.slug)}`);
+  formData1.append(
+    "title",
+    `Competition for ${nextEvent.slug.replace("-", " ")}`,
+  );
   await updateCompetitionMetadata(formData1, competitionId, "title");
 
   const questions: SelectQuestion[] = [];
