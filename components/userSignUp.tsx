@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 
-const Signup = () => {
+const UserSignUp = () => {
   return (
     <div className="flex flex-col items-center justify-center bg-white p-8">
       <div className="w-full max-w-lg text-left">
@@ -110,4 +110,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default UserSignUp;
