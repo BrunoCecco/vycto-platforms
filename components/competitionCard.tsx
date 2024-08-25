@@ -27,7 +27,7 @@ const CompetitionCard = async ({
   }
 
   return (
-    <div className="w-80 overflow-hidden rounded-xl border bg-white p-4 shadow-lg">
+    <div className="overflow-hidden rounded-xl border bg-white p-4 shadow-lg">
       <div className="relative h-40 w-full">
         <BlurImage
           alt={competition.title ?? "Card thumbnail"}

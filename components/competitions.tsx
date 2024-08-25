@@ -8,7 +8,7 @@ const Competitions = ({
   competitions: SelectCompetition[];
 }) => {
   return (
-    <div className="flex flex-col space-y-4 sm:flex-row md:space-x-4 md:space-y-0">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {competitions.map((competition: SelectCompetition, index) => (
         <CompetitionCard key={index} competition={competition} />
       ))}

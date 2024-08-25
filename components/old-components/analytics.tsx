@@ -86,9 +86,16 @@ const categories = [
 
 export default function AnalyticsMockup() {
   return (
-    <div className="grid gap-6">
-      <Card>
-        <Title>Visitors</Title>
+    <div className="">
+      <iframe
+        src="https://analytics.tinybird.co/?token=p.eyJ1IjogIjllOGNmNTViLTRhOTQtNGU0MC1hZDM1LWU3YjYxMzRkMTJlNyIsICJpZCI6ICJiY2JmZmJlMC0wOWYxLTQ0N2ItODE1ZS01NDQ4MWY5MGRjYWUiLCAiaG9zdCI6ICJhd3MtZXUtY2VudHJhbC0xIn0.0Vl_qdLoLNKWAd-vqMy1u-vS4FC9EApa_vEgEI8G7Xg&host=https%3A%2F%2Fapi.eu-central-1.aws.tinybird.co&kpi=bounce_rate"
+        // src="https://vercel.com/matthew-charkes-projects/vycto-platforms/analytics"
+        className="h-screen w-full"
+        title="Tinybird Analytics"
+        allowFullScreen
+      ></iframe>
+      {/* <Card>
+      <Title>Visitors</Title>
         <AreaChart
           className="mt-4 h-72"
           data={chartdata}
@@ -145,9 +152,9 @@ export default function AnalyticsMockup() {
               }))}
               className="mt-2"
             />
-          </Card>
-        ))}
-      </Grid>
+          </Card> */}
+      {/* ))} */}
+      {/* </Grid> */}
     </div>
   );
 }
