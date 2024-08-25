@@ -108,10 +108,11 @@ export async function generateStaticParams() {
 export default async function SubmissionPage({
   params,
 }: {
-  params: { domain: string; slug: string };
+  params: { domain: string; slug: string; submissionId: string };
 }) {
   const domain = decodeURIComponent(params.domain);
   const slug = decodeURIComponent(params.slug);
+  const siteData = await getSiteData(domain);
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
   let questions;
@@ -229,7 +230,12 @@ export default async function SubmissionPage({
   };
 
   return (
-    <div className="bg-white">
+    <div
+      className=""
+      style={{
+        backgroundColor: siteData?.color1 ?? "white",
+      }}
+    >
       <CompetitionHeader session={session} users={users} data={data} />
       <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0 ">
         <GameStats

@@ -28,7 +28,7 @@ export default function SubmitAnswersForm({
           } else {
             va.track("Submitted Answers");
             router.refresh();
-            router.push(`${slug}/submission`);
+            router.push(`${slug}/${userId}`);
             toast.success(`Successfully submitted answers!`);
           }
         })
