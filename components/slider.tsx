@@ -37,19 +37,18 @@ const Slider = ({
           ref={formRef}
           id={questionId}
           className="flex w-full flex-col items-center justify-center"
-          aria-disabled={disabled}
           action={async (data: FormData) => {
             if (userId != undefined) {
               console.log("Answering question", data);
               await answerQuestion(data);
-              toast.success("Answer submitted!");
+              toast.success("Answer saved!");
             } else {
               // editing question so we have to updatequestionmetadata
               console.log("Updating question metadata", data);
               const formData = new FormData();
               formData.append("answer1", values[0].toString());
               await updateQuestionMetadata(formData, question, "answer1");
-              toast.success("Answer submitted!");
+              toast.success("Answer saved!");
             }
           }}
         >

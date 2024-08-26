@@ -119,7 +119,7 @@ const EditGeneralNumber = ({
 
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <Input
+          <input
             type="number"
             value={editedCorrectAnswer}
             onChange={handleCorrectAnswerInputChange}

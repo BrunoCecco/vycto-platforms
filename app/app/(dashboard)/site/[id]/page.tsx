@@ -31,7 +31,7 @@ export default async function SiteCompetitions({
       <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:items-start sm:space-y-0">
         <div className="flex flex-col items-center gap-4 sm:items-start">
           <h1 className="truncate font-cal text-xl font-bold sm:w-auto sm:text-3xl dark:text-white">
-            All Competitions for {data.name}
+            Welcome to the {data.name} playground!
           </h1>
           <a
             href={
