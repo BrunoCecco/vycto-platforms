@@ -39,7 +39,7 @@ const Retention = () => {
         </div>
 
         {/* Right Section (Grid) */}
-        <div className="grid w-2/3 grid-cols-3 justify-evenly border-2">
+        <div className="grid w-2/3 grid-cols-3 justify-evenly">
           {/* Column Titles */}
           <span className="text-center text-gray-500">Growth</span>
           <span className="text-center text-gray-500">March</span>
@@ -68,7 +68,7 @@ const Retention = () => {
             - 2.3%
           </span>
           <span className="text-center text-gray-600">132</span>
-          <div className="flex justify-center border-2">
+          <div className="flex justify-center">
             <span className="text-red-500">127</span>
           </div>
         </div>

@@ -73,7 +73,6 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
-      <TabSelector />
       {/* Uncomment if needed */}
       {/* <div className="my-8">
         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">

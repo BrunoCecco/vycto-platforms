@@ -6,7 +6,7 @@ const TabSelector = () => {
   const [activeTab, setActiveTab] = useState("Challenge");
 
   return (
-    <div className="flex w-full flex-col items-center justify-center py-8">
+    <div className="mx-auto flex w-full flex-col items-center justify-center bg-white p-8 md:w-3/4 md:p-14 lg:w-3/5">
       <div className="flex w-full border-b-2">
         {["Challenge", "Rewards", "Leaderboard"].map((tab) => (
           <button

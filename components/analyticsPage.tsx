@@ -9,7 +9,7 @@ const AnalyticsPage: React.FC = () => {
   return (
     <div className="">
       <div className="italic">
-        This dashboard is for demo purposes: start publishing competitions to
+        This dashboard is for demo purposes: Start publishing competitions to
         see your analytics!
       </div>
       <StatsBadges />
