@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Uploader from "../old-components/uploader";
 import PointsBadge from "../pointsBadge";
+import Input from "../input";
 
 const EditTrueFalse = ({
   question,
@@ -13,7 +14,6 @@ const EditTrueFalse = ({
   question: SelectQuestion;
   removeQuestion: (id: string) => void;
 }) => {
-  const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
     question.question ?? "Griezmann will score",
@@ -39,10 +39,6 @@ const EditTrueFalse = ({
     toast.success("Question updated successfully");
   };
 
-  const handleQuestionClick = () => {
-    setIsEditingQuestion(true);
-  };
-
   const handlePointsClick = () => {
     setIsEditingPoints(true);
   };
@@ -64,7 +60,6 @@ const EditTrueFalse = ({
   };
 
   const handleInputBlur = async (key: string, value: string) => {
-    setIsEditingQuestion(false);
     setIsEditingPoints(false);
     await updateQuestion(key, value);
   };
@@ -111,22 +106,13 @@ const EditTrueFalse = ({
 
         {/* Editable Question */}
         <div className="mb-1 text-center">
-          {isEditingQuestion ? (
-            <input
-              type="text"
-              value={editedQuestion}
-              onChange={handleQuestionInputChange}
-              onBlur={() => handleInputBlur("question", editedQuestion)}
-              className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
-            />
-          ) : (
-            <h2
-              className="cursor-pointer border-2 text-xl font-semibold text-gray-800"
-              onClick={handleQuestionClick}
-            >
-              {editedQuestion}
-            </h2>
-          )}
+          <Input
+            type="text"
+            value={editedQuestion}
+            onChange={handleQuestionInputChange}
+            onBlur={() => handleInputBlur("question", editedQuestion)}
+            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
+          />
         </div>
         <p className="mb-4 text-center text-gray-500">
           Select correctly to score points.
@@ -143,9 +129,6 @@ const EditTrueFalse = ({
 
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <label htmlFor="correctAnswer" className="text-center">
-            Correct Answer:
-          </label>
           <input
             type="text"
             value={editedCorrectAnswer}

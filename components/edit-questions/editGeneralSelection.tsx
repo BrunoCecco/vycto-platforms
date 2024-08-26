@@ -5,6 +5,7 @@ import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
 import Uploader from "../old-components/uploader";
+import Input from "../input";
 
 const EditGeneralSelection = ({
   question,
@@ -13,7 +14,6 @@ const EditGeneralSelection = ({
   question: SelectQuestion;
   removeQuestion: (id: string) => void;
 }) => {
-  const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
     question.question || "How many goals will the player score?",
@@ -125,23 +125,14 @@ const EditGeneralSelection = ({
 
         {/* Editable Question */}
         <div className="mb-1 text-center">
-          {isEditingQuestion ? (
-            <input
-              type="text"
-              name="question"
-              value={editedQuestion}
-              onChange={handleQuestionChange}
-              onBlur={() => handleInputBlur("question", editedQuestion)}
-              className="w-full border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
-            />
-          ) : (
-            <h2
-              className="cursor-pointer border-2 text-xl font-semibold text-gray-800"
-              onClick={() => setIsEditingQuestion(true)}
-            >
-              {editedQuestion}
-            </h2>
-          )}
+          <Input
+            type="text"
+            name="question"
+            value={editedQuestion}
+            onChange={handleQuestionChange}
+            onBlur={() => handleInputBlur("question", editedQuestion)}
+            className="w-full border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
+          />
         </div>
         <p className="text-center text-gray-500">
           Select correctly to score points
@@ -151,7 +142,7 @@ const EditGeneralSelection = ({
         <div className="flex flex-col items-center justify-center pt-3">
           {options.map((option, index) => (
             <div key={index} className="mb-2 flex items-center">
-              <input
+              <Input
                 type="text"
                 name={"anwer" + (index + 1)}
                 value={option}
@@ -169,7 +160,7 @@ const EditGeneralSelection = ({
           ))}
           {options?.length < 4 && (
             <div className="flex items-center">
-              <input
+              <Input
                 type="text"
                 value={newOption}
                 onChange={(e) => setNewOption(e.target.value)}
@@ -188,9 +179,6 @@ const EditGeneralSelection = ({
 
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <label htmlFor="correctAnswer" className="text-center">
-            Correct Answer:
-          </label>
           <input
             type="text"
             value={editedCorrectAnswer}

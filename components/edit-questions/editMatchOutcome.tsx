@@ -180,15 +180,12 @@ const EditMatchOutcome = ({
 
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <label htmlFor="correctAnswer" className="text-center">
-            Correct Answer:
-          </label>
           <input
             type="text"
             value={editedCorrectAnswer}
             onChange={handleCorrectAnswerInputChange}
             onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
-            placeholder="Chelsea"
+            placeholder="Correct Answer"
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
           <button

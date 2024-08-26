@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import Uploader from "../old-components/uploader";
 import PointsBadge from "../pointsBadge";
 import { MinusCircle, PlusCircle } from "lucide-react";
+import Input from "../input";
 
 const EditGeneralNumber = ({
   question,
@@ -14,7 +15,6 @@ const EditGeneralNumber = ({
   question: SelectQuestion;
   removeQuestion: (id: string) => void;
 }) => {
-  const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
     question.question || "Edit your question here",
@@ -39,10 +39,6 @@ const EditGeneralNumber = ({
     toast.success("Question updated successfully");
   };
 
-  const handleQuestionClick = () => {
-    setIsEditingQuestion(true);
-  };
-
   const handlePointsClick = () => {
     setIsEditingPoints(true);
   };
@@ -65,7 +61,6 @@ const EditGeneralNumber = ({
 
   const handleInputBlur = async (key: string, value: string) => {
     console.log("handleInputBlur", key, value);
-    setIsEditingQuestion(false);
     setIsEditingPoints(false);
     await updateQuestion(key, value);
   };
@@ -113,30 +108,18 @@ const EditGeneralNumber = ({
 
         {/* Editable Question */}
         <div className="mb-1 text-center">
-          {isEditingQuestion ? (
-            <input
-              type="text"
-              value={editedQuestion}
-              onChange={handleQuestionInputChange}
-              onBlur={() => handleInputBlur("question", editedQuestion)}
-              className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
-            />
-          ) : (
-            <h2
-              className="cursor-pointer border-2 text-xl font-semibold text-gray-800"
-              onClick={handleQuestionClick}
-            >
-              {editedQuestion}
-            </h2>
-          )}
+          <Input
+            type="text"
+            value={editedQuestion}
+            onChange={handleQuestionInputChange}
+            onBlur={() => handleInputBlur("question", editedQuestion)}
+            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
+          />
         </div>
 
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <label htmlFor="correctAnswer" className="text-center">
-            Correct Answer:
-          </label>
-          <input
+          <Input
             type="number"
             value={editedCorrectAnswer}
             onChange={handleCorrectAnswerInputChange}

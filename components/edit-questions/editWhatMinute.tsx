@@ -14,7 +14,6 @@ const EditWhatMinute = ({
   question: SelectQuestion;
   removeQuestion: (id: string) => void;
 }) => {
-  const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
     question.question ?? "What minute?",
@@ -39,10 +38,6 @@ const EditWhatMinute = ({
     toast.success("Question updated successfully");
   };
 
-  const handleQuestionClick = () => {
-    setIsEditingQuestion(true);
-  };
-
   const handlePointsClick = () => {
     setIsEditingPoints(true);
   };
@@ -64,7 +59,6 @@ const EditWhatMinute = ({
   };
 
   const handleInputBlur = async (key: string, value: string) => {
-    setIsEditingQuestion(false);
     setIsEditingPoints(false);
     await updateQuestion(key, value);
   };
@@ -112,22 +106,13 @@ const EditWhatMinute = ({
 
         {/* Editable Question */}
         <div className="mb-1 text-center">
-          {isEditingQuestion ? (
-            <input
-              type="text"
-              value={editedQuestion}
-              onChange={handleQuestionInputChange}
-              onBlur={() => handleInputBlur("question", editedQuestion)}
-              className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
-            />
-          ) : (
-            <h2
-              className="cursor-pointer border-2 text-xl font-semibold text-gray-800"
-              onClick={handleQuestionClick}
-            >
-              {editedQuestion}
-            </h2>
-          )}
+          <input
+            type="text"
+            value={editedQuestion}
+            onChange={handleQuestionInputChange}
+            onBlur={() => handleInputBlur("question", editedQuestion)}
+            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
+          />
         </div>
         <p className="text-center text-gray-500">
           The closer you get, the more points you score
@@ -144,9 +129,6 @@ const EditWhatMinute = ({
 
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <label htmlFor="correctAnswer" className="text-center">
-            Correct Answer:
-          </label>
           <input
             type="text"
             value={editedCorrectAnswer}

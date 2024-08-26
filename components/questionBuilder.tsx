@@ -10,6 +10,7 @@ import EditGuessScore from "./edit-questions/editGuessScore";
 import EditGeneralSelection from "./edit-questions/editGeneralSelection";
 import EditTrueFalse from "./edit-questions/editTrueFalse";
 import EditGeneralNumber from "./edit-questions/editGeneralNumber";
+import { toast } from "sonner";
 
 const QuestionBuilder = ({
   competitionId,
@@ -86,6 +87,7 @@ const QuestionBuilder = ({
     newQuestions.splice(index, 1);
     setQuestions(newQuestions);
     await deleteQuestion(id);
+    toast.success("Question deleted successfully");
   };
 
   const handleAddQuestion = async (

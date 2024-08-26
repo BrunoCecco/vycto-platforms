@@ -58,7 +58,6 @@ const EditPlayerSelection = ({
   removeQuestion: (id: string) => void;
 }) => {
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
-  const [isEditingQuestion, setIsEditingQuestion] = useState(false);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
     question.question ?? "Which player will score first?",
@@ -89,11 +88,6 @@ const EditPlayerSelection = ({
     await updateQuestionMetadata(formData, question, key);
     toast.success("Question updated successfully");
   };
-
-  const handleQuestionClick = () => {
-    setIsEditingQuestion(true);
-  };
-
   const handlePointsClick = () => {
     setIsEditingPoints(true);
   };
@@ -127,7 +121,6 @@ const EditPlayerSelection = ({
   // };
 
   const handleInputBlur = async (key: string, value: string) => {
-    setIsEditingQuestion(false);
     setIsEditingPoints(false);
     await updateQuestion(key, value);
   };
@@ -173,22 +166,13 @@ const EditPlayerSelection = ({
 
         {/* Editable Question */}
         <div className="mb-2 text-center">
-          {isEditingQuestion ? (
-            <input
-              type="text"
-              value={editedQuestion}
-              onChange={handleQuestionInputChange}
-              onBlur={() => handleInputBlur("question", editedQuestion)}
-              className="w-full text-center text-xl font-semibold text-gray-800"
-            />
-          ) : (
-            <h2
-              className="cursor-pointer border-2 text-xl font-semibold text-gray-800"
-              onClick={handleQuestionClick}
-            >
-              {question.question ?? editedQuestion}
-            </h2>
-          )}
+          <input
+            type="text"
+            value={editedQuestion}
+            onChange={handleQuestionInputChange}
+            onBlur={() => handleInputBlur("question", editedQuestion)}
+            className="w-full text-center text-xl font-semibold text-gray-800"
+          />
         </div>
         <p className="mb-6 text-center text-gray-500">
           Select the correct answer
@@ -246,9 +230,6 @@ const EditPlayerSelection = ({
           />
         </div>
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <label htmlFor="correctAnswer" className="text-gray-500">
-            Correct Answer:
-          </label>
           <input
             type="text"
             value={editedCorrectAnswer}

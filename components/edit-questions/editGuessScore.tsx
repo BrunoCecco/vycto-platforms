@@ -5,6 +5,7 @@ import { PlusCircle, MinusCircle } from "lucide-react";
 import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
+import Input from "../input";
 
 const EditGuessScore = ({
   question,
@@ -94,7 +95,7 @@ const EditGuessScore = ({
               <PlusCircle />
             </div>
             {isEditingHome ? (
-              <input
+              <Input
                 type="text"
                 name="answer1"
                 value={homeTeam}
@@ -126,7 +127,7 @@ const EditGuessScore = ({
               <PlusCircle />
             </div>
             {isEditingAway ? (
-              <input
+              <Input
                 type="text"
                 name="answer2"
                 value={awayTeam}
@@ -147,10 +148,7 @@ const EditGuessScore = ({
 
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <label htmlFor="correctAnswer" className="text-center">
-            Correct Answer:
-          </label>
-          <input
+          <Input
             type="text"
             value={editedCorrectAnswer}
             onChange={handleCorrectAnswerInputChange}

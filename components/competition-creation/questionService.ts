@@ -63,13 +63,12 @@ export const createFootballQuestions = async ({
   formData.append("date", isoStringDate);
   await updateCompetitionMetadata(formData, competitionId, "date");
   const formData1 = new FormData();
-  formData1.append(
-    "title",
-    `Competition for ${nextEvent.slug.replace("-", " ")}`,
-  );
+  formData1.append("title", `Competition for ${name}`);
   await updateCompetitionMetadata(formData1, competitionId, "title");
 
   const questions: SelectQuestion[] = [];
+
+  var playerName = type === "player" ? name : players[3].name;
 
   questionTemplates.football.forEach((template) => {
     questions.push({
@@ -78,11 +77,11 @@ export const createFootballQuestions = async ({
       question: template.question
         .replace("<insert_team1>", nextEvent.homeTeam.name)
         .replace("<insert_team2>", nextEvent.awayTeam.name)
-        .replace("<insert_player1>", name),
+        .replace("<insert_player1>", playerName),
       type: template.type,
       answer1: template.answers[0]
         ?.replace("<insert_team1>", nextEvent.homeTeam.name)
-        .replace("<insert_player1>", name),
+        .replace("<insert_player1>", playerName),
       answer2: template.answers[1]
         ?.replace("<insert_team2>", nextEvent.awayTeam.name)
         .replace("<insert_player2>", players[0].name),
@@ -97,7 +96,7 @@ export const createFootballQuestions = async ({
       correctAnswer: null,
       image1:
         template.type == "PlayerSelection"
-          ? `https://api.sofascore.com/api/v1/player/${playerId}/image`
+          ? `https://api.sofascore.com/api/v1/player/${playerId || players[3].id}/image`
           : `https://api.sofascore.com/api/v1/team/${nextEvent.homeTeam?.id}/image`,
       image2:
         template.type == "PlayerSelection"
@@ -111,43 +110,6 @@ export const createFootballQuestions = async ({
         template.type == "PlayerSelection"
           ? `https://api.sofascore.com/api/v1/player/${players[2].id}/image`
           : `https://api.sofascore.com/api/v1/team/${teamId}/image`,
-      points: 5,
-    });
-  });
-  return questions;
-};
-
-const generateEventQuestions = (
-  event: TeamEvent,
-  players: Player[],
-  competitionId: string,
-): SelectQuestion[] => {
-  const questions: SelectQuestion[] = [];
-
-  questionTemplates.football.forEach((template) => {
-    questions.push({
-      id: createId(),
-      competitionId: competitionId,
-      question: template.question
-        .replace("<insert_team1>", event.homeTeam.name)
-        .replace("<insert_team2>", event.awayTeam.name)
-        .replace("<insert_player1>", event.awayTeam.name),
-      type: template.type,
-      answer1: template.answers[0].replace(
-        "<insert_team1>",
-        event.homeTeam.name,
-      ),
-      answer2: template.answers[1].replace(
-        "<insert_team2>",
-        event.awayTeam.name,
-      ),
-      answer3: template.answers[2],
-      answer4: template.answers[3],
-      correctAnswer: null,
-      image1: `https://api.sofascore.com/api/v1/team/${event.homeTeam.id}/image`,
-      image2: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
-      image3: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
-      image4: `https://api.sofascore.com/api/v1/team/${event.awayTeam.id}/image`,
       points: 5,
     });
   });
