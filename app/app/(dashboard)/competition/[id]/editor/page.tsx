@@ -2,8 +2,11 @@ import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import Editor from "@/components/old-components/editor";
 import db from "@/lib/db";
-import { getQuestionsForCompetition } from "@/lib/fetchers";
+import {  
+  getQuestionsForCompetition,
+} from "@/lib/fetchers";
 import CompetitionCreator from "@/components/competition-creation";
+import Button from "@/components/button";
 
 export default async function CompetitionPage({
   params,
@@ -38,6 +41,13 @@ export default async function CompetitionPage({
 
   return (
     <div>
+      {new Date(data?.date).getTime() < Date.now() && (
+        <div className="my-6 flex flex-col">
+          <div className="font-cal text-xl font-bold dark:text-white">
+            Time to submit the correct answers for this competition!
+          </div>
+        </div>
+      )}
       <Editor competition={data} initialQuestions={initialQuestions} />
     </div>
   );

@@ -18,14 +18,14 @@ const PoweredBadge = () => {
 
       {/* Powered by Text */}
       <div className="relative -top-8">
-        <p className="text-lg font-semibold">
+        <p className="font-semibold">
           Powered by{" "}
           <a href="#" className="underline">
             Vycto
           </a>
         </p>
-        <p className="mt-2 text-base">
-          empowering sports brands to engage passionate fan bases.
+        <p className="mt-2 text-sm">
+          Empowering sports brands to engage passionate fan bases.
         </p>
       </div>
     </div>

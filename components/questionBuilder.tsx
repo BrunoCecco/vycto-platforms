@@ -170,13 +170,10 @@ const QuestionBuilder = ({
   );
 
   return (
-    <div className="">
+    <div className="flex flex-col gap-4">
       {renderAddButton(0)}
       {questions.map((question, index) => (
-        <div
-          key={index + "editable" + question.id}
-          className="flex flex-col gap-4"
-        >
+        <div key={index + "editable" + question.id} className="">
           {getQuestionElement(question, question.type as QuestionType)}
         </div>
       ))}

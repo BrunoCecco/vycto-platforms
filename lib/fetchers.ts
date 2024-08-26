@@ -233,3 +233,12 @@ export async function getUserData(email: string) {
     },
   )();
 }
+
+export async function checkCorrectAnswersPresent(competitionId: string) {
+  const questions = await getQuestionsForCompetition(competitionId);
+  // check each question has correctAnswer field
+  return questions.every(
+    (question) =>
+      question.correctAnswer !== null && question.correctAnswer?.trim() !== "",
+  );
+}
