@@ -9,7 +9,7 @@ const Button = React.forwardRef<
   const baseStyles =
     "px-4 py-2 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors";
   const variantStyles = {
-    default: "bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-400",
+    default: "bg-stone-800 text-white hover:bg-stone-700 focus:ring-stone-400",
     outline:
       "border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-400",
     destructive: "bg-red-500 text-white hover:bg-red-600 focus:ring-red-400",

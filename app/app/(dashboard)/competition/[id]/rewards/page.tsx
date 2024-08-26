@@ -1,6 +1,6 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
-import Form from "@/components/form";
+import CombinedForm from "@/components/form/combined";
 import { updateCompetitionMetadata } from "@/lib/actions";
 import db from "@/lib/db";
 
@@ -29,41 +29,62 @@ export default async function CompetitionRewards({
         <h1 className="font-cal text-3xl font-bold dark:text-white">
           Competition Rewards
         </h1>
-        <Form
-          title="Reward Title"
-          description="Title of the rewards for this competition."
-          helpText="Please enter the title of the reward."
-          inputAttrs={{
-            name: "rewardTitle",
-            type: "text",
-            defaultValue: data?.rewardTitle!,
-            placeholder: "Bose Headphones",
-          }}
+        <CombinedForm
+          title="Reward #1"
+          descriptions={[
+            "Title of the main reward for this competition.",
+            "Describe the main reward for this competition.",
+            "The thumbnail image for the main reward. Accepted formats: .png, .jpg, .jpeg",
+          ]}
+          helpText="Please enter the details for the main reward."
+          inputAttrs={[
+            {
+              name: "rewardTitle",
+              type: "text",
+              defaultValue: data?.rewardTitle!,
+              placeholder: "Season Ticket",
+            },
+            {
+              name: "rewardDescription",
+              type: "text",
+              defaultValue: data?.rewardDescription!,
+              placeholder: "Win a season ticket worth $2000",
+            },
+            {
+              name: "rewardImage",
+              type: "file",
+              defaultValue: data?.rewardImage!,
+            },
+          ]}
           handleSubmit={updateCompetitionMetadata}
         />
-
-        <Form
-          title="Reward Description"
-          description="Describe the rewards for this competition."
-          helpText="Please enter the description/value of the reward."
-          inputAttrs={{
-            name: "rewardDescription",
-            type: "text",
-            defaultValue: data?.rewardDescription!,
-            placeholder: "Win a pair of Bose Headphones worth $100",
-          }}
-          handleSubmit={updateCompetitionMetadata}
-        />
-
-        <Form
-          title="Thumbnail image"
-          description="The thumbnail image for the reward. Accepted formats: .png, .jpg, .jpeg"
-          helpText="Max file size 50MB. Recommended size 1200x630."
-          inputAttrs={{
-            name: "rewardImage",
-            type: "file",
-            defaultValue: data?.rewardImage!,
-          }}
+        <CombinedForm
+          title="Reward #2"
+          descriptions={[
+            "Title of the secondary rewards for this competition.",
+            "Describe the secondary rewards for this competition.",
+            "The thumbnail image for the secondary reward. Accepted formats: .png, .jpg, .jpeg",
+          ]}
+          helpText="Please enter the details for the secondary reward."
+          inputAttrs={[
+            {
+              name: "reward2Title",
+              type: "text",
+              defaultValue: data?.reward2Title!,
+              placeholder: "%15 off all games",
+            },
+            {
+              name: "reward2Description",
+              type: "text",
+              defaultValue: data?.reward2Description!,
+              placeholder: "Win a %15 discount on all games",
+            },
+            {
+              name: "reward2Image",
+              type: "file",
+              defaultValue: data?.reward2Image!,
+            },
+          ]}
           handleSubmit={updateCompetitionMetadata}
         />
       </div>
