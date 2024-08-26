@@ -7,14 +7,11 @@ import Retention from "./analytics/retention";
 
 const AnalyticsPage: React.FC = () => {
   return (
-    <div className="p-8">
-      <h1 className="pl-4 text-2xl font-bold">Analytics</h1>
+    <div className="">
       <StatsBadges />
-      <div className="flex space-x-8 p-4">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <EngagementTime />
         <EngagementTraffic />
-      </div>
-      <div className="flex space-x-8 p-4">
         <Retention />
         <VoucherConversions />
       </div>

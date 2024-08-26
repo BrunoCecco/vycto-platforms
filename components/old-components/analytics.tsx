@@ -11,6 +11,7 @@ import {
   AreaChart,
 } from "@tremor/react";
 import Image from "next/image";
+import AnalyticsPage from "../analyticsPage";
 
 const chartdata = [
   {
@@ -87,74 +88,14 @@ const categories = [
 export default function AnalyticsMockup() {
   return (
     <div className="">
-      <iframe
+      {/* <iframe
         src="https://analytics.tinybird.co/?token=p.eyJ1IjogIjllOGNmNTViLTRhOTQtNGU0MC1hZDM1LWU3YjYxMzRkMTJlNyIsICJpZCI6ICJiY2JmZmJlMC0wOWYxLTQ0N2ItODE1ZS01NDQ4MWY5MGRjYWUiLCAiaG9zdCI6ICJhd3MtZXUtY2VudHJhbC0xIn0.0Vl_qdLoLNKWAd-vqMy1u-vS4FC9EApa_vEgEI8G7Xg&host=https%3A%2F%2Fapi.eu-central-1.aws.tinybird.co&kpi=bounce_rate"
         // src="https://vercel.com/matthew-charkes-projects/vycto-platforms/analytics"
         className="h-screen w-full"
         title="Tinybird Analytics"
         allowFullScreen
-      ></iframe>
-      {/* <Card>
-      <Title>Visitors</Title>
-        <AreaChart
-          className="mt-4 h-72"
-          data={chartdata}
-          index="date"
-          categories={["Visitors"]}
-          colors={["indigo"]}
-          valueFormatter={(number: number) =>
-            Intl.NumberFormat("us").format(number).toString()
-          }
-        />
-      </Card>
-      <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
-        {categories.map(({ title, subtitle, data }) => (
-          <Card key={title} className="max-w-lg">
-            <Title>{title}</Title>
-            <Flex className="mt-4">
-              <Text>
-                <Bold>{subtitle}</Bold>
-              </Text>
-              <Text>
-                <Bold>Visitors</Bold>
-              </Text>
-            </Flex>
-            <BarList
-              // @ts-ignore
-              data={data.map(({ name, value, code }) => ({
-                name,
-                value,
-                icon: () => {
-                  if (title === "Top Referrers") {
-                    return (
-                      <Image
-                        src={`https://www.google.com/s2/favicons?sz=64&domain_url=${name}`}
-                        alt={name}
-                        className="mr-2.5"
-                        width={20}
-                        height={20}
-                      />
-                    );
-                  } else if (title === "Countries") {
-                    return (
-                      <Image
-                        src={`https://flag.vercel.app/m/${code}.svg`}
-                        className="mr-2.5"
-                        alt={code}
-                        width={24}
-                        height={16}
-                      />
-                    );
-                  } else {
-                    return null;
-                  }
-                },
-              }))}
-              className="mt-2"
-            />
-          </Card> */}
-      {/* ))} */}
-      {/* </Grid> */}
+      ></iframe> */}
+      <AnalyticsPage />
     </div>
   );
 }

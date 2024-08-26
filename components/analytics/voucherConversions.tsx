@@ -16,7 +16,7 @@ const data = [
 
 const VoucherConversions: React.FC = () => {
   return (
-    <div className="mx-auto w-full rounded-xl bg-white p-6 shadow-lg md:w-1/2">
+    <div className="w-full rounded-xl bg-white p-6 shadow-lg">
       {/* Header Section */}
       <div className="flex items-center justify-between pb-4">
         <div className="flex items-center space-x-2">

@@ -27,7 +27,7 @@ const CompetitionCard = async ({
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border bg-white p-4 shadow-lg">
+    <div className="rounded-xl border border-stone-200 bg-white p-4 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
       <div className="relative h-40 w-full">
         <BlurImage
           alt={competition.title ?? "Card thumbnail"}
@@ -76,7 +76,7 @@ const CompetitionCard = async ({
         </p>
         <Link
           href={competition.slug}
-          className="w-24 rounded-full  p-2 text-center text-white"
+          className="w-24 rounded-full  p-2 text-center text-white hover:opacity-75"
           style={{ backgroundColor: competition.color2 }}
         >
           Play

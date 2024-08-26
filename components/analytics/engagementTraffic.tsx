@@ -15,7 +15,7 @@ const data = [
 
 const EngagementTraffic = () => {
   return (
-    <div className="mx-auto w-1/2 rounded-xl bg-white p-6 shadow-lg">
+    <div className="w-full rounded-xl bg-white p-6 shadow-lg">
       <div className="flex items-center justify-between pb-4">
         <div className="flex items-center space-x-2">
           <Calendar size={24} color="#6C63FF" />

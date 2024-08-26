@@ -137,7 +137,7 @@ export default async function SiteCompetitionPage({
       data.id,
     );
     if (userComp && "submitted" in userComp && userComp.submitted) {
-      redirect(`/${domain}/${slug}/${userComp.userId}`);
+      redirect(`/${slug}/${userComp.userId}`);
     }
     users = await getCompetitionUsers(data!.id);
   }
