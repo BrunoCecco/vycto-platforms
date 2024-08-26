@@ -37,6 +37,7 @@ import SubmitAnswersForm from "@/components/form/submit-answers-form";
 import Link from "next/link";
 import GameStats from "@/components/gameStats";
 import GeneralNumber from "@/components/questions/generalNumber";
+import Rewards from "@/components/rewards";
 
 export async function generateMetadata({
   params,
@@ -238,6 +239,16 @@ export default async function SiteCompetitionPage({
       }}
     >
       <CompetitionHeader session={session} users={users} data={data} />
+      <TabSelector />
+      <Rewards
+        rewardTitle={data.rewardTitle}
+        rewardDescription={data.rewardDescription}
+        rewardImage={data.rewardImage}
+        reward2Title={data.reward2Title}
+        reward2Description={data.reward2Description}
+        reward2Image={data.reward2Image}
+      />
+      {/* Challenge bit is below */}
       <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0 ">
         {questions &&
           questions.map((question: any, index: number) => {
@@ -267,8 +278,7 @@ export default async function SiteCompetitionPage({
           />
         )}
       </div>
-
-      <Leaderboard users={users} />
+      {/* {activeTab === "Leaderboard" && <Leaderboard users={users} />} */}
 
       {/* <MDX source={data.mdxSource} /> */}
 

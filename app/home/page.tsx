@@ -15,6 +15,7 @@ import UserSignUp from "@/components/userSignUp";
 import B2BSignUp from "@/components/b2BSignUp";
 import PoweredBadge from "@/components/poweredBadge";
 import AnalyticsPage from "@/components/analyticsPage";
+import Rewards from "@/components/rewards";
 
 const homeTeam = {
   name: "Real Madrid",
@@ -55,6 +56,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen space-y-12 bg-green-100">
       <h1 className="text-2xl font-bold">Development Playground</h1>
+      {/* <Rewards />  */}
       <AnalyticsPage />
       <PoweredBadge />
       <B2BSignUp />
