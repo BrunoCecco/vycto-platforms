@@ -70,7 +70,7 @@ const Slider = ({
             name="answer"
             value={values[0]}
           />
-          <Range
+          {/* <Range
             label={`${questionId}-range`}
             step={1}
             min={MIN}
@@ -113,7 +113,7 @@ const Slider = ({
                 </span>
               </div>
             )}
-          />
+          /> */}
         </form>
         <span className="text-sm font-bold text-black">{MAX}</span>
       </div>

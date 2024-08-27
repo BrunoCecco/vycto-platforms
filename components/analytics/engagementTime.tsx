@@ -26,7 +26,7 @@ const EngagementTime = () => {
 
       <div className="flex items-start space-x-10">
         <div>
-          <h2 className="text-2xl font-bold">$350.4hrs</h2>
+          <h2 className="text-2xl font-bold">350.4hrs</h2>
           <p className="text-xs text-gray-500">
             Total Spent
             <span className="ml-2 text-green-500">+2.45%</span>
