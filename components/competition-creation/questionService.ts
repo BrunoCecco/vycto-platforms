@@ -84,7 +84,7 @@ export const createFootballQuestions = async ({
         .replace("<insert_player1>", playerName),
       answer2: template.answers[1]
         ?.replace("<insert_team2>", nextEvent.awayTeam.name)
-        .replace("<insert_player2>", players[0].name),
+        .replace("<insert_player2>", players[5].name),
       answer3: template.answers[2]?.replace(
         "<insert_player3>",
         players[1].name,
@@ -100,7 +100,7 @@ export const createFootballQuestions = async ({
           : `https://api.sofascore.com/api/v1/team/${nextEvent.homeTeam?.id}/image`,
       image2:
         template.type == "PlayerSelection"
-          ? `https://api.sofascore.com/api/v1/player/${players[0].id}/image`
+          ? `https://api.sofascore.com/api/v1/player/${players[5].id}/image`
           : `https://api.sofascore.com/api/v1/team/${nextEvent.awayTeam?.id}/image`,
       image3:
         template.type == "PlayerSelection"

@@ -79,7 +79,7 @@ export default async function Competitions({
       <h1 className="font-cal text-4xl">No Competitions Yet</h1>
       <Image
         alt="missing competition"
-        src="https://illustrations.popsy.co/gray/graphic-design.svg"
+        src="/logo.png"
         width={400}
         height={400}
       />
