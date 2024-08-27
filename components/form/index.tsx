@@ -44,6 +44,7 @@ export default function Form({
       name={inputAttrs.name}
       upload={(name: string, value: string) => {
         const formData = new FormData();
+        // append input as file type to form data
         formData.append(name, value);
         handleSubmit(formData, id, name).then(async (res: any) => {
           if (res.error) {

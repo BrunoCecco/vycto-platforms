@@ -135,32 +135,6 @@ export const updateSite = withSiteAuth(
           }
           */
         }
-      } else if (key === "image" || key === "logo") {
-        if (!process.env.BLOB_READ_WRITE_TOKEN) {
-          return {
-            error:
-              "Missing BLOB_READ_WRITE_TOKEN token. Note: Vercel Blob is currently in beta – please fill out this form for access: https://tally.so/r/nPDMNd",
-          };
-        }
-
-        const file = formData.get(key) as File;
-        const filename = `${nanoid()}.${file.type.split("/")[1]}`;
-
-        const { url } = await put(filename, file, {
-          access: "public",
-        });
-
-        const blurhash = key === "image" ? await getBlurDataURL(url) : null;
-
-        response = await db
-          .update(sites)
-          .set({
-            [key]: url,
-            ...(blurhash && { imageBlurhash: blurhash }),
-          })
-          .where(eq(sites.id, site.id))
-          .returning()
-          .then((res) => res[0]);
       } else {
         response = await db
           .update(sites)
@@ -327,34 +301,15 @@ export const updateCompetitionMetadata = withCompetitionAuth(
 
     try {
       let response;
-      if (key === "image") {
-        const file = formData.get("image") as File;
-        const filename = `${nanoid()}.${file.type.split("/")[1]}`;
 
-        const { url } = await put(filename, file, {
-          access: "public",
-        });
-
-        const blurhash = await getBlurDataURL(url);
-        response = await db
-          .update(competitions)
-          .set({
-            image: url,
-            imageBlurhash: blurhash,
-          })
-          .where(eq(competitions.id, competition.id))
-          .returning()
-          .then((res) => res[0]);
-      } else {
-        response = await db
-          .update(competitions)
-          .set({
-            [key]: key === "published" ? value === "true" : value,
-          })
-          .where(eq(competitions.id, competition.id))
-          .returning()
-          .then((res) => res[0]);
-      }
+      response = await db
+        .update(competitions)
+        .set({
+          [key]: key === "published" ? value === "true" : value,
+        })
+        .where(eq(competitions.id, competition.id))
+        .returning()
+        .then((res) => res[0]);
 
       revalidateTag(
         `${competition.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-competitions`,
