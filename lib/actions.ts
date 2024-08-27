@@ -118,13 +118,10 @@ export const updateSite = withSiteAuth(
         if (site.customDomain && site.customDomain !== value) {
           response = await removeDomainFromVercelProject(site.customDomain);
 
-          /* Optional: remove domain from Vercel team 
-
+          /* Optional: remove domain from Vercel team
           // first, we need to check if the apex domain is being used by other sites
           const apexDomain = getApexDomain(`https://${site.customDomain}`);
           const domainCount = await db.select({ count: count() }).from(sites).where(or(eq(sites.customDomain, apexDomain), ilike(sites.customDomain, `%.${apexDomain}`))).then((res) => res[0].count);
-
-
           // if the apex domain is being used by other sites
           // we should only remove it from our Vercel project
           if (domainCount >= 1) {
@@ -136,7 +133,6 @@ export const updateSite = withSiteAuth(
               site.customDomain
             );
           }
-          
           */
         }
       } else if (key === "image" || key === "logo") {

@@ -6,6 +6,7 @@ import db from "@/lib/db";
 
 import FanZone from "@/components/fanZone";
 import { SelectCompetition } from "@/lib/schema";
+import Leaderboard from "@/components/leaderboard";
 
 export async function generateStaticParams() {
   const allSites = await db.query.sites.findMany({
@@ -100,6 +101,7 @@ export default async function SiteHomePage({
             ) as SelectCompetition[]
           }
         />
+        <Leaderboard siteData={data} users={[]} />
       </div>
     </>
   );

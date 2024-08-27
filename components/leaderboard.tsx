@@ -8,23 +8,23 @@ const leaderboardData = [
     name: "john_doe",
     profilePic: "/logo.png", // Replace with actual image URL
     rank: 1,
-    totalPoints: 1500,
+    points: 1000,
     latestSubmission: "View",
   },
   {
     id: 2,
-    name: "john_doe",
+    name: "garry_123",
     profilePic: "/logo.png",
     rank: 2,
-    totalPoints: 1400,
+    points: 700,
     latestSubmission: "View",
   },
   {
     id: 3,
-    name: "john_doe",
+    name: "timotheeee",
     profilePic: "/logo.png",
-    rank: 2,
-    totalPoints: 1100,
+    points: 300,
+    rank: 3,
     latestSubmission: "View",
   },
 ];
@@ -36,13 +36,17 @@ const Leaderboard = ({
   siteData: SelectSite;
   users: any;
 }) => {
-  const sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
+  var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
+
+  if (sortedUsers.length === 0) {
+    sortedUsers = leaderboardData;
+  }
 
   return (
     <div className="container w-full rounded-2xl border border-gray-200 bg-white p-4 md:p-8">
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row md:items-center md:py-6">
         <div className="flex items-center gap-4">
-          <div className="relative inline-block h-16 w-48 overflow-hidden rounded-full align-middle md:h-16 md:w-36">
+          <div className="relative inline-block h-16 w-32 overflow-hidden rounded-full align-middle md:h-16 md:w-36">
             <Image
               src={siteData.logo || "/logo.png"}
               alt="Brand Logo"
@@ -97,7 +101,7 @@ const Leaderboard = ({
                     />
                   </div>
                   <span className="font-bold text-gray-900">
-                    @{user.username}
+                    @{user.username || user.email || user.name || "User"}
                   </span>
                 </td>
                 <td className="py-4 text-gray-900">{index + 1}</td>
