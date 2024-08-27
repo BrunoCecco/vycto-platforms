@@ -13,22 +13,20 @@ const FanZone = ({
 }) => {
   return (
     <>
-      {currentCompetitions?.length > 0 && (
-        <h2 className="py-4 text-2xl font-semibold text-gray-800">
-          Current Competitions{" "}
-          <span role="img" aria-label="fire">
-            🔥
-          </span>
-        </h2>
-      )}
+      <h2 className="py-10 text-2xl font-semibold text-gray-800">
+        Current Competitions{" "}
+        <span role="img" aria-label="fire">
+          🔥
+        </span>
+      </h2>
       {currentCompetitions?.length > 0 ? (
         <Competitions competitions={currentCompetitions} />
       ) : (
         <h2 className="py-4 text-lg font-semibold text-gray-600">
-          No competitions yet...
+          No current competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
-      <h2 className="py-10 text-2xl font-semibold text-gray-800">
+      <h2 className="mt-6 py-10 text-2xl font-semibold text-gray-800">
         Past Competitions{" "}
         <span role="img" aria-label="fire">
           👏
@@ -37,8 +35,8 @@ const FanZone = ({
       {pastCompetitions?.length > 0 ? (
         <Competitions competitions={pastCompetitions} />
       ) : (
-        <h2 className="py-4 text-lg font-semibold text-gray-600">
-          No past competitions yet... stay tuned for more!
+        <h2 className="mb-24 py-4 text-lg font-semibold italic text-gray-600">
+          No past competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
     </>
