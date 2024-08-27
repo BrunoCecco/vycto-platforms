@@ -30,8 +30,8 @@ const GeneralSelection = ({ ...props }) => {
   }, [selectedOption]);
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:w-1/2 md:p-10">
+    <div className="flex w-full items-center justify-center">
+      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
         {/* Points Badge */}
         <PointsBadge points={props.points} />
 
@@ -57,7 +57,7 @@ const GeneralSelection = ({ ...props }) => {
         </p>
 
         <div className="flex flex-col items-center justify-center pt-3">
-          <div className="flex flex-wrap items-center justify-between rounded-lg bg-gray-200 p-2">
+          <div className="flex w-full flex-wrap items-center justify-between rounded-lg bg-gray-200 p-2">
             {goalOptions.map((option) => (
               <Submit
                 key={option}
@@ -69,7 +69,7 @@ const GeneralSelection = ({ ...props }) => {
                 <button
                   key={option}
                   disabled={props.disabled}
-                  className={`rounded-lg px-4 py-3 text-sm text-sm ${
+                  className={`w-max rounded-lg px-4 py-3 text-sm ${
                     selectedOption === option
                       ? "bg-white font-semibold text-blue-600 shadow-md"
                       : ""

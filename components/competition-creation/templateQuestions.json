@@ -18,7 +18,7 @@
     {
       "type": "GuessScore",
       "question": "What will be the final score in the match?",
-      "answers": []
+      "answers": ["<insert_team1>", "<insert_team2>"]
     },
     {
       "type": "GeneralSelection",

@@ -10,8 +10,8 @@ const GuessScore = ({ ...props }) => {
   const [scoreAway, setScoreAway] = useState(props.answer?.split("-")[1] ?? 0);
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:w-1/2 md:p-10">
+    <div className="flex w-full items-center justify-center">
+      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
         {/* Points Badge */}
         <PointsBadge points={props.points} />
 

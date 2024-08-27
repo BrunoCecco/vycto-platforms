@@ -36,6 +36,7 @@ import SubmitAnswersForm from "@/components/form/submit-answers-form";
 import Link from "next/link";
 import GameStats from "@/components/gameStats";
 import GeneralNumber from "@/components/questions/generalNumber";
+import CompetitionPage from "@/components/competitionPage";
 
 export async function generateMetadata({
   params,
@@ -236,8 +237,7 @@ export default async function SubmissionPage({
         backgroundColor: siteData?.color1 ?? "white",
       }}
     >
-      <CompetitionHeader session={session} users={users} data={data} />
-      <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0 ">
+      <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0">
         <GameStats
           competitionTitle="Atletico vs Inter"
           username="nicolascastr0"
@@ -248,48 +248,17 @@ export default async function SubmissionPage({
           rank="33rd"
           bonusPoints={0.5}
         />
-        {questions &&
-          questions.map((question: any, index: number) => {
-            const answer = answers?.find(
-              (a: any) => a.questionId === question.id,
-            );
-            const disabled =
-              userComp && "submitted" in userComp && userComp?.submitted;
-            return getQuestionType(
-              question.type,
-              question,
-              session?.user.id!,
-              index,
-              answer?.answer,
-              disabled || false,
-            );
-          })}
+        <CompetitionPage
+          session={session}
+          data={data}
+          siteData={siteData}
+          questions={questions}
+          answers={answers}
+          users={users}
+          userComp={userComp}
+          slug={slug}
+        />
       </div>
-
-      <Leaderboard users={users} />
-
-      {/* <MDX source={data.mdxSource} /> */}
-
-      {data.adjacentCompetitions.length > 0 && (
-        <div className="relative pb-20 pt-10 sm:pt-20">
-          <div
-            className="absolute inset-0 z-10 flex items-center"
-            aria-hidden="true"
-          >
-            <div className="w-full border-t border-stone-300 dark:border-stone-700" />
-          </div>
-          <div className="relative z-20 mx-auto w-fit rounded-full bg-white px-6 text-center text-sm text-stone-500 dark:bg-black dark:text-stone-400">
-            More competitions
-          </div>
-        </div>
-      )}
-      {data.adjacentCompetitions && (
-        <div className="mx-5 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 pb-20 md:grid-cols-2 xl:mx-auto xl:grid-cols-3">
-          {data.adjacentCompetitions.map((data: any, index: number) => (
-            <BlogCard key={index} data={data} />
-          ))}
-        </div>
-      )}
     </div>
   );
 }

@@ -234,65 +234,22 @@ export default async function SiteCompetitionPage({
 
   return (
     <div
-      className=""
       style={{
         backgroundColor: siteData?.color1 ?? "white",
       }}
     >
-      <CompetitionPage
-        session={session}
-        data={data}
-        siteData={siteData}
-        questions={questions}
-        answers={answers}
-        users={users}
-        userComp={userComp}
-        slug={slug}
-      />
-      {/* <CompetitionHeader session={session} users={users} data={data} />
-
-      <TabSelector />
-      <Rewards
-        rewardTitle={data.rewardTitle}
-        rewardDescription={data.rewardDescription}
-        rewardImage={data.rewardImage}
-        reward2Title={data.reward2Title}
-        reward2Description={data.reward2Description}
-        reward2Image={data.reward2Image}
-      />
-      <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0 ">
-        {questions &&
-          questions.map((question: any, index: number) => {
-            const answer = answers?.find(
-              (a: any) => a.questionId === question.id,
-            );
-            const disabled =
-              userComp && "submitted" in userComp && userComp?.submitted;
-            return getQuestionType(
-              question.type,
-              question,
-              session?.user.id!,
-              index,
-              answer?.answer,
-              disabled || false,
-            );
-          })}
-        {userComp && "submitted" in userComp && userComp.submitted ? (
-          <div className="mx-auto flex h-8 w-fit items-center justify-center space-x-2 rounded-md border border-green-600 bg-green-600 px-2 text-sm text-white sm:h-10">
-            Answers Submitted
-          </div>
-        ) : (
-          <SubmitAnswersForm
-            userId={session?.user.id!}
-            competitionId={data.id}
-            slug={slug}
-          />
-        )}
-      </div> */}
-      {/* {activeTab === "Leaderboard" && <Leaderboard users={users} />} */}
-
-      {/* <MDX source={data.mdxSource} /> */}
-
+      <div className="mx-auto w-full md:w-3/4 lg:w-3/5">
+        <CompetitionPage
+          session={session}
+          data={data}
+          siteData={siteData}
+          questions={questions}
+          answers={answers}
+          users={users}
+          userComp={userComp}
+          slug={slug}
+        />
+      </div>
       {data.adjacentCompetitions.length > 0 && (
         <div className="relative pb-20 pt-10 sm:pt-20">
           <div

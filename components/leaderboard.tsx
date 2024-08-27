@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { SelectSite } from "@/lib/schema";
 
 const leaderboardData = [
   {
@@ -28,30 +29,35 @@ const leaderboardData = [
   },
 ];
 
-const Leaderboard = ({ users }: { users: any }) => {
+const Leaderboard = ({
+  siteData,
+  users,
+}: {
+  siteData: SelectSite;
+  users: any;
+}) => {
   const sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
 
   return (
-    <div className="container mx-auto w-5/6 rounded-2xl border border-gray-200 bg-white p-4 md:w-3/4">
+    <div className="container w-full rounded-2xl border border-gray-200 bg-white p-4 md:p-8">
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row md:items-center md:py-6">
         <div className="flex items-center gap-4">
-          <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
+          <div className="relative inline-block h-16 w-48 overflow-hidden rounded-full align-middle md:h-16 md:w-36">
             <Image
-              src="/logo.png"
+              src={siteData.logo || "/logo.png"}
               alt="Brand Logo"
               fill={true}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              objectFit="cover"
-              className="overflow-hidden rounded-full"
+              objectFit="contain"
             />
           </div>
           <h1 className="text-lg font-bold text-gray-800 md:text-2xl">
             Leaderboard - August 2024
           </h1>
         </div>
-        <button className="w-24 rounded-full bg-blue-100 p-2 text-purple-800 hover:bg-blue-300">
+        {/* <button className="w-24 rounded-full bg-blue-100 p-2 text-purple-800 hover:bg-blue-300">
           View
-        </button>
+        </button> */}
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full rounded-xl">
@@ -63,11 +69,11 @@ const Leaderboard = ({ users }: { users: any }) => {
               <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Rank
               </th>
-              <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Total Points
+              <th className="text-wrap py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Points
               </th>
-              <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Last Submission
+              <th className="hidden py-3 text-left text-xs font-medium uppercase text-gray-500 sm:table-cell">
+                Submission
               </th>
               <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Rank
@@ -80,7 +86,9 @@ const Leaderboard = ({ users }: { users: any }) => {
                 <td className="flex items-center space-x-3 py-4">
                   <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
                     <Image
-                      src={"/logo.png"}
+                      src={
+                        user.image ?? `https://avatar.vercel.sh/${user.email}`
+                      }
                       alt="Profile"
                       fill={true}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -94,14 +102,14 @@ const Leaderboard = ({ users }: { users: any }) => {
                 </td>
                 <td className="py-4 text-gray-900">{index + 1}</td>
                 <td className="py-4 text-gray-900">{user.points}</td>
-                <td className="py-4">
-                  <button className="w-24 rounded-full bg-blue-100 p-2 text-purple-800 hover:bg-blue-300">
+                <td className="hidden py-4 sm:table-cell">
+                  <button className="rounded-full bg-blue-100 p-2 px-4 text-purple-800 hover:bg-blue-300">
                     View
                   </button>
                 </td>
                 <td className="py-4">
                   <div
-                    className="flex h-2 items-center justify-center rounded-full bg-purple-800 text-white"
+                    className="my-auto flex h-2 items-center justify-center rounded-full bg-purple-800 text-white"
                     style={{ width: 100 - index + 1 + "%" }}
                   ></div>
                 </td>

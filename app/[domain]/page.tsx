@@ -100,35 +100,6 @@ export default async function SiteHomePage({
             ) as SelectCompetition[]
           }
         />
-
-        {/* {competitions.length > 0 ? (
-          <div className="grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
-            {competitions &&
-              competitions.map((metadata: any, index: number) => (
-                <BlogCard key={index} data={metadata} />
-              ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-20">
-            <Image
-              alt="missing competition"
-              src="https://illustrations.popsy.co/gray/success.svg"
-              width={400}
-              height={400}
-              className="dark:hidden"
-            />
-            <Image
-              alt="missing competition"
-              src="https://illustrations.popsy.co/white/success.svg"
-              width={400}
-              height={400}
-              className="hidden dark:block"
-            />
-            <p className="font-title text-2xl text-stone-600 dark:text-stone-400">
-              No competitions yet.
-            </p>
-          </div>
-        )} */}
       </div>
     </>
   );

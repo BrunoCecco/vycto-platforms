@@ -89,13 +89,6 @@ export default async function SiteLayout({
       }}
     >
       {children}
-
-      {/* {domain == `demo.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` ||
-      domain == `platformize.co` ? (
-        <CTA />
-      ) : (
-        <ReportAbuse />
-      )} */}
     </div>
   );
 }

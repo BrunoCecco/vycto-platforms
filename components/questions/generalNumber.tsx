@@ -10,8 +10,8 @@ const GeneralNumber = ({ ...props }) => {
   const [answer, setAnswer] = useState(props.answer ?? 0);
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl md:w-1/2">
+    <div className="flex w-full items-center justify-center">
+      <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
         {/* Points Badge */}
         <PointsBadge points={props.points} />
 
@@ -46,23 +46,21 @@ const GeneralNumber = ({ ...props }) => {
               className="w-20 text-center"
             />
           </div>
-          <p className="text-sm font-semibold">{props.answer2}</p>
         </div>
-        <div className="flex justify-around">
-          <Submit
-            userId={props.userId}
-            questionId={props.id}
-            competitionId={props.competitionId}
-            answer={answer.toString()}
+
+        <Submit
+          userId={props.userId}
+          questionId={props.id}
+          competitionId={props.competitionId}
+          answer={answer.toString()}
+        >
+          <button
+            className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-white"
+            disabled={props.disabled}
           >
-            <button
-              className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-white"
-              disabled={props.disabled}
-            >
-              Submit
-            </button>
-          </Submit>
-        </div>
+            Submit
+          </button>
+        </Submit>
         {props.correctAnswer?.length > 0 ? (
           <div className="mt-2 text-center font-semibold text-green-600">
             Correct answer: {props.correctAnswer}

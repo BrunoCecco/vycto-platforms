@@ -172,28 +172,9 @@ export default function CompetitionPage({
           )}
         </div>
       )}
-      {activeTab == "Leaderboard" && <Leaderboard users={users} />}
-
-      {/* <MDX source={data.mdxSource} /> */}
-
-      {data.adjacentCompetitions.length > 0 && (
-        <div className="relative pb-20 pt-10 sm:pt-20">
-          <div
-            className="absolute inset-0 z-10 flex items-center"
-            aria-hidden="true"
-          >
-            <div className="w-full border-t border-stone-300 dark:border-stone-700" />
-          </div>
-          <div className="relative z-20 mx-auto w-fit rounded-full bg-white px-6 text-center text-sm text-stone-500 dark:bg-black dark:text-stone-400">
-            More competitions
-          </div>
-        </div>
-      )}
-      {data.adjacentCompetitions && (
-        <div className="mx-5 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 pb-20 md:grid-cols-2 xl:mx-auto xl:grid-cols-3">
-          {data.adjacentCompetitions.map((data: any, index: number) => (
-            <BlogCard key={index} data={data} />
-          ))}
+      {activeTab == "Leaderboard" && (
+        <div className="px-8 sm:px-0">
+          <Leaderboard siteData={siteData} users={users} />
         </div>
       )}
     </div>

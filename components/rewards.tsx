@@ -47,17 +47,19 @@ const Rewards: React.FC<RewardsProps> = ({
     <div className="relative mx-auto w-full max-w-xl">
       <div className="relative overflow-hidden">
         <div
-          className="flex transition-transform duration-500"
+          className="flex justify-between transition-transform duration-500"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {[0, 1].map((index) => (
-            <div key={index} className="min-w-full">
+            <div
+              key={index}
+              className="flex h-[400px] min-w-full items-center justify-center"
+            >
               <Image
                 src={rewards[index].src || "/placeholder.png"}
                 alt={`Slide ${index + 1}`}
-                width={800}
                 height={400}
-                layout="responsive"
+                width={400}
                 objectFit="contain"
               />
             </div>
