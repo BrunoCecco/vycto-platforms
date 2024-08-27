@@ -73,16 +73,16 @@ const Slider = ({
             <input
               type="range"
               min="0"
-              max="100"
+              max="90"
               value={value}
               onChange={(e) => setValue(parseInt(e.target.value))}
               className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
               style={{ backgroundSize: `${value}% 100%` }}
             />
             <div
-              className="pointer-events-none absolute left-0 top-0 mt-2 -translate-x-1/2 transform text-center text-xs font-bold text-white"
+              className="pointer-events-none absolute left-0 top-0 mt-8 -translate-x-1/2 transform text-center text-lg font-extrabold text-blue-500"
               style={{
-                left: `calc(${value}%)`,
+                left: `calc(${value}% + 40px)`,
               }}
             >
               {value}
