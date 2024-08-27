@@ -53,7 +53,7 @@ const Rewards: React.FC<RewardsProps> = ({
           {[0, 1].map((index) => (
             <div key={index} className="min-w-full">
               <Image
-                src={rewards[index].src}
+                src={rewards[index].src || "/placeholder.png"}
                 alt={`Slide ${index + 1}`}
                 width={800}
                 height={400}

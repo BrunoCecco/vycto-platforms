@@ -2,9 +2,13 @@
 
 import { useState } from "react";
 
-const TabSelector = () => {
-  const [activeTab, setActiveTab] = useState("Challenge");
-
+const TabSelector = ({
+  activeTab,
+  setActiveTab,
+}: {
+  activeTab: string;
+  setActiveTab: any;
+}) => {
   return (
     <div className="mx-auto flex w-full flex-col items-center justify-center bg-white p-8 md:w-3/4 md:p-14 lg:w-3/5">
       <div className="flex w-full border-b-2">

@@ -57,20 +57,14 @@ export default function CombinedForm({
       <h2 className=" p-5 pb-0 font-cal text-xl dark:text-white">{title}</h2>
       <div className="flex w-full flex-wrap">
         {inputAttrs.map((inputAttr, index) => (
-          <div className="relative flex w-1/2 flex-col space-y-4 p-5">
+          <div
+            className="relative flex w-1/2 flex-col space-y-4 p-5"
+            key={index + "reward-editor"}
+          >
             <p className="text-sm text-stone-500 dark:text-stone-400">
               {descriptions[index]}
             </p>
-            {inputAttr.name === "image" ||
-            inputAttr.name === "logo" ||
-            inputAttr.name.includes("Image") ? (
-              <Uploader
-                id={inputAttr.name}
-                defaultValue={inputAttr.defaultValue}
-                name={inputAttr.name}
-                upload={() => null}
-              />
-            ) : inputAttr.name === "font" ? (
+            {inputAttr.name === "font" ? (
               <div className="flex max-w-sm items-center overflow-hidden rounded-lg border border-stone-600">
                 <select
                   name="font"

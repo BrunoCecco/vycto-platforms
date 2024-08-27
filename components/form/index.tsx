@@ -35,7 +35,33 @@ export default function Form({
   const router = useRouter();
   const { update } = useSession();
 
-  return (
+  return inputAttrs.name === "image" ||
+    inputAttrs.name === "logo" ||
+    inputAttrs.name.includes("Image") ? (
+    <Uploader
+      id={inputAttrs.name}
+      defaultValue={inputAttrs.defaultValue}
+      name={inputAttrs.name}
+      upload={(name: string, value: string) => {
+        const formData = new FormData();
+        formData.append(name, value);
+        handleSubmit(formData, id, name).then(async (res: any) => {
+          if (res.error) {
+            toast.error(res.error);
+          } else {
+            va.track(`Updated ${name}`, id ? { id } : {});
+            if (id) {
+              router.refresh();
+            } else {
+              await update();
+              router.refresh();
+            }
+            toast.success(`Successfully updated ${name}!`);
+          }
+        });
+      }}
+    />
+  ) : (
     <form
       action={async (data: FormData) => {
         if (
@@ -68,16 +94,7 @@ export default function Form({
         <p className="text-sm text-stone-500 dark:text-stone-400">
           {description}
         </p>
-        {inputAttrs.name === "image" ||
-        inputAttrs.name === "logo" ||
-        inputAttrs.name === "rewardImage" ? (
-          <Uploader
-            id={inputAttrs.name}
-            defaultValue={inputAttrs.defaultValue}
-            name={inputAttrs.name}
-            upload={() => null}
-          />
-        ) : inputAttrs.name === "font" ? (
+        {inputAttrs.name === "font" ? (
           <div className="flex max-w-sm items-center overflow-hidden rounded-lg border border-stone-600">
             <select
               name="font"

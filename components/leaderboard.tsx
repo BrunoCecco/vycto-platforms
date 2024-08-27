@@ -28,7 +28,7 @@ const leaderboardData = [
   },
 ];
 
-const Leaderboard = async ({ users }: { users: any }) => {
+const Leaderboard = ({ users }: { users: any }) => {
   const sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
 
   return (

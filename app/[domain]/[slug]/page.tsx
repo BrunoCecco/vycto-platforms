@@ -38,6 +38,7 @@ import Link from "next/link";
 import GameStats from "@/components/gameStats";
 import GeneralNumber from "@/components/questions/generalNumber";
 import Rewards from "@/components/rewards";
+import CompetitionPage from "@/components/competitionPage";
 
 export async function generateMetadata({
   params,
@@ -238,7 +239,18 @@ export default async function SiteCompetitionPage({
         backgroundColor: siteData?.color1 ?? "white",
       }}
     >
-      <CompetitionHeader session={session} users={users} data={data} />
+      <CompetitionPage
+        session={session}
+        data={data}
+        siteData={siteData}
+        questions={questions}
+        answers={answers}
+        users={users}
+        userComp={userComp}
+        slug={slug}
+      />
+      {/* <CompetitionHeader session={session} users={users} data={data} />
+
       <TabSelector />
       <Rewards
         rewardTitle={data.rewardTitle}
@@ -248,7 +260,6 @@ export default async function SiteCompetitionPage({
         reward2Description={data.reward2Description}
         reward2Image={data.reward2Image}
       />
-      {/* Challenge bit is below */}
       <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0 ">
         {questions &&
           questions.map((question: any, index: number) => {
@@ -277,7 +288,7 @@ export default async function SiteCompetitionPage({
             slug={slug}
           />
         )}
-      </div>
+      </div> */}
       {/* {activeTab === "Leaderboard" && <Leaderboard users={users} />} */}
 
       {/* <MDX source={data.mdxSource} /> */}

@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import CombinedForm from "@/components/form/combined";
 import { updateCompetitionMetadata } from "@/lib/actions";
 import db from "@/lib/db";
+import Form from "@/components/form";
 
 export default async function CompetitionRewards({
   params,
@@ -34,7 +35,6 @@ export default async function CompetitionRewards({
           descriptions={[
             "Title of the main reward for this competition.",
             "Describe the main reward for this competition.",
-            "The thumbnail image for the main reward. Accepted formats: .png, .jpg, .jpeg",
           ]}
           helpText="Please enter the details for the main reward."
           inputAttrs={[
@@ -50,20 +50,27 @@ export default async function CompetitionRewards({
               defaultValue: data?.rewardDescription!,
               placeholder: "Win a season ticket worth $2000",
             },
-            {
-              name: "rewardImage",
-              type: "file",
-              defaultValue: data?.rewardImage!,
-            },
           ]}
           handleSubmit={updateCompetitionMetadata}
         />
+
+        <Form
+          title="Main Reward Image"
+          description="The thumbnail image for the main reward. Accepted formats: .png, .jpg, .jpeg"
+          helpText="Please enter the image for the main reward."
+          inputAttrs={{
+            name: "rewardImage",
+            type: "file",
+            defaultValue: data?.rewardImage!,
+          }}
+          handleSubmit={updateCompetitionMetadata}
+        />
+
         <CombinedForm
           title="Reward #2"
           descriptions={[
             "Title of the secondary rewards for this competition.",
             "Describe the secondary rewards for this competition.",
-            "The thumbnail image for the secondary reward. Accepted formats: .png, .jpg, .jpeg",
           ]}
           helpText="Please enter the details for the secondary reward."
           inputAttrs={[
@@ -79,12 +86,19 @@ export default async function CompetitionRewards({
               defaultValue: data?.reward2Description!,
               placeholder: "Win a %15 discount on all games",
             },
-            {
-              name: "reward2Image",
-              type: "file",
-              defaultValue: data?.reward2Image!,
-            },
           ]}
+          handleSubmit={updateCompetitionMetadata}
+        />
+
+        <Form
+          title="Secondary Reward Image"
+          description="The thumbnail image for the secondary reward. Accepted formats: .png, .jpg, .jpeg"
+          helpText="Please enter the image for the secondary reward."
+          inputAttrs={{
+            name: "reward2Image",
+            type: "file",
+            defaultValue: data?.reward2Image!,
+          }}
           handleSubmit={updateCompetitionMetadata}
         />
       </div>
