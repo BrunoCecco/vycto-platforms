@@ -24,7 +24,7 @@ const GameStats: FC<GameStatsProps> = ({
 }) => {
   return (
     <div className="flex justify-center">
-      <div className="flex h-80 flex-col justify-around rounded-lg border-2 px-6 py-4 shadow-sm md:w-1/2">
+      <div className="flex h-80 w-full flex-col justify-around rounded-lg border-2 bg-white px-6 py-4 shadow-sm">
         {/* Header */}
         <h2 className="text-center text-xl font-semibold text-blue-900">
           Competition: {competitionTitle}
@@ -41,7 +41,7 @@ const GameStats: FC<GameStatsProps> = ({
           {/* <span className="ml-1" role="img" aria-label="tick">
             ✅
           </span> */}
-          <Share className="ml-1 cursor-pointer text-gray-400 hover:text-gray-600" />
+          {/* <Share className="ml-1 cursor-pointer text-gray-400 hover:text-gray-600" /> */}
         </div>
 
         {/* Statistics */}

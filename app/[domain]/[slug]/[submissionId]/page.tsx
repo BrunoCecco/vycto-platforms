@@ -238,16 +238,6 @@ export default async function SubmissionPage({
       }}
     >
       <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0">
-        <GameStats
-          competitionTitle="Atletico vs Inter"
-          username="nicolascastr0"
-          submissionDate="09 May 2024"
-          submissionTime="15:42"
-          totalPoints={67.61}
-          percentile="Top 4%"
-          rank="33rd"
-          bonusPoints={0.5}
-        />
         <CompetitionPage
           session={session}
           data={data}

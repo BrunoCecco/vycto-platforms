@@ -69,7 +69,7 @@ export default async function SiteHomePage({
             <Link
               className="ml-3 rounded-full bg-blue-200 px-8 py-2 pt-1 font-semibold text-white"
               style={{ backgroundColor: data.color2 }}
-              href={`/${latestCompetition.slug}`}
+              href={`/${latestCompetition?.slug}` ?? "/"}
             >
               Play
             </Link>

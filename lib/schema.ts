@@ -218,6 +218,9 @@ export const userCompetitions = pgTable(
       }),
     points: integer("points").default(0),
     submitted: boolean("submitted").default(false),
+    submissionDate: text("submissionDate")
+      .notNull()
+      .default(new Date().toISOString()),
   },
   (table) => {
     return {

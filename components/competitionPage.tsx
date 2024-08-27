@@ -21,6 +21,7 @@ import GeneralNumber from "@/components/questions/generalNumber";
 import Rewards from "@/components/rewards";
 import { useState } from "react";
 import Leaderboard from "./leaderboard";
+import GameStats from "./gameStats";
 
 export default function CompetitionPage({
   session,
@@ -143,6 +144,25 @@ export default function CompetitionPage({
       )}
       {activeTab == "Challenge" && (
         <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0 ">
+          {userComp && "submitted" in userComp && userComp.submitted ? (
+            <GameStats
+              competitionTitle={data.title}
+              username={
+                session?.user.username ||
+                session?.user.email ||
+                session?.user.name ||
+                "User"
+              }
+              submissionDate={
+                userComp.submissionDate?.toString() || "09 Aug 2024"
+              }
+              submissionTime="15:42"
+              totalPoints={67.61}
+              percentile="Top 4%"
+              rank="33rd"
+              bonusPoints={0.5}
+            />
+          ) : null}
           {questions &&
             questions.map((question: any, index: number) => {
               const answer = answers?.find(
