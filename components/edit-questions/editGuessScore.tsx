@@ -6,6 +6,7 @@ import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
 import Input from "../input";
+import { X } from "lucide-react";
 
 const EditGuessScore = ({
   question,
@@ -64,6 +65,13 @@ const EditGuessScore = ({
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
+        {/* Remove Button */}
+        <button
+          onClick={handleRemove}
+          className="absolute left-2 top-2 rounded-full p-2 text-red-500 hover:text-red-600 focus:outline-none"
+        >
+          <X className="h-6 w-6" />
+        </button>
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
@@ -156,12 +164,6 @@ const EditGuessScore = ({
             placeholder="0 - 0"
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
-          <button
-            onClick={handleRemove}
-            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-          >
-            Remove
-          </button>
         </div>
       </div>
     </div>

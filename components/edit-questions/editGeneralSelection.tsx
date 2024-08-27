@@ -6,6 +6,7 @@ import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
 import Uploader from "../old-components/uploader";
 import Input from "../input";
+import { X } from "lucide-react";
 
 const EditGeneralSelection = ({
   question,
@@ -95,6 +96,13 @@ const EditGeneralSelection = ({
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
+        {/* Remove Button */}
+        <button
+          onClick={handleRemove}
+          className="absolute left-2 top-2 rounded-full p-2 text-red-500 hover:text-red-600 focus:outline-none"
+        >
+          <X className="h-6 w-6" />
+        </button>
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
@@ -150,12 +158,6 @@ const EditGeneralSelection = ({
                 onBlur={() => handleInputBlur("answer" + (index + 1), option)}
                 className="mr-2 border-b-2 border-gray-300 text-center"
               />
-              <button
-                onClick={() => handleRemoveOption(index)}
-                className="ml-2 text-red-500"
-              >
-                Remove
-              </button>
             </div>
           ))}
           {options?.length < 4 && (

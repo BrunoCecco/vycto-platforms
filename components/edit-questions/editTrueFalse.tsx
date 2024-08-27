@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import Uploader from "../old-components/uploader";
 import PointsBadge from "../pointsBadge";
 import Input from "../input";
+import { X } from "lucide-react";
 
 const EditTrueFalse = ({
   question,
@@ -77,6 +78,13 @@ const EditTrueFalse = ({
   return (
     <div className="flex items-center justify-center">
       <div className="i relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
+        {/* Remove Button */}
+        <button
+          onClick={handleRemove}
+          className="absolute left-2 top-2 rounded-full p-2 text-red-500 hover:text-red-600 focus:outline-none"
+        >
+          <X className="h-6 w-6" />
+        </button>
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
@@ -137,12 +145,6 @@ const EditTrueFalse = ({
             placeholder="Correct Answer"
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
-          <button
-            onClick={handleRemove}
-            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-          >
-            Remove
-          </button>
         </div>
       </div>
     </div>
