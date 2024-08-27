@@ -18,13 +18,12 @@ const Slider = ({
   question?: SelectQuestion;
   disabled: boolean;
 }) => {
-  const [values, setValues] = useState([parseInt(initialValue) || 0]);
+  const [value, setValue] = useState(parseInt(initialValue) || 0);
   const MIN = 0;
   const MAX = 90;
 
-  const handleChange = (newValues: number[]) => {
-    console.log("New values:", newValues);
-    setValues(newValues);
+  const handleChange = (newValue: number) => {
+    setValue(newValue);
   };
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -46,7 +45,7 @@ const Slider = ({
               // editing question so we have to updatequestionmetadata
               console.log("Updating question metadata", data);
               const formData = new FormData();
-              formData.append("answer1", values[0].toString());
+              formData.append("answer1", value.toString());
               await updateQuestionMetadata(formData, question, "answer1");
               toast.success("Answer saved!");
             }
@@ -68,52 +67,27 @@ const Slider = ({
             id={`${questionId}-answer`}
             type="hidden"
             name="answer"
-            value={values[0]}
+            value={value}
           />
-          {/* <Range
-            label={`${questionId}-range`}
-            step={1}
-            min={MIN}
-            max={MAX}
-            disabled={disabled}
-            values={values}
-            onChange={handleChange}
-            onFinalChange={() => formRef.current?.requestSubmit()}
-            renderTrack={({ props, children }) => (
-              <div
-                {...props}
-                key={questionId + "-track"}
-                className="h-2 w-full rounded-full bg-gray-200"
-                style={{ position: "relative" }}
-              >
-                <div
-                  className="h-2 rounded-full bg-green-500"
-                  style={{
-                    position: "absolute",
-                    left: "0",
-                    right: `${100 - ((values[0] - MIN) / (MAX - MIN)) * 100}%`,
-                  }}
-                />
-                {children}
-              </div>
-            )}
-            renderThumb={({ props }) => (
-              <div
-                {...props}
-                key={questionId + "-thumb"}
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-gray-200 shadow-md"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <span className="text-xs font-bold text-blue-600">
-                  {values[0]}
-                </span>
-              </div>
-            )}
-          /> */}
+          <div className="relative w-full">
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={value}
+              onChange={(e) => setValue(parseInt(e.target.value))}
+              className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
+              style={{ backgroundSize: `${value}% 100%` }}
+            />
+            <div
+              className="pointer-events-none absolute left-0 top-0 mt-2 -translate-x-1/2 transform text-center text-xs font-bold text-white"
+              style={{
+                left: `calc(${value}%)`,
+              }}
+            >
+              {value}
+            </div>
+          </div>
         </form>
         <span className="text-sm font-bold text-black">{MAX}</span>
       </div>

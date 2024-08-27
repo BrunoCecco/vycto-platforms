@@ -102,3 +102,21 @@ ul[data-type="taskList"] li[data-checked="true"] > div > p {
   text-decoration: line-through;
   text-decoration-thickness: 2px;
 }
+
+/* RangeSlider.css */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 36px; /* Change this value to make the thumb larger */
+  height: 36px; /* Change this value to make the thumb larger */
+  background-color: #1f2937; /* Customize the thumb color */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 36px; /* Change this value to make the thumb larger */
+  height: 36px; /* Change this value to make the thumb larger */
+  background-color: #1f2937; /* Customize the thumb color */
+  border-radius: 50%;
+  cursor: pointer;
+}
