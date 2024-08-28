@@ -47,11 +47,7 @@ export default async function middleware(req: NextRequest) {
     console.log(session, "session", req.url, hostname);
     if (!session && path !== "/login" && path !== "/verify") {
       return NextResponse.redirect(new URL("/login", req.url));
-    } else if (
-      session &&
-      (path === "/login" || path === "/verify") &&
-      hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
-    ) {
+    } else if (session && (path === "/login" || path === "/verify")) {
       return NextResponse.redirect(new URL("/", req.url));
     } else if (
       session &&

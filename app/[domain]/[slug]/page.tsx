@@ -129,7 +129,6 @@ export default async function SiteCompetitionPage({
   if (data && new Date(data.date).getTime() < Date.now()) {
     // calculate points
     const points = await calculateUserPoints(session?.user.id!, data!.id);
-    console.log(points, "points");
   }
 
   if (session && data) {
