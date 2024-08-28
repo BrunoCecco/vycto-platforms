@@ -66,7 +66,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
       {/* Banner */}
       <div className="relative mt-4 h-14 w-full overflow-hidden rounded-lg md:h-32">
         <Image
-          src={"/banner.jpg"}
+          src={"/cover1.png"}
           alt="Players Banner"
           objectFit="cover"
           fill={true}
