@@ -101,6 +101,7 @@ export default async function SiteHomePage({
             ) as SelectCompetition[]
           }
         />
+        <div className="my-10">
         <Leaderboard siteData={data} users={[]} />
       </div>
     </>

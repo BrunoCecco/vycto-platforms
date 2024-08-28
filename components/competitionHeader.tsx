@@ -64,7 +64,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
       </div>
 
       {/* Banner */}
-      <div className="relative mt-4 h-14 w-full overflow-hidden rounded-lg md:h-32">
+      {/* <div className="relative mt-4 h-14 w-full overflow-hidden rounded-lg md:h-32">
         <Image
           src={"/cover1.png"}
           alt="Players Banner"
@@ -72,7 +72,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
           fill={true}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-      </div>
+      </div> */}
       {/* Uncomment if needed */}
       {/* <div className="my-8">
         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
