@@ -57,7 +57,7 @@ export default async function SiteHomePage({
   return (
     <>
       <div className="mx-5 max-w-screen-xl pb-20 lg:mx-24 2xl:mx-auto">
-        <div className="ease left-0 right-0 top-0 z-30 flex transition-all duration-150 dark:bg-black dark:text-white">
+        <div className="ease left-0 right-0 top-0 z-30 flex transition-all duration-150 dark:text-white">
           <div className="my-6 mr-auto flex h-full max-w-screen-xl items-center justify-center space-x-5 sm:my-12">
             <div className="">
               <Image
