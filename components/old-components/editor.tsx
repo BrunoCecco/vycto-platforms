@@ -29,6 +29,9 @@ export default function Editor({
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
   const [data, setData] = useState<CompetitionWithSite>(competition);
+  const [hasEnded, setHasEnded] = useState(
+    new Date(competition.date).getTime() < Date.now(),
+  );
 
   const url = process.env.NEXT_PUBLIC_VERCEL_ENV
     ? `https://${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.slug}`
@@ -51,19 +54,29 @@ export default function Editor({
   }, [data, startTransitionSaving]);
 
   const submitCorrectAnswers = async () => {
+    if (!hasEnded) {
+      alert("Competition has not ended yet.");
+      return;
+    }
     // calculate points
     const correctAnswersPresent = await checkCorrectAnswersPresent(
       competition.id,
     );
     if (!correctAnswersPresent) {
-      alert("Please submit the correct answers before submitting.");
+      alert(
+        "Please enter the correct answers for each question before submitting. Make sure each correct answer is a valid answer for the question.",
+      );
       return;
     }
   };
 
   return (
     <div className="max-w-screen relative min-h-[500px] w-full border-stone-200 p-12 px-8 pt-24 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:pt-12 sm:shadow-lg dark:border-stone-700">
-      {/* <Button onClick={submitCorrectAnswers}>Submit Correct Answers</Button> */}
+      {hasEnded && (
+        <Button className="my-2" onClick={submitCorrectAnswers}>
+          Submit Correct Answers
+        </Button>
+      )}
       <div className="absolute right-5 top-16 mb-5 flex items-center space-x-3 sm:right-5 sm:top-5">
         {data.published && (
           <a

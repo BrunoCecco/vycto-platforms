@@ -4,12 +4,14 @@ import BlurImage from "./old-components/blur-image";
 import { placeholderBlurhash, random } from "@/lib/utils";
 import { getCompetitionUsers, getSiteData } from "@/lib/fetchers";
 import Link from "next/link";
-import { SelectCompetition } from "@/lib/schema";
+import { SelectCompetition, SelectSite } from "@/lib/schema";
 
 const CompetitionCard = async ({
   competition,
+  siteData,
 }: {
   competition: SelectCompetition;
+  siteData: SelectSite;
 }) => {
   const users = await getCompetitionUsers(competition.slug);
 
@@ -51,7 +53,7 @@ const CompetitionCard = async ({
         <div className="relative flex items-center">
           <div className="relative h-6 w-6">
             <Image
-              src={"/atletiPast.jpg"}
+              src={`https://avatar.vercel.sh/1`}
               alt="Profile 1"
               layout="fill"
               objectFit="cover"
@@ -60,7 +62,7 @@ const CompetitionCard = async ({
           </div>
           <div className="relative -ml-2 h-6 w-6">
             <Image
-              src={"/atletiPast.jpg"}
+              src={`https://avatar.vercel.sh/99`}
               alt="Profile 2"
               layout="fill"
               objectFit="cover"
@@ -71,13 +73,13 @@ const CompetitionCard = async ({
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="text-sm" style={{ color: competition.color2 }}>
+        <p className="text-sm" style={{ color: siteData.color2 }}>
           {status}
         </p>
         <Link
           href={competition.slug}
           className="w-24 rounded-full  p-2 text-center text-white hover:opacity-75"
-          style={{ backgroundColor: competition.color2 }}
+          style={{ backgroundColor: siteData.color2 }}
         >
           Play
         </Link>

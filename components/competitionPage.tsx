@@ -154,7 +154,8 @@ export default function CompetitionPage({
                 "User"
               }
               submissionDate={
-                userComp.submissionDate?.toString() || "09 Aug 2024"
+                new Date(userComp.submissionDate).toDateString() ||
+                "09 Aug 2024"
               }
               submissionTime="15:42"
               totalPoints={67.61}
@@ -164,10 +165,13 @@ export default function CompetitionPage({
             />
           ) : null}
           {questions &&
+            answers &&
+            userComp &&
             questions.map((question: any, index: number) => {
               const answer = answers?.find(
                 (a: any) => a.questionId === question.id,
               );
+              console.log("answer", answers);
               const disabled =
                 userComp && "submitted" in userComp && userComp?.submitted;
               return getQuestionType(

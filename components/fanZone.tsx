@@ -20,9 +20,9 @@ const FanZone = ({
         </span>
       </h2>
       {currentCompetitions?.length > 0 ? (
-        <Competitions competitions={currentCompetitions} />
+        <Competitions competitions={currentCompetitions} siteData={siteData} />
       ) : (
-        <h2 className="py-4 text-lg font-semibold text-gray-600">
+        <h2 className="py-4 text-lg font-semibold italic text-gray-600">
           No current competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
@@ -33,7 +33,7 @@ const FanZone = ({
         </span>
       </h2>
       {pastCompetitions?.length > 0 ? (
-        <Competitions competitions={pastCompetitions} />
+        <Competitions competitions={pastCompetitions} siteData={siteData} />
       ) : (
         <h2 className="mb-24 py-4 text-lg font-semibold italic text-gray-600">
           No past competitions yet. Stay tuned for more! Coming soon! 🔥

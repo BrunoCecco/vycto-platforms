@@ -6,7 +6,6 @@ import {
   getQuestionsForCompetition,
   getSiteData,
 } from "@/lib/fetchers";
-import BlogCard from "@/components/old-components/blog-card";
 import db from "@/lib/db";
 import {
   competitions,
@@ -15,27 +14,12 @@ import {
   sites,
 } from "@/lib/schema";
 import { eq } from "drizzle-orm";
-import Leaderboard from "@/components/leaderboard";
 import {
   answerQuestion,
-  calculateUserPoints,
   enterUserToCompetition,
   submitAnswers,
 } from "@/lib/actions";
 import { getSession } from "@/lib/auth";
-import TrueFalse from "@/components/questions/trueFalse";
-import WhatMinute from "@/components/questions/whatMinute";
-import MatchOutcome from "@/components/questions/matchOutcome";
-import GuessScore from "@/components/questions/guessScore";
-import GeneralSelection from "@/components/questions/generalSelection";
-import PlayerSelection from "@/components/questions/playerSelection";
-import { QuestionType } from "@/lib/types";
-import CompetitionHeader from "@/components/competitionHeader";
-import TabSelector from "@/components/tabSelector";
-import SubmitAnswersForm from "@/components/form/submit-answers-form";
-import Link from "next/link";
-import GameStats from "@/components/gameStats";
-import GeneralNumber from "@/components/questions/generalNumber";
 import CompetitionPage from "@/components/competitionPage";
 
 export async function generateMetadata({
@@ -124,11 +108,6 @@ export default async function SubmissionPage({
     questions = await getQuestionsForCompetition(data.id);
     answers = await getAnswersForUser(session?.user.id!, data!.id);
   }
-  if (data && new Date(data.date).getTime() < Date.now()) {
-    // calculate points
-    const points = await calculateUserPoints(session?.user.id!, data!.id);
-    console.log(points, "points");
-  }
 
   if (session && data) {
     userComp = await enterUserToCompetition(
@@ -146,90 +125,6 @@ export default async function SubmissionPage({
     notFound();
   }
 
-  const getQuestionType = (
-    type: QuestionType,
-    question: SelectQuestion,
-    userId: string,
-    index: number,
-    answer: string,
-    disabled: boolean,
-  ) => {
-    switch (type) {
-      case QuestionType.TrueFalse:
-        return (
-          <TrueFalse
-            key={index}
-            {...question}
-            userId={userId}
-            answer={answer}
-            disabled={disabled}
-          />
-        );
-      case QuestionType.WhatMinute:
-        return (
-          <WhatMinute
-            key={index}
-            {...question}
-            userId={userId}
-            answer={answer}
-            disabled={disabled}
-          />
-        );
-      case QuestionType.PlayerSelection:
-        return (
-          <PlayerSelection
-            key={index}
-            {...question}
-            userId={userId}
-            answer={answer}
-            disabled={disabled}
-          />
-        );
-      case QuestionType.MatchOutcome:
-        return (
-          <MatchOutcome
-            key={index}
-            {...question}
-            userId={userId}
-            answer={answer}
-            disabled={disabled}
-          />
-        );
-      case QuestionType.GuessScore:
-        return (
-          <GuessScore
-            key={index}
-            {...question}
-            userId={userId}
-            answer={answer}
-            disabled={disabled}
-          />
-        );
-      case QuestionType.GeneralSelection:
-        return (
-          <GeneralSelection
-            key={index}
-            {...question}
-            userId={userId}
-            answer={answer}
-            disabled={disabled}
-          />
-        );
-      case QuestionType.GeneralNumber:
-        return (
-          <GeneralNumber
-            key={index}
-            {...question}
-            userId={userId}
-            answer={answer}
-            disabled={disabled}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <div
       className=""
@@ -237,7 +132,7 @@ export default async function SubmissionPage({
         backgroundColor: siteData?.color1 ?? "white",
       }}
     >
-      <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0">
+      <div className="mx-auto w-full md:w-3/4 lg:w-3/5">
         <CompetitionPage
           session={session}
           data={data}

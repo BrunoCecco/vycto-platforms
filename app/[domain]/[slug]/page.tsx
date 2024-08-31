@@ -19,7 +19,6 @@ import { eq } from "drizzle-orm";
 import Leaderboard from "@/components/leaderboard";
 import {
   answerQuestion,
-  calculateUserPoints,
   enterUserToCompetition,
   submitAnswers,
 } from "@/lib/actions";
@@ -125,10 +124,6 @@ export default async function SiteCompetitionPage({
   if (data) {
     questions = await getQuestionsForCompetition(data.id);
     answers = await getAnswersForUser(session?.user.id!, data!.id);
-  }
-  if (data && new Date(data.date).getTime() < Date.now()) {
-    // calculate points
-    const points = await calculateUserPoints(session?.user.id!, data!.id);
   }
 
   if (session && data) {

@@ -1,3 +1,5 @@
+"use server";
+
 import { unstable_cache } from "next/cache";
 import db from "./db";
 import { and, desc, eq, not } from "drizzle-orm";
@@ -164,19 +166,19 @@ async function getMdxSource(competitionContents: string) {
 }
 
 export async function getQuestionsForCompetition(competitionId: string) {
-  // return await unstable_cache(
-  //   async () => {
-  return await db.query.questions.findMany({
-    where: eq(questions.competitionId, competitionId),
-    orderBy: desc(questions.id),
-  });
-  // },
-  //   [`${competitionId}-questions`],
-  //   {
-  //     revalidate: 900,
-  //     tags: [`${competitionId}-questions`],
-  //   },
-  // )();
+  return await unstable_cache(
+    async () => {
+      return await db.query.questions.findMany({
+        where: eq(questions.competitionId, competitionId),
+        orderBy: desc(questions.id),
+      });
+    },
+    [`${competitionId}-questions`],
+    {
+      revalidate: 900,
+      tags: [`${competitionId}-questions`],
+    },
+  )();
 }
 
 export async function getAnswersForUser(userId: string, competitionId: string) {
@@ -236,9 +238,15 @@ export async function getUserData(email: string) {
 
 export async function checkCorrectAnswersPresent(competitionId: string) {
   const questions = await getQuestionsForCompetition(competitionId);
+  let valid = false;
   // check each question has correctAnswer field
   return questions.every(
     (question) =>
-      question.correctAnswer !== null && question.correctAnswer?.trim() !== "",
+      question.correctAnswer !== null &&
+      question.correctAnswer?.trim() !== "" &&
+      (question.correctAnswer == question.answer1 ||
+        question.correctAnswer == question.answer2 ||
+        question.correctAnswer == question.answer3 ||
+        question.correctAnswer == question.answer4),
   );
 }
