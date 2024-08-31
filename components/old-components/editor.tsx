@@ -13,7 +13,10 @@ import { toast } from "sonner";
 import type { SelectCompetition, SelectQuestion } from "@/lib/schema";
 import QuestionBuilder from "../questionBuilder";
 import Button from "../button";
-import { checkCorrectAnswersPresent } from "@/lib/fetchers";
+import {
+  validateCorrectAnswers,
+  calculateCompetitionPoints,
+} from "@/lib/fetchers";
 
 type CompetitionWithSite = SelectCompetition & {
   site: { subdomain: string | null } | null;
@@ -59,13 +62,15 @@ export default function Editor({
       return;
     }
     // calculate points
-    const correctAnswersPresent = await checkCorrectAnswersPresent(
-      competition.id,
-    );
-    if (!correctAnswersPresent) {
-      alert(
-        "Please enter the correct answers for each question before submitting. Make sure each correct answer is a valid answer for the question.",
-      );
+    try {
+      await validateCorrectAnswers(competition.id);
+      // now we can calculate the points
+      await calculateCompetitionPoints(competition.id);
+      toast.success("Successfully calculated points for the competition.");
+      return;
+    } catch (e: any) {
+      console.error(e);
+      alert(e.message);
       return;
     }
   };

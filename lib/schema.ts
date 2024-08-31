@@ -2,6 +2,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import {
   boolean,
+  decimal,
   index,
   integer,
   pgTable,
@@ -105,16 +106,12 @@ export const sites = pgTable(
       .$defaultFn(() => createId()),
     name: text("name"),
     description: text("description"),
-    logo: text("logo").default(
-      "https://vycto.com/img/vycto_logo.png",
-    ),
+    logo: text("logo").default("https://vycto.com/img/vycto_logo.png"),
     font: text("font").default("font-cal").notNull(),
     color1: text("color1").default("gray").notNull(),
     color2: text("color2").default("gray").notNull(),
     color3: text("color3").default("gray").notNull(),
-    image: text("image").default(
-      "https://vycto.com/img/vycto_logo.png",
-    ),
+    image: text("image").default("https://vycto.com/img/vycto_logo.png"),
     imageBlurhash: text("imageBlurhash").default(
       "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAhCAYAAACbffiEAAAACXBIWXMAABYlAAAWJQFJUiTwAAABfUlEQVR4nN3XyZLDIAwE0Pz/v3q3r55JDlSBplsIEI49h76k4opexCK/juP4eXjOT149f2Tf9ySPgcjCc7kdpBTgDPKByKK2bTPFEdMO0RDrusJ0wLRBGCIuelmWJAjkgPGDSIQEMBDCfA2CEPM80+Qwl0JkNxBimiaYGOTUlXYI60YoehzHJDEm7kxjV3whOQTD3AaCuhGKHoYhyb+CBMwjIAFz647kTqyapdV4enGINuDJMSScPmijSwjCaHeLcT77C7EC0C1ugaCTi2HYfAZANgj6Z9A8xY5eiYghDMNQBJNCWhASot0jGsSCUiHWZcSGQjaWWCDaGMOWnsCcn2QhVkRuxqqNxMSdUSElCDbp1hbNOsa6Ugxh7xXauF4DyM1m5BLtCylBXgaxvPXVwEoOBjeIFVODtW74oj1yBQah3E8tyz3SkpolKS9Geo9YMD1QJR1Go4oJkgO1pgbNZq0AOUPChyjvh7vlXaQa+X1UXwKxgHokB2XPxbX+AnijwIU4ahazAAAAAElFTkSuQmCC",
     ),
@@ -216,7 +213,8 @@ export const userCompetitions = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    points: integer("points").default(0),
+    // decimal value
+    points: decimal("points", { precision: 7, scale: 4 }).default("0.0000"),
     submitted: boolean("submitted").default(false),
     submissionDate: text("submissionDate")
       .notNull()

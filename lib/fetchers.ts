@@ -14,6 +14,8 @@ import {
 } from "./schema";
 import { serialize } from "next-mdx-remote/serialize";
 import { replaceExamples, replaceTweets } from "@/lib/remark-plugins";
+import { QuestionType } from "./types";
+import { updateUserPoints } from "./actions";
 
 export async function getSiteData(domain: string) {
   const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
@@ -229,17 +231,172 @@ export async function getUserData(email: string) {
   )();
 }
 
-export async function checkCorrectAnswersPresent(competitionId: string) {
+export async function validateCorrectAnswers(competitionId: string) {
   const questions = await getQuestionsForCompetition(competitionId);
-  let valid = false;
-  // check each question has correctAnswer field
-  return questions.every(
+  // check each question has a valid correctAnswer field
+  let questionsEmpty = questions.every(
     (question) =>
-      question.correctAnswer !== null &&
-      question.correctAnswer?.trim() !== "" &&
-      (question.correctAnswer == question.answer1 ||
-        question.correctAnswer == question.answer2 ||
-        question.correctAnswer == question.answer3 ||
-        question.correctAnswer == question.answer4),
+      question.correctAnswer === null || question.correctAnswer === "",
   );
+  if (questionsEmpty) {
+    throw new Error("At least one question has no correct answer");
+  }
+  for (let question of questions) {
+    if (question.correctAnswer === null || question.correctAnswer === "") {
+      throw new Error("At least one question has no correct answer");
+    }
+    switch (question.type) {
+      case QuestionType.TrueFalse:
+        if (
+          question.correctAnswer !== "true" &&
+          question.correctAnswer !== "false"
+        ) {
+          throw new Error("TrueFalse question has invalid correct answer");
+        }
+        break;
+      case QuestionType.WhatMinute:
+        if (
+          isNaN(parseInt(question.correctAnswer)) ||
+          parseInt(question.correctAnswer) < 0 ||
+          parseInt(question.correctAnswer) > 140
+        ) {
+          throw new Error(
+            "WhatMinute question has invalid correct answer - must be a number between 0 and 140",
+          );
+        }
+        break;
+      case QuestionType.GeneralSelection:
+      case QuestionType.PlayerSelection:
+        if (
+          question.correctAnswer != question.answer1 &&
+          question.correctAnswer != question.answer2 &&
+          question.correctAnswer != question.answer3 &&
+          question.correctAnswer != question.answer4
+        ) {
+          throw new Error(
+            question.type +
+              " question has invalid correct answer - the correct answer must be one of the answer options",
+          );
+        }
+        break;
+      case QuestionType.MatchOutcome:
+        if (
+          question.correctAnswer != question.answer1 &&
+          question.correctAnswer != "draw" &&
+          question.correctAnswer != question.answer2
+        ) {
+          throw new Error(
+            "MatchOutcome question has invalid correct answer - the correct answer must be one of the answer options",
+          );
+        }
+        break;
+      case QuestionType.GuessScore:
+        // match the correct answer to the format 'X-Y' or 'X - Y'
+        if (!question.correctAnswer.match(/^\d+\s*-\s*\d+$/)) {
+          throw new Error(
+            "GuessScore question has invalid correct answer - the correct answer must be in the format 'X-Y'",
+          );
+        }
+        break;
+      case QuestionType.GeneralNumber:
+        if (isNaN(parseInt(question.correctAnswer))) {
+          throw new Error(
+            "GeneralNumber question has invalid correct answer - the correct answer must be a number",
+          );
+        }
+        break;
+      default:
+        throw new Error("Invalid question type " + question.type);
+    }
+  }
+  return true;
+}
+
+export async function calculateUserPoints(
+  userId: string,
+  competitionId: string,
+) {
+  const questions = await getQuestionsForCompetition(competitionId);
+  const answers = await getAnswersForUser(userId, competitionId);
+  var points: number = 0;
+
+  // caclulate the points for each question depending on the question type
+  for (let question of questions) {
+    const questionPoints = question.points || 0;
+    const userAnswer = answers.find(
+      (a) => a.questionId === question.id,
+    )?.answer;
+    if (userAnswer === undefined) continue;
+    if (
+      question.correctAnswer === null ||
+      question.correctAnswer === "" ||
+      userAnswer === null ||
+      userAnswer === ""
+    ) {
+      continue;
+    }
+    switch (question.type) {
+      case QuestionType.TrueFalse:
+        if (question.correctAnswer === userAnswer) {
+          points += questionPoints;
+        }
+        break;
+      case QuestionType.WhatMinute:
+        const percentageDifference = Math.abs(
+          parseInt(question.correctAnswer) - parseInt(userAnswer),
+        );
+        points += points * (1 - percentageDifference / 90);
+        break;
+      case QuestionType.GeneralSelection:
+      case QuestionType.PlayerSelection:
+        if (question.correctAnswer === userAnswer) {
+          points += questionPoints;
+        }
+        break;
+      case QuestionType.MatchOutcome:
+        if (question.correctAnswer === userAnswer) {
+          points += questionPoints;
+        }
+        break;
+      case QuestionType.GuessScore:
+        const correctHome = parseInt(question.correctAnswer.split("-")[0]) || 0;
+        const correctAway = parseInt(question.correctAnswer.split("-")[1]) || 0;
+        const userHome = parseInt(userAnswer.split("-")[0]) || 0;
+        const userAway = parseInt(userAnswer.split("-")[1]) || 0;
+        const homeDifference = Math.abs(correctHome - userHome);
+        points +=
+          (points / 2) * (1 - homeDifference / Math.max(homeDifference, 10));
+        const awayDifference = Math.abs(correctAway - userAway);
+        points +=
+          (points / 2) * (1 - awayDifference / Math.max(awayDifference, 10));
+        break;
+      case QuestionType.GeneralNumber:
+        const correctNumber = parseInt(question.correctAnswer) || 0;
+        const userNumber = parseInt(userAnswer) || 0;
+        const numberDifference = Math.abs(correctNumber - userNumber);
+        // set a sensible numerator depending on the correct number
+        const numerator = Math.max(correctNumber, 10);
+        points +=
+          points *
+          (1 - numberDifference / Math.max(numerator, numberDifference));
+        break;
+      default:
+        break;
+    }
+  }
+  // update the user's points in the database
+  await updateUserPoints(userId, competitionId, points);
+  return points;
+}
+
+export async function calculateCompetitionPoints(competitionId: string) {
+  console.log(`Calculating points for competition ${competitionId}`);
+  const competitionUsers = await db.query.userCompetitions.findMany({
+    where: eq(userCompetitions.competitionId, competitionId),
+  });
+
+  for (let user of competitionUsers) {
+    const points = await calculateUserPoints(user.userId, competitionId);
+    console.log(`User ${user.userId} has ${points} points`);
+  }
 }
