@@ -108,6 +108,7 @@ const EditGeneralSelection = ({
           {isEditingPoints ? (
             <input
               type="number"
+              min={0}
               name="points"
               value={points}
               onChange={handlePointsChange}

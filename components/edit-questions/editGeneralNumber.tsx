@@ -91,6 +91,7 @@ const EditGeneralNumber = ({
           {isEditingPoints ? (
             <input
               type="number"
+              min={0}
               value={points}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
@@ -128,6 +129,7 @@ const EditGeneralNumber = ({
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
           <input
             type="number"
+            min={0}
             value={editedCorrectAnswer}
             onChange={handleCorrectAnswerInputChange}
             onBlur={() =>

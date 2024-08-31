@@ -100,14 +100,15 @@ export default async function SubmissionPage({
   const siteData = await getSiteData(domain);
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
-  let questions;
-  let answers: any;
+
+  if (!data) {
+    notFound();
+  }
+
   let users;
   let userComp: SelectUserCompetition | undefined | { error: string };
-  if (data) {
-    questions = await getQuestionsForCompetition(data.id);
-    answers = await getAnswersForUser(session?.user.id!, data!.id);
-  }
+  const questions = await getQuestionsForCompetition(data.id);
+  const answers = await getAnswersForUser(session?.user.id!, data!.id);
 
   if (session && data) {
     userComp = await enterUserToCompetition(
@@ -119,10 +120,6 @@ export default async function SubmissionPage({
       redirect(`/${domain}/${slug}`);
     }
     users = await getCompetitionUsers(data!.id);
-  }
-
-  if (!data) {
-    notFound();
   }
 
   return (

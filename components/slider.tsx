@@ -18,13 +18,10 @@ const Slider = ({
   question?: SelectQuestion;
   disabled: boolean;
 }) => {
+  console.log(initialValue, "initialValue");
   const [value, setValue] = useState(parseInt(initialValue) || 0);
   const MIN = 0;
   const MAX = 90;
-
-  const handleChange = (newValue: number) => {
-    setValue(newValue);
-  };
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -75,7 +72,13 @@ const Slider = ({
               min="0"
               max="90"
               value={value}
+              disabled={disabled}
               onChange={(e) => setValue(parseInt(e.target.value))}
+              onBlur={() => {
+                if (formRef.current) {
+                  formRef.current.submit();
+                }
+              }}
               className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
               style={{ backgroundSize: `${value}% 100%` }}
             />

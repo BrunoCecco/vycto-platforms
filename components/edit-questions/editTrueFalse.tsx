@@ -90,6 +90,7 @@ const EditTrueFalse = ({
           {isEditingPoints ? (
             <input
               type="number"
+              min={0}
               value={points}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}

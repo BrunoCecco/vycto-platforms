@@ -184,19 +184,12 @@ export async function getQuestionsForCompetition(competitionId: string) {
 export async function getAnswersForUser(userId: string, competitionId: string) {
   return await unstable_cache(
     async () => {
-      return await db
-        .select({
-          answer: answers.answer,
-          questionId: answers.questionId,
-        })
-        .from(answers)
-        .leftJoin(questions, eq(questions.id, answers.questionId))
-        .where(
-          and(
-            eq(answers.userId, userId),
-            eq(questions.competitionId, competitionId),
-          ),
-        );
+      return await db.query.answers.findMany({
+        where: and(
+          eq(answers.userId, userId),
+          eq(answers.competitionId, competitionId),
+        ),
+      });
     },
     [`${userId}-${competitionId}-answers`],
     {

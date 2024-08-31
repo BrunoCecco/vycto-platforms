@@ -87,6 +87,7 @@ const EditMatchOutcome = ({
           {isEditingPoints ? (
             <input
               type="number"
+              min={0}
               value={points}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}

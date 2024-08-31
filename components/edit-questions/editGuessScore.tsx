@@ -78,6 +78,7 @@ const EditGuessScore = ({
             <input
               type="number"
               name="points"
+              min={0}
               value={points}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}

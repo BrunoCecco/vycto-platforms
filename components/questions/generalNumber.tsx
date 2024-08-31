@@ -40,6 +40,8 @@ const GeneralNumber = ({ ...props }) => {
           <div className="flex items-center gap-4 md:gap-8">
             <Input
               type="number"
+              min={0}
+              disabled={props.disabled}
               name="answer"
               value={answer}
               onChange={(e) => setAnswer(parseInt(e.target.value))}

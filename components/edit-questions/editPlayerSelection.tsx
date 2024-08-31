@@ -159,10 +159,10 @@ const EditPlayerSelection = ({
           {isEditingPoints ? (
             <input
               type="number"
+              min={0}
               value={points}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              min={0}
               className="w-20 text-center text-xl font-semibold text-gray-800"
             />
           ) : (

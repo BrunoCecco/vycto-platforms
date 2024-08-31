@@ -3,6 +3,7 @@
 import BlogCard from "@/components/old-components/blog-card";
 import {
   competitions,
+  SelectAnswer,
   SelectQuestion,
   SelectUserCompetition,
   sites,
@@ -37,7 +38,7 @@ export default function CompetitionPage({
   data: any;
   siteData: any;
   questions: SelectQuestion[] | undefined;
-  answers: any;
+  answers: SelectAnswer[] | undefined;
   userComp: SelectUserCompetition | undefined | { error: string };
   users: any;
   slug: string;
@@ -165,8 +166,6 @@ export default function CompetitionPage({
             />
           ) : null}
           {questions &&
-            answers &&
-            userComp &&
             questions.map((question: any, index: number) => {
               const answer = answers?.find(
                 (a: any) => a.questionId === question.id,
@@ -179,7 +178,7 @@ export default function CompetitionPage({
                 question,
                 session?.user.id!,
                 index,
-                answer?.answer,
+                answer?.answer || "",
                 disabled || false,
               );
             })}
