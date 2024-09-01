@@ -1,8 +1,6 @@
 "use client";
 import { useState, FC, useRef } from "react";
-import { Range } from "react-range";
-import { answerQuestion, updateQuestionMetadata } from "@/lib/actions";
-import { SelectQuestion } from "@/lib/schema";
+import { answerQuestion } from "@/lib/actions";
 import { toast } from "sonner";
 
 const Slider = ({
@@ -10,15 +8,15 @@ const Slider = ({
   questionId,
   initialValue,
   competitionId,
-  question,
   disabled,
+  onBlur,
 }: {
   userId?: string;
   questionId: string;
   initialValue: string;
   competitionId?: string;
-  question?: SelectQuestion;
   disabled: boolean;
+  onBlur?: (value: number) => void;
 }) => {
   const [value, setValue] = useState(parseInt(initialValue) || 0);
   const MIN = 0;
@@ -41,6 +39,7 @@ const Slider = ({
               disabled={disabled}
               onChange={(e) => setValue(parseInt(e.target.value))}
               onBlur={async () => {
+                if (onBlur) onBlur(value);
                 if (!userId || userId == "" || !competitionId) return;
                 const data = new FormData();
                 data.append("userId", userId);

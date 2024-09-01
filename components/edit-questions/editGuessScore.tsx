@@ -182,7 +182,7 @@ const EditGuessScore = ({
               );
             }}
           >
-            Update correct answer
+            Update Correct Answer
           </Button>
         </div>
       </div>

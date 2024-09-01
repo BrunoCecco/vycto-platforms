@@ -7,6 +7,7 @@ import Uploader from "../old-components/uploader";
 import PointsBadge from "../pointsBadge";
 import Slider from "../slider";
 import { X } from "lucide-react";
+import Button from "../button";
 
 const EditWhatMinute = ({
   question,
@@ -47,12 +48,6 @@ const EditWhatMinute = ({
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setEditedQuestion(e.target.value);
-  };
-
-  const handleCorrectAnswerInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setEditedCorrectAnswer(e.target.value);
   };
 
   const handlePointsInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,25 +122,22 @@ const EditWhatMinute = ({
           The closer you get, the more points you score
         </p>
 
-        <div className="flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-4">
           <Slider
-            initialValue={question.answer1 || "0"}
+            initialValue={editedCorrectAnswer || "0"}
             questionId={question.id}
-            question={question}
             disabled={false}
+            onBlur={(val: number) => {
+              setEditedCorrectAnswer(val.toString());
+            }}
           />
-        </div>
-
-        {/* Save Button */}
-        <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <input
-            type="text"
-            value={editedCorrectAnswer}
-            onChange={handleCorrectAnswerInputChange}
-            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
-            placeholder="Correct Answer"
-            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
-          />
+          <Button
+            onClick={async () =>
+              handleInputBlur("correctAnswer", editedCorrectAnswer)
+            }
+          >
+            Update Correct Answer
+          </Button>
         </div>
       </div>
     </div>
