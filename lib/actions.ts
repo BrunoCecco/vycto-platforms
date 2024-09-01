@@ -461,7 +461,7 @@ export const updateUserPoints = async (
     const [response] = await db
       .update(userCompetitions)
       .set({
-        points,
+        points: points.toString(),
       })
       .where(
         and(
