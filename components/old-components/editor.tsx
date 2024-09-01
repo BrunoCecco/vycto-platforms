@@ -66,6 +66,13 @@ export default function Editor({
       await validateCorrectAnswers(competition.id);
       // now we can calculate the points
       await calculateCompetitionPoints(competition.id);
+      const formData = new FormData();
+      formData.append("correctAnswersSubmitted", "true");
+      await updateCompetitionMetadata(
+        formData,
+        competition.id,
+        "correctAnswersSubmitted",
+      );
       toast.success("Successfully calculated points for the competition.");
       return;
     } catch (e: any) {
@@ -77,11 +84,25 @@ export default function Editor({
 
   return (
     <div className="max-w-screen relative min-h-[500px] w-full border-stone-200 p-12 px-8 pt-24 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:pt-12 sm:shadow-lg dark:border-stone-700">
-      {hasEnded && (
-        <Button className="my-2" onClick={submitCorrectAnswers}>
-          Submit Correct Answers
-        </Button>
-      )}
+      {hasEnded ? (
+        competition.correctAnswersSubmitted ? (
+          <Button className="my-2" onClick={submitCorrectAnswers}>
+            Update Correct Answers
+          </Button>
+        ) : (
+          <>
+            <div className="my-2 text-white">
+              <p>
+                This competition has ended. Please edit and submit the correct
+                answers for each question.
+              </p>
+            </div>
+            <Button className="my-2" onClick={submitCorrectAnswers}>
+              Submit Correct Answers
+            </Button>
+          </>
+        )
+      ) : null}
       <div className="absolute right-5 top-16 mb-5 flex items-center space-x-3 sm:right-5 sm:top-5">
         {data.published && (
           <a

@@ -305,7 +305,10 @@ export const updateCompetitionMetadata = withCompetitionAuth(
       response = await db
         .update(competitions)
         .set({
-          [key]: key === "published" ? value === "true" : value,
+          [key]:
+            key === "published" || key == "correctAnswersSubmitted"
+              ? value === "true"
+              : value,
         })
         .where(eq(competitions.id, competition.id))
         .returning()

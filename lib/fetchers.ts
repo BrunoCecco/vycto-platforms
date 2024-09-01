@@ -251,8 +251,8 @@ export async function validateCorrectAnswers(competitionId: string) {
     switch (question.type) {
       case QuestionType.TrueFalse:
         if (
-          question.correctAnswer !== "true" &&
-          question.correctAnswer !== "false"
+          question.correctAnswer.toLowerCase() !== "true" &&
+          question.correctAnswer.toLowerCase() !== "false"
         ) {
           throw new Error("TrueFalse question has invalid correct answer");
         }
@@ -285,7 +285,7 @@ export async function validateCorrectAnswers(competitionId: string) {
       case QuestionType.MatchOutcome:
         if (
           question.correctAnswer != question.answer1 &&
-          question.correctAnswer != "draw" &&
+          question.correctAnswer != "Draw" &&
           question.correctAnswer != question.answer2
         ) {
           throw new Error(

@@ -43,7 +43,7 @@ const Rewards: React.FC<RewardsProps> = ({
     setCurrentIndex((prevIndex) => (prevIndex === 1 ? 0 : prevIndex + 1));
   };
 
-  return (
+  return rewardTitle?.length > 0 && reward2Title?.length > 0 ? (
     <div className="relative mx-auto w-full max-w-xl">
       <div className="relative overflow-hidden">
         <div
@@ -82,6 +82,10 @@ const Rewards: React.FC<RewardsProps> = ({
         <h2 className="text-xl font-bold">{rewards[currentIndex].title}</h2>
         <p className="text-gray-600">{rewards[currentIndex].description}</p>
       </div>
+    </div>
+  ) : (
+    <div className="text-center">
+      <h2>Sorry, no rewards available</h2>
     </div>
   );
 };

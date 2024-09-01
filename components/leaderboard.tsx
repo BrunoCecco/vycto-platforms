@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { SelectSite } from "@/lib/schema";
+import { SelectCompetition, SelectSite } from "@/lib/schema";
+import Link from "next/link";
 
 const leaderboardData = [
   {
@@ -31,9 +32,11 @@ const leaderboardData = [
 
 const Leaderboard = ({
   siteData,
+  competition,
   users,
 }: {
   siteData: SelectSite;
+  competition: SelectCompetition;
   users: any;
 }) => {
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
@@ -41,6 +44,7 @@ const Leaderboard = ({
   if (sortedUsers.length === 0) {
     sortedUsers = leaderboardData;
   }
+  console.log(sortedUsers);
 
   return (
     <div className="container w-full rounded-2xl border border-gray-200 bg-white p-4 md:p-8">
@@ -56,7 +60,7 @@ const Leaderboard = ({
             />
           </div>
           <h1 className="text-lg font-bold text-gray-800 md:text-2xl">
-            Leaderboard - August 2024
+            Leaderboard
           </h1>
         </div>
         {/* <button className="w-24 rounded-full bg-blue-100 p-2 text-purple-800 hover:bg-blue-300">
@@ -105,11 +109,16 @@ const Leaderboard = ({
                   </span>
                 </td>
                 <td className="py-4 text-gray-900">{index + 1}</td>
-                <td className="py-4 text-gray-900">{user.points}</td>
+                <td className="py-4 text-gray-900">
+                  {parseFloat(user.points || "0").toFixed(2)}
+                </td>
                 <td className="hidden py-4 sm:table-cell">
-                  <button className="rounded-full bg-blue-100 p-2 px-4 text-purple-800 hover:bg-blue-300">
+                  <Link
+                    href={`/${competition.slug}/${user.userId}`}
+                    className="rounded-full bg-blue-100 p-2 px-4 text-purple-800 hover:bg-blue-300"
+                  >
                     View
-                  </button>
+                  </Link>
                 </td>
                 <td className="py-4">
                   <div

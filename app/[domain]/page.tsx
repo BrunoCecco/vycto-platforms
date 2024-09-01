@@ -102,7 +102,8 @@ export default async function SiteHomePage({
           }
         />
         <div className="my-10" />
-        <Leaderboard siteData={data} users={[]} />
+        {/* to do - make a site leaderboard separate from the competition leaderboard */}
+        {/* <Leaderboard siteData={data} users={[]} /> */}
       </div>
     </>
   );

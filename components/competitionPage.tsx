@@ -196,7 +196,7 @@ export default function CompetitionPage({
       )}
       {activeTab == "Leaderboard" && (
         <div className="px-8 sm:px-0">
-          <Leaderboard siteData={siteData} users={users} />
+          <Leaderboard siteData={siteData} competition={data} users={users} />
         </div>
       )}
     </div>

@@ -166,6 +166,9 @@ export const competitions = pgTable(
       .$onUpdate(() => new Date()),
     date: text("date").notNull().default(new Date().toISOString()),
     published: boolean("published").default(false).notNull(),
+    correctAnswersSubmitted: boolean("correctAnswersSubmitted")
+      .default(false)
+      .notNull(),
     rewardTitle: text("rewardTitle"),
     rewardDescription: text("rewardDescription"),
     rewardImage: text("rewardImage"),
