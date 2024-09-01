@@ -9,63 +9,29 @@ const Slider = ({
   userId,
   questionId,
   initialValue,
+  competitionId,
   question,
   disabled,
 }: {
   userId?: string;
   questionId: string;
   initialValue: string;
+  competitionId?: string;
   question?: SelectQuestion;
   disabled: boolean;
 }) => {
-  console.log(initialValue, "initialValue");
   const [value, setValue] = useState(parseInt(initialValue) || 0);
   const MIN = 0;
   const MAX = 90;
-
-  const formRef = useRef<HTMLFormElement>(null);
 
   return (
     <div className="w-full px-4 py-6">
       <div className="flex items-center justify-center space-x-4">
         <span className="text-sm text-gray-600">{MIN}</span>
-        <form
-          ref={formRef}
+        <div
           id={questionId}
           className="flex w-full flex-col items-center justify-center"
-          action={async (data: FormData) => {
-            if (userId != undefined) {
-              console.log("Answering question", data);
-              await answerQuestion(data);
-              toast.success("Answer saved!");
-            } else {
-              // editing question so we have to updatequestionmetadata
-              console.log("Updating question metadata", data);
-              const formData = new FormData();
-              formData.append("answer1", value.toString());
-              await updateQuestionMetadata(formData, question, "answer1");
-              toast.success("Answer saved!");
-            }
-          }}
         >
-          <input
-            id={`${questionId}-userId`}
-            type="hidden"
-            name="userId"
-            value={userId}
-          />
-          <input
-            id={`${questionId}-questionId`}
-            type="hidden"
-            name="questionId"
-            value={questionId}
-          />
-          <input
-            id={`${questionId}-answer`}
-            type="hidden"
-            name="answer"
-            value={value}
-          />
           <div className="relative w-full">
             <input
               type="range"
@@ -74,10 +40,15 @@ const Slider = ({
               value={value}
               disabled={disabled}
               onChange={(e) => setValue(parseInt(e.target.value))}
-              onBlur={() => {
-                if (formRef.current) {
-                  formRef.current.submit();
-                }
+              onBlur={async () => {
+                if (!userId || userId == "" || !competitionId) return;
+                const data = new FormData();
+                data.append("userId", userId);
+                data.append("questionId", questionId);
+                data.append("answer", value.toString());
+                data.append("competitionId", competitionId);
+                await answerQuestion(data);
+                toast.success("Answer saved!");
               }}
               className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
               style={{ backgroundSize: `${value}% 100%` }}
@@ -91,7 +62,7 @@ const Slider = ({
               {value}
             </div>
           </div>
-        </form>
+        </div>
         <span className="text-sm font-bold text-black">{MAX}</span>
       </div>
     </div>

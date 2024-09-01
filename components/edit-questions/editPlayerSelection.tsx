@@ -238,14 +238,19 @@ const EditPlayerSelection = ({
           />
         </div>
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <input
-            type="text"
+          <select
             value={editedCorrectAnswer}
-            onChange={handleCorrectAnswerInputChange}
-            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
-            placeholder="Correct Answer"
+            onChange={async (e) => {
+              setEditedCorrectAnswer(e.target.value);
+              handleInputBlur("correctAnswer", e.target.value);
+            }}
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
-          />
+          >
+            <option value={answer1}>{answer1}</option>
+            <option value={answer2}>{answer2}</option>
+            <option value={answer3}>{answer3}</option>
+            <option value={answer4}>{answer4}</option>
+          </select>
         </div>
       </div>
     </div>

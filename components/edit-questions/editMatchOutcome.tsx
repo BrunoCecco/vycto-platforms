@@ -178,25 +178,21 @@ const EditMatchOutcome = ({
           </div>
         </div>
 
-        {/* Draw Button */}
-        <div className="flex justify-center">
-          <div
-            className={`w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-center text-sm font-semibold text-blue-600`}
-          >
-            Draw
-          </div>
-        </div>
-
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <input
-            type="text"
+          {/* select element to edit the correct answer */}
+          <select
             value={editedCorrectAnswer}
-            onChange={handleCorrectAnswerInputChange}
-            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
-            placeholder="Correct Answer"
+            onChange={async (e) => {
+              setEditedCorrectAnswer(e.target.value);
+              handleInputBlur("correctAnswer", e.target.value);
+            }}
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
-          />
+          >
+            <option value={homeTeam}>{homeTeam}</option>
+            <option value={awayTeam}>{awayTeam}</option>
+            <option value="Draw">Draw</option>
+          </select>
         </div>
       </div>
     </div>

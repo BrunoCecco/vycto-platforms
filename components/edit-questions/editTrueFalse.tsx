@@ -8,6 +8,33 @@ import PointsBadge from "../pointsBadge";
 import Input from "../input";
 import { X } from "lucide-react";
 
+const Button = ({
+  children,
+  selected,
+  disabled,
+  onClick,
+}: {
+  children: React.ReactNode;
+  selected: boolean;
+  disabled: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <button
+      type="submit"
+      className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 transition-all duration-200 hover:bg-blue-50 hover:opacity-75"
+      style={{
+        backgroundColor: selected ? "blue" : "white",
+        color: selected ? "white" : "blue",
+      }}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+};
+
 const EditTrueFalse = ({
   question,
   removeQuestion,
@@ -37,7 +64,7 @@ const EditTrueFalse = ({
     formData.append(key, value);
     console.log("formData", key, value);
     await updateQuestionMetadata(formData, question, key);
-    toast.success("Question updated successfully");
+    toast.success(key + " updated successfully");
   };
 
   const handlePointsClick = () => {
@@ -128,24 +155,26 @@ const EditTrueFalse = ({
         </p>
 
         <div className="flex justify-around gap-4 text-center">
-          <div className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 hover:bg-blue-50">
+          <Button
+            selected={editedCorrectAnswer == "True"}
+            disabled={false}
+            onClick={async () => {
+              setEditedCorrectAnswer("True");
+              handleInputBlur("correctAnswer", "True");
+            }}
+          >
             True
-          </div>
-          <div className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 hover:bg-blue-50">
+          </Button>
+          <Button
+            selected={editedCorrectAnswer == "False"}
+            disabled={false}
+            onClick={async () => {
+              setEditedCorrectAnswer("False");
+              handleInputBlur("correctAnswer", "False");
+            }}
+          >
             False
-          </div>
-        </div>
-
-        {/* Save Button */}
-        <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <input
-            type="text"
-            value={editedCorrectAnswer}
-            onChange={handleCorrectAnswerInputChange}
-            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
-            placeholder="Correct Answer"
-            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
-          />
+          </Button>
         </div>
       </div>
     </div>

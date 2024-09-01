@@ -239,6 +239,9 @@ export async function validateCorrectAnswers(competitionId: string) {
       question.correctAnswer === null || question.correctAnswer === "",
   );
   if (questionsEmpty) {
+    console.log(
+      questions.find((q) => q.correctAnswer === null || q.correctAnswer === ""),
+    );
     throw new Error("At least one question has no correct answer");
   }
   for (let question of questions) {
@@ -337,7 +340,7 @@ export async function calculateUserPoints(
     }
     switch (question.type) {
       case QuestionType.TrueFalse:
-        if (question.correctAnswer === userAnswer) {
+        if (question.correctAnswer == userAnswer) {
           points += questionPoints;
         }
         break;
@@ -345,16 +348,16 @@ export async function calculateUserPoints(
         const percentageDifference = Math.abs(
           parseInt(question.correctAnswer) - parseInt(userAnswer),
         );
-        points += points * (1 - percentageDifference / 90);
+        points += questionPoints * (1 - percentageDifference / 90);
         break;
       case QuestionType.GeneralSelection:
       case QuestionType.PlayerSelection:
-        if (question.correctAnswer === userAnswer) {
+        if (question.correctAnswer == userAnswer) {
           points += questionPoints;
         }
         break;
       case QuestionType.MatchOutcome:
-        if (question.correctAnswer === userAnswer) {
+        if (question.correctAnswer == userAnswer) {
           points += questionPoints;
         }
         break;
@@ -365,24 +368,29 @@ export async function calculateUserPoints(
         const userAway = parseInt(userAnswer.split("-")[1]) || 0;
         const homeDifference = Math.abs(correctHome - userHome);
         points +=
-          (points / 2) * (1 - homeDifference / Math.max(homeDifference, 10));
+          (questionPoints / 2) *
+          (1 - homeDifference / Math.max(homeDifference, 10));
         const awayDifference = Math.abs(correctAway - userAway);
         points +=
-          (points / 2) * (1 - awayDifference / Math.max(awayDifference, 10));
+          (questionPoints / 2) *
+          (1 - awayDifference / Math.max(awayDifference, 10));
         break;
       case QuestionType.GeneralNumber:
         const correctNumber = parseInt(question.correctAnswer) || 0;
         const userNumber = parseInt(userAnswer) || 0;
         const numberDifference = Math.abs(correctNumber - userNumber);
         // set a sensible numerator depending on the correct number
-        const numerator = Math.max(correctNumber, 10);
+        const numerator = Math.max(correctNumber, 5);
         points +=
-          points *
+          questionPoints *
           (1 - numberDifference / Math.max(numerator, numberDifference));
         break;
       default:
         break;
     }
+    console.log(
+      `User ${userId} has ${points} points for question ${question.type} (${question.question})`,
+    );
   }
   // update the user's points in the database
   await updateUserPoints(userId, competitionId, points);

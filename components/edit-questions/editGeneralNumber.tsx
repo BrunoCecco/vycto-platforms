@@ -20,7 +20,7 @@ const EditGeneralNumber = ({
     question.question || "Edit your question here",
   );
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
-    question.correctAnswer ?? 0,
+    question.correctAnswer || "",
   );
   const [points, setPoints] = useState(question.points ?? 0);
   const [image, setImage] = useState(question.image1 ?? "/placeholder.png");

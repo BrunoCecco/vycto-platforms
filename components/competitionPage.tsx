@@ -170,7 +170,6 @@ export default function CompetitionPage({
               const answer = answers?.find(
                 (a: any) => a.questionId === question.id,
               );
-              console.log("answer", answers);
               const disabled =
                 userComp && "submitted" in userComp && userComp?.submitted;
               return getQuestionType(

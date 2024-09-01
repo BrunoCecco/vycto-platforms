@@ -7,6 +7,7 @@ import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
 import Input from "../input";
 import { X } from "lucide-react";
+import Button from "../button";
 
 const EditGuessScore = ({
   question,
@@ -25,6 +26,13 @@ const EditGuessScore = ({
 
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
     question.correctAnswer || "",
+  );
+
+  const [scoreHome, setScoreHome] = useState(
+    parseInt(question.correctAnswer?.split("-")[0] || "0"),
+  );
+  const [scoreAway, setScoreAway] = useState(
+    parseInt(question.correctAnswer?.split("-")[1] || "0"),
   );
 
   const [mounted, setMounted] = useState(false);
@@ -99,9 +107,13 @@ const EditGuessScore = ({
         <div className="flex w-full items-center justify-between gap-4 py-4 md:justify-around md:px-4">
           <div className="flex flex-col items-center gap-4 text-gray-500">
             <div className="flex items-center gap-4 md:gap-8">
-              <MinusCircle />
-              <div>0</div>
-              <PlusCircle />
+              <button onClick={() => setScoreHome(Math.max(scoreHome - 1, 0))}>
+                <MinusCircle />
+              </button>
+              <div>{scoreHome}</div>
+              <button onClick={() => setScoreHome(scoreHome + 1)}>
+                <PlusCircle />
+              </button>
             </div>
             {isEditingHome ? (
               <Input
@@ -131,9 +143,13 @@ const EditGuessScore = ({
 
           <div className="flex flex-col items-center gap-4 text-gray-500">
             <div className="flex items-center gap-4 md:gap-8">
-              <MinusCircle />
-              <div>0</div>
-              <PlusCircle />
+              <button onClick={() => setScoreAway(Math.max(scoreAway - 1, 0))}>
+                <MinusCircle />
+              </button>
+              <div>{scoreAway}</div>
+              <button onClick={() => setScoreAway(scoreAway + 1)}>
+                <PlusCircle />
+              </button>
             </div>
             {isEditingAway ? (
               <Input
@@ -157,14 +173,17 @@ const EditGuessScore = ({
 
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <Input
-            type="text"
-            value={editedCorrectAnswer}
-            onChange={handleCorrectAnswerInputChange}
-            onBlur={() => handleInputBlur("correctAnswer", editedCorrectAnswer)}
-            placeholder="0 - 0"
-            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
-          />
+          <Button
+            onClick={async () => {
+              setEditedCorrectAnswer(`${scoreHome}-${scoreAway}`);
+              await updateQuestion(
+                "correctAnswer",
+                `${scoreHome}-${scoreAway}`,
+              );
+            }}
+          >
+            Update correct answer
+          </Button>
         </div>
       </div>
     </div>
