@@ -286,6 +286,7 @@ export const answers = pgTable(
         onUpdate: "cascade",
       }),
     answer: text("answer"),
+    points: decimal("points", { precision: 7, scale: 4 }).default("0.0000"),
   },
   (table) => {
     return {

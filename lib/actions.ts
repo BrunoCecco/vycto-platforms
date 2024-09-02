@@ -482,6 +482,31 @@ export const updateUserPoints = async (
   }
 };
 
+export const updateAnswerPoints = async (
+  userId: string,
+  questionId: string,
+  points: number,
+) => {
+  console.log("Updating answer points: ", userId, questionId, points);
+  try {
+    const [response] = await db
+      .update(answers)
+      .set({
+        points: points.toString(),
+      })
+      .where(
+        and(eq(answers.userId, userId), eq(answers.questionId, questionId)),
+      )
+      .returning();
+
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
 export const createQuestion = async ({
   competitionId,
   type,

@@ -15,7 +15,7 @@ import {
 import { serialize } from "next-mdx-remote/serialize";
 import { replaceExamples, replaceTweets } from "@/lib/remark-plugins";
 import { QuestionType } from "./types";
-import { updateUserPoints } from "./actions";
+import { updateUserPoints, updateAnswerPoints } from "./actions";
 
 export async function getSiteData(domain: string) {
   const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
@@ -330,6 +330,8 @@ export async function calculateUserPoints(
       (a) => a.questionId === question.id,
     )?.answer;
     if (userAnswer === undefined) continue;
+
+    let pointsToAdd = 0;
     if (
       question.correctAnswer === null ||
       question.correctAnswer === "" ||
@@ -341,24 +343,24 @@ export async function calculateUserPoints(
     switch (question.type) {
       case QuestionType.TrueFalse:
         if (question.correctAnswer == userAnswer) {
-          points += questionPoints;
+          pointsToAdd = questionPoints;
         }
         break;
       case QuestionType.WhatMinute:
         const percentageDifference = Math.abs(
           parseInt(question.correctAnswer) - parseInt(userAnswer),
         );
-        points += questionPoints * (1 - percentageDifference / 90);
+        pointsToAdd = questionPoints * (1 - percentageDifference / 90);
         break;
       case QuestionType.GeneralSelection:
       case QuestionType.PlayerSelection:
         if (question.correctAnswer == userAnswer) {
-          points += questionPoints;
+          pointsToAdd = questionPoints;
         }
         break;
       case QuestionType.MatchOutcome:
         if (question.correctAnswer == userAnswer) {
-          points += questionPoints;
+          pointsToAdd = questionPoints;
         }
         break;
       case QuestionType.GuessScore:
@@ -367,11 +369,11 @@ export async function calculateUserPoints(
         const userHome = parseInt(userAnswer.split("-")[0]) || 0;
         const userAway = parseInt(userAnswer.split("-")[1]) || 0;
         const homeDifference = Math.abs(correctHome - userHome);
-        points +=
+        pointsToAdd +=
           (questionPoints / 2) *
           (1 - homeDifference / Math.max(homeDifference, 10));
         const awayDifference = Math.abs(correctAway - userAway);
-        points +=
+        pointsToAdd +=
           (questionPoints / 2) *
           (1 - awayDifference / Math.max(awayDifference, 10));
         break;
@@ -381,13 +383,15 @@ export async function calculateUserPoints(
         const numberDifference = Math.abs(correctNumber - userNumber);
         // set a sensible numerator depending on the correct number
         const numerator = Math.max(correctNumber, 5);
-        points +=
+        pointsToAdd =
           questionPoints *
           (1 - numberDifference / Math.max(numerator, numberDifference));
         break;
       default:
         break;
     }
+    points += pointsToAdd;
+    await updateAnswerPoints(userId, question.id, pointsToAdd);
     console.log(
       `User ${userId} has ${points} points for question ${question.type} (${question.question})`,
     );

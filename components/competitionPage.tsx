@@ -172,13 +172,19 @@ export default function CompetitionPage({
               );
               const disabled =
                 userComp && "submitted" in userComp && userComp?.submitted;
-              return getQuestionType(
-                question.type,
-                question,
-                session?.user.id!,
-                index,
-                answer?.answer || "",
-                disabled || false,
+              return (
+                <div>
+                  {getQuestionType(
+                    question.type,
+                    question,
+                    session?.user.id!,
+                    index,
+                    answer?.answer || "",
+                    disabled || false,
+                  )}
+                  <div>Points earned: {answer?.points?.toString()}</div>
+                  <div>Points available: {question?.points?.toString()}</div>
+                </div>
               );
             })}
           {userComp && "submitted" in userComp && userComp.submitted ? (
