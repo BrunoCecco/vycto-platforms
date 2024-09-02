@@ -6,7 +6,7 @@ interface GameStatsProps {
   username: string;
   submissionDate: string;
   submissionTime: string;
-  totalPoints: number;
+  totalPoints: string;
   percentile: string;
   rank: string;
   bonusPoints: number;

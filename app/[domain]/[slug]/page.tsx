@@ -7,36 +7,15 @@ import {
   getSiteData,
 } from "@/lib/fetchers";
 import BlogCard from "@/components/old-components/blog-card";
-import { placeholderBlurhash, toDateString } from "@/lib/utils";
 import db from "@/lib/db";
-import {
-  competitions,
-  SelectQuestion,
-  SelectUserCompetition,
-  sites,
-} from "@/lib/schema";
+import { competitions, SelectUserCompetition, sites } from "@/lib/schema";
 import { eq } from "drizzle-orm";
-import Leaderboard from "@/components/leaderboard";
 import {
   answerQuestion,
   enterUserToCompetition,
   submitAnswers,
 } from "@/lib/actions";
 import { getSession } from "@/lib/auth";
-import TrueFalse from "@/components/questions/trueFalse";
-import WhatMinute from "@/components/questions/whatMinute";
-import MatchOutcome from "@/components/questions/matchOutcome";
-import GuessScore from "@/components/questions/guessScore";
-import GeneralSelection from "@/components/questions/generalSelection";
-import PlayerSelection from "@/components/questions/playerSelection";
-import { QuestionType } from "@/lib/types";
-import CompetitionHeader from "@/components/competitionHeader";
-import TabSelector from "@/components/tabSelector";
-import SubmitAnswersForm from "@/components/form/submit-answers-form";
-import Link from "next/link";
-import GameStats from "@/components/gameStats";
-import GeneralNumber from "@/components/questions/generalNumber";
-import Rewards from "@/components/rewards";
 import CompetitionPage from "@/components/competitionPage";
 
 export async function generateMetadata({
@@ -117,30 +96,27 @@ export default async function SiteCompetitionPage({
   const slug = decodeURIComponent(params.slug);
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
-  let questions;
-  let answers: any;
-  let users;
-  let userComp: SelectUserCompetition | undefined | { error: string };
-  if (data) {
-    questions = await getQuestionsForCompetition(data.id);
-    answers = await getAnswersForUser(session?.user.id!, data!.id);
-  }
-
-  if (session && data) {
-    userComp = await enterUserToCompetition(
-      session.user.id,
-      session.user.username || session.user.name || session.user.email,
-      data.id,
-    );
-    if (userComp && "submitted" in userComp && userComp.submitted) {
-      redirect(`/${slug}/${userComp.userId}`);
-    }
-    users = await getCompetitionUsers(data!.id);
-  }
 
   if (!data) {
     notFound();
   }
+
+  if (!session) {
+    redirect(`/login?redirect=${encodeURIComponent(`/${domain}/${slug}`)}`);
+  }
+
+  const questions = await getQuestionsForCompetition(data.id);
+  const answers = await getAnswersForUser(session?.user.id!, data!.id);
+
+  const userComp = await enterUserToCompetition(
+    session.user.id,
+    session.user.username || session.user.name || session.user.email,
+    data.id,
+  );
+  if (userComp && "submitted" in userComp && userComp.submitted) {
+    redirect(`/${slug}/${userComp.userId}`);
+  }
+  const users = await getCompetitionUsers(data!.id);
 
   return (
     <div

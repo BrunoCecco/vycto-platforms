@@ -158,7 +158,7 @@ export default function CompetitionPage({
                 "09 Aug 2024"
               }
               submissionTime="15:42"
-              totalPoints={67.61}
+              totalPoints={parseFloat(userComp.points || "0").toFixed(2)}
               percentile="Top 4%"
               rank="33rd"
               bonusPoints={0.5}
@@ -172,7 +172,7 @@ export default function CompetitionPage({
               const disabled =
                 userComp && "submitted" in userComp && userComp?.submitted;
               return (
-                <div>
+                <div key={index}>
                   {getQuestionType(
                     question,
                     session?.user.id!,

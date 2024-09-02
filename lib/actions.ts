@@ -507,6 +507,28 @@ export const updateAnswerPoints = async (
   }
 };
 
+// tbd competition stats
+// export const updateCompetitionStats = async (
+//   competitionId: string,
+//   stats: any,
+// ) => {
+//   try {
+//     const [response] = await db
+//       .update(competitions)
+//       .set({
+//         stats,
+//       })
+//       .where(eq(competitions.id, competitionId))
+//       .returning();
+
+//     return response;
+//   } catch (error: any) {
+//     return {
+//       error: error.message,
+//     };
+//   }
+// }
+
 export const createQuestion = async ({
   competitionId,
   type,

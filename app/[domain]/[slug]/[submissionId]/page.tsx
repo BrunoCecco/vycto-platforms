@@ -97,6 +97,7 @@ export default async function SubmissionPage({
 }) {
   const domain = decodeURIComponent(params.domain);
   const slug = decodeURIComponent(params.slug);
+  const submissionId = decodeURIComponent(params.submissionId);
   const siteData = await getSiteData(domain);
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
@@ -105,22 +106,24 @@ export default async function SubmissionPage({
     notFound();
   }
 
-  let users;
-  let userComp: SelectUserCompetition | undefined | { error: string };
+  if (!session) {
+    redirect(
+      `/login?redirect=${encodeURIComponent(`/${domain}/${slug}/${submissionId}`)}`,
+    );
+  }
+
   const questions = await getQuestionsForCompetition(data.id);
   const answers = await getAnswersForUser(session?.user.id!, data!.id);
 
-  if (session && data) {
-    userComp = await enterUserToCompetition(
-      session.user.id,
-      session.user.username || session.user.name || session.user.email,
-      data.id,
-    );
-    if (!userComp || "submitted" in userComp == false || !userComp.submitted) {
-      redirect(`/${domain}/${slug}`);
-    }
-    users = await getCompetitionUsers(data!.id);
+  const userComp = await enterUserToCompetition(
+    session.user.id,
+    session.user.username || session.user.name || session.user.email,
+    data.id,
+  );
+  if (!userComp || "submitted" in userComp == false || !userComp.submitted) {
+    redirect(`/${domain}/${slug}`);
   }
+  const users = await getCompetitionUsers(data!.id);
 
   return (
     <div
