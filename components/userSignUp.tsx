@@ -36,7 +36,10 @@ const UserSignUp = () => {
               />
               <span>Continue with Apple</span>
             </button>
-            <button className="flex w-1/2 items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm">
+            <button
+              onClick={() => signIn("facebook")}
+              className="flex w-1/2 items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm"
+            >
               <Image
                 src="/facebookIcon.svg"
                 width={20}

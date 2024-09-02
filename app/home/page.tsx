@@ -76,33 +76,6 @@ export default function HomePage() {
       <EditMatchOutcome />
       <EditGeneralSelection /> */}
       {/* <QuestionBuilder competitionId={"id"} initialQuestions={[]} /> */}
-      <h1 className="text-2xl font-bold">
-        All questions below have data passed in from props. Should be easier to
-        populate now by setting props from DB data. If needed, answers can now
-        easily be passed out too.
-      </h1>
-      <WhatMinute
-        question="What minute will Atletico score vs Inter?"
-        imageSrc="/trueFalse.jpg"
-        points={5}
-      />
-      <MatchOutcome
-        question="Real Madrid vs Chelsea"
-        points={5}
-        homeTeam={homeTeam}
-        awayTeam={awayTeam}
-      />
-      <GuessScore homeTeam="Real Madrid" awayTeam="Chelsea" points={5} />
-      <GeneralSelection
-        question="How many goals will Morata score?"
-        imageSrc="/trueFalse.jpg"
-        points={5}
-      />
-      <PlayerSelection
-        question="Who will score the 1st point?"
-        points={5}
-        players={players}
-      />
     </div>
   );
 }
