@@ -6,8 +6,12 @@ import { PlusCircle, MinusCircle } from "lucide-react";
 import Submit from "./submit";
 
 const GuessScore = ({ ...props }) => {
-  const [scoreHome, setScoreHome] = useState(props.answer?.split("-")[0] ?? 0);
-  const [scoreAway, setScoreAway] = useState(props.answer?.split("-")[1] ?? 0);
+  const [scoreHome, setScoreHome] = useState(
+    props.answer.answer?.split("-")[0] ?? 0,
+  );
+  const [scoreAway, setScoreAway] = useState(
+    props.answer.answer?.split("-")[1] ?? 0,
+  );
 
   return (
     <div className="flex w-full items-center justify-center">
@@ -81,8 +85,18 @@ const GuessScore = ({ ...props }) => {
           </button>
         </Submit>
         {props.correctAnswer?.length > 0 ? (
-          <div className="mt-2 text-center font-semibold text-green-600">
-            Correct answer: {props.correctAnswer}
+          <div className="mt-2">
+            <div>
+              Correct answer:{" "}
+              <span className="font-semibold">{props.correctAnswer}</span>
+            </div>
+            <div>
+              Points earned:{" "}
+              <span className="font-semibold">
+                {parseFloat(props.answer?.points || "0").toFixed(2)}
+              </span>
+              /{props.points?.toString()}
+            </div>
           </div>
         ) : null}
       </div>

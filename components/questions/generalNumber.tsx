@@ -7,7 +7,7 @@ import { MinusCircle, PlusCircle } from "lucide-react";
 import Input from "../input";
 
 const GeneralNumber = ({ ...props }) => {
-  const [answer, setAnswer] = useState(props.answer ?? 0);
+  const [answer, setAnswer] = useState(props.answer.answer ?? 0);
 
   return (
     <div className="flex w-full items-center justify-center">
@@ -64,8 +64,18 @@ const GeneralNumber = ({ ...props }) => {
           </button>
         </Submit>
         {props.correctAnswer?.length > 0 ? (
-          <div className="mt-2 text-center font-semibold text-green-600">
-            Correct answer: {props.correctAnswer}
+          <div className="mt-2">
+            <div>
+              Correct answer:{" "}
+              <span className="font-semibold">{props.correctAnswer}</span>
+            </div>
+            <div>
+              Points earned:{" "}
+              <span className="font-semibold">
+                {parseFloat(props.answer?.points || "0").toFixed(2)}
+              </span>
+              /{props.points?.toString()}
+            </div>
           </div>
         ) : null}
       </div>

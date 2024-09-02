@@ -46,14 +46,13 @@ export default function CompetitionPage({
   const [activeTab, setActiveTab] = useState("Challenge");
 
   const getQuestionType = (
-    type: QuestionType,
     question: SelectQuestion,
     userId: string,
     index: number,
-    answer: string,
+    answer: SelectAnswer | undefined,
     disabled: boolean,
   ) => {
-    switch (type) {
+    switch (question.type) {
       case QuestionType.TrueFalse:
         return (
           <TrueFalse
@@ -175,15 +174,12 @@ export default function CompetitionPage({
               return (
                 <div>
                   {getQuestionType(
-                    question.type,
                     question,
                     session?.user.id!,
                     index,
-                    answer?.answer || "",
+                    answer,
                     disabled || false,
                   )}
-                  <div>Points earned: {answer?.points?.toString()}</div>
-                  <div>Points available: {question?.points?.toString()}</div>
                 </div>
               );
             })}

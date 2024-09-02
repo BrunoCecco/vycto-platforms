@@ -6,7 +6,9 @@ import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
 
 const MatchOutcome = ({ ...props }) => {
-  const [selectedOutcome, setSelectedOutcome] = useState(props.answer || "");
+  const [selectedOutcome, setSelectedOutcome] = useState(
+    props.answer.answer || "",
+  );
 
   return (
     <div className="flex w-full items-center justify-center">
@@ -113,8 +115,18 @@ const MatchOutcome = ({ ...props }) => {
           </Submit>
         </div>
         {props.correctAnswer?.length > 0 ? (
-          <div className="mt-2 text-center font-semibold text-green-600">
-            Correct answer: {props.correctAnswer}
+          <div className="mt-2">
+            <div>
+              Correct answer:{" "}
+              <span className="font-semibold">{props.correctAnswer}</span>
+            </div>
+            <div>
+              Points earned:{" "}
+              <span className="font-semibold">
+                {parseFloat(props.answer?.points || "0").toFixed(2)}
+              </span>
+              /{props.points?.toString()}
+            </div>
           </div>
         ) : null}
       </div>

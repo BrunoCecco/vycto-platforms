@@ -32,7 +32,7 @@ const WhatMinute = ({ ...props }) => {
         </p>
         <div className="flex items-center justify-center">
           <Slider
-            initialValue={props.answer}
+            initialValue={props.answer.answer}
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
@@ -40,8 +40,18 @@ const WhatMinute = ({ ...props }) => {
           />
         </div>
         {props.correctAnswer?.length > 0 ? (
-          <div className="mt-2 text-center font-semibold text-green-600">
-            Correct answer: {props.correctAnswer}
+          <div className="mt-2">
+            <div>
+              Correct answer:{" "}
+              <span className="font-semibold">{props.correctAnswer}</span>
+            </div>
+            <div>
+              Points earned:{" "}
+              <span className="font-semibold">
+                {parseFloat(props.answer?.points || "0").toFixed(2)}
+              </span>
+              /{props.points?.toString()}
+            </div>
           </div>
         ) : null}
       </div>

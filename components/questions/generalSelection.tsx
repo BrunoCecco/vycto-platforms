@@ -7,7 +7,9 @@ import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
 
 const GeneralSelection = ({ ...props }) => {
-  const [selectedOption, setSelectedOption] = useState(props.answer || "");
+  const [selectedOption, setSelectedOption] = useState(
+    props.answer.answer || "",
+  );
   const goalOptions = [
     props.answer1,
     props.answer2,
@@ -30,7 +32,7 @@ const GeneralSelection = ({ ...props }) => {
   }, [selectedOption]);
 
   return (
-    <div className="flex w-full items-center justify-center">
+    <div className="flex w-full items-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
         {/* Points Badge */}
         <PointsBadge points={props.points} />
@@ -56,7 +58,7 @@ const GeneralSelection = ({ ...props }) => {
           Select correctly to score points
         </p>
 
-        <div className="flex flex-col items-center justify-center pt-3">
+        <div className="flex flex-col justify-center pt-3">
           <div className="flex w-full flex-wrap items-center justify-between rounded-lg bg-gray-200 p-2">
             {goalOptions.map((option) => (
               <Submit
@@ -82,8 +84,18 @@ const GeneralSelection = ({ ...props }) => {
             ))}
           </div>
           {props.correctAnswer?.length > 0 ? (
-            <div className="mt-2 text-center font-semibold text-green-600">
-              Correct answer: {props.correctAnswer}
+            <div className="mt-2">
+              <div>
+                Correct answer:{" "}
+                <span className="font-semibold">{props.correctAnswer}</span>
+              </div>
+              <div>
+                Points earned:{" "}
+                <span className="font-semibold">
+                  {parseFloat(props.answer?.points || "0").toFixed(2)}
+                </span>
+                /{props.points?.toString()}
+              </div>
             </div>
           ) : null}
         </div>
