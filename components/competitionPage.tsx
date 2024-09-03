@@ -197,7 +197,7 @@ export default function CompetitionPage({
         </div>
       )}
       {activeTab == "Leaderboard" && (
-        <div className="px-8 sm:px-0">
+        <div className="flex justify-center md:px-8">
           <Leaderboard siteData={siteData} competition={data} users={users} />
         </div>
       )}

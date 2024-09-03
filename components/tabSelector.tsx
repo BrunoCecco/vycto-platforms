@@ -10,8 +10,8 @@ const TabSelector = ({
   setActiveTab: any;
 }) => {
   return (
-    <div className="mx-auto mb-8 flex w-full flex-col items-center justify-center">
-      <div className="flex w-full overflow-hidden rounded-b-lg border-b-2 bg-white">
+    <div className="mx-auto flex w-full flex-col items-center justify-center md:mb-8">
+      <div className="flex w-full overflow-hidden border-b-2 bg-white md:rounded-b-lg">
         {["Challenge", "Rewards", "Leaderboard"].map((tab) => (
           <button
             key={tab}
