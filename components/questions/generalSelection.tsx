@@ -5,6 +5,7 @@ import { useState } from "react";
 import PointsBadge from "../pointsBadge";
 import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
+import QuestionResultBlock from "../questionResultBlock";
 
 const GeneralSelection = ({ ...props }) => {
   const [selectedOption, setSelectedOption] = useState(
@@ -37,15 +38,15 @@ const GeneralSelection = ({ ...props }) => {
         <PointsBadge points={props.points} />
 
         {/* Placeholder for Image or Graphic */}
-        <div className="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-100">
+        <div className="mb-4 flex h-44 w-full items-center justify-center overflow-hidden rounded-lg bg-green-100">
           <Image
             src={props.image1 ?? "/placeholder.png"}
-            alt="True or False Image"
-            width={500}
             unoptimized
-            height={200}
+            alt="Question Image"
+            width={1}
+            height={1}
             objectFit="cover"
-            className="rounded-lg"
+            className="h-100% w-auto"
           />
         </div>
 
@@ -83,19 +84,11 @@ const GeneralSelection = ({ ...props }) => {
             ))}
           </div>
           {props.correctAnswer?.length > 0 ? (
-            <div className="mt-2">
-              <div>
-                Correct answer:{" "}
-                <span className="font-semibold">{props.correctAnswer}</span>
-              </div>
-              <div>
-                Points earned:{" "}
-                <span className="font-semibold">
-                  {parseFloat(props.answer?.points || "0").toFixed(2)}
-                </span>
-                /{props.points?.toString()}
-              </div>
-            </div>
+            <QuestionResultBlock
+              correctAnswer={props.correctAnswer}
+              pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}
+              totalPoints={props.points?.toString()}
+            />
           ) : null}
         </div>
       </div>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import PointsBadge from "../pointsBadge";
 import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
+import QuestionResultBlock from "../questionResultBlock";
 
 const MatchOutcome = ({ ...props }) => {
   const [selectedOutcome, setSelectedOutcome] = useState(
@@ -39,20 +40,22 @@ const MatchOutcome = ({ ...props }) => {
               disabled={props.disabled}
               onClick={() => setSelectedOutcome(props.answer1)}
             >
-              <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
-                <Image
-                  src={props.image1 ?? "/placeholder.png"}
-                  alt={props.answer1}
-                  unoptimized={true}
-                  width={500}
-                  height={200}
-                  objectFit="cover"
-                  className="rounded-lg"
-                />
+              <div className="flex flex-col items-center">
+                <div className="relative h-full w-28 items-center justify-center overflow-hidden rounded-lg md:w-36">
+                  <Image
+                    src={props.image1 ?? "/placeholder.png"}
+                    unoptimized
+                    alt="Option 1 Image"
+                    width={1}
+                    height={1}
+                    objectFit="cover"
+                    className="h-100% w-auto"
+                  />
+                </div>
+                <p className="text-sm font-semibold text-gray-700">
+                  {props.answer1}
+                </p>
               </div>
-              <p className="text-sm font-semibold text-gray-700">
-                {props.answer1}
-              </p>
             </button>
           </Submit>
 
@@ -78,20 +81,22 @@ const MatchOutcome = ({ ...props }) => {
               disabled={props.disabled}
               onClick={() => setSelectedOutcome(props.answer2)}
             >
-              <div className="relative h-20 w-24 overflow-hidden rounded-lg border md:h-24 md:w-32">
-                <Image
-                  src={props.image2 ?? "/placeholder.png"}
-                  alt={props.answer2}
-                  unoptimized
-                  width={500}
-                  height={200}
-                  objectFit="cover"
-                  className="rounded-lg"
-                />
+              <div className="flex flex-col items-center">
+                <div className="relative h-full w-28 items-center justify-center overflow-hidden rounded-lg md:w-36">
+                  <Image
+                    src={props.image2 ?? "/placeholder.png"}
+                    unoptimized
+                    alt="Option 2 Image"
+                    width={1}
+                    height={1}
+                    objectFit="cover"
+                    className="h-100% w-auto"
+                  />
+                </div>
+                <p className="text-sm font-semibold text-gray-700">
+                  {props.answer2}
+                </p>
               </div>
-              <p className="text-sm font-semibold text-gray-700">
-                {props.answer2}
-              </p>
             </button>
           </Submit>
         </div>
@@ -118,19 +123,11 @@ const MatchOutcome = ({ ...props }) => {
           </Submit>
         </div>
         {props.correctAnswer?.length > 0 ? (
-          <div className="mt-2">
-            <div>
-              Correct answer:{" "}
-              <span className="font-semibold">{props.correctAnswer}</span>
-            </div>
-            <div>
-              Points earned:{" "}
-              <span className="font-semibold">
-                {parseFloat(props.answer?.points || "0").toFixed(2)}
-              </span>
-              /{props.points?.toString()}
-            </div>
-          </div>
+          <QuestionResultBlock
+            correctAnswer={props.correctAnswer}
+            pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}
+            totalPoints={props.points?.toString()}
+          />
         ) : null}
       </div>
     </div>

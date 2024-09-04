@@ -2,24 +2,25 @@ import Image from "next/image";
 import { FC, useState } from "react";
 import Slider from "../slider";
 import PointsBadge from "../pointsBadge";
+import QuestionResultBlock from "../questionResultBlock";
 
 const WhatMinute = ({ ...props }) => {
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
+      <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl md:shadow-2xl">
         {/* Points Badge */}
         <PointsBadge points={props.points} />
 
         {/* Placeholder for Image or Graphic */}
-        <div className="mb-4 h-32 w-full overflow-hidden rounded-lg bg-green-100">
+        <div className="mb-4 flex h-44 w-full items-center justify-center overflow-hidden rounded-lg bg-green-100">
           <Image
             src={props.image1 ?? "/placeholder.png"}
             unoptimized
             alt="Question Image"
-            width={500}
-            height={200}
+            width={1}
+            height={1}
             objectFit="cover"
-            className="rounded-lg"
+            className="h-100% w-auto"
           />
         </div>
 
@@ -41,19 +42,11 @@ const WhatMinute = ({ ...props }) => {
           />
         </div>
         {props.correctAnswer?.length > 0 ? (
-          <div className="mt-2">
-            <div>
-              Correct answer:{" "}
-              <span className="font-semibold">{props.correctAnswer}</span>
-            </div>
-            <div>
-              Points earned:{" "}
-              <span className="font-semibold">
-                {parseFloat(props.answer?.points || "0").toFixed(2)}
-              </span>
-              /{props.points?.toString()}
-            </div>
-          </div>
+          <QuestionResultBlock
+            correctAnswer={props.correctAnswer}
+            pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}
+            totalPoints={props.points?.toString()}
+          />
         ) : null}
       </div>
     </div>

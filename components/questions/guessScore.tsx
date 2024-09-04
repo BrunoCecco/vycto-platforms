@@ -4,6 +4,7 @@ import { FC, useState } from "react";
 import PointsBadge from "../pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
 import Submit from "./submit";
+import QuestionResultBlock from "../questionResultBlock";
 
 const GuessScore = ({ ...props }) => {
   const [scoreHome, setScoreHome] = useState(
@@ -86,19 +87,11 @@ const GuessScore = ({ ...props }) => {
           </button>
         </Submit>
         {props.correctAnswer?.length > 0 ? (
-          <div className="mt-2">
-            <div>
-              Correct answer:{" "}
-              <span className="font-semibold">{props.correctAnswer}</span>
-            </div>
-            <div>
-              Points earned:{" "}
-              <span className="font-semibold">
-                {parseFloat(props.answer?.points || "0").toFixed(2)}
-              </span>
-              /{props.points?.toString()}
-            </div>
-          </div>
+          <QuestionResultBlock
+            correctAnswer={props.correctAnswer}
+            pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}
+            totalPoints={props.points?.toString()}
+          />
         ) : null}
       </div>
     </div>
