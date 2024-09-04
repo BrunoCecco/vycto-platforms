@@ -25,7 +25,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
     users.find((u: { userId: any }) => u.userId === session.user.id);
 
   return (
-    <div className="mx-auto flex w-full flex-col items-center justify-center bg-white p-8 sm:p-10">
+    <div className="mx-auto flex w-full flex-col items-center justify-center bg-white p-8 sm:p-10 md:rounded-3xl">
       {/* Placeholder for Image or Graphic */}
       <div className="my-4 w-full overflow-hidden rounded-xl">
         <BlurImage

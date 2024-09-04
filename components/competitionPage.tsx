@@ -193,7 +193,7 @@ export default function CompetitionPage({
   };
 
   return (
-    <div>
+    <div className="rounded-3xl bg-white shadow-2xl lg:px-24">
       <CompetitionHeader session={session} users={users} data={data} />
       <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab == "Rewards" && (
@@ -207,7 +207,7 @@ export default function CompetitionPage({
         />
       )}
       {activeTab == "Challenge" && (
-        <div className="mx-auto flex w-full flex-col justify-center gap-8 p-8 pt-0 ">
+        <div className="mx-auto flex w-full flex-col justify-center gap-12 bg-white py-12 md:gap-20 md:rounded-3xl">
           {userComp && "submitted" in userComp && userComp.submitted ? (
             <GameStats
               competitionTitle={data.title}
@@ -236,7 +236,7 @@ export default function CompetitionPage({
             })}
           {session ? (
             userComp && "submitted" in userComp && userComp.submitted ? (
-              <div className="mx-auto flex h-8 w-fit items-center justify-center space-x-2 rounded-md border border-green-600 bg-green-600 px-2 text-sm text-white sm:h-10">
+              <div className="text-md mx-auto rounded-xl border-green-600 bg-green-600 p-4 text-white">
                 Answers Submitted
               </div>
             ) : (

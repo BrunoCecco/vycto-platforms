@@ -41,12 +41,12 @@ const Leaderboard = ({
 }) => {
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
 
-  if (sortedUsers.length === 1) {
+  if (sortedUsers.length === 0) {
     sortedUsers = leaderboardData;
   }
 
   return (
-    <div className="container w-full border border-gray-200 bg-white px-2 py-6 md:rounded-2xl md:p-8">
+    <div className="container w-full bg-white px-2 py-6 md:rounded-2xl md:p-8">
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row md:items-center md:py-6">
         <div className="flex items-center justify-center gap-4 md:justify-normal">
           <div className="relative inline-block h-16 w-32 align-middle md:h-16 md:w-36">
