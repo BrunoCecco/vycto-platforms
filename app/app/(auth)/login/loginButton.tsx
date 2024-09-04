@@ -5,12 +5,13 @@ import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { usePostHog } from "posthog-js/react";
 
 export default function LoginButton({ email }: { email: string }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-
+  const posthog = usePostHog();
   // Get error message added by next/auth in URL.
   const searchParams = useSearchParams();
 
@@ -26,6 +27,7 @@ export default function LoginButton({ email }: { email: string }) {
         disabled={loading}
         onClick={() => {
           setLoading(true);
+          posthog?.capture("sign-in-email-clicked");
           signIn("email", {
             email,
           }).then((res) => {

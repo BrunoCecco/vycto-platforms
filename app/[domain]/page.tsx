@@ -7,6 +7,8 @@ import db from "@/lib/db";
 import FanZone from "@/components/fanZone";
 import { SelectCompetition } from "@/lib/schema";
 import Leaderboard from "@/components/leaderboard";
+import { getSession } from "@/lib/auth";
+import { usePostHog } from "posthog-js/react";
 
 export async function generateStaticParams() {
   const allSites = await db.query.sites.findMany({
@@ -53,6 +55,15 @@ export default async function SiteHomePage({
   const latestCompetition = competitions.sort(
     (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )[0];
+
+  const session = await getSession();
+  const posthog = usePostHog();
+
+  if (session) {
+    posthog?.identify(session?.user?.id!, {
+      email: session?.user?.email,
+    });
+  }
 
   return (
     <>

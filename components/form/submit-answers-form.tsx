@@ -9,6 +9,7 @@ import { deleteCompetition, submitAnswers } from "@/lib/actions";
 import va from "@vercel/analytics";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
+import { usePostHog } from "posthog-js/react";
 
 export default function SubmitAnswersForm({
   userId,
@@ -24,9 +25,10 @@ export default function SubmitAnswersForm({
   const router = useRouter();
   const { data: session } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const posthog = usePostHog();
 
   const handleSubmit = async () => {
-    if (!session) {
+    if (!session && !userId) {
       // If not logged in, redirect to login page
       signIn(undefined, { callbackUrl: `/comp/${slug}` });
       return;
@@ -38,6 +40,7 @@ export default function SubmitAnswersForm({
       if ("error" in res && res.error) {
         toast.error(res.error);
       } else {
+        posthog?.capture("answers_submitted");
         va.track("Submitted Answers");
         router.refresh();
         router.push(`/comp/${slug}/${userId}`);
