@@ -13,7 +13,7 @@ const Retention = () => {
           </div>
 
           {/* Left Column */}
-          <div className="flex w-1/3 flex-col space-y-6">
+          <div className="flex flex-col space-y-6">
             <div className="flex items-center space-x-2">
               <CheckCircle2 size={28} className="text-emerald-400" />
               <div>

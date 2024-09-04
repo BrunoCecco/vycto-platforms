@@ -80,7 +80,7 @@ const Rewards: React.FC<RewardsProps> = ({
       </div>
       <div className="mt-4 text-center">
         <h2 className="text-xl font-bold">{rewards[currentIndex].title}</h2>
-        <p className="text-gray-600">{rewards[currentIndex].description}</p>
+        <p className="text-md">{rewards[currentIndex].description}</p>
       </div>
     </div>
   ) : (

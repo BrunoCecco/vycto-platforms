@@ -21,7 +21,9 @@ const VoucherConversions: React.FC = () => {
       <div className="flex items-center justify-between pb-4">
         <div className="flex items-center space-x-2">
           <Calendar size={24} color="#6C63FF" />
-          <span className="text-lg font-medium">Conversion</span>
+          <span className="hidden text-lg font-medium md:inline">
+            Conversion
+          </span>
         </div>
         <div className="flex items-center space-x-4">
           <span className="text-lg font-medium text-gray-600">
@@ -32,7 +34,7 @@ const VoucherConversions: React.FC = () => {
       </div>
 
       {/* Month and Arrows for Pie Chart */}
-      <div className="flex w-1/2 items-center justify-between pb-4 pr-4">
+      <div className="flex items-center justify-between border-2 pb-4 pr-4 md:w-1/2">
         <ChevronLeft className="h-5 w-5 cursor-pointer text-gray-400" />
         <span className="px-2 text-gray-600">April</span>
         <ChevronRight className="h-5 w-5 cursor-pointer text-gray-400" />
@@ -62,7 +64,7 @@ const VoucherConversions: React.FC = () => {
         </div>
 
         {/* Details Section */}
-        <div className="-mt-10 flex-1 md:pl-6">
+        <div className="flex-1 md:-mt-10 md:pl-6">
           <div className="space-y-4">
             {/* Details with Subheading for April */}
             <div className="border-b pb-2">

@@ -8,6 +8,7 @@ import EmailProvider, {
 } from "next-auth/providers/email";
 import { createTransport } from "nodemailer";
 import AppleProvider from "next-auth/providers/apple";
+import FacebookProvider from "next-auth/providers/facebook";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
@@ -15,6 +16,10 @@ export const authOptions: NextAuthOptions = {
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID!,
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_ID!,
+      clientSecret: process.env.FACEBOOK_SECRET!,
     }),
     EmailProvider({
       server: {
