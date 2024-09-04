@@ -8,7 +8,6 @@ import FanZone from "@/components/fanZone";
 import { SelectCompetition } from "@/lib/schema";
 import Leaderboard from "@/components/leaderboard";
 import { getSession } from "@/lib/auth";
-import { usePostHog } from "posthog-js/react";
 
 export async function generateStaticParams() {
   const allSites = await db.query.sites.findMany({
@@ -57,13 +56,6 @@ export default async function SiteHomePage({
   )[0];
 
   const session = await getSession();
-  const posthog = usePostHog();
-
-  if (session) {
-    posthog?.identify(session?.user?.id!, {
-      email: session?.user?.email,
-    });
-  }
 
   return (
     <>
@@ -81,7 +73,7 @@ export default async function SiteHomePage({
             <Link
               className="ml-3 rounded-full bg-blue-200 px-8 py-2 pt-1 font-semibold text-white"
               style={{ backgroundColor: data.color2 }}
-              href={`/${latestCompetition?.slug}` ?? "/"}
+              href={`/comp/${latestCompetition?.slug}` ?? "/"}
             >
               Play
             </Link>

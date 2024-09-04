@@ -27,6 +27,7 @@ import LoginToSubmitButton from "@/components/loginToSubmitButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { submitAnswers } from "@/lib/actions";
 import { toast } from "sonner";
+import { usePostHog } from "posthog-js/react";
 
 export default function CompetitionPage({
   session,
@@ -51,19 +52,16 @@ export default function CompetitionPage({
   const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(
     {},
   );
-  // () => {
-  //   if (typeof window !== "undefined") {
-  //     const savedAnswers = localStorage.getItem(`localAnswers_${data.id}`);
-  //     return savedAnswers ? JSON.parse(savedAnswers) : {};
-  //   }
-  //   return {};
-  // },
 
   const searchParams = useSearchParams();
   const router = useRouter();
+  const posthog = usePostHog();
 
   useEffect(() => {
     if (session && searchParams && !userComp) {
+      posthog?.identify(session?.user?.id!, {
+        email: session?.user?.email,
+      });
       const extractedAnswers: { [key: string]: string } = {};
       console.log(searchParams);
       searchParams.forEach((value, key) => {

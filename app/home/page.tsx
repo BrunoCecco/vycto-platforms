@@ -17,41 +17,6 @@ import PoweredBadge from "@/components/poweredBadge";
 import AnalyticsPage from "@/components/analyticsPage";
 import Rewards from "@/components/rewards";
 
-const homeTeam = {
-  name: "Real Madrid",
-  image: "/teamBadge.jpg",
-  position: "Home",
-};
-
-const awayTeam = {
-  name: "Chelsea",
-  image: "/teamBadge.jpg",
-  position: "Away",
-};
-
-const players = [
-  {
-    name: "Giannis Antetokounmpo",
-    position: "Small Forward",
-    image: "/player.png",
-  },
-  {
-    name: "Damian Lillard",
-    position: "Point Guard",
-    image: "/player.png",
-  },
-  {
-    name: "Brook Lopez",
-    position: "Centre",
-    image: "/player.png",
-  },
-  {
-    name: "Khris Middleton",
-    position: "Shooting Guard",
-    image: "/player.png",
-  },
-];
-
 export default function HomePage() {
   return (
     <div className="min-h-screen space-y-12 bg-green-100">
@@ -62,20 +27,6 @@ export default function HomePage() {
       <B2BSignUp />
       <UserSignUp />
       <SelectUsername />
-      <GameStats
-        competitionTitle="Atletico vs Inter"
-        username="nicolascastr0"
-        submissionDate="09 May 2024"
-        submissionTime="15:42"
-        totalPoints={67.61}
-        percentile="Top 4%"
-        rank="33rd"
-        bonusPoints={0.5}
-      />
-      {/* <EditGuessScore />
-      <EditMatchOutcome />
-      <EditGeneralSelection /> */}
-      {/* <QuestionBuilder competitionId={"id"} initialQuestions={[]} /> */}
     </div>
   );
 }

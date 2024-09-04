@@ -58,7 +58,7 @@ export default function Editor({
 
   const submitCorrectAnswers = async () => {
     if (!hasEnded) {
-      alert("Competition has not ended yet.");
+      toast.error("Competition has not ended yet.");
       return;
     }
     // calculate points
@@ -77,7 +77,7 @@ export default function Editor({
       return;
     } catch (e: any) {
       console.error(e);
-      alert(e.message);
+      toast.error(e.message);
       return;
     }
   };

@@ -112,7 +112,7 @@ const Leaderboard = ({
                 </td>
                 <td className="hidden py-4 sm:table-cell">
                   <Link
-                    href={`/${competition.slug}/${user.userId}`}
+                    href={`/comp/${competition.slug}/${user.userId}`}
                     className="rounded-full bg-blue-100 p-2 px-4 text-purple-800 hover:bg-blue-300"
                   >
                     View
@@ -171,7 +171,7 @@ const Leaderboard = ({
                 </td>
                 <td className="py-4">
                   <Link
-                    href={`/${competition.slug}/${user.userId}`}
+                    href={`/comp/${competition.slug}/${user.userId}`}
                     className="rounded-full bg-blue-100 p-2 px-4 text-purple-800 hover:bg-blue-300"
                   >
                     View

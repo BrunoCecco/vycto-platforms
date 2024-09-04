@@ -77,7 +77,7 @@ const CompetitionCard = async ({
           {status}
         </p>
         <Link
-          href={competition.slug}
+          href={"/comp/" + competition.slug}
           className="w-24 rounded-full  p-2 text-center text-white hover:opacity-75"
           style={{ backgroundColor: siteData.color2 }}
         >
