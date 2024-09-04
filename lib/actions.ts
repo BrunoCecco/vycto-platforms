@@ -431,8 +431,36 @@ export const enterUserToCompetition = async (
   }
 };
 
-export const submitAnswers = async (userId: string, competitionId: string) => {
+export const submitAnswers = async (
+  userId: string,
+  competitionId: string,
+  localAnswers: { [key: string]: string },
+) => {
+  const session = await getSession();
+  if (!session?.user.id) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+
   try {
+    // First, submit any local answers that haven't been saved to the database yet
+    for (const [questionId, answer] of Object.entries(localAnswers)) {
+      await db
+        .insert(answers)
+        .values({
+          userId: session.user.id,
+          competitionId,
+          questionId,
+          answer,
+        })
+        .onConflictDoUpdate({
+          target: [answers.userId, answers.questionId],
+          set: { answer },
+        });
+    }
+
+    // Then, mark the user's competition as submitted
     const [response] = await db
       .update(userCompetitions)
       .set({
@@ -440,7 +468,7 @@ export const submitAnswers = async (userId: string, competitionId: string) => {
       })
       .where(
         and(
-          eq(userCompetitions.userId, userId),
+          eq(userCompetitions.userId, session.user.id),
           eq(userCompetitions.competitionId, competitionId),
         ),
       )

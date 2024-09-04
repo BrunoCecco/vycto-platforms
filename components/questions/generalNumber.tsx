@@ -55,6 +55,7 @@ const GeneralNumber = ({ ...props }) => {
           questionId={props.id}
           competitionId={props.competitionId}
           answer={answer.toString()}
+          onLocalAnswer={props.onLocalAnswer}
         >
           <button
             className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-white"

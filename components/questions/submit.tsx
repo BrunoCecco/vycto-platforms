@@ -7,23 +7,29 @@ const Submit = ({
   questionId,
   competitionId,
   answer,
+  onLocalAnswer,
   children,
 }: {
-  userId: string;
+  userId: string | null;
   questionId: string;
   competitionId: string;
   answer: string;
+  onLocalAnswer: (questionId: string, answer: string) => void;
   children: React.ReactNode;
 }) => {
+  const handleSubmit = async (data: FormData) => {
+    if (userId) {
+      await answerQuestion(data);
+      toast.success("Answer updated!");
+    } else {
+      onLocalAnswer(questionId, answer);
+      toast.success("Answer saved locally!");
+    }
+  };
+
   return (
-    <form
-      className="flex items-center justify-center"
-      action={async (data: FormData) => {
-        await answerQuestion(data);
-        toast.success("Answer updated!");
-      }}      
-    >
-      <input type="hidden" name="userId" value={userId} />
+    <form className="flex items-center justify-center" action={handleSubmit}>
+      {userId && <input type="hidden" name="userId" value={userId} />}
       <input type="hidden" name="questionId" value={questionId} />
       <input type="hidden" name="competitionId" value={competitionId} />
       <input type="hidden" name="answer" value={answer} />

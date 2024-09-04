@@ -45,7 +45,7 @@ const PlayerComponent = ({
 
 const PlayerSelection = ({ ...props }) => {
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(
-    props.answer.answer,
+    props.answer?.answer,
   );
 
   return (
@@ -69,6 +69,7 @@ const PlayerSelection = ({ ...props }) => {
             questionId={props.id}
             competitionId={props.competitionId}
             answer={props.answer1}
+            onLocalAnswer={props.onLocalAnswer}
           >
             <PlayerComponent
               name={props.answer1}
@@ -83,6 +84,7 @@ const PlayerSelection = ({ ...props }) => {
             questionId={props.id}
             competitionId={props.competitionId}
             answer={props.answer2}
+            onLocalAnswer={props.onLocalAnswer}
           >
             <PlayerComponent
               name={props.answer2}
@@ -97,6 +99,7 @@ const PlayerSelection = ({ ...props }) => {
             questionId={props.id}
             competitionId={props.competitionId}
             answer={props.answer3}
+            onLocalAnswer={props.onLocalAnswer}
           >
             <PlayerComponent
               name={props.answer3}
@@ -111,6 +114,7 @@ const PlayerSelection = ({ ...props }) => {
             questionId={props.id}
             competitionId={props.competitionId}
             answer={props.answer4}
+            onLocalAnswer={props.onLocalAnswer}
           >
             <PlayerComponent
               name={props.answer4}

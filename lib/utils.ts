@@ -72,3 +72,7 @@ export function stripUndefined<T>(obj: T): Pick<T, NonNullableProps<T>> {
   for (const key in obj) if (obj[key] !== undefined) result[key] = obj[key];
   return result;
 }
+
+export const validateEmail = (email: string) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};

@@ -67,6 +67,7 @@ const TrueFalse = ({ ...props }) => {
             competitionId={props.competitionId}
             questionId={props.id}
             answer="True"
+            onLocalAnswer={props.onLocalAnswer}
           >
             <Button
               selected={selected == "True"}
@@ -81,6 +82,7 @@ const TrueFalse = ({ ...props }) => {
             competitionId={props.competitionId}
             questionId={props.id}
             answer="False"
+            onLocalAnswer={props.onLocalAnswer}
           >
             <Button
               selected={selected == "False"}

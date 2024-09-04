@@ -5,6 +5,7 @@ import {
   decimal,
   index,
   integer,
+  jsonb,
   pgTable,
   primaryKey,
   serial,

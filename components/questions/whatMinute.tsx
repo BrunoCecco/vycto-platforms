@@ -37,6 +37,7 @@ const WhatMinute = ({ ...props }) => {
             questionId={props.id}
             competitionId={props.competitionId}
             disabled={props.disabled}
+            onLocalAnswer={props.onLocalAnswer}
           />
         </div>
         {props.correctAnswer?.length > 0 ? (

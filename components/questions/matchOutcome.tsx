@@ -30,6 +30,7 @@ const MatchOutcome = ({ ...props }) => {
             questionId={props.id}
             competitionId={props.competitionId}
             answer={props.answer1}
+            onLocalAnswer={props.onLocalAnswer}
           >
             <button
               className={`text-center ${
@@ -68,6 +69,7 @@ const MatchOutcome = ({ ...props }) => {
             questionId={props.id}
             competitionId={props.competitionId}
             answer={props.answer2}
+            onLocalAnswer={props.onLocalAnswer}
           >
             <button
               className={`text-center ${
@@ -102,6 +104,7 @@ const MatchOutcome = ({ ...props }) => {
             questionId={props.id}
             competitionId={props.competitionId}
             answer="Draw"
+            onLocalAnswer={props.onLocalAnswer}
           >
             <button
               className={`w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 ${

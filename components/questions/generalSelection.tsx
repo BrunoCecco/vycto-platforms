@@ -10,12 +10,11 @@ const GeneralSelection = ({ ...props }) => {
   const [selectedOption, setSelectedOption] = useState(
     props.answer.answer || "",
   );
-  const goalOptions = [
-    props.answer1,
-    props.answer2,
-    props.answer3,
-    props.answer4,
-  ];
+  const goalOptions = [];
+  if (props.answer1 && props.answer1 != "") goalOptions.push(props.answer1);
+  if (props.answer2 && props.answer2 != "") goalOptions.push(props.answer2);
+  if (props.answer3 && props.answer3 != "") goalOptions.push(props.answer3);
+  if (props.answer4 && props.answer4 != "") goalOptions.push(props.answer4);
 
   useEffect(() => {
     const updateAnswer = async () => {
@@ -59,17 +58,17 @@ const GeneralSelection = ({ ...props }) => {
         </p>
 
         <div className="flex flex-col justify-center pt-3">
-          <div className="flex w-full flex-wrap items-center justify-between rounded-lg bg-gray-200 p-2">
-            {goalOptions.map((option) => (
+          <div className="flex w-full flex-wrap items-center justify-around rounded-lg bg-gray-200 p-2">
+            {goalOptions.map((option, index) => (
               <Submit
-                key={option}
+                key={"option" + index}
                 userId={props.userId}
                 competitionId={props.competitionId}
                 questionId={props.id}
                 answer={option}
+                onLocalAnswer={props.onLocalAnswer}
               >
                 <button
-                  key={option}
                   disabled={props.disabled}
                   className={`w-max rounded-lg px-4 py-3 text-sm ${
                     selectedOption === option

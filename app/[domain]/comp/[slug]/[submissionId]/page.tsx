@@ -6,9 +6,13 @@ import {
   getQuestionsForCompetition,
   getSiteData,
 } from "@/lib/fetchers";
-import BlogCard from "@/components/old-components/blog-card";
 import db from "@/lib/db";
-import { competitions, SelectUserCompetition, sites } from "@/lib/schema";
+import {
+  competitions,
+  SelectQuestion,
+  SelectUserCompetition,
+  sites,
+} from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import {
   answerQuestion,
@@ -86,14 +90,15 @@ export async function generateStaticParams() {
   return allPaths;
 }
 
-export default async function SiteCompetitionPage({
+export default async function SubmissionPage({
   params,
 }: {
-  params: { domain: string; slug: string };
+  params: { domain: string; slug: string; submissionId: string };
 }) {
   const domain = decodeURIComponent(params.domain);
-  const siteData = await getSiteData(domain);
   const slug = decodeURIComponent(params.slug);
+  const submissionId = decodeURIComponent(params.submissionId);
+  const siteData = await getSiteData(domain);
   const session = await getSession();
   const data = await getCompetitionData(domain, slug);
 
@@ -102,7 +107,11 @@ export default async function SiteCompetitionPage({
   }
 
   if (!session) {
-    redirect(`/login?redirect=${encodeURIComponent(`/${domain}/${slug}`)}`);
+    redirect(
+      `/login?redirect=${encodeURIComponent(
+        `/comp/${domain}/${slug}/${submissionId}`,
+      )}`,
+    );
   }
 
   const questions = await getQuestionsForCompetition(data.id);
@@ -113,13 +122,15 @@ export default async function SiteCompetitionPage({
     session.user.username || session.user.name || session.user.email,
     data.id,
   );
-  if (userComp && "submitted" in userComp && userComp.submitted) {
-    redirect(`/${slug}/${userComp.userId}`);
+  if (!userComp || "submitted" in userComp == false || !userComp.submitted) {
+    redirect(`/comp/${domain}/${slug}`);
   }
   const users = await getCompetitionUsers(data!.id);
+  console.log("submissionId", submissionId, answers);
 
   return (
     <div
+      className=""
       style={{
         backgroundColor: siteData?.color1 ?? "white",
       }}
@@ -136,26 +147,6 @@ export default async function SiteCompetitionPage({
           slug={slug}
         />
       </div>
-      {data.adjacentCompetitions.length > 0 && (
-        <div className="relative pb-20 pt-10 sm:pt-20">
-          <div
-            className="absolute inset-0 z-10 flex items-center"
-            aria-hidden="true"
-          >
-            <div className="w-full border-t border-stone-300 dark:border-stone-700" />
-          </div>
-          <div className="relative z-20 mx-auto w-fit rounded-full bg-white px-6 text-center text-sm text-stone-500 dark:bg-black dark:text-stone-400">
-            More competitions
-          </div>
-        </div>
-      )}
-      {data.adjacentCompetitions && (
-        <div className="mx-5 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 pb-20 md:grid-cols-2 xl:mx-auto xl:grid-cols-3">
-          {data.adjacentCompetitions.map((data: any, index: number) => (
-            <BlogCard key={index} data={data} />
-          ))}
-        </div>
-      )}
     </div>
   );
 }

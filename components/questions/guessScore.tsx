@@ -76,6 +76,7 @@ const GuessScore = ({ ...props }) => {
           questionId={props.id}
           competitionId={props.competitionId}
           answer={`${scoreHome}-${scoreAway}`}
+          onLocalAnswer={props.onLocalAnswer}
         >
           <button
             className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-white"

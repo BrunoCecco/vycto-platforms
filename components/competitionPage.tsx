@@ -20,9 +20,13 @@ import TabSelector from "@/components/tabSelector";
 import SubmitAnswersForm from "@/components/form/submit-answers-form";
 import GeneralNumber from "@/components/questions/generalNumber";
 import Rewards from "@/components/rewards";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Leaderboard from "./leaderboard";
 import GameStats from "./gameStats";
+import LoginToSubmitButton from "@/components/loginToSubmitButton";
+import { useRouter, useSearchParams } from "next/navigation";
+import { submitAnswers } from "@/lib/actions";
+import { toast } from "sonner";
 
 export default function CompetitionPage({
   session,
@@ -44,83 +48,145 @@ export default function CompetitionPage({
   slug: string;
 }) {
   const [activeTab, setActiveTab] = useState("Challenge");
+  const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(
+    {},
+  );
+  // () => {
+  //   if (typeof window !== "undefined") {
+  //     const savedAnswers = localStorage.getItem(`localAnswers_${data.id}`);
+  //     return savedAnswers ? JSON.parse(savedAnswers) : {};
+  //   }
+  //   return {};
+  // },
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session && searchParams && !userComp) {
+      const extractedAnswers: { [key: string]: string } = {};
+      console.log(searchParams);
+      searchParams.forEach((value, key) => {
+        console.log(key, value);
+        extractedAnswers[key] = value;
+      });
+      if (Object.keys(extractedAnswers).length > 0) {
+        setLocalAnswers(extractedAnswers);
+        submitExtractedAnswers(extractedAnswers);
+      }
+    }
+  }, [session, searchParams]);
+
+  const submitExtractedAnswers = async (extractedAnswers: {
+    [key: string]: string;
+  }) => {
+    if (session?.user?.id) {
+      try {
+        const res = await submitAnswers(
+          session.user.id,
+          data.id,
+          extractedAnswers,
+        );
+        if ("error" in res && res.error) {
+          toast.error(res.error);
+        } else {
+          router.refresh();
+          router.push(`/comp/${slug}/${session.user.id}`);
+          toast.success(`Successfully submitted answers!`);
+        }
+      } catch (error) {
+        toast.error("Failed to submit answers.");
+      }
+    }
+  };
+
+  const handleLocalAnswer = (questionId: string, answer: string) => {
+    const newLocalAnswers = { ...localAnswers, [questionId]: answer };
+    setLocalAnswers(newLocalAnswers);
+    // if (typeof window !== "undefined") {
+    //   localStorage.setItem(
+    //     `localAnswers_${data.id}`,
+    //     JSON.stringify(newLocalAnswers),
+    //   );
+    // }
+  };
 
   const getQuestionType = (
     question: SelectQuestion,
     userId: string,
     index: number,
-    answer: SelectAnswer | undefined,
+    answer: SelectAnswer | { answer: string | null } | undefined,
     disabled: boolean,
   ) => {
     switch (question.type) {
       case QuestionType.TrueFalse:
         return (
           <TrueFalse
-            key={index}
             {...question}
             userId={userId}
             answer={answer}
             disabled={disabled}
+            onLocalAnswer={handleLocalAnswer}
           />
         );
       case QuestionType.WhatMinute:
         return (
           <WhatMinute
-            key={index}
             {...question}
             userId={userId}
             answer={answer}
             disabled={disabled}
+            onLocalAnswer={handleLocalAnswer}
           />
         );
       case QuestionType.PlayerSelection:
         return (
           <PlayerSelection
-            key={index}
             {...question}
             userId={userId}
             answer={answer}
             disabled={disabled}
+            onLocalAnswer={handleLocalAnswer}
           />
         );
       case QuestionType.MatchOutcome:
         return (
           <MatchOutcome
-            key={index}
             {...question}
             userId={userId}
             answer={answer}
             disabled={disabled}
+            onLocalAnswer={handleLocalAnswer}
           />
         );
       case QuestionType.GuessScore:
         return (
           <GuessScore
-            key={index}
             {...question}
             userId={userId}
             answer={answer}
             disabled={disabled}
+            onLocalAnswer={handleLocalAnswer}
           />
         );
       case QuestionType.GeneralSelection:
         return (
           <GeneralSelection
-            key={index}
             {...question}
             userId={userId}
             answer={answer}
             disabled={disabled}
+            onLocalAnswer={handleLocalAnswer}
           />
         );
       case QuestionType.GeneralNumber:
         return (
           <GeneralNumber
-            key={index}
             {...question}
             userId={userId}
             answer={answer}
             disabled={disabled}
+            onLocalAnswer={handleLocalAnswer}
           />
         );
       default:
@@ -168,11 +234,11 @@ export default function CompetitionPage({
             questions.map((question: any, index: number) => {
               const answer = answers?.find(
                 (a: any) => a.questionId === question.id,
-              );
+              ) || { answer: searchParams.get(question.id) };
               const disabled =
                 userComp && "submitted" in userComp && userComp?.submitted;
               return (
-                <div key={index}>
+                <div key={"compquestion" + index}>
                   {getQuestionType(
                     question,
                     session?.user.id!,
@@ -183,15 +249,23 @@ export default function CompetitionPage({
                 </div>
               );
             })}
-          {userComp && "submitted" in userComp && userComp.submitted ? (
-            <div className="mx-auto flex h-8 w-fit items-center justify-center space-x-2 rounded-md border border-green-600 bg-green-600 px-2 text-sm text-white sm:h-10">
-              Answers Submitted
-            </div>
+          {session ? (
+            userComp && "submitted" in userComp && userComp.submitted ? (
+              <div className="mx-auto flex h-8 w-fit items-center justify-center space-x-2 rounded-md border border-green-600 bg-green-600 px-2 text-sm text-white sm:h-10">
+                Answers Submitted
+              </div>
+            ) : (
+              <SubmitAnswersForm
+                userId={session?.user.id!}
+                competitionId={data.id}
+                slug={slug}
+                localAnswers={localAnswers}
+              />
+            )
           ) : (
-            <SubmitAnswersForm
-              userId={session?.user.id!}
-              competitionId={data.id}
-              slug={slug}
+            <LoginToSubmitButton
+              localAnswers={localAnswers}
+              competitionSlug={slug}
             />
           )}
         </div>

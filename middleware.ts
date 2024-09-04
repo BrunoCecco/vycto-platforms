@@ -44,8 +44,15 @@ export default async function middleware(req: NextRequest) {
     hostname != process.env.NEXT_PUBLIC_ROOT_DOMAIN
   ) {
     const session = await getToken({ req });
-    console.log(session, "session", req.url, hostname);
-    if (!session && path !== "/login" && path !== "/verify") {
+    if (!session && path.includes("/comp")) {
+      return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+    }
+    if (
+      !session &&
+      path !== "/login" &&
+      path !== "/verify" &&
+      !path.includes("/comp")
+    ) {
       return NextResponse.redirect(new URL("/login", req.url));
     } else if (session && (path === "/login" || path === "/verify")) {
       return NextResponse.redirect(new URL("/", req.url));
