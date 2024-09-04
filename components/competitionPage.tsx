@@ -211,21 +211,8 @@ export default function CompetitionPage({
           {userComp && "submitted" in userComp && userComp.submitted ? (
             <GameStats
               competitionTitle={data.title}
-              username={
-                session?.user.username ||
-                session?.user.email ||
-                session?.user.name ||
-                "User"
-              }
-              submissionDate={
-                new Date(userComp.submissionDate).toDateString() ||
-                "09 Aug 2024"
-              }
-              submissionTime="15:42"
-              totalPoints={parseFloat(userComp.points || "0").toFixed(2)}
-              percentile="Top 4%"
-              rank="33rd"
-              bonusPoints={0.5}
+              userComp={userComp}
+              users={users}
             />
           ) : null}
           {questions &&
