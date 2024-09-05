@@ -101,12 +101,6 @@ export default function CompetitionPage({
   const handleLocalAnswer = (questionId: string, answer: string) => {
     const newLocalAnswers = { ...localAnswers, [questionId]: answer };
     setLocalAnswers(newLocalAnswers);
-    // if (typeof window !== "undefined") {
-    //   localStorage.setItem(
-    //     `localAnswers_${data.id}`,
-    //     JSON.stringify(newLocalAnswers),
-    //   );
-    // }
   };
 
   const getQuestionType = (

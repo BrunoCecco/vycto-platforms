@@ -10,7 +10,7 @@ const Slider: FC<{
   competitionId?: string;
   disabled: boolean;
   onBlur?: (value: number) => void;
-  onLocalAnswer: (questionId: string, answer: string) => void;
+  onLocalAnswer?: (questionId: string, answer: string) => void;
 }> = ({
   userId,
   questionId,
@@ -40,7 +40,7 @@ const Slider: FC<{
       data.append("competitionId", competitionId);
       await answerQuestion(data);
       toast.success("Answer saved!");
-    } else {
+    } else if (onLocalAnswer) {
       onLocalAnswer(questionId, value.toString());
       toast.success("Answer saved locally!");
     }
