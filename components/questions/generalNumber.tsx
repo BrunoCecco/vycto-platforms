@@ -2,13 +2,15 @@
 import Image from "next/image";
 import PointsBadge from "../pointsBadge";
 import Submit from "./submit";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import Input from "../input";
 import QuestionResultBlock from "../questionResultBlock";
 
 const GeneralNumber = ({ ...props }) => {
   const [answer, setAnswer] = useState(props.answer.answer ?? 0);
+
+  const submitButton = useRef<HTMLButtonElement | null>(null);
 
   return (
     <div className="flex w-full items-center justify-center">
@@ -37,20 +39,6 @@ const GeneralNumber = ({ ...props }) => {
           Answer correctly to score points.
         </p>
 
-        <div className="flex flex-col items-center gap-4 text-gray-500">
-          <div className="flex items-center gap-4 md:gap-8">
-            <Input
-              type="number"
-              min={0}
-              disabled={props.disabled}
-              name="answer"
-              value={answer}
-              onChange={(e) => setAnswer(parseInt(e.target.value))}
-              className="w-20 text-center"
-            />
-          </div>
-        </div>
-
         <Submit
           userId={props.userId}
           questionId={props.id}
@@ -58,12 +46,17 @@ const GeneralNumber = ({ ...props }) => {
           answer={answer.toString()}
           onLocalAnswer={props.onLocalAnswer}
         >
-          <button
-            className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-white"
+          <Input
+            type="number"
+            min={0}
             disabled={props.disabled}
-          >
-            Submit
-          </button>
+            name="answer"
+            value={answer}
+            onChange={(e) => setAnswer(parseInt(e.target.value))}
+            className="w-20 text-center"
+            onBlur={() => submitButton?.current?.click()}
+          />
+          <button className="hidden" type="submit" ref={submitButton}></button>
         </Submit>
         {props.correctAnswer?.length > 0 ? (
           <QuestionResultBlock
