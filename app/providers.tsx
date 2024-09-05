@@ -4,10 +4,16 @@ import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 import { ModalProvider } from "@/components/modal/provider";
 import { PostHogProvider } from "posthog-js/react";
+import posthog from "posthog-js";
 
-const options = {
-  api_host: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
-};
+if (typeof window !== "undefined") {
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    person_profiles: "identified_only",
+    capture_pageview: false, // Disable automatic pageview capture, as we capture manually
+    capture_pageleave: true,
+  });
+}
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -15,12 +21,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <Toaster className="dark:hidden" />
       <Toaster theme="dark" className="hidden dark:block" />
       <ModalProvider>
-        <PostHogProvider
-          apiKey={process.env.REACT_APP_PUBLIC_POSTHOG_KEY}
-          options={options}
-        >
-          {children}
-        </PostHogProvider>
+        <PostHogProvider client={posthog}>{children}</PostHogProvider>
       </ModalProvider>
     </SessionProvider>
   );

@@ -5,7 +5,11 @@ import { Providers } from "./providers";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import Script from "next/script";
+import dynamic from "next/dynamic";
 
+const PostHogPageView = dynamic(() => import("./postHogPageView"), {
+  ssr: false,
+});
 const title = "Vycto - Sports Sponsorship Activation & Gamification Platform";
 const description =
   "Gamifying Sports Sponsorships. We help sports brands activate on their sponsorship IP using gamification to generate real, tangible, measurable ROI.";
@@ -43,8 +47,9 @@ export default function RootLayout({
           data-token="p.eyJ1IjogIjllOGNmNTViLTRhOTQtNGU0MC1hZDM1LWU3YjYxMzRkMTJlNyIsICJpZCI6ICIxY2YxNjgyNS0yZDQ3LTQzOTEtYTg2My01NWI2MDcxMDAwY2IiLCAiaG9zdCI6ICJhd3MtZXUtY2VudHJhbC0xIn0.nIz77lsApRDOdpKjlQhXJTHWhbX8u9wN4vWUDsUtgGY"
         />
         <Providers>
-          {children}
+          <PostHogPageView />
           <Analytics />
+          {children}
         </Providers>
       </body>
     </html>
