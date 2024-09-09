@@ -1,6 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import { SelectCompetition, SelectSite, SelectUser } from "@/lib/schema";
+import {
+  SelectCompetition,
+  SelectSite,
+  SelectUser,
+  SelectUserCompetition,
+} from "@/lib/schema";
 import Link from "next/link";
 
 const leaderboardData = [
@@ -37,7 +42,7 @@ const Leaderboard = ({
 }: {
   siteData: SelectSite;
   competition: SelectCompetition;
-  users: SelectUser[];
+  users: SelectUserCompetition[];
 }) => {
   return (
     <div className="container w-full bg-white px-2 py-6 md:rounded-2xl md:p-8">

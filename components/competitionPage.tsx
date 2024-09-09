@@ -45,7 +45,7 @@ export default function CompetitionPage({
   questions: SelectQuestion[] | undefined;
   answers: SelectAnswer[] | undefined;
   userComp: SelectUserCompetition | undefined | { error: string };
-  users: any;
+  users: SelectUserCompetition[];
   slug: string;
 }) {
   const [activeTab, setActiveTab] = useState("Challenge");

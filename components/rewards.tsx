@@ -1,18 +1,59 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { SelectCompetition, SelectSite, SelectUser } from "@/lib/schema";
+import {
+  SelectCompetition,
+  SelectSite,
+  SelectUser,
+  SelectUserCompetition,
+} from "@/lib/schema";
 import Leaderboard from "./leaderboard";
+import { getCompetitionWinnerData } from "@/lib/fetchers";
 
 interface RewardsProps {
   siteData: SelectSite;
   competition: SelectCompetition;
-  users: SelectUser[];
+  users: SelectUserCompetition[];
 }
 
 const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [rewardWinners, setRewardWinners] = useState<SelectUserCompetition[]>(
+    [],
+  );
+  const [reward2Winners, setReward2Winners] = useState<SelectUserCompetition[]>(
+    [],
+  );
+  const [reward3Winners, setReward3Winners] = useState<SelectUserCompetition[]>(
+    [],
+  );
+
+  useEffect(() => {
+    const fetchWinnerData = async () => {
+      const winnerData = await getCompetitionWinnerData(competition.id);
+      if (winnerData?.sortedUsers && winnerData) {
+        setRewardWinners(
+          winnerData.sortedUsers.slice(0, winnerData.rewardWinners!),
+        );
+        setReward2Winners(
+          winnerData.sortedUsers.slice(
+            winnerData.rewardWinners!,
+            winnerData.rewardWinners! + winnerData.reward2Winners!,
+          ),
+        );
+        setReward3Winners(
+          winnerData.sortedUsers.slice(
+            winnerData.rewardWinners! + winnerData.reward2Winners!,
+            winnerData.rewardWinners! +
+              winnerData.reward2Winners! +
+              winnerData.reward3Winners!,
+          ),
+        );
+      }
+    };
+    fetchWinnerData();
+  }, [competition.id]);
 
   const rewards = [
     {
@@ -74,20 +115,10 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
         <h2 className="text-xl font-bold">{rewards[currentIndex].title}</h2>
         <p className="text-md">{rewards[currentIndex].description}</p>
       </div>
-      <Leaderboard
-        siteData={siteData}
-        competition={competition}
-        users={users}
-      />
     </div>
   ) : (
     <div className="py-12 text-center">
       <h2>Sorry, no rewards available yet</h2>
-      <Leaderboard
-        siteData={siteData}
-        competition={competition}
-        users={users}
-      />
     </div>
   );
 };
