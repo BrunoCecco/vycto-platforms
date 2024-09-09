@@ -50,11 +50,11 @@ const AdminTable: React.FC = () => {
   };
 
   return (
-    <div className="overflow-x-auto p-12">
+    <div className="overflow-x-auto rounded-2xl bg-white px-4 py-6">
       <table className="min-w-full table-auto border-collapse">
-        <thead className="bg-white text-left text-xs font-medium uppercase text-gray-500">
+        <thead className="text-md border-b-2 bg-white text-left font-medium">
           <tr>
-            <th className="px-4 py-2">Name & Surname</th>
+            <th className="px-4 py-2">User</th>
             <th className="px-4 py-2">Email</th>
             <th className="px-4 py-2">Date Created</th>
             <th className="px-4 py-2">Active</th>
@@ -62,8 +62,8 @@ const AdminTable: React.FC = () => {
         </thead>
         <tbody className="bg-white">
           {users.map((user) => (
-            <tr key={user.id} className="border-t border-gray-200">
-              <td className="flex items-center px-4 py-3">
+            <tr key={user.id}>
+              <td className="flex items-center px-4 py-5">
                 <div className="relative mr-3 h-10 w-10">
                   {/* Using Next.js Image component for avatar */}
                   <Image
@@ -95,12 +95,12 @@ const AdminTable: React.FC = () => {
                     className="peer sr-only"
                   />
                   <div
-                    className={`h-6 w-11 rounded-full bg-gray-200 transition-colors duration-300
+                    className={`h-5 w-8 rounded-full bg-gray-200 transition-colors duration-300
                       peer-checked:bg-green-500 peer-focus:ring-2 peer-focus:ring-green-500 peer-focus:ring-offset-2`}
                   ></div>
                   <span
-                    className={`absolute left-1 top-1 h-4 w-4 transform rounded-full bg-white 
-                    transition-transform peer-checked:translate-x-5`}
+                    className={`absolute left-1 h-3 w-3 transform rounded-full bg-white 
+                    transition-transform peer-checked:translate-x-3`}
                   ></span>
                 </label>
               </td>
