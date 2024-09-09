@@ -191,14 +191,7 @@ export default function CompetitionPage({
       <CompetitionHeader session={session} users={users} data={data} />
       <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab == "Rewards" && (
-        <Rewards
-          rewardTitle={data.rewardTitle}
-          rewardDescription={data.rewardDescription}
-          rewardImage={data.rewardImage}
-          reward2Title={data.reward2Title}
-          reward2Description={data.reward2Description}
-          reward2Image={data.reward2Image}
-        />
+        <Rewards siteData={siteData} competition={data} users={users} />
       )}
       {activeTab == "Challenge" && (
         <div className="mx-auto flex w-full flex-col justify-center gap-12 bg-white py-12 md:gap-20 md:rounded-3xl">

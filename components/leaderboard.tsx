@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { SelectCompetition, SelectSite } from "@/lib/schema";
+import { SelectCompetition, SelectSite, SelectUser } from "@/lib/schema";
 import Link from "next/link";
 
 const leaderboardData = [
@@ -37,14 +37,8 @@ const Leaderboard = ({
 }: {
   siteData: SelectSite;
   competition: SelectCompetition;
-  users: any;
+  users: SelectUser[];
 }) => {
-  var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
-
-  if (sortedUsers.length === 0) {
-    sortedUsers = leaderboardData;
-  }
-
   return (
     <div className="container w-full bg-white px-2 py-6 md:rounded-2xl md:p-8">
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row md:items-center md:py-6">
@@ -87,8 +81,8 @@ const Leaderboard = ({
             </tr>
           </thead>
           <tbody>
-            {sortedUsers.map((user: any, index: number) => (
-              <tr key={user.userId} className="border-b">
+            {users.map((user: any, index: number) => (
+              <tr key={user.userId} className="border-b text-left">
                 <td className="flex items-center space-x-3 py-4">
                   <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
                     <Image
@@ -146,7 +140,7 @@ const Leaderboard = ({
             </tr>
           </thead>
           <tbody>
-            {sortedUsers.map((user: any, index: number) => (
+            {users.map((user: any, index: number) => (
               <tr key={user.userId} className="border-b">
                 <td className="pr-2 text-gray-900">{index + 1}</td>
                 <td className="flex items-center py-4">

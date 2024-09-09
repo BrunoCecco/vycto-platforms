@@ -2,36 +2,28 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { SelectCompetition, SelectSite, SelectUser } from "@/lib/schema";
+import Leaderboard from "./leaderboard";
 
 interface RewardsProps {
-  rewardTitle: any;
-  rewardDescription: any;
-  rewardImage: any;
-  reward2Title: any;
-  reward2Description: any;
-  reward2Image: any;
+  siteData: SelectSite;
+  competition: SelectCompetition;
+  users: SelectUser[];
 }
 
-const Rewards: React.FC<RewardsProps> = ({
-  rewardTitle,
-  rewardDescription,
-  rewardImage,
-  reward2Title,
-  reward2Description,
-  reward2Image,
-}) => {
+const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const rewards = [
     {
-      src: rewardImage,
-      title: rewardTitle,
-      description: rewardDescription,
+      src: competition.rewardImage,
+      title: competition.rewardTitle,
+      description: competition.rewardDescription,
     },
     {
-      src: reward2Image,
-      title: reward2Title,
-      description: reward2Description,
+      src: competition.reward2Image,
+      title: competition.reward2Title,
+      description: competition.reward2Description,
     },
   ];
 
@@ -43,7 +35,7 @@ const Rewards: React.FC<RewardsProps> = ({
     setCurrentIndex((prevIndex) => (prevIndex === 1 ? 0 : prevIndex + 1));
   };
 
-  return rewardTitle?.length > 0 && reward2Title?.length > 0 ? (
+  return competition?.rewardTitle && competition?.reward2Title ? (
     <div className="relative mx-auto w-full max-w-xl">
       <div className="relative overflow-hidden">
         <div
@@ -82,10 +74,20 @@ const Rewards: React.FC<RewardsProps> = ({
         <h2 className="text-xl font-bold">{rewards[currentIndex].title}</h2>
         <p className="text-md">{rewards[currentIndex].description}</p>
       </div>
+      <Leaderboard
+        siteData={siteData}
+        competition={competition}
+        users={users}
+      />
     </div>
   ) : (
-    <div className="text-center">
-      <h2>Sorry, no rewards available</h2>
+    <div className="py-12 text-center">
+      <h2>Sorry, no rewards available yet</h2>
+      <Leaderboard
+        siteData={siteData}
+        competition={competition}
+        users={users}
+      />
     </div>
   );
 };

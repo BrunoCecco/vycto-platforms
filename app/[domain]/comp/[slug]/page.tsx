@@ -117,6 +117,7 @@ export default async function SiteCompetitionPage({
     redirect(`/comp/${slug}/${userComp.userId}`);
   }
   const users = await getCompetitionUsers(data!.id);
+  var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
 
   return (
     <div
@@ -131,7 +132,7 @@ export default async function SiteCompetitionPage({
           siteData={siteData}
           questions={questions}
           answers={answers}
-          users={users}
+          users={sortedUsers}
           userComp={userComp}
           slug={slug}
         />

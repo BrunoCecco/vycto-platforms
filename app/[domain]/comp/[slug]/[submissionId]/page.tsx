@@ -122,7 +122,7 @@ export default async function SubmissionPage({
     redirect(`/comp/${domain}/${slug}`);
   }
   const users = await getCompetitionUsers(data!.id);
-  console.log("submissionId", submissionId, answers);
+  var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
 
   return (
     <div
@@ -138,7 +138,7 @@ export default async function SubmissionPage({
           siteData={siteData}
           questions={questions}
           answers={answers}
-          users={users}
+          users={sortedUsers}
           userComp={userComp}
           slug={slug}
         />
