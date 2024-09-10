@@ -77,7 +77,7 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
   };
 
   return competition?.rewardTitle && competition?.reward2Title ? (
-    <div className="relative mx-auto w-full max-w-xl">
+    <div className="relative mx-auto w-full max-w-xl py-12">
       <div className="relative overflow-hidden">
         <div
           className="flex justify-between transition-transform duration-500"
@@ -115,6 +115,13 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
         <h2 className="text-xl font-bold">{rewards[currentIndex].title}</h2>
         <p className="text-md">{rewards[currentIndex].description}</p>
       </div>
+      {rewardWinners.length > 0 && (
+        <Leaderboard
+          siteData={siteData}
+          competition={competition}
+          users={currentIndex === 0 ? rewardWinners : reward2Winners}
+        />
+      )}
     </div>
   ) : (
     <div className="py-12 text-center">

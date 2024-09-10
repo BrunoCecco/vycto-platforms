@@ -151,7 +151,7 @@ export default async function SiteCompetitionPage({
         </div>
       )}
       {data.adjacentCompetitions && (
-        <div className="mx-5 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:mx-auto xl:grid-cols-3">
+        <div className="mx-5 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 pb-12 md:grid-cols-2 xl:mx-auto xl:grid-cols-3">
           {data.adjacentCompetitions.map((data: any, index: number) => (
             <BlogCard key={index} data={data} />
           ))}
