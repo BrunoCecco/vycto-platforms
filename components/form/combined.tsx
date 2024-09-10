@@ -18,6 +18,7 @@ interface InputAttr {
   placeholder?: string;
   maxLength?: number;
   pattern?: string;
+  min?: string;
 }
 export default function CombinedForm({
   title,

@@ -45,7 +45,7 @@ export default async function CompetitionSettings({
 
         <Form
           title="Thumbnail image"
-          description="The thumbnail image for your competition. Accepted formats: .png, .jpg, .jpeg"
+          description="The thumbnail image for your competition."
           helpText="Max file size 50MB. Recommended size 1200x630."
           inputAttrs={{
             name: "image",

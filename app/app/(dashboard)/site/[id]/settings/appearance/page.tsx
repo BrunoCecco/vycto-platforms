@@ -15,7 +15,7 @@ export default async function SiteSettingsAppearance({
     <div className="flex flex-col space-y-6">
       <Form
         title="Thumbnail image"
-        description="The thumbnail image for your site. Accepted formats: .png, .jpg, .jpeg"
+        description="The thumbnail image for your site."
         helpText="Max file size 50MB. Recommended size 1200x630."
         inputAttrs={{
           name: "image",
@@ -26,7 +26,7 @@ export default async function SiteSettingsAppearance({
       />
       <Form
         title="Logo"
-        description="The logo for your site. Accepted formats: .png, .jpg, .jpeg"
+        description="The logo for your site."
         helpText="Max file size 50MB. Recommended size 400x400."
         inputAttrs={{
           name: "logo",

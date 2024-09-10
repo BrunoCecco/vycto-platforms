@@ -35,6 +35,7 @@ export default async function CompetitionRewards({
           descriptions={[
             "Title of the main reward for this competition.",
             "Describe the main reward for this competition.",
+            "Number of winners for the main reward.",
           ]}
           helpText="Please enter the details for the main reward."
           inputAttrs={[
@@ -50,13 +51,19 @@ export default async function CompetitionRewards({
               defaultValue: data?.rewardDescription!,
               placeholder: "Win a season ticket worth $2000",
             },
+            {
+              name: "rewardWinners",
+              type: "number",
+              min: "0",
+              defaultValue: data?.rewardWinners?.toString() || "1",
+            },
           ]}
           handleSubmit={updateCompetitionMetadata}
         />
 
         <Form
           title="Main Reward Image"
-          description="The thumbnail image for the main reward. Accepted formats: .png, .jpg, .jpeg"
+          description="The thumbnail image for the main reward."
           helpText="Please enter the image for the main reward."
           inputAttrs={{
             name: "rewardImage",
@@ -71,6 +78,7 @@ export default async function CompetitionRewards({
           descriptions={[
             "Title of the secondary rewards for this competition.",
             "Describe the secondary rewards for this competition.",
+            "Number of winners for the secondary reward.",
           ]}
           helpText="Please enter the details for the secondary reward."
           inputAttrs={[
@@ -86,13 +94,19 @@ export default async function CompetitionRewards({
               defaultValue: data?.reward2Description!,
               placeholder: "Win a %15 discount on all games",
             },
+            {
+              name: "reward2Winners",
+              type: "number",
+              min: "0",
+              defaultValue: data?.reward2Winners?.toString() || "1",
+            },
           ]}
           handleSubmit={updateCompetitionMetadata}
         />
 
         <Form
           title="Secondary Reward Image"
-          description="The thumbnail image for the secondary reward. Accepted formats: .png, .jpg, .jpeg"
+          description="The thumbnail image for the secondary reward."
           helpText="Please enter the image for the secondary reward."
           inputAttrs={{
             name: "reward2Image",

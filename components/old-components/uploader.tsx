@@ -4,17 +4,20 @@ import { useState, useCallback, useMemo, ChangeEvent } from "react";
 import { toast } from "sonner";
 import LoadingDots from "@/components/icons/loading-dots";
 import Image from "next/image";
+import { capitalize } from "@/lib/utils";
 
 export default function Uploader({
   id,
   defaultValue,
   name,
   upload,
+  title,
 }: {
   id: string;
   defaultValue: string | null;
   name: string;
   upload: (name: string, value: string) => void;
+  title?: string;
 }) {
   const [data, setData] = useState({
     [name]: defaultValue,
@@ -93,12 +96,14 @@ export default function Uploader({
       }}
     >
       <div>
-        {/* <div className="mb-4 space-y-1">
-          <h2 className="text-xl font-semibold">Upload a file</h2>
-          <p className="text-sm text-gray-500">
-            Accepted formats: .png, .jpg, .gif, .mp4
-          </p>
-        </div> */}
+        {title && (
+          <div className="mb-4 space-y-1">
+            <h2 className="text-xl font-semibold">{capitalize(title)}</h2>
+            <p className="text-sm text-gray-500">
+              Accepted formats: .png, .jpg, .gif, .mp4
+            </p>
+          </div>
+        )}
         <label
           htmlFor={`${id}-upload-${name}`}
           className="group relative mt-2 flex h-72 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50"

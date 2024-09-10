@@ -40,6 +40,7 @@ export default function Form({
     inputAttrs.name.includes("Image") ? (
     <Uploader
       id={inputAttrs.name}
+      title={title}
       defaultValue={inputAttrs.defaultValue}
       name={inputAttrs.name}
       upload={(name: string, value: string) => {
