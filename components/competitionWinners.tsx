@@ -1,13 +1,8 @@
 "use client";
-import { getCompetitionWinnerData } from "@/lib/fetchers";
 import Image from "next/image";
 import Link from "next/link";
 import { SelectCompetition, SelectUserCompetition } from "@/lib/schema";
 import { useEffect, useState } from "react";
-
-type CompetitionWithSite = SelectCompetition & {
-  site: { subdomain: string | null } | null;
-};
 
 const User = ({
   user,
@@ -26,7 +21,7 @@ const User = ({
       <div className="flex items-center py-4">
         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
           <Image
-            src={`https://avatar.vercel.sh/${user.username}`}
+            src={`https://avatar.vercel.sh/${user.username || user.email}`}
             alt="Profile"
             fill={true}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

@@ -50,7 +50,7 @@ export default function LoginToSubmitButton({
       });
 
       if (result?.ok && !result?.error) {
-        setMessage("Email sent - check your inbox!");
+        setMessage("Email sent - check your inbox to confirm your answers!");
       } else {
         setError("Error sending email - try again?");
       }
@@ -62,7 +62,7 @@ export default function LoginToSubmitButton({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center justify-center gap-4 px-8 lg:px-0 ">
       <Input
         type="email"
         placeholder="Email"
@@ -81,9 +81,7 @@ export default function LoginToSubmitButton({
         {loading ? (
           <LoadingDots color="#A8A29E" />
         ) : (
-          <p className="text-sm font-medium text-stone-600 ">
-            Sign in with email to submit
-          </p>
+          <p className="text-sm font-medium text-stone-600 ">Submit Answers</p>
         )}
       </button>
       {message && (
