@@ -8,7 +8,7 @@ export default async function SiteLayout({
   params: { id: string };
   children: ReactNode;
 }) {
-  const data = await db.query.sites.findFirst({
+  const siteData = await db.query.sites.findFirst({
     where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
   });
 
@@ -16,7 +16,7 @@ export default async function SiteLayout({
     <div
       className="flex max-w-screen-xl flex-col space-y-12 p-8"
       style={{
-        backgroundColor: data?.color1,
+        backgroundColor: siteData?.color1,
         minHeight: "100vh",
       }}
     >
