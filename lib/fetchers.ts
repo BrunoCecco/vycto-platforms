@@ -41,6 +41,25 @@ export async function getSiteData(domain: string) {
   )();
 }
 
+export async function getAllCompetitions() {
+  return await unstable_cache(
+    async () => {
+      return await db.query.competitions.findMany({
+        where: eq(competitions.published, true),
+        orderBy: [desc(competitions.createdAt)],
+        with: {
+          site: true,
+        },
+      });
+    },
+    ["all-competitions"],
+    {
+      revalidate: 3600, // Cache for 1 hour
+      tags: ["all-competitions"],
+    },
+  )();
+}
+
 export async function getCompetitionsForSite(domain: string) {
   const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
     ? domain.replace(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`, "")
