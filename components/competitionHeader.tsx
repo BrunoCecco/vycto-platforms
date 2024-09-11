@@ -2,7 +2,6 @@
 
 import BlurImage from "@/components/old-components/blur-image";
 import MDX from "@/components/old-components/mdx";
-import EnterCompetitionButton from "@/components/old-components/enter-competition-button";
 import Image from "next/image";
 import TabSelector from "./tabSelector";
 import { placeholderBlurhash } from "@/lib/utils";

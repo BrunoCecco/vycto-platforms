@@ -422,26 +422,32 @@ export async function calculateCompetitionPoints(competitionId: string) {
 }
 
 export async function getCompetitionWinnerData(competitionId: string) {
-  const competitionUsers = await db.query.userCompetitions.findMany({
-    where: eq(userCompetitions.competitionId, competitionId),
-  });
-  const numWinnerData = await db.query.competitions.findFirst({
-    where: eq(competitions.id, competitionId),
-    columns: {
-      rewardWinners: true,
-      reward2Winners: true,
-      reward3Winners: true,
-    },
-  });
-  var sortedUsers = competitionUsers.sort((a, b) => {
-    let aPoints = parseFloat(a.points || "0");
-    let bPoints = parseFloat(b.points || "0");
-    return bPoints - aPoints;
-  });
-  return {
-    sortedUsers: sortedUsers,
-    rewardWinners: numWinnerData?.rewardWinners || 0,
-    reward2Winners: numWinnerData?.reward2Winners || 0,
-    reward3Winners: numWinnerData?.reward3Winners || 0,
-  };
+  try {
+    const competitionUsers = await db.query.userCompetitions.findMany({
+      where: eq(userCompetitions.competitionId, competitionId),
+    });
+    const numWinnerData = await db.query.competitions.findFirst({
+      where: eq(competitions.id, competitionId),
+      columns: {
+        rewardWinners: true,
+        reward2Winners: true,
+        reward3Winners: true,
+      },
+    });
+
+    var sortedUsers = competitionUsers.sort((a, b) => {
+      let aPoints = parseFloat(a.points || "0");
+      let bPoints = parseFloat(b.points || "0");
+      return bPoints - aPoints;
+    });
+
+    return {
+      sortedUsers: sortedUsers,
+      rewardWinners: numWinnerData?.rewardWinners || 0,
+      reward2Winners: numWinnerData?.reward2Winners || 0,
+      reward3Winners: numWinnerData?.reward3Winners || 0,
+    };
+  } catch (error) {
+    console.log(error);
+  }
 }

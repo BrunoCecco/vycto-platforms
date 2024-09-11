@@ -19,41 +19,6 @@ interface RewardsProps {
 
 const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [rewardWinners, setRewardWinners] = useState<SelectUserCompetition[]>(
-    [],
-  );
-  const [reward2Winners, setReward2Winners] = useState<SelectUserCompetition[]>(
-    [],
-  );
-  const [reward3Winners, setReward3Winners] = useState<SelectUserCompetition[]>(
-    [],
-  );
-
-  useEffect(() => {
-    const fetchWinnerData = async () => {
-      const winnerData = await getCompetitionWinnerData(competition.id);
-      if (winnerData?.sortedUsers && winnerData) {
-        setRewardWinners(
-          winnerData.sortedUsers.slice(0, winnerData.rewardWinners!),
-        );
-        setReward2Winners(
-          winnerData.sortedUsers.slice(
-            winnerData.rewardWinners!,
-            winnerData.rewardWinners! + winnerData.reward2Winners!,
-          ),
-        );
-        setReward3Winners(
-          winnerData.sortedUsers.slice(
-            winnerData.rewardWinners! + winnerData.reward2Winners!,
-            winnerData.rewardWinners! +
-              winnerData.reward2Winners! +
-              winnerData.reward3Winners!,
-          ),
-        );
-      }
-    };
-    fetchWinnerData();
-  }, [competition.id]);
 
   const rewards = [
     {
@@ -115,13 +80,6 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
         <h2 className="text-xl font-bold">{rewards[currentIndex].title}</h2>
         <p className="text-md">{rewards[currentIndex].description}</p>
       </div>
-      {rewardWinners.length > 0 && (
-        <Leaderboard
-          siteData={siteData}
-          competition={competition}
-          users={currentIndex === 0 ? rewardWinners : reward2Winners}
-        />
-      )}
     </div>
   ) : (
     <div className="py-12 text-center">

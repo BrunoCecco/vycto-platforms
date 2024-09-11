@@ -3,6 +3,7 @@ import {
   getAnswersForUser,
   getCompetitionData,
   getCompetitionUsers,
+  getCompetitionWinnerData,
   getQuestionsForCompetition,
   getSiteData,
 } from "@/lib/fetchers";
@@ -120,6 +121,7 @@ export default async function SiteCompetitionPage({
   }
   const users = await getCompetitionUsers(data!.id);
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
+  const winnerData = await getCompetitionWinnerData(data.id);
 
   return (
     <div
@@ -137,6 +139,7 @@ export default async function SiteCompetitionPage({
           users={sortedUsers}
           userComp={userComp}
           slug={slug}
+          winnerData={winnerData}
         />
       </div>
       {data.adjacentCompetitions.length > 0 && (

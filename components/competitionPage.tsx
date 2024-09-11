@@ -4,6 +4,7 @@ import BlogCard from "@/components/old-components/blog-card";
 import {
   competitions,
   SelectAnswer,
+  SelectCompetition,
   SelectQuestion,
   SelectUserCompetition,
   sites,
@@ -28,6 +29,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { submitAnswers } from "@/lib/actions";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
+import CompetitionWinners from "./competitionWinners";
 
 export default function CompetitionPage({
   session,
@@ -38,15 +40,17 @@ export default function CompetitionPage({
   userComp,
   users,
   slug,
+  winnerData,
 }: {
   session: any;
-  data: any;
+  data: SelectCompetition;
   siteData: any;
   questions: SelectQuestion[] | undefined;
   answers: SelectAnswer[] | undefined;
   userComp: SelectUserCompetition | undefined | { error: string };
   users: SelectUserCompetition[];
   slug: string;
+  winnerData: any;
 }) {
   const [activeTab, setActiveTab] = useState("Challenge");
   const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(
@@ -56,6 +60,10 @@ export default function CompetitionPage({
   const searchParams = useSearchParams();
   const router = useRouter();
   const posthog = usePostHog();
+
+  const url = process.env.NEXT_PUBLIC_VERCEL_ENV
+    ? `https://${siteData?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/comp/${data.slug}`
+    : `http://${siteData?.subdomain}.localhost:3000/comp/${data.slug}`;
 
   useEffect(() => {
     if (session && searchParams && !userComp) {
@@ -197,7 +205,7 @@ export default function CompetitionPage({
         <div className="mx-auto flex w-full flex-col justify-center gap-12 bg-white py-12 md:gap-20 md:rounded-3xl">
           {userComp && "submitted" in userComp && userComp.submitted ? (
             <GameStats
-              competitionTitle={data.title}
+              competitionTitle={data.title!}
               userComp={userComp}
               users={users}
             />
@@ -243,7 +251,12 @@ export default function CompetitionPage({
         </div>
       )}
       {activeTab == "Leaderboard" && (
-        <div className="flex justify-center md:px-8">
+        <div className="flex flex-col justify-center md:px-8">
+          <CompetitionWinners
+            winnerData={winnerData}
+            url={url}
+            adminView={false}
+          />
           <Leaderboard siteData={siteData} competition={data} users={users} />
         </div>
       )}
