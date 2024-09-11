@@ -214,6 +214,8 @@ export const userCompetitions = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
     username: text("username"),
+    email: text("email"),
+    image: text("image"),
     competitionId: text("competitionId")
       .notNull()
       .references(() => competitions.id, {

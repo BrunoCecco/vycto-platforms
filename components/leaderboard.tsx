@@ -145,15 +145,13 @@ const Leaderboard = ({
             </tr>
           </thead>
           <tbody>
-            {users.map((user: any, index: number) => (
+            {users.map((user, index: number) => (
               <tr key={user.userId} className="border-b">
                 <td className="pr-2 text-gray-900">{index + 1}</td>
                 <td className="flex items-center py-4">
                   <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
                     <Image
-                      src={
-                        user.image ?? `https://avatar.vercel.sh/${user.email}`
-                      }
+                      src={`https://avatar.vercel.sh/${user.username}`}
                       alt="Profile"
                       fill={true}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -162,7 +160,7 @@ const Leaderboard = ({
                     />
                   </div>
                   <span className="ml-2 font-bold text-gray-900">
-                    @{user.username || user.email || user.name || "User"}
+                    @{user.username || "User"}
                   </span>
                 </td>
                 <td className="py-4 text-gray-900">

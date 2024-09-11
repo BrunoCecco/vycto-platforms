@@ -162,7 +162,7 @@ export default function SearchPage() {
             ))}
           </ul>
         )}
-        {selectedResult && (
+        {/* {selectedResult && (
           <div>
             <h2 className="mb-2 text-xl font-semibold">
               Drafting a competition for {selectedResult.name} (
@@ -174,7 +174,7 @@ export default function SearchPage() {
               </div>
             )}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -52,15 +52,6 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
             .setLocale("en-UK")
             .toLocaleString(DateTime.DATE_FULL)}
         </div>
-        {session?.user && users && !isUserInCompetition ? (
-          <EnterCompetitionButton
-            userId={session.user.id}
-            username={session.user.username || session.user.email || "User"}
-            competitionId={data.id}
-          />
-        ) : (
-          <div className="font-bold italic">Entered</div>
-        )}
       </div>
 
       {/* Banner */}

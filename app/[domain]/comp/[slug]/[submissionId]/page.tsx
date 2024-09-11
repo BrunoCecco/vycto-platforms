@@ -117,7 +117,13 @@ export default async function SubmissionPage({
   const questions = await getQuestionsForCompetition(data.id);
   const answers = await getAnswersForUser(submissionId, data!.id);
 
-  const userComp = await enterUserToCompetition(submissionId, "", data.id);
+  const userComp = await enterUserToCompetition(
+    submissionId,
+    session.user.username,
+    data.id,
+    session.user.email,
+    session.user.image,
+  );
   if (!userComp || "submitted" in userComp == false || !userComp.submitted) {
     redirect(`/comp/${domain}/${slug}`);
   }

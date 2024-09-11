@@ -110,7 +110,9 @@ export default async function SiteCompetitionPage({
     ? await enterUserToCompetition(
         session.user.id,
         session.user.username || session.user.name || session.user.email,
+        session.user.email,
         data.id,
+        session.user.image,
       )
     : undefined;
   if (userComp && "submitted" in userComp && userComp.submitted) {

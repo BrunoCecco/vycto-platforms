@@ -399,7 +399,9 @@ export const editUser = async (
 export const enterUserToCompetition = async (
   userId: string,
   username: string,
+  email: string,
   competitionId: string,
+  image?: string,
 ) => {
   try {
     // first check if the user is already in the competition
@@ -419,7 +421,9 @@ export const enterUserToCompetition = async (
       .values({
         userId,
         username,
+        email,
         competitionId,
+        image: image ?? "",
       })
       .returning();
 

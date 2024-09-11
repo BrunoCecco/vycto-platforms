@@ -16,6 +16,7 @@ import {
   Github,
   Gift,
   Wand,
+  Trophy,
 } from "lucide-react";
 import {
   useParams,
@@ -97,6 +98,12 @@ export default function Nav({ children }: { children: ReactNode }) {
           href: `/competition/${id}/settings`,
           isActive: segments.includes("settings"),
           icon: <Settings width={18} />,
+        },
+        {
+          name: "Results",
+          href: `/competition/${id}/results`,
+          isActive: segments.includes("results"),
+          icon: <Trophy width={18} />,
         },
       ];
     }

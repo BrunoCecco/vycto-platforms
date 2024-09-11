@@ -1,14 +1,28 @@
 import BlurImage from "@/components/old-components/blur-image";
+import { getCompetitionUsers } from "@/lib/fetchers";
 import type { SelectCompetition, SelectSite } from "@/lib/schema";
 import { placeholderBlurhash } from "@/lib/utils";
 import Link from "next/link";
 
-export default function CompetitionCard({
+const CompetitionCard = async ({
   data,
 }: {
   data: SelectCompetition & { site: SelectSite | null };
-}) {
-  const url = `${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/comp/${data.slug}`;
+}) => {
+  const users = await getCompetitionUsers(data.slug);
+
+  let status;
+  if (new Date(data.date) > new Date()) {
+    const days = Math.ceil(
+      (new Date(data.date).getTime() - new Date().getTime()) /
+        (1000 * 60 * 60 * 24),
+    );
+    status = days + " Days to go";
+  } else if (new Date(data.date) < new Date()) {
+    status = users.length + " Participants";
+  } else {
+    status = "Live";
+  }
 
   return (
     <div className="rounded-xl border border-stone-200 bg-white p-4 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
@@ -45,14 +59,10 @@ export default function CompetitionCard({
       {/* Status & Edit Button */}
       <div className="flex items-center justify-between">
         <p className="text-sm" style={{ color: data.site?.color2 || "#000" }}>
-          {/* {data.status} */}X days to go?
+          {status}
         </p>
         <Link
-          href={
-            process.env.NEXT_PUBLIC_VERCEL_ENV
-              ? `https://${url}`
-              : `http://${data.site?.subdomain}.localhost:3000/comp/${data.slug}`
-          }
+          href={`/competition/${data.id}/editor`}
           className="w-24 rounded-full bg-blue-600 p-2 text-center text-white hover:opacity-75"
         >
           Edit
@@ -60,4 +70,6 @@ export default function CompetitionCard({
       </div>
     </div>
   );
-}
+};
+
+export default CompetitionCard;
