@@ -1,35 +1,42 @@
 import AdminPage from "@/components/adminPage";
 import AnalyticsPage from "@/components/analyticsPage";
 import B2BSignUp from "@/components/b2BSignUp";
+import CompetitionCard from "@/components/competitionCard";
 import Competitions from "@/components/competitions";
 import PoweredBadge from "@/components/poweredBadge";
 import SelectUsername from "@/components/selectUsername";
 import UserSignUp from "@/components/userSignUp";
 import { getAllCompetitions } from "@/lib/fetchers";
-import { SelectSite } from "@/lib/schema";
+import Image from "next/image";
 
 export default async function HomePage() {
   const allComps = await getAllCompetitions();
 
-  // unique sites
-  const sites = [...new Set(allComps.map((comp: any) => comp.site.subdomain))];
-
   return (
-    <div className="min-h-screen space-y-12 bg-purple-100">
-      <h1 className="text-2xl font-bold">Welcome to Vycto 1!</h1>
-      {sites.map((site: any) => {
-        return (
-          <div key={site}>
-            <h1>{site}</h1>
-            {allComps.map((comp: any) => {
-              console.log(comp.site.subdomain, site);
-              if (comp.site.subdomain === site) {
-                return <div key={comp.id}>{comp.name}</div>;
-              }
-            })}
-          </div>
-        );
-      })}
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-purple-100 to-purple-200 lg:flex-row">
+      {/* Left side - Logo/Title */}
+      <div className="flex items-center justify-center p-8 lg:w-1/2 lg:p-16">
+        {/* <h1 className="text-6xl font-bold text-purple-800 lg:text-8xl">
+          VYCTO
+        </h1> */}
+        <Image src="/logo.png" alt="VYCTO" width={100} height={100} />
+      </div>
+
+      {/* Right side - Scrollable Cards */}
+      <div className="max-h-screen overflow-y-auto p-8 lg:w-1/2">
+        <h1 className="mb-12 text-xl font-bold">Top Competitions</h1>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {allComps
+            .filter((comp) => new Date(comp.date).getTime() >= Date.now())
+            .map((comp) => (
+              <CompetitionCard
+                key={comp.id}
+                siteData={comp.site!}
+                competition={comp}
+              />
+            ))}
+        </div>
+      </div>
     </div>
   );
 }
