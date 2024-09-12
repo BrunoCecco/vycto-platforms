@@ -25,14 +25,13 @@ const CompetitionCard = async ({
   }
 
   return (
-    <div className="rounded-xl border border-stone-200 bg-white p-4 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
-      {/* Image Section */}
+    <div className="rounded-lg border border-stone-200 bg-white shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
       <div className="relative h-40 w-full">
         <BlurImage
           alt={data.title ?? "Card thumbnail"}
           layout="fill"
           objectFit="cover"
-          className="rounded-xl"
+          className="rounded-t-lg"
           src={data.image ?? "/placeholder.png"}
           placeholder="blur"
           blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
@@ -44,29 +43,31 @@ const CompetitionCard = async ({
         )}
       </div>
 
-      {/* Title & Sponsor Section */}
-      <div className="flex items-center justify-between py-2">
-        <div>
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
-            {data.title}
-          </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            {data.sponsor}
-          </p>
+      <div className="px-4 pb-4 pt-2">
+        {/* Title & Sponsor Section */}
+        <div className="flex items-center justify-between py-2">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
+              {data.title}
+            </h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {data.sponsor}
+            </p>
+          </div>
         </div>
-      </div>
 
-      {/* Status & Edit Button */}
-      <div className="flex items-center justify-between">
-        <p className="text-sm" style={{ color: data.site?.color2 || "#000" }}>
-          {status}
-        </p>
-        <Link
-          href={`/competition/${data.id}/editor`}
-          className="w-24 rounded-full bg-blue-600 p-2 text-center text-white hover:opacity-75"
-        >
-          Edit
-        </Link>
+        {/* Status & Edit Button */}
+        <div className="flex items-center justify-between">
+          <p className="text-sm" style={{ color: data.site?.color2 || "#000" }}>
+            {status}
+          </p>
+          <Link
+            href={`/competition/${data.id}/editor`}
+            className="w-24 rounded-lg bg-black p-2 text-center text-white hover:opacity-75"
+          >
+            Edit
+          </Link>
+        </div>
       </div>
     </div>
   );
