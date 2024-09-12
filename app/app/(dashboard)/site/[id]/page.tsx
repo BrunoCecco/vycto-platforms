@@ -1,7 +1,6 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
-import Competitions from "@/components/old-components/competitions";
-import CreateCompetitionButton from "@/components/old-components/create-competition-button";
+import EditFanzone from "@/components/editFanzone";
 import db from "@/lib/db";
 
 export default async function SiteCompetitions({
@@ -9,46 +8,37 @@ export default async function SiteCompetitions({
 }: {
   params: { id: string };
 }) {
+  // Fetch session
   const session = await getSession();
   if (!session) {
     redirect("/login");
   }
+
+  // Fetch site data from the database
   const data = await db.query.sites.findFirst({
     where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
   });
 
+  // Handle cases where data is not found or user is not authorized
   if (
     !data ||
-    (data.userId !== session.user.id && data.admin != session.user.email)
+    (data.userId !== session.user.id && data.admin !== session.user.email)
   ) {
     notFound();
   }
 
-  const url = `${data.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`;
+  // Generate the URL
+  const url = process.env.NEXT_PUBLIC_VERCEL_ENV
+    ? `https://${data.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+    : `http://${data.subdomain}.localhost:3000`;
 
+  // Render the EditFanzone component and pass necessary props
   return (
-    <>
-      <div className="flex flex-col items-center justify-between space-y-4 sm:flex-row sm:items-start sm:space-y-0">
-        <div className="flex flex-col items-center gap-4 sm:items-start">
-          <h1 className="truncate font-cal text-xl font-bold sm:w-auto sm:text-3xl dark:text-white">
-            Welcome to the {data.name} playground!
-          </h1>
-          <a
-            href={
-              process.env.NEXT_PUBLIC_VERCEL_ENV
-                ? `https://${url}`
-                : `http://${data.subdomain}.localhost:3000`
-            }
-            target="_blank"
-            rel="noreferrer"
-            className="truncate rounded-md bg-stone-100 px-2 py-1 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-400 dark:hover:bg-stone-700"
-          >
-            {url} ↗
-          </a>
-        </div>
-        <CreateCompetitionButton />
-      </div>
-      <Competitions siteId={decodeURIComponent(params.id)} />
-    </>
+    <EditFanzone
+      data={data}
+      url={url}
+      siteId={decodeURIComponent(params.id)}
+      latestCompetition
+    />
   );
 }

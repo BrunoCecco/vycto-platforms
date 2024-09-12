@@ -57,7 +57,12 @@ export default async function Competitions({
       </div>
 
       {currentCompetitions && currentCompetitions?.length > 0 && (
-        <h1 className="my-4 font-cal text-2xl">Current Competitions</h1>
+        <h2 className="py-10 text-2xl font-semibold text-gray-800">
+          Current Competitions{" "}
+          <span role="img" aria-label="fire">
+            🔥
+          </span>
+        </h2>
       )}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {currentCompetitions.map((competition: any) => (
