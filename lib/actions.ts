@@ -372,6 +372,7 @@ export const editUser = async (
     };
   }
   const value = formData.get(key) as string;
+  console.log("Editing user: ", value);
 
   try {
     const [response] = await db

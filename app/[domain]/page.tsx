@@ -4,7 +4,7 @@ import db from "@/lib/db";
 import FanZone from "@/components/fanZone";
 import { SelectCompetition } from "@/lib/schema";
 import { getSession } from "@/lib/auth";
-import FanZoneHeader from "@/components/fazoneHeader";
+import SettingsButton from "@/components/settings/settingsButton";
 
 export async function generateStaticParams() {
   const allSites = await db.query.sites.findMany({
@@ -54,6 +54,9 @@ export default async function SiteHomePage({
   return (
     <>
       <div className="mx-5 max-w-screen-xl pb-20 lg:mx-24 2xl:mx-auto">
+        <div className="flex justify-end pt-5">
+          <SettingsButton />
+        </div>
         {/* Use the FanZoneHeader component */}
         <FanZone
           siteData={data}

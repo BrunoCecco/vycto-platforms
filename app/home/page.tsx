@@ -15,14 +15,11 @@ export default async function HomePage() {
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-purple-100 to-purple-200 lg:flex-row">
       {/* Left side - Logo/Title */}
-      <div className="flex items-center justify-center p-8 lg:w-1/2 lg:p-16">
-        {/* <h1 className="text-6xl font-bold text-purple-800 lg:text-8xl">
-          VYCTO
-        </h1> */}
+      <div className="mx-auto flex items-center justify-center p-8 lg:w-1/2 lg:p-16">
         <Image src="/logo.png" alt="VYCTO" width={100} height={100} />
       </div>
 
-      {/* Right side - Scrollable Cards */}
+      {/* Right side - Scrollable Cards
       <div className="max-h-screen overflow-y-auto p-8 lg:w-1/2">
         <h1 className="mb-12 text-xl font-bold">Top Competitions</h1>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -36,7 +33,7 @@ export default async function HomePage() {
               />
             ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
