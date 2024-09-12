@@ -1,6 +1,6 @@
 import CreateCompetitionButton from "@/components/old-components/create-competition-button";
 import Competitions from "@/components/old-components/competitions";
-import FanZoneHeader from "./fazoneHeader";
+import EditFanZoneHeader from "./editFanzoneHeader";
 
 export default function EditFanzone({
   data,
@@ -16,10 +16,7 @@ export default function EditFanzone({
 }) {
   return (
     <div>
-      <FanZoneHeader data={data} latestCompetition={latestCompetition} />
-      <div>
-        <CreateCompetitionButton />
-      </div>
+      <EditFanZoneHeader data={data} latestCompetition={latestCompetition} />
       <Competitions siteId={siteId} />
     </div>
   );
