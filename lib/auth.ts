@@ -23,7 +23,7 @@ declare module "next-auth" {
       name: string;
       email: string;
       username: string;
-      image: string | undefined;      
+      image?: string;      
     };
   }
 }
