@@ -57,7 +57,7 @@ export default function Uploader({
 
   return (
     <form
-      className="grid gap-6"
+      className="grid w-full gap-6"
       onSubmit={async (e) => {
         e.preventDefault();
         setSaving(true);
@@ -106,7 +106,7 @@ export default function Uploader({
         )}
         <label
           htmlFor={`${id}-upload-${name}`}
-          className="group relative mt-2 flex h-72 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50"
+          className="group relative mt-2 flex h-44 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50"
         >
           <div
             className="absolute z-[5] h-full w-full rounded-md"
