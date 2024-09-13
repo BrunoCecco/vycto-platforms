@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { createCompetition } from "@/lib/actions";
 import { cn } from "@/lib/utils";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import { Plus } from "lucide-react";
 import LoadingDots from "@/components/icons/loading-dots";
 import va from "@vercel/analytics";
@@ -11,7 +11,12 @@ import va from "@vercel/analytics";
 export default function CreateCompetitionButton() {
   const router = useRouter();
   const { id } = useParams() as { id: string };
+  console.log(id)
   const [isPending, startTransition] = useTransition();
+
+  if (!id || id === "undefined") {
+    return null;
+  }
 
   return (
     <button
@@ -35,7 +40,7 @@ export default function CreateCompetitionButton() {
         <LoadingDots color="#808080" />
       ) : (
         <div className="h-full w-full rounded-lg border border-white shadow-md transition-all hover:shadow-2xl dark:border-stone-700 dark:hover:border-white">
-          <div className="flex h-40 w-full items-center justify-center rounded-t-lg border border-white">
+          <div className="flex h-40 w-full items-center justify-center rounded-t-lg border border-white bg-gray-800">
             <Plus className="h-10 w-10 text-white" />
           </div>
           <h2 className="p-6 text-lg font-semibold text-white">

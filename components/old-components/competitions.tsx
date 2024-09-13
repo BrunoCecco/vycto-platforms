@@ -17,6 +17,7 @@ export default async function Competitions({
     redirect("/login");
   }
 
+
   const competitions = await db.query.competitions.findMany({
     where: (competitions, { and, eq }) =>
       and(
@@ -52,6 +53,7 @@ export default async function Competitions({
         <h1 className="my-4 font-cal text-2xl">Drafted Competitions</h1>
       )}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        
         <CreateCompetitionButton />
         {draftedCompetitions.map((competition: any) => (
           <CompetitionCard key={competition.id} data={competition} />
