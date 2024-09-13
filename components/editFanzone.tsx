@@ -16,7 +16,11 @@ export default function EditFanzone({
 }) {
   return (
     <div>
-      <EditFanZoneHeader data={data} latestCompetition={latestCompetition} />
+      <EditFanZoneHeader
+        siteId={siteId}
+        data={data}
+        latestCompetition={latestCompetition}
+      />
       <Competitions siteId={siteId} />
     </div>
   );

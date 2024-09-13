@@ -17,7 +17,6 @@ export default async function Competitions({
     redirect("/login");
   }
 
-
   const competitions = await db.query.competitions.findMany({
     where: (competitions, { and, eq }) =>
       and(
@@ -52,8 +51,7 @@ export default async function Competitions({
       {draftedCompetitions && draftedCompetitions?.length > 0 && (
         <h1 className="my-4 font-cal text-2xl">Drafted Competitions</h1>
       )}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        
+      <div className="grid grid-cols-1 gap-4 pb-4 sm:grid-cols-2 xl:grid-cols-4">
         <CreateCompetitionButton />
         {draftedCompetitions.map((competition: any) => (
           <CompetitionCard key={competition.id} data={competition} />
@@ -61,21 +59,26 @@ export default async function Competitions({
       </div>
 
       {currentCompetitions && currentCompetitions?.length > 0 && (
-        <h2 className="py-10 text-2xl font-semibold text-gray-800">
+        <h2 className="my-4 text-2xl font-semibold text-gray-800">
           Current Competitions{" "}
           <span role="img" aria-label="fire">
             🔥
           </span>
         </h2>
       )}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 pb-4 sm:grid-cols-2 xl:grid-cols-4">
         {currentCompetitions.map((competition: any) => (
           <CompetitionCard key={competition.id} data={competition} />
         ))}
       </div>
 
       {pastCompetitions && pastCompetitions?.length > 0 && (
-        <h1 className="my-4 font-cal text-2xl">Past Competitions</h1>
+        <h1 className="my-4 font-cal text-2xl">
+          Past Competitions{" "}
+          <span role="img" aria-label="fire">
+            👏
+          </span>
+        </h1>
       )}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {pastCompetitions.map((competition: any) => (
