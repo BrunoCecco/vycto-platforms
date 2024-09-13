@@ -1,4 +1,9 @@
-import { getServerSession, Theme, type NextAuthOptions } from "next-auth";
+import {
+  getServerSession,
+  Session,
+  Theme,
+  type NextAuthOptions,
+} from "next-auth";
 import db from "./db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { Adapter } from "next-auth/adapters";
@@ -9,6 +14,19 @@ import EmailProvider, {
 import { createTransport } from "nodemailer";
 import AppleProvider from "next-auth/providers/apple";
 import FacebookProvider from "next-auth/providers/facebook";
+
+// Add this type declaration at the top of your file
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+      username?: string | null;
+    };
+  }
+}
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
@@ -80,16 +98,23 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-export function getSession() {
-  return getServerSession(authOptions) as Promise<{
-    user: {
-      id: string;
-      name: string;
-      username: string;
-      email: string;
-      image: string;
+export async function getSession() {
+  const session = await getServerSession(authOptions);
+  if (session?.user && session.user.id) {
+    // Fetch the latest user data from the database
+    const user = await db.query.users.findFirst({
+      where: (users, { eq }) => eq(users.id, session.user.id),
+    });
+
+    // Update the session with the latest username
+    return {
+      user: {
+        ...session.user,
+        username: user?.username || session.user.username,
+      },
     };
-  } | null>;
+  }
+  return null;
 }
 
 export function withSiteAuth(action: any) {
@@ -201,6 +226,12 @@ function html(params: { url: string; host: string; theme: Theme }) {
   <table width="100%" border="0" cellspacing="20" cellpadding="0"
     style="background: ${color.mainBackground}; max-width: 600px; margin: auto; border-radius: 10px;">
     <tr>
+      <td align="center"
+        style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+        <img src="https://app.vyctorewards.com/logo.png" alt="VYCTO" width="100" height="100" />
+      </td>      
+    </tr>
+    <tr>    
       <td align="center"
         style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
         Sign in to <strong>${escapedHost}</strong>

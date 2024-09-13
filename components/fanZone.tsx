@@ -1,18 +1,22 @@
 import { FC } from "react";
 import Competitions from "./competitions";
 import { competitions, SelectCompetition, SelectSite } from "@/lib/schema";
+import FanZoneHeader from "./fazoneHeader";
 
 const FanZone = ({
   siteData,
   currentCompetitions,
   pastCompetitions,
+  latestCompetition,
 }: {
   siteData: SelectSite;
   currentCompetitions: SelectCompetition[];
   pastCompetitions: SelectCompetition[];
+  latestCompetition: any;
 }) => {
   return (
-    <>
+    <div>
+      <FanZoneHeader data={siteData} latestCompetition={latestCompetition} />
       <h2 className="py-10 text-2xl font-semibold text-gray-800">
         Current Competitions{" "}
         <span role="img" aria-label="fire">
@@ -39,7 +43,7 @@ const FanZone = ({
           No past competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
-    </>
+    </div>
   );
 };
 

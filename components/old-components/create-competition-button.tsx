@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import { createCompetition } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 import { useParams, useRouter } from "next/navigation";
+import { Plus } from "lucide-react";
 import LoadingDots from "@/components/icons/loading-dots";
 import va from "@vercel/analytics";
 
@@ -23,17 +24,24 @@ export default function CreateCompetitionButton() {
         })
       }
       className={cn(
-        "flex items-center justify-center space-x-2 rounded-lg border p-2 px-4 text-sm transition-all focus:outline-none",
+        "flex items-center font-medium transition-all focus:outline-none",
         isPending
           ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "border border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800",
+          : "active:bg-stone-100 dark:border-stone-700 dark:bg-stone-900 dark:text-white dark:hover:border-blue-500",
       )}
       disabled={isPending}
     >
       {isPending ? (
         <LoadingDots color="#808080" />
       ) : (
-        <p>Create New Competition</p>
+        <div className="h-full w-full rounded-lg border border-white shadow-md transition-all hover:shadow-2xl dark:border-stone-700 dark:hover:border-white">
+          <div className="flex h-40 w-full items-center justify-center rounded-t-lg border border-white">
+            <Plus className="h-10 w-10 text-white" />
+          </div>
+          <h2 className="p-6 text-lg font-semibold text-white">
+            Create a competition
+          </h2>
+        </div>
       )}
     </button>
   );

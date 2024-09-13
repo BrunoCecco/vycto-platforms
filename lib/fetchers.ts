@@ -2,7 +2,7 @@
 
 import { unstable_cache } from "next/cache";
 import db from "./db";
-import { and, desc, eq, not } from "drizzle-orm";
+import { and, desc, eq, gte, not } from "drizzle-orm";
 import {
   questions,
   answers,
