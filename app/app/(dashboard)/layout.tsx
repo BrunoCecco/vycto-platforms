@@ -2,6 +2,7 @@ import { ReactNode, Suspense } from "react";
 import Profile from "@/components/old-components/profile";
 import Nav from "@/components/old-components/nav";
 import PoweredBadge from "@/components/poweredBadge";
+import Loading from "./loading";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
@@ -10,7 +11,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <div className="mb-8">
           <PoweredBadge />
         </div>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <Profile />
         </Suspense>
       </Nav>

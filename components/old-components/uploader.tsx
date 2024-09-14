@@ -114,8 +114,10 @@ export default function Uploader({
       <div>
         {title && !children && (
           <div className="mb-4 space-y-1">
-            <h2 className="text-xl font-semibold">{capitalize(title)}</h2>
-            <p className="text-sm text-gray-500">
+            <h2 className="text-xl font-semibold  dark:text-stone-200">
+              {capitalize(title)}
+            </h2>
+            <p className="text-sm  dark:text-stone-200">
               Accepted formats: .png, .jpg, .gif, .mp4
             </p>
           </div>

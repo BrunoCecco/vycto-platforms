@@ -46,7 +46,7 @@ export default async function Competitions({
     (competition: any) => !competition.published,
   );
 
-  return competitions.length > 0 ? (
+  return (
     <div className="mt-10">
       {draftedCompetitions && draftedCompetitions?.length > 0 && (
         <h1 className="my-4 font-cal text-2xl">Drafted Competitions</h1>
@@ -85,19 +85,6 @@ export default async function Competitions({
           <CompetitionCard key={competition.id} data={competition} />
         ))}
       </div>
-    </div>
-  ) : (
-    <div className="mt-10 flex flex-col items-center space-x-4">
-      <h1 className="font-cal text-4xl">No Competitions Yet</h1>
-      <Image
-        alt="missing competition"
-        src="/logo.png"
-        width={400}
-        height={400}
-      />
-      <p className="text-lg text-stone-500">
-        You do not have any competitions yet. Create one to get started.
-      </p>
     </div>
   );
 }

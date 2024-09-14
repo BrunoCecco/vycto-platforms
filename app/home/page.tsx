@@ -1,11 +1,3 @@
-import AdminPage from "@/components/adminPage";
-import AnalyticsPage from "@/components/analyticsPage";
-import B2BSignUp from "@/components/b2BSignUp";
-import CompetitionCard from "@/components/competitionCard";
-import Competitions from "@/components/competitions";
-import PoweredBadge from "@/components/poweredBadge";
-import SelectUsername from "@/components/selectUsername";
-import UserSignUp from "@/components/userSignUp";
 import { getAllCompetitions } from "@/lib/fetchers";
 import Image from "next/image";
 
