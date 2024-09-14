@@ -5,6 +5,7 @@ import Competitions from "@/components/old-components/competitions";
 import Link from "next/link";
 import PlaceholderCard from "@/components/old-components/placeholder-card";
 import OverviewSitesCTA from "@/components/old-components/overview-sites-cta";
+import Loading from "./loading";
 
 export default function Overview() {
   return (
@@ -14,7 +15,7 @@ export default function Overview() {
           <h1 className="font-cal text-3xl font-bold dark:text-white">
             Top Playgrounds
           </h1>
-          <Suspense fallback={null}>
+          <Suspense fallback={<Loading />}>
             <OverviewSitesCTA />
           </Suspense>
         </div>

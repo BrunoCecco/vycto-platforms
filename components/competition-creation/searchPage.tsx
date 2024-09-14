@@ -110,9 +110,9 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen ">
       <div className="w-full space-y-4">
-        <h1 className="text-2xl font-bold text-gray-800">
+        <h1 className="text-2xl font-bold dark:text-stone-200">
           Competition Creator
         </h1>
         <form

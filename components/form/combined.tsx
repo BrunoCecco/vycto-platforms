@@ -62,7 +62,7 @@ export default function CombinedForm({
             className="relative flex w-1/2 flex-col space-y-4 p-5"
             key={index + "reward-editor"}
           >
-            <p className="text-sm text-stone-500 dark:text-stone-400">
+            <p className="text-sm text-stone-500 dark:text-stone-200">
               {descriptions[index]}
             </p>
             {inputAttr.name === "font" ? (

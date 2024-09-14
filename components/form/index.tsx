@@ -119,7 +119,7 @@ export default function Form({
           <input
             {...inputAttrs}
             type="color"
-            className="h-12 w-12 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+            className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
           />
         ) : inputAttrs.name === "subdomain" ? (
           <div className="flex w-full max-w-md">
