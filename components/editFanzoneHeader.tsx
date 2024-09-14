@@ -27,7 +27,7 @@ export default function EditFanZoneHeader({
     <>
       {/* Top Header Section */}
       <div className="ease left-0 right-0 top-0 z-30 flex transition-all duration-150 dark:text-white">
-        <div className="my-6 mr-auto flex h-full max-w-screen-xl items-center justify-center space-x-5 sm:my-12">
+        <div className="my-6 mr-auto flex h-32 max-w-screen-xl items-center justify-center space-x-5 overflow-hidden sm:my-12">
           <Form
             title=""
             description=""
@@ -39,23 +39,21 @@ export default function EditFanZoneHeader({
             }}
             handleSubmit={updateSite}
           >
-            <div className="relative flex h-20 w-52 cursor-pointer items-center justify-center rounded-xl">
-              {data?.logo != null && (
-                <div className="relative h-full w-full overflow-hidden">
-                  <img
-                    src={data?.logo as string}
-                    alt="Preview"
-                    className="h-full w-full object-contain"
-                  />
-                </div>
-              )}
-              {!data?.logo && (
-                <div className="relative flex h-20 w-52 cursor-pointer items-center justify-center rounded-xl border-2 border-white">
-                  {" "}
-                  <Plus className="h-10 w-10 text-white" />
-                </div>
-              )}
-            </div>
+            {data?.logo != null && (
+              <Image
+                className="rounded-xl"
+                alt={data.name || ""}
+                height={80}
+                src={data.logo || ""}
+                width={250}
+              />
+            )}
+            {!data?.logo && (
+              <div className="relative flex h-32 w-[250px] cursor-pointer items-center justify-center rounded-xl border-2 border-white">
+                {" "}
+                <Plus className="h-10 w-10 text-white" />
+              </div>
+            )}
           </Form>
           <Link
             className="ml-3 rounded-full bg-blue-200 px-8 py-2 pt-1 font-semibold text-white"
@@ -80,18 +78,19 @@ export default function EditFanZoneHeader({
           }}
           handleSubmit={updateSite}
         >
-          <div className="relative flex h-44 w-full cursor-pointer items-center justify-center rounded-xl">
-            {data?.image != null && (
-              <div className="relative h-full w-full overflow-hidden">
-                <img
-                  src={data?.image as string}
-                  alt="Preview"
-                  className="h-full w-full object-contain"
-                />
-              </div>
-            )}
+          <div className="relative flex h-44 w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl">
+            {data.image ? (
+              <Image
+                src={data.image ?? "/placeholder.png"}
+                unoptimized
+                alt="Banner Image"
+                width={1}
+                height={1}
+                className="h-100% w-auto object-cover"
+              />
+            ) : null}
             {!data?.image && (
-              <div className="relative flex h-44 w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white">
+              <div className="relative flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white">
                 {" "}
                 <Plus className="h-10 w-10 text-white" />
               </div>
