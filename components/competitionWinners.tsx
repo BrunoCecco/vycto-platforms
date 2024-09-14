@@ -25,8 +25,7 @@ const User = ({
             alt="Profile"
             fill={true}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            objectFit="cover"
-            className="overflow-hidden rounded-full"
+            className="overflow-hidden rounded-full object-cover"
           />
         </div>
         <span className="ml-2 font-bold text-gray-900">

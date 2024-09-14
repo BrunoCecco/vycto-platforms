@@ -34,8 +34,7 @@ const CompetitionCard = async ({
         <BlurImage
           alt={competition.title ?? "Card thumbnail"}
           layout="fill"
-          objectFit="cover"
-          className="rounded-t-lg"
+          className="rounded-t-lg object-cover"
           src={competition.image ?? "/placeholder.png"}
           placeholder="blur"
           blurDataURL={competition.imageBlurhash ?? placeholderBlurhash}
@@ -57,8 +56,7 @@ const CompetitionCard = async ({
                 src={`https://avatar.vercel.sh/1`}
                 alt="Profile 1"
                 layout="fill"
-                objectFit="cover"
-                className="rounded-full border-2 border-white"
+                className="rounded-full border-2 border-white object-cover"
               />
             </div>
             <div className="relative -ml-2 h-6 w-6">
@@ -66,8 +64,7 @@ const CompetitionCard = async ({
                 src={`https://avatar.vercel.sh/99`}
                 alt="Profile 2"
                 layout="fill"
-                objectFit="cover"
-                className="rounded-full border-2 border-white"
+                className="rounded-full border-2 border-white object-cover"
               />
             </div>
           </div>

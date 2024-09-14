@@ -58,7 +58,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
         <Image
           src={"/cover1.png"}
           alt="Players Banner"
-          objectFit="cover"
+          className="object-contain"
           fill={true}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />

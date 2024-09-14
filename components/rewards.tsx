@@ -58,7 +58,7 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
                 alt={`Slide ${index + 1}`}
                 height={400}
                 width={400}
-                objectFit="contain"
+                className="object-contain"
               />
             </div>
           ))}

@@ -48,8 +48,7 @@ const MatchOutcome = ({ ...props }) => {
                     alt="Option 1 Image"
                     width={1}
                     height={1}
-                    objectFit="cover"
-                    className="h-100% w-auto"
+                    className="h-100% w-auto object-cover"
                   />
                 </div>
                 <p className="text-sm font-semibold text-gray-700">
@@ -89,8 +88,7 @@ const MatchOutcome = ({ ...props }) => {
                     alt="Option 2 Image"
                     width={1}
                     height={1}
-                    objectFit="cover"
-                    className="h-100% w-auto"
+                    className="h-100% w-auto object-cover"
                   />
                 </div>
                 <p className="text-sm font-semibold text-gray-700">

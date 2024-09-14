@@ -34,8 +34,7 @@ const PlayerComponent = ({
         layout="responsive"
         width={128}
         height={96}
-        objectFit="cover"
-        className={`rounded-md ${
+        className={`rounded-md object-cover ${
           selectedPlayer !== name ? "opacity-50" : "opacity-100"
         }`}
       />

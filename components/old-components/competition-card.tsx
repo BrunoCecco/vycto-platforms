@@ -30,8 +30,7 @@ const CompetitionCard = async ({
         <BlurImage
           alt={data.title ?? "Card thumbnail"}
           layout="fill"
-          objectFit="cover"
-          className="rounded-t-lg"
+          className="rounded-t-lg object-cover"
           src={data.image ?? "/placeholder.png"}
           placeholder="blur"
           blurDataURL={data.imageBlurhash ?? placeholderBlurhash}

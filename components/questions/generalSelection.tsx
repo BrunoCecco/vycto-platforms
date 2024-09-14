@@ -45,8 +45,7 @@ const GeneralSelection = ({ ...props }) => {
             alt="Question Image"
             width={1}
             height={1}
-            objectFit="cover"
-            className="h-100% w-auto"
+            className="h-100% w-auto object-cover"
           />
         </div>
 

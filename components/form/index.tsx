@@ -17,6 +17,7 @@ export default function Form({
   helpText,
   inputAttrs,
   handleSubmit,
+  children,
 }: {
   title: string;
   description: string;
@@ -30,6 +31,7 @@ export default function Form({
     pattern?: string;
   };
   handleSubmit: any;
+  children?: React.ReactNode;
 }) {
   const { id } = useParams() as { id?: string };
   const router = useRouter();
@@ -53,6 +55,7 @@ export default function Form({
           } else {
             va.track(`Updated ${name}`, id ? { id } : {});
             if (id) {
+              await update();
               router.refresh();
             } else {
               await update();
@@ -62,7 +65,9 @@ export default function Form({
           }
         });
       }}
-    />
+    >
+      {children}
+    </Uploader>
   ) : (
     <form
       action={async (data: FormData) => {

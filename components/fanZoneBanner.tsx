@@ -15,7 +15,7 @@ const FanZoneBanner: FC<FanZoneBannerProps> = ({ logoPlaySrc, bannerSrc }) => {
           src={logoPlaySrc}
           alt="Cablenet Play"
           layout="fill"
-          objectFit="contain"
+          className="object-contain"
         />
       </div>
 
@@ -25,7 +25,7 @@ const FanZoneBanner: FC<FanZoneBannerProps> = ({ logoPlaySrc, bannerSrc }) => {
           src={bannerSrc}
           alt="Players Banner"
           layout="fill"
-          objectFit="contain"
+          className="object-contain"
         />
       </div>
     </div>
