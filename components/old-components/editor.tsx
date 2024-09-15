@@ -100,7 +100,7 @@ export default function Editor({
                 answers for each question.
               </p>
             </div> */}
-              <Button className="my-2" onClick={submitCorrectAnswers}>
+              <Button onClick={submitCorrectAnswers}>
                 Submit Correct Answers
               </Button>
             </>
