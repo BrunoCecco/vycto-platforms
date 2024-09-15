@@ -17,6 +17,8 @@ import {
   validateCorrectAnswers,
   calculateCompetitionPoints,
 } from "@/lib/fetchers";
+import CompetitionHeader from "../competitionHeader";
+import EditCompetitionHeader from "../editCompetitionHeader";
 
 type CompetitionWithSite = SelectCompetition & {
   site: { subdomain: string | null } | null;
@@ -84,26 +86,28 @@ export default function Editor({
 
   return (
     <div className="max-w-screen relative min-h-[500px] w-full border-stone-200 p-12 px-8 pt-24 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:pt-12 sm:shadow-lg dark:border-stone-700">
-      {hasEnded ? (
-        competition.correctAnswersSubmitted ? (
-          <Button className="my-2" onClick={submitCorrectAnswers}>
-            Update Correct Answers
-          </Button>
-        ) : (
-          <>
-            <div className="my-2 text-white">
+      <div className="absolute left-5 top-16 mb-5 flex items-center sm:top-5">
+        {hasEnded ? (
+          competition.correctAnswersSubmitted ? (
+            <Button className="my-2" onClick={submitCorrectAnswers}>
+              Update Correct Answers
+            </Button>
+          ) : (
+            <>
+              {/* <div className="my-2">
               <p>
                 This competition has ended. Please edit and submit the correct
                 answers for each question.
               </p>
-            </div>
-            <Button className="my-2" onClick={submitCorrectAnswers}>
-              Submit Correct Answers
-            </Button>
-          </>
-        )
-      ) : null}
-      <div className="absolute right-5 top-16 mb-5 flex items-center space-x-3 sm:right-5 sm:top-5">
+            </div> */}
+              <Button className="my-2" onClick={submitCorrectAnswers}>
+                Submit Correct Answers
+              </Button>
+            </>
+          )
+        ) : null}
+      </div>
+      <div className="absolute right-5 top-16 mb-5 flex items-center space-x-3 sm:top-5">
         {data.published && (
           <a
             href={url}
@@ -158,7 +162,7 @@ export default function Editor({
           )}
         </button>
       </div>
-      <div className="mb-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
+      {/* <div className="mb-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
         <input
           type="text"
           placeholder="Title"
@@ -172,7 +176,8 @@ export default function Editor({
           onChange={(e) => setData({ ...data, description: e.target.value })}
           className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
         />
-      </div>
+      </div> */}
+      <EditCompetitionHeader />
       <QuestionBuilder
         competitionId={competition.id}
         initialQuestions={initialQuestions}
