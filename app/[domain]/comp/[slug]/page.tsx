@@ -142,7 +142,7 @@ export default async function SiteCompetitionPage({
           winnerData={winnerData}
         />
       </div>
-      {data.adjacentCompetitions.length > 0 && (
+      {/* {data.adjacentCompetitions.length > 0 && (
         <div className="relative pb-20 pt-10 sm:pt-20">
           <div
             className="absolute inset-0 z-10 flex items-center"
@@ -161,7 +161,7 @@ export default async function SiteCompetitionPage({
             <BlogCard key={index} data={data} />
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 }
