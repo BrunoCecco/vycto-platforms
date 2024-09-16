@@ -50,9 +50,9 @@ const EditCompetitionDetails = async ({
             </h1>
             <div className="relative flex h-full w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl">
               {data.image ? (
-                <Image
+                <BlurImage
                   src={data.image ?? "/placeholder.png"}
-                  // blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
+                  blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
                   width={1200}
                   height={630}
                   unoptimized
@@ -60,12 +60,9 @@ const EditCompetitionDetails = async ({
                   className="h-full w-full rounded-lg object-cover"
                 />
               ) : null}
-              {/* {!data?.image && ( */}
               <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-lg border-white bg-gray-700 opacity-25">
-                {" "}
                 <Plus className="h-10 w-10 text-white" />
               </div>
-              {/* )} */}
             </div>
           </div>
         </Form>

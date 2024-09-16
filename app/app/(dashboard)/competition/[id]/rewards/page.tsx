@@ -34,7 +34,7 @@ export default async function CompetitionRewards({
           title="Reward #1"
           descriptions={[
             "Title of the main reward for this competition.",
-            "Describe the main reward for this competition.",
+            "Description",
             "Number of winners for the main reward.",
           ]}
           helpText="Please enter the details for the main reward."
@@ -77,7 +77,7 @@ export default async function CompetitionRewards({
           title="Reward #2"
           descriptions={[
             "Title of the secondary rewards for this competition.",
-            "Describe the secondary rewards for this competition.",
+            "Description",
             "Number of winners for the secondary reward.",
           ]}
           helpText="Please enter the details for the secondary reward."

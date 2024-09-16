@@ -62,7 +62,8 @@ const CompetitionCard = async ({
           </p>
           <Link
             href={`/competition/${data.id}/editor`}
-            className="w-24 rounded-lg bg-black p-2 text-center text-white hover:opacity-75"
+            className="w-24 rounded-lg p-2 text-center text-white hover:opacity-75"
+            style={{ backgroundColor: data.site?.color2 || "black" }}
           >
             Edit
           </Link>

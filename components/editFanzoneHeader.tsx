@@ -39,21 +39,19 @@ export default function EditFanZoneHeader({
             }}
             handleSubmit={updateSite}
           >
-            {data?.logo != null && (
-              <Image
-                className="rounded-xl"
-                alt={data.name || ""}
-                height={80}
-                src={data.logo || ""}
-                width={250}
-              />
-            )}
-            {!data?.logo && (
-              <div className="relative flex h-32 w-[250px] cursor-pointer items-center justify-center rounded-xl border-2 border-white">
-                {" "}
+            <div className="relative h-32 w-[250px]">
+              {data?.logo != null && (
+                <Image
+                  className="h-full w-full rounded-xl object-contain"
+                  fill
+                  alt={data.name || ""}
+                  src={data.logo || ""}
+                />
+              )}
+              <div className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white bg-gray-700 opacity-25">
                 <Plus className="h-10 w-10 text-white" />
               </div>
-            )}
+            </div>
           </Form>
           <Link
             className="ml-3 rounded-full bg-blue-200 px-8 py-2 pt-1 font-semibold text-white"
@@ -89,12 +87,9 @@ export default function EditFanZoneHeader({
                 className="h-100% w-auto object-cover"
               />
             ) : null}
-            {!data?.image && (
-              <div className="relative flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white">
-                {" "}
-                <Plus className="h-10 w-10 text-white" />
-              </div>
-            )}
+            <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white bg-gray-700 opacity-25">
+              <Plus className="h-10 w-10 text-white" />
+            </div>
           </div>
         </Form>
       </div>

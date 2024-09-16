@@ -34,7 +34,8 @@ const GameStats: FC<GameStatsProps> = ({
         {/* Submission Info */}
         <div className="flex flex-col items-center justify-center text-center text-gray-600">
           <p className="text-sm">
-            Submitted Prediction: {userComp.submissionDate}
+            Submitted Prediction:{" "}
+            {new Date(userComp.submissionDate).toDateString()}
           </p>
           {/* <span className="ml-1" role="img" aria-label="tick">
             ✅

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EditPlayerSelection from "./edit-questions/editPlayerSelection";
 import EditWhatMinute from "./edit-questions/editWhatMinute";
 import { createQuestion, deleteQuestion } from "@/lib/actions";
@@ -11,6 +11,7 @@ import EditGeneralSelection from "./edit-questions/editGeneralSelection";
 import EditTrueFalse from "./edit-questions/editTrueFalse";
 import EditGeneralNumber from "./edit-questions/editGeneralNumber";
 import { toast } from "sonner";
+import Button from "./button";
 
 const QuestionBuilder = ({
   competitionId,
@@ -23,6 +24,7 @@ const QuestionBuilder = ({
     initialQuestions || [],
   );
   const [showOptionsIndex, setShowOptionsIndex] = useState<number | null>(null);
+  const questionsRef = useRef<HTMLDivElement | null>(null);
 
   const getQuestionElement = (question: SelectQuestion, type: QuestionType) => {
     switch (type) {
@@ -105,19 +107,25 @@ const QuestionBuilder = ({
 
     if (!question) return;
 
-    setQuestions([question, ...questions]);
+    setQuestions([...questions, question]);
+
+    window.scrollTo({
+      left: 0,
+      top: (questionsRef.current?.getBoundingClientRect().bottom || 0) + 100,
+      behavior: "smooth",
+    });
   };
 
   const renderAddButton = (index: number | null) => (
     <div className="flex justify-center">
-      <button
+      <Button
         onClick={() =>
           setShowOptionsIndex(showOptionsIndex === index ? null : index)
         }
         className="flex items-center justify-center rounded-full bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
       >
         {showOptionsIndex === index ? "Cancel" : "Add Question"}
-      </button>
+      </Button>
       {showOptionsIndex === index && (
         <div className="absolute z-10 mt-10 w-72 rounded-lg bg-white shadow-lg">
           <button
@@ -172,7 +180,7 @@ const QuestionBuilder = ({
   );
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4" ref={questionsRef}>
       {renderAddButton(0)}
       {questions.map((question, index) => (
         <div key={index + "editable" + question.id} className="">

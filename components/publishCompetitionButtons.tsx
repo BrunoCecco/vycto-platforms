@@ -48,7 +48,7 @@ export default function PublishCompetitionButtons({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="mr-auto flex flex-col items-start justify-center gap-4">
       <Button
         onClick={() => {
           const formData = new FormData();
@@ -68,7 +68,7 @@ export default function PublishCompetitionButtons({
           });
         }}
         className={cn(
-          "flex items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none",
+          "flex items-center justify-center space-x-2 rounded-lg border transition-all focus:outline-none",
           isPendingPublishing
             ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
             : "border border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800",
@@ -87,17 +87,15 @@ export default function PublishCompetitionButtons({
             Update Correct Answers
           </Button>
         ) : (
-          <>
-            <div className="my-2">
-              <p>
-                This competition has ended. Please edit and submit the correct
-                answers for each question.
-              </p>
-            </div>
+          <div className="">
             <Button onClick={submitCorrectAnswers}>
               Submit Correct Answers
             </Button>
-          </>
+            <p className="mt-2">
+              This competition has ended. Please edit and submit the correct
+              answers for each question.
+            </p>
+          </div>
         )
       ) : null}
     </div>

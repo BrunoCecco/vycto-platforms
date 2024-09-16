@@ -413,6 +413,8 @@ export const enterUserToCompetition = async (
       ),
     });
 
+    console.log("EXISTING", existingUser);
+
     if (existingUser) {
       return existingUser;
     }

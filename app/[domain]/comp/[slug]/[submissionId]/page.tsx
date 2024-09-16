@@ -121,12 +121,13 @@ export default async function SubmissionPage({
   const userComp = await enterUserToCompetition(
     submissionId,
     session.user.username,
-    data.id,
     session.user.email,
+    data.id,
     session.user.image,
   );
+  console.log("DATA", userComp, submissionId);
   if (!userComp || "submitted" in userComp == false || !userComp.submitted) {
-    redirect(`/comp/${domain}/${slug}`);
+    notFound();
   }
   const users = await getCompetitionUsers(data!.id);
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);

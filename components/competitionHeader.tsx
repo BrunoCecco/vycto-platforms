@@ -47,7 +47,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
           Competition: {data.title}
         </h1>
         <div className="pt-2 text-xl dark:text-stone-400">
-          by <span className="text-green-500">{data.site?.name}</span>
+          by <span style={{ color: data.site?.color2 }}>{data.site?.name}</span>
         </div>
         <div className="m-auto w-10/12 pt-4 text-sm font-light text-stone-800 md:text-base dark:text-stone-300">
           {DateTime.fromISO(data.date)
