@@ -26,10 +26,11 @@ import Leaderboard from "./leaderboard";
 import GameStats from "./gameStats";
 import LoginToSubmitButton from "@/components/loginToSubmitButton";
 import { useRouter, useSearchParams } from "next/navigation";
-import { submitAnswers } from "@/lib/actions";
+import { submitAnswers, updateUsername } from "@/lib/actions";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import CompetitionWinners from "./competitionWinners";
+import LoginButton from "@/app/app/(auth)/login/loginButton";
 
 export default function CompetitionPage({
   session,
@@ -56,6 +57,8 @@ export default function CompetitionPage({
   const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(
     {},
   );
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -72,16 +75,29 @@ export default function CompetitionPage({
       });
       const extractedAnswers: { [key: string]: string } = {};
       console.log(searchParams);
-      searchParams.forEach((value, key) => {
-        console.log(key, value);
-        extractedAnswers[key] = value;
+      searchParams.forEach(async (value, key) => {
+        if (key != "username") {
+          console.log(key, value);
+          extractedAnswers[key] = value;
+        }
       });
       if (Object.keys(extractedAnswers).length > 0) {
         setLocalAnswers(extractedAnswers);
         submitExtractedAnswers(extractedAnswers);
       }
     }
+    checkUsername();
   }, [session, searchParams]);
+
+  const checkUsername = async () => {
+    const username = searchParams.get("username");
+    if (username) {
+      console.log(username, "username");
+      const res = await updateUsername(username, session.user.email);
+      console.log(res, "resss");
+      toast.success("Username updated");
+    }
+  };
 
   const submitExtractedAnswers = async (extractedAnswers: {
     [key: string]: string;
@@ -248,10 +264,30 @@ export default function CompetitionPage({
               />
             )
           ) : (
-            <LoginToSubmitButton
-              localAnswers={localAnswers}
-              competitionSlug={slug}
-            />
+            <div className="mx-5 rounded-md border border-stone-200 p-10 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email address"
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
+              />
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Username"
+                onChange={(e) => setUsername(e.target.value)}
+                className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
+              />
+              <LoginButton
+                email={email}
+                username={username}
+                localAnswers={localAnswers}
+                competitionSlug={slug}
+              />
+            </div>
           )}
         </div>
       )}

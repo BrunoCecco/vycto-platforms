@@ -40,7 +40,6 @@ export default async function middleware(req: NextRequest) {
   const path = `${url.pathname}${
     searchParams.length > 0 ? `?${searchParams}` : ""
   }`;
-
   // rewrites for app pages
   if (
     hostname.includes(`${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
@@ -61,19 +60,25 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/", req.url));
     } else if (
       session &&
-      hostname != `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+      hostname != `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` &&
+      path.includes("newusername")
     ) {
-      // if searchParams contains "username=" update the username in database
-      const username = req.nextUrl.searchParams.get("username");
+      // if path contains "newusername/{username}" update the username in database
+      const username = path.split("/")[path.split("/").length - 1];
       if (username) {
         await db
           .update(users)
-          .set({ username })
+          .set({ username: username })
           .where(eq(users.email, session.email as string));
-        return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+        return NextResponse.redirect(new URL(`/`, req.url));
       } else {
-        return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+        return NextResponse.redirect(new URL(`/`, req.url));
       }
+    } else if (
+      session &&
+      hostname != `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+    ) {
+      return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
     }
     return NextResponse.rewrite(
       new URL(`/app${path === "/" ? "" : path}`, req.url),

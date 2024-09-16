@@ -2,6 +2,8 @@ import Form from "@/components/form";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { editUser } from "@/lib/actions";
+import LogoutButton from "../old-components/logout-button";
+import Button from "../button";
 
 export default async function UserSettings() {
   const session = await getSession();
@@ -28,6 +30,11 @@ export default async function UserSettings() {
           }}
           handleSubmit={editUser}
         />
+
+        <div className="mx-auto flex items-center gap-2">
+          <div>Sign Out</div>
+          <LogoutButton />
+        </div>
       </div>
     </div>
   );

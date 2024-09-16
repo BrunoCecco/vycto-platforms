@@ -489,6 +489,23 @@ export const submitAnswers = async (
   }
 };
 
+export const updateUsername = async (username: string, email: string) => {
+  try {
+    const [response] = await db
+      .update(users)
+      .set({
+        username: username,
+      })
+      .where(eq(users.email, email))
+      .returning();
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
 export const updateUserPoints = async (
   userId: string,
   competitionId: string,
