@@ -15,7 +15,7 @@ const FanZone = ({
   latestCompetition: any;
 }) => {
   return (
-    <div>
+    <div className="w-full">
       <FanZoneHeader data={siteData} latestCompetition={latestCompetition} />
       <h2 className="py-10 text-2xl font-semibold text-gray-800">
         Current Competitions{" "}

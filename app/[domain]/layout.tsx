@@ -7,6 +7,8 @@ import { notFound, redirect } from "next/navigation";
 import { getSiteData } from "@/lib/fetchers";
 import { fontMapper } from "@/styles/fonts";
 import { Metadata } from "next";
+import SettingsButton from "@/components/settings/settingsButton";
+import SiteNav from "@/components/siteNav";
 
 export async function generateMetadata({
   params,
@@ -88,6 +90,17 @@ export default async function SiteLayout({
         minHeight: "100vh",
       }}
     >
+      <div className="flex justify-between p-5">
+        <Link href="/">
+          <Image
+            src={data.logo ?? "/logo.png"}
+            alt="Logo"
+            width={100}
+            height={100}
+          />
+        </Link>
+      </div>
+      <SiteNav />
       {children}
     </div>
   );
