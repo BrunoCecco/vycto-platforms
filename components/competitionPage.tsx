@@ -196,7 +196,12 @@ export default function CompetitionPage({
 
   return (
     <div className="bg-white px-4 shadow-2xl md:rounded-xl md:px-24">
-      <CompetitionHeader session={session} users={users} data={data} />
+      <CompetitionHeader
+        session={session}
+        users={users}
+        data={data}
+        siteData={siteData}
+      />
       <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab == "Rewards" && (
         <Rewards siteData={siteData} competition={data} users={users} />

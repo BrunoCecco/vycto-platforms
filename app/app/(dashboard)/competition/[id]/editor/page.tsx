@@ -1,10 +1,11 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
-import Editor from "@/components/old-components/editor";
+import QuestionEditor from "@/components/old-components/questionEditor";
 import db from "@/lib/db";
-import { getQuestionsForCompetition } from "@/lib/fetchers";
+import { getCompetitionData, getQuestionsForCompetition } from "@/lib/fetchers";
 import CompetitionCreator from "@/components/competition-creation";
 import Button from "@/components/button";
+import EditCompetitionDetails from "@/components/editCompetitionDetails";
 
 export default async function CompetitionPage({
   params,
@@ -16,30 +17,31 @@ export default async function CompetitionPage({
     redirect("/login");
   }
 
-  const data = await db.query.competitions.findFirst({
+  const competitionData = await db.query.competitions.findFirst({
     where: (competitions, { eq }) =>
       eq(competitions.id, decodeURIComponent(params.id)),
     with: {
-      site: {
-        columns: {
-          subdomain: true,
-        },
-      },
+      site: true,
     },
   });
 
   if (
-    !data ||
-    (data.userId !== session.user.id && data.admin != session.user.email)
+    !competitionData ||
+    (competitionData.userId !== session.user.id &&
+      competitionData.admin != session.user.email)
   ) {
     notFound();
   }
 
-  const initialQuestions = await getQuestionsForCompetition(data.id);
+  const initialQuestions = await getQuestionsForCompetition(competitionData.id);
 
   return (
     <div>
-      <Editor competition={data} initialQuestions={initialQuestions} />
+      <EditCompetitionDetails data={competitionData} />
+      <QuestionEditor
+        competition={competitionData}
+        initialQuestions={initialQuestions}
+      />
     </div>
   );
 }

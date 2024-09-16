@@ -124,12 +124,18 @@ export default function Uploader({
         )}
         {children ? (
           <label htmlFor={`${id}-upload-${name}`}>
-            {children ? children : null}
+            {saveDisabled || saving ? (
+              <div className="mx-auto flex h-20 w-20 items-center justify-center bg-black">
+                <LoadingDots color="white" />
+              </div>
+            ) : children ? (
+              children
+            ) : null}
           </label>
         ) : (
           <label
             htmlFor={`${id}-upload-${name}`}
-            className="group relative mt-2 flex h-44 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50"
+            className="group relative mt-2 flex h-80 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50"
           >
             <div
               className="absolute z-[5] h-full w-full rounded-md"
@@ -230,11 +236,6 @@ export default function Uploader({
             onChange={onChangePicture}
           />
         </div>
-        {saving ? (
-          <div className="flex items-center justify-center">
-            <LoadingDots color="white" />
-          </div>
-        ) : null}
       </div>
 
       {/* <button

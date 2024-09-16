@@ -131,6 +131,8 @@ export async function getCompetitionData(domain: string, slug: string) {
             : null,
         );
 
+      console.log(data, "DATAA");
+
       if (!data) return null;
 
       const [mdxSource, adjacentCompetitions] = await Promise.all([

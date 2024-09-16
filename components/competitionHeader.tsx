@@ -6,17 +6,20 @@ import Image from "next/image";
 import TabSelector from "./tabSelector";
 import { placeholderBlurhash } from "@/lib/utils";
 import { DateTime } from "luxon";
+import { SelectSite } from "@/lib/schema";
 
 interface CompetitionHeaderProps {
   session: any;
   users: any;
   data: any;
+  siteData: SelectSite;
 }
 
 const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
   session,
   users,
   data,
+  siteData,
 }) => {
   const isUserInCompetition =
     session?.user &&
@@ -54,15 +57,16 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
       </div>
 
       {/* Banner */}
-      {/* <div className="relative mt-4 h-14 w-full overflow-hidden rounded-lg md:h-32">
-        <Image
-          src={"/cover1.png"}
+      <div className="relative mt-4 h-14 w-full overflow-hidden rounded-lg md:h-32">
+        <BlurImage
+          src={siteData.image ?? "/logo.png"}
+          blurDataURL={siteData.imageBlurhash ?? placeholderBlurhash}
           alt="Players Banner"
-          className="object-contain"
+          className="object-cover"
           fill={true}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-      </div> */}
+      </div>
       {/* Uncomment if needed */}
       {/* <div className="my-8">
         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">

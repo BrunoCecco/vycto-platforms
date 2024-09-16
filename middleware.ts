@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import { users } from "./lib/schema";
+import db from "./lib/db";
+import { eq } from "drizzle-orm";
 
 export const config = {
   matcher: [
@@ -60,7 +63,17 @@ export default async function middleware(req: NextRequest) {
       session &&
       hostname != `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
     ) {
-      return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+      // if searchParams contains "username=" update the username in database
+      const username = req.nextUrl.searchParams.get("username");
+      if (username) {
+        await db
+          .update(users)
+          .set({ username })
+          .where(eq(users.email, session.email as string));
+        return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+      } else {
+        return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+      }
     }
     return NextResponse.rewrite(
       new URL(`/app${path === "/" ? "" : path}`, req.url),
