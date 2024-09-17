@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import CTA from "@/components/old-components/cta";
 import ReportAbuse from "@/components/old-components/report-abuse";
 import { notFound, redirect } from "next/navigation";
-import { getSiteData } from "@/lib/fetchers";
+import { getCompetitionsForSite, getSiteData } from "@/lib/fetchers";
 import { fontMapper } from "@/styles/fonts";
 import { Metadata } from "next";
 import SettingsButton from "@/components/settings/settingsButton";
@@ -73,6 +73,16 @@ export default async function SiteLayout({
     notFound();
   }
 
+  const compData = await getCompetitionsForSite(domain);
+
+  const competitions = compData.map(
+    (competition: any) => competition.competition,
+  );
+
+  const latestCompetition = competitions.sort(
+    (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  )[0];
+
   // Optional: Redirect to custom domain if it exists
   if (
     domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
@@ -91,16 +101,25 @@ export default async function SiteLayout({
       }}
     >
       <div className="flex justify-between p-5">
-        <Link href="/">
-          <Image
-            src={data.logo ?? "/logo.png"}
-            alt="Logo"
-            width={100}
-            height={100}
-          />
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href="/">
+            <Image
+              src={data.logo ?? "/logo.png"}
+              alt="Logo"
+              width={100}
+              height={100}
+            />
+          </Link>
+          <Link
+            className="ml-3 rounded-full px-8 py-2 pt-1 font-semibold text-white hover:opacity-75"
+            style={{ backgroundColor: data.color2 || "#1E40AF" }} // Default color fallback
+            href={`/comp/${latestCompetition?.slug}` ?? "/"}
+          >
+            Play
+          </Link>
+        </div>
+        <SiteNav />
       </div>
-      <SiteNav />
       {children}
     </div>
   );
