@@ -118,8 +118,8 @@ export default async function SiteLayout({
             Play
           </Link>
         </div>
-        <SiteNav />
       </div>
+      <SiteNav />
       {children}
     </div>
   );
