@@ -10,7 +10,7 @@ export default function EditCompetitionTitle({
 }) {
   return (
     <div className="mb-5 flex w-full flex-col space-y-3 border-b border-stone-200 dark:border-stone-700">
-      <label htmlFor="title" className="text-lg font-bold">
+      <label htmlFor="title" className="text-xl font-bold">
         Competition Title
       </label>
       <input
@@ -28,7 +28,7 @@ export default function EditCompetitionTitle({
           );
           console.log(response);
         }}
-        className="dark:placeholder-text-600 border-none px-0 font-cal text-3xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+        className="dark:placeholder-text-600 border-none px-0 font-cal text-lg placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
       />
     </div>
   );

@@ -48,7 +48,7 @@ export default function PublishCompetitionButtons({
   };
 
   return (
-    <div className="mr-auto flex flex-col items-start justify-center gap-4">
+    <div className="mr-auto flex items-start justify-center gap-4">
       <Button
         onClick={() => {
           const formData = new FormData();
@@ -91,10 +91,10 @@ export default function PublishCompetitionButtons({
             <Button onClick={submitCorrectAnswers}>
               Submit Correct Answers
             </Button>
-            <p className="mt-2">
+            {/* <p className="mt-2">
               This competition has ended. Please edit and submit the correct
               answers for each question.
-            </p>
+            </p> */}
           </div>
         )
       ) : null}
