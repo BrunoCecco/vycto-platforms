@@ -1,7 +1,38 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { validateEmail } from "@/lib/utils";
+import { toast } from "sonner";
+import { usePostHog } from "posthog-js/react";
 
 const UserSignUp = () => {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const posthog = usePostHog();
+
+  const handleLogin = async () => {
+    setLoading(true);
+    if (!validateEmail(email)) {
+      toast.error("Invalid email, please try again");
+      return;
+    }
+    posthog?.capture("sign-in-email-clicked");
+    const callbackUrl = username ? `/newusername/${username}` : "";
+    signIn("email", {
+      email,
+      callbackUrl,
+    }).then((res) => {
+      if (res?.ok && !res?.error) {
+        setMessage("Email sent - check your inbox!");
+      } else {
+        setError("Error sending email - try again?");
+      }
+    });
+  };
+
   return (
     <div className="flex flex-col items-center justify-center bg-white p-8">
       <div className="w-full max-w-lg text-left">
@@ -68,6 +99,21 @@ const UserSignUp = () => {
             </div>
             <div>
               <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Username
+              </label>
+              <input
+                id="username"
+                type="username"
+                placeholder="username"
+                onChange={(e) => setUsername(e.target.value)}
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
@@ -77,10 +123,11 @@ const UserSignUp = () => {
                 id="email"
                 type="email"
                 placeholder="buzz@lightyear.com"
+                onChange={(e) => setEmail(e.target.value)}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
             </div>
-            <div>
+            {/* <div>
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
@@ -93,9 +140,9 @@ const UserSignUp = () => {
                 placeholder="Password"
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
-            </div>
+            </div> */}
             <button
-              type="submit"
+              onClick={handleLogin}
               className="flex w-full justify-center rounded-md border border-transparent bg-blue-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
               Sign Up
