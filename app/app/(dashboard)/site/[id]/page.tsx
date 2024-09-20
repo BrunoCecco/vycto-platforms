@@ -1,6 +1,6 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
-import EditFanzone from "@/components/editFanzone";
+import EditFanzone from "@/components/edit-fanzone/editFanzone";
 import db from "@/lib/db";
 
 export default async function SiteCompetitions({

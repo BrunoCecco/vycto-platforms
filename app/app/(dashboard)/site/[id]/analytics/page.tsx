@@ -1,6 +1,6 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
-import AnalyticsMockup from "@/components/old-components/analytics";
+import AnalyticsMockup from "@/components/analytics/analytics";
 import db from "@/lib/db";
 
 export default async function SiteAnalytics({
