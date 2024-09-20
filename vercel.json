@@ -1,0 +1,9 @@
+{
+    "redirects": [
+        {
+            "source": "/",
+            "destination": "https://vycto.tech",
+            "permanent": true
+        }
+    ]
+}
