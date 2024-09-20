@@ -5,8 +5,8 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Input from "../input";
-import Uploader from "../old-components/uploader";
-import PointsBadge from "../pointsBadge";
+import Uploader from "../form/uploader";
+import PointsBadge from "../competitions/pointsBadge";
 
 const EditGeneralNumber = ({
   question,

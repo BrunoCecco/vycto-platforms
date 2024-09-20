@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getCompetitionsForSite, getSiteData } from "@/lib/fetchers";
 import db from "@/lib/db";
-import FanZone from "@/components/fanZone";
+import FanZone from "@/components/fanzone/fanZone";
 import { SelectCompetition } from "@/lib/schema";
 import { getSession } from "@/lib/auth";
 import SettingsButton from "@/components/settings/settingsButton";
@@ -54,7 +54,7 @@ export default async function SiteHomePage({
 
   return (
     <>
-      <div className="mx-5 max-w-screen-xl pb-20 lg:mx-24 2xl:mx-auto">
+      <div className="mx-5 max-w-screen-xl pb-20 pt-10 lg:mx-24 2xl:mx-auto">
         {/* Use the FanZoneHeader component */}
         <FanZone
           siteData={data}

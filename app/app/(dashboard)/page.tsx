@@ -1,17 +1,16 @@
 import { Suspense } from "react";
-import Sites from "@/components/old-components/sites";
-import OverviewStats from "@/components/old-components/overview-stats";
-import Competitions from "@/components/old-components/competitions";
+import Sites from "@/components/edit-sites/sites";
 import Link from "next/link";
-import PlaceholderCard from "@/components/old-components/placeholder-card";
-import OverviewSitesCTA from "@/components/old-components/overview-sites-cta";
+import PlaceholderCard from "@/components/images/placeholderCard";
+import OverviewSitesCTA from "@/components/edit-sites/overviewSitesCTA";
 import Loading from "./loading";
+import EditCompetitions from "@/components/edit-competition/editCompetitions";
 
 export default function Overview() {
   return (
     <div className="flex max-w-screen-xl flex-col space-y-12 p-8">
       <div className="flex flex-col space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
           <h1 className="font-cal text-3xl font-bold dark:text-white">
             Top Playgrounds
           </h1>
@@ -42,7 +41,7 @@ export default function Overview() {
             </div>
           }
         >
-          <Competitions limit={8} />
+          <EditCompetitions limit={8} />
         </Suspense>
       </div>
     </div>

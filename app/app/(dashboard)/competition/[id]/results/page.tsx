@@ -1,7 +1,7 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import db from "@/lib/db";
-import CompetitionWinners from "@/components/competitionWinners";
+import CompetitionWinners from "@/components/competitions/competitionWinners";
 import { getCompetitionWinnerData } from "@/lib/fetchers";
 
 export default async function CompetitionResults({

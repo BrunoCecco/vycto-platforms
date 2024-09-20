@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from "react";
-import Profile from "@/components/old-components/profile";
-import Nav from "@/components/old-components/nav";
-import PoweredBadge from "@/components/poweredBadge";
+import Profile from "@/components/nav/profile";
+import Nav from "@/components/nav/nav";
+import PoweredBadge from "@/components/nav/poweredBadge";
 import Loading from "./loading";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {

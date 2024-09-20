@@ -1,16 +1,21 @@
-"use client";
 import { Suspense, useState } from "react";
 import { signIn } from "next-auth/react";
 import LoginButton from "./loginButton";
-import UserSignUp from "@/components/userSignUp";
+import UserSignUp from "@/components/auth/userSignUp";
+import { getSiteData } from "@/lib/fetchers";
+import { headers } from "next/headers";
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+export default async function LoginPage({
+  params,
+}: {
+  params: { domain: string };
+}) {
+  const domain = decodeURIComponent(params.domain);
+  const heads = headers();
+  const siteData = await getSiteData(heads.get("x-forwarded-host") || domain);
 
   return (
-    // <div className="mx-5 rounded-md border border-stone-200 p-10 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
-    <UserSignUp />
+    <UserSignUp siteData={siteData} />
     //   <input
     //     type="email"
     //     id="email"

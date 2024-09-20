@@ -1,9 +1,9 @@
 "use client";
 import { useState, FC } from "react";
 import Image from "next/image";
-import PointsBadge from "../pointsBadge";
+import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
-import QuestionResultBlock from "../questionResultBlock";
+import QuestionResultBlock from "../competitions/questionResultBlock";
 
 const PlayerComponent = ({
   name,

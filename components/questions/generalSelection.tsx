@@ -2,10 +2,10 @@
 import Image from "next/image";
 import { FC, useEffect } from "react";
 import { useState } from "react";
-import PointsBadge from "../pointsBadge";
+import PointsBadge from "../competitions/pointsBadge";
 import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
-import QuestionResultBlock from "../questionResultBlock";
+import QuestionResultBlock from "../competitions/questionResultBlock";
 
 const GeneralSelection = ({ ...props }) => {
   const [selectedOption, setSelectedOption] = useState(

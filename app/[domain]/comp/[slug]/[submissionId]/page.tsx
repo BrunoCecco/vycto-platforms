@@ -21,7 +21,7 @@ import {
   submitAnswers,
 } from "@/lib/actions";
 import { getSession } from "@/lib/auth";
-import CompetitionPage from "@/components/competitionPage";
+import CompetitionPage from "@/components/competitions/competitionPage";
 
 export async function generateMetadata({
   params,

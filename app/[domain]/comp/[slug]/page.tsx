@@ -7,7 +7,6 @@ import {
   getQuestionsForCompetition,
   getSiteData,
 } from "@/lib/fetchers";
-import BlogCard from "@/components/old-components/blog-card";
 import db from "@/lib/db";
 import { competitions, SelectUserCompetition, sites } from "@/lib/schema";
 import { eq } from "drizzle-orm";
@@ -17,7 +16,7 @@ import {
   submitAnswers,
 } from "@/lib/actions";
 import { getSession } from "@/lib/auth";
-import CompetitionPage from "@/components/competitionPage";
+import CompetitionPage from "@/components/competitions/competitionPage";
 
 export async function generateMetadata({
   params,

@@ -3,9 +3,9 @@ import { updateQuestionMetadata } from "@/lib/actions";
 import { SelectQuestion } from "@/lib/schema";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import Uploader from "../old-components/uploader";
-import PointsBadge from "../pointsBadge";
-import Slider from "../slider";
+import Uploader from "../form/uploader";
+import PointsBadge from "../competitions/pointsBadge";
+import Slider from "../competitions/slider";
 import { X } from "lucide-react";
 import Button from "../button";
 

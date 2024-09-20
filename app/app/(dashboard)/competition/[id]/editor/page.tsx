@@ -1,11 +1,11 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
-import QuestionEditor from "@/components/old-components/questionEditor";
+import QuestionEditor from "@/components/edit-competition/questionEditor";
 import db from "@/lib/db";
 import { getCompetitionData, getQuestionsForCompetition } from "@/lib/fetchers";
 import CompetitionCreator from "@/components/competition-creation";
 import Button from "@/components/button";
-import EditCompetitionDetails from "@/components/editCompetitionDetails";
+import EditCompetitionDetails from "@/components/edit-competition/editCompetitionDetails";
 
 export default async function CompetitionPage({
   params,

@@ -3,8 +3,8 @@ import { updateQuestionMetadata } from "@/lib/actions";
 import { SelectQuestion } from "@/lib/schema";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import Uploader from "../old-components/uploader";
-import PointsBadge from "../pointsBadge";
+import Uploader from "../form/uploader";
+import PointsBadge from "../competitions/pointsBadge";
 import Input from "../input";
 import { X } from "lucide-react";
 

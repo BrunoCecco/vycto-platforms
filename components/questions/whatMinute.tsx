@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { FC, useState } from "react";
-import Slider from "../slider";
-import PointsBadge from "../pointsBadge";
-import QuestionResultBlock from "../questionResultBlock";
+import Slider from "../competitions/slider";
+import PointsBadge from "../competitions/pointsBadge";
+import QuestionResultBlock from "../competitions/questionResultBlock";
 
 const WhatMinute = ({ ...props }) => {
   return (

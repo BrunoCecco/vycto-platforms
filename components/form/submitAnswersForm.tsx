@@ -1,0 +1,89 @@
+"use client";
+
+import LoadingDots from "@/components/icons/loadingDots";
+import { cn } from "@/lib/utils";
+import { useParams, useRouter } from "next/navigation";
+import { useFormStatus } from "react-dom";
+import { toast } from "sonner";
+import { deleteCompetition, submitAnswers } from "@/lib/actions";
+import va from "@vercel/analytics";
+import { useState } from "react";
+import { signIn, useSession } from "next-auth/react";
+import { usePostHog } from "posthog-js/react";
+
+export default function SubmitAnswersForm({
+  userId,
+  competitionId,
+  slug,
+  localAnswers,
+}: {
+  userId: string | null;
+  competitionId: string;
+  slug: string;
+  localAnswers: { [key: string]: string };
+}) {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const posthog = usePostHog();
+
+  const handleSubmit = async () => {
+    if (!session && !userId) {
+      // If not logged in, redirect to login page
+      signIn(undefined, { callbackUrl: `/comp/${slug}` });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await submitAnswers(userId!, competitionId, localAnswers);
+      if ("error" in res && res.error) {
+        toast.error(res.error);
+      } else {
+        posthog?.capture("answers_submitted");
+        va.track("Submitted Answers");
+        router.refresh();
+        router.push(`/comp/${slug}/${userId}`);
+        toast.success(`Successfully submitted answers!`);
+      }
+    } catch (error) {
+      toast.error("An error occurred while submitting answers.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="rounded-lg bg-white px-8 pb-8 dark:bg-black">
+      <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-green-600 bg-stone-50 p-3">
+        <p className="text-center text-sm text-stone-500 dark:text-stone-400">
+          Once submitted, you will not be able to edit your answers.
+        </p>
+        <FormButton onClick={handleSubmit} isSubmitting={isSubmitting} />
+      </div>
+    </div>
+  );
+}
+
+function FormButton({
+  onClick,
+  isSubmitting,
+}: {
+  onClick: () => void;
+  isSubmitting: boolean;
+}) {
+  return (
+    <button
+      className={cn(
+        "text-md flex items-center justify-center space-x-2 rounded-full border p-4 transition-all focus:outline-none sm:h-10",
+        isSubmitting
+          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
+          : "border-green-600 bg-green-600 text-white hover:bg-white hover:text-green-600 dark:hover:bg-transparent",
+      )}
+      disabled={isSubmitting}
+      onClick={onClick}
+    >
+      {isSubmitting ? <LoadingDots color="#808080" /> : <p>Submit Answers</p>}
+    </button>
+  );
+}

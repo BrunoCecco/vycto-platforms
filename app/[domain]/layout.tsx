@@ -1,14 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
-import CTA from "@/components/old-components/cta";
-import ReportAbuse from "@/components/old-components/report-abuse";
 import { notFound, redirect } from "next/navigation";
 import { getCompetitionsForSite, getSiteData } from "@/lib/fetchers";
 import { fontMapper } from "@/styles/fonts";
 import { Metadata } from "next";
 import SettingsButton from "@/components/settings/settingsButton";
-import SiteNav from "@/components/siteNav";
+import SiteNav from "@/components/nav/siteNav";
 
 export async function generateMetadata({
   params,

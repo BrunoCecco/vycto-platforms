@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import PointsBadge from "../pointsBadge";
+import PointsBadge from "../competitions/pointsBadge";
 import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
-import Uploader from "../old-components/uploader";
+import Uploader from "../form/uploader";
 import { X } from "lucide-react";
 
 const EditMatchOutcome = ({

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import PointsBadge from "../pointsBadge";
+import PointsBadge from "../competitions/pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
 import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";

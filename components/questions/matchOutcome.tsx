@@ -1,10 +1,10 @@
 "use client";
 import { useState, FC, useEffect } from "react";
 import Image from "next/image";
-import PointsBadge from "../pointsBadge";
+import PointsBadge from "../competitions/pointsBadge";
 import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
-import QuestionResultBlock from "../questionResultBlock";
+import QuestionResultBlock from "../competitions/questionResultBlock";
 
 const MatchOutcome = ({ ...props }) => {
   const [selectedOutcome, setSelectedOutcome] = useState(

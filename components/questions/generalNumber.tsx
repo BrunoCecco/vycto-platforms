@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import PointsBadge from "../pointsBadge";
+import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
 import { useRef, useState } from "react";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import Input from "../input";
-import QuestionResultBlock from "../questionResultBlock";
+import QuestionResultBlock from "../competitions/questionResultBlock";
 
 const GeneralNumber = ({ ...props }) => {
   const [answer, setAnswer] = useState(props.answer.answer ?? 0);

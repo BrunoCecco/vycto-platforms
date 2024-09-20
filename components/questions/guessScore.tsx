@@ -1,9 +1,9 @@
 "use client";
 import { FC, useRef, useState, useCallback, useEffect } from "react";
-import PointsBadge from "../pointsBadge";
+import PointsBadge from "../competitions/pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
 import Submit from "./submit";
-import QuestionResultBlock from "../questionResultBlock";
+import QuestionResultBlock from "../competitions/questionResultBlock";
 
 const GuessScore = ({ ...props }) => {
   const [scores, setScores] = useState({

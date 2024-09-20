@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
-import PointsBadge from "../pointsBadge";
+import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
 import { useState } from "react";
-import QuestionResultBlock from "../questionResultBlock";
+import QuestionResultBlock from "../competitions/questionResultBlock";
 
 const Button = ({
   children,

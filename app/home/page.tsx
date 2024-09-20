@@ -1,3 +1,4 @@
+import SelectUsername from "@/components/auth/selectUsername";
 import { getAllCompetitions } from "@/lib/fetchers";
 import Image from "next/image";
 
@@ -10,6 +11,7 @@ export default async function HomePage() {
       <div className="mx-auto flex items-center justify-center p-8 lg:w-1/2 lg:p-16">
         <Image src="/logo.png" alt="VYCTO" width={100} height={100} />
       </div>
+      <SelectUsername />
 
       {/* Right side - Scrollable Cards
       <div className="max-h-screen overflow-y-auto p-8 lg:w-1/2">

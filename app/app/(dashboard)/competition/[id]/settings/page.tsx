@@ -2,7 +2,7 @@ import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import Form from "@/components/form";
 import { updateCompetitionMetadata } from "@/lib/actions";
-import DeleteCompetitionForm from "@/components/form/delete-competition-form";
+import DeleteCompetitionForm from "@/components/form/deleteCompetitionForm";
 import db from "@/lib/db";
 
 export default async function CompetitionSettings({
