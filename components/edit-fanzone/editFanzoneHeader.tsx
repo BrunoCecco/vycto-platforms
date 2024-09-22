@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { SelectCompetition, sites } from "@/lib/schema";
 import { updateSite } from "@/lib/actions";
 import Form from "@/components/form";
+
 export default function EditFanZoneHeader({
   siteId,
   data,
