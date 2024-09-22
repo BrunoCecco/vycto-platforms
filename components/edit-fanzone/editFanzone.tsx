@@ -1,7 +1,7 @@
-import Competitions from "../competitions/competitions";
 import CreateCompetitionButton from "../edit-competition/createCompetitionButton";
 // import Competitions from "../competitions/competitions";
 import EditFanZoneHeader from "./editFanzoneHeader";
+import EditCompetitions from "../edit-competition/editCompetitions";
 
 export default function EditFanzone({
   data,
@@ -22,7 +22,7 @@ export default function EditFanzone({
         data={data}
         latestCompetition={latestCompetition}
       />
-      <Competitions siteId={siteId} />
+      <EditCompetitions siteId={siteId} />
     </div>
   );
 }

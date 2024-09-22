@@ -5,7 +5,7 @@ import { SelectCompetition, sites } from "@/lib/schema";
 import { updateSite } from "@/lib/actions";
 import { useState, ChangeEvent } from "react";
 import { toast } from "sonner";
-import Form from "./form";
+import Form from "@/components/form";
 import db from "@/lib/db";
 import { eq } from "drizzle-orm";
 
