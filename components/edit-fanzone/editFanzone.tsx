@@ -1,7 +1,5 @@
-import CreateCompetitionButton from "../edit-competition/createCompetitionButton";
-// import Competitions from "../competitions/competitions";
+import EditCompetitions from "@/components/edit-competition/editCompetitions";
 import EditFanZoneHeader from "./editFanzoneHeader";
-import EditCompetitions from "../edit-competition/editCompetitions";
 
 export default function EditFanzone({
   data,

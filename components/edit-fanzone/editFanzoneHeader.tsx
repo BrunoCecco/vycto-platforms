@@ -3,12 +3,7 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 import { SelectCompetition, sites } from "@/lib/schema";
 import { updateSite } from "@/lib/actions";
-import { useState, ChangeEvent } from "react";
-import { toast } from "sonner";
 import Form from "@/components/form";
-import db from "@/lib/db";
-import { eq } from "drizzle-orm";
-
 export default function EditFanZoneHeader({
   siteId,
   data,
