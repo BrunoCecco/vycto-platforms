@@ -1,9 +1,9 @@
 import React from "react";
-import StatsBadges from "./analytics/statsBadges";
-import EngagementTime from "./analytics/engagementTime";
-import EngagementTraffic from "./analytics/engagementTraffic";
-import VoucherConversions from "./analytics/voucherConversions";
-import Retention from "./analytics/retention";
+import StatsBadges from "@/components/analytics/statsBadges";
+import EngagementTime from "@/components/analytics/engagementTime";
+import EngagementTraffic from "@/components/analytics/engagementTraffic";
+import VoucherConversions from "@/components/analytics/voucherConversions";
+import Retention from "@/components/analytics/retention";
 
 const AnalyticsPage: React.FC = () => {
   return (
