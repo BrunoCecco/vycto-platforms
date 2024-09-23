@@ -25,7 +25,7 @@ import Leaderboard from "@/components/leaderboard/leaderboard";
 import GameStats from "@/components/competitions/gameStats";
 import LoginToSubmitButton from "@/components/auth/loginToSubmitButton";
 import { useRouter, useSearchParams } from "next/navigation";
-import { submitAnswers, updateUsername } from "@/lib/actions";
+import { submitAnswers, updateName, updateUsername } from "@/lib/actions";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import CompetitionWinners from "@/components/competitions/competitionWinners";
@@ -91,10 +91,13 @@ export default function CompetitionPage({
   const checkUsername = async () => {
     const username = searchParams.get("username");
     if (username) {
-      console.log(username, "username");
       const res = await updateUsername(username, session.user.email);
-      console.log(res, "resss");
       toast.success("Username updated");
+    }
+    const name = searchParams.get("name");
+    if (name) {
+      const res = await updateName(name, session.user.email);
+      toast.success("Name updated");
     }
   };
 
