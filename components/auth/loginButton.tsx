@@ -78,7 +78,7 @@ export default function LoginButton({
       return;
     }
     posthog?.capture("sign-in-email-clicked");
-    var callbackUrl = username ? `/newusername/${username}` : "";
+    var callbackUrl = username ? `/updateuser/${username}` : "";
     if (name && name?.trim() != "") {
       callbackUrl += `/${name}`;
     }

@@ -61,22 +61,6 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/", req.url));
     } else if (
       session &&
-      hostname != `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` &&
-      path.includes("updateuser")
-    ) {
-      // if path contains "updateuser?username={username}&name={name}" update the username and name in database
-      const username = url.searchParams.get("username");
-      const name = url.searchParams.get("name");
-      console.log(username, name);
-      if (username) {
-        await updateUsername(username, session.email as string);
-      }
-      if (name) {
-        await updateName(name, session.email as string);
-      }
-      return NextResponse.redirect(new URL(`/`, req.url));
-    } else if (
-      session &&
       hostname != `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
     ) {
       return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));

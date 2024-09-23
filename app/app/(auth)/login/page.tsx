@@ -1,20 +1,19 @@
-import { Suspense, useState } from "react";
-import { signIn } from "next-auth/react";
-import LoginButton from "../../../../components/auth/loginButton";
 import UserSignUp from "@/components/auth/userSignUp";
 import { getSiteData } from "@/lib/fetchers";
 import { headers } from "next/headers";
 import B2BSignUp from "@/components/auth/b2BSignUp";
 
-export default async function LoginPage({
-  params,
-}: {
-  params: { domain: string };
-}) {
-  const domain = decodeURIComponent(params.domain);
+export default async function LoginPage() {
   const heads = headers();
-  const host = heads.get("x-forwarded-host");
-  const siteData = await getSiteData(host || domain);
+  const host = heads
+    .get("x-forwarded-host")
+    ?.replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
+
+  const host1 = heads
+    .get("host")
+    ?.replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
+  console.log(host, host1);
+  const siteData = host ? await getSiteData(host) : undefined;
 
   return host?.includes("app.vycto.com") || host?.includes("app.localhost") ? (
     <B2BSignUp />

@@ -3,7 +3,6 @@ import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { editUser } from "@/lib/actions";
 import LogoutButton from "../auth/logout-button";
-import Button from "../button";
 
 export default async function UserSettings() {
   const session = await getSession();
@@ -17,6 +16,18 @@ export default async function UserSettings() {
         <h1 className="font-cal text-3xl font-bold dark:text-white">
           Settings
         </h1>
+        <Form
+          title="Name"
+          description="Your full name."
+          helpText="Please enter your first and last name."
+          inputAttrs={{
+            name: "name",
+            type: "text",
+            defaultValue: session.user.name!,
+            placeholder: "Full Name",
+          }}
+          handleSubmit={editUser}
+        />
         <Form
           title="Username"
           description="Your username displayed on leaderboards."
