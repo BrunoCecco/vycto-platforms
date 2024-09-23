@@ -158,7 +158,7 @@ const Leaderboard = ({
                     />
                   </div>
                   <span className="ml-2 font-bold text-gray-900">
-                    @{user.username || "User"}
+                    @{user.username || "User" + index}
                   </span>
                 </td>
                 <td className="py-4 text-gray-900">

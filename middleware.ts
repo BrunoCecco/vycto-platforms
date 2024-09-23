@@ -3,6 +3,7 @@ import { getToken } from "next-auth/jwt";
 import { users } from "./lib/schema";
 import db from "./lib/db";
 import { eq } from "drizzle-orm";
+import { updateName, updateUsername } from "./lib/actions";
 
 export const config = {
   matcher: [
@@ -61,19 +62,19 @@ export default async function middleware(req: NextRequest) {
     } else if (
       session &&
       hostname != `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` &&
-      path.includes("newusername")
+      path.includes("updateuser")
     ) {
-      // if path contains "newusername/{username}" update the username in database
-      const username = path.split("/")[path.split("/").length - 1];
+      // if path contains "updateuser?username={username}&name={name}" update the username and name in database
+      const username = url.searchParams.get("username");
+      const name = url.searchParams.get("name");
+      console.log(username, name);
       if (username) {
-        await db
-          .update(users)
-          .set({ username: username })
-          .where(eq(users.email, session.email as string));
-        return NextResponse.redirect(new URL(`/`, req.url));
-      } else {
-        return NextResponse.redirect(new URL(`/`, req.url));
+        await updateUsername(username, session.email as string);
       }
+      if (name) {
+        await updateName(name, session.email as string);
+      }
+      return NextResponse.redirect(new URL(`/`, req.url));
     } else if (
       session &&
       hostname != `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`

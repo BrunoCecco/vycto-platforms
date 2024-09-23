@@ -29,7 +29,7 @@ import { submitAnswers, updateUsername } from "@/lib/actions";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import CompetitionWinners from "@/components/competitions/competitionWinners";
-import LoginButton from "@/app/app/(auth)/login/loginButton";
+import LoginButton from "@/components/auth/loginButton";
 
 export default function CompetitionPage({
   session,

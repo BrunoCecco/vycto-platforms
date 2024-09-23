@@ -2,39 +2,13 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { validateEmail } from "@/lib/utils";
-import { toast } from "sonner";
-import { usePostHog } from "posthog-js/react";
-import { getSiteData } from "@/lib/fetchers";
 import { SelectSite } from "@/lib/schema";
+import LoginButton from "./loginButton";
 
 const UserSignUp = ({ siteData }: { siteData?: SelectSite }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  const posthog = usePostHog();
-
-  const handleLogin = async () => {
-    setLoading(true);
-    if (!validateEmail(email)) {
-      toast.error("Invalid email, please try again");
-      return;
-    }
-    posthog?.capture("sign-in-email-clicked");
-    const callbackUrl = username ? `/newusername/${username}` : "";
-    signIn("email", {
-      email,
-      callbackUrl,
-    }).then((res) => {
-      if (res?.ok && !res?.error) {
-        setMessage("Email sent - check your inbox!");
-      } else {
-        setError("Error sending email - try again?");
-      }
-    });
-  };
+  const [name, setName] = useState("");
 
   return (
     <div className="flex flex-col items-center justify-center bg-white p-8">
@@ -91,12 +65,8 @@ const UserSignUp = ({ siteData }: { siteData?: SelectSite }) => {
             <div className="flex space-x-4">
               <input
                 type="text"
-                placeholder="First Name"
-                className="block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
+                placeholder="Full Name"
+                onChange={(e) => setName(e.target.value)}
                 className="block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
             </div>
@@ -144,12 +114,7 @@ const UserSignUp = ({ siteData }: { siteData?: SelectSite }) => {
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
             </div> */}
-            <button
-              onClick={handleLogin}
-              className="flex w-full justify-center rounded-md border border-transparent bg-blue-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              Sign Up
-            </button>
+            <LoginButton email={email} username={username} name={name} />
           </form>
         </div>
 

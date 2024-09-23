@@ -13,11 +13,13 @@ export default function LoginButton({
   username,
   localAnswers,
   competitionSlug,
+  name,
 }: {
   email: string;
   username: string;
   localAnswers?: { [key: string]: string };
   competitionSlug?: string;
+  name?: string;
 }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -45,7 +47,10 @@ export default function LoginButton({
           `${encodeURIComponent(questionId)}=${encodeURIComponent(answer)}`,
       )
       .join("&");
-    const callbackUrl = `/comp/${competitionSlug}?${answersQuery}&username=${username}`;
+    var callbackUrl = `/comp/${competitionSlug}?${answersQuery}&username=${username}`;
+    if (name && name?.trim() != "") {
+      callbackUrl += `&name=${name}`;
+    }
     console.log(callbackUrl);
     try {
       const result = await signIn("email", {
@@ -73,7 +78,10 @@ export default function LoginButton({
       return;
     }
     posthog?.capture("sign-in-email-clicked");
-    const callbackUrl = username ? `/newusername/${username}` : "";
+    var callbackUrl = username ? `/newusername/${username}` : "";
+    if (name && name?.trim() != "") {
+      callbackUrl += `/${name}`;
+    }
     signIn("email", {
       email,
       callbackUrl,
@@ -95,16 +103,14 @@ export default function LoginButton({
         }
         className={`${
           loading
-            ? "cursor-not-allowed bg-stone-50 dark:bg-stone-800"
-            : "bg-white hover:bg-stone-50 active:bg-stone-100 dark:bg-black dark:hover:border-white dark:hover:bg-black"
-        } group my-2 flex h-10 w-full items-center justify-center space-x-2 rounded-md border border-stone-200 transition-colors duration-75 focus:outline-none dark:border-stone-400`}
+            ? "cursor-not-allowed bg-blue-800"
+            : "bg-blue-500  hover:bg-blue-600"
+        } group my-2 flex h-10 w-full items-center justify-center space-x-2 rounded-md border border-stone-200 text-white transition-colors duration-75 focus:outline-none dark:border-stone-400`}
       >
         {loading ? (
           <LoadingDots color="#A8A29E" />
         ) : (
-          <p className="text-sm font-medium text-stone-600 dark:text-stone-200">
-            Sign in with Email
-          </p>
+          <p className="text-sm font-medium">Sign in with Email</p>
         )}
       </button>
       {message && (

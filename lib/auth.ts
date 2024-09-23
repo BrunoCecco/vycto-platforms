@@ -110,6 +110,7 @@ export async function getSession() {
     return {
       user: {
         ...session.user,
+        name: user?.name || session.user.name,
         username: user?.username || session.user.username,
       },
     };
