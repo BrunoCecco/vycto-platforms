@@ -214,7 +214,7 @@ export default function CompetitionPage({
 
   return (
     <div
-      className={`mx-auto w-full md:w-3/4 md:py-20 lg:w-2/3 ${activeTab == "Leaderboard" ? `md:w-full lg:w-full` : ``}`}
+      className={`${activeTab == "Leaderboard" ? `mx-auto w-full md:w-5/6 lg:w-5/6` : `mx-auto w-full md:w-3/4 md:py-20 lg:w-2/3`}`}
     >
       <div className="bg-white px-4 py-20 shadow-2xl md:rounded-xl md:px-24">
         <CompetitionHeader

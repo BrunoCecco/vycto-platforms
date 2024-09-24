@@ -140,19 +140,17 @@ export default async function SubmissionPage({
         backgroundColor: siteData?.color1 ?? "white",
       }}
     >
-      <div className="mx-auto w-full md:w-3/4 lg:w-3/5">
-        <CompetitionPage
-          session={session}
-          data={data}
-          siteData={siteData}
-          questions={questions}
-          answers={answers}
-          users={sortedUsers}
-          userComp={userComp}
-          slug={slug}
-          winnerData={winnerData}
-        />
-      </div>
+      <CompetitionPage
+        session={session}
+        data={data}
+        siteData={siteData}
+        questions={questions}
+        answers={answers}
+        users={sortedUsers}
+        userComp={userComp}
+        slug={slug}
+        winnerData={winnerData}
+      />
     </div>
   );
 }
