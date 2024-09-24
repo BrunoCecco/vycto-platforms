@@ -15,6 +15,7 @@ export default async function CompetitionPage({
   const session = await getSession();
   if (!session) {
     redirect("/login");
+    console.log("HERE");
   }
 
   const competitionData = await db.query.competitions.findFirst({

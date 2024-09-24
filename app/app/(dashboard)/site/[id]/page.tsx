@@ -12,6 +12,7 @@ export default async function SiteCompetitions({
   const session = await getSession();
   if (!session) {
     redirect("/login");
+    console.log("HERE");
   }
 
   // Fetch site data from the database

@@ -13,6 +13,7 @@ export default async function CompetitionSettings({
   const session = await getSession();
   if (!session) {
     redirect("/login");
+    console.log("HERE");
   }
   const data = await db.query.competitions.findFirst({
     where: (competitions, { eq }) =>

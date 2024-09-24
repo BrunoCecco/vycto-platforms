@@ -294,14 +294,7 @@ export default function CompetitionPage({
         </div>
       )}
       {activeTab == "Leaderboard" && (
-        <div className="flex flex-col justify-center md:px-8">
-          <CompetitionWinners
-            winnerData={winnerData}
-            url={url}
-            adminView={false}
-          />
-          <Leaderboard siteData={siteData} competition={data} users={users} />
-        </div>
+        <Leaderboard siteData={siteData} competition={data} users={users} />
       )}
     </div>
   );

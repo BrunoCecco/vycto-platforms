@@ -41,11 +41,6 @@ export default async function UserSettings() {
           }}
           handleSubmit={editUser}
         />
-
-        <div className="mx-auto flex items-center gap-2">
-          <div>Sign Out</div>
-          <LogoutButton />
-        </div>
       </div>
     </div>
   );

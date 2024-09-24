@@ -15,6 +15,7 @@ export default async function EditCompetitions({
   const session = await getSession();
   if (!session?.user) {
     redirect("/login");
+    console.log("HERE");
   }
 
   const competitions = await db.query.competitions.findMany({

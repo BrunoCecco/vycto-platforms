@@ -113,12 +113,8 @@ export default function LoginButton({
           <p className="text-sm font-medium">Sign in with Email</p>
         )}
       </button>
-      {message && (
-        <p className="text-sm text-stone-500 dark:text-stone-400">{message}</p>
-      )}
-      {error !== "" && (
-        <p className="text-sm text-stone-500 dark:text-stone-400">{error}</p>
-      )}
+      {message && <p className="text-sm text-stone-700">{message}</p>}
+      {error !== "" && <p className="text-sm text-stone-700">{error}</p>}
     </>
   );
 }

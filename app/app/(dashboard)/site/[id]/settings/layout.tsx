@@ -14,6 +14,7 @@ export default async function SiteAnalyticsLayout({
   const session = await getSession();
   if (!session) {
     redirect("/login");
+    console.log("HERE");
   }
   const data = await db.query.sites.findFirst({
     where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),

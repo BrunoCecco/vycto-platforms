@@ -1,12 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getCompetitionsForSite, getSiteData } from "@/lib/fetchers";
 import { fontMapper } from "@/styles/fonts";
 import { Metadata } from "next";
 import SettingsButton from "@/components/settings/settingsButton";
 import SiteNav from "@/components/nav/siteNav";
+import Profile from "@/components/nav/profile";
+import Loading from "../app/(dashboard)/loading";
 
 export async function generateMetadata({
   params,
@@ -98,8 +100,8 @@ export default async function SiteLayout({
         minHeight: "100vh",
       }}
     >
-      <div className="flex justify-between p-5">
-        <div className="flex items-center gap-4">
+      <div className="flex justify-between">
+        <div className="flex items-center gap-4 p-5">
           <Link href="/">
             <Image
               src={data.logo ?? "/logo.png"}
@@ -116,8 +118,13 @@ export default async function SiteLayout({
             Play
           </Link>
         </div>
+
+        <SiteNav>
+          <Suspense fallback={<Loading />}>
+            <Profile />
+          </Suspense>
+        </SiteNav>
       </div>
-      <SiteNav />
       {children}
     </div>
   );
