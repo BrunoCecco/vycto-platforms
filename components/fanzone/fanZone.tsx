@@ -5,6 +5,7 @@ import FanZoneHeader from "./fanzoneHeader";
 import Leaderboard from "@/components/leaderboard/leaderboard";
 import MonthlyLeaderboard from "../leaderboard/monthlyLeaderboard";
 import { getMonthlyLeaderboardData } from "@/lib/fetchers";
+import YearlyLeaderboard from "../leaderboard/yearlyLeaderboard";
 
 const FanZone = async ({
   siteData,
@@ -17,8 +18,6 @@ const FanZone = async ({
   pastCompetitions: SelectCompetition[];
   latestCompetition: any;
 }) => {
-  const monthlyLeaderboardData = await getMonthlyLeaderboardData(siteData.id);
-
   return (
     <div className="w-full">
       <FanZoneHeader data={siteData} latestCompetition={latestCompetition} />
@@ -49,10 +48,9 @@ const FanZone = async ({
         </h2>
       )}
       <div className="my-4 sm:my-10" />
-      <MonthlyLeaderboard
-        siteData={siteData}
-        monthData={monthlyLeaderboardData}
-      />
+      <MonthlyLeaderboard siteData={siteData} />
+      <div className="my-4 sm:my-10" />
+      <YearlyLeaderboard siteData={siteData} />
     </div>
   );
 };

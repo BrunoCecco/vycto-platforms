@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import { SelectSite } from "@/lib/schema";
-import { getMonthlyLeaderboardData } from "@/lib/fetchers";
+import { getYearlyLeaderboardData } from "@/lib/fetchers";
 
-const MonthlyLeaderboard = async ({ siteData }: { siteData: SelectSite }) => {
-  const monthData = await getMonthlyLeaderboardData(siteData.id);
+const YearlyLeaderboard = async ({ siteData }: { siteData: SelectSite }) => {
+  const yearData = await getYearlyLeaderboardData(siteData.id);
+
   return (
     <div className="container bg-white p-10 md:rounded-2xl">
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row md:items-center md:py-6">
@@ -20,7 +21,7 @@ const MonthlyLeaderboard = async ({ siteData }: { siteData: SelectSite }) => {
           </div>
           <h1 className="text-lg font-bold text-gray-800 md:text-2xl">
             Leaderboard -{" "}
-            {new Date().toLocaleString("default", { month: "long" })}
+            {new Date().toLocaleString("default", { year: "numeric" })}
           </h1>
         </div>
       </div>
@@ -48,7 +49,7 @@ const MonthlyLeaderboard = async ({ siteData }: { siteData: SelectSite }) => {
             </tr>
           </thead>
           <tbody>
-            {monthData.map((user: any, index: number) => (
+            {yearData.map((user: any, index: number) => (
               <tr key={user.userId} className="border-b text-left">
                 <td className="flex items-center space-x-3 py-4">
                   <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
@@ -104,7 +105,7 @@ const MonthlyLeaderboard = async ({ siteData }: { siteData: SelectSite }) => {
             </tr>
           </thead>
           <tbody>
-            {monthData.map((user: any, index: number) => (
+            {yearData.map((user: any, index: number) => (
               <tr key={user.userId} className="border-b">
                 <td className="pr-2 text-gray-900">{index + 1}</td>
                 <td className="flex items-center py-4">
@@ -141,4 +142,4 @@ const MonthlyLeaderboard = async ({ siteData }: { siteData: SelectSite }) => {
   );
 };
 
-export default MonthlyLeaderboard;
+export default YearlyLeaderboard;

@@ -440,18 +440,37 @@ export async function calculateCompetitionPoints(competitionId: string) {
   return usersWithPoints;
 }
 
+export async function getCompetitionsForPeriod(
+  siteId: string,
+  startDate: Date,
+  endDate: Date,
+) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.competitions.findMany({
+        where: and(
+          eq(competitions.siteId, siteId),
+          gte(competitions.createdAt, startDate),
+          lte(competitions.createdAt, endDate),
+        ),
+        orderBy: desc(competitions.createdAt),
+      });
+    },
+    [`${siteId}-${startDate}-${endDate}`],
+    {
+      revalidate: 900,
+      tags: [`${siteId}-${startDate}-${endDate}`],
+    },
+  )();
+}
+
 export async function getMonthlyLeaderboardData(siteId: string) {
   // get all competitions for the site within the current month
-  const comps = await db.query.competitions.findMany({
-    where: and(
-      eq(competitions.siteId, siteId),
-      lte(
-        competitions.createdAt,
-        new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-      ),
-    ),
-  });
-
+  const comps = await getCompetitionsForPeriod(
+    siteId,
+    new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+    new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
+  );
   // await promise for all site competitions and store in array
   const allCompetitionPoints = await Promise.all(
     comps.map((comp) => calculateCompetitionPoints(comp.id)),
@@ -478,7 +497,43 @@ export async function getMonthlyLeaderboardData(siteId: string) {
       };
     }),
   );
-  return monthlyLeaderboardData;
+  return monthlyLeaderboardData.sort((a, b) => b.points - a.points);
+}
+
+export async function getYearlyLeaderboardData(siteId: string) {
+  // get all competitions for the site within the current year
+  const comps = await getCompetitionsForPeriod(
+    siteId,
+    new Date(new Date().getFullYear(), 0, 1),
+    new Date(new Date().getFullYear(), 11, 31),
+  );
+  // await promise for all site competitions and store in array
+  const allCompetitionPoints = await Promise.all(
+    comps.map((comp) => calculateCompetitionPoints(comp.id)),
+  );
+
+  const allUsers = allCompetitionPoints.flat();
+  // deduplicate users and sum their points
+  const userPoints = allUsers.reduce((acc: any, user: any) => {
+    if (acc[user.userId]) {
+      acc[user.userId] += user.points;
+    } else {
+      acc[user.userId] = user.points;
+    }
+    return acc;
+  }, {});
+  const yearlyLeaderboardData = await Promise.all(
+    Object.keys(userPoints).map(async (userId) => {
+      const user = await db.query.users.findFirst({
+        where: eq(users.id, userId),
+      });
+      return {
+        ...user,
+        points: userPoints[userId],
+      };
+    }),
+  );
+  return yearlyLeaderboardData.sort((a, b) => b.points - a.points);
 }
 
 export async function getCompetitionWinnerData(competitionId: string) {
