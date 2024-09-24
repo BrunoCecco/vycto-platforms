@@ -128,19 +128,17 @@ export default async function SiteCompetitionPage({
         backgroundColor: siteData?.color1 ?? "white",
       }}
     >
-      <div className="mx-auto w-full md:w-3/4 md:py-20 lg:w-2/3">
-        <CompetitionPage
-          session={session}
-          data={data}
-          siteData={siteData}
-          questions={questions}
-          answers={answers}
-          users={sortedUsers}
-          userComp={userComp}
-          slug={slug}
-          winnerData={winnerData}
-        />
-      </div>
+      <CompetitionPage
+        session={session}
+        data={data}
+        siteData={siteData}
+        questions={questions}
+        answers={answers}
+        users={sortedUsers}
+        userComp={userComp}
+        slug={slug}
+        winnerData={winnerData}
+      />
       {/* {data.adjacentCompetitions.length > 0 && (
         <div className="relative pb-20 pt-10 sm:pt-20">
           <div

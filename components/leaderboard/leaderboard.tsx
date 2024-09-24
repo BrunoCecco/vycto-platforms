@@ -45,7 +45,7 @@ const Leaderboard = ({
   users: SelectUserCompetition[];
 }) => {
   return (
-    <div className="container bg-white px-2 py-6 md:rounded-2xl md:p-8">
+    <div className="container bg-white pt-20 md:rounded-2xl">
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row md:items-center md:py-6">
         <div className="flex items-center gap-4">
           <div className="relative inline-block h-16 w-32 align-middle md:h-16 md:w-36">

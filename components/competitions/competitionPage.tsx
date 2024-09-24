@@ -213,89 +213,93 @@ export default function CompetitionPage({
   };
 
   return (
-    <div className="bg-white px-4 shadow-2xl md:rounded-xl md:px-24">
-      <CompetitionHeader
-        session={session}
-        users={users}
-        data={data}
-        siteData={siteData}
-      />
-      <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
-      {activeTab == "Rewards" && (
-        <Rewards siteData={siteData} competition={data} users={users} />
-      )}
-      {activeTab == "Challenge" && (
-        <div className="mx-auto flex w-full flex-col justify-center gap-12 bg-white py-12 md:gap-20 md:rounded-3xl">
-          {userComp && "submitted" in userComp && userComp.submitted ? (
-            <GameStats
-              competitionTitle={data.title!}
-              userComp={userComp}
-              users={users}
-            />
-          ) : null}
-          {questions &&
-            questions.map((question: any, index: number) => {
-              const answer = answers?.find(
-                (a: any) => a.questionId === question.id,
-              ) || { answer: searchParams.get(question.id) };
-              const disabled =
-                userComp && "submitted" in userComp && userComp?.submitted;
-              return (
-                <div key={"compquestion" + index}>
-                  {getQuestionType(
-                    question,
-                    session?.user.id!,
-                    index,
-                    answer,
-                    disabled || false,
-                  )}
+    <div
+      className={`mx-auto w-full md:w-3/4 md:py-20 lg:w-2/3 ${activeTab == "Leaderboard" ? `md:w-full lg:w-full` : ``}`}
+    >
+      <div className="bg-white px-4 py-20 shadow-2xl md:rounded-xl md:px-24">
+        <CompetitionHeader
+          session={session}
+          users={users}
+          data={data}
+          siteData={siteData}
+        />
+        <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
+        {activeTab == "Rewards" && (
+          <Rewards siteData={siteData} competition={data} users={users} />
+        )}
+        {activeTab == "Challenge" && (
+          <div className="mx-auto flex w-full flex-col justify-center gap-12 bg-white py-12 md:gap-20 md:rounded-3xl">
+            {userComp && "submitted" in userComp && userComp.submitted ? (
+              <GameStats
+                competitionTitle={data.title!}
+                userComp={userComp}
+                users={users}
+              />
+            ) : null}
+            {questions &&
+              questions.map((question: any, index: number) => {
+                const answer = answers?.find(
+                  (a: any) => a.questionId === question.id,
+                ) || { answer: searchParams.get(question.id) };
+                const disabled =
+                  userComp && "submitted" in userComp && userComp?.submitted;
+                return (
+                  <div key={"compquestion" + index}>
+                    {getQuestionType(
+                      question,
+                      session?.user.id!,
+                      index,
+                      answer,
+                      disabled || false,
+                    )}
+                  </div>
+                );
+              })}
+            {session ? (
+              userComp && "submitted" in userComp && userComp.submitted ? (
+                <div className="text-md mx-auto rounded-xl border-green-600 bg-green-600 p-4 text-white">
+                  Answers Submitted
                 </div>
-              );
-            })}
-          {session ? (
-            userComp && "submitted" in userComp && userComp.submitted ? (
-              <div className="text-md mx-auto rounded-xl border-green-600 bg-green-600 p-4 text-white">
-                Answers Submitted
-              </div>
+              ) : (
+                <SubmitAnswersForm
+                  userId={session?.user.id!}
+                  competitionId={data.id}
+                  slug={slug}
+                  localAnswers={localAnswers}
+                />
+              )
             ) : (
-              <SubmitAnswersForm
-                userId={session?.user.id!}
-                competitionId={data.id}
-                slug={slug}
-                localAnswers={localAnswers}
-              />
-            )
-          ) : (
-            <div className="mx-5 rounded-md border border-stone-200 p-10 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email address"
-                onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
-              />
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Username"
-                onChange={(e) => setUsername(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
-              />
-              <LoginButton
-                email={email}
-                username={username}
-                localAnswers={localAnswers}
-                competitionSlug={slug}
-              />
-            </div>
-          )}
-        </div>
-      )}
-      {activeTab == "Leaderboard" && (
-        <Leaderboard siteData={siteData} competition={data} users={users} />
-      )}
+              <div className="mx-5 rounded-md border border-stone-200 p-10 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Email address"
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
+                />
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Username"
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
+                />
+                <LoginButton
+                  email={email}
+                  username={username}
+                  localAnswers={localAnswers}
+                  competitionSlug={slug}
+                />
+              </div>
+            )}
+          </div>
+        )}
+        {activeTab == "Leaderboard" && (
+          <Leaderboard siteData={siteData} competition={data} users={users} />
+        )}
+      </div>
     </div>
   );
 }
