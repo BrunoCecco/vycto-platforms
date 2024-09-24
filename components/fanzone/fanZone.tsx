@@ -2,8 +2,11 @@ import { FC } from "react";
 import Competitions from "@/components/competitions/competitions";
 import { competitions, SelectCompetition, SelectSite } from "@/lib/schema";
 import FanZoneHeader from "./fanzoneHeader";
+import Leaderboard from "@/components/leaderboard/leaderboard";
+import MonthlyLeaderboard from "../leaderboard/monthlyLeaderboard";
+import { getMonthlyLeaderboardData } from "@/lib/fetchers";
 
-const FanZone = ({
+const FanZone = async ({
   siteData,
   currentCompetitions,
   pastCompetitions,
@@ -14,6 +17,8 @@ const FanZone = ({
   pastCompetitions: SelectCompetition[];
   latestCompetition: any;
 }) => {
+  const monthlyLeaderboardData = await getMonthlyLeaderboardData(siteData.id);
+
   return (
     <div className="w-full">
       <FanZoneHeader data={siteData} latestCompetition={latestCompetition} />
@@ -43,6 +48,11 @@ const FanZone = ({
           No past competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
+      <div className="my-4 sm:my-10" />
+      <MonthlyLeaderboard
+        siteData={siteData}
+        monthData={monthlyLeaderboardData}
+      />
     </div>
   );
 };

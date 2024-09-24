@@ -1,5 +1,9 @@
 import { notFound } from "next/navigation";
-import { getCompetitionsForSite, getSiteData } from "@/lib/fetchers";
+import {
+  getMonthlyLeaderboardData,
+  getCompetitionsForSite,
+  getSiteData,
+} from "@/lib/fetchers";
 import db from "@/lib/db";
 import FanZone from "@/components/fanzone/fanZone";
 import { SelectCompetition } from "@/lib/schema";

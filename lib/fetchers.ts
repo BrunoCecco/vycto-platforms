@@ -2,7 +2,7 @@
 
 import { unstable_cache } from "next/cache";
 import db from "./db";
-import { and, desc, eq, gte, not } from "drizzle-orm";
+import { and, desc, eq, gte, lte, not } from "drizzle-orm";
 import {
   questions,
   answers,
@@ -438,6 +438,47 @@ export async function calculateCompetitionPoints(competitionId: string) {
   }
   var sortedUsers = usersWithPoints.sort((a, b) => b.points - a.points);
   return usersWithPoints;
+}
+
+export async function getMonthlyLeaderboardData(siteId: string) {
+  // get all competitions for the site within the current month
+  const comps = await db.query.competitions.findMany({
+    where: and(
+      eq(competitions.siteId, siteId),
+      lte(
+        competitions.createdAt,
+        new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+      ),
+    ),
+  });
+
+  // await promise for all site competitions and store in array
+  const allCompetitionPoints = await Promise.all(
+    comps.map((comp) => calculateCompetitionPoints(comp.id)),
+  );
+
+  const allUsers = allCompetitionPoints.flat();
+  // deduplicate users and sum their points
+  const userPoints = allUsers.reduce((acc: any, user: any) => {
+    if (acc[user.userId]) {
+      acc[user.userId] += user.points;
+    } else {
+      acc[user.userId] = user.points;
+    }
+    return acc;
+  }, {});
+  const monthlyLeaderboardData = await Promise.all(
+    Object.keys(userPoints).map(async (userId) => {
+      const user = await db.query.users.findFirst({
+        where: eq(users.id, userId),
+      });
+      return {
+        ...user,
+        points: userPoints[userId],
+      };
+    }),
+  );
+  return monthlyLeaderboardData;
 }
 
 export async function getCompetitionWinnerData(competitionId: string) {
