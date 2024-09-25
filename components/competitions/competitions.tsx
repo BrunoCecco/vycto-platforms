@@ -5,9 +5,11 @@ import { SelectCompetition, SelectSite } from "@/lib/schema";
 const Competitions = ({
   competitions,
   siteData,
+  type,
 }: {
   competitions: SelectCompetition[];
   siteData: SelectSite;
+  type?: "current" | "past";
 }) => {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -16,6 +18,7 @@ const Competitions = ({
           key={index}
           competition={competition}
           siteData={siteData}
+          type={type}
         />
       ))}
     </div>

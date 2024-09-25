@@ -38,6 +38,7 @@ export default function LoginButton({
     setLoading(true);
     if (!validateEmail(email)) {
       toast.error("Invalid email, please try again");
+      setLoading(false);
       return;
     }
 
@@ -75,6 +76,7 @@ export default function LoginButton({
     setLoading(true);
     if (!validateEmail(email)) {
       toast.error("Invalid email, please try again");
+      setLoading(false);
       return;
     }
     posthog?.capture("sign-in-email-clicked");
@@ -91,6 +93,7 @@ export default function LoginButton({
       } else {
         setError("Error sending email - try again?");
       }
+      setLoading(false);
     });
   };
 

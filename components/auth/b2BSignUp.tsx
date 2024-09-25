@@ -2,9 +2,13 @@
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import LoginButton from "./loginButton";
 
 const B2BSignUp: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+
   return (
     <div className="flex min-h-screen">
       {/* Left side - Sign In form */}
@@ -26,7 +30,26 @@ const B2BSignUp: React.FC = () => {
               <span className="bg-white px-2 text-gray-500">or</span>
             </div>
           </div>
-          <form className="space-y-6">
+          <div className="space-y-6">
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Username
+              </label>
+              <div className="mt-1">
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="user123"
+                  required
+                  className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                />
+              </div>
+            </div>
             {/* Email Field */}
             <div>
               <label
@@ -40,16 +63,17 @@ const B2BSignUp: React.FC = () => {
                   id="email"
                   name="email"
                   type="email"
+                  onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
                   placeholder="mail@simple.com"
                   required
-                  className="block w-full appearance-none rounded-xl border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                  className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 />
               </div>
             </div>
 
             {/* Password Field */}
-            <div>
+            {/* <div>
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
@@ -64,7 +88,7 @@ const B2BSignUp: React.FC = () => {
                   autoComplete="current-password"
                   placeholder="Min. 8 characters"
                   required
-                  className="block w-full appearance-none rounded-xl border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                  className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 />
                 <button
                   type="button"
@@ -102,17 +126,10 @@ const B2BSignUp: React.FC = () => {
                   Forgot password?
                 </a>
               </div>
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              >
-                Sign In
-              </button>
-            </div>
-          </form>
-          <div className="mt-6 text-center">
+            </div> */}
+            <LoginButton email={email} username={username} />
+          </div>
+          {/* <div className="mt-6 text-center">
             <p className="text-gray-600">
               Not registered yet?{" "}
               <a
@@ -122,7 +139,7 @@ const B2BSignUp: React.FC = () => {
                 Create an Account
               </a>
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -132,7 +149,7 @@ const B2BSignUp: React.FC = () => {
           <Image src={"/vLogo.png"} width={75} height={75} alt={""} />
           <div className="flex items-center justify-center">
             <Image src={"/vyctoLogo.png"} width={110} height={110} alt={""} />
-            <span className="text-md ml-3 rounded-xl border-2 border-[#FFC700] p-1 font-medium text-[#FFC700]">
+            <span className="text-md ml-3 rounded-lg border-2 border-[#FFC700] p-1 font-medium text-[#FFC700]">
               beta
             </span>
           </div>

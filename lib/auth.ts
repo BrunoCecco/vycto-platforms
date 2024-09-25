@@ -15,6 +15,13 @@ import { createTransport } from "nodemailer";
 import AppleProvider from "next-auth/providers/apple";
 import FacebookProvider from "next-auth/providers/facebook";
 
+const SUPER_ADMINS = [
+  "bruno.ceccolini@gmail.com",
+  "nicolas@vycto.com",
+  "nicolas@vycto.ai",
+  "nicolas2ric@gmail.com",
+];
+
 // Add this type declaration at the top of your file
 declare module "next-auth" {
   interface Session {
@@ -185,6 +192,9 @@ export function withCompetitionAuth(action: any) {
 async function sendVerificationRequest(params: SendVerificationRequestParams) {
   const { identifier, url, provider, theme } = params;
   const { host } = new URL(url);
+  if (SUPER_ADMINS.indexOf(identifier) == -1) {
+    throw new Error(`UNAUTHORIZED: Email could not be sent`);
+  }
   const transport = createTransport(provider.server);
   const result = await transport.sendMail({
     to: identifier,

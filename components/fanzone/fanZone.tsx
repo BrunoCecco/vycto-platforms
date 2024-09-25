@@ -28,7 +28,11 @@ const FanZone = async ({
         </span>
       </h2>
       {currentCompetitions?.length > 0 ? (
-        <Competitions competitions={currentCompetitions} siteData={siteData} />
+        <Competitions
+          competitions={currentCompetitions}
+          siteData={siteData}
+          type="current"
+        />
       ) : (
         <h2 className="py-4 text-lg font-semibold italic text-gray-600">
           No current competitions yet. Stay tuned for more! Coming soon! 🔥
@@ -41,7 +45,11 @@ const FanZone = async ({
         </span>
       </h2>
       {pastCompetitions?.length > 0 ? (
-        <Competitions competitions={pastCompetitions} siteData={siteData} />
+        <Competitions
+          competitions={pastCompetitions}
+          siteData={siteData}
+          type="past"
+        />
       ) : (
         <h2 className="mb-24 py-4 text-lg font-semibold italic text-gray-600">
           No past competitions yet. Stay tuned for more! Coming soon! 🔥

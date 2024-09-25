@@ -14,7 +14,7 @@ const UserSignUp = ({ siteData }: { siteData?: SelectSite }) => {
     <div className="flex flex-col items-center justify-center bg-white p-8">
       <div className="w-full max-w-lg text-left">
         <p className="text-xs text-gray-500">
-          powered by{" "}
+          Powered by{" "}
           <span className="text-md font-bold text-blue-700">Vycto</span>
         </p>
 

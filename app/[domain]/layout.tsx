@@ -92,6 +92,8 @@ export default async function SiteLayout({
     return redirect(`https://${data.customDomain}`);
   }
 
+  const cla = `hover:text-${data.color2}`;
+
   return (
     <div
       className={fontMapper[data.font]}
@@ -111,7 +113,7 @@ export default async function SiteLayout({
             />
           </Link>
           <Link
-            className="ml-3 rounded-full px-8 py-2 pt-1 font-semibold text-white hover:opacity-75"
+            className={`ml-3 rounded-full px-8 py-2 pt-1 font-semibold text-white hover:invert ${cla}`}
             style={{ backgroundColor: data.color2 || "#1E40AF" }} // Default color fallback
             href={`/comp/${latestCompetition?.slug}` ?? "/"}
           >

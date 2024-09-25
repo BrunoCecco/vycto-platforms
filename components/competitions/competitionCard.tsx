@@ -9,9 +9,11 @@ import { SelectCompetition, SelectSite } from "@/lib/schema";
 const CompetitionCard = async ({
   competition,
   siteData,
+  type,
 }: {
   competition: SelectCompetition;
   siteData: SelectSite;
+  type?: "current" | "past";
 }) => {
   const users = await getCompetitionUsers(competition.slug);
 
@@ -79,7 +81,7 @@ const CompetitionCard = async ({
             className="w-24 rounded-full  p-2 text-center text-white hover:opacity-75"
             style={{ backgroundColor: siteData.color2 }}
           >
-            Play
+            {type === "current" ? "Play" : "View"}
           </Link>
         </div>
       </div>

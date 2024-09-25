@@ -4,6 +4,14 @@ import { users } from "./lib/schema";
 import db from "./lib/db";
 import { eq } from "drizzle-orm";
 import { updateName, updateUsername } from "./lib/actions";
+import { signOut } from "next-auth/react";
+
+const SUPER_ADMINS = [
+  "bruno.ceccolini@gmail.com",
+  "nicolas@vycto.com",
+  "nicolas@vycto.ai",
+  "nicolas2ric@gmail.com",
+];
 
 export const config = {
   matcher: [
@@ -66,9 +74,20 @@ export default async function middleware(req: NextRequest) {
     ) {
       return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
     }
-    return NextResponse.rewrite(
-      new URL(`/app${path === "/" ? "" : path}`, req.url),
-    );
+    if (session && SUPER_ADMINS.indexOf(session?.email || "") != -1) {
+      return NextResponse.rewrite(
+        new URL(`/app${path === "/" ? "" : path}`, req.url),
+      );
+    } else if (session && SUPER_ADMINS.indexOf(session?.email || "") == -1) {
+      signOut();
+      // return NextResponse.rewrite(
+      //   new URL(`/home${path === "/" ? "" : path}`, req.url),
+      // );
+    } else if (!session) {
+      return NextResponse.rewrite(
+        new URL(`/app${path === "/" ? "" : path}`, req.url),
+      );
+    }
   }
 
   // special case for `vercel.pub` domain
