@@ -4,7 +4,6 @@ import { users } from "./lib/schema";
 import db from "./lib/db";
 import { eq } from "drizzle-orm";
 import { updateName, updateUsername } from "./lib/actions";
-import { signOut } from "next-auth/react";
 
 const SUPER_ADMINS = [
   "bruno.ceccolini@gmail.com",
@@ -78,11 +77,10 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.rewrite(
         new URL(`/app${path === "/" ? "" : path}`, req.url),
       );
-    } else if (session && SUPER_ADMINS.indexOf(session?.email || "") == -1) {
-      signOut();
-      // return NextResponse.rewrite(
-      //   new URL(`/home${path === "/" ? "" : path}`, req.url),
-      // );
+    } else if (session && SUPER_ADMINS.indexOf(session?.email || "") == -1) {      
+      return NextResponse.rewrite(
+        new URL(`/home${path === "/" ? "" : path}`, req.url),
+      );
     } else if (!session) {
       return NextResponse.rewrite(
         new URL(`/app${path === "/" ? "" : path}`, req.url),
