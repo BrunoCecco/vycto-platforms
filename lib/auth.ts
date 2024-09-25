@@ -192,7 +192,7 @@ export function withCompetitionAuth(action: any) {
 async function sendVerificationRequest(params: SendVerificationRequestParams) {
   const { identifier, url, provider, theme } = params;
   const { host } = new URL(url);
-  if (SUPER_ADMINS.indexOf(identifier) == -1) {
+  if (host.startsWith("app") && SUPER_ADMINS.indexOf(identifier) == -1) {
     throw new Error(`UNAUTHORIZED: Email could not be sent`);
   }
   const transport = createTransport(provider.server);

@@ -43,12 +43,12 @@ const CompetitionCard = async ({
         />
       </div>
 
-      <div className="px-4 pb-4 pt-2">
+      <div className="flex h-36 flex-col justify-between px-4 pb-4 pt-2">
         {/* Title, sponser & profiles bit */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-800">
-              {competition.title}
+              {competition.title || "Competition by " + competition.sponsor}
             </h2>
             <p className="text-sm text-gray-600">{competition.sponsor}</p>
           </div>

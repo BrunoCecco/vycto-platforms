@@ -35,7 +35,7 @@ export default function EditFanZoneHeader({
             }}
             handleSubmit={updateSite}
           >
-            <div className="relative h-32 w-[250px]">
+            <div className="relative h-[100px] w-[100px]">
               {data?.logo != null && (
                 <Image
                   className="h-full w-full rounded-xl object-contain"
@@ -60,7 +60,7 @@ export default function EditFanZoneHeader({
       </div>
 
       {/* Banner Section */}
-      <div className="mb-4 hidden h-44 w-full items-center justify-center rounded-xl sm:flex">
+      <div className="mb-4 hidden w-full items-center justify-center rounded-xl sm:flex">
         <Form
           title=""
           description=""

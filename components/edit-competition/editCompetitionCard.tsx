@@ -42,7 +42,7 @@ const EditCompetitionCard = async ({
         )}
       </div>
 
-      <div className="px-4 pb-4 pt-2">
+      <div className="flex h-36 flex-col justify-between px-4 pb-4 pt-2">
         {/* Title & Sponsor Section */}
         <div className="flex items-center justify-between py-2">
           <div>

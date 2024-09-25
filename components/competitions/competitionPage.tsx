@@ -23,7 +23,6 @@ import Rewards from "@/components/competitions/rewards";
 import { useEffect, useState } from "react";
 import Leaderboard from "@/components/leaderboard/leaderboard";
 import GameStats from "@/components/competitions/gameStats";
-import LoginToSubmitButton from "@/components/auth/loginToSubmitButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { submitAnswers, updateName, updateUsername } from "@/lib/actions";
 import { toast } from "sonner";
@@ -58,16 +57,17 @@ export default function CompetitionPage({
   );
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [ended, setEnded] = useState(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const posthog = usePostHog();
 
-  const url = process.env.NEXT_PUBLIC_VERCEL_ENV
-    ? `https://${siteData?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/comp/${data.slug}`
-    : `http://${siteData?.subdomain}.localhost:3000/comp/${data.slug}`;
-
   useEffect(() => {
+    setEnded(
+      data.correctAnswersSubmitted ||
+        new Date(data.date).getTime() < Date.now(),
+    );
     if (session && searchParams && !userComp) {
       posthog?.identify(session?.user?.id!, {
         email: session?.user?.email,
@@ -250,12 +250,16 @@ export default function CompetitionPage({
                       session?.user.id!,
                       index,
                       answer,
-                      disabled || false,
+                      disabled || ended || false,
                     )}
                   </div>
                 );
               })}
-            {session ? (
+            {ended ? (
+              <div className="text-md mx-auto rounded-xl border-red-600 bg-red-600 p-4 text-white">
+                Competition Ended
+              </div>
+            ) : session ? (
               userComp && "submitted" in userComp && userComp.submitted ? (
                 <div className="text-md mx-auto rounded-xl border-green-600 bg-green-600 p-4 text-white">
                   Answers Submitted
@@ -271,19 +275,19 @@ export default function CompetitionPage({
             ) : (
               <div className="mx-5 rounded-md border border-stone-200 p-10 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email address"
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
-                />
-                <input
                   type="text"
                   id="username"
                   name="username"
                   placeholder="Username"
                   onChange={(e) => setUsername(e.target.value)}
+                  className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
+                />
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Email address"
+                  onChange={(e) => setEmail(e.target.value)}
                   className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
                 />
                 <LoginButton
