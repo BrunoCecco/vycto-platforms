@@ -187,19 +187,19 @@ async function getMdxSource(competitionContents: string) {
 }
 
 export async function getQuestionsForCompetition(competitionId: string) {
-  return await unstable_cache(
-    async () => {
-      return await db.query.questions.findMany({
-        where: eq(questions.competitionId, competitionId),
-        orderBy: desc(questions.id),
-      });
-    },
-    [`${competitionId}-questions`],
-    {
-      revalidate: 900,
-      tags: [`${competitionId}-questions`],
-    },
-  )();
+  // return await unstable_cache(
+  //   async () => {
+  return await db.query.questions.findMany({
+    where: eq(questions.competitionId, competitionId),
+    orderBy: desc(questions.id),
+  });
+  //   },
+  //   [`${competitionId}-questions`],
+  //   {
+  //     revalidate: 900,
+  //     tags: [`${competitionId}-questions`],
+  //   },
+  // )();
 }
 
 export async function getAnswersForUser(userId: string, competitionId: string) {
@@ -221,18 +221,18 @@ export async function getAnswersForUser(userId: string, competitionId: string) {
 }
 
 export async function getCompetitionUsers(competitionId: string) {
-  return await unstable_cache(
-    async () => {
-      return await db.query.userCompetitions.findMany({
-        where: eq(userCompetitions.competitionId, competitionId),
-      });
-    },
-    [`${competitionId}-users`],
-    {
-      revalidate: 900,
-      tags: [`${competitionId}-users`],
-    },
-  )();
+  // return await unstable_cache(
+  //   async () => {
+  return await db.query.userCompetitions.findMany({
+    where: eq(userCompetitions.competitionId, competitionId),
+  });
+  //   },
+  //   [`${competitionId}-users`],
+  //   {
+  //     revalidate: 900,
+  //     tags: [`${competitionId}-users`],
+  //   },
+  // )();
 }
 
 export async function getUserData(email: string) {
@@ -257,6 +257,7 @@ export async function validateCorrectAnswers(competitionId: string) {
     (question) =>
       question.correctAnswer === null || question.correctAnswer === "",
   );
+  console.log(questions);
   if (questionsEmpty) {
     console.log(
       questions.find((q) => q.correctAnswer === null || q.correctAnswer === ""),

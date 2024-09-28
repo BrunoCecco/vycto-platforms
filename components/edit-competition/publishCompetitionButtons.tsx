@@ -2,7 +2,7 @@
 
 import { updateCompetitionMetadata } from "@/lib/actions";
 import { SelectCompetition } from "@/lib/schema";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import LoadingDots from "../icons/loadingDots";
 import { cn } from "@/lib/utils";
@@ -20,6 +20,14 @@ export default function PublishCompetitionButtons({
 }) {
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
+  const [canPublish, setCanPublish] = useState(true);
+
+  useEffect(() => {
+    setCanPublish(
+      competition.published ||
+        new Date(competition.date).getTime() >= Date.now(),
+    );
+  }, [competition]);
 
   const submitCorrectAnswers = async () => {
     if (!(new Date(competition.date).getTime() < Date.now())) {
@@ -47,7 +55,7 @@ export default function PublishCompetitionButtons({
     }
   };
 
-  return (
+  return canPublish ? (
     <div className="mr-auto flex items-center justify-center gap-4">
       <Button
         onClick={() => {
@@ -98,6 +106,12 @@ export default function PublishCompetitionButtons({
           </div>
         )
       ) : null}
+    </div>
+  ) : (
+    <div>
+      <p className="text-sm text-stone-700">
+        The competition date is invalid - please select a date in the future.
+      </p>
     </div>
   );
 }
