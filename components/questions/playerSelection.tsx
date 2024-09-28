@@ -20,7 +20,7 @@ const PlayerComponent = ({
 }) => {
   return (
     <button
-      className={`cursor-pointer rounded-lg border-2 p-2 shadow-sm transition duration-200 ${
+      className={`flex  cursor-pointer flex-col items-center rounded-lg border-2 p-2 shadow-sm transition duration-200 ${
         selectedPlayer === name ? "border-yellow-500" : "border-transparent"
       }`}
       disabled={disabled}
@@ -31,14 +31,13 @@ const PlayerComponent = ({
         src={image || "/player.png"}
         alt={name}
         unoptimized
-        layout="responsive"
         width={128}
         height={96}
-        className={`rounded-md object-cover ${
+        className={`rounded-md object-cover object-center ${
           selectedPlayer !== name ? "opacity-50" : "opacity-100"
         }`}
       />
-      <div className="mt-2 text-center">{name}</div>
+      <div className="mt-2 w-fit text-wrap text-center">{name}</div>
     </button>
   );
 };

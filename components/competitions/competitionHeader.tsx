@@ -40,13 +40,13 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
 
       {/* Text section */}
       <div className="text-center text-stone-800">
-        <h1 className="text-2xl font-bold md:text-3xl dark:text-white">
+        <h1 className="text-2xl font-bold md:text-3xl ">
           Competition: {data.title}
         </h1>
-        <div className="pt-2 text-xl dark:text-stone-400">
+        <div className="pt-2 text-xl ">
           by <span style={{ color: data.site?.color2 }}>{data.site?.name}</span>
         </div>
-        <div className="m-auto w-10/12 pt-4 text-sm font-light text-stone-800 md:text-base dark:text-stone-300">
+        <div className="m-auto w-10/12 pt-4 text-sm font-light text-stone-800 md:text-base ">
           {DateTime.fromISO(data.date)
             .setLocale("en-UK")
             .toLocaleString(DateTime.DATE_FULL)}
