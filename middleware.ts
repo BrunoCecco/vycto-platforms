@@ -77,7 +77,7 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.rewrite(
         new URL(`/app${path === "/" ? "" : path}`, req.url),
       );
-    } else if (session && SUPER_ADMINS.indexOf(session?.email || "") == -1) {      
+    } else if (session && SUPER_ADMINS.indexOf(session?.email || "") == -1) {
       return NextResponse.rewrite(
         new URL(`/home${path === "/" ? "" : path}`, req.url),
       );
@@ -101,6 +101,7 @@ export default async function middleware(req: NextRequest) {
     hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
   ) {
     return NextResponse.redirect("https://vycto.tech");
+
     // return NextResponse.rewrite(
     //   new URL(`/home${path === "/" ? "" : path}`, req.url),
     // );
