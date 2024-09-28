@@ -100,7 +100,7 @@ export default async function middleware(req: NextRequest) {
     hostname === "localhost:3000" ||
     hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
   ) {
-    return NextResponse.redirect("https://vycto.tech/");
+    return NextResponse.redirect("https://vycto.tech");
     // return NextResponse.rewrite(
     //   new URL(`/home${path === "/" ? "" : path}`, req.url),
     // );
