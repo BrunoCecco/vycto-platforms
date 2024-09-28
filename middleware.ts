@@ -8,6 +8,7 @@ import { updateName, updateUsername } from "./lib/actions";
 const SUPER_ADMINS = [
   "bruno.ceccolini@gmail.com",
   "nicolas@vycto.com",
+  "nicolasconstantinou9@gmail.com",
   "nicolas@vycto.ai",
   "nicolas2ric@gmail.com",
 ];
