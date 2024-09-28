@@ -82,11 +82,10 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.rewrite(
         new URL(`/home${path === "/" ? "" : path}`, req.url),
       );
-    } else {
-      return NextResponse.rewrite(
-        new URL(`/app${path === "/" ? "" : path}`, req.url),
-      );
     }
+    return NextResponse.rewrite(
+      new URL(`/app${path === "/" ? "" : path}`, req.url),
+    );
   }
 
   // special case for `vercel.pub` domain
