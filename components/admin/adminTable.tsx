@@ -58,7 +58,7 @@ const AdminTable = () => {
               <span>Role: </span>
               <select
                 onChange={(e) => setSelectedRole(e.currentTarget.value)}
-                className="ml-2 rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
+                className="ml-2 rounded-lg border border-stone-200 bg-white "
                 value={selectedRole}
                 defaultValue={selectedRole}
               >
