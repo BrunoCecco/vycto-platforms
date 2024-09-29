@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Loading from "../loading";
-import AdminPage from "@/components/admin/adminPage";
+import AdminTable from "@/components/admin/adminTable";
 
 export default function Admin() {
   return (
@@ -12,7 +12,7 @@ export default function Admin() {
           </h1>
         </div>
         <Suspense fallback={<Loading />}>
-          <AdminPage />
+          <AdminTable />
         </Suspense>
       </div>
     </div>

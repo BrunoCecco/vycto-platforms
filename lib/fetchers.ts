@@ -569,12 +569,14 @@ export async function getCompetitionWinnerData(competitionId: string) {
   }
 }
 
-export async function getAllUsers(limit?: number) {
+export async function getAllUsers(role: string, offset: number, limit: number) {
   return await unstable_cache(
     async () => {
       return await db.query.users.findMany({
+        where: eq(users.role, role),
         orderBy: [desc(users.createdAt)],
         limit: limit,
+        offset: offset,
       });
     },
     ["all-users"],
