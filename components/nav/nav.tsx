@@ -17,6 +17,7 @@ import {
   Gift,
   Wand,
   Trophy,
+  Table2,
 } from "lucide-react";
 import {
   useParams,
@@ -27,7 +28,13 @@ import { ReactNode, useEffect, useMemo, useState } from "react";
 import { getSiteFromCompetitionId } from "@/lib/actions";
 import Image from "next/image";
 
-export default function Nav({ children }: { children: ReactNode }) {
+export default function Nav({
+  isSuperAdmin = false,
+  children,
+}: {
+  isSuperAdmin?: boolean;
+  children: ReactNode;
+}) {
   const segments = useSelectedLayoutSegments();
   const { id } = useParams() as { id?: string };
 
@@ -125,6 +132,12 @@ export default function Nav({ children }: { children: ReactNode }) {
         href: "/settings",
         isActive: segments[0] === "settings",
         icon: <Settings width={18} />,
+      },
+      {
+        name: isSuperAdmin ? "Admin Panel" : "",
+        href: isSuperAdmin ? `/admin` : "",
+        isActive: segments.includes("admin"),
+        icon: <Table2 width={18} />,
       },
     ];
   }, [segments, id, siteId]);

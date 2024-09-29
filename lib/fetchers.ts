@@ -16,6 +16,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import { replaceExamples, replaceTweets } from "@/lib/remark-plugins";
 import { QuestionType } from "./types";
 import { updateUserPoints, updateAnswerPoints } from "./actions";
+import { ADMIN, SUPER_ADMIN } from "./constants";
 
 export async function getSiteData(domain: string) {
   const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
@@ -566,4 +567,52 @@ export async function getCompetitionWinnerData(competitionId: string) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function getAllUsers(limit?: number) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.users.findMany({
+        orderBy: [desc(users.createdAt)],
+        limit: limit,
+      });
+    },
+    ["all-users"],
+    {
+      revalidate: 60, // Cache for 1 minute
+      tags: ["all-users"],
+    },
+  )();
+}
+
+export async function getAllSuperAdmins() {
+  return await unstable_cache(
+    async () => {
+      return await db.query.users.findMany({
+        where: eq(users.role, SUPER_ADMIN),
+        orderBy: [desc(users.createdAt)],
+      });
+    },
+    ["all-super-admins"],
+    {
+      revalidate: 60, // Cache for 1 minute
+      tags: ["all-super-admins"],
+    },
+  )();
+}
+
+export async function getAllAdmins() {
+  return await unstable_cache(
+    async () => {
+      return await db.query.users.findMany({
+        where: eq(users.role, ADMIN),
+        orderBy: [desc(users.createdAt)],
+      });
+    },
+    ["all-admins"],
+    {
+      revalidate: 60, // Cache for 1 minute
+      tags: ["all-admins"],
+    },
+  )();
 }

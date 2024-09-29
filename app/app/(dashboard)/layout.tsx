@@ -5,7 +5,7 @@ import PoweredBadge from "@/components/nav/poweredBadge";
 import Loading from "./loading";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { SUPER_ADMIN } from "@/lib/constants";
+import { SUPER_ADMIN, ADMIN } from "@/lib/constants";
 
 export default async function DashboardLayout({
   children,
@@ -14,13 +14,16 @@ export default async function DashboardLayout({
 }) {
   const session = await getSession();
 
-  if (!session || session.user.role != SUPER_ADMIN) {
+  if (
+    !session ||
+    (session.user.role != SUPER_ADMIN && session.user.role != ADMIN)
+  ) {
     redirect("https://vycto.tech");
   }
 
   return (
     <div>
-      <Nav>
+      <Nav isSuperAdmin>
         <div className="mb-8">
           <PoweredBadge />
         </div>

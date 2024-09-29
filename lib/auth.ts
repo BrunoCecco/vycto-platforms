@@ -14,6 +14,7 @@ import EmailProvider, {
 import { createTransport } from "nodemailer";
 import AppleProvider from "next-auth/providers/apple";
 import FacebookProvider from "next-auth/providers/facebook";
+import { SUPER_ADMIN } from "./constants";
 
 // Add this type declaration at the top of your file
 declare module "next-auth" {
@@ -117,6 +118,29 @@ export async function getSession() {
     };
   }
   return null;
+}
+
+export function withSuperAdminAuth(action: any) {
+  return async (
+    formData: FormData | null,
+    userId: string,
+    key: string | null,
+  ) => {
+    const session = await getSession();
+    if (!session) {
+      return {
+        error: "Not authenticated",
+      };
+    }
+
+    if (session.user.role != SUPER_ADMIN) {
+      return {
+        error: "Not authorized",
+      };
+    }
+
+    return action(formData, userId, key);
+  };
 }
 
 export function withSiteAuth(action: any) {

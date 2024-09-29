@@ -1,54 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image"; // Importing Next.js Image component
+import { SelectUser } from "@/lib/schema";
+import Form from "../form";
+import { updateUser } from "@/lib/actions";
+import SelectForm from "../form/select";
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  dateCreated: string;
-  isActive: boolean;
-  avatarUrl: string;
-}
-
-const usersData: User[] = [
-  {
-    id: 1,
-    name: "Mikaela Panayiotou",
-    email: "m@cablenet.net",
-    dateCreated: "01/04/23",
-    isActive: true,
-    avatarUrl: "/path/to/avatar1.png", // Replace with actual path
-  },
-  {
-    id: 2,
-    name: "Andreas Polyviou",
-    email: "andresa@cablenet.net",
-    dateCreated: "01/04/23",
-    isActive: true,
-    avatarUrl: "/path/to/avatar2.png",
-  },
-  {
-    id: 3,
-    name: "Chrystalla Christodoulou",
-    email: "chrysc@cablenet.net",
-    dateCreated: "03/09/23",
-    isActive: true,
-    avatarUrl: "/path/to/avatar3.png",
-  },
-];
-
-const AdminTable: React.FC = () => {
-  const [users, setUsers] = useState<User[]>(usersData);
-
-  // Function to toggle active status
-  const toggleActiveStatus = (id: number) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === id ? { ...user, isActive: !user.isActive } : user,
-      ),
-    );
-  };
-
+const AdminTable = ({
+  users,
+  admins,
+  superAdmins,
+}: {
+  users: SelectUser[];
+  admins: SelectUser[];
+  superAdmins: SelectUser[];
+}) => {
   return (
     <div className="overflow-x-auto rounded-2xl bg-white px-4 py-6">
       <table className="min-w-full table-auto border-collapse">
@@ -56,19 +21,19 @@ const AdminTable: React.FC = () => {
           <tr>
             <th className="px-4 py-2">User</th>
             <th className="px-4 py-2">Email</th>
-            <th className="px-4 py-2">Date Created</th>
-            <th className="px-4 py-2">Active</th>
+            <th className="px-4 py-2">Joined</th>
+            <th className="px-4 py-2">Role</th>
           </tr>
         </thead>
         <tbody className="bg-white">
           {users.map((user) => (
             <tr key={user.id}>
               <td className="flex items-center px-4 py-5">
-                <div className="relative mr-3 h-10 w-10">
+                <div className="relative mr-3 w-10">
                   {/* Using Next.js Image component for avatar */}
                   <Image
-                    src={user.avatarUrl}
-                    alt={user.name}
+                    src={user.image || "/placeholder.png"}
+                    alt={user.name || user.username || ""}
                     width={40}
                     height={40}
                     className="rounded-full object-cover"
@@ -84,25 +49,19 @@ const AdminTable: React.FC = () => {
                   {user.email}
                 </a>
               </td>
-              <td className="px-4 py-3 text-gray-500">{user.dateCreated}</td>
+              <td className="px-4 py-3 text-gray-500">
+                {new Date(user.createdAt).toLocaleDateString()}
+              </td>
               <td className="px-4 py-3">
-                {/* Switch for Active Status */}
-                <label className="relative inline-flex cursor-pointer items-center">
-                  <input
-                    type="checkbox"
-                    checked={user.isActive}
-                    onChange={() => toggleActiveStatus(user.id)}
-                    className="peer sr-only"
-                  />
-                  <div
-                    className={`h-5 w-8 rounded-full bg-gray-200 transition-colors duration-300
-                      peer-checked:bg-green-500 peer-focus:ring-2 peer-focus:ring-green-500 peer-focus:ring-offset-2`}
-                  ></div>
-                  <span
-                    className={`absolute left-1 h-3 w-3 transform rounded-full bg-white 
-                    transition-transform peer-checked:translate-x-3`}
-                  ></span>
-                </label>
+                <SelectForm
+                  inputAttrs={{
+                    name: "role",
+                    type: "text",
+                    defaultValue: user.role!,
+                  }}
+                  userId={user.id}
+                  handleSubmit={updateUser}
+                />
               </td>
             </tr>
           ))}

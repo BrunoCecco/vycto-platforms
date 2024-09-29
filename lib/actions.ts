@@ -1,6 +1,6 @@
 "use server";
 
-import { getSession } from "@/lib/auth";
+import { getSession, withSuperAdminAuth } from "@/lib/auth";
 import {
   addDomainToVercel,
   removeDomainFromVercelProject,
@@ -23,6 +23,7 @@ import {
   users,
   answers,
   SelectQuestion,
+  SelectUser,
 } from "./schema";
 import { QuestionType } from "./types";
 
@@ -731,3 +732,29 @@ export const answerQuestion = async (formData: FormData) => {
     };
   }
 };
+
+export const updateUser = withSuperAdminAuth(
+  async (formData: FormData, userId: string, key: string) => {
+    const value = formData.get(key) as string;
+    console.log(value, userId);
+
+    try {
+      const [response] = await db
+        .update(users)
+        .set({
+          [key]: value,
+        })
+        .where(eq(users.id, userId))
+        .returning();
+
+      revalidateTag("all-users");
+      revalidateTag("all-admins");
+      revalidateTag("all-super-admins");
+      return response;
+    } catch (error: any) {
+      return {
+        error: error.message,
+      };
+    }
+  },
+);
