@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-const SUPER_ADMINS = [
-  "bruno.ceccolini@gmail.com",
-  "nicolas@vycto.com",
-  "nicolasconstantinou9@gmail.com",
-  "nicolas@vycto.ai",
-  "nicolas2ric@gmail.com",
-];
-
 export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
   let hostname = req.headers
@@ -38,14 +30,6 @@ export default async function middleware(req: NextRequest) {
     // Redirect to login if no session and not already on login page
     if (!session && path != "/login") {
       return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    // Check if user is a super admin
-    if (session && !SUPER_ADMINS.includes(session.email as string)) {
-      // Redirect to an unauthorized page or the root domain
-      return NextResponse.redirect(
-        process.env.NEXT_PUBLIC_ROOT_DOMAIN as string,
-      );
     }
 
     // Allow access for super admins

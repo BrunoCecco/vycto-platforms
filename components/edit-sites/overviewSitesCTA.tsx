@@ -5,11 +5,12 @@ import Link from "next/link";
 import db from "@/lib/db";
 import { sites } from "@/lib/schema";
 import { count, eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
 
 export default async function OverviewSitesCTA() {
   const session = await getSession();
   if (!session) {
-    return 0;
+    redirect("/login");
   }
   const [sitesResult] = await db
     .select({ count: count() })

@@ -15,13 +15,6 @@ import { createTransport } from "nodemailer";
 import AppleProvider from "next-auth/providers/apple";
 import FacebookProvider from "next-auth/providers/facebook";
 
-const SUPER_ADMINS = [
-  "bruno.ceccolini@gmail.com",
-  "nicolas@vycto.com",
-  "nicolas@vycto.ai",
-  "nicolas2ric@gmail.com",
-];
-
 // Add this type declaration at the top of your file
 declare module "next-auth" {
   interface Session {
@@ -119,6 +112,7 @@ export async function getSession() {
         ...session.user,
         name: user?.name || session.user.name,
         username: user?.username || session.user.username,
+        role: user?.role || "user",
       },
     };
   }
@@ -192,8 +186,18 @@ export function withCompetitionAuth(action: any) {
 async function sendVerificationRequest(params: SendVerificationRequestParams) {
   const { identifier, url, provider, theme } = params;
   const { host } = new URL(url);
-  if (host.startsWith("app") && SUPER_ADMINS.indexOf(identifier) == -1) {
-    throw new Error(`UNAUTHORIZED: Email could not be sent`);
+
+  const superAdmins = await db.query.superAdmins.findFirst({
+    where: (superAdmins, { eq }) => eq(superAdmins.email, identifier),
+    columns: {
+      email: true,
+    },
+  });
+
+  if (host.startsWith("app") && superAdmins && superAdmins.email != undefined) {
+    throw new Error(
+      `UNAUTHORIZED ACCOUNT: You do not have permissions to access the vycto admin dashboard`,
+    );
   }
   const transport = createTransport(provider.server);
   const result = await transport.sendMail({
