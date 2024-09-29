@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import CompetitionWinners from "@/components/competitions/competitionWinners";
 import LoginButton from "@/components/auth/loginButton";
+import UserSignUp from "../auth/userSignUp";
 
 export default function CompetitionPage({
   session,
@@ -274,7 +275,7 @@ export default function CompetitionPage({
               )
             ) : (
               <div className="mx-5 rounded-md border border-stone-200 p-10 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
-                <input
+                {/* <input
                   type="text"
                   id="username"
                   name="username"
@@ -289,10 +290,9 @@ export default function CompetitionPage({
                   placeholder="Email address"
                   onChange={(e) => setEmail(e.target.value)}
                   className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
-                />
-                <LoginButton
-                  email={email}
-                  username={username}
+                /> */}
+                <UserSignUp
+                  siteData={siteData}
                   localAnswers={localAnswers}
                   competitionSlug={slug}
                 />
