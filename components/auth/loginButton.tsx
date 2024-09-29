@@ -63,7 +63,7 @@ export default function LoginButton({
       if (result?.ok && !result?.error) {
         setMessage("Email sent - check your inbox to confirm your answers!");
       } else {
-        setError("Error sending email - try again?");
+        setError(`Error sending email ${result?.error} - try again?`);
       }
     } catch (error) {
       setError("An unexpected error occurred");
@@ -91,7 +91,8 @@ export default function LoginButton({
       if (res?.ok && !res?.error) {
         setMessage("Email sent - check your inbox!");
       } else {
-        setError("Error sending email - try again?");
+        console.log(res);
+        setError(`Error sending email ${res?.error} - try again?`);
       }
       setLoading(false);
     });

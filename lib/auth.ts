@@ -194,7 +194,12 @@ async function sendVerificationRequest(params: SendVerificationRequestParams) {
     },
   });
 
-  if (host.startsWith("app") && superAdmins && superAdmins.email != undefined) {
+  console.log(superAdmins, "supers");
+
+  if (
+    host.startsWith("app") &&
+    (superAdmins == undefined || superAdmins.email == undefined)
+  ) {
     throw new Error(
       `UNAUTHORIZED ACCOUNT: You do not have permissions to access the vycto admin dashboard`,
     );
