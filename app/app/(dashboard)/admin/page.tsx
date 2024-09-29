@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-import Loading from "../loading";
 import AdminTable from "@/components/admin/adminTable";
 
 export default function Admin() {
@@ -11,9 +9,7 @@ export default function Admin() {
             Admin Dashboard
           </h1>
         </div>
-        <Suspense fallback={<Loading />}>
-          <AdminTable />
-        </Suspense>
+        <AdminTable />
       </div>
     </div>
   );

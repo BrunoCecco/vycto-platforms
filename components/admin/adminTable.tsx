@@ -16,33 +16,22 @@ const AdminTable = () => {
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
+    const fetchUsers = async () => {
+      const users = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ role: selectedRole, offset, limit }),
+      });
+      console.log(users);
+      const data = await users.json();
+      console.log(data);
+
+      setCurrentUsers(data);
+    };
     fetchUsers();
-  }, [selectedRole, offset]);
-
-  const fetchUsers = async () => {
-    const users = await fetch("/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ role: selectedRole, offset, limit }),
-    });
-    console.log(users);
-    const data = await users.json();
-    console.log(data);
-
-    setCurrentUsers(data);
-  };
-
-  const fetchAdmins = async () => {
-    const admins = await getAllAdmins();
-    return admins;
-  };
-
-  const fetchSuperAdmins = async () => {
-    const superAdmins = await getAllSuperAdmins();
-    return superAdmins;
-  };
+  }, [selectedRole, offset, limit]);
 
   const prevPage = () => {
     if (offset === 0) return;
