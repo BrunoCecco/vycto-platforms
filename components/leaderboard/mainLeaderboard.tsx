@@ -142,9 +142,6 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
                 <th className="text-wrap py-3 text-left text-xs font-medium uppercase text-gray-500">
                   Points
                 </th>
-                <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
-                  Submission
-                </th>
               </tr>
             </thead>
             <tbody>

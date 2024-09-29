@@ -41,6 +41,7 @@ export default function LoginButton({
       setLoading(false);
       return;
     }
+    posthog?.capture("sign-in-email-competition-page-clicked");
 
     const answersQuery = Object.entries(localAnswers || {})
       .map(

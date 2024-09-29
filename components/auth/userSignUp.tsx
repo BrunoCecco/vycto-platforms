@@ -4,11 +4,61 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { SelectSite } from "@/lib/schema";
 import LoginButton from "./loginButton";
+import { toast } from "sonner";
+import { usePostHog } from "posthog-js/react";
 
-const UserSignUp = ({ siteData }: { siteData?: SelectSite }) => {
+const UserSignUp = ({
+  siteData,
+  localAnswers,
+  competitionSlug,
+}: {
+  siteData?: SelectSite;
+  localAnswers?: { [key: string]: string };
+  competitionSlug?: string;
+}) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const posthog = usePostHog();
+
+  const handleLoginToSubmit = async (provider: "apple" | "facebook") => {
+    setLoading(true);
+
+    posthog?.capture(provider + "sign-in-clicked");
+    const answersQuery = Object.entries(localAnswers || {})
+      .map(
+        ([questionId, answer]) =>
+          `${encodeURIComponent(questionId)}=${encodeURIComponent(answer)}`,
+      )
+      .join("&");
+    var callbackUrl = `/comp/${competitionSlug}?${answersQuery}`;
+    console.log(callbackUrl);
+    try {
+      const result = await signIn(provider, {
+        callbackUrl,
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = async (provider: "apple" | "facebook") => {
+    setLoading(true);
+    posthog?.capture(provider + "sign-in-clicked");
+    try {
+      const result = await signIn(provider);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center bg-white p-8">
@@ -32,7 +82,11 @@ const UserSignUp = ({ siteData }: { siteData?: SelectSite }) => {
 
           <div className="mt-6 flex w-full space-x-4">
             <button
-              onClick={() => signIn("apple")}
+              onClick={() =>
+                localAnswers || competitionSlug
+                  ? handleLoginToSubmit("apple")
+                  : handleLogin("apple")
+              }
               className="flex w-1/2 items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-sm font-medium text-gray-700 shadow-sm"
             >
               <Image
@@ -45,7 +99,11 @@ const UserSignUp = ({ siteData }: { siteData?: SelectSite }) => {
               <span>Continue with Apple</span>
             </button>
             <button
-              onClick={() => signIn("facebook")}
+              onClick={() =>
+                localAnswers || competitionSlug
+                  ? handleLoginToSubmit("facebook")
+                  : handleLogin("facebook")
+              }
               className="flex w-1/2 items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm"
             >
               <Image
