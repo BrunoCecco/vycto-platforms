@@ -10,6 +10,8 @@ import {
 } from "@/lib/schema";
 import Leaderboard from "../leaderboard/leaderboard";
 import { getCompetitionWinnerData } from "@/lib/fetchers";
+import BlurImage from "../images/blurImage";
+import { placeholderBlurhash } from "@/lib/utils";
 
 interface RewardsProps {
   siteData: SelectSite;
@@ -42,8 +44,8 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
   };
 
   return competition?.rewardTitle || competition?.reward2Title ? (
-    <div className="relative mx-auto w-full max-w-xl pt-20">
-      <div className="relative overflow-hidden">
+    <div className="relative mx-auto w-full max-w-xl pb-12 pt-6 md:py-20">
+      <div className="relative overflow-hidden py-2">
         <div
           className="flex justify-between transition-transform duration-500"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -51,14 +53,23 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
           {[0, 1].map((index) => (
             <div
               key={index}
-              className="flex h-[300px] min-w-full items-center justify-center"
+              className="flex min-w-full items-center justify-center overflow-hidden rounded-lg"
             >
-              <Image
+              {/* <Image
                 src={rewards[index].src || "/placeholder.png"}
                 alt={`Slide ${index + 1}`}
-                height={400}
-                width={400}
+                height={200}
+                width={200}
                 className="object-contain"
+              /> */}
+              <BlurImage
+                alt={`Slide ${index + 1}`}
+                width={1200}
+                height={630}
+                className="h-full w-full rounded-lg object-cover"
+                placeholder="blur"
+                blurDataURL={rewards[index].src ?? placeholderBlurhash}
+                src={rewards[index].src ?? "/placeholder.png"}
               />
             </div>
           ))}
@@ -76,9 +87,13 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
           <ChevronRight className="h-6 w-6" />
         </button>
       </div>
-      <div className="text-center md:mt-4">
-        <h2 className="text-xl font-bold">{rewards[currentIndex].title}</h2>
-        <p className="text-md">{rewards[currentIndex].description}</p>
+      <div className="md:mt-4">
+        <h3 className="text-center text-lg font-bold">
+          {rewards[currentIndex].title}
+        </h3>
+        <p className="text-md mt-2 text-left md:text-center">
+          {rewards[currentIndex].description}
+        </p>
       </div>
     </div>
   ) : (

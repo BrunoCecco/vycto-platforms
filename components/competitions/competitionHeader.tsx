@@ -54,7 +54,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
       </div>
 
       {/* Banner */}
-      <div className="relative mt-4 h-14 w-full overflow-hidden rounded-lg md:h-32">
+      <div className="relative mt-4 h-24 w-full overflow-hidden rounded-lg md:h-32">
         <BlurImage
           src={siteData.image ?? "/logo.png"}
           blurDataURL={siteData.imageBlurhash ?? placeholderBlurhash}
