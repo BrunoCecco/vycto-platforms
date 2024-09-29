@@ -45,9 +45,9 @@ const Leaderboard = ({
   users: SelectUserCompetition[];
 }) => {
   return (
-    <div className="container bg-white pt-20 md:rounded-2xl">
-      <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row md:items-center md:py-6">
-        <div className="flex items-center gap-4">
+    <div className="container w-full bg-white px-2 py-2 md:rounded-2xl md:p-8">
+      {/* <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row md:items-center md:py-6">
+        <div className="flex items-center justify-center gap-4 md:justify-normal">
           <div className="relative inline-block h-16 w-32 align-middle md:h-16 md:w-36">
             <Image
               src={siteData.logo || "/logo.png"}
@@ -61,7 +61,7 @@ const Leaderboard = ({
             Leaderboard
           </h1>
         </div>
-      </div>
+      </div> */}
 
       <div className="overflow-x-auto">
         {/* Desktop Table */}
@@ -156,7 +156,10 @@ const Leaderboard = ({
                     />
                   </div>
                   <span className="ml-2 font-bold text-gray-900">
-                    @{user.username || "User" + index}
+                    @
+                    {(user.username || "User").length > 10
+                      ? `${(user.username || "User").slice(0, 10)}...`
+                      : user.username || "User" + index}
                   </span>
                 </td>
                 <td className="py-4 text-gray-900">
