@@ -51,7 +51,7 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
           {[0, 1].map((index) => (
             <div
               key={index}
-              className="flex h-[400px] min-w-full items-center justify-center"
+              className="flex h-[300px] min-w-full items-center justify-center"
             >
               <Image
                 src={rewards[index].src || "/placeholder.png"}
@@ -76,7 +76,7 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
           <ChevronRight className="h-6 w-6" />
         </button>
       </div>
-      <div className="mt-4 text-center">
+      <div className="text-center md:mt-4">
         <h2 className="text-xl font-bold">{rewards[currentIndex].title}</h2>
         <p className="text-md">{rewards[currentIndex].description}</p>
       </div>
