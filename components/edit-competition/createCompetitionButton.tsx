@@ -39,11 +39,11 @@ export default function CreateCompetitionButton() {
       {isPending ? (
         <LoadingDots color="#808080" />
       ) : (
-        <div className="da h-full w-full rounded-lg shadow-md transition-all hover:shadow-2xl">
-          <div className="flex h-40 w-full items-center justify-center rounded-t-lg border border-white bg-gray-800">
+        <div className="h-full w-full rounded-lg shadow-md transition-all hover:shadow-2xl">
+          <div className="flex h-48 w-full items-center justify-center rounded-t-lg border border-white bg-gray-800">
             <Plus className="h-10 w-10 text-white" />
           </div>
-          <h2 className="p-6 text-lg font-semibold text-white">
+          <h2 className="flex h-40 items-center justify-center p-6 text-lg font-semibold text-white">
             Create a competition
           </h2>
         </div>

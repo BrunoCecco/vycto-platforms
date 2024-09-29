@@ -32,7 +32,7 @@ const CompetitionCard = async ({
 
   return (
     <div className="rounded-lg border border-stone-200 bg-white shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
-      <div className="relative h-40 w-full">
+      <div className="relative h-48 w-full">
         <BlurImage
           alt={competition.title ?? "Card thumbnail"}
           layout="fill"
@@ -43,7 +43,7 @@ const CompetitionCard = async ({
         />
       </div>
 
-      <div className="flex h-36 flex-col justify-between px-4 pb-4 pt-2">
+      <div className="flex h-40 flex-col justify-between px-4 pb-4 pt-2">
         {/* Title, sponser & profiles bit */}
         <div className="flex items-center justify-between">
           <div>

@@ -2,6 +2,7 @@ import BlurImage from "@/components/images/blurImage";
 import { getCompetitionUsers } from "@/lib/fetchers";
 import type { SelectCompetition, SelectSite } from "@/lib/schema";
 import { placeholderBlurhash } from "@/lib/utils";
+import { ExternalLink, LinkIcon } from "lucide-react";
 import Link from "next/link";
 
 const EditCompetitionCard = async ({
@@ -10,6 +11,10 @@ const EditCompetitionCard = async ({
   data: SelectCompetition & { site: SelectSite | null };
 }) => {
   const users = await getCompetitionUsers(data.slug);
+
+  const url = process.env.NEXT_PUBLIC_VERCEL_ENV
+    ? `https://${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/comp/${data.slug}`
+    : `http://${data.site?.subdomain}.localhost:3000/comp/${data.slug}`;
 
   let status;
   if (new Date(data.date) > new Date()) {
@@ -26,7 +31,7 @@ const EditCompetitionCard = async ({
 
   return (
     <div className="rounded-lg border border-stone-200 bg-white shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
-      <div className="relative h-40 w-full">
+      <div className="relative h-48 w-full">
         <BlurImage
           alt={data.title ?? "Card thumbnail"}
           layout="fill"
@@ -42,7 +47,7 @@ const EditCompetitionCard = async ({
         )}
       </div>
 
-      <div className="flex h-36 flex-col justify-between px-4 pb-4 pt-2">
+      <div className="flex h-40 flex-col justify-between px-4 pb-4 pt-2">
         {/* Title & Sponsor Section */}
         <div className="flex items-center justify-between py-2">
           <div>
@@ -57,9 +62,22 @@ const EditCompetitionCard = async ({
 
         {/* Status & Edit Button */}
         <div className="flex items-center justify-between">
-          <p className="text-sm" style={{ color: data.site?.color2 || "#000" }}>
-            {status}
-          </p>
+          <div
+            className="flex items-center text-sm"
+            style={{ color: data.site?.color2 || "#000" }}
+          >
+            <p>{status}</p>
+            {data.published && (
+              <a
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="ml-2 truncate rounded-md bg-stone-100 px-2 py-1 font-medium text-stone-600 transition-colors hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-400 dark:hover:bg-stone-700"
+              >
+                <ExternalLink height={16} width={16} />
+              </a>
+            )}
+          </div>
           <Link
             href={`/competition/${data.id}/editor`}
             className="w-24 rounded-lg p-2 text-center text-white hover:opacity-75"

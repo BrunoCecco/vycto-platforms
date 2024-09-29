@@ -14,7 +14,7 @@ export default async function SiteLayout({
 
   return (
     <div
-      className="flex max-w-screen-xl flex-col space-y-12 p-8"
+      className="flex  flex-col space-y-12 p-8"
       style={{
         backgroundColor: siteData?.color1,
         minHeight: "100vh",
