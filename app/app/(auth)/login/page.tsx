@@ -15,7 +15,7 @@ export default async function LoginPage() {
   console.log(host, host1);
   const siteData = host ? await getSiteData(host) : undefined;
 
-  return host?.includes("app.vycto.com") || host?.includes("app.localhost") ? (
+  return host?.includes("app.") ? (
     <B2BSignUp />
   ) : (
     <UserSignUp siteData={siteData} />

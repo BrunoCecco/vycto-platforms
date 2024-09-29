@@ -124,8 +124,8 @@ export default function Uploader({
         )}
         {children ? (
           <label htmlFor={`${id}-upload-${name}`}>
-            {saveDisabled || saving ? (
-              <div className="mx-auto flex h-20 w-20 items-center justify-center bg-black">
+            {saving ? (
+              <div className="mx-auto flex h-20 w-20 items-center justify-center bg-transparent">
                 <LoadingDots color="white" />
               </div>
             ) : children ? (

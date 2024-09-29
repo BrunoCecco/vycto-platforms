@@ -24,9 +24,17 @@ export const users = pgTable("users", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+  role: text("role").default("user"),
   updatedAt: timestamp("updatedAt", { mode: "date" })
     .notNull()
     .$onUpdate(() => new Date()),
+});
+
+export const superAdmins = pgTable("superAdmins", {
+  userId: text("userId")
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  email: text("email").notNull().unique(),
 });
 
 export const sessions = pgTable(
@@ -370,6 +378,10 @@ export const userRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
   sites: many(sites),
   competitions: many(competitions),
+}));
+
+export const superAdminsRelations = relations(superAdmins, ({ one }) => ({
+  user: one(users, { references: [users.id], fields: [superAdmins.userId] }),
 }));
 
 export type SelectSite = typeof sites.$inferSelect;

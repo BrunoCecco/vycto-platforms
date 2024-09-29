@@ -15,7 +15,7 @@ const B2BSignUp: React.FC = () => {
       <div className="flex w-1/2 flex-col justify-center bg-white px-16">
         <div className="mx-auto w-full max-w-md">
           <h2 className="mb-6 text-3xl font-bold text-gray-900">Sign In</h2>
-          <p className="mb-8 text-gray-600">
+          {/* <p className="mb-8 text-gray-600">
             Enter your email and password to sign in!
           </p>
           <button className="mb-6 flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 py-2 text-gray-700 shadow-sm hover:bg-gray-50">
@@ -29,7 +29,7 @@ const B2BSignUp: React.FC = () => {
             <div className="relative flex justify-center text-sm">
               <span className="bg-white px-2 text-gray-500">or</span>
             </div>
-          </div>
+          </div> */}
           <div className="space-y-6">
             <div>
               <label

@@ -3,8 +3,21 @@ import Profile from "@/components/nav/profile";
 import Nav from "@/components/nav/nav";
 import PoweredBadge from "@/components/nav/poweredBadge";
 import Loading from "./loading";
+import { getSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { SUPER_ADMIN } from "@/lib/constants";
 
-export default function DashboardLayout({ children }: { children: ReactNode }) {
+export default async function DashboardLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const session = await getSession();
+
+  if (!session || session.user.role != SUPER_ADMIN) {
+    redirect("https://vycto.tech");
+  }
+
   return (
     <div>
       <Nav>

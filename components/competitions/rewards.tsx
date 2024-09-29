@@ -41,8 +41,8 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
     setCurrentIndex((prevIndex) => (prevIndex === 1 ? 0 : prevIndex + 1));
   };
 
-  return competition?.rewardTitle && competition?.reward2Title ? (
-    <div className="relative mx-auto w-full max-w-xl pb-16 md:py-12">
+  return competition?.rewardTitle || competition?.reward2Title ? (
+    <div className="relative mx-auto w-full max-w-xl pt-20">
       <div className="relative overflow-hidden">
         <div
           className="flex justify-between transition-transform duration-500"

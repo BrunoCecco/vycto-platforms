@@ -2,10 +2,7 @@ import { FC } from "react";
 import Competitions from "@/components/competitions/competitions";
 import { competitions, SelectCompetition, SelectSite } from "@/lib/schema";
 import FanZoneHeader from "./fanzoneHeader";
-import Leaderboard from "@/components/leaderboard/leaderboard";
-import MonthlyLeaderboard from "../leaderboard/monthlyLeaderboard";
-import { getMonthlyLeaderboardData } from "@/lib/fetchers";
-import YearlyLeaderboard from "../leaderboard/yearlyLeaderboard";
+import MainLeaderboard from "../leaderboard/mainLeaderboard";
 
 const FanZone = async ({
   siteData,
@@ -56,9 +53,7 @@ const FanZone = async ({
         </h2>
       )}
       <div className="my-4 sm:my-10" />
-      <MonthlyLeaderboard siteData={siteData} />
-      <div className="my-4 sm:my-10" />
-      <YearlyLeaderboard siteData={siteData} />
+      <MainLeaderboard siteData={siteData} />
     </div>
   );
 };
