@@ -3,7 +3,7 @@ import Image from "next/image"; // Importing Next.js Image component
 import { SelectUser } from "@/lib/schema";
 import Form from "../form";
 import { updateUser } from "@/lib/actions";
-import SelectForm from "../form/select";
+import UserForm from "../form/updateuser";
 
 const AdminTable = ({
   users,
@@ -26,20 +26,21 @@ const AdminTable = ({
           </tr>
         </thead>
         <tbody className="bg-white">
-          {users.map((user) => (
+          {users.map((user, index) => (
             <tr key={user.id}>
               <td className="flex items-center px-4 py-5">
-                <div className="relative mr-3 w-10">
+                <div className="relative mr-3 h-10 w-10">
                   {/* Using Next.js Image component for avatar */}
                   <Image
                     src={user.image || "/placeholder.png"}
-                    alt={user.name || user.username || ""}
-                    width={40}
-                    height={40}
-                    className="rounded-full object-cover"
+                    alt={user.name ?? user.username ?? "user" + index}
+                    fill
+                    className="rounded-full object-contain"
                   />
                 </div>
-                <span className="text-gray-900">{user.name}</span>
+                <span className="text-gray-900">
+                  {user.name ?? user.username ?? "user" + index}
+                </span>
               </td>
               <td className="px-4 py-3">
                 <a
@@ -53,7 +54,7 @@ const AdminTable = ({
                 {new Date(user.createdAt).toLocaleDateString()}
               </td>
               <td className="px-4 py-3">
-                <SelectForm
+                <UserForm
                   inputAttrs={{
                     name: "role",
                     type: "text",

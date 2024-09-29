@@ -13,7 +13,7 @@ import Uploader from "./uploader";
 import { USER_ROLES } from "@/lib/constants";
 import { useRef } from "react";
 
-export default function SelectForm({
+export default function UserForm({
   inputAttrs,
   userId,
   handleSubmit,

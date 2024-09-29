@@ -8,7 +8,6 @@ const AdminPage = async () => {
   const admins = await getAllAdmins();
   return (
     <div className="m-10 space-y-6">
-      <h1 className="text-xl font-semibold">User Admin</h1>
       <AdminTable users={users} admins={admins} superAdmins={superAdmins} />
     </div>
   );
