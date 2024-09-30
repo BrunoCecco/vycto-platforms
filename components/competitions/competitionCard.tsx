@@ -5,6 +5,7 @@ import { placeholderBlurhash, random } from "@/lib/utils";
 import { getCompetitionUsers, getSiteData } from "@/lib/fetchers";
 import Link from "next/link";
 import { SelectCompetition, SelectSite } from "@/lib/schema";
+import MovingBorder from "../movingBorder";
 
 const CompetitionCard = async ({
   competition,
@@ -31,7 +32,9 @@ const CompetitionCard = async ({
   }
 
   return (
-    <div className="rounded-lg border border-stone-200 bg-white shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
+    
+    <div className="rounded-lg overflow-hidden h-full w-full bg-white shadow-md transition-all hover:shadow-xl">
+      <MovingBorder color1={siteData.color1} color2={siteData.color2}>
       <div className="relative h-48 w-full">
         <BlurImage
           alt={competition.title ?? "Card thumbnail"}
@@ -85,6 +88,7 @@ const CompetitionCard = async ({
           </Link>
         </div>
       </div>
+      </MovingBorder>
     </div>
   );
 };
