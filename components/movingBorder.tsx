@@ -1,11 +1,15 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, useAnimationControls } from 'framer-motion'
 
 export default function MovingBorder({color1, color2, children}: {color1: string; color2: string; children: React.ReactNode}) {
   const [isHovered, setIsHovered] = useState(false)
   const controls = useAnimationControls()
+
+  useEffect(() => {
+    controls.start("animate")
+  }, [controls])
 
   const handleMouseEnter = () => {
     setIsHovered(true)
