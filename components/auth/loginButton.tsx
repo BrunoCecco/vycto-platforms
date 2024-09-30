@@ -53,7 +53,6 @@ export default function LoginButton({
     if (name && name?.trim() != "") {
       callbackUrl += `&name=${name}`;
     }
-    console.log(callbackUrl);
     try {
       const result = await signIn("email", {
         email,
@@ -92,7 +91,6 @@ export default function LoginButton({
       if (res?.ok && !res?.error) {
         setMessage("Email sent - check your inbox!");
       } else {
-        console.log(res);
         setError(`Error sending email ${res?.error} - try again?`);
       }
       setLoading(false);

@@ -74,10 +74,8 @@ export default function CompetitionPage({
         email: session?.user?.email,
       });
       const extractedAnswers: { [key: string]: string } = {};
-      console.log(searchParams);
       searchParams.forEach(async (value, key) => {
         if (key != "username") {
-          console.log(key, value);
           extractedAnswers[key] = value;
         }
       });

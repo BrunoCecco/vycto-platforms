@@ -76,7 +76,6 @@ export default function SearchPage() {
       const response = await axios.get(
         `https://api.sofascore.com/api/v1/search/all?q=${query}&page=0`,
       );
-      console.log(response.data.results);
       const players = response.data.results
         .filter((result: any) => {
           return (

@@ -1,4 +1,4 @@
-import BlurImage from "@/components/images/blurImage";
+import BlurImage from "@/components/media/blurImage";
 import { getCompetitionUsers } from "@/lib/fetchers";
 import type { SelectCompetition, SelectSite } from "@/lib/schema";
 import { placeholderBlurhash } from "@/lib/utils";
@@ -34,7 +34,7 @@ const EditCompetitionCard = async ({
       <div className="relative h-48 w-full">
         <BlurImage
           alt={data.title ?? "Card thumbnail"}
-          layout="fill"
+          fill
           className="rounded-t-lg object-cover"
           src={data.image ?? "/placeholder.png"}
           placeholder="blur"

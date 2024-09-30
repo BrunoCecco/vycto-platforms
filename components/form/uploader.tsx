@@ -231,7 +231,7 @@ export default function Uploader({
             id={`${id}-upload-${name}`}
             name={name}
             type="file"
-            accept="image/*"
+            accept="image/*, video/*"
             className="sr-only"
             onChange={onChangePicture}
           />

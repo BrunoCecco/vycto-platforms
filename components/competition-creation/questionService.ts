@@ -137,7 +137,6 @@ export const createQuestions = async ({
   }
   const teamId = entity.team?.id || entity.id;
   const sport = entity.team?.sport.name || entity.sport.name;
-  console.log("sport", sport, "type", type, "entity", entity, "teamId", teamId);
 
   // Generate questions for the entity and sport
   let questions: SelectQuestion[] = [];

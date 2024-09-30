@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FC } from "react";
-import BlurImage from "@/components/images/blurImage";
+import BlurImage from "@/components/media/blurImage";
 import { placeholderBlurhash, random } from "@/lib/utils";
 import { getCompetitionUsers, getSiteData } from "@/lib/fetchers";
 import Link from "next/link";
@@ -35,7 +35,7 @@ const CompetitionCard = async ({
       <div className="relative h-48 w-full">
         <BlurImage
           alt={competition.title ?? "Card thumbnail"}
-          layout="fill"
+          fill
           className="rounded-t-lg object-cover"
           src={competition.image ?? "/placeholder.png"}
           placeholder="blur"
@@ -57,7 +57,7 @@ const CompetitionCard = async ({
               <Image
                 src={`https://avatar.vercel.sh/1`}
                 alt="Profile 1"
-                layout="fill"
+                fill
                 className="rounded-full border-2 border-white object-cover"
               />
             </div>
@@ -65,7 +65,7 @@ const CompetitionCard = async ({
               <Image
                 src={`https://avatar.vercel.sh/99`}
                 alt="Profile 2"
-                layout="fill"
+                fill
                 className="rounded-full border-2 border-white object-cover"
               />
             </div>

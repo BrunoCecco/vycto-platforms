@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Sites from "@/components/edit-sites/sites";
-import PlaceholderCard from "@/components/images/placeholderCard";
+import PlaceholderCard from "@/components/media/placeholderCard";
 import CreateSiteButton from "@/components/edit-fanzone/createSiteButton";
 import CreateSiteModal from "@/components/modal/create-site";
 

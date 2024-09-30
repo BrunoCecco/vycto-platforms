@@ -24,9 +24,7 @@ const AdminTable = () => {
         },
         body: JSON.stringify({ role: selectedRole, offset, limit }),
       });
-      console.log(users);
       const data = await users.json();
-      console.log(data);
 
       setCurrentUsers(data);
     };

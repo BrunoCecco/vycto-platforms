@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { SelectCompetition, SelectSite } from "@/lib/schema";
-import BlurImage from "../images/blurImage";
+import BlurImage from "../media/blurImage";
 import { capitalize, placeholderBlurhash } from "@/lib/utils";
+import BannerMedia from "../media/bannerMedia";
 
 export default function FanZoneHeader({
   data,
@@ -19,18 +20,9 @@ export default function FanZoneHeader({
       </div>
 
       {/* Banner Section */}
-      {data.image ? (
-        <div className="h-36 w-full overflow-hidden rounded-xl sm:h-[30vw]">
-          <BlurImage
-            src={data.image ?? "/placeholder.png"}
-            blurDataURL={placeholderBlurhash}
-            unoptimized
-            alt="Banner Image"
-            fill
-            className="object-contain object-center"
-          />
-        </div>
-      ) : null}
+      <div className="h-36 w-full overflow-hidden rounded-xl sm:h-[30vw]">
+        {data.image ? <BannerMedia src={data.image} /> : null}
+      </div>
     </>
   );
 }

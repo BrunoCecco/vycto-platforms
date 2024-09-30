@@ -1,6 +1,6 @@
 "use client";
 
-import BlurImage from "@/components/images/blurImage";
+import BlurImage from "@/components/media/blurImage";
 import { placeholderBlurhash } from "@/lib/utils";
 import { DateTime } from "luxon";
 import { SelectSite } from "@/lib/schema";

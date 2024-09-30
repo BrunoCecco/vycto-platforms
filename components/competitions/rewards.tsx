@@ -10,7 +10,7 @@ import {
 } from "@/lib/schema";
 import Leaderboard from "../leaderboard/leaderboard";
 import { getCompetitionWinnerData } from "@/lib/fetchers";
-import BlurImage from "../images/blurImage";
+import BlurImage from "../media/blurImage";
 import { placeholderBlurhash } from "@/lib/utils";
 
 interface RewardsProps {

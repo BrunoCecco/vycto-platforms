@@ -9,7 +9,6 @@ export default async function UpdateUserName({
 }) {
   const username = params.username;
   const session = await getSession();
-  console.log(params.username, params);
   if (username) {
     await updateUsername(username, session?.user.email as string);
   }

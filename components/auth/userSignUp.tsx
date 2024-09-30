@@ -39,7 +39,6 @@ const UserSignUp = ({
       const result = await signIn(provider, {
         callbackUrl,
       });
-      console.log(result);
     } catch (error) {
       console.log(error);
     } finally {

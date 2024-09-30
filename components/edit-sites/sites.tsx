@@ -8,7 +8,6 @@ export default async function Sites({ limit }: { limit?: number }) {
   const session = await getSession();
   if (!session) {
     redirect("/login");
-    console.log("HERE");
   }
 
   const sites = await db.query.sites.findMany({

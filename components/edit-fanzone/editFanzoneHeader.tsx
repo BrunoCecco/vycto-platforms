@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { SelectCompetition, sites } from "@/lib/schema";
 import { updateSite } from "@/lib/actions";
 import Form from "@/components/form";
+import BannerMedia from "../media/bannerMedia";
 
 export default function EditFanZoneHeader({
   siteId,
@@ -73,15 +74,7 @@ export default function EditFanZoneHeader({
           handleSubmit={updateSite}
         >
           <div className="relative flex h-36 w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl sm:h-[30vw]">
-            {data.image ? (
-              <Image
-                src={data.image ?? "/placeholder.png"}
-                unoptimized
-                alt="Banner Image"
-                fill
-                className="object-contain object-center"
-              />
-            ) : null}
+            {data.image ? <BannerMedia src={data.image} /> : null}
             <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white bg-gray-700 opacity-25">
               <Plus className="h-10 w-10 text-white" />
             </div>

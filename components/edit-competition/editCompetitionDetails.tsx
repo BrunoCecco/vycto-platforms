@@ -1,7 +1,7 @@
 import { SelectCompetition, SelectSite } from "@/lib/schema";
 import { placeholderBlurhash } from "@/lib/utils";
 import { DateTime } from "luxon";
-import BlurImage from "@/components/images/blurImage";
+import BlurImage from "@/components/media/blurImage";
 import Form from "../form";
 import { updateCompetition, updateCompetitionMetadata } from "@/lib/actions";
 import { Plus } from "lucide-react";

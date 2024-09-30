@@ -218,8 +218,6 @@ async function sendVerificationRequest(params: SendVerificationRequestParams) {
     },
   });
 
-  console.log(superAdmins, "supers");
-
   if (
     host.startsWith("app") &&
     (superAdmins == undefined || superAdmins.email == undefined)
