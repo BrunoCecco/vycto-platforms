@@ -213,9 +213,9 @@ export default function CompetitionPage({
 
   return (
     <div
-      className={`${activeTab == "Leaderboard" ? `mx-auto w-full md:w-5/6 lg:w-5/6` : `mx-auto w-full md:w-3/4 md:pb-20 lg:w-2/3`}`}
+      className={`${activeTab == "Leaderboard" ? `mx-auto w-full md:w-5/6 md:pb-20 lg:w-5/6` : `mx-auto w-full md:w-3/4 md:pb-20 lg:w-2/3`}`}
     >
-      <div className="bg-white px-8 py-8 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
+      <div className=" bg-white px-8 py-8 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
         <CompetitionHeader
           session={session}
           users={users}
