@@ -8,6 +8,7 @@ const B2BSignUp: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [emailExists, setEmailExists] = useState(true);
 
   return (
     <div className="flex min-h-screen">
@@ -31,25 +32,6 @@ const B2BSignUp: React.FC = () => {
             </div>
           </div> */}
           <div className="space-y-6">
-            <div>
-              <label
-                htmlFor="username"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Username
-              </label>
-              <div className="mt-1">
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="user123"
-                  required
-                  className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
-                />
-              </div>
-            </div>
             {/* Email Field */}
             <div>
               <label
@@ -70,6 +52,30 @@ const B2BSignUp: React.FC = () => {
                   className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 />
               </div>
+              {!emailExists && (
+                <div>
+                  <p className="mt-2 text-center text-sm text-gray-600">
+                    Welcome! Please choose a username.
+                  </p>
+                  <label
+                    htmlFor="username"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Username
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="username"
+                      name="username"
+                      type="text"
+                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="user123"
+                      required
+                      className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Password Field */}
@@ -127,19 +133,12 @@ const B2BSignUp: React.FC = () => {
                 </a>
               </div>
             </div> */}
-            <LoginButton email={email} username={username} />
+            <LoginButton
+              email={email}
+              setEmailExists={setEmailExists}
+              username={username}
+            />
           </div>
-          {/* <div className="mt-6 text-center">
-            <p className="text-gray-600">
-              Not registered yet?{" "}
-              <a
-                href="#"
-                className="font-medium text-blue-600 hover:text-blue-500"
-              >
-                Create an Account
-              </a>
-            </p>
-          </div> */}
         </div>
       </div>
 

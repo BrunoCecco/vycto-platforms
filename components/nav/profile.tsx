@@ -2,7 +2,7 @@ import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import LogoutButton from "../auth/logout-button";
+import LogoutButton from "../auth/logoutButton";
 
 export default async function Profile() {
   const session = await getSession();

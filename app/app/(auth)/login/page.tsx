@@ -18,6 +18,8 @@ export default async function LoginPage() {
   return host?.includes("app.") ? (
     <B2BSignUp />
   ) : (
-    <UserSignUp siteData={siteData} />
+    <div className="mx-auto flex max-w-lg flex-col items-center justify-center p-8">
+      <UserSignUp siteData={siteData} />
+    </div>
   );
 }
