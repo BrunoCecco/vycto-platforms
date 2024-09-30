@@ -272,23 +272,7 @@ export default function CompetitionPage({
                 />
               )
             ) : (
-              <div className="mx-5 rounded-md border border-stone-200 p-10 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
-                {/* <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  placeholder="Username"
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
-                />
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email address"
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full rounded-md border border-stone-200 dark:border-stone-400"
-                /> */}
+              <div className="rounded-md border border-stone-200 p-8 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
                 <UserSignUp
                   siteData={siteData}
                   localAnswers={localAnswers}

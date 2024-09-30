@@ -2,7 +2,7 @@ import Form from "@/components/form";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { editUser } from "@/lib/actions";
-import LogoutButton from "../auth/logout-button";
+import LogoutButton from "../auth/logoutButton";
 
 export default async function UserSettings() {
   const session = await getSession();
