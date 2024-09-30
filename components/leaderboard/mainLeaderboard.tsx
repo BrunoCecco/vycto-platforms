@@ -31,7 +31,7 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
     data && (
       <div className="container min-w-full rounded-xl bg-white px-2 py-4 md:p-10">
         <div className="flex flex-col justify-between gap-4 sm:flex-row md:items-center md:py-6">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-center gap-4 sm:flex-row">
             <div className="relative inline-block h-16 w-32 align-middle md:h-16 md:w-36">
               <Image
                 src={siteData.logo || "/logo.png"}

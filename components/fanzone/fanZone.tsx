@@ -52,7 +52,7 @@ const FanZone = async ({
           No past competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
-      <div className="my-30" />
+      <div className="my-20" />
       <MainLeaderboard siteData={siteData} />
     </div>
   );
