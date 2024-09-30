@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import { validateEmail } from "@/lib/utils";
+import Leaflet from "../modal/leaflet";
 
 export default function LoginButton({
   email,
@@ -26,6 +27,7 @@ export default function LoginButton({
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const posthog = usePostHog();
   // Get error message added by next/auth in URL.
@@ -99,6 +101,7 @@ export default function LoginButton({
 
       if (result && result.ok) {
         setMessage("Email sent - check your inbox to confirm your answers!");
+        setShowModal(true);
       } else {
         setError(`Error sending email ${result?.error} - try again?`);
       }
@@ -122,6 +125,7 @@ export default function LoginButton({
 
       if (result && result.ok) {
         setMessage("Email sent - check your inbox to start playing!");
+        setShowModal(true);
       } else {
         setError(`Error sending email ${result?.error} - try again?`);
       }
@@ -148,6 +152,13 @@ export default function LoginButton({
             <p className="text-sm font-medium">Let&apos;s Play!</p>
           )}
         </button>
+      )}
+      {showModal && (
+        <Leaflet setShow={setShowModal}>
+          <p className="text-sm font-bold text-stone-700 my-40">
+            {message}
+          </p>
+        </Leaflet>
       )}
       {message && <p className="text-sm font-bold text-stone-700">{message}</p>}
       {error !== "" && (
