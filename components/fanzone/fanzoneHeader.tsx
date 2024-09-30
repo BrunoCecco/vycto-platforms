@@ -15,13 +15,24 @@ export default function FanZoneHeader({
 }) {
   return (
     <>
-      <div className="mb-10 text-2xl font-bold">
+      <div className="text-2xl font-bold md:mb-10">
         {capitalize(data.name || "")}
       </div>
 
       {/* Banner Section */}
-      <div className="h-36 w-full overflow-hidden rounded-xl sm:h-[30vw]">
+      {/* <div className="h-36 w-full overflow-hidden rounded-xl sm:h-[30vw]">
         {data.image ? <BannerMedia src={data.image} /> : null}
+      </div> */}
+      {/* Banner */}
+      <div className="relative mt-4 h-24 w-full overflow-hidden rounded-lg md:h-40">
+        <BlurImage
+          src={data.image ?? "/logo.png"}
+          blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
+          alt="Players Banner"
+          className="object-cover"
+          fill={true}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </div>
     </>
   );
