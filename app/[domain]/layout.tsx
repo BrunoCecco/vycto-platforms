@@ -103,7 +103,7 @@ export default async function SiteLayout({
       }}
     >
       <div className="flex justify-between">
-        <div className="flex items-center gap-4 p-5">
+        <div className="mx-5 flex items-center gap-4 pt-5 lg:mx-24">
           <Link href="/">
             <Image
               src={data.logo ?? "/logo.png"}

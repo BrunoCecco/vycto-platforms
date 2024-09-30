@@ -15,7 +15,7 @@ export default function FanZoneHeader({
 }) {
   return (
     <>
-      <div className="text-2xl font-bold md:mb-10">
+      <div className="text-6xl font-bold md:mb-10">
         {capitalize(data.name || "")}
       </div>
 
