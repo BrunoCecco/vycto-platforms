@@ -32,15 +32,13 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
       <div className="container min-w-full rounded-xl bg-white px-2 py-4 md:p-10">
         <div className="flex flex-col justify-between gap-4 sm:flex-row md:items-center md:py-6">
           <div className="flex flex-col items-center gap-4 sm:flex-row">
-            <div className="relative inline-block h-16 w-32 align-middle md:h-16 md:w-36">
-              <Image
-                src={siteData.logo || "/logo.png"}
-                alt="Brand Logo"
-                fill={true}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-contain"
-              />
-            </div>
+            <Image
+              src={siteData.logo || "/logo.png"}
+              alt="Brand Logo"
+              width={80}
+              height={80}
+              className="object-contain"
+            />
             <h1 className="text-lg font-bold text-gray-800 md:text-2xl">
               Leaderboard -{" "}
               {rangeType == "monthly"

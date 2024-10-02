@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { SelectCompetition, sites } from "@/lib/schema";
+import { SelectCompetition, SelectSite, sites } from "@/lib/schema";
 import { updateSite } from "@/lib/actions";
 import Form from "@/components/form";
 import BannerMedia from "../media/bannerMedia";
@@ -12,12 +12,7 @@ export default function EditFanZoneHeader({
   latestCompetition,
 }: {
   siteId: string;
-  data: {
-    name: string | null;
-    logo: string | null;
-    image: string | null;
-    color2: string | null;
-  };
+  data: SelectSite;
   latestCompetition: SelectCompetition | null;
 }) {
   return (
@@ -52,7 +47,10 @@ export default function EditFanZoneHeader({
           </Form>
           <Link
             className="ml-3 rounded-full bg-blue-200 px-8 py-2 pt-1 font-semibold text-white"
-            style={{ backgroundColor: data.color2 || "#1E40AF" }} // Default color fallback
+            style={{
+              backgroundColor: data.color2 || "#1E40AF",
+              backgroundImage: `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
+            }}
             href={`/comp/${latestCompetition?.slug}` ?? "/"}
           >
             Play

@@ -114,7 +114,7 @@ export default async function SiteLayout({
             />
           </Link>
           <Link
-            className={`ml-3 rounded-full px-8 py-2 pt-1 font-semibold text-white ${cla} shadow-md transition-all duration-200 hover:shadow-none`}
+            className={`ml-3 rounded-full px-8 py-2 pt-1 font-semibold text-white shadow-gray-600 ${cla} shadow-md transition-all duration-200 hover:shadow-none`}
             style={{
               backgroundImage: `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
             }}
