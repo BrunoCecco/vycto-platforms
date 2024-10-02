@@ -71,7 +71,7 @@ export default function EditFanZoneHeader({
           }}
           handleSubmit={updateSite}
         >
-          <div className="relative flex h-36 w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl sm:h-[30vw]">
+          <div className="relative flex h-36 w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl sm:h-[30vw] xl:h-[20vw]">
             {data.image ? <BannerMedia src={data.image} /> : null}
             <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white bg-gray-700 opacity-25">
               <Plus className="h-10 w-10 text-white" />

@@ -15,12 +15,8 @@ export default function FanZoneHeader({
 }) {
   return (
     <>
-      <div className="text-6xl font-bold md:mb-10">
-        {capitalize(data.name || "")}
-      </div>
-
       {/* Banner Section */}
-      <div className="h-36 rounded-xl shadow-lg sm:h-[30vw]">
+      <div className="h-36 rounded-xl shadow-lg sm:h-[30vw] xl:h-[20vw]">
         <div className="h-full w-full overflow-hidden rounded-xl">
           {data.image ? <BannerMedia src={data.image} /> : null}
         </div>

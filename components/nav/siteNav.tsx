@@ -54,7 +54,7 @@ export default function SiteNav({ children }: { children?: ReactNode }) {
   return (
     <>
       <button
-        className={`fixed z-20 hover:opacity-75 ${
+        className={`fixed z-20 rounded-md bg-black p-2 shadow-md hover:opacity-75 2xl:hidden ${
           // left align for Editor, right align for other pages
           segments[0] === "competition" && segments.length === 2 && !showSidebar
             ? "left-5 top-5"
@@ -67,9 +67,9 @@ export default function SiteNav({ children }: { children?: ReactNode }) {
       <div
         className={`transform ${
           showSidebar
-            ? "w-[100vw] translate-x-0 sm:w-[15vw] sm:translate-x-[85vw]"
+            ? "w-[100vw] translate-x-0 sm:w-[25vw] sm:translate-x-[75vw]"
             : "w-[15vw] translate-x-[115vw]"
-        } fixed z-10 flex h-full flex-col justify-between border-r border-stone-200 bg-stone-100 p-4 transition-all duration-200 sm:w-[15vw] dark:border-stone-700 dark:bg-stone-900`}
+        } fixed z-10 flex h-full flex-col justify-between border-r border-stone-200 bg-stone-100 p-4 transition-all duration-200 sm:w-[25vw] 2xl:w-[10vw] 2xl:translate-x-[90vw] dark:border-stone-700 dark:bg-stone-900`}
       >
         <div className="grid gap-2">
           <div className="flex items-center space-x-2 rounded-lg px-2 py-1.5">

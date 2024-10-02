@@ -9,6 +9,7 @@ import SettingsButton from "@/components/settings/settingsButton";
 import SiteNav from "@/components/nav/siteNav";
 import Profile from "@/components/nav/profile";
 import Loading from "../app/(dashboard)/loading";
+import { capitalize } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -94,6 +95,11 @@ export default async function SiteLayout({
 
   const cla = `hover:text-${data.color2}`;
 
+  const addFanzoneToString = (str: string) => {
+    if (str?.includes("fanzone")) return str;
+    return str + " FANZONE";
+  };
+
   return (
     <div
       className={fontMapper[data.font]}
@@ -103,25 +109,30 @@ export default async function SiteLayout({
       }}
     >
       <div className="flex justify-between">
-        <div className="mx-5 flex items-center gap-4 pt-5 lg:mx-24">
-          <Link href="/">
-            <Image
-              src={data.logo ?? "/logo.png"}
-              alt="Logo"
-              width={100}
-              height={100}
-              className=""
-            />
-          </Link>
-          <Link
-            className={`ml-3 rounded-full px-8 py-2 pt-1 font-semibold text-white shadow-gray-600 ${cla} shadow-md transition-all duration-200 hover:shadow-none`}
-            style={{
-              backgroundImage: `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
-            }}
-            href={`/comp/${latestCompetition?.slug}` ?? "/"}
-          >
-            Play
-          </Link>
+        <div className="mx-5 flex w-full max-w-screen-2xl items-center justify-between pt-5 lg:mx-24">
+          <div className="flex items-center gap-4">
+            <Link href="/">
+              <Image
+                src={data.logo ?? "/logo.png"}
+                alt="Logo"
+                width={100}
+                height={100}
+                className=""
+              />
+            </Link>
+            <Link
+              className={`ml-3 rounded-full px-8 py-2 font-semibold text-white shadow-gray-600 ${cla} shadow-md transition-all duration-200 hover:shadow-none`}
+              style={{
+                backgroundImage: `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
+              }}
+              href={`/comp/${latestCompetition?.slug}` ?? "/"}
+            >
+              Play
+            </Link>
+          </div>
+          <div className="text-4xl font-bold">
+            {capitalize(addFanzoneToString(data.name || ""))}
+          </div>
         </div>
 
         <SiteNav>

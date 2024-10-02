@@ -18,7 +18,7 @@ const FanZone = async ({
   return (
     <div className="w-full">
       <FanZoneHeader data={siteData} latestCompetition={latestCompetition} />
-      <h2 className="py-10 text-2xl font-semibold text-gray-800">
+      <h2 className="py-6 text-2xl font-semibold text-gray-800">
         Current Competitions{" "}
         <span role="img" aria-label="fire">
           🔥
@@ -35,7 +35,7 @@ const FanZone = async ({
           No current competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
-      <h2 className="mt-6 py-10 text-2xl font-semibold text-gray-800">
+      <h2 className="mt-6 py-6 text-2xl font-semibold text-gray-800">
         Past Competitions{" "}
         <span role="img" aria-label="fire">
           👏
@@ -52,7 +52,7 @@ const FanZone = async ({
           No past competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
-      <div className="my-20" />
+      <div className="my-10" />
       <MainLeaderboard siteData={siteData} />
     </div>
   );

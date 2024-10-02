@@ -49,7 +49,7 @@ export default async function CompetitionOG({
           <h1 tw="text-6xl font-bold text-gray-900 leading-none tracking-tight">
             {data.title}
           </h1>
-          <p tw="mt-4 text-xl text-gray-600 max-w-xl text-center">
+          <p tw="mt-4 text-xl text-gray-600 max-w-2xl text-center">
             {truncate(data.description, 120)}
           </p>
           <div tw="flex items-center justify-center">

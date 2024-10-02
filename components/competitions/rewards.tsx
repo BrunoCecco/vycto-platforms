@@ -44,7 +44,7 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
   };
 
   return competition?.rewardTitle || competition?.reward2Title ? (
-    <div className="relative mx-auto w-full max-w-xl pb-12 pt-6 md:py-20">
+    <div className="relative mx-auto w-full max-w-2xl pb-12 pt-6 md:py-20">
       <div className="relative overflow-hidden py-2">
         <div
           className="flex justify-between transition-transform duration-500"
