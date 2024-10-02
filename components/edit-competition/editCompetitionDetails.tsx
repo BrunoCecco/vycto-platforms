@@ -29,7 +29,7 @@ const EditCompetitionDetails = async ({
   });
 
   return (
-    <div className="mx-auto flex w-full flex-col items-center justify-center bg-white md:rounded-3xl">
+    <div className="mx-auto flex w-full flex-col items-center justify-center md:rounded-3xl">
       {/* Placeholder for Image or Graphic */}
       <PublishCompetitionButtons competition={competitionData!} />
       <div className="my-4 w-full overflow-hidden rounded-xl">
@@ -45,7 +45,7 @@ const EditCompetitionDetails = async ({
           handleSubmit={updateCompetitionMetadata}
         >
           <div className="flex flex-col">
-            <h1 className="mb-4 text-left text-xl font-bold">
+            <h1 className="mb-4 text-left text-xl font-bold dark:text-white">
               Competition Thumbnail
             </h1>
             <div className="relative flex h-[400px] w-[600px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl">

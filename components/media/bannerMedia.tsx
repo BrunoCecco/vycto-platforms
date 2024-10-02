@@ -10,6 +10,7 @@ export default function BannerMedia({ src }: { src: string }) {
     videoFormats.includes(mediaFormat) ? (
       <video
         autoPlay
+        preload="none"
         loop
         muted
         playsInline
@@ -25,7 +26,7 @@ export default function BannerMedia({ src }: { src: string }) {
         unoptimized
         alt="Banner Image"
         fill
-        className="object-contain object-center"
+        className="object-cover object-center"
       />
     )
   ) : null;

@@ -110,11 +110,14 @@ export default async function SiteLayout({
               alt="Logo"
               width={100}
               height={100}
+              className=""
             />
           </Link>
           <Link
-            className={`ml-3 rounded-full px-8 py-2 pt-1 font-semibold text-white hover:invert ${cla}`}
-            style={{ backgroundColor: data.color2 || "#1E40AF" }} // Default color fallback
+            className={`ml-3 rounded-full px-8 py-2 pt-1 font-semibold text-white ${cla} shadow-md transition-all duration-200 hover:shadow-none`}
+            style={{
+              backgroundImage: `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
+            }}
             href={`/comp/${latestCompetition?.slug}` ?? "/"}
           >
             Play
