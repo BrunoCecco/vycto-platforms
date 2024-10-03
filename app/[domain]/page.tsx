@@ -58,7 +58,7 @@ export default async function SiteHomePage({
 
   return (
     <>
-      <div className="mx-5 max-w-screen-2xl pb-20 pt-10 lg:mx-24">
+      <div className="mx-5 pb-20 pt-10 lg:mx-24">
         {/* Use the FanZoneHeader component */}
         <FanZone
           siteData={data}

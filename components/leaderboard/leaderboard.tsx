@@ -8,33 +8,6 @@ import {
 } from "@/lib/schema";
 import Link from "next/link";
 
-const leaderboardData = [
-  {
-    id: 1,
-    name: "john_doe",
-    profilePic: "/logo.png", // Replace with actual image URL
-    rank: 1,
-    points: 1000,
-    latestSubmission: "View",
-  },
-  {
-    id: 2,
-    name: "garry_123",
-    profilePic: "/logo.png",
-    rank: 2,
-    points: 700,
-    latestSubmission: "View",
-  },
-  {
-    id: 3,
-    name: "timotheeee",
-    profilePic: "/logo.png",
-    points: 300,
-    rank: 3,
-    latestSubmission: "View",
-  },
-];
-
 const Leaderboard = ({
   siteData,
   competition,
@@ -46,23 +19,6 @@ const Leaderboard = ({
 }) => {
   return (
     <div className="container w-full bg-white p-2 md:rounded-xl md:p-8">
-      {/* <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row md:items-center md:py-6">
-        <div className="flex items-center justify-center gap-4 md:justify-normal">
-          <div className="relative inline-block h-16 w-32 align-middle md:h-16 md:w-36">
-            <Image
-              src={siteData.logo || "/logo.png"}
-              alt="Brand Logo"
-              fill={true}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-contain"
-            />
-          </div>
-          <h1 className="text-lg font-bold text-gray-800 md:text-2xl">
-            Leaderboard
-          </h1>
-        </div>
-      </div> */}
-
       <div className="overflow-x-auto">
         {/* Desktop Table */}
         <table className="hidden min-w-full rounded-xl md:table">

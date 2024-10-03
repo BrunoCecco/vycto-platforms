@@ -19,8 +19,8 @@ const FanZone = async ({
   return (
     <div className="w-full">
       <FanZoneHeader data={siteData} latestCompetition={latestCompetition} />
-      <h2 className="py-6 text-2xl font-semibold text-gray-800">
-        <PlayCircle />
+      <h2 className="mt-6 flex items-center py-2 text-lg font-semibold text-white sm:py-6 sm:text-2xl">
+        <PlayCircle className="mr-2" />
         Current Competitions
       </h2>
       {currentCompetitions?.length > 0 ? (
@@ -30,12 +30,12 @@ const FanZone = async ({
           type="current"
         />
       ) : (
-        <h2 className="py-4 text-lg font-semibold italic text-gray-600">
+        <h2 className="py-4 text-lg font-semibold italic text-slate-200">
           No current competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
-      <h2 className="mt-6 py-6 text-2xl font-semibold text-gray-800">
-        <ClockIcon />
+      <h2 className="mt-6 flex items-center py-2 text-lg font-semibold text-white sm:py-6 sm:text-2xl">
+        <ClockIcon className="mr-2" />
         Past Competitions
       </h2>
       {pastCompetitions?.length > 0 ? (
@@ -45,7 +45,7 @@ const FanZone = async ({
           type="past"
         />
       ) : (
-        <h2 className="mb-24 py-4 text-lg font-semibold italic text-gray-600">
+        <h2 className="mb-24 py-4 text-lg font-semibold italic text-slate-200">
           No past competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}

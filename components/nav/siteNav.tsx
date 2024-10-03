@@ -49,7 +49,7 @@ export default function SiteNav({
       {
         name: "Home",
         href: "/",
-        isActive: segments[0] === "",
+        isActive: segments.length === 0,
         icon: <Home width={18} />,
       },
       {
@@ -90,15 +90,17 @@ export default function SiteNav({
   return (
     <>
       <button
-        className={`z-20 rounded-md bg-white p-2 shadow-md hover:opacity-75 sm:hidden`}
+        className={`z-20 rounded-md p-2 shadow-md hover:opacity-75 sm:hidden`}
         onClick={() => setShowSidebar(!showSidebar)}
       >
-        <Menu width={20} className="dark:text-white" />
+        <Menu width={20} className="text-stone-100" />
       </button>
       <div
         className={`transform ${
-          showSidebar ? "w-[100vw] translate-x-0" : "w-[15vw] translate-x-0"
-        } fixed z-10 flex h-full flex-col justify-between border-r border-stone-200 bg-stone-100 p-4 transition-all duration-200 sm:w-1/5 2xl:w-[10vw] 2xl:translate-x-[90vw] dark:border-stone-700 dark:bg-stone-900`}
+          showSidebar
+            ? "w-[100vw] translate-x-0"
+            : "w-[15vw] -translate-x-[15vw]"
+        } fixed z-10 flex h-full flex-col justify-between overflow-hidden border-r border-stone-200 bg-stone-100 p-4 transition-all duration-200 sm:w-1/5 sm:translate-x-0 2xl:w-[10vw] 2xl:translate-x-[90vw] dark:border-stone-700 dark:bg-stone-900`}
       >
         <div className="grid gap-2">
           <div className="hidden flex-col gap-2 px-2 py-2 sm:flex">

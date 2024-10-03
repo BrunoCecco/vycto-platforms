@@ -3,18 +3,15 @@ import UserSettings from "@/components/settings/userSettings";
 export default async function SettingsPage() {
   // explain how to play with beautiful layouy
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-4 max-w-screen-2xl py-8 sm:mx-20">
       <h1 className="mb-6 text-3xl font-bold text-white">How to Play</h1>
 
       <div className="mb-8 rounded-lg bg-slate-700 p-6 shadow-lg">
         <h2 className="mb-4 text-2xl font-semibold text-white">
-          1. Join a Competition
+          1. Enter a Competition
         </h2>
         <p className="mb-2 text-gray-300">
-          Browse our active competitions and choose one that interests you.
-        </p>
-        <p className="text-gray-300">
-          Click on the "Join" button to participate in the selected competition.
+          Browse our active competitions and click "Play".
         </p>
       </div>
 
@@ -22,14 +19,7 @@ export default async function SettingsPage() {
         <h2 className="mb-4 text-2xl font-semibold text-white">
           2. Answer Questions
         </h2>
-        <p className="mb-2 text-gray-300">
-          Each competition consists of multiple-choice questions related to the
-          topic.
-        </p>
-        <p className="text-gray-300">
-          Read each question carefully and select the answer you believe is
-          correct.
-        </p>
+        <p className="mb-2 text-gray-300">Submit your answers!</p>
       </div>
 
       <div className="mb-8 rounded-lg bg-slate-700 p-6 shadow-lg">
@@ -37,12 +27,8 @@ export default async function SettingsPage() {
           3. Earn Points
         </h2>
         <p className="mb-2 text-gray-300">
-          Correct answers earn you points. The faster you answer, the more
-          points you get!
-        </p>
-        <p className="text-gray-300">
-          Keep an eye on the leaderboard to see how you rank against other
-          players.
+          Points will be calculated after the event and you will be placed on a
+          leaderboard.
         </p>
       </div>
 

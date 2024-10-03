@@ -100,7 +100,7 @@ export default async function SiteLayout({
 
   return (
     <div className={`${fontMapper[data.font]} flex min-h-screen bg-slate-800`}>
-      <div className="relative sm:w-1/5">
+      <div className="relative z-50 w-0 sm:w-1/5">
         <SiteNav
           data={data}
           latestCompetitionUrl={`/comp/${latestCompetition?.slug}`}
@@ -110,8 +110,8 @@ export default async function SiteLayout({
           </Suspense>
         </SiteNav>
       </div>
-      <div className="relative w-full sm:w-4/5">
-        <div className="mx-5 flex items-center justify-between pt-5 sm:hidden">
+      <div className="max-w-screen-2x relative w-full sm:w-4/5">
+        <div className="mx-5 flex flex-col items-center justify-between gap-4 pt-5 sm:hidden">
           <div className="flex items-center gap-4">
             <Link href="/">
               <Image
@@ -132,10 +132,12 @@ export default async function SiteLayout({
               Play
             </Link>
           </div>
-          <div className="text-4xl font-bold">
+
+          <div className="text-2xl font-bold text-white sm:text-4xl">
             {capitalize(addFanzoneToString(data.name || ""))}
           </div>
         </div>
+
         {children}
       </div>
     </div>
