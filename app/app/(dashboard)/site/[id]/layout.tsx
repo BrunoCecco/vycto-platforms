@@ -13,13 +13,7 @@ export default async function SiteLayout({
   });
 
   return (
-    <div
-      className="flex  flex-col space-y-12 p-8"
-      style={{
-        backgroundColor: siteData?.color1,
-        minHeight: "100vh",
-      }}
-    >
+    <div className="flex  min-h-screen flex-col space-y-12 bg-slate-800 p-8">
       <div className="flex flex-col space-y-6">{children}</div>
     </div>
   );

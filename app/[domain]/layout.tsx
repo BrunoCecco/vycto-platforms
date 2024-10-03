@@ -93,23 +93,25 @@ export default async function SiteLayout({
     return redirect(`https://${data.customDomain}`);
   }
 
-  const cla = `hover:text-${data.color2}`;
-
   const addFanzoneToString = (str: string) => {
     if (str?.includes("fanzone")) return str;
     return str + " FANZONE";
   };
 
   return (
-    <div
-      className={fontMapper[data.font]}
-      style={{
-        backgroundColor: data.color1 ?? "green",
-        minHeight: "100vh",
-      }}
-    >
-      <div className="flex justify-between">
-        <div className="mx-5 flex w-full max-w-screen-2xl items-center justify-between pt-5 lg:mx-24">
+    <div className={`${fontMapper[data.font]} flex min-h-screen bg-slate-800`}>
+      <div className="relative sm:w-1/5">
+        <SiteNav
+          data={data}
+          latestCompetitionUrl={`/comp/${latestCompetition?.slug}`}
+        >
+          <Suspense fallback={<Loading />}>
+            <Profile />
+          </Suspense>
+        </SiteNav>
+      </div>
+      <div className="relative w-full sm:w-4/5">
+        <div className="mx-5 flex items-center justify-between pt-5 sm:hidden">
           <div className="flex items-center gap-4">
             <Link href="/">
               <Image
@@ -121,7 +123,7 @@ export default async function SiteLayout({
               />
             </Link>
             <Link
-              className={`ml-3 rounded-full px-8 py-2 font-semibold text-white shadow-gray-600 ${cla} shadow-md transition-all duration-200 hover:shadow-none`}
+              className={`ml-3 rounded-full px-8 py-2 font-semibold text-white shadow-md shadow-gray-600 transition-all duration-200 hover:shadow-none`}
               style={{
                 backgroundImage: `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
               }}
@@ -134,14 +136,8 @@ export default async function SiteLayout({
             {capitalize(addFanzoneToString(data.name || ""))}
           </div>
         </div>
-
-        <SiteNav>
-          <Suspense fallback={<Loading />}>
-            <Profile />
-          </Suspense>
-        </SiteNav>
+        {children}
       </div>
-      {children}
     </div>
   );
 }

@@ -17,6 +17,9 @@ import {
   Gift,
   Wand,
   Trophy,
+  Home,
+  Book,
+  Crown,
 } from "lucide-react";
 import {
   useParams,
@@ -26,13 +29,41 @@ import {
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import { getSiteFromCompetitionId } from "@/lib/actions";
 import Image from "next/image";
+import { SelectSite } from "@/lib/schema";
+import { capitalize } from "@/lib/utils";
 
-export default function SiteNav({ children }: { children?: ReactNode }) {
+export default function SiteNav({
+  data,
+  latestCompetitionUrl,
+  children,
+}: {
+  data: SelectSite;
+  latestCompetitionUrl: string;
+  children?: ReactNode;
+}) {
   const segments = useSelectedLayoutSegments();
   const { id } = useParams() as { id?: string };
 
   const tabs = useMemo(() => {
     return [
+      {
+        name: "Home",
+        href: "/",
+        isActive: segments[0] === "",
+        icon: <Home width={18} />,
+      },
+      {
+        name: "How To Play",
+        href: "/howtoplay",
+        isActive: segments[0] === "howtoplay",
+        icon: <Book width={18} />,
+      },
+      {
+        name: "My Rewards",
+        href: "/rewards",
+        isActive: segments[0] === "rewards",
+        icon: <Crown width={18} />,
+      },
       {
         name: "Settings",
         href: "/settings",
@@ -51,40 +82,50 @@ export default function SiteNav({ children }: { children?: ReactNode }) {
     setShowSidebar(false);
   }, [pathname]);
 
+  const addFanzoneToString = (str: string) => {
+    if (str?.includes("fanzone")) return str;
+    return str + " FANZONE";
+  };
+
   return (
     <>
       <button
-        className={`fixed z-20 rounded-md bg-black p-2 shadow-md hover:opacity-75 2xl:hidden ${
-          // left align for Editor, right align for other pages
-          segments[0] === "competition" && segments.length === 2 && !showSidebar
-            ? "left-5 top-5"
-            : "right-5 top-7"
-        }`}
+        className={`z-20 rounded-md bg-white p-2 shadow-md hover:opacity-75 sm:hidden`}
         onClick={() => setShowSidebar(!showSidebar)}
       >
         <Menu width={20} className="dark:text-white" />
       </button>
       <div
         className={`transform ${
-          showSidebar
-            ? "w-[100vw] translate-x-0 sm:w-[25vw] sm:translate-x-[75vw]"
-            : "w-[15vw] translate-x-[115vw]"
-        } fixed z-10 flex h-full flex-col justify-between border-r border-stone-200 bg-stone-100 p-4 transition-all duration-200 sm:w-[25vw] 2xl:w-[10vw] 2xl:translate-x-[90vw] dark:border-stone-700 dark:bg-stone-900`}
+          showSidebar ? "w-[100vw] translate-x-0" : "w-[15vw] translate-x-0"
+        } fixed z-10 flex h-full flex-col justify-between border-r border-stone-200 bg-stone-100 p-4 transition-all duration-200 sm:w-1/5 2xl:w-[10vw] 2xl:translate-x-[90vw] dark:border-stone-700 dark:bg-stone-900`}
       >
         <div className="grid gap-2">
-          <div className="flex items-center space-x-2 rounded-lg px-2 py-1.5">
-            <Link
-              href="/"
-              className="rounded-lg p-2 hover:bg-stone-200 dark:hover:bg-stone-700"
-            >
-              <Image
-                src="/logo.png"
-                width={36}
-                height={36}
-                alt="Logo"
-                className="dark:scale-110 dark:rounded-full dark:border dark:border-stone-400"
-              />
-            </Link>
+          <div className="hidden flex-col gap-2 px-2 py-2 sm:flex">
+            <div className="flex items-center justify-between gap-2">
+              <Link href="/">
+                <Image
+                  src={data.logo ?? "/logo.png"}
+                  alt="Logo"
+                  width={80}
+                  height={80}
+                  className=""
+                />
+              </Link>
+              <Link
+                className={`rounded-full px-8 py-2 font-semibold text-white shadow-sm shadow-gray-600 transition-all duration-200 hover:shadow-none`}
+                style={{
+                  backgroundImage: `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
+                }}
+                href={latestCompetitionUrl}
+              >
+                Play
+              </Link>
+            </div>
+
+            <div className="text-2xl font-bold">
+              {capitalize(addFanzoneToString(data.name || ""))}
+            </div>
           </div>
           <div className="grid gap-1">
             {tabs.map(({ name, href, isActive, icon }) => (

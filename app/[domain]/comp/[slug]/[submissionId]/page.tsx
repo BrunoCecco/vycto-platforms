@@ -134,12 +134,7 @@ export default async function SubmissionPage({
   const winnerData = await getCompetitionWinnerData(data.id);
 
   return (
-    <div
-      className=""
-      style={{
-        backgroundColor: siteData?.color1 ?? "white",
-      }}
-    >
+    <div className="">
       <CompetitionPage
         session={session}
         data={data}
