@@ -11,7 +11,7 @@ export default async function SettingsPage() {
           1. Enter a Competition
         </h2>
         <p className="mb-2 text-gray-300">
-          Browse our active competitions and click "Play".
+          Browse our active competitions and click &ldquo;Play&ldquo;.
         </p>
       </div>
 
