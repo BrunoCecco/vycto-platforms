@@ -1,9 +1,13 @@
+import { SelectSite } from "@/lib/schema";
 import Image from "next/image";
 
-export default function Loading({ logo }: { logo?: string | null }) {
+export default function Loading({ data }: { data?: SelectSite | null }) {
   return (
-    <div className="absolute left-0 top-0 z-50 h-screen w-screen">
-      <div className="absolute h-screen w-screen animate-pulse bg-slate-300 opacity-50" />
+    <div className="absolute left-0 top-0 z-50 h-screen w-full">
+      <div
+        className="absolute h-screen w-screen animate-pulse opacity-50"
+        style={{ backgroundColor: data?.color1 }}
+      />
       {/* generate an amazing loading screen here using the tailwindcss documentation */}
       <div className="flex h-full flex-col items-center justify-center">
         <div
@@ -13,6 +17,7 @@ export default function Loading({ logo }: { logo?: string | null }) {
           <svg
             aria-hidden="true"
             className="dark:text-white-600 h-[200px] w-[200px] animate-spin fill-white text-gray-200"
+            style={{ color: data?.color1 }}
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -28,13 +33,13 @@ export default function Loading({ logo }: { logo?: string | null }) {
           </svg>
           <span className="sr-only">Loading...</span>
 
-          {logo && (
+          {data?.logo && (
             <Image
               className="absolute object-contain object-center"
               height={100}
               width={100}
               alt="Loading"
-              src={logo}
+              src={data.logo}
             />
           )}
         </div>

@@ -3,7 +3,7 @@ import Competitions from "@/components/competitions/competitions";
 import { competitions, SelectCompetition, SelectSite } from "@/lib/schema";
 import FanZoneHeader from "./fanzoneHeader";
 import MainLeaderboard from "../leaderboard/mainLeaderboard";
-import { ClockIcon, PlayCircle } from "lucide-react";
+import { ClockIcon, Medal, PlayCircle } from "lucide-react";
 
 const FanZone = async ({
   siteData,
@@ -19,8 +19,8 @@ const FanZone = async ({
   return (
     <div className="w-full">
       <FanZoneHeader data={siteData} latestCompetition={latestCompetition} />
-      <h2 className="mt-6 flex items-center py-2 text-lg font-semibold text-white sm:py-6 sm:text-2xl">
-        <PlayCircle className="mr-2" />
+      <h2 className="flex items-center py-2 text-lg font-semibold text-white sm:py-6 sm:text-2xl">
+        <Medal className="mr-2" style={{ color: siteData.color1 }} />
         Current Competitions
       </h2>
       {currentCompetitions?.length > 0 ? (
@@ -34,8 +34,8 @@ const FanZone = async ({
           No current competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
-      <h2 className="mt-6 flex items-center py-2 text-lg font-semibold text-white sm:py-6 sm:text-2xl">
-        <ClockIcon className="mr-2" />
+      <h2 className="flex items-center py-2 text-lg font-semibold text-white sm:py-6 sm:text-2xl">
+        <ClockIcon className="mr-2" style={{ color: siteData.color1 }} />
         Past Competitions
       </h2>
       {pastCompetitions?.length > 0 ? (

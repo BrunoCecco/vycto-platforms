@@ -31,6 +31,7 @@ import { getSiteFromCompetitionId } from "@/lib/actions";
 import Image from "next/image";
 import { SelectSite } from "@/lib/schema";
 import { capitalize } from "@/lib/utils";
+import PoweredBadge from "./poweredBadge";
 
 export default function SiteNav({
   data,
@@ -82,15 +83,10 @@ export default function SiteNav({
     setShowSidebar(false);
   }, [pathname]);
 
-  const addFanzoneToString = (str: string) => {
-    if (str?.includes("fanzone")) return str;
-    return str + " FANZONE";
-  };
-
   return (
     <>
       <button
-        className={`z-20 rounded-md p-2 shadow-md hover:opacity-75 sm:hidden`}
+        className={`relative z-20 rounded-md p-2 shadow-md hover:opacity-75 sm:hidden`}
         onClick={() => setShowSidebar(!showSidebar)}
       >
         <Menu width={20} className="text-stone-100" />
@@ -100,17 +96,18 @@ export default function SiteNav({
           showSidebar
             ? "w-[100vw] translate-x-0"
             : "w-[15vw] -translate-x-[15vw]"
-        } fixed z-10 flex h-full flex-col justify-between overflow-hidden border-r border-stone-200 bg-stone-100 p-4 transition-all duration-200 sm:w-1/5 sm:translate-x-0 2xl:w-[10vw] 2xl:translate-x-[90vw] dark:border-stone-700 dark:bg-stone-900`}
+        } fixed top-0 z-10 flex h-full flex-col justify-between overflow-hidden border-r border-stone-700 bg-stone-900 p-4 transition-all duration-200 sm:w-1/5 sm:translate-x-0 2xl:w-[10vw] 2xl:translate-x-[90vw]`}
+        style={{ borderColor: data.color1 }}
       >
-        <div className="grid gap-2">
-          <div className="hidden flex-col gap-2 px-2 py-2 sm:flex">
+        <div className="flex h-full flex-col justify-between">
+          <div className="hidden flex-col gap-4 px-2 py-2 sm:flex">
             <div className="flex items-center justify-between gap-2">
               <Link href="/">
                 <Image
                   src={data.logo ?? "/logo.png"}
                   alt="Logo"
-                  width={80}
-                  height={80}
+                  width={60}
+                  height={60}
                   className=""
                 />
               </Link>
@@ -124,28 +121,36 @@ export default function SiteNav({
                 Play
               </Link>
             </div>
-
-            <div className="text-2xl font-bold">
-              {capitalize(addFanzoneToString(data.name || ""))}
+            <div className="grid gap-1">
+              {tabs.map(({ name, href, isActive, icon }) => (
+                <Link
+                  key={name}
+                  href={href}
+                  className={`flex items-center space-x-3 ${
+                    isActive ? "bg-stone-700" : ""
+                  } rounded-lg px-2 py-1.5 text-white transition-all duration-150  ease-in-out hover:bg-stone-700 active:bg-stone-300 active:bg-stone-800`}
+                >
+                  {icon}
+                  <span className="text-sm font-medium">{name}</span>
+                </Link>
+              ))}
             </div>
           </div>
-          <div className="grid gap-1">
-            {tabs.map(({ name, href, isActive, icon }) => (
-              <Link
-                key={name}
-                href={href}
-                className={`flex items-center space-x-3 ${
-                  isActive ? "bg-stone-200 text-black dark:bg-stone-700" : ""
-                } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-stone-700 dark:active:bg-stone-800`}
-              >
-                {icon}
-                <span className="text-sm font-medium">{name}</span>
-              </Link>
-            ))}
+          <div className="mb-2">
+            <div className="mb-1 font-semibold tracking-wide text-white">
+              POWERED BY
+            </div>
+            <Image
+              src={"/vyctoLogoWhite.png"}
+              alt="Vycto Logo"
+              width={80}
+              height={60}
+              className=""
+            />
           </div>
         </div>
         <div>
-          <div className="my-2 border-t border-stone-200 dark:border-stone-700" />
+          <div className="my-2 border-t border-stone-700" />
           {children}
         </div>
       </div>

@@ -6,10 +6,12 @@ import { motion, useAnimationControls } from "framer-motion";
 export default function MovingBorder({
   color1,
   color2,
+  className,
   children,
 }: {
   color1: string;
   color2: string;
+  className?: string;
   children: React.ReactNode;
 }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -36,7 +38,7 @@ export default function MovingBorder({
       onMouseLeave={handleMouseLeave}
     >
       <motion.svg
-        className="absolute inset-0 h-full w-full"
+        className={`absolute inset-0 h-full w-full ${className}`}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >

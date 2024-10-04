@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: var(--font-space);
+}
+
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #000000;

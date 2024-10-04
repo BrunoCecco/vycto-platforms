@@ -10,6 +10,7 @@ import SiteNav from "@/components/nav/siteNav";
 import Profile from "@/components/nav/profile";
 import Loading from "../app/(dashboard)/loading";
 import { capitalize } from "@/lib/utils";
+import LoadingDots from "@/components/icons/loadingDots";
 
 export async function generateMetadata({
   params,
@@ -60,6 +61,13 @@ export async function generateMetadata({
   };
 }
 
+const Background = () => (
+  <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
+    {/* <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 via-transparent to-yellow-500 blur-3xl"></div>
+    <div className="absolute inset-0 bg-gradient-to-tl from-yellow-300 via-transparent to-yellow-400 blur-3xl"></div> */}
+  </div>
+);
+
 export default async function SiteLayout({
   params,
   children,
@@ -93,25 +101,22 @@ export default async function SiteLayout({
     return redirect(`https://${data.customDomain}`);
   }
 
-  const addFanzoneToString = (str: string) => {
-    if (str?.includes("fanzone")) return str;
-    return str + " FANZONE";
-  };
-
   return (
-    <div className={`${fontMapper[data.font]} flex min-h-screen bg-slate-800`}>
+    <div
+      className={`${fontMapper["font-space"]} font-space flex min-h-screen bg-slate-950`}
+    >
       <div className="relative z-50 w-0 sm:w-1/5">
         <SiteNav
           data={data}
           latestCompetitionUrl={`/comp/${latestCompetition?.slug}`}
         >
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<LoadingDots />}>
             <Profile />
           </Suspense>
         </SiteNav>
       </div>
       <div className="max-w-screen-2x relative w-full sm:w-4/5">
-        <div className="mx-5 flex flex-col items-center justify-between gap-4 pt-5 sm:hidden">
+        <div className="mx-5 flex flex-col items-center justify-between gap-4 pt-5 sm:mx-24 sm:hidden sm:items-start">
           <div className="flex items-center gap-4">
             <Link href="/">
               <Image
@@ -131,10 +136,6 @@ export default async function SiteLayout({
             >
               Play
             </Link>
-          </div>
-
-          <div className="text-2xl font-bold text-white sm:text-4xl">
-            {capitalize(addFanzoneToString(data.name || ""))}
           </div>
         </div>
 

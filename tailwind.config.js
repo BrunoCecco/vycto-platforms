@@ -128,6 +128,7 @@ module.exports = {
         cal: ["var(--font-cal)", ...fontFamily.sans],
         title: ["var(--font-title)", ...fontFamily.sans],
         mono: ["Consolas", ...fontFamily.mono],
+        space: ["var(--font-space)", ...fontFamily.sans],
       },
       typography: {
         DEFAULT: {

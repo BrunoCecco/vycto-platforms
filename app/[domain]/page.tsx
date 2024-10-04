@@ -10,6 +10,8 @@ import { SelectCompetition } from "@/lib/schema";
 import { getSession } from "@/lib/auth";
 import SettingsButton from "@/components/settings/settingsButton";
 import Image from "next/image";
+import { capitalize } from "@/lib/utils";
+import { fontMapper } from "@/styles/fonts";
 
 export async function generateStaticParams() {
   const allSites = await db.query.sites.findMany({
@@ -56,9 +58,17 @@ export default async function SiteHomePage({
 
   const session = await getSession();
 
+  const addFanzoneToString = (str: string) => {
+    if (str?.includes("fanzone")) return str;
+    return str + " FANZONE";
+  };
+
   return (
     <>
-      <div className="mx-5 pb-20 pt-10 lg:mx-24">
+      <div className={`mx-5 pb-20 pt-8 lg:mx-24`}>
+        <div className="pb-8 text-2xl font-bold tracking-wider text-white sm:text-4xl">
+          <h1>{capitalize(addFanzoneToString(data.name || ""))}</h1>
+        </div>
         {/* Use the FanZoneHeader component */}
         <FanZone
           siteData={data}

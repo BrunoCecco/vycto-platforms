@@ -32,27 +32,32 @@ const CompetitionCard = async ({
   }
 
   return (
-    <div className="h-full w-full overflow-hidden rounded-lg bg-white shadow-md transition-all hover:shadow-xl">
-      <MovingBorder color1={siteData.color1} color2={siteData.color2}>
+    <div className="group h-full w-full rounded-lg bg-slate-200 shadow-lg shadow-black transition-all transition-all duration-200 hover:bg-slate-100 hover:shadow-xl">
+      <MovingBorder
+        color1={siteData.color1}
+        color2={siteData.color2}
+        className="invisible group-hover:visible"
+      >
         <div className="relative h-48 w-full">
-          <BlurImage
-            alt={competition.title ?? "Card thumbnail"}
-            fill
-            className="rounded-t-lg object-cover"
-            src={competition.image ?? "/placeholder.png"}
-            placeholder="blur"
-            blurDataURL={competition.imageBlurhash ?? placeholderBlurhash}
-          />
+          <div className="h-full w-full overflow-hidden rounded-t-lg">
+            <BlurImage
+              alt={competition.title ?? "Card thumbnail"}
+              fill
+              className="rounded-t-lg object-cover transition-all duration-100 hover:scale-110"
+              src={competition.image ?? "/placeholder.png"}
+              placeholder="blur"
+              blurDataURL={competition.imageBlurhash ?? placeholderBlurhash}
+            />
+          </div>
         </div>
 
-        <div className="flex h-32 flex-col justify-between px-4 pb-4 pt-2 text-left">
+        <div className="flex h-28 flex-col justify-between px-1 pb-1 pt-2 text-left">
           {/* Title, sponser & profiles bit */}
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-semibold text-gray-800">
                 {competition.title || "Competition by " + competition.sponsor}
               </h2>
-              <p className="text-sm text-gray-600">{competition.sponsor}</p>
             </div>
             <div className="relative flex items-center">
               <div className="relative h-6 w-6">
@@ -80,7 +85,7 @@ const CompetitionCard = async ({
             </p>
             <Link
               href={"/comp/" + competition.slug}
-              className="w-24 rounded-full  p-2 text-center text-white transition-all duration-200 hover:scale-105"
+              className="w-24 rounded-xl p-2 text-center text-white transition-all duration-200 hover:scale-105"
               style={{
                 backgroundColor: type === "past" ? "gray" : siteData.color2,
                 backgroundImage:

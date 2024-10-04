@@ -11,7 +11,5 @@ export default async function SiteCompetitionLayout({
 }) {
   const domain = decodeURIComponent(params.domain);
   const data = await getSiteData(domain);
-  return (
-    <Suspense fallback={<Loading logo={data?.logo} />}>{children}</Suspense>
-  );
+  return <Suspense fallback={<Loading data={data} />}>{children}</Suspense>;
 }
