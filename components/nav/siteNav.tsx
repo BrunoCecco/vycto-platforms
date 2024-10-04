@@ -44,6 +44,7 @@ export default function SiteNav({
 }) {
   const segments = useSelectedLayoutSegments();
   const { id } = useParams() as { id?: string };
+  const [hovered, setHovered] = useState(false);
 
   const tabs = useMemo(() => {
     return [
@@ -112,10 +113,14 @@ export default function SiteNav({
                 />
               </Link>
               <Link
-                className={`rounded-full px-8 py-2 font-semibold text-white shadow-sm shadow-gray-600 transition-all duration-200 hover:shadow-none`}
-                style={{
-                  backgroundImage: `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
-                }}
+                className={`bg-[${data.color2}] rounded-full px-8 py-2 font-semibold text-white shadow-sm shadow-gray-600 transition-all duration-200 hover:shadow-none`}
+                // style={{
+                //   backgroundImage: hovered
+                //     ? `linear-gradient(45deg, ${data.color2}, ${data.color2})`
+                //     : `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
+                // }}
+                onMouseOver={() => setHovered(true)}
+                onMouseOut={() => setHovered(false)}
                 href={latestCompetitionUrl}
               >
                 Play

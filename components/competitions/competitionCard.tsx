@@ -1,5 +1,6 @@
+"use client";
 import Image from "next/image";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import BlurImage from "@/components/media/blurImage";
 import { placeholderBlurhash, random } from "@/lib/utils";
 import { getCompetitionUsers, getSiteData } from "@/lib/fetchers";
@@ -7,7 +8,7 @@ import Link from "next/link";
 import { SelectCompetition, SelectSite } from "@/lib/schema";
 import MovingBorder from "../movingBorder";
 
-const CompetitionCard = async ({
+const CompetitionCard = ({
   competition,
   siteData,
   type,
@@ -16,23 +17,32 @@ const CompetitionCard = async ({
   siteData: SelectSite;
   type?: "current" | "past";
 }) => {
-  const users = await getCompetitionUsers(competition.slug);
+  const [users, setUsers] = useState<any[]>();
+  const [status, setStatus] = useState<string>();
+  const [hovered, setHovered] = useState(false);
 
-  let status;
-  if (new Date(competition.date) > new Date()) {
-    const days = Math.ceil(
-      (new Date(competition.date).getTime() - new Date().getTime()) /
-        (1000 * 60 * 60 * 24),
-    );
-    status = days + " Days to go";
-  } else if (new Date(competition.date) < new Date()) {
-    status = users.length + " Participants";
-  } else {
-    status = "Live";
-  }
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const usrs = await getCompetitionUsers(competition.slug);
+      setUsers(usrs);
+
+      if (new Date(competition.date) > new Date()) {
+        const days = Math.ceil(
+          (new Date(competition.date).getTime() - new Date().getTime()) /
+            (1000 * 60 * 60 * 24),
+        );
+        setStatus(days + " Days to go");
+      } else if (new Date(competition.date) < new Date()) {
+        setStatus(usrs?.length + " Participants");
+      } else {
+        setStatus("Live");
+      }
+    };
+    fetchUsers();
+  }, [competition]);
 
   return (
-    <div className="group h-full w-full rounded-lg bg-slate-200 shadow-lg shadow-black transition-all transition-all duration-200 hover:bg-slate-100 hover:shadow-xl">
+    <div className="group h-full w-full rounded-lg bg-slate-200 shadow-lg shadow-black transition-all duration-200 hover:bg-slate-100 hover:shadow-xl">
       <MovingBorder
         color1={siteData.color1}
         color2={siteData.color2}
@@ -86,10 +96,13 @@ const CompetitionCard = async ({
             <Link
               href={"/comp/" + competition.slug}
               className="w-24 rounded-xl p-2 text-center text-white transition-all duration-200 hover:scale-105"
+              onMouseOver={() => setHovered(true)}
+              onMouseOut={() => setHovered(false)}
               style={{
-                backgroundColor: type === "past" ? "gray" : siteData.color2,
+                backgroundColor:
+                  !hovered && type === "past" ? "gray" : siteData.color2,
                 backgroundImage:
-                  type === "current"
+                  type === "current" && !hovered
                     ? `linear-gradient(45deg, ${siteData.color1}, ${siteData.color2})`
                     : "none",
               }}
