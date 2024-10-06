@@ -29,7 +29,7 @@ export default async function Rewards() {
         />
       </div>
       <FlipText word="Your Rewards" className="mb-8 text-4xl" />
-      <div className="mb-8 grid grid-cols-1 items-center justify-center gap-8 md:grid-cols-4">
+      <div className="mb-8 grid grid-cols-1 items-center justify-center space-y-8 sm:space-x-8 md:grid-cols-4">
         <div className="col-span-1">
           <PendingRewards count={0} amount={0} />
         </div>

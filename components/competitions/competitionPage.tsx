@@ -213,22 +213,20 @@ export default function CompetitionPage({
   };
 
   return (
-    <div
-      className={`${activeTab == "Leaderboard" ? `mx-auto w-full md:w-5/6 md:pb-20 lg:w-5/6` : `mx-auto w-full md:w-3/4 md:pb-20 lg:w-2/3`}`}
-    >
-      <div className=" bg-white px-8 py-8 md:rounded-b-xl md:px-24 md:py-20 md:shadow-2xl">
-        <TracingBeam color1={siteData.color1} color2={siteData.color2}>
-          <CompetitionHeader
-            session={session}
-            users={users}
-            data={data}
-            siteData={siteData}
-          />
-          <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
-          {activeTab == "Rewards" && (
-            <Rewards siteData={siteData} competition={data} users={users} />
-          )}
-          {activeTab == "Challenge" && (
+    <div className="w-full pb-5 sm:pb-20">
+      <div className=" h-max bg-white px-8 py-8 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
+        <CompetitionHeader
+          session={session}
+          users={users}
+          data={data}
+          siteData={siteData}
+        />
+        <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
+        {activeTab == "Rewards" && (
+          <Rewards siteData={siteData} competition={data} users={users} />
+        )}
+        {activeTab == "Challenge" && (
+          <TracingBeam color1={siteData.color1} color2={siteData.color2}>
             <div className="mx-auto flex w-full flex-col justify-center gap-12 bg-white py-12 md:gap-20 md:rounded-3xl">
               {userComp && "submitted" in userComp && userComp.submitted ? (
                 <GameStats
@@ -283,11 +281,11 @@ export default function CompetitionPage({
                 </div>
               )}
             </div>
-          )}
-          {activeTab == "Leaderboard" && (
-            <Leaderboard siteData={siteData} competition={data} users={users} />
-          )}
-        </TracingBeam>
+          </TracingBeam>
+        )}
+        {activeTab == "Leaderboard" && (
+          <Leaderboard siteData={siteData} competition={data} users={users} />
+        )}
       </div>
     </div>
   );

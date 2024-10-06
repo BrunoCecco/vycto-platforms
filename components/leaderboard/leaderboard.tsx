@@ -18,10 +18,10 @@ const Leaderboard = ({
   users: SelectUserCompetition[];
 }) => {
   return (
-    <div className="container w-full bg-white p-2 md:rounded-xl md:p-8">
+    <div className="container mt-2 w-full">
       <div className="overflow-x-auto">
         {/* Desktop Table */}
-        <table className="hidden min-w-full rounded-xl md:table">
+        <table className="hidden min-w-full md:table">
           <thead className="pb-4">
             <tr className="pb-4">
               <th className="order-2 py-3 text-left text-xs font-medium uppercase text-gray-500">
