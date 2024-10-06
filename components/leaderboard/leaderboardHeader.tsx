@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { SelectSite } from "@/lib/schema";
 import { Crown } from "lucide-react";
-import { Button, Select, SelectItem } from "@tremor/react";
+import { Button, Select, SelectItem, TextInput } from "@tremor/react";
 
 const LeaderboardHeader = ({
   siteData,
   rangeType,
   setRangeType,
+  setQuery,
 }: {
   siteData: SelectSite;
   rangeType: string;
   setRangeType: any;
+  setQuery?: any;
 }) => {
   const timeRanges = ["Monthly", "Yearly", "All Time"];
 
@@ -29,6 +31,7 @@ const LeaderboardHeader = ({
         </h1>
       </div>
       <div className="flex items-center gap-4">
+        <TextInput placeholder="Search" onValueChange={setQuery} />
         <Select
           value={rangeType}
           onValueChange={(value) => setRangeType(value)}

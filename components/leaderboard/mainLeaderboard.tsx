@@ -1,32 +1,51 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { SelectSite } from "@/lib/schema";
+import { SelectSite, SelectUser } from "@/lib/schema";
 import { getLeaderboardData } from "@/lib/fetchers";
 import LeaderboardHeader from "./leaderboardHeader";
 
+type LeaderboardUser = SelectUser & { points: number };
+
 const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
   const [rangeType, setRangeType] = useState<"yearly" | "monthly" | "all time">(
-    "alltime",
+    "all time",
   );
 
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<LeaderboardUser[]>([]);
+  const [filteredData, setFilteredData] = useState<LeaderboardUser[]>([]);
+  const [query, setQuery] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const leaderboardData = await getLeaderboardData(siteData.id, rangeType);
-      setData(leaderboardData);
+      setData(leaderboardData! as LeaderboardUser[]);
     };
     fetchData();
   }, [rangeType]);
 
+  useEffect(() => {
+    if (data) {
+      setFilteredData(
+        data.filter(
+          (user: LeaderboardUser) =>
+            user.username?.toLowerCase().includes(query?.toLowerCase()) ||
+            user.email?.toLowerCase().includes(query?.toLowerCase()) ||
+            user.name?.toLowerCase().includes(query?.toLowerCase()),
+        ),
+      );
+    }
+  }, [query, data]);
+
   return (
-    data && (
+    filteredData && (
       <div className="container min-w-full rounded-xl">
         <LeaderboardHeader
           siteData={siteData}
           rangeType={rangeType}
           setRangeType={setRangeType}
+          setQuery={setQuery}
         />
 
         <div className="overflow-x-auto">
@@ -49,8 +68,8 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
               </tr>
             </thead>
             <tbody>
-              {data?.length > 0 ? (
-                data.map((user: any, index: number) => (
+              {filteredData?.length > 0 ? (
+                filteredData.map((user: any, index: number) => (
                   <tr key={user.userId} className="border-b text-left">
                     <td className="flex items-center space-x-3 py-4">
                       <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
@@ -91,7 +110,7 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
 
           {/* Mobile Table */}
           <table className="min-w-full rounded-xl md:hidden">
-            {data?.length > 0 ? (
+            {filteredData?.length > 0 ? (
               <>
                 <thead className="pb-4">
                   <tr className="pb-4">
@@ -105,7 +124,7 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((user: any, index: number) => (
+                  {filteredData.map((user: any, index: number) => (
                     <tr key={user.userId} className="border-b">
                       <td className="pr-2">{index + 1}</td>
                       <td className="flex items-center py-4">
