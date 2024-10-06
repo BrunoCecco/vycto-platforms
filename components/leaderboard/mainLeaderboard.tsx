@@ -4,10 +4,17 @@ import Image from "next/image";
 import { SelectSite, SelectUser } from "@/lib/schema";
 import { getLeaderboardData } from "@/lib/fetchers";
 import LeaderboardHeader from "./leaderboardHeader";
+import { getSession } from "@/lib/auth";
 
 type LeaderboardUser = SelectUser & { points: number };
 
-const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
+const MainLeaderboard = ({
+  siteData,
+  user,
+}: {
+  siteData: SelectSite;
+  user: SelectUser;
+}) => {
   const [rangeType, setRangeType] = useState<"yearly" | "monthly" | "all time">(
     "all time",
   );
@@ -47,6 +54,15 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
           setRangeType={setRangeType}
           setQuery={setQuery}
         />
+
+        {data?.findIndex((usr) => usr.id === user.id) > -1 && (
+          <div className="flex items-center gap-4 rounded-lg py-4">
+            <span className="text-lg font-bold">Your Rank:</span>
+            <span className="text-lg font-bold">
+              {data.findIndex((usr) => usr.id === user.id) + 1}
+            </span>
+          </div>
+        )}
 
         <div className="overflow-x-auto">
           {/* Desktop Table */}

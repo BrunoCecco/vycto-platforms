@@ -10,11 +10,13 @@ const FanZone = async ({
   currentCompetitions,
   pastCompetitions,
   latestCompetition,
+  user,
 }: {
   siteData: SelectSite;
   currentCompetitions: SelectCompetition[];
   pastCompetitions: SelectCompetition[];
   latestCompetition: any;
+  user: any;
 }) => {
   return (
     <div className="w-full">
@@ -50,7 +52,7 @@ const FanZone = async ({
         </h2>
       )}
       <div className="my-10" />
-      <MainLeaderboard siteData={siteData} />
+      <MainLeaderboard siteData={siteData} user={user} />
     </div>
   );
 };

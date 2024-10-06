@@ -80,6 +80,7 @@ export default async function SiteHomePage({
           ) as SelectCompetition[]
         }
         latestCompetition={latestCompetition}
+        user={session?.user}
       />
       <div className="my-4 sm:my-10" />
     </div>
