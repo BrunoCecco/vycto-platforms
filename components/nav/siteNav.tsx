@@ -30,8 +30,7 @@ import { ReactNode, useEffect, useMemo, useState } from "react";
 import { getSiteFromCompetitionId } from "@/lib/actions";
 import Image from "next/image";
 import { SelectSite } from "@/lib/schema";
-import { capitalize } from "@/lib/utils";
-import PoweredBadge from "./poweredBadge";
+import PlayButton from "../buttons/playButton";
 
 export default function SiteNav({
   data,
@@ -101,8 +100,8 @@ export default function SiteNav({
         style={{ borderColor: data.color1 }}
       >
         <div className="flex h-full flex-col justify-between">
-          <div className="hidden flex-col gap-4 px-2 py-2 sm:flex">
-            <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-col gap-4 px-2 py-2">
+            <div className="hidden items-center justify-between gap-2 sm:flex">
               <Link href="/">
                 <Image
                   src={data.logo ?? "/logo.png"}
@@ -112,21 +111,13 @@ export default function SiteNav({
                   className=""
                 />
               </Link>
-              <Link
-                className={`bg-[${data.color2}] rounded-full px-8 py-2 font-semibold text-white shadow-sm shadow-gray-600 transition-all duration-200 hover:shadow-none`}
-                // style={{
-                //   backgroundImage: hovered
-                //     ? `linear-gradient(45deg, ${data.color2}, ${data.color2})`
-                //     : `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
-                // }}
-                onMouseOver={() => setHovered(true)}
-                onMouseOut={() => setHovered(false)}
-                href={latestCompetitionUrl}
-              >
-                Play
+              <Link href={latestCompetitionUrl}>
+                <PlayButton color1={data.color1} color2={data.color2}>
+                  Play
+                </PlayButton>
               </Link>
             </div>
-            <div className="grid gap-1">
+            <div className="mt-4 grid gap-1">
               {tabs.map(({ name, href, isActive, icon }) => (
                 <Link
                   key={name}

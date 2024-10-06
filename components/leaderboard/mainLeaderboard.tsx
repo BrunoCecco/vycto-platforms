@@ -98,7 +98,10 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
                     <td className="flex items-center space-x-3 py-4">
                       <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
                         <Image
-                          src={`https://avatar.vercel.sh/${user.email}`}
+                          src={
+                            user.image ||
+                            `https://avatar.vercel.sh/${user.email}`
+                          }
                           alt="Profile"
                           fill={true}
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -153,7 +156,10 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
                       <td className="flex items-center py-4">
                         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
                           <Image
-                            src={`https://avatar.vercel.sh/${user.username}`}
+                            src={
+                              user.image ||
+                              `https://avatar.vercel.sh/${user.username}`
+                            }
                             alt="Profile"
                             fill={true}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

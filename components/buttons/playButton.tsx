@@ -13,11 +13,11 @@ const PlayButton = ({ children, ...props }: ShinyButtonProps) => {
     <button
       className="rounded-lg p-0.5"
       style={{
-        backgroundImage: `linear-gradient(45deg, ${props.color2} 10% 50%, ${props.color1})`,
+        backgroundImage: `linear-gradient(45deg, ${props.color1} 10% 50%, ${props.color1})`,
       }}
       {...props}
     >
-      <div className="duration-400 group relative rounded-lg  bg-black px-8 py-2 text-white transition-all hover:scale-105  hover:bg-transparent">
+      <div className="duration-400 group relative rounded-lg  bg-black px-8 py-2 text-white transition-all hover:scale-105 hover:bg-transparent hover:text-black">
         {children}
       </div>
     </button>

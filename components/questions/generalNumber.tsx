@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import Input from "../input";
 import QuestionResultBlock from "../competitions/questionResultBlock";
+import FlipText from "../ui/flipText";
 
 const GeneralNumber = ({ ...props }) => {
   const [answer, setAnswer] = useState(props.answer.answer ?? 0);
@@ -31,9 +32,10 @@ const GeneralNumber = ({ ...props }) => {
         </div>
 
         {/* Question */}
-        <h2 className="mb-1 text-center text-xl font-semibold text-gray-800">
-          {props.question}
-        </h2>
+        <FlipText
+          word={props.question}
+          className="mb-1 text-center text-xl font-semibold text-gray-800"
+        />
         <p className="mb-6 text-center text-gray-500">
           Answer correctly to score points.
         </p>

@@ -11,6 +11,7 @@ import Profile from "@/components/nav/profile";
 import Loading from "../app/(dashboard)/loading";
 import { capitalize } from "@/lib/utils";
 import LoadingDots from "@/components/icons/loadingDots";
+import PlayButton from "@/components/buttons/playButton";
 
 export async function generateMetadata({
   params,
@@ -127,14 +128,10 @@ export default async function SiteLayout({
                 className=""
               />
             </Link>
-            <Link
-              className={`ml-3 rounded-full px-8 py-2 font-semibold text-white shadow-md shadow-gray-600 transition-all duration-200 hover:shadow-none`}
-              style={{
-                backgroundImage: `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
-              }}
-              href={`/comp/${latestCompetition?.slug}` ?? "/"}
-            >
-              Play
+            <Link href={`/comp/${latestCompetition?.slug}` ?? "/"}>
+              <PlayButton color1={data.color1} color2={data.color2}>
+                Play
+              </PlayButton>
             </Link>
           </div>
         </div>

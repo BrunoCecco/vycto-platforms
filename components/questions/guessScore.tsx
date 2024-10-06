@@ -4,6 +4,7 @@ import PointsBadge from "../competitions/pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
+import FlipText from "../ui/flipText";
 
 const GuessScore = ({ ...props }) => {
   const [scores, setScores] = useState({
@@ -37,9 +38,10 @@ const GuessScore = ({ ...props }) => {
         {/* Points Badge */}
         <PointsBadge points={props.points} />
 
-        <h2 className="mb-12 text-xl font-semibold text-gray-800">
-          Guess the score 🔥
-        </h2>
+        <FlipText
+          word={"Guess the score"}
+          className="mb-1 text-center text-xl font-semibold text-gray-800"
+        />
 
         {/* Teams */}
         <Submit

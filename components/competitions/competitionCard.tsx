@@ -6,8 +6,9 @@ import { placeholderBlurhash, random } from "@/lib/utils";
 import { getCompetitionUsers, getSiteData } from "@/lib/fetchers";
 import Link from "next/link";
 import { SelectCompetition, SelectSite } from "@/lib/schema";
-import MovingBorder from "../movingBorder";
+import MovingBorder from "../ui/movingBorder";
 import PlayButton from "../buttons/playButton";
+import { BackgroundGradient } from "../ui/backgroundGradient";
 
 const CompetitionCard = ({
   competition,
@@ -42,12 +43,8 @@ const CompetitionCard = ({
   }, [competition]);
 
   return (
-    <div className="group h-full w-full rounded-lg bg-slate-200 shadow-lg shadow-black transition-all duration-200 hover:bg-slate-100 hover:shadow-xl">
-      <MovingBorder
-        color1={siteData.color1}
-        color2={siteData.color2}
-        className="invisible group-hover:visible"
-      >
+    <BackgroundGradient className="group h-full w-[300px] rounded-lg">
+      <div className="h-full w-full rounded-lg bg-slate-200 p-2 transition-all duration-200 hover:bg-slate-100">
         <div className="relative h-48 w-full">
           <div className="h-full w-full overflow-hidden rounded-t-lg">
             <BlurImage
@@ -100,8 +97,8 @@ const CompetitionCard = ({
             </Link>
           </div>
         </div>
-      </MovingBorder>
-    </div>
+      </div>
+    </BackgroundGradient>
   );
 };
 

@@ -6,7 +6,6 @@ import {
   removeDomainFromVercelProject,
   validDomainRegex,
 } from "@/lib/domains";
-import { getBlurDataURL } from "@/lib/utils";
 import { put } from "@vercel/blob";
 import { and, eq } from "drizzle-orm";
 import { customAlphabet } from "nanoid";

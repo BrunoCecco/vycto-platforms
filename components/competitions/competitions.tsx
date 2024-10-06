@@ -12,15 +12,17 @@ const Competitions = ({
   type?: "current" | "past";
 }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-      {competitions.map((competition: SelectCompetition, index) => (
-        <CompetitionCard
-          key={index}
-          competition={competition}
-          siteData={siteData}
-          type={type}
-        />
-      ))}
+    <div className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth">
+      <div className="flex flex-row justify-start gap-4">
+        {competitions.map((competition: SelectCompetition, index) => (
+          <CompetitionCard
+            key={index}
+            competition={competition}
+            siteData={siteData}
+            type={type}
+          />
+        ))}
+      </div>
     </div>
   );
 };

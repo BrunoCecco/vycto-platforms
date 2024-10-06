@@ -9,7 +9,6 @@ module.exports = {
     "./lib/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}", // Tremor module
   ],
-  safelist: ["bg-tremor-brand-faint"],
   theme: {
     screens: {
       sm: "640px",

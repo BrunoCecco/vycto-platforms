@@ -4,6 +4,7 @@ import Image from "next/image";
 import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
+import FlipText from "../ui/flipText";
 
 const PlayerComponent = ({
   name,
@@ -54,9 +55,10 @@ const PlayerSelection = ({ ...props }) => {
         <PointsBadge points={props.points} />
 
         {/* Question */}
-        <h2 className="mb-2 text-center text-xl font-semibold text-gray-800">
-          {props.question}
-        </h2>
+        <FlipText
+          word={props.question}
+          className="mb-1 text-center text-xl font-semibold text-gray-800"
+        />
         <p className="mb-6 text-center text-gray-500">
           Select the correct answer
         </p>

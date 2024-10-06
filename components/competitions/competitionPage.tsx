@@ -30,6 +30,7 @@ import { usePostHog } from "posthog-js/react";
 import CompetitionWinners from "@/components/competitions/competitionWinners";
 import LoginButton from "@/components/auth/loginButton";
 import UserSignUp from "../auth/userSignUp";
+import { TracingBeam } from "../ui/tracingBeam";
 
 export default function CompetitionPage({
   session,
@@ -216,75 +217,77 @@ export default function CompetitionPage({
       className={`${activeTab == "Leaderboard" ? `mx-auto w-full md:w-5/6 md:pb-20 lg:w-5/6` : `mx-auto w-full md:w-3/4 md:pb-20 lg:w-2/3`}`}
     >
       <div className=" bg-white px-8 py-8 md:rounded-b-xl md:px-24 md:py-20 md:shadow-2xl">
-        <CompetitionHeader
-          session={session}
-          users={users}
-          data={data}
-          siteData={siteData}
-        />
-        <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
-        {activeTab == "Rewards" && (
-          <Rewards siteData={siteData} competition={data} users={users} />
-        )}
-        {activeTab == "Challenge" && (
-          <div className="mx-auto flex w-full flex-col justify-center gap-12 bg-white py-12 md:gap-20 md:rounded-3xl">
-            {userComp && "submitted" in userComp && userComp.submitted ? (
-              <GameStats
-                competitionTitle={data.title!}
-                userComp={userComp}
-                users={users}
-              />
-            ) : null}
-            {questions &&
-              questions.map((question: any, index: number) => {
-                const answer = answers?.find(
-                  (a: any) => a.questionId === question.id,
-                ) || { answer: searchParams.get(question.id) };
-                const disabled =
-                  userComp && "submitted" in userComp && userComp?.submitted;
-                return (
-                  <div key={"compquestion" + index}>
-                    {getQuestionType(
-                      question,
-                      session?.user.id!,
-                      index,
-                      answer,
-                      disabled || ended || false,
-                    )}
-                  </div>
-                );
-              })}
-            {ended ? (
-              <div className="text-md mx-auto rounded-xl border-red-600 bg-red-600 p-4 text-white">
-                Competition Ended
-              </div>
-            ) : session ? (
-              userComp && "submitted" in userComp && userComp.submitted ? (
-                <div className="text-md mx-auto rounded-xl border-green-600 bg-green-600 p-4 text-white">
-                  Answers Submitted
+        <TracingBeam color1={siteData.color1} color2={siteData.color2}>
+          <CompetitionHeader
+            session={session}
+            users={users}
+            data={data}
+            siteData={siteData}
+          />
+          <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
+          {activeTab == "Rewards" && (
+            <Rewards siteData={siteData} competition={data} users={users} />
+          )}
+          {activeTab == "Challenge" && (
+            <div className="mx-auto flex w-full flex-col justify-center gap-12 bg-white py-12 md:gap-20 md:rounded-3xl">
+              {userComp && "submitted" in userComp && userComp.submitted ? (
+                <GameStats
+                  competitionTitle={data.title!}
+                  userComp={userComp}
+                  users={users}
+                />
+              ) : null}
+              {questions &&
+                questions.map((question: any, index: number) => {
+                  const answer = answers?.find(
+                    (a: any) => a.questionId === question.id,
+                  ) || { answer: searchParams.get(question.id) };
+                  const disabled =
+                    userComp && "submitted" in userComp && userComp?.submitted;
+                  return (
+                    <div key={"compquestion" + index}>
+                      {getQuestionType(
+                        question,
+                        session?.user.id!,
+                        index,
+                        answer,
+                        disabled || ended || false,
+                      )}
+                    </div>
+                  );
+                })}
+              {ended ? (
+                <div className="text-md mx-auto rounded-xl border-red-600 bg-red-600 p-4 text-white">
+                  Competition Ended
                 </div>
+              ) : session ? (
+                userComp && "submitted" in userComp && userComp.submitted ? (
+                  <div className="text-md mx-auto rounded-xl border-green-600 bg-green-600 p-4 text-white">
+                    Answers Submitted
+                  </div>
+                ) : (
+                  <SubmitAnswersForm
+                    userId={session?.user.id!}
+                    competitionId={data.id}
+                    slug={slug}
+                    localAnswers={localAnswers}
+                  />
+                )
               ) : (
-                <SubmitAnswersForm
-                  userId={session?.user.id!}
-                  competitionId={data.id}
-                  slug={slug}
-                  localAnswers={localAnswers}
-                />
-              )
-            ) : (
-              <div className="rounded-md border border-stone-200 p-8 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
-                <UserSignUp
-                  siteData={siteData}
-                  localAnswers={localAnswers}
-                  competitionSlug={slug}
-                />
-              </div>
-            )}
-          </div>
-        )}
-        {activeTab == "Leaderboard" && (
-          <Leaderboard siteData={siteData} competition={data} users={users} />
-        )}
+                <div className="rounded-md border border-stone-200 p-8 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
+                  <UserSignUp
+                    siteData={siteData}
+                    localAnswers={localAnswers}
+                    competitionSlug={slug}
+                  />
+                </div>
+              )}
+            </div>
+          )}
+          {activeTab == "Leaderboard" && (
+            <Leaderboard siteData={siteData} competition={data} users={users} />
+          )}
+        </TracingBeam>
       </div>
     </div>
   );

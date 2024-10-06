@@ -5,6 +5,7 @@ import PointsBadge from "../competitions/pointsBadge";
 import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
+import FlipText from "../ui/flipText";
 
 const MatchOutcome = ({ ...props }) => {
   const [selectedOutcome, setSelectedOutcome] = useState(
@@ -18,9 +19,10 @@ const MatchOutcome = ({ ...props }) => {
         <PointsBadge points={props.points || 0} />
 
         {/* Match Info */}
-        <h2 className="text-lg font-semibold text-gray-800 md:text-xl">
-          {props.question}
-        </h2>
+        <FlipText
+          word={props.question}
+          className="mb-1 text-center text-xl font-semibold text-gray-800"
+        />
         <p className="text-sm text-gray-500">Pick the winner to score points</p>
 
         {/* Teams */}

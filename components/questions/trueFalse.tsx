@@ -4,6 +4,7 @@ import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
 import { useState } from "react";
 import QuestionResultBlock from "../competitions/questionResultBlock";
+import FlipText from "../ui/flipText";
 
 const Button = ({
   children,
@@ -54,9 +55,10 @@ const TrueFalse = ({ ...props }) => {
         </div>
 
         {/* Question */}
-        <h2 className="mb-1 text-center text-xl font-semibold text-gray-800">
-          {props.question}
-        </h2>
+        <FlipText
+          word={props.question}
+          className="mb-1 text-center text-xl font-semibold text-gray-800"
+        />
         <p className="mb-6 text-center text-gray-500">
           Select correctly to score points
         </p>

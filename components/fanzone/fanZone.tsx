@@ -19,7 +19,7 @@ const FanZone = async ({
   return (
     <div className="w-full">
       <FanZoneHeader data={siteData} latestCompetition={latestCompetition} />
-      <h2 className="flex items-center py-2 text-lg font-semibold text-white sm:py-6 sm:text-2xl">
+      <h2 className="flex items-center py-6 text-lg font-semibold text-white sm:text-2xl">
         <Medal className="mr-2" style={{ color: siteData.color1 }} />
         Current Competitions
       </h2>
@@ -34,7 +34,7 @@ const FanZone = async ({
           No current competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}
-      <h2 className="flex items-center py-2 text-lg font-semibold text-white sm:py-6 sm:text-2xl">
+      <h2 className="flex items-center py-6 text-lg font-semibold text-white sm:text-2xl">
         <ClockIcon className="mr-2" style={{ color: siteData.color1 }} />
         Past Competitions
       </h2>

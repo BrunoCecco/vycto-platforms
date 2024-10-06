@@ -113,153 +113,136 @@ export default function Uploader({
   }, [data[name], saving]);
 
   return (
-    <form
-      className="grid w-full gap-6 rounded-lg bg-white p-5 sm:p-10"
-      ref={formRef}
-      onSubmit={handleSubmit}
-    >
-      <div>
-        {title && (
-          <div className="mb-4 space-y-1">
-            <h2 className="text-xl font-semibold dark:text-stone-200">
-              {capitalize(title)}
-            </h2>
-            <p className="text-sm  dark:text-stone-200">{description}</p>
-          </div>
-        )}
-        {children ? (
-          <label htmlFor={`${id}-upload-${name}`}>
-            {saving ? (
-              <div className="mx-auto flex h-20 w-20 items-center justify-center bg-transparent">
-                <LoadingDots color="white" />
-              </div>
-            ) : children ? (
-              children
-            ) : null}
-          </label>
-        ) : (
-          <label
-            htmlFor={`${id}-upload-${name}`}
-            className="group relative mt-2 flex h-80 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50"
-          >
-            <div
-              className="absolute z-[5] h-full w-full rounded-md"
-              onDragOver={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setDragActive(true);
-              }}
-              onDragEnter={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setDragActive(true);
-              }}
-              onDragLeave={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setDragActive(false);
-              }}
-              onDrop={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setDragActive(false);
-
-                const file = e.dataTransfer.files && e.dataTransfer.files[0];
-                if (file) {
-                  if (file.size / 1024 / 1024 > 50) {
-                    toast.error("File size too big (max 50MB)");
-                  } else {
-                    setFile(file);
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                      setData((prev) => ({
-                        ...prev,
-                        [name]: e.target?.result as string,
-                      }));
-                    };
-                    reader.readAsDataURL(file);
-                  }
-                }
-              }}
-            />
-            <div
-              className={`${
-                dragActive ? "border-2 border-black" : ""
-              } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-md px-10 transition-all ${
-                data[name]
-                  ? "bg-white/80 opacity-0 hover:opacity-100 hover:backdrop-blur-md"
-                  : "bg-white opacity-100 hover:bg-gray-50"
-              }`}
-            >
-              <svg
-                className={`${
-                  dragActive ? "scale-110" : "scale-100"
-                } h-7 w-7 text-gray-500 transition-all duration-75 group-hover:scale-110 group-active:scale-95`}
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
-                <path d="M12 12v9"></path>
-                <path d="m16 16-4-4-4 4"></path>
-              </svg>
-              <p className="mt-2 text-center text-sm text-gray-500">
-                Drag and drop or click to upload.
-              </p>
-              <p className="mt-2 text-center text-sm text-gray-500">
-                Max file size: 50MB
-              </p>
-              <span className="sr-only">Photo upload</span>
+    <div className="grid w-full gap-6 rounded-lg bg-white p-5 sm:p-10">
+      <form className="" ref={formRef} onSubmit={handleSubmit}>
+        <div>
+          {title && (
+            <div className="mb-4 space-y-1">
+              <h2 className="text-xl font-semibold dark:text-stone-200">
+                {capitalize(title)}
+              </h2>
+              <p className="text-sm  dark:text-stone-200">{description}</p>
             </div>
-            {data[name] != null && (
-              <div className="relative h-full w-full rounded-md">
-                <img
-                  src={data[name] as string}
-                  alt="Preview"
-                  // fill={true}
-                  // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="h-full w-full object-contain"
-                />
+          )}
+          {children ? (
+            <label htmlFor={`${id}-upload-${name}`}>
+              {saving ? (
+                <div className="mx-auto flex h-20 w-20 items-center justify-center bg-transparent">
+                  <LoadingDots color="white" />
+                </div>
+              ) : children ? (
+                children
+              ) : null}
+            </label>
+          ) : (
+            <label
+              htmlFor={`${id}-upload-${name}`}
+              className="group relative mt-2 flex h-80 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50"
+            >
+              <div
+                className="absolute z-[5] h-full w-full rounded-md"
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setDragActive(true);
+                }}
+                onDragEnter={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setDragActive(true);
+                }}
+                onDragLeave={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setDragActive(false);
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setDragActive(false);
+
+                  const file = e.dataTransfer.files && e.dataTransfer.files[0];
+                  if (file) {
+                    if (file.size / 1024 / 1024 > 50) {
+                      toast.error("File size too big (max 50MB)");
+                    } else {
+                      setFile(file);
+                      const reader = new FileReader();
+                      reader.onload = (e) => {
+                        setData((prev) => ({
+                          ...prev,
+                          [name]: e.target?.result as string,
+                        }));
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }
+                }}
+              />
+              <div
+                className={`${
+                  dragActive ? "border-2 border-black" : ""
+                } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-md px-10 transition-all ${
+                  data[name]
+                    ? "bg-white/80 opacity-0 hover:opacity-100 hover:backdrop-blur-md"
+                    : "bg-white opacity-100 hover:bg-gray-50"
+                }`}
+              >
+                <svg
+                  className={`${
+                    dragActive ? "scale-110" : "scale-100"
+                  } h-7 w-7 text-gray-500 transition-all duration-75 group-hover:scale-110 group-active:scale-95`}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
+                  <path d="M12 12v9"></path>
+                  <path d="m16 16-4-4-4 4"></path>
+                </svg>
+                <p className="mt-2 text-center text-sm text-gray-500">
+                  Drag and drop or click to upload.
+                </p>
+                <p className="mt-2 text-center text-sm text-gray-500">
+                  Max file size: 50MB
+                </p>
+                <span className="sr-only">Photo upload</span>
               </div>
-            )}
-          </label>
-        )}
+              {data[name] != null && (
+                <div className="relative h-full w-full rounded-md">
+                  <img
+                    src={data[name] as string}
+                    alt="Preview"
+                    // fill={true}
+                    // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+              )}
+            </label>
+          )}
 
-        <div className="mt-1 flex rounded-md shadow-sm">
-          <input
-            id={`${id}-upload-${name}`}
-            name={name}
-            type="file"
-            accept="image/*, video/*"
-            className="sr-only"
-            onChange={onChangePicture}
-          />
+          <div className="mt-1 flex rounded-md shadow-sm">
+            <input
+              id={`${id}-upload-${name}`}
+              name={name}
+              type="file"
+              accept="image/*, video/*"
+              className="sr-only"
+              onChange={onChangePicture}
+            />
+          </div>
         </div>
-      </div>
+      </form>
       {data[name] != "" && (
-        <Button onClick={() => setFile(new File([""], "empty"))}>Remove</Button>
+        <Button onClick={() => upload(name, "")}>Remove</Button>
       )}
-
-      {/* <button
-        disabled={saveDisabled}
-        className={`${
-          saveDisabled
-            ? "cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400"
-            : "border-black bg-black text-white hover:bg-white hover:text-black"
-        } flex h-10 w-full items-center justify-center rounded-md border text-sm transition-all focus:outline-none`}
-      >
-        {saving ? (
-          <LoadingDots color="#808080" />
-        ) : (
-          <p className="text-sm">Confirm upload</p>
-        )}
-      </button> */}
-    </form>
+    </div>
   );
 }

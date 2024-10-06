@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import Slider from "../competitions/slider";
 import PointsBadge from "../competitions/pointsBadge";
 import QuestionResultBlock from "../competitions/questionResultBlock";
+import FlipText from "@/components/ui/flipText";
 
 const WhatMinute = ({ ...props }) => {
   return (
@@ -24,9 +25,10 @@ const WhatMinute = ({ ...props }) => {
         </div>
 
         {/* Question */}
-        <h2 className="mb-1 text-center text-xl font-semibold text-gray-800">
-          {props.question}
-        </h2>
+        <FlipText
+          word={props.question}
+          className="mb-1 text-center text-xl font-semibold text-gray-800"
+        />
         <p className="text-center text-gray-500">
           The closer you get, the more points you score
         </p>
