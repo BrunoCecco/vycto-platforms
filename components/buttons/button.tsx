@@ -1,9 +1,12 @@
+import { cn } from "@/lib/utils";
 import React from "react";
+import LoadingDots from "../icons/loadingDots";
 
 const Button = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: "default" | "outline" | "destructive" | "ghost";
+    pending?: boolean;
   }
 >(({ className, variant = "default", ...props }, ref) => {
   const baseStyles =
@@ -18,10 +21,18 @@ const Button = React.forwardRef<
 
   return (
     <button
-      className={`${baseStyles} ${variantStyles[variant]} ${props.disabled ? "cursor-not-allowed opacity-50" : ""} ${className}`}
+      className={cn(
+        "flex items-center justify-center space-x-2 rounded-md border p-2 px-4 transition-all focus:outline-none",
+        baseStyles,
+        variantStyles[variant],
+        props.disabled ? "cursor-not-allowed opacity-50" : "",
+        className,
+      )}
       ref={ref}
       {...props}
-    />
+    >
+      {props.pending ? <LoadingDots color="#808080" /> : props.children}
+    </button>
   );
 });
 Button.displayName = "Button";

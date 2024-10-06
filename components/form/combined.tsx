@@ -10,6 +10,7 @@ import DomainConfiguration from "./domainConfiguration";
 import va from "@vercel/analytics";
 import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
+import Button from "../buttons/button";
 
 interface InputAttr {
   name: string;
@@ -145,16 +146,8 @@ export default function CombinedForm({
 function FormButton() {
   const { pending } = useFormStatus();
   return (
-    <button
-      className={cn(
-        "flex items-center justify-center space-x-2 rounded-md border p-2 px-4 text-sm transition-all focus:outline-none",
-        pending
-          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "border-black bg-black text-white hover:bg-white hover:text-black dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800",
-      )}
-      disabled={pending}
-    >
-      {pending ? <LoadingDots color="#808080" /> : <p>Save Changes</p>}
-    </button>
+    <Button disabled={pending} pending={pending}>
+      <p>Save Changes</p>
+    </Button>
   );
 }

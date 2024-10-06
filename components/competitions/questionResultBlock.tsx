@@ -12,7 +12,7 @@ const QuestionResultBlock: React.FC<QuestionResultBlockProps> = ({
   totalPoints,
 }) => {
   return (
-    <div className="flex items-center justify-center pt-6">
+    <div className="flex items-center justify-center pt-6 text-black">
       <div className="w-1/2 rounded-lg border border-green-600 p-4 text-center shadow-md">
         <div className="mb-2">
           Correct answer:{" "}

@@ -64,30 +64,28 @@ export default async function SiteHomePage({
   };
 
   return (
-    <>
-      <div className={`mx-5 pb-20 pt-8 lg:mx-24`}>
-        <div className="pb-8 text-2xl font-bold tracking-wider text-white sm:text-4xl">
-          <h1>{capitalize(addFanzoneToString(data.name || ""))}</h1>
-        </div>
-        {/* Use the FanZoneHeader component */}
-        <FanZone
-          siteData={data}
-          currentCompetitions={
-            competitions.filter(
-              (competition: any) =>
-                new Date(competition.date).getTime() >= Date.now(),
-            ) as SelectCompetition[]
-          }
-          pastCompetitions={
-            competitions.filter(
-              (competition: any) =>
-                new Date(competition.date).getTime() < Date.now(),
-            ) as SelectCompetition[]
-          }
-          latestCompetition={latestCompetition}
-        />
-        <div className="my-4 sm:my-10" />
+    <div>
+      <div className="pb-8 text-2xl font-bold tracking-wider text-white sm:text-4xl">
+        <h1>{capitalize(addFanzoneToString(data.name || ""))}</h1>
       </div>
-    </>
+      {/* Use the FanZoneHeader component */}
+      <FanZone
+        siteData={data}
+        currentCompetitions={
+          competitions.filter(
+            (competition: any) =>
+              new Date(competition.date).getTime() >= Date.now(),
+          ) as SelectCompetition[]
+        }
+        pastCompetitions={
+          competitions.filter(
+            (competition: any) =>
+              new Date(competition.date).getTime() < Date.now(),
+          ) as SelectCompetition[]
+        }
+        latestCompetition={latestCompetition}
+      />
+      <div className="my-4 sm:my-10" />
+    </div>
   );
 }

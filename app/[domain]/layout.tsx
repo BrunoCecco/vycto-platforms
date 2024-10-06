@@ -116,15 +116,15 @@ export default async function SiteLayout({
           </Suspense>
         </SiteNav>
       </div>
-      <div className="max-w-screen-2x relative w-full sm:w-4/5">
+      <div className="relative w-full max-w-screen-2xl sm:w-4/5">
         <div className="mx-5 flex flex-col items-center justify-between gap-4 pt-5 sm:mx-24 sm:hidden sm:items-start">
           <div className="flex items-center gap-4">
             <Link href="/">
               <Image
                 src={data.logo ?? "/logo.png"}
                 alt="Logo"
-                width={100}
-                height={100}
+                width={50}
+                height={50}
                 className=""
               />
             </Link>
@@ -135,8 +135,9 @@ export default async function SiteLayout({
             </Link>
           </div>
         </div>
-
-        {children}
+        <div className={`mx-5 pb-20 pt-8 text-white lg:mx-24 dark:text-black`}>
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import UserSettings from "@/components/settings/userSettings";
 export default async function SettingsPage() {
   // explain how to play with beautiful layouy
   return (
-    <div className="mx-4 max-w-screen-2xl py-8 sm:mx-20">
+    <div>
       <h1 className="mb-6 text-3xl font-bold text-white">How to Play</h1>
 
       <div className="mb-8 rounded-lg bg-slate-700 p-6 shadow-lg">

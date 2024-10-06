@@ -14,7 +14,7 @@ export default async function UserSettings() {
   }
 
   return (
-    <div className="flex flex-col space-y-12 p-8">
+    <div className="flex flex-col space-y-12">
       <div className="flex flex-col space-y-6">
         <h1 className="font-cal text-3xl font-bold dark:text-white">
           Settings

@@ -2,6 +2,7 @@
 
 import { updateCompetitionMetadata } from "@/lib/actions";
 import { SelectCompetition } from "@/lib/schema";
+import Input from "../input";
 
 export default function EditCompetitionTitle({
   competition,
@@ -13,7 +14,7 @@ export default function EditCompetitionTitle({
       <label htmlFor="title" className="text-xl font-bold dark:text-white">
         Competition Title
       </label>
-      <input
+      <Input
         id="title-editor"
         type="text"
         placeholder="Title"
@@ -28,7 +29,6 @@ export default function EditCompetitionTitle({
           );
           console.log(response);
         }}
-        className="dark:placeholder-text-600 border-none px-0 font-cal text-lg text-stone-600 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
       />
     </div>
   );
