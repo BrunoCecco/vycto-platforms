@@ -97,7 +97,7 @@ export default function SiteNav({
           showSidebar
             ? "w-[100vw] translate-x-0"
             : "w-[15vw] -translate-x-[15vw]"
-        } fixed top-0 z-10 flex h-full flex-col justify-between overflow-hidden border-r border-stone-700 bg-stone-900 p-4 transition-all duration-200 sm:w-1/5 sm:translate-x-0 2xl:w-[10vw] 2xl:translate-x-[90vw]`}
+        } fixed top-0 z-10 flex h-full flex-col justify-between overflow-hidden border-r border-stone-700 bg-stone-900 p-4 transition-all duration-200 sm:w-1/5 sm:translate-x-0`}
         style={{ borderColor: data.color1 }}
       >
         <div className="flex h-full flex-col justify-between">

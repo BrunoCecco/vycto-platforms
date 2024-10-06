@@ -71,7 +71,7 @@ export default function MovingBorder({
               pathLength: 0.1,
               pathOffset: [0, 1],
               transition: {
-                pathOffset: { duration: 5, repeat: Infinity, ease: "linear" },
+                pathOffset: { duration: 3, repeat: Infinity, ease: "linear" },
                 pathLength: { duration: 0.01 },
               },
             },
@@ -85,14 +85,14 @@ export default function MovingBorder({
         <defs>
           <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor={color1} />
-            <stop offset="50%" stopColor={color2} />
+            <stop offset="50%" stopColor={color1} />
             <stop offset="100%" stopColor={color1} />
           </linearGradient>
-          <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+          {/* <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor={color2} />
             <stop offset="50%" stopColor={color2} />
             <stop offset="100%" stopColor={color2} />
-          </linearGradient>
+          </linearGradient> */}
         </defs>
       </motion.svg>
       <div className="relative z-10 h-full w-full p-4 text-center">

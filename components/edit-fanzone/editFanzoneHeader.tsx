@@ -5,6 +5,7 @@ import { SelectCompetition, SelectSite, sites } from "@/lib/schema";
 import { updateSite } from "@/lib/actions";
 import Form from "@/components/form";
 import BannerMedia from "../media/bannerMedia";
+import PlayButton from "../buttons/playButton";
 
 export default function EditFanZoneHeader({
   siteId,
@@ -19,9 +20,9 @@ export default function EditFanZoneHeader({
     <>
       {/* Top Header Section */}
       <div className="ease left-0 right-0 top-0 z-30 flex transition-all duration-150 dark:text-white">
-        <div className="my-6 mr-auto flex h-32  items-center justify-center space-x-5 overflow-hidden sm:my-12">
+        <div className="my-6 mr-auto flex h-max items-center space-x-5 sm:my-12">
           <Form
-            title=""
+            title="Site Logo"
             description=""
             helpText=""
             inputAttrs={{
@@ -45,15 +46,10 @@ export default function EditFanZoneHeader({
               </div>
             </div>
           </Form>
-          <Link
-            className="ml-3 rounded-full bg-blue-200 px-8 py-2 pt-1 font-semibold text-white"
-            style={{
-              backgroundColor: data.color2 || "#1E40AF",
-              backgroundImage: `linear-gradient(45deg, ${data.color2}, ${data.color1})`,
-            }}
-            href={`/comp/${latestCompetition?.slug}` ?? "/"}
-          >
-            Play
+          <Link href={`/comp/${latestCompetition?.slug}` ?? "/"}>
+            <PlayButton color1={data.color1} color2={data.color2}>
+              Play
+            </PlayButton>
           </Link>
         </div>
       </div>
@@ -61,7 +57,7 @@ export default function EditFanZoneHeader({
       {/* Banner Section */}
       <div className="mb-4 hidden w-full items-center justify-center rounded-xl sm:flex">
         <Form
-          title=""
+          title="Site Banner"
           description=""
           helpText=""
           inputAttrs={{

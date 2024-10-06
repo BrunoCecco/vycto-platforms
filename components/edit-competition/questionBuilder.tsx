@@ -11,7 +11,7 @@ import EditGeneralSelection from "@/components/edit-questions/editGeneralSelecti
 import EditTrueFalse from "@/components/edit-questions/editTrueFalse";
 import EditGeneralNumber from "@/components/edit-questions/editGeneralNumber";
 import { toast } from "sonner";
-import Button from "@/components/button";
+import Button from "@/components/buttons/button";
 
 const QuestionBuilder = ({
   competitionId,

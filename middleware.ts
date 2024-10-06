@@ -38,7 +38,6 @@ export default async function middleware(req: NextRequest) {
 
   // Handle user-facing sites ([example].vyctorewards.com)
   if (hostname.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)) {
-    console.log("HEREEE", hostname, path, session);
     if (!session && path.startsWith("/login")) {
       return NextResponse.rewrite(
         new URL(`/app${path === "/" ? "" : path}`, req.url),

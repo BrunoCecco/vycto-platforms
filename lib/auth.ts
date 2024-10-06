@@ -114,6 +114,7 @@ export async function getSession() {
         name: user?.name || session.user.name,
         username: user?.username || session.user.username,
         role: user?.role || "user",
+        image: user?.image || session.user.image,
       },
     };
   }

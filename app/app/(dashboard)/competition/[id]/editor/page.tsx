@@ -4,7 +4,7 @@ import QuestionEditor from "@/components/edit-competition/questionEditor";
 import db from "@/lib/db";
 import { getCompetitionData, getQuestionsForCompetition } from "@/lib/fetchers";
 import CompetitionCreator from "@/components/competition-creation";
-import Button from "@/components/button";
+import Button from "@/components/buttons/button";
 import EditCompetitionDetails from "@/components/edit-competition/editCompetitionDetails";
 
 export default async function CompetitionPage({

@@ -7,7 +7,7 @@ import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
 import Input from "../input";
 import { X } from "lucide-react";
-import Button from "../button";
+import Button from "../buttons/button";
 
 const EditGuessScore = ({
   question,

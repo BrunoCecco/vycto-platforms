@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import LoadingDots from "@/components/icons/loadingDots";
 import Image from "next/image";
 import { capitalize } from "@/lib/utils";
+import Button from "../buttons/button";
 
 export default function Uploader({
   id,
@@ -19,6 +20,7 @@ export default function Uploader({
   name,
   upload,
   title,
+  description,
   children,
 }: {
   id: string;
@@ -26,6 +28,7 @@ export default function Uploader({
   name: string;
   upload: (name: string, value: string) => void;
   title?: string;
+  description?: string;
   children?: React.ReactNode;
 }) {
   const [data, setData] = useState({
@@ -110,16 +113,18 @@ export default function Uploader({
   }, [data[name], saving]);
 
   return (
-    <form className="grid w-full gap-6" ref={formRef} onSubmit={handleSubmit}>
+    <form
+      className="grid w-full gap-6 rounded-lg bg-white p-5 sm:p-10"
+      ref={formRef}
+      onSubmit={handleSubmit}
+    >
       <div>
-        {title && !children && (
+        {title && (
           <div className="mb-4 space-y-1">
-            <h2 className="text-xl font-semibold  dark:text-stone-200">
+            <h2 className="text-xl font-semibold dark:text-stone-200">
               {capitalize(title)}
             </h2>
-            <p className="text-sm  dark:text-stone-200">
-              Accepted formats: .png, .jpg, .gif, .mp4
-            </p>
+            <p className="text-sm  dark:text-stone-200">{description}</p>
           </div>
         )}
         {children ? (
@@ -237,6 +242,9 @@ export default function Uploader({
           />
         </div>
       </div>
+      {data[name] != "" && (
+        <Button onClick={() => setFile(new File([""], "empty"))}>Remove</Button>
+      )}
 
       {/* <button
         disabled={saveDisabled}

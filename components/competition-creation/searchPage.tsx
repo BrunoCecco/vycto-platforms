@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Input from "@/components/input";
-import Button from "@/components/button";
+import Button from "@/components/buttons/button";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { SelectQuestion } from "@/lib/schema";

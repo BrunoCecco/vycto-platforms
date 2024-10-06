@@ -6,7 +6,7 @@ import { SelectSite } from "@/lib/schema";
 import LoginButton from "./loginButton";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
-import Button from "../button";
+import Button from "../buttons/button";
 import LoadingDots from "../icons/loadingDots";
 
 const UserSignUp = ({

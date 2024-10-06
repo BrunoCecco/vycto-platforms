@@ -7,7 +7,7 @@ import Uploader from "../form/uploader";
 import PointsBadge from "../competitions/pointsBadge";
 import Slider from "../competitions/slider";
 import { X } from "lucide-react";
-import Button from "../button";
+import Button from "../buttons/button";
 
 const EditWhatMinute = ({
   question,

@@ -6,7 +6,7 @@ import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import LoadingDots from "../icons/loadingDots";
 import { cn } from "@/lib/utils";
-import Button from "../button";
+import Button from "../buttons/button";
 import {
   calculateCompetitionPoints,
   validateCorrectAnswers,

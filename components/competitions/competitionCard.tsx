@@ -7,6 +7,7 @@ import { getCompetitionUsers, getSiteData } from "@/lib/fetchers";
 import Link from "next/link";
 import { SelectCompetition, SelectSite } from "@/lib/schema";
 import MovingBorder from "../movingBorder";
+import PlayButton from "../buttons/playButton";
 
 const CompetitionCard = ({
   competition,
@@ -19,7 +20,6 @@ const CompetitionCard = ({
 }) => {
   const [users, setUsers] = useState<any[]>();
   const [status, setStatus] = useState<string>();
-  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -93,21 +93,10 @@ const CompetitionCard = ({
             <p className="text-sm" style={{ color: siteData.color2 }}>
               {status}
             </p>
-            <Link
-              href={"/comp/" + competition.slug}
-              className="w-24 rounded-xl p-2 text-center text-white transition-all duration-200 hover:scale-105"
-              onMouseOver={() => setHovered(true)}
-              onMouseOut={() => setHovered(false)}
-              style={{
-                backgroundColor:
-                  !hovered && type === "past" ? "gray" : siteData.color2,
-                backgroundImage:
-                  type === "current" && !hovered
-                    ? `linear-gradient(45deg, ${siteData.color1}, ${siteData.color2})`
-                    : "none",
-              }}
-            >
-              {type === "current" ? "Play" : "View"}
+            <Link href={"/comp/" + competition.slug}>
+              <PlayButton color1={siteData.color1} color2={siteData.color2}>
+                {type === "current" ? "Play" : "View"}
+              </PlayButton>
             </Link>
           </div>
         </div>

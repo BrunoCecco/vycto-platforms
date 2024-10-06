@@ -22,7 +22,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div>
+    <div className="bg-slate-200 dark:bg-gray-950">
       <Nav isSuperAdmin>
         <div className="mb-8">
           <PoweredBadge />
@@ -31,7 +31,7 @@ export default async function DashboardLayout({
           <Profile />
         </Suspense>
       </Nav>
-      <div className="min-h-screen sm:pl-60 dark:bg-black">{children}</div>
+      <div className="min-h-screen sm:pl-60">{children}</div>
     </div>
   );
 }
