@@ -31,13 +31,13 @@ export default async function Rewards() {
       <FlipText word="Your Rewards" className="mb-8 text-4xl" />
       <div className="mb-8 grid grid-cols-1 items-center justify-center gap-8 md:grid-cols-4">
         <div className="col-span-1">
-          <PendingRewards count={1} amount={45.0} />
+          <PendingRewards count={0} amount={0} />
         </div>
         <div className="col-span-2">
           <ClaimRewardsCard />
         </div>
         <div className="col-span-1">
-          <ClaimedRewards count={2} amount={72.39} />
+          <ClaimedRewards count={0} amount={0} />
         </div>
       </div>
       <div>
