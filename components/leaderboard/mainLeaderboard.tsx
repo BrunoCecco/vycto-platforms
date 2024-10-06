@@ -47,7 +47,7 @@ const MainLeaderboard = ({
 
   return (
     filteredData && (
-      <div className="container min-w-full rounded-xl">
+      <div className="rounded-x container min-w-full text-white">
         <LeaderboardHeader
           siteData={siteData}
           rangeType={rangeType}

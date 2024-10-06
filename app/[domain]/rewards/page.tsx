@@ -15,7 +15,7 @@ export default async function Rewards() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen text-white">
       <div className="mb-8 flex justify-center">
         <Image
           src={
