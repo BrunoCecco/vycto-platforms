@@ -14,7 +14,7 @@ export default function RewardsList() {
             </tr>
           </thead>
           <tbody>
-            {rewards &&
+            {/* {rewards &&
               rewards.map((reward, index) => (
                 <tr key={index} className="border-t border-gray-700">
                   <td className="p-4">
@@ -26,7 +26,7 @@ export default function RewardsList() {
                   </td>
                   <td className="p-4">{reward.claimed}</td>
                 </tr>
-              ))}
+              ))} */}
           </tbody>
         </table>
       </div>

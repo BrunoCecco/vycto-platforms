@@ -2,91 +2,48 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { SelectSite } from "@/lib/schema";
-import {
-  getMonthlyLeaderboardData,
-  getYearlyLeaderboardData,
-} from "@/lib/fetchers";
+import { getLeaderboardData } from "@/lib/fetchers";
+import LeaderboardHeader from "./leaderboardHeader";
 
 const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
-  const [rangeType, setRangeType] = useState("yearly");
+  const [rangeType, setRangeType] = useState<"yearly" | "monthly" | "all time">(
+    "alltime",
+  );
 
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (rangeType === "monthly") {
-        const monthData = await getMonthlyLeaderboardData(siteData.id);
-        setData(monthData);
-      } else {
-        console.log("Yearly");
-        const yearData = await getYearlyLeaderboardData(siteData.id);
-        console.log(yearData);
-        setData(yearData);
-      }
+      const leaderboardData = await getLeaderboardData(siteData.id, rangeType);
+      setData(leaderboardData);
     };
     fetchData();
   }, [rangeType]);
 
   return (
     data && (
-      <div className="container min-w-full rounded-xl bg-white px-2 py-4 md:p-10">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row md:items-center md:py-6">
-          <div className="flex flex-col items-center gap-4 sm:flex-row">
-            <Image
-              src={siteData.logo || "/logo.png"}
-              alt="Brand Logo"
-              width={80}
-              height={80}
-              className="object-contain"
-            />
-            <h1 className="text-lg font-bold text-gray-800 md:text-2xl">
-              Leaderboard -{" "}
-              {rangeType == "monthly"
-                ? new Date().toLocaleString("default", { month: "long" })
-                : new Date().getFullYear()}
-            </h1>
-          </div>
-          <div className="flex items-center justify-center gap-6">
-            <button
-              onClick={() => setRangeType("monthly")}
-              className={`rounded-md px-4 py-2`}
-              style={{
-                backgroundColor: siteData.color2,
-                opacity: rangeType === "monthly" ? 1 : 0.5,
-                color: "white",
-              }}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setRangeType("yearly")}
-              className={`rounded-md px-4 py-2`}
-              style={{
-                backgroundColor: siteData.color2,
-                opacity: rangeType === "yearly" ? 1 : 0.5,
-                color: "white",
-              }}
-            >
-              Yearly
-            </button>
-          </div>
-        </div>
+      <div className="container min-w-full rounded-xl">
+        <LeaderboardHeader
+          siteData={siteData}
+          rangeType={rangeType}
+          setRangeType={setRangeType}
+        />
 
         <div className="overflow-x-auto">
           {/* Desktop Table */}
           <table className="hidden min-w-full rounded-xl md:table">
             <thead className="pb-4">
               <tr className="pb-4">
-                <th className="order-2 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                <th className="order-2 py-3 text-left text-xs font-medium uppercase">
                   Name
                 </th>
-                <th className="order-1 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                <th className="order-1 py-3 text-left text-xs font-medium uppercase">
                   Rank
                 </th>
-                <th className="order-3 text-wrap py-3 text-left text-xs font-medium uppercase text-gray-500">
+                <th className="order-3 text-wrap py-3 text-left text-xs font-medium uppercase">
                   Points
                 </th>
-                <th className="order-5 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                <th className="order-5 py-3 text-left text-xs font-medium uppercase">
                   Rank
                 </th>
               </tr>
@@ -108,12 +65,12 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
                           className="overflow-hidden rounded-full object-cover"
                         />
                       </div>
-                      <span className="font-bold text-gray-900">
+                      <span className="font-bold">
                         @{user.username || user.email || user.name || "User"}
                       </span>
                     </td>
-                    <td className="py-4 text-gray-900">{index + 1}</td>
-                    <td className="py-4 text-gray-900">
+                    <td className="py-4">{index + 1}</td>
+                    <td className="py-4">
                       {parseFloat(user.points || "0").toFixed(2)}
                     </td>
                     <td className="py-4">
@@ -126,9 +83,7 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
                 ))
               ) : (
                 <tr>
-                  <td className="pt-4 text-center text-gray-900">
-                    No data available
-                  </td>
+                  <td className="pt-4 text-center">No data available</td>
                 </tr>
               )}
             </tbody>
@@ -140,11 +95,11 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
               <>
                 <thead className="pb-4">
                   <tr className="pb-4">
-                    <th className="py-3 text-left text-xs font-medium uppercase text-gray-500"></th>
-                    <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
+                    <th className="py-3 text-left text-xs font-medium uppercase"></th>
+                    <th className="py-3 text-left text-xs font-medium uppercase">
                       Name
                     </th>
-                    <th className="text-wrap py-3 text-left text-xs font-medium uppercase text-gray-500">
+                    <th className="text-wrap py-3 text-left text-xs font-medium uppercase">
                       Points
                     </th>
                   </tr>
@@ -152,7 +107,7 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
                 <tbody>
                   {data.map((user: any, index: number) => (
                     <tr key={user.userId} className="border-b">
-                      <td className="pr-2 text-gray-900">{index + 1}</td>
+                      <td className="pr-2">{index + 1}</td>
                       <td className="flex items-center py-4">
                         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
                           <Image
@@ -166,11 +121,11 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
                             className="overflow-hidden rounded-full object-cover"
                           />
                         </div>
-                        <span className="ml-2 font-bold text-gray-900">
+                        <span className="ml-2 font-bold">
                           @{user.username || "User" + index}
                         </span>
                       </td>
-                      <td className="py-4 text-gray-900">
+                      <td className="py-4">
                         {parseFloat(user.points || "0").toFixed(2)}
                       </td>
                     </tr>
@@ -180,7 +135,7 @@ const MainLeaderboard = ({ siteData }: { siteData: SelectSite }) => {
             ) : (
               <tbody>
                 <tr>
-                  <td className="pt-4 text-center text-gray-900" colSpan={3}>
+                  <td className="pt-4 text-center" colSpan={3}>
                     No data available
                   </td>
                 </tr>

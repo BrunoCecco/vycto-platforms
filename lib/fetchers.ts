@@ -466,13 +466,26 @@ export async function getCompetitionsForPeriod(
   )();
 }
 
-export async function getMonthlyLeaderboardData(siteId: string) {
-  // get all competitions for the site within the current month
-  const comps = await getCompetitionsForPeriod(
-    siteId,
-    new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-    new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
-  );
+export async function getLeaderboardData(
+  siteId: string,
+  period: "monthly" | "yearly" | "all time",
+) {
+  const startDate =
+    period === "monthly"
+      ? new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+      : period === "yearly"
+        ? new Date(new Date().getFullYear(), 0, 1)
+        : new Date(0);
+  const endDate =
+    period === "monthly"
+      ? new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+      : period === "yearly"
+        ? new Date(new Date().getFullYear(), 11, 31)
+        : new Date();
+
+  // get all competitions for the site within the specified period
+  const comps = await getCompetitionsForPeriod(siteId, startDate, endDate);
+
   // await promise for all site competitions and store in array
   const allCompetitionPoints = await Promise.all(
     comps.map((comp) => calculateCompetitionPoints(comp.id)),
@@ -488,7 +501,8 @@ export async function getMonthlyLeaderboardData(siteId: string) {
     }
     return acc;
   }, {});
-  const monthlyLeaderboardData = await Promise.all(
+
+  const leaderboardData = await Promise.all(
     Object.keys(userPoints).map(async (userId) => {
       const user = await db.query.users.findFirst({
         where: eq(users.id, userId),
@@ -499,43 +513,8 @@ export async function getMonthlyLeaderboardData(siteId: string) {
       };
     }),
   );
-  return monthlyLeaderboardData.sort((a, b) => b.points - a.points);
-}
 
-export async function getYearlyLeaderboardData(siteId: string) {
-  // get all competitions for the site within the current year
-  const comps = await getCompetitionsForPeriod(
-    siteId,
-    new Date(new Date().getFullYear(), 0, 1),
-    new Date(new Date().getFullYear(), 11, 31),
-  );
-  // await promise for all site competitions and store in array
-  const allCompetitionPoints = await Promise.all(
-    comps.map((comp) => calculateCompetitionPoints(comp.id)),
-  );
-
-  const allUsers = allCompetitionPoints.flat();
-  // deduplicate users and sum their points
-  const userPoints = allUsers.reduce((acc: any, user: any) => {
-    if (acc[user.userId]) {
-      acc[user.userId] += user.points;
-    } else {
-      acc[user.userId] = user.points;
-    }
-    return acc;
-  }, {});
-  const yearlyLeaderboardData = await Promise.all(
-    Object.keys(userPoints).map(async (userId) => {
-      const user = await db.query.users.findFirst({
-        where: eq(users.id, userId),
-      });
-      return {
-        ...user,
-        points: userPoints[userId],
-      };
-    }),
-  );
-  return yearlyLeaderboardData.sort((a, b) => b.points - a.points);
+  return leaderboardData.sort((a, b) => b.points - a.points);
 }
 
 export async function getCompetitionWinnerData(competitionId: string) {
