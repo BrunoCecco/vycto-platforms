@@ -115,6 +115,7 @@ export async function getSession() {
         username: user?.username || session.user.username,
         role: user?.role || "user",
         image: user?.image || session.user.image,
+        country: user?.country || "",
       },
     };
   }

@@ -12,6 +12,12 @@ import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import { USER_ROLES } from "@/lib/constants";
 import Button from "../buttons/button";
+import { Select, SelectItem } from "@tremor/react";
+import {
+  useTimezoneSelect,
+  ITimezoneOption,
+  allTimezones,
+} from "react-timezone-select";
 
 export default function Form({
   title,
@@ -38,6 +44,12 @@ export default function Form({
   const { id } = useParams() as { id?: string };
   const router = useRouter();
   const { update } = useSession();
+
+  const { options: timezoneOptions, parseTimezone } = useTimezoneSelect({
+    labelStyle: "original",
+    timezones: allTimezones,
+  });
+  console.log(allTimezones);
 
   return inputAttrs.name === "image" ||
     inputAttrs.name === "logo" ||
@@ -97,38 +109,41 @@ export default function Form({
           }
         });
       }}
-      className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
+      className="rounded-lg border border-stone-200 bg-white text-black dark:border-stone-700 dark:bg-black dark:text-white"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
         <h2 className="font-cal text-xl dark:text-white">{title}</h2>
         <p className="text-sm text-stone-500 dark:text-stone-400">
           {description}
         </p>
-        {inputAttrs.name === "role" ? (
-          <div className="flex max-w-sm items-center overflow-hidden rounded-lg border border-stone-600">
-            <select
-              name="role"
-              defaultValue={inputAttrs.defaultValue}
-              className="w-full rounded-none border-none bg-white px-4 py-2 text-sm font-medium text-stone-700 focus:outline-none focus:ring-black dark:bg-black dark:text-stone-200 dark:focus:ring-white"
-            >
-              {USER_ROLES.map((role) => (
-                <option key={role} value={role}>
-                  {role}
-                </option>
+        {timezoneOptions && inputAttrs.name === "country" ? (
+          <div className="flex max-w-sm items-center rounded-lg border border-stone-600">
+            <Select name="country" defaultValue={inputAttrs.defaultValue}>
+              {timezoneOptions.map((timezone: ITimezoneOption) => (
+                <SelectItem key={timezone.value} value={timezone.value}>
+                  {timezone.label}
+                </SelectItem>
               ))}
-            </select>
+              <SelectItem value="None">None</SelectItem>
+            </Select>
+          </div>
+        ) : inputAttrs.name === "role" ? (
+          <div className="flex max-w-sm items-center rounded-lg border border-stone-600">
+            <Select name="role" defaultValue={inputAttrs.defaultValue}>
+              {USER_ROLES.map((role) => (
+                <SelectItem key={role} value={role}>
+                  {role}
+                </SelectItem>
+              ))}
+            </Select>
           </div>
         ) : inputAttrs.name === "font" ? (
           <div className="flex max-w-sm items-center overflow-hidden rounded-lg border border-stone-600">
-            <select
-              name="font"
-              defaultValue={inputAttrs.defaultValue}
-              className="w-full rounded-none border-none bg-white px-4 py-2 text-sm font-medium text-stone-700 focus:outline-none focus:ring-black dark:bg-black dark:text-stone-200 dark:focus:ring-white"
-            >
-              <option value="font-cal">Cal Sans</option>
-              <option value="font-lora">Lora</option>
-              <option value="font-work">Work Sans</option>
-            </select>
+            <Select name="font" defaultValue={inputAttrs.defaultValue}>
+              <SelectItem value="font-cal">Cal Sans</SelectItem>
+              <SelectItem value="font-lora">Lora</SelectItem>
+              <SelectItem value="font-work">Work Sans</SelectItem>
+            </Select>
           </div>
         ) : inputAttrs.name === "color1" ||
           inputAttrs.name === "color2" ||

@@ -3,9 +3,8 @@ import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { editUser } from "@/lib/actions";
 import LogoutButton from "../auth/logoutButton";
-import Image from "next/image";
-import { PencilIcon } from "lucide-react";
 import EditProfileImage from "./editProfileImage";
+import CountryPicker from "./countryPicker";
 
 export default async function UserSettings() {
   const session = await getSession();
@@ -43,6 +42,30 @@ export default async function UserSettings() {
               defaultValue: session.user.username!,
               placeholder: "user123",
               maxLength: 32,
+            }}
+            handleSubmit={editUser}
+          />
+          <Form
+            title="Email"
+            description="Your email."
+            helpText="Must be a valid email."
+            inputAttrs={{
+              name: "email",
+              type: "text",
+              defaultValue: session.user.email!,
+              placeholder: "Email",
+            }}
+            handleSubmit={editUser}
+          />
+          <Form
+            title="Country"
+            description="Your country of residence."
+            helpText="Used to calculate competition timings."
+            inputAttrs={{
+              name: "country",
+              type: "text",
+              defaultValue: session.user.country!,
+              placeholder: "Country",
             }}
             handleSubmit={editUser}
           />

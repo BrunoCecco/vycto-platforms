@@ -25,6 +25,7 @@ export const users = pgTable("users", {
   image: text("image"),
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
   role: text("role").default("user"),
+  country: text("country"),
   updatedAt: timestamp("updatedAt", { mode: "date" })
     .notNull()
     .$onUpdate(() => new Date()),
