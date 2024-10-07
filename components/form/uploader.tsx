@@ -113,7 +113,7 @@ export default function Uploader({
   }, [data[name], saving]);
 
   return (
-    <div className="grid w-full gap-6 rounded-lg bg-white p-5 sm:p-10">
+    <div className="grid w-full gap-6 rounded-lg border border-stone-200 bg-white p-5 sm:p-10 dark:border-stone-700 dark:bg-black">
       <form className="" ref={formRef} onSubmit={handleSubmit}>
         <div>
           {title && (
