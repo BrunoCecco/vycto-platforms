@@ -33,7 +33,7 @@ const MainLeaderboard = ({
   }, [rangeType]);
 
   useEffect(() => {
-    if (data && query != "") {
+    if (data) {
       setFilteredData(
         data.filter(
           (user: LeaderboardUser) =>
@@ -55,7 +55,7 @@ const MainLeaderboard = ({
           setQuery={setQuery}
         />
 
-        {data && data?.findIndex((usr) => usr.id === user.id) > -1 && (
+        {data && data?.findIndex((usr) => usr.id === user?.id) > -1 && (
           <div className="flex items-center gap-4 rounded-lg py-4">
             <span className="text-lg font-bold">Your Rank:</span>
             <span className="text-lg font-bold">

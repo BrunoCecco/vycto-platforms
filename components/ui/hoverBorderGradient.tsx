@@ -6,13 +6,14 @@ import { cn } from "@/lib/utils";
 
 type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT";
 
-function HoverBorderGradient({
+export default function HoverBorderGradient({
   children,
   containerClassName,
   className,
   as: Tag = "button",
   duration = 1,
   clockwise = true,
+  color,
   ...props
 }: React.PropsWithChildren<
   {
@@ -21,6 +22,7 @@ function HoverBorderGradient({
     className?: string;
     duration?: number;
     clockwise?: boolean;
+    color?: string;
   } & React.HTMLAttributes<HTMLElement>
 >) {
   const [hovered, setHovered] = useState<boolean>(false);
@@ -36,16 +38,13 @@ function HoverBorderGradient({
   };
 
   const movingMap: Record<Direction, string> = {
-    TOP: "radial-gradient(20.7% 50% at 50% 0%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    LEFT: "radial-gradient(16.6% 43.1% at 0% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    BOTTOM:
-      "radial-gradient(20.7% 50% at 50% 100%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    RIGHT:
-      "radial-gradient(16.2% 41.199999999999996% at 100% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
+    TOP: `radial-gradient(20.7% 50% at 50% 0%, ${color} 0%, rgba(255, 255, 255, 0) 100%)`,
+    LEFT: `radial-gradient(16.6% 43.1% at 0% 50%, ${color} 0%, rgba(255, 255, 255, 0) 100%)`,
+    BOTTOM: `radial-gradient(20.7% 50% at 50% 100%, ${color} 0%, rgba(255, 255, 255, 0) 100%)`,
+    RIGHT: `radial-gradient(16.2% 41.199999999999996% at 100% 50%, ${color} 0%, rgba(255, 255, 255, 0) 100%)`,
   };
 
-  const highlight =
-    "radial-gradient(75% 181.15942028985506% at 50% 50%, #3275F8 0%, rgba(255, 255, 255, 0) 100%)";
+  const highlight = `radial-gradient(75% 181.15942028985506% at 50% 50%, ${color} 0%, rgba(255, 255, 255, 0) 100%)`;
 
   useEffect(() => {
     if (!hovered) {
@@ -62,7 +61,7 @@ function HoverBorderGradient({
       }}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "relative flex h-min w-fit  flex-col flex-nowrap content-center items-center justify-center gap-10 overflow-visible rounded-full border bg-black/20 decoration-clone p-px transition duration-500 hover:bg-black/10 dark:bg-white/20",
+        "relative flex h-min w-fit  flex-col flex-nowrap content-center items-center justify-center gap-10 overflow-visible rounded-full bg-black/20 decoration-clone p-px transition duration-500 hover:bg-black/10 dark:bg-white/20",
         containerClassName,
       )}
       {...props}
@@ -97,5 +96,3 @@ function HoverBorderGradient({
     </Tag>
   );
 }
-
-export default HoverBorderGradient;

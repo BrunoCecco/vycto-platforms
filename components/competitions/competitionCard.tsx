@@ -45,7 +45,7 @@ const CompetitionCard = ({
 
   return (
     <BackgroundGradient className="group h-full w-[300px] rounded-lg">
-      <div className="h-full w-full rounded-lg bg-slate-200 p-2 transition-all duration-200 hover:bg-slate-100">
+      <div className="h-full w-full rounded-lg bg-slate-800 p-2 text-white transition-all duration-200">
         <div className="relative h-48 w-full">
           <div className="h-full w-full overflow-hidden rounded-t-lg">
             <BlurImage
@@ -63,7 +63,7 @@ const CompetitionCard = ({
           {/* Title, sponser & profiles bit */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-gray-800">
+              <h2 className="font-semibold">
                 {competition.title || "Competition by " + competition.sponsor}
               </h2>
             </div>
