@@ -6,6 +6,7 @@ interface ShinyButtonProps {
   children: React.ReactNode;
   color1: string;
   color2: string;
+  onClick?: () => void;
   className?: string;
   style?: React.CSSProperties;
 }

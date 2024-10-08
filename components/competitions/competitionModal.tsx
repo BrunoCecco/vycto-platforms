@@ -17,12 +17,14 @@ export default function CompetitionModal({
   type,
   siteData,
   competition,
+  onClose,
   status,
   users,
 }: {
   type: string;
   siteData: SelectSite;
   competition: SelectCompetition;
+  onClose: () => void;
   status?: string;
   users?: any[];
 }) {
@@ -33,12 +35,7 @@ export default function CompetitionModal({
     competition.reward2Image,
   ];
   return (
-    <Modal>
-      <ModalTrigger className="group/modal-btn">
-        <PlayButton color1={siteData.color1} color2={siteData.color2}>
-          {type === "current" ? "Play" : "View"}
-        </PlayButton>
-      </ModalTrigger>
+    <Modal isOpen={true} onClose={onClose}>
       <ModalBody>
         <ModalContent>
           <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 md:text-2xl dark:text-neutral-100">
@@ -76,11 +73,6 @@ export default function CompetitionModal({
             ))}
           </div>
           <div className="mx-auto flex max-w-sm flex-col items-center gap-4">
-            <div className="flex items-center justify-center">
-              <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                {users?.length} Participants
-              </span>
-            </div>
             <div className="flex items-center justify-center">
               <span className="text-sm text-neutral-700 dark:text-neutral-300">
                 {status}

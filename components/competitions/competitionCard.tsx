@@ -15,10 +15,12 @@ const CompetitionCard = ({
   competition,
   siteData,
   type,
+  onClick, // Accept onClick prop
 }: {
   competition: SelectCompetition;
   siteData: SelectSite;
   type?: "current" | "past";
+  onClick: () => void; // Define onClick type
 }) => {
   const [users, setUsers] = useState<any[]>();
   const [status, setStatus] = useState<string>();
@@ -45,6 +47,8 @@ const CompetitionCard = ({
 
   return (
     <BackgroundGradient className="group h-full w-[300px] rounded-lg">
+      {" "}
+      {/* Add onClick here */}
       <div className="h-full w-full rounded-lg bg-slate-800 p-2 text-white transition-all duration-200">
         <div className="relative h-48 w-full">
           <div className="h-full w-full overflow-hidden rounded-t-lg">
@@ -88,16 +92,14 @@ const CompetitionCard = ({
           </div>
 
           <div className="flex items-center justify-between">
-            <p className="text-sm" style={{ color: siteData.color2 }}>
-              {status}
-            </p>
-            <CompetitionModal
-              type={type!}
-              siteData={siteData}
-              competition={competition}
-              status={status}
-              users={users}
-            />
+            <p className="text-sm text-slate-200">{status}</p>
+            <PlayButton
+              color1={siteData.color1}
+              color2={siteData.color2}
+              onClick={onClick}
+            >
+              {type === "current" ? "Play" : "View"}
+            </PlayButton>
           </div>
         </div>
       </div>

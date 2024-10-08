@@ -9,6 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import Leaflet from "../modal/leaflet";
 
 interface ModalContextType {
   open: boolean;
@@ -17,11 +18,17 @@ interface ModalContextType {
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
-export const ModalProvider = ({ children }: { children: ReactNode }) => {
-  const [open, setOpen] = useState(false);
-
+export const ModalProvider = ({
+  isOpen,
+  onClose,
+  children,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+}) => {
   return (
-    <ModalContext.Provider value={{ open, setOpen }}>
+    <ModalContext.Provider value={{ open: isOpen, setOpen: onClose }}>
       {children}
     </ModalContext.Provider>
   );
@@ -35,8 +42,20 @@ export const useModal = () => {
   return context;
 };
 
-export function Modal({ children }: { children: ReactNode }) {
-  return <ModalProvider>{children}</ModalProvider>;
+export function Modal({
+  isOpen,
+  onClose,
+  children,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <ModalProvider isOpen={isOpen} onClose={onClose}>
+      {children}
+    </ModalProvider>
+  );
 }
 
 export const ModalTrigger = ({
