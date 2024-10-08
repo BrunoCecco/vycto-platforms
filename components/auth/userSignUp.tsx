@@ -1,11 +1,12 @@
 "use client";
+
 import Image from "next/image";
-import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { SelectSite } from "@/lib/schema";
 import LoginButton from "./loginButton";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
+import { auth, facebookProvider, signInWithPopup } from "@/lib/firebase"; // Import Firebase auth functions
 import Button from "../buttons/button";
 import LoadingDots from "../icons/loadingDots";
 
@@ -26,37 +27,25 @@ const UserSignUp = ({
 
   const posthog = usePostHog();
 
-  const handleLoginToSubmit = async (provider: "apple" | "facebook") => {
+  // Handle Facebook sign in using Firebase
+  const handleFacebookSignIn = async () => {
     setLoading(true);
+    posthog?.capture("facebook-sign-in-clicked");
 
-    posthog?.capture(provider + "sign-in-clicked");
-    const answersQuery = Object.entries(localAnswers || {})
-      .map(
-        ([questionId, answer]) =>
-          `${encodeURIComponent(questionId)}=${encodeURIComponent(answer)}`,
-      )
-      .join("&");
-    var callbackUrl = `/comp/${competitionSlug}?${answersQuery}`;
-    console.log(callbackUrl);
     try {
-      const result = await signIn(provider, {
-        callbackUrl,
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+      // Sign in with Facebook
+      const result = await signInWithPopup(auth, facebookProvider);
+      // Get the signed-in user info
+      const user = result.user;
+      console.log("User signed in: ", user);
 
-  const handleLogin = async (provider: "apple" | "facebook") => {
-    setLoading(true);
-    posthog?.capture(provider + "sign-in-clicked");
-    try {
-      const result = await signIn(provider);
-      console.log(result);
+      // Here, you can handle additional logic like redirecting or fetching user data
+
+      // If needed, set emailExists to false to show the username and name fields
+      setEmailExists(false);
     } catch (error) {
-      console.log(error);
+      console.error("Error during sign in with Facebook: ", error);
+      toast.error("Failed to sign in with Facebook.");
     } finally {
       setLoading(false);
     }
@@ -85,28 +74,7 @@ const UserSignUp = ({
           {emailExists && (
             <div className="mt-6 flex w-full flex-col gap-4 md:flex-row">
               <button
-                onClick={() =>
-                  localAnswers || competitionSlug
-                    ? handleLoginToSubmit("apple")
-                    : handleLogin("apple")
-                }
-                className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-xs font-medium text-gray-700 shadow-sm md:w-1/2"
-              >
-                <Image
-                  src="/appleIcon.svg"
-                  width={20}
-                  height={20}
-                  alt="Apple Logo"
-                  className="mr-2 h-5 w-5"
-                />
-                <span>Continue with Apple</span>
-              </button>
-              <button
-                onClick={() =>
-                  localAnswers || competitionSlug
-                    ? handleLoginToSubmit("facebook")
-                    : handleLogin("facebook")
-                }
+                onClick={() => handleFacebookSignIn()} // Use Firebase Facebook sign-in
                 className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-xs font-medium text-gray-700 shadow-sm md:w-1/2"
               >
                 <Image
