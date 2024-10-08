@@ -19,8 +19,8 @@ const MainLeaderboard = ({
     "all time",
   );
 
-  const [data, setData] = useState<LeaderboardUser[]>([]);
-  const [filteredData, setFilteredData] = useState<LeaderboardUser[]>([]);
+  const [data, setData] = useState<LeaderboardUser[]>();
+  const [filteredData, setFilteredData] = useState<LeaderboardUser[]>();
   const [query, setQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -33,7 +33,7 @@ const MainLeaderboard = ({
   }, [rangeType]);
 
   useEffect(() => {
-    if (data) {
+    if (data && query != "") {
       setFilteredData(
         data.filter(
           (user: LeaderboardUser) =>
@@ -55,7 +55,7 @@ const MainLeaderboard = ({
           setQuery={setQuery}
         />
 
-        {data?.findIndex((usr) => usr.id === user.id) > -1 && (
+        {data && data?.findIndex((usr) => usr.id === user.id) > -1 && (
           <div className="flex items-center gap-4 rounded-lg py-4">
             <span className="text-lg font-bold">Your Rank:</span>
             <span className="text-lg font-bold">
@@ -86,7 +86,7 @@ const MainLeaderboard = ({
             <tbody>
               {filteredData?.length > 0 ? (
                 filteredData.map((user: any, index: number) => (
-                  <tr key={user.userId} className="border-b text-left">
+                  <tr key={index} className="border-b text-left">
                     <td className="flex items-center space-x-3 py-4">
                       <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
                         <Image
@@ -140,8 +140,11 @@ const MainLeaderboard = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredData.map((user: any, index: number) => (
-                    <tr key={user.userId} className="border-b">
+                  {filteredData?.map((user: any, index: number) => (
+                    <tr
+                      key={user.userId + index + "mobile"}
+                      className="border-b"
+                    >
                       <td className="pr-2">{index + 1}</td>
                       <td className="flex items-center py-4">
                         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle">

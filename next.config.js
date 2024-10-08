@@ -1,3 +1,5 @@
+const { hostname } = require("os");
+
 /**
  * @type {import('next').NextConfig}
  */
@@ -24,6 +26,7 @@ module.exports = {
       { hostname: "vyctorewards.com" },
       { hostname: "vycto.com" },
       { hostname: "app.vyctorewards.com" },
+      { hostname: "images.unsplash.com" },
     ],
   },
 };

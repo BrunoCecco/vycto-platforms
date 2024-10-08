@@ -9,6 +9,7 @@ import { SelectCompetition, SelectSite } from "@/lib/schema";
 import MovingBorder from "../ui/movingBorder";
 import PlayButton from "../buttons/playButton";
 import { BackgroundGradient } from "../ui/backgroundGradient";
+import CompetitionModal from "./competitionModal";
 
 const CompetitionCard = ({
   competition,
@@ -90,11 +91,13 @@ const CompetitionCard = ({
             <p className="text-sm" style={{ color: siteData.color2 }}>
               {status}
             </p>
-            <Link href={"/comp/" + competition.slug}>
-              <PlayButton color1={siteData.color1} color2={siteData.color2}>
-                {type === "current" ? "Play" : "View"}
-              </PlayButton>
-            </Link>
+            <CompetitionModal
+              type={type!}
+              siteData={siteData}
+              competition={competition}
+              status={status}
+              users={users}
+            />
           </div>
         </div>
       </div>
