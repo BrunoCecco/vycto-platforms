@@ -18,6 +18,7 @@ import {
   ITimezoneOption,
   allTimezones,
 } from "react-timezone-select";
+import CountryPicker from "../settings/countryPicker";
 
 export default function Form({
   title,
@@ -117,18 +118,14 @@ export default function Form({
           {description}
         </p>
         {timezoneOptions && inputAttrs.name === "country" ? (
-          <div className="flex max-w-sm items-center rounded-lg border border-stone-600">
-            <Select name="country" defaultValue={inputAttrs.defaultValue}>
-              {timezoneOptions.map((timezone: ITimezoneOption) => (
-                <SelectItem key={timezone.value} value={timezone.value}>
-                  {timezone.label}
-                </SelectItem>
-              ))}
-              <SelectItem value="None">None</SelectItem>
-            </Select>
+          <div className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
+            <CountryPicker
+              name="country"
+              defaultValue={inputAttrs.defaultValue}
+            />
           </div>
         ) : inputAttrs.name === "role" ? (
-          <div className="flex max-w-sm items-center rounded-lg border border-stone-600">
+          <div className="flex max-w-md items-center rounded-lg border border-stone-600">
             <Select name="role" defaultValue={inputAttrs.defaultValue}>
               {USER_ROLES.map((role) => (
                 <SelectItem key={role} value={role}>
@@ -138,7 +135,7 @@ export default function Form({
             </Select>
           </div>
         ) : inputAttrs.name === "font" ? (
-          <div className="flex max-w-sm items-center overflow-hidden rounded-lg border border-stone-600">
+          <div className="flex max-w-md items-center overflow-hidden rounded-lg border border-stone-600">
             <Select name="font" defaultValue={inputAttrs.defaultValue}>
               <SelectItem value="font-cal">Cal Sans</SelectItem>
               <SelectItem value="font-lora">Lora</SelectItem>

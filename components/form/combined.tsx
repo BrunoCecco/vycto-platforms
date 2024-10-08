@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import Button from "../buttons/button";
 import CountryPicker from "../settings/countryPicker";
-import { Select, SelectItem } from "@tremor/react";
+import { Select, SelectItem, TextInput } from "@tremor/react";
 import { USER_ROLES } from "@/lib/constants";
 
 interface InputAttr {
@@ -62,21 +62,24 @@ export default function CombinedForm({
       <h2 className=" p-5 pb-0 font-cal text-xl text-black dark:text-white">
         {title}
       </h2>
-      <div className="flex w-full flex-wrap">
+      <div className="grid grid-cols-1 sm:grid-cols-2">
         {inputAttrs.map((inputAttr, index) => (
           <div
-            className="relative flex w-1/2 flex-col space-y-4 p-5"
+            className="relative flex w-full flex-col space-y-2 p-5"
             key={index + "reward-editor"}
           >
             <p className="text-sm text-stone-500 dark:text-stone-200">
               {descriptions[index]}
             </p>
             {inputAttr.name === "country" ? (
-              <div className="flex max-w-sm items-center rounded-lg border border-stone-600">
-                <CountryPicker defaultValue={inputAttrs.defaultValue} />
+              <div className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
+                <CountryPicker
+                  name="country"
+                  defaultValue={inputAttr.defaultValue}
+                />
               </div>
             ) : inputAttr.name === "role" ? (
-              <div className="flex max-w-sm items-center rounded-lg border border-stone-600">
+              <div className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
                 <Select name="role" defaultValue={inputAttr.defaultValue}>
                   {USER_ROLES.map((role) => (
                     <SelectItem key={role} value={role}>
@@ -86,7 +89,7 @@ export default function CombinedForm({
                 </Select>
               </div>
             ) : inputAttr.name === "font" ? (
-              <div className="flex max-w-sm items-center overflow-hidden rounded-lg border border-stone-600">
+              <div className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
                 <Select name="font" defaultValue={inputAttr.defaultValue}>
                   <SelectItem value="font-cal">Cal Sans</SelectItem>
                   <SelectItem value="font-lora">Lora</SelectItem>

@@ -19,9 +19,11 @@ export default async function UserSettings() {
         <h1 className="font-cal text-3xl font-bold dark:text-white">
           Settings
         </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <EditProfileImage session={session} />
-          <Form
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-1">
+          <div className="w-full sm:w-fit">
+            <EditProfileImage session={session} />
+          </div>
+          {/* <Form
             title="Name"
             description="Your full name."
             helpText="Please enter your first and last name."
@@ -69,7 +71,7 @@ export default async function UserSettings() {
               placeholder: "Country",
             }}
             handleSubmit={editUser}
-          />
+          /> */}
           <CombinedForm
             title={"User Profile"}
             descriptions={[

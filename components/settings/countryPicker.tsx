@@ -8,8 +8,10 @@ import {
 import { Select, SelectItem } from "@tremor/react";
 
 export default function CountryPicker({
+  name,
   defaultValue,
 }: {
+  name: string;
   defaultValue: string;
 }) {
   const { options, parseTimezone } = useTimezoneSelect({
@@ -17,7 +19,7 @@ export default function CountryPicker({
     timezones: allTimezones,
   });
   return (
-    <Select defaultValue={defaultValue}>
+    <Select name={name} defaultValue={defaultValue}>
       {options?.map((timezone: ITimezoneOption) => (
         <SelectItem key={timezone.value} value={timezone.value}>
           {timezone.label}
