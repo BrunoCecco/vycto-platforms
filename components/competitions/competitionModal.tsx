@@ -26,7 +26,12 @@ export default function CompetitionModal({
   status?: string;
   users?: any[];
 }) {
-  const images = ["/logo.png", competition.image, siteData.logo];
+  const images = [
+    siteData.logo,
+    competition.image,
+    competition.rewardImage,
+    competition.reward2Image,
+  ];
   return (
     <Modal>
       <ModalTrigger className="group/modal-btn">
