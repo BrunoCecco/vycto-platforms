@@ -11,6 +11,9 @@ import va from "@vercel/analytics";
 import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import Button from "../buttons/button";
+import CountryPicker from "../settings/countryPicker";
+import { Select, SelectItem } from "@tremor/react";
+import { USER_ROLES } from "@/lib/constants";
 
 interface InputAttr {
   name: string;
@@ -56,7 +59,9 @@ export default function CombinedForm({
       }}
       className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
     >
-      <h2 className=" p-5 pb-0 font-cal text-xl dark:text-white">{title}</h2>
+      <h2 className=" p-5 pb-0 font-cal text-xl text-black dark:text-white">
+        {title}
+      </h2>
       <div className="flex w-full flex-wrap">
         {inputAttrs.map((inputAttr, index) => (
           <div
@@ -66,17 +71,27 @@ export default function CombinedForm({
             <p className="text-sm text-stone-500 dark:text-stone-200">
               {descriptions[index]}
             </p>
-            {inputAttr.name === "font" ? (
+            {inputAttr.name === "country" ? (
+              <div className="flex max-w-sm items-center rounded-lg border border-stone-600">
+                <CountryPicker defaultValue={inputAttrs.defaultValue} />
+              </div>
+            ) : inputAttr.name === "role" ? (
+              <div className="flex max-w-sm items-center rounded-lg border border-stone-600">
+                <Select name="role" defaultValue={inputAttr.defaultValue}>
+                  {USER_ROLES.map((role) => (
+                    <SelectItem key={role} value={role}>
+                      {role}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
+            ) : inputAttr.name === "font" ? (
               <div className="flex max-w-sm items-center overflow-hidden rounded-lg border border-stone-600">
-                <select
-                  name="font"
-                  defaultValue={inputAttr.defaultValue}
-                  className="w-full rounded-none border-none bg-white px-4 py-2 text-sm font-medium text-stone-700 focus:outline-none focus:ring-black dark:bg-black dark:text-stone-200 dark:focus:ring-white"
-                >
-                  <option value="font-cal">Cal Sans</option>
-                  <option value="font-lora">Lora</option>
-                  <option value="font-work">Work Sans</option>
-                </select>
+                <Select name="font" defaultValue={inputAttr.defaultValue}>
+                  <SelectItem value="font-cal">Cal Sans</SelectItem>
+                  <SelectItem value="font-lora">Lora</SelectItem>
+                  <SelectItem value="font-work">Work Sans</SelectItem>
+                </Select>
               </div>
             ) : inputAttr.name === "color1" ||
               inputAttr.name === "color2" ||
@@ -84,7 +99,7 @@ export default function CombinedForm({
               <input
                 {...inputAttr}
                 type="color"
-                className="h-12 w-12 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
               />
             ) : inputAttr.name === "subdomain" ? (
               <div className="flex w-full max-w-md">

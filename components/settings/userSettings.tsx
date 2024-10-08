@@ -5,6 +5,7 @@ import { editUser } from "@/lib/actions";
 import LogoutButton from "../auth/logoutButton";
 import EditProfileImage from "./editProfileImage";
 import CountryPicker from "./countryPicker";
+import CombinedForm from "../form/combined";
 
 export default async function UserSettings() {
   const session = await getSession();
@@ -67,6 +68,44 @@ export default async function UserSettings() {
               defaultValue: session.user.country!,
               placeholder: "Country",
             }}
+            handleSubmit={editUser}
+          />
+          <CombinedForm
+            title={"User Profile"}
+            descriptions={[
+              "Your Full Name",
+              "Your username displayed on leaderboards.",
+              "Your email.",
+              "Your country of residence.",
+            ]}
+            helpText="User details"
+            inputAttrs={[
+              {
+                name: "name",
+                type: "text",
+                defaultValue: session.user.name!,
+                placeholder: "Full Name",
+              },
+              {
+                name: "username",
+                type: "text",
+                defaultValue: session.user.username!,
+                placeholder: "user123",
+                maxLength: 32,
+              },
+              {
+                name: "email",
+                type: "text",
+                defaultValue: session.user.email!,
+                placeholder: "Email",
+              },
+              {
+                name: "country",
+                type: "text",
+                defaultValue: session.user.country!,
+                placeholder: "Country",
+              },
+            ]}
             handleSubmit={editUser}
           />
         </div>
