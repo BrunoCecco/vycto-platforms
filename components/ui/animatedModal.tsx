@@ -20,15 +20,15 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider = ({
   isOpen,
-  onClose,
+  setIsOpen,
   children,
 }: {
   isOpen: boolean;
-  onClose: () => void;
+  setIsOpen: (open: boolean) => void;
   children: ReactNode;
 }) => {
   return (
-    <ModalContext.Provider value={{ open: isOpen, setOpen: onClose }}>
+    <ModalContext.Provider value={{ open: isOpen, setOpen: setIsOpen }}>
       {children}
     </ModalContext.Provider>
   );
@@ -44,15 +44,15 @@ export const useModal = () => {
 
 export function Modal({
   isOpen,
-  onClose,
+  setIsOpen,
   children,
 }: {
   isOpen: boolean;
-  onClose: () => void;
+  setIsOpen: (open: boolean) => void;
   children: ReactNode;
 }) {
   return (
-    <ModalProvider isOpen={isOpen} onClose={onClose}>
+    <ModalProvider isOpen={isOpen} setIsOpen={setIsOpen}>
       {children}
     </ModalProvider>
   );
@@ -87,7 +87,7 @@ export const ModalBody = ({
 
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = "hidden";
+      // document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
@@ -98,7 +98,7 @@ export const ModalBody = ({
   useOutsideClick(modalRef, () => setOpen(false));
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="sync">
       {open && (
         <motion.div
           initial={{

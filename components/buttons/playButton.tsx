@@ -12,7 +12,7 @@ interface ShinyButtonProps {
 }
 const PlayButton = ({ children, ...props }: ShinyButtonProps) => {
   return (
-    <button {...props}>
+    <div {...props}>
       <HoverBorderGradient
         containerClassName="rounded-full"
         as="button"
@@ -21,7 +21,7 @@ const PlayButton = ({ children, ...props }: ShinyButtonProps) => {
       >
         {children}
       </HoverBorderGradient>
-    </button>
+    </div>
   );
 };
 

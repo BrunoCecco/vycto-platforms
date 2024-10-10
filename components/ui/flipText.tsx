@@ -24,7 +24,7 @@ export default function FlipText({
 }: SlightFlipProps) {
   return (
     <div className="flex flex-wrap justify-center space-x-2">
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="sync">
         {word.split(" ").map((char, i) => (
           <motion.span
             key={i}

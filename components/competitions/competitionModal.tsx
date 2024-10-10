@@ -12,30 +12,37 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { SelectCompetition, SelectSite } from "../../lib/schema";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function CompetitionModal({
   type,
   siteData,
   competition,
-  onClose,
+  setIsOpen,
   status,
   users,
 }: {
   type: string;
   siteData: SelectSite;
   competition: SelectCompetition;
-  onClose: () => void;
+  setIsOpen: (open: boolean) => void;
   status?: string;
   users?: any[];
 }) {
   const images = [
-    siteData.logo,
-    competition.image,
-    competition.rewardImage,
-    competition.reward2Image,
+    siteData?.logo,
+    competition?.image,
+    competition?.rewardImage,
+    competition?.reward2Image,
   ];
+
+  const pathname = usePathname();
+
   return (
-    <Modal isOpen={true} onClose={onClose}>
+    <Modal
+      isOpen={pathname === "/" && competition != null}
+      setIsOpen={setIsOpen}
+    >
       <ModalBody>
         <ModalContent>
           <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 md:text-2xl dark:text-neutral-100">
@@ -81,8 +88,8 @@ export default function CompetitionModal({
           </div>
         </ModalContent>
         <ModalFooter className="gap-4">
-          <Link href={"/comp/" + competition.slug}>
-            <PlayButton color1={siteData.color1} color2={siteData.color2}>
+          <Link href={"/comp/" + competition?.slug}>
+            <PlayButton color1={siteData?.color1} color2={siteData?.color2}>
               {type === "current" ? "Let's Go →" : "View →"}
             </PlayButton>
           </Link>

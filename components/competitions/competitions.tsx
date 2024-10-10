@@ -1,9 +1,10 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, use, useEffect, useState } from "react";
 import CompetitionCard from "./competitionCard";
 import { SelectCompetition, SelectSite } from "@/lib/schema";
 import CompetitionModal from "./competitionModal";
+import { usePathname } from "next/navigation";
 
 const Competitions = ({
   competitions,
@@ -16,18 +17,32 @@ const Competitions = ({
 }) => {
   const [selectedCompetition, setSelectedCompetition] =
     useState<SelectCompetition | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (selectedCompetition) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [selectedCompetition]);
+
+  const pathname = usePathname();
 
   const handleCompetitionClick = (competition: SelectCompetition) => {
     setSelectedCompetition(competition);
   };
 
   const getStatus = (competition: SelectCompetition) => {
+    if (!competition) return;
     const days = Math.ceil(
       (new Date(competition.date).getTime() - new Date().getTime()) /
         (1000 * 60 * 60 * 24),
     );
     return days > 0 ? `${days} Days to go` : `${Math.abs(days)} Days ago`;
   };
+
+  console.log(pathname);
 
   return (
     <div className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth">
@@ -42,15 +57,13 @@ const Competitions = ({
           />
         ))}
       </div>
-      {selectedCompetition && (
-        <CompetitionModal
-          type={type!}
-          siteData={siteData}
-          competition={selectedCompetition}
-          onClose={() => setSelectedCompetition(null)} // Close handler
-          status={getStatus(selectedCompetition)} // Pass status
-        />
-      )}
+      <CompetitionModal
+        type={type!}
+        siteData={siteData}
+        competition={selectedCompetition!}
+        setIsOpen={setIsOpen} // Close handler
+        status={getStatus(selectedCompetition!)} // Pass status
+      />
     </div>
   );
 };

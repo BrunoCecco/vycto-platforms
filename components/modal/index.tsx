@@ -40,7 +40,7 @@ export default function Modal({
   const { isMobile, isDesktop } = useWindowSize();
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="sync">
       {showModal && (
         <>
           {isMobile && <Leaflet setShow={setShowModal}>{children}</Leaflet>}

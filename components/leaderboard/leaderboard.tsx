@@ -36,9 +36,6 @@ const Leaderboard = ({
               <th className="order-4 hidden py-3 text-left text-xs font-medium uppercase text-gray-500 sm:table-cell">
                 Submission
               </th>
-              <th className="order-5 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Rank
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -71,12 +68,6 @@ const Leaderboard = ({
                   >
                     View
                   </Link>
-                </td>
-                <td className="py-4">
-                  <div
-                    className="my-auto flex h-2 items-center justify-center rounded-full bg-purple-800 text-white"
-                    style={{ width: 100 - index + 1 + "%" }}
-                  ></div>
                 </td>
               </tr>
             ))}
