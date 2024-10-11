@@ -17,31 +17,55 @@ const Leaderboard = ({
   competition: SelectCompetition;
   users: SelectUserCompetition[];
 }) => {
+  const calculateBg = (index: number) => {
+    if (index > 2) return "";
+    switch (index) {
+      case 0:
+        // return gold gradient dark to light
+        return "linear-gradient(90deg, #FFA700 0%, #FFDF00 100%)";
+      case 1:
+        // return silver gradient dark to light
+        return "linear-gradient(90deg, #A0A0A0 0%, #D3D3D3 100%)";
+      case 2:
+        // return bronze gradient dark to light
+        return "linear-gradient(90deg, #CD7F32 0%, #8B4513 100%)";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="container mt-2 w-full">
       <div className="overflow-x-auto">
         {/* Desktop Table */}
-        <table className="hidden min-w-full md:table">
+        <table className="min-w-full table-auto border-separate sm:border-spacing-x-2">
           <thead className="pb-4">
             <tr className="pb-4">
               <th className="order-2 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Name
               </th>
-              <th className="order-1 py-3 text-left text-xs font-medium uppercase text-gray-500">
+              <th className="order-1 hidden py-3 text-left text-xs font-medium uppercase text-gray-500 sm:table-cell">
                 Rank
               </th>
               <th className="order-3 text-wrap py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Points
+                <span className="hidden sm:block">Points</span>
+                <span className="block sm:hidden">Pts</span>
               </th>
-              <th className="order-4 hidden py-3 text-left text-xs font-medium uppercase text-gray-500 sm:table-cell">
+              <th className="order-4 py-3 text-right text-xs font-medium uppercase text-gray-500 sm:table-cell">
                 Submission
               </th>
             </tr>
           </thead>
           <tbody>
             {users.map((user: any, index: number) => (
-              <tr key={user.userId} className="border-b text-left">
-                <td className="flex items-center space-x-3 py-4">
+              <tr
+                key={user.userId}
+                className="relative w-full columns-12 border-b text-left"
+              >
+                <td className="flex w-[150px] items-center space-x-2 py-4 md:w-[200px] lg:w-[300px]">
+                  <td className="table-cell pr-2 text-gray-900 sm:hidden">
+                    {index + 1}
+                  </td>
                   <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
                     <Image
                       src={
@@ -50,77 +74,27 @@ const Leaderboard = ({
                       alt="Profile"
                       fill={true}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="overflow-hidden rounded-full object-cover"
+                      className="rounded-full object-cover"
                     />
                   </div>
-                  <span className="font-bold text-gray-900">
+                  <span className="ml-2 w-0 flex-1 truncate text-sm font-bold text-gray-900">
                     @{user.username || user.email || user.name || "User"}
                   </span>
                 </td>
-                <td className="py-4 text-gray-900">{index + 1}</td>
-                <td className="py-4 text-gray-900">
+                <td className="hidden py-4 text-gray-900 sm:table-cell">
+                  {index + 1}
+                </td>
+                <td className="py-4 text-sm text-gray-900">
                   {parseFloat(user.points || "0").toFixed(2)}
                 </td>
-                <td className="hidden py-4 sm:table-cell">
+                <td className="justify-end py-4 text-right">
                   <Link
                     href={`/comp/${competition.slug}/${user.userId}`}
-                    className="rounded-full bg-blue-100 p-2 px-4 text-purple-800 hover:bg-blue-300"
-                  >
-                    View
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {/* Mobile Table */}
-        <table className="min-w-full rounded-xl md:hidden">
-          <thead className="pb-4">
-            <tr className="pb-4">
-              <th className="py-3 text-left text-xs font-medium uppercase text-gray-500"></th>
-              <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Name
-              </th>
-              <th className="text-wrap py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Points
-              </th>
-              <th className="py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Submission
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index: number) => (
-              <tr key={user.userId} className="border-b">
-                <td className="pr-2 text-gray-900">{index + 1}</td>
-                <td className="flex items-center py-4">
-                  <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
-                    <Image
-                      src={
-                        user.image ||
-                        `https://avatar.vercel.sh/${user.username}`
-                      }
-                      alt="Profile"
-                      fill={true}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="overflow-hidden rounded-full object-cover"
-                    />
-                  </div>
-                  <span className="ml-2 font-bold text-gray-900">
-                    @
-                    {(user.username || "User").length > 10
-                      ? `${(user.username || "User").slice(0, 10)}...`
-                      : user.username || "User" + index}
-                  </span>
-                </td>
-                <td className="py-4 text-gray-900">
-                  {parseFloat(user.points || "0").toFixed(2)}
-                </td>
-                <td className="py-4">
-                  <Link
-                    href={`/comp/${competition.slug}/${user.userId}`}
-                    className="rounded-full bg-blue-100 p-2 px-4 text-purple-800 hover:bg-blue-300"
+                    className="rounded-lg bg-blue-100 p-2 px-4 text-sm text-purple-800 shadow-md transition-all duration-200 hover:bg-blue-300 hover:shadow-none"
+                    style={{
+                      backgroundImage: calculateBg(index),
+                      color: "black",
+                    }}
                   >
                     View
                   </Link>
