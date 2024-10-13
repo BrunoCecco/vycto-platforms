@@ -63,10 +63,7 @@ const UserSignUp = ({
     posthog?.capture("apple-sign-in-clicked");
 
     try {
-      const result = await signIn("apple", {
-        redirect: true,
-        callbackUrl: "https://ael.localhost:3000",
-      });
+      const result = await signInWithPopup(auth, appleProvider);
       // The signed-in user ino.
       const user = result;
       console.log("User signed in: ", user);

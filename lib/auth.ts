@@ -33,15 +33,15 @@ declare module "next-auth" {
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
   providers: [
-    AppleProvider({
-      clientId: process.env.APPLE_CLIENT_ID!,
-      clientSecret: process.env.APPLE_CLIENT_SECRET!,
-      authorization: {
-        params: {
-          redirect_uri: "https://vyctorewards.com/api/auth/callback/apple",
-        },
-      },
-    }),
+    // AppleProvider({
+    //   clientId: process.env.APPLE_CLIENT_ID!,
+    //   clientSecret: process.env.APPLE_CLIENT_SECRET!,
+    //   // authorization: {
+    //   //   params: {
+    //   //     redirect_uri: "https://vyctorewards.com/api/auth/callback/apple",
+    //   //   },
+    //   // },
+    // }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID!,
       clientSecret: process.env.FACEBOOK_SECRET!,
@@ -89,10 +89,11 @@ export const authOptions: NextAuthOptions = {
     redirect: async ({ url, baseUrl }) => {
       // Check if the URL is a subdomain and redirect accordingly
       // const subdomain = url.split(".")[0]; // Extract subdomain from URL
+      // console.log(subdomain, "SUBDOMAIN");
       // if (subdomain && subdomain !== "www" && subdomain !== "vyctorewards") {
       //   return `https://${subdomain}.vyctorewards.com`; // Redirect to the subdomain
       // }
-      return "https://vyctorewards.com"; // Default redirect
+      return "https://ael.localhost:3000"; // Default redirect
     },
     jwt: async ({ token, user }) => {
       if (user) {
