@@ -15,7 +15,6 @@ export default function ClaimRewardsCard({
       className="flex h-full w-full flex-col justify-between"
     >
       <div className="flex h-full w-full flex-col justify-between rounded-lg bg-slate-800 p-8">
-        <h2 className="text-2xl font-bold uppercase">{comp.rewardTitle}</h2>
         <div className="relative h-1/3 w-full">
           <Image
             src={comp.rewardImage ?? "/placeholder.png"}
@@ -24,6 +23,7 @@ export default function ClaimRewardsCard({
             className="overflow-hidden rounded-lg object-contain"
           />
         </div>
+        <h2 className="text-2xl font-bold uppercase">{comp.rewardTitle}</h2>
         <div className="flex w-full items-center justify-between">
           <p className="rounded-full bg-slate-200 p-1 px-2 text-xs font-bold text-black">
             EXCLUSIVE PRIZE

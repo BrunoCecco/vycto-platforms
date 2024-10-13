@@ -11,6 +11,9 @@ importers:
       '@auth/drizzle-adapter':
         specifier: ^1.1.0
         version: 1.2.0(nodemailer@6.9.14)
+      '@next-auth/firebase-adapter':
+        specifier: 0.0.2-canary.207
+        version: 0.0.2-canary.207(firebase@10.14.0)(next-auth@4.24.7(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
@@ -955,6 +958,12 @@ packages:
 
   '@neondatabase/serverless@0.9.4':
     resolution: {integrity: sha512-D0AXgJh6xkf+XTlsO7iwE2Q1w8981E1cLCPAALMU2YKtkF/1SF6BiAzYARZFYo175ON+b1RNIy9TdSFHm5nteg==}
+
+  '@next-auth/firebase-adapter@0.0.2-canary.207':
+    resolution: {integrity: sha512-P+F3V0YGmV24SacGfOuBBSqeZRrfVSg3XVJ33/u6xb6BH4As7BowCcT012F73KZoT/LkkZUSpj4hJvlzhGI+hg==}
+    peerDependencies:
+      firebase: ^8.6.2
+      next-auth: latest
 
   '@next/env@13.4.20-canary.15':
     resolution: {integrity: sha512-89+fp4Hx/E3sPVqGsN9eoFp5yB22WRIKuuaGNkTWMfkePcVbqvxwgLZylWjej8gdhThjOxl4e4PN3Ee9Dib91g==}
@@ -6120,6 +6129,11 @@ snapshots:
     dependencies:
       '@types/pg': 8.11.6
     optional: true
+
+  '@next-auth/firebase-adapter@0.0.2-canary.207(firebase@10.14.0)(next-auth@4.24.7(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+    dependencies:
+      firebase: 10.14.0
+      next-auth: 4.24.7(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   '@next/env@13.4.20-canary.15': {}
 

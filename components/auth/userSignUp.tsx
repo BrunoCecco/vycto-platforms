@@ -6,9 +6,15 @@ import { SelectSite } from "@/lib/schema";
 import LoginButton from "./loginButton";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
-import { auth, facebookProvider, signInWithPopup } from "@/lib/firebase"; // Import Firebase auth functions
+import {
+  appleProvider,
+  auth,
+  facebookProvider,
+  signInWithPopup,
+} from "@/lib/firebase"; // Import Firebase auth functions
 import Button from "../buttons/button";
 import LoadingDots from "../icons/loadingDots";
+import { OAuthProvider } from "firebase/auth";
 
 const UserSignUp = ({
   siteData,
@@ -51,6 +57,36 @@ const UserSignUp = ({
     }
   };
 
+  const handleAppleSignin = async () => {
+    setLoading(true);
+    posthog?.capture("apple-sign-in-clicked");
+
+    try {
+      const result = await signInWithPopup(auth, appleProvider);
+      // The signed-in user ino.
+      const user = result.user;
+
+      // Apple credential
+      const credential = OAuthProvider.credentialFromResult(result);
+      console.log("User signed in: ", user, credential);
+      if (credential === null) {
+        throw new Error("No credential found");
+      }
+      const accessToken = credential.accessToken;
+      const idToken = credential.idToken;
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The credential that was used.
+      const credential = OAuthProvider.credentialFromError(error);
+      console.error("Error during sign in with Apple: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center bg-white md:p-8">
       <div className="w-full">
@@ -85,6 +121,19 @@ const UserSignUp = ({
                   className="mr-2 h-5 w-5"
                 />
                 <span>Continue with Facebook</span>
+              </button>
+              <button
+                onClick={() => handleAppleSignin()} // Use Firebase Facebook sign-in
+                className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-xs font-medium text-gray-700 shadow-sm md:w-1/2"
+              >
+                <Image
+                  src="/appleIcon.svg"
+                  width={20}
+                  height={20}
+                  alt="Apple Logo"
+                  className="mr-2 h-5 w-5"
+                />
+                <span>Continue with Apple</span>
               </button>
             </div>
           )}
