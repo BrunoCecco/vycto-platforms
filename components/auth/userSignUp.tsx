@@ -15,6 +15,7 @@ import {
 import Button from "../buttons/button";
 import LoadingDots from "../icons/loadingDots";
 import { OAuthProvider } from "firebase/auth";
+import { signIn } from "next-auth/react";
 
 const UserSignUp = ({
   siteData,
@@ -62,18 +63,13 @@ const UserSignUp = ({
     posthog?.capture("apple-sign-in-clicked");
 
     try {
-      const result = await signInWithPopup(auth, appleProvider);
+      const result = await signIn("apple", {
+        redirect: true,
+        callbackUrl: "https://ael.localhost:3000",
+      });
       // The signed-in user ino.
-      const user = result.user;
-
-      // Apple credential
-      const credential = OAuthProvider.credentialFromResult(result);
-      console.log("User signed in: ", user, credential);
-      if (credential === null) {
-        throw new Error("No credential found");
-      }
-      const accessToken = credential.accessToken;
-      const idToken = credential.idToken;
+      const user = result;
+      console.log("User signed in: ", user);
     } catch (error: any) {
       const errorCode = error.code;
       const errorMessage = error.message;

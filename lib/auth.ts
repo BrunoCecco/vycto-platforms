@@ -33,10 +33,15 @@ declare module "next-auth" {
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
   providers: [
-    // AppleProvider({
-    //   clientId: process.env.APPLE_CLIENT_ID!,
-    //   clientSecret: process.env.APPLE_CLIENT_SECRET!,
-    // }),
+    AppleProvider({
+      clientId: process.env.APPLE_CLIENT_ID!,
+      clientSecret: process.env.APPLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          redirect_uri: "https://vyctorewards.com/api/auth/callback/apple",
+        },
+      },
+    }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID!,
       clientSecret: process.env.FACEBOOK_SECRET!,
@@ -53,33 +58,6 @@ export const authOptions: NextAuthOptions = {
       },
       from: process.env.EMAIL_FROM,
       sendVerificationRequest: sendVerificationRequest,
-    }),
-    CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
-      name: "Credentials",
-      // `credentials` is used to generate a form on the sign in page.
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials, req) {
-        console.log(credentials?.email, credentials);
-        // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
-
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
-        }
-      },
     }),
   ],
   pages: {
@@ -108,6 +86,14 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
+    redirect: async ({ url, baseUrl }) => {
+      // Check if the URL is a subdomain and redirect accordingly
+      // const subdomain = url.split(".")[0]; // Extract subdomain from URL
+      // if (subdomain && subdomain !== "www" && subdomain !== "vyctorewards") {
+      //   return `https://${subdomain}.vyctorewards.com`; // Redirect to the subdomain
+      // }
+      return "https://vyctorewards.com"; // Default redirect
+    },
     jwt: async ({ token, user }) => {
       if (user) {
         token.user = user;
