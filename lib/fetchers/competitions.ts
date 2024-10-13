@@ -189,3 +189,34 @@ export async function getCompetitionUsers(competitionId: string) {
   //   },
   // )();
 }
+
+export async function getUserCompetitions(userId: string) {
+  // return await unstable_cache(
+  //   async () => {
+  return await db.query.userCompetitions.findMany({
+    where: eq(userCompetitions.userId, userId),
+  });
+
+  //   },
+  //   [`${competitionId}-users`],
+  //   {
+  //     revalidate: 900,
+  //     tags: [`${competitionId}-users`],
+  //   },
+  // )();
+}
+
+export async function getCompetitionFromId(competitionId: string) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.competitions.findFirst({
+        where: eq(competitions.id, competitionId),
+      });
+    },
+    [`${competitionId}-competition`],
+    {
+      revalidate: 900,
+      tags: [`${competitionId}-competition`],
+    },
+  )();
+}

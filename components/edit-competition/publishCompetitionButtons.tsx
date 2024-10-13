@@ -1,6 +1,9 @@
 "use client";
 
-import { updateCompetitionMetadata } from "@/lib/actions";
+import {
+  updateCompetitionMetadata,
+  updateUserCompetitionRewards,
+} from "@/lib/actions";
 import { SelectCompetition } from "@/lib/schema";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -39,6 +42,8 @@ export default function PublishCompetitionButtons({
       await validateCorrectAnswers(competition.id);
       // now we can calculate the points
       await calculateCompetitionPoints(competition.id);
+      // assign rewards to users
+      await updateUserCompetitionRewards(competition.id);
       const formData = new FormData();
       formData.append("correctAnswersSubmitted", "true");
       await updateCompetitionMetadata(

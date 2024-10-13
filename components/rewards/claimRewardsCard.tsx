@@ -24,7 +24,7 @@ export default function ClaimRewardsCard({
           />
         </div>
         <h2 className="text-2xl font-bold uppercase">{comp.rewardTitle}</h2>
-        <div className="flex w-full items-center justify-between">
+        <div className="flex w-full items-center justify-between gap-4">
           <p className="rounded-full bg-slate-200 p-1 px-2 text-xs font-bold text-black">
             EXCLUSIVE PRIZE
           </p>

@@ -1,6 +1,11 @@
-export default function RewardsList() {
-  const rewards: any = [];
+import { SelectCompetition, SelectUserCompetition } from "@/lib/schema";
+import RewardsListing from "./rewardListing";
 
+export default async function RewardsList({
+  userCompetitions,
+}: {
+  userCompetitions: SelectUserCompetition[];
+}) {
   return (
     <div>
       <h2 className="mb-4 text-2xl font-bold">Your Rewards</h2>
@@ -9,24 +14,18 @@ export default function RewardsList() {
           <thead>
             <tr className="bg-gray-700">
               <th className="p-4 text-left">Event</th>
-              <th className="p-4 text-left">Ready to claim</th>
-              <th className="p-4 text-left">Total rewards</th>
+              <th className="p-4 text-left">Reward</th>
+              <th className="p-4 text-left">Status</th>
             </tr>
           </thead>
           <tbody>
-            {/* {rewards &&
-              rewards.map((reward, index) => (
-                <tr key={index} className="border-t border-gray-700">
-                  <td className="p-4">
-                    <p className="font-semibold">{reward.event}</p>
-                    <p className="text-sm text-gray-400">{reward.date}</p>
-                  </td>
-                  <td className="p-4">
-                    <span className="text-orange-500">All claimed</span>
-                  </td>
-                  <td className="p-4">{reward.claimed}</td>
-                </tr>
-              ))} */}
+            {userCompetitions &&
+              userCompetitions.map((userComp, index) => (
+                <RewardsListing
+                  key={userComp.competitionId}
+                  userComp={userComp}
+                />
+              ))}
           </tbody>
         </table>
       </div>

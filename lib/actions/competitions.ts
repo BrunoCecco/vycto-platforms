@@ -17,6 +17,7 @@ import {
   answers,
   SelectQuestion,
   SelectUser,
+  SelectUserCompetition,
 } from "../schema";
 import { QuestionType } from "../types";
 
@@ -324,28 +325,6 @@ export const updateAnswerPoints = async (
   }
 };
 
-// tbd competition stats
-// export const updateCompetitionStats = async (
-//   competitionId: string,
-//   stats: any,
-// ) => {
-//   try {
-//     const [response] = await db
-//       .update(competitions)
-//       .set({
-//         stats,
-//       })
-//       .where(eq(competitions.id, competitionId))
-//       .returning();
-
-//     return response;
-//   } catch (error: any) {
-//     return {
-//       error: error.message,
-//     };
-//   }
-// }
-
 export const createQuestion = async ({
   competitionId,
   type,
@@ -475,6 +454,95 @@ export const answerQuestion = async (formData: FormData) => {
       .returning();
 
     return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const updateRewardForUser = async (
+  userId: string,
+  competitionId: string,
+  rewardId: number,
+  ranking: number,
+) => {
+  try {
+    const response = await db
+      .update(userCompetitions)
+      .set({
+        rewardId,
+        ranking,
+      })
+      .where(
+        and(
+          eq(userCompetitions.userId, userId),
+          eq(userCompetitions.competitionId, competitionId),
+        ),
+      )
+      .returning()
+      .then((res) => res[0]);
+
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+// goes through each user in a competition and assigns their reward id or -1 if they didn't win
+export const updateUserCompetitionRewards = async (competitionId: string) => {
+  try {
+    const competitionUsers = await db.query.userCompetitions.findMany({
+      where: eq(userCompetitions.competitionId, competitionId),
+    });
+    const rewardWinnerData = await db.query.competitions.findFirst({
+      where: eq(competitions.id, competitionId),
+      columns: {
+        rewardWinners: true,
+        reward2Winners: true,
+        reward3Winners: true,
+      },
+    });
+    var sortedUsers = competitionUsers.sort((a, b) => {
+      let aPoints = parseFloat(a.points || "0");
+      let bPoints = parseFloat(b.points || "0");
+      return bPoints - aPoints;
+    });
+
+    let reward1Winners = rewardWinnerData?.rewardWinners || 0;
+    let reward2Winners = rewardWinnerData?.reward2Winners
+      ? reward1Winners + rewardWinnerData.reward2Winners
+      : reward1Winners;
+    let reward3Winners = rewardWinnerData?.reward3Winners
+      ? reward2Winners + rewardWinnerData.reward3Winners
+      : reward2Winners;
+
+    for (let i = 0; i < sortedUsers.length; i++) {
+      let user = sortedUsers[i];
+      let rewardId =
+        i < reward1Winners
+          ? 0
+          : i < reward2Winners
+            ? 1
+            : i < reward3Winners
+              ? 2
+              : -1;
+      let ranking = i + 1;
+      await updateRewardForUser(
+        user.userId,
+        user.competitionId,
+        rewardId,
+        ranking,
+      );
+    }
+
+    const updatedCompetitionUsers = await db.query.userCompetitions.findMany({
+      where: eq(userCompetitions.competitionId, competitionId),
+    });
+
+    return updatedCompetitionUsers;
   } catch (error: any) {
     return {
       error: error.message,

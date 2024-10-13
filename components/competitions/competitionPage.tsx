@@ -41,7 +41,6 @@ export default function CompetitionPage({
   userComp,
   users,
   slug,
-  winnerData,
 }: {
   session: any;
   data: SelectCompetition;
@@ -51,7 +50,6 @@ export default function CompetitionPage({
   userComp: SelectUserCompetition | undefined | { error: string };
   users: SelectUserCompetition[];
   slug: string;
-  winnerData: any;
 }) {
   const [activeTab, setActiveTab] = useState("Challenge");
   const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(

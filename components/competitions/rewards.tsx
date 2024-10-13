@@ -9,7 +9,6 @@ import {
   SelectUserCompetition,
 } from "@/lib/schema";
 import Leaderboard from "../leaderboard/leaderboard";
-import { getCompetitionWinnerData } from "@/lib/fetchers";
 import BlurImage from "../media/blurImage";
 import { placeholderBlurhash } from "@/lib/utils";
 
@@ -32,6 +31,11 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
       src: competition.reward2Image,
       title: competition.reward2Title,
       description: competition.reward2Description,
+    },
+    {
+      src: competition.reward3Image,
+      title: competition.reward3Title,
+      description: competition.reward3Description,
     },
   ];
 

@@ -3,7 +3,6 @@ import {
   getAnswersForUser,
   getCompetitionData,
   getCompetitionUsers,
-  getCompetitionWinnerData,
   getQuestionsForCompetition,
   getSiteData,
 } from "@/lib/fetchers";
@@ -131,7 +130,6 @@ export default async function SubmissionPage({
   }
   const users = await getCompetitionUsers(data!.id);
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
-  const winnerData = await getCompetitionWinnerData(data.id);
 
   return (
     <div className="">
@@ -144,7 +142,6 @@ export default async function SubmissionPage({
         users={sortedUsers}
         userComp={userComp}
         slug={slug}
-        winnerData={winnerData}
       />
     </div>
   );

@@ -66,7 +66,15 @@ const UserSignUp = ({
       const result = await signInWithPopup(auth, appleProvider);
       // The signed-in user ino.
       const user = result;
-      console.log("User signed in: ", user);
+      const res = await signIn("credentials", {
+        redirect: false,
+        user: {
+          id: user.user.uid,
+          name: user.user.displayName,
+          email: user.user.email,
+        },
+      });
+      console.log("User signed in: ", res);
     } catch (error: any) {
       const errorCode = error.code;
       const errorMessage = error.message;

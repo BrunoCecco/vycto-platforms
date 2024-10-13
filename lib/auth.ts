@@ -16,6 +16,7 @@ import AppleProvider from "next-auth/providers/apple";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { SUPER_ADMIN } from "./constants";
+import { FirebaseAdapter } from "@next-auth/firebase-adapter";
 
 // Add this type declaration at the top of your file
 declare module "next-auth" {
@@ -59,6 +60,22 @@ export const authOptions: NextAuthOptions = {
       from: process.env.EMAIL_FROM,
       sendVerificationRequest: sendVerificationRequest,
     }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "Username", type: "text" },
+      },
+      async authorize(credentials) {
+        console.log(credentials);
+        const user = await db.query.users.findFirst({
+          where: (users, { eq }) => eq(users.username, credentials!.username),
+        });
+        if (user) {
+          return user;
+        }
+        return null;
+      },
+    }),
   ],
   pages: {
     signIn: `/login`,
@@ -69,6 +86,7 @@ export const authOptions: NextAuthOptions = {
     sessionsTable: sessions,
     verificationTokensTable: verificationTokens,
   }) as Adapter,
+  // adapter: FirebaseAdapter(firestore),
   session: { strategy: "jwt" },
   cookies: {
     sessionToken: {
@@ -86,15 +104,6 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
-    redirect: async ({ url, baseUrl }) => {
-      // Check if the URL is a subdomain and redirect accordingly
-      // const subdomain = url.split(".")[0]; // Extract subdomain from URL
-      // console.log(subdomain, "SUBDOMAIN");
-      // if (subdomain && subdomain !== "www" && subdomain !== "vyctorewards") {
-      //   return `https://${subdomain}.vyctorewards.com`; // Redirect to the subdomain
-      // }
-      return "https://ael.localhost:3000"; // Default redirect
-    },
     jwt: async ({ token, user }) => {
       if (user) {
         token.user = user;

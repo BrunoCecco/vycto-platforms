@@ -63,20 +63,14 @@ const Slider: FC<{
               disabled={disabled}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
-              style={{ backgroundSize: `${value}% 100%` }}
+              className="h-3 w-full appearance-none"
             />
-            <div
-              className="pointer-events-none absolute left-0 top-0 mt-8 -translate-x-1/2 transform text-center text-lg font-extrabold text-blue-500"
-              style={{
-                left: `calc(${value}% + 40px)`,
-              }}
-            >
-              {value}
-            </div>
           </div>
         </div>
         <span className="text-sm font-bold text-black">{MAX}</span>
+      </div>
+      <div className="pointer-events-none mt-4 transform text-center text-lg font-extrabold text-black">
+        {value}
       </div>
     </div>
   );

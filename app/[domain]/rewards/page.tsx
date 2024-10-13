@@ -8,6 +8,7 @@ import {
   getCompetitionsForPeriod,
   getCompetitionsForSite,
   getSiteData,
+  getUserCompetitions,
 } from "@/lib/fetchers";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
@@ -41,6 +42,8 @@ export default async function Rewards({
     (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )[0];
 
+  const userCompetitions = await getUserCompetitions(session.user.id);
+
   return (
     <div className="min-h-screen text-white">
       <div className="mb-8 flex justify-center">
@@ -68,7 +71,9 @@ export default async function Rewards({
         </div>
       </div>
       <div>
-        <RewardsList />
+        <RewardsList
+          userCompetitions={userCompetitions}
+        />
       </div>
     </div>
   );

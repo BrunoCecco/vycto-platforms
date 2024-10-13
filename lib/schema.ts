@@ -233,6 +233,8 @@ export const userCompetitions = pgTable(
       }),
     // decimal value
     points: decimal("points", { precision: 7, scale: 4 }).default("0.0000"),
+    rewardId: integer("rewardId").default(-1),
+    ranking: integer("ranking").default(-1),
     submitted: boolean("submitted").default(false),
     submissionDate: text("submissionDate")
       .notNull()

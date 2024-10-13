@@ -14,7 +14,7 @@ export default async function SiteLayout({
 
   return (
     <div className="flex  min-h-screen flex-col space-y-12">
-      <div className="flex flex-col space-y-6">{children}</div>
+      <div className="flex flex-col space-y-6 p-8">{children}</div>
     </div>
   );
 }
