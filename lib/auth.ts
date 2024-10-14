@@ -14,7 +14,6 @@ import EmailProvider, {
 import { createTransport } from "nodemailer";
 import AppleProvider from "next-auth/providers/apple";
 import FacebookProvider from "next-auth/providers/facebook";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { SUPER_ADMIN } from "./constants";
 
 // Add this type declaration at the top of your file
@@ -36,11 +35,6 @@ export const authOptions: NextAuthOptions = {
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID!,
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
-      authorization: {
-        params: {
-          redirect_uri: "https://vycto-30b78.firebaseapp.com/__/auth/handler",
-        },
-      },
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID!,
@@ -59,25 +53,6 @@ export const authOptions: NextAuthOptions = {
       from: process.env.EMAIL_FROM,
       sendVerificationRequest: sendVerificationRequest,
     }),
-    // CredentialsProvider({
-    //   name: "Credentials",
-    //   credentials: {
-    //     id: { label: "ID", type: "text" },
-    //     name: { label: "Name", type: "text" },
-    //     email: { label: "Email", type: "text" },
-    //   },
-    //   async authorize(credentials) {
-    //     console.log(credentials);
-    //     const user = await db.query.users.findFirst({
-    //       where: (users, { eq }) => eq(users.email, credentials!.email),
-    //     });
-    //     console.log(user, credentials.user, "CRED");
-    //     if (user) {
-    //       return user;
-    //     }
-    //     return null;
-    //   },
-    // }),
   ],
   pages: {
     signIn: `/login`,
