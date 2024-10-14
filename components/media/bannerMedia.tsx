@@ -45,7 +45,7 @@ export default function BannerMedia({ src }: { src: string }) {
           playsInline
           muted
           onLoadedData={() => setIsLoading(false)}
-          className="h-full w-full object-cover object-center transition-all duration-200 hover:scale-125"
+          className="h-full w-full object-cover object-center transition-all duration-100 hover:scale-105"
           onClick={() => setPlay(!play)}
         >
           <source src={src} type={`video/${mediaFormat}`} />
@@ -66,7 +66,7 @@ export default function BannerMedia({ src }: { src: string }) {
         unoptimized
         alt="Banner Image"
         fill
-        className="object-cover object-center transition-all duration-200 hover:scale-125"
+        className="object-cover object-center transition-all duration-100 hover:scale-110"
       />
     )
   ) : null;
