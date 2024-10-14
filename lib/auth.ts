@@ -66,6 +66,15 @@ export const authOptions: NextAuthOptions = {
   // adapter: FirebaseAdapter(firestore),
   session: { strategy: "jwt" },
   cookies: {
+    pkceCodeVerifier: {
+      name: "next-auth.pkce.code_verifier",
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
     sessionToken: {
       name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
       options: {
