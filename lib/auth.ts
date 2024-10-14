@@ -70,9 +70,9 @@ export const authOptions: NextAuthOptions = {
       name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.pkce.code_verifier`,
       options: {
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: "none",
         path: "/",
-        secure: VERCEL_DEPLOYMENT,
+        secure: true,
       },
     },
     sessionToken: {
