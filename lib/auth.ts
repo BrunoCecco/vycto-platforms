@@ -67,12 +67,12 @@ export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   cookies: {
     pkceCodeVerifier: {
-      name: "next-auth.pkce.code_verifier",
+      name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.pkce.code_verifier`,
       options: {
         httpOnly: true,
-        sameSite: "none",
+        sameSite: "lax",
         path: "/",
-        secure: process.env.NODE_ENV === "production",
+        secure: VERCEL_DEPLOYMENT,
       },
     },
     sessionToken: {

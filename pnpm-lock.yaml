@@ -152,6 +152,9 @@ importers:
       tailwind-merge:
         specifier: ^2.3.0
         version: 2.3.0
+      undici:
+        specifier: ^6.20.1
+        version: 6.20.1
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -5358,6 +5361,10 @@ packages:
 
   undici@6.19.7:
     resolution: {integrity: sha512-HR3W/bMGPSr90i8AAp2C4DM3wChFdJPLrWYpIS++LxS8K+W535qftjt+4MyjNYHeWabMj1nvtmLIi7l++iq91A==}
+    engines: {node: '>=18.17'}
+
+  undici@6.20.1:
+    resolution: {integrity: sha512-AjQF1QsmqfJys+LXfGTNum+qw4S88CojRInG/6t31W/1fk6G59s92bnAvGz5Cmur+kQv2SURXEvvudLmbrE8QA==}
     engines: {node: '>=18.17'}
 
   unified@10.1.2:
@@ -11878,6 +11885,8 @@ snapshots:
       '@fastify/busboy': 2.1.1
 
   undici@6.19.7: {}
+
+  undici@6.20.1: {}
 
   unified@10.1.2:
     dependencies:
