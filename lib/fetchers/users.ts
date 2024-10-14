@@ -21,6 +21,21 @@ export async function getUserData(email: string) {
   )();
 }
 
+export async function getUserDataById(userId: string) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.users.findFirst({
+        where: eq(users.id, userId),
+      });
+    },
+    [`${userId}-user`],
+    {
+      revalidate: 900,
+      tags: [`${userId}-user`],
+    },
+  )();
+}
+
 export async function getAllUsers(role: string, offset: number, limit: number) {
   return await unstable_cache(
     async () => {

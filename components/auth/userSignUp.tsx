@@ -81,7 +81,7 @@ const UserSignUp = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-white md:p-8">
+    <div className="flex flex-col items-center justify-center md:p-8">
       <div className="w-full">
         <p className="text-xs text-gray-500">
           Powered by{" "}
@@ -137,7 +137,7 @@ const UserSignUp = ({
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-500"
               >
                 Email Address
               </label>

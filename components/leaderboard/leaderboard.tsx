@@ -63,9 +63,9 @@ const Leaderboard = ({
                 className="relative w-full columns-12 border-b text-left"
               >
                 <td className="flex w-[150px] items-center space-x-2 py-4 md:w-[200px] lg:w-[300px]">
-                  <td className="table-cell pr-2 text-gray-900 sm:hidden">
+                  <div className="table-cell pr-2 text-gray-900 sm:hidden">
                     {index + 1}
-                  </td>
+                  </div>
                   <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
                     <Image
                       src={

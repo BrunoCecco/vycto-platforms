@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, Suspense } from "react";
 import Competitions from "@/components/competitions/competitions";
 import { competitions, SelectCompetition, SelectSite } from "@/lib/schema";
 import FanZoneHeader from "./fanzoneHeader";
 import MainLeaderboard from "../leaderboard/mainLeaderboard";
 import { ClockIcon, Medal, PlayCircle } from "lucide-react";
+import LoadingDots from "../icons/loadingDots";
 
 const FanZone = async ({
   siteData,
