@@ -16,7 +16,6 @@ import AppleProvider from "next-auth/providers/apple";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { SUPER_ADMIN } from "./constants";
-import { FirebaseAdapter } from "@next-auth/firebase-adapter";
 
 // Add this type declaration at the top of your file
 declare module "next-auth" {
@@ -34,15 +33,15 @@ declare module "next-auth" {
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
   providers: [
-    // AppleProvider({
-    //   clientId: process.env.APPLE_CLIENT_ID!,
-    //   clientSecret: process.env.APPLE_CLIENT_SECRET!,
-    //   // authorization: {
-    //   //   params: {
-    //   //     redirect_uri: "https://vyctorewards.com/api/auth/callback/apple",
-    //   //   },
-    //   // },
-    // }),
+    AppleProvider({
+      clientId: process.env.APPLE_CLIENT_ID!,
+      clientSecret: process.env.APPLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          redirect_uri: "https://vycto-30b78.firebaseapp.com/__/auth/handler",
+        },
+      },
+    }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID!,
       clientSecret: process.env.FACEBOOK_SECRET!,
@@ -60,22 +59,25 @@ export const authOptions: NextAuthOptions = {
       from: process.env.EMAIL_FROM,
       sendVerificationRequest: sendVerificationRequest,
     }),
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        username: { label: "Username", type: "text" },
-      },
-      async authorize(credentials) {
-        console.log(credentials);
-        const user = await db.query.users.findFirst({
-          where: (users, { eq }) => eq(users.username, credentials!.username),
-        });
-        if (user) {
-          return user;
-        }
-        return null;
-      },
-    }),
+    // CredentialsProvider({
+    //   name: "Credentials",
+    //   credentials: {
+    //     id: { label: "ID", type: "text" },
+    //     name: { label: "Name", type: "text" },
+    //     email: { label: "Email", type: "text" },
+    //   },
+    //   async authorize(credentials) {
+    //     console.log(credentials);
+    //     const user = await db.query.users.findFirst({
+    //       where: (users, { eq }) => eq(users.email, credentials!.email),
+    //     });
+    //     console.log(user, credentials.user, "CRED");
+    //     if (user) {
+    //       return user;
+    //     }
+    //     return null;
+    //   },
+    // }),
   ],
   pages: {
     signIn: `/login`,
@@ -125,6 +127,7 @@ export const authOptions: NextAuthOptions = {
 
 export async function getSession() {
   const session = await getServerSession(authOptions);
+
   if (session?.user && session.user.id) {
     // Fetch the latest user data from the database
     const user = await db.query.users.findFirst({

@@ -63,17 +63,10 @@ const UserSignUp = ({
     posthog?.capture("apple-sign-in-clicked");
 
     try {
-      const result = await signInWithPopup(auth, appleProvider);
-      // The signed-in user ino.
-      const user = result;
-      const res = await signIn("credentials", {
-        redirect: false,
-        user: {
-          id: user.user.uid,
-          name: user.user.displayName,
-          email: user.user.email,
-        },
-      });
+      // const result = await signInWithPopup(auth, appleProvider);
+      // // The signed-in user ino.
+      // const user = result;
+      const res = await signIn("apple");
       console.log("User signed in: ", res);
     } catch (error: any) {
       const errorCode = error.code;

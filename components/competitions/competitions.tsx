@@ -61,6 +61,7 @@ const Competitions = ({
         type={type!}
         siteData={siteData}
         competition={selectedCompetition!}
+        isOpen={isOpen}
         setIsOpen={setIsOpen} // Close handler
         status={getStatus(selectedCompetition!)} // Pass status
       />

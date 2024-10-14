@@ -18,6 +18,7 @@ export default function CompetitionModal({
   type,
   siteData,
   competition,
+  isOpen,
   setIsOpen,
   status,
   users,
@@ -25,6 +26,7 @@ export default function CompetitionModal({
   type: string;
   siteData: SelectSite;
   competition: SelectCompetition;
+  isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   status?: string;
   users?: any[];
@@ -36,19 +38,25 @@ export default function CompetitionModal({
     competition?.reward2Image,
   ];
 
-  const pathname = usePathname();
-
   return (
-    <Modal
-      isOpen={pathname === "/" && competition != null}
-      setIsOpen={setIsOpen}
-    >
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <ModalBody>
         <ModalContent>
           <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 md:text-2xl dark:text-neutral-100">
-            {type === "current"
-              ? "Ready to win big prizes? 👀"
-              : "View competition results"}
+            {type === "current" ? (
+              <span>
+                A chance to{" "}
+                <span
+                  className="rounded-lg p-2 text-white"
+                  style={{ backgroundColor: siteData.color1 }}
+                >
+                  win
+                </span>{" "}
+                your favourite {siteData.name} prizes
+              </span>
+            ) : (
+              "View competition results"
+            )}
           </h4>
           <div className="mb-8 flex items-center justify-center">
             {images.map((image, idx) => (
