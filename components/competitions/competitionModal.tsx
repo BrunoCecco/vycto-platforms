@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { SelectCompetition, SelectSite } from "../../lib/schema";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Crown, Sparkle, Timer } from "lucide-react";
 
 export default function CompetitionModal({
   type,
@@ -39,70 +40,87 @@ export default function CompetitionModal({
   ];
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <ModalBody>
-        <ModalContent>
-          <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 md:text-2xl dark:text-neutral-100">
-            {type === "current" ? (
-              <span>
-                A chance to{" "}
-                <span
-                  className="rounded-lg p-2 text-white"
-                  style={{ backgroundColor: siteData.color1 }}
+    competition && (
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        <ModalBody>
+          <ModalContent>
+            <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 md:text-2xl dark:text-neutral-100">
+              {type === "current" ? (
+                <span>
+                  A chance to{" "}
+                  <span
+                    className="rounded-lg p-2 text-white"
+                    style={{ backgroundColor: siteData.color1 }}
+                  >
+                    win
+                  </span>{" "}
+                  your favourite {siteData.name} prizes
+                </span>
+              ) : (
+                "View competition results"
+              )}
+            </h4>
+            <div className="mb-8 flex items-center justify-center">
+              {images.map((image, idx) => (
+                <motion.div
+                  key={"images" + idx}
+                  style={{
+                    rotate: Math.random() * 20 - 10,
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    rotate: 0,
+                    zIndex: 100,
+                  }}
+                  whileTap={{
+                    scale: 1.1,
+                    rotate: 0,
+                    zIndex: 100,
+                  }}
+                  className="-mr-4 mt-4 flex-shrink-0 overflow-hidden rounded-xl border border-neutral-100 bg-white p-1 dark:border-neutral-700 dark:bg-neutral-800"
                 >
-                  win
-                </span>{" "}
-                your favourite {siteData.name} prizes
-              </span>
-            ) : (
-              "View competition results"
-            )}
-          </h4>
-          <div className="mb-8 flex items-center justify-center">
-            {images.map((image, idx) => (
-              <motion.div
-                key={"images" + idx}
-                style={{
-                  rotate: Math.random() * 20 - 10,
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  rotate: 0,
-                  zIndex: 100,
-                }}
-                whileTap={{
-                  scale: 1.1,
-                  rotate: 0,
-                  zIndex: 100,
-                }}
-                className="-mr-4 mt-4 flex-shrink-0 overflow-hidden rounded-xl border border-neutral-100 bg-white p-1 dark:border-neutral-700 dark:bg-neutral-800"
-              >
-                <Image
-                  src={image || "/logo.png"}
-                  alt="images"
-                  width="500"
-                  height="500"
-                  className="h-20 w-20 flex-shrink-0 rounded-lg object-cover md:h-40 md:w-40"
-                />
-              </motion.div>
-            ))}
-          </div>
-          <div className="mx-auto flex max-w-sm flex-col items-center gap-4">
-            <div className="flex items-center justify-center">
-              <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                {status}
-              </span>
+                  <Image
+                    src={image || "/logo.png"}
+                    alt="images"
+                    width="500"
+                    height="500"
+                    className="h-20 w-20 flex-shrink-0 rounded-lg object-cover md:h-40 md:w-40"
+                  />
+                </motion.div>
+              ))}
             </div>
-          </div>
-        </ModalContent>
-        <ModalFooter className="gap-4">
-          <Link href={"/comp/" + competition?.slug}>
-            <PlayButton color1={siteData?.color1} color2={siteData?.color2}>
-              {type === "current" ? "Let's Go →" : "View →"}
-            </PlayButton>
-          </Link>
-        </ModalFooter>
-      </ModalBody>
-    </Modal>
+            <div className="mx-auto grid max-w-md grid-cols-2 items-center gap-4 text-sm text-neutral-700 dark:text-neutral-300">
+              {/* <span className="">
+              {status}
+            </span> */}
+              <span className="flex items-center">
+                <Sparkle className="mr-2" /> {competition.title}
+              </span>
+              <span className="flex items-center">
+                <Timer className="mr-2" />{" "}
+                {new Date(competition.date).toDateString()}
+              </span>
+              <span className="flex items-center">
+                <Crown className="mr-2" />{" "}
+                {(competition.rewardWinners || 0) +
+                  (competition.reward2Winners || 0) +
+                  (competition.reward3Winners || 0)}{" "}
+                Winners
+              </span>
+              <span className="">{competition.rewardTitle}</span>
+              <span className="">{competition.reward2Title}</span>
+              <span className="">{competition.reward3Title}</span>
+            </div>
+          </ModalContent>
+          <ModalFooter className="gap-4">
+            <Link href={"/comp/" + competition?.slug}>
+              <PlayButton color1={siteData?.color1} color2={siteData?.color2}>
+                {type === "current" ? "Let's Go →" : "View →"}
+              </PlayButton>
+            </Link>
+          </ModalFooter>
+        </ModalBody>
+      </Modal>
+    )
   );
 }

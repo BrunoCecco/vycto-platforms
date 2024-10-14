@@ -41,10 +41,10 @@ const UserSignUp = ({
 
     try {
       // Sign in with Facebook
-      const result = await signInWithPopup(auth, facebookProvider);
+      const result = await signIn("google");
       // Get the signed-in user info
-      const user = result.user;
-      console.log("User signed in: ", user);
+      // const user = result.user;
+      // console.log("User signed in: ", user);
 
       // Here, you can handle additional logic like redirecting or fetching user data
 
@@ -63,7 +63,9 @@ const UserSignUp = ({
     posthog?.capture("apple-sign-in-clicked");
 
     try {
-      const res = await signIn("apple");
+      const res = await signIn("apple", {
+        is_private_email: false,
+      });
       console.log("User signed in: ", res);
     } catch (error: any) {
       const errorCode = error.code;
@@ -100,7 +102,7 @@ const UserSignUp = ({
 
           {emailExists && (
             <div className="mt-6 flex w-full flex-col gap-4 md:flex-row">
-              <button
+              {/* <button
                 onClick={() => handleFacebookSignIn()} // Use Firebase Facebook sign-in
                 className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-xs font-medium text-gray-700 shadow-sm md:w-1/2"
               >
@@ -112,7 +114,7 @@ const UserSignUp = ({
                   className="mr-2 h-5 w-5"
                 />
                 <span>Continue with Facebook</span>
-              </button>
+              </button> */}
               <button
                 onClick={() => handleAppleSignin()} // Use Firebase Facebook sign-in
                 className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-xs font-medium text-gray-700 shadow-sm md:w-1/2"

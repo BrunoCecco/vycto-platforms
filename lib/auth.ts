@@ -14,6 +14,7 @@ import EmailProvider, {
 import { createTransport } from "nodemailer";
 import AppleProvider from "next-auth/providers/apple";
 import FacebookProvider from "next-auth/providers/facebook";
+import GoogleProvider from "next-auth/providers/google";
 import { SUPER_ADMIN } from "./constants";
 
 // Add this type declaration at the top of your file
@@ -35,6 +36,11 @@ export const authOptions: NextAuthOptions = {
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID!,
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
+    }),
+    GoogleProvider({
+      clientId:
+        "1093526144020-ugos7d10gau4t1n76g0k0va3oaljg6jn.apps.googleusercontent.com",
+      clientSecret: "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",
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID!,
@@ -63,7 +69,6 @@ export const authOptions: NextAuthOptions = {
     sessionsTable: sessions,
     verificationTokensTable: verificationTokens,
   }) as Adapter,
-  // adapter: FirebaseAdapter(firestore),
   session: { strategy: "jwt" },
   cookies: {
     pkceCodeVerifier: {

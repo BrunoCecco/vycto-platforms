@@ -12,7 +12,7 @@ export default async function Profile() {
       <div className="flex w-full items-center justify-between">
         <Link
           href="/settings"
-          className="flex w-full flex-1 items-center space-x-3 rounded-lg px-2 py-1.5 text-white transition-all duration-150 ease-in-out hover:bg-stone-700 active:bg-stone-800"
+          className="flex w-5/6 flex-1 items-center space-x-3 rounded-lg px-2 py-1.5 text-white transition-all duration-150 ease-in-out hover:bg-stone-700 active:bg-stone-800"
         >
           <Image
             src={
