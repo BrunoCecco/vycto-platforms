@@ -117,7 +117,7 @@ const UserSignUp = ({
               </button> */}
               <button
                 onClick={() => handleAppleSignin()} // Use Firebase Facebook sign-in
-                className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-xs font-medium text-gray-700 shadow-sm md:w-1/2"
+                className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-xs font-medium text-gray-700 shadow-sm md:w-full"
               >
                 <Image
                   src="/appleIcon.svg"
