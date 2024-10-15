@@ -20,6 +20,7 @@ import {
   Home,
   Book,
   Crown,
+  Bell,
 } from "lucide-react";
 import {
   useParams,
@@ -31,6 +32,8 @@ import { getSiteFromCompetitionId } from "@/lib/actions";
 import Image from "next/image";
 import { SelectSite } from "@/lib/schema";
 import PlayButton from "../buttons/playButton";
+import { Button } from "@tremor/react";
+import { toast } from "sonner";
 
 export default function SiteNav({
   data,
@@ -81,7 +84,12 @@ export default function SiteNav({
   useEffect(() => {
     // hide sidebar on path change
     setShowSidebar(false);
+    toast.success("Successfully subscribed to notifications!");
   }, [pathname]);
+
+  const stayNotified = () => {
+    toast.success("Successfully subscribed to notifications!");
+  };
 
   return (
     <>
@@ -130,6 +138,13 @@ export default function SiteNav({
                   <span className="text-sm font-medium">{name}</span>
                 </Link>
               ))}
+              <div
+                onClick={stayNotified}
+                className={`mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 text-white transition-all duration-150  ease-in-out hover:bg-stone-700 `}
+              >
+                <Bell width={18} />
+                <span className="text-sm font-medium">Stay Notified</span>
+              </div>
             </div>
           </div>
           <div className="mb-2">

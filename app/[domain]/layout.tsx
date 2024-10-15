@@ -12,6 +12,7 @@ import Loading from "../app/(dashboard)/loading";
 import { capitalize } from "@/lib/utils";
 import LoadingDots from "@/components/icons/loadingDots";
 import PlayButton from "@/components/buttons/playButton";
+import { toast } from "sonner";
 
 export async function generateMetadata({
   params,
@@ -104,7 +105,7 @@ export default async function SiteLayout({
 
   return (
     <div
-      className={`${fontMapper["font-space"]} font-space flex min-h-screen bg-slate-950`}
+      className={`${fontMapper["font-space"]} flex min-h-screen bg-slate-950 font-space`}
     >
       <div className="relative z-50 w-0 sm:w-1/5">
         <SiteNav
