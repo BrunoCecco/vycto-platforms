@@ -3,6 +3,7 @@ import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import LoginButton from "./loginButton";
+import SignUpWrapper from "./signUpWrapper";
 
 const B2BSignUp: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,12 +12,10 @@ const B2BSignUp: React.FC = () => {
   const [emailExists, setEmailExists] = useState(true);
 
   return (
-    <div className="flex min-h-screen">
-      {/* Left side - Sign In form */}
-      <div className="flex w-1/2 flex-col justify-center bg-white px-16">
-        <div className="mx-auto w-full max-w-md">
-          <h2 className="mb-6 text-3xl font-bold text-gray-900">Sign In</h2>
-          {/* <p className="mb-8 text-gray-600">
+    <SignUpWrapper>
+      <div className="mx-auto w-full max-w-md">
+        <h2 className="mb-6 text-3xl font-bold text-gray-900">Sign In</h2>
+        {/* <p className="mb-8 text-gray-600">
             Enter your email and password to sign in!
           </p>
           <button className="mb-6 flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 py-2 text-gray-700 shadow-sm hover:bg-gray-50">
@@ -31,55 +30,55 @@ const B2BSignUp: React.FC = () => {
               <span className="bg-white px-2 text-gray-500">or</span>
             </div>
           </div> */}
-          <div className="space-y-6">
-            {/* Email Field */}
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email <span>*</span>
-              </label>
-              <div className="mt-1">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="email"
-                  placeholder="mail@simple.com"
-                  required
-                  className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
-                />
-              </div>
-              {!emailExists && (
-                <div>
-                  <p className="mt-2 text-center text-sm text-gray-600">
-                    Welcome! Please choose a username.
-                  </p>
-                  <label
-                    htmlFor="username"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Username
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="username"
-                      name="username"
-                      type="text"
-                      onChange={(e) => setUsername(e.target.value)}
-                      placeholder="user123"
-                      required
-                      className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
-              )}
+        <div className="space-y-6">
+          {/* Email Field */}
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email <span>*</span>
+            </label>
+            <div className="mt-1">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                placeholder="mail@simple.com"
+                required
+                className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              />
             </div>
+            {!emailExists && (
+              <div>
+                <p className="mt-2 text-center text-sm text-gray-600">
+                  Welcome! Please choose a username.
+                </p>
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Username
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="user123"
+                    required
+                    className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
 
-            {/* Password Field */}
-            {/* <div>
+          {/* Password Field */}
+          {/* <div>
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
@@ -133,45 +132,14 @@ const B2BSignUp: React.FC = () => {
                 </a>
               </div>
             </div> */}
-            <LoginButton
-              email={email}
-              setEmailExists={setEmailExists}
-              username={username}
-            />
-          </div>
+          <LoginButton
+            email={email}
+            setEmailExists={setEmailExists}
+            username={username}
+          />
         </div>
       </div>
-
-      {/* Right side - Logo and Info */}
-      <div className="relative flex w-1/2 flex-col items-center justify-center overflow-hidden bg-[#543ccc] text-white">
-        <div className="flex h-1/2 flex-col items-center justify-between">
-          <Image src={"/vLogo.png"} width={75} height={75} alt={""} />
-          <div className="flex items-center justify-center">
-            <Image src={"/vyctoLogo.png"} width={110} height={110} alt={""} />
-            <span className="text-md ml-3 rounded-lg border-2 border-[#FFC700] p-1 font-medium text-[#FFC700]">
-              beta
-            </span>
-          </div>
-          <div className="rounded-lg border-2 border-gray-400 bg-gradient-to-br from-[#868CFF] to-[#4318FF] px-12 py-4 text-center text-white shadow-lg">
-            <p className="text-lg">Learn more about vycto on</p>
-            <a href="https://vycto.com" className="text-2xl font-semibold">
-              vycto.com
-            </a>
-          </div>
-        </div>
-
-        <div className="absolute bottom-6 space-x-10 text-sm text-white">
-          <a href="#">Product</a>
-          <a href="#">Mission</a>
-          <a href="#">Contact</a>
-        </div>
-
-        {/* Curve effect */}
-        <div className="absolute bottom-0 left-0 h-28 w-28 bg-white">
-          <div className="h-28 w-28 rounded-bl-full bg-[#543ccc]"></div>
-        </div>
-      </div>
-    </div>
+    </SignUpWrapper>
   );
 };
 

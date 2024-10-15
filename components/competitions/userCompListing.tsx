@@ -1,12 +1,16 @@
 import { getCompetitionFromId } from "@/lib/fetchers";
 import { SelectUserCompetition } from "@/lib/schema";
+import { getSession } from "next-auth/react";
 import Image from "next/image";
+import Button from "../buttons/button";
 
-export default async function RewardsListing({
+export default async function UserCompListing({
   userComp,
 }: {
   userComp: SelectUserCompetition;
 }) {
+  const session = await getSession();
+
   const comp = await getCompetitionFromId(userComp.competitionId);
   const rewardDetails = () => {
     if (comp?.id.startsWith("yt")) console.log("rewardid:", userComp.rewardId);
@@ -35,7 +39,8 @@ export default async function RewardsListing({
   };
 
   const userReward = rewardDetails();
-  if (comp?.id.startsWith("yt")) console.log(userReward, "reward");
+  const canClaim = session?.user.id === userComp.userId && userReward != null;
+
   if (!userReward)
     return (
       <tr className="bg-gray-800">
@@ -56,9 +61,19 @@ export default async function RewardsListing({
             </div>
           </div>
         </td>
-        <td className="p-4 text-left">No reward</td>
+        <td className="p-4 text-left text-sm font-medium text-gray-300">
+          <div className="text-sm font-medium text-gray-300">
+            Points: {userComp.points}
+          </div>
+          <div className="text-sm font-medium text-gray-300">
+            Rank: {userComp.ranking}/{userComp.totalUsers}
+          </div>
+          <div className="text-sm font-medium text-gray-300">
+            Average: {userComp.averagePoints}
+          </div>
+        </td>
         <td className="p-4 text-left">
-          <div className="text-sm text-gray-300"></div>
+          <div className="text-sm text-gray-300">{comp?.rewardTitle}</div>
         </td>
       </tr>
     );
@@ -80,21 +95,28 @@ export default async function RewardsListing({
             <div className="text-sm font-medium text-gray-300">
               {comp?.title}
             </div>
-            <div className="text-sm text-gray-300">
-              Rank: {userComp.ranking}
-            </div>
-            <div className="text-sm text-gray-300">
-              {parseFloat(userComp.points || "0").toFixed(2)} Pts
-            </div>
           </div>
         </div>
       </td>
       <td className="p-4 text-left">
-        <div className="font-medium">{userReward.title}</div>
-        <div className="text-sm text-gray-300">{userReward.description}</div>
+        <div className="text-sm font-medium text-gray-300">
+          Points: {userComp.points}
+        </div>
+        <div className="text-sm font-medium text-gray-300">
+          Rank: {userComp.ranking}/{userComp.totalUsers}
+        </div>
+        <div className="text-sm font-medium text-gray-300">
+          Average: {userComp.averagePoints}
+        </div>
       </td>
       <td className="p-4 text-left">
-        <div className="text-sm text-gray-300">Claim soon...</div>
+        <div className="text-sm text-gray-300">{userReward.title}</div>
+        <div className="text-sm text-gray-300">{userReward.description}</div>
+        {canClaim && (
+          <Button className="bg-gradient-to-tr from-blue-200 to-blue-400">
+            Claim
+          </Button>
+        )}
       </td>
     </tr>
   );

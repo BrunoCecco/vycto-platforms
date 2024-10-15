@@ -461,11 +461,13 @@ export const answerQuestion = async (formData: FormData) => {
   }
 };
 
-export const updateRewardForUser = async (
+export const updateStatsForUser = async (
   userId: string,
   competitionId: string,
   rewardId: number,
   ranking: number,
+  totalUsers: number,
+  averagePoints: number,
 ) => {
   try {
     const response = await db
@@ -473,6 +475,8 @@ export const updateRewardForUser = async (
       .set({
         rewardId,
         ranking,
+        totalUsers,
+        averagePoints: averagePoints.toString(),
       })
       .where(
         and(
@@ -492,7 +496,7 @@ export const updateRewardForUser = async (
 };
 
 // goes through each user in a competition and assigns their reward id or -1 if they didn't win
-export const updateUserCompetitionRewards = async (competitionId: string) => {
+export const updateUserCompetitionStats = async (competitionId: string) => {
   try {
     const competitionUsers = await db.query.userCompetitions.findMany({
       where: eq(userCompetitions.competitionId, competitionId),
@@ -519,6 +523,13 @@ export const updateUserCompetitionRewards = async (competitionId: string) => {
       ? reward2Winners + rewardWinnerData.reward3Winners
       : reward2Winners;
 
+    let totalUsers = competitionUsers.length;
+    let averagePoints = sortedUsers.reduce(
+      (acc, user) => acc + parseFloat(user.points || "0"),
+      0,
+    );
+    averagePoints /= totalUsers;
+
     for (let i = 0; i < sortedUsers.length; i++) {
       let user = sortedUsers[i];
       let rewardId =
@@ -530,11 +541,14 @@ export const updateUserCompetitionRewards = async (competitionId: string) => {
               ? 2
               : -1;
       let ranking = i + 1;
-      await updateRewardForUser(
+
+      await updateStatsForUser(
         user.userId,
         user.competitionId,
         rewardId,
         ranking,
+        totalUsers,
+        averagePoints,
       );
     }
 

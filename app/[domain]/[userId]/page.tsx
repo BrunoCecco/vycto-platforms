@@ -23,8 +23,7 @@ import {
   submitAnswers,
 } from "@/lib/actions";
 import { getSession } from "@/lib/auth";
-import CompetitionPage from "@/components/competitions/competitionPage";
-import UserCompetitionInfo from "@/components/competitions/userCompetitionInfo";
+import UserCompListing from "@/components/competitions/userCompListing";
 
 export default async function UserCompetitionsPage({
   params,
@@ -41,14 +40,29 @@ export default async function UserCompetitionsPage({
   }
 
   return (
-    <div className="">
+    <div className="text-white">
       <h1 className="mb-4 text-lg font-bold">
-        {user?.username || user?.name} competitions
+        {user?.username || user?.name || "User " + user?.id.substring(0, 5)}{" "}
+        competitions
       </h1>
-      {competitions &&
-        competitions.map((comp: SelectUserCompetition) => (
-          <UserCompetitionInfo key={comp.competitionId} userComp={comp} />
-        ))}
+      <table className="w-full overflow-hidden rounded-lg">
+        <thead>
+          <tr className="bg-gray-700">
+            <th className="p-4 text-left">Competition</th>
+            <th className="p-4 text-left">Stats</th>
+            <th className="p-4 text-left">Reward</th>
+          </tr>
+        </thead>
+        <tbody>
+          {competitions &&
+            competitions.map((userComp, index) => (
+              <UserCompListing
+                key={userComp.competitionId}
+                userComp={userComp}
+              />
+            ))}
+        </tbody>
+      </table>
     </div>
   );
 }

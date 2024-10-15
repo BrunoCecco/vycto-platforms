@@ -2,7 +2,7 @@
 
 import {
   updateCompetitionMetadata,
-  updateUserCompetitionRewards,
+  updateUserCompetitionStats,
 } from "@/lib/actions";
 import { SelectCompetition } from "@/lib/schema";
 import { useEffect, useState, useTransition } from "react";
@@ -42,8 +42,8 @@ export default function PublishCompetitionButtons({
       await validateCorrectAnswers(competition.id);
       // now we can calculate the points
       await calculateCompetitionPoints(competition.id);
-      // assign rewards to users
-      await updateUserCompetitionRewards(competition.id);
+      // assign rewards to users and update the competition stats
+      await updateUserCompetitionStats(competition.id);
       const formData = new FormData();
       formData.append("correctAnswersSubmitted", "true");
       await updateCompetitionMetadata(

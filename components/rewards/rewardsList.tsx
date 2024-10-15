@@ -1,5 +1,5 @@
 import { SelectCompetition, SelectUserCompetition } from "@/lib/schema";
-import RewardsListing from "./rewardListing";
+import UserCompListing from "../competitions/userCompListing";
 
 export default async function RewardsList({
   userCompetitions,
@@ -13,15 +13,15 @@ export default async function RewardsList({
         <table className="w-full">
           <thead>
             <tr className="bg-gray-700">
-              <th className="p-4 text-left">Event</th>
+              <th className="p-4 text-left">Competition</th>
+              <th className="p-4 text-left">Stats</th>
               <th className="p-4 text-left">Reward</th>
-              <th className="p-4 text-left">Status</th>
             </tr>
           </thead>
           <tbody>
             {userCompetitions &&
               userCompetitions.map((userComp, index) => (
-                <RewardsListing
+                <UserCompListing
                   key={userComp.competitionId}
                   userComp={userComp}
                 />

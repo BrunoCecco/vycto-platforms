@@ -123,6 +123,7 @@ export default function LoginButton({
         redirect: false,
       });
 
+      console.log(result);
       if (result && result.ok) {
         setMessage("Email sent - check your inbox to start playing!");
         setShowModal(true);
@@ -155,9 +156,7 @@ export default function LoginButton({
       )}
       {showModal && (
         <Leaflet setShow={setShowModal}>
-          <p className="text-sm font-bold text-stone-700 my-40">
-            {message}
-          </p>
+          <p className="my-40 text-sm font-bold text-stone-700">{message}</p>
         </Leaflet>
       )}
       {message && <p className="text-sm font-bold text-stone-700">{message}</p>}

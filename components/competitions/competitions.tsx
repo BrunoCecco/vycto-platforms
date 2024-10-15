@@ -27,6 +27,12 @@ const Competitions = ({
     }
   }, [selectedCompetition]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedCompetition(null);
+    }
+  }, [isOpen]);
+
   const pathname = usePathname();
 
   const handleCompetitionClick = (competition: SelectCompetition) => {

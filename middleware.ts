@@ -44,6 +44,10 @@ export default async function middleware(req: NextRequest) {
       );
     }
 
+    if (session && path.startsWith("/login")) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+
     // Allow all requests to user-facing sites
     return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
   }

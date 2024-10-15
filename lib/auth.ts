@@ -37,11 +37,11 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.APPLE_CLIENT_ID!,
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
     }),
-    GoogleProvider({
-      clientId:
-        "1093526144020-ugos7d10gau4t1n76g0k0va3oaljg6jn.apps.googleusercontent.com",
-      clientSecret: "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",
-    }),
+    // GoogleProvider({
+    //   clientId:
+    //     "1093526144020-ugos7d10gau4t1n76g0k0va3oaljg6jn.apps.googleusercontent.com",
+    //   clientSecret: "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",
+    // }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID!,
       clientSecret: process.env.FACEBOOK_SECRET!,
@@ -71,15 +71,15 @@ export const authOptions: NextAuthOptions = {
   }) as Adapter,
   session: { strategy: "jwt" },
   cookies: {
-    pkceCodeVerifier: {
-      name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.pkce.code_verifier`,
-      options: {
-        httpOnly: true,
-        sameSite: "none",
-        path: "/",
-        secure: true,
-      },
-    },
+    // pkceCodeVerifier: {
+    //   name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.pkce.code_verifier`,
+    //   options: {
+    //     httpOnly: true,
+    //     sameSite: "none",
+    //     path: "/",
+    //     secure: true,
+    //   },
+    // },
     sessionToken: {
       name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
       options: {

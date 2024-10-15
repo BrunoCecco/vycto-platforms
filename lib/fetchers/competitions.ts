@@ -142,19 +142,19 @@ export async function getCompetitionData(domain: string, slug: string) {
 }
 
 export async function getQuestionsForCompetition(competitionId: string) {
-  // return await unstable_cache(
-  //   async () => {
-  return await db.query.questions.findMany({
-    where: eq(questions.competitionId, competitionId),
-    orderBy: desc(questions.id),
-  });
-  //   },
-  //   [`${competitionId}-questions`],
-  //   {
-  //     revalidate: 900,
-  //     tags: [`${competitionId}-questions`],
-  //   },
-  // )();
+  return await unstable_cache(
+    async () => {
+      return await db.query.questions.findMany({
+        where: eq(questions.competitionId, competitionId),
+        orderBy: desc(questions.id),
+      });
+    },
+    [`${competitionId}-questions`],
+    {
+      revalidate: 900,
+      tags: [`${competitionId}-questions`],
+    },
+  )();
 }
 
 export async function getAnswersForUser(userId: string, competitionId: string) {
@@ -176,34 +176,33 @@ export async function getAnswersForUser(userId: string, competitionId: string) {
 }
 
 export async function getCompetitionUsers(competitionId: string) {
-  // return await unstable_cache(
-  //   async () => {
-  return await db.query.userCompetitions.findMany({
-    where: eq(userCompetitions.competitionId, competitionId),
-  });
-  //   },
-  //   [`${competitionId}-users`],
-  //   {
-  //     revalidate: 900,
-  //     tags: [`${competitionId}-users`],
-  //   },
-  // )();
+  return await unstable_cache(
+    async () => {
+      return await db.query.userCompetitions.findMany({
+        where: eq(userCompetitions.competitionId, competitionId),
+      });
+    },
+    [`${competitionId}-users`],
+    {
+      revalidate: 900,
+      tags: [`${competitionId}-users`],
+    },
+  )();
 }
 
 export async function getUserCompetitions(userId: string) {
-  // return await unstable_cache(
-  //   async () => {
-  return await db.query.userCompetitions.findMany({
-    where: eq(userCompetitions.userId, userId),
-  });
-
-  //   },
-  //   [`${competitionId}-users`],
-  //   {
-  //     revalidate: 900,
-  //     tags: [`${competitionId}-users`],
-  //   },
-  // )();
+  return await unstable_cache(
+    async () => {
+      return await db.query.userCompetitions.findMany({
+        where: eq(userCompetitions.userId, userId),
+      });
+    },
+    [`${userId}-users`],
+    {
+      revalidate: 900,
+      tags: [`${userId}-users`],
+    },
+  )();
 }
 
 export async function getCompetitionFromId(competitionId: string) {

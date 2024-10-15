@@ -235,6 +235,10 @@ export const userCompetitions = pgTable(
     points: decimal("points", { precision: 7, scale: 4 }).default("0.0000"),
     rewardId: integer("rewardId").default(-1),
     ranking: integer("ranking").default(-1),
+    totalUsers: integer("totalUsers").default(0),
+    averagePoints: decimal("averagePoints", { precision: 7, scale: 4 }).default(
+      "0.0000",
+    ),
     submitted: boolean("submitted").default(false),
     submissionDate: text("submissionDate")
       .notNull()
