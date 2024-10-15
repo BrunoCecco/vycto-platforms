@@ -19,13 +19,13 @@ import { signIn } from "next-auth/react";
 
 const SignUpWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex min-h-screen bg-white">
-      <div className="mx-auto flex w-1/2 max-w-lg flex-col items-center justify-center md:p-8">
+    <div className="flex min-h-screen flex-col bg-white md:flex-row">
+      <div className="mx-auto flex w-full max-w-lg flex-col items-center justify-center p-8 md:w-1/2">
         {children}
       </div>
 
       {/* Right side - Logo and Info */}
-      <div className="relative flex w-1/2 flex-col items-center justify-center overflow-hidden bg-[#543ccc] text-white">
+      <div className="relative hidden w-1/2 flex-col items-center justify-center overflow-hidden bg-[#543ccc] text-white md:flex">
         <div className="flex h-1/2 flex-col items-center justify-between">
           <Image src={"/vLogo.png"} width={75} height={75} alt={""} />
           <div className="flex items-center justify-center">
