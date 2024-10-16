@@ -5,11 +5,13 @@ import { cn } from "@/lib/utils";
 
 export const TextGenerateEffect = ({
   words,
+  delay = 0.2,
   className,
   filter = true,
   duration = 0.5,
 }: {
   words: string;
+  delay?: number;
   className?: string;
   filter?: boolean;
   duration?: number;
@@ -25,7 +27,7 @@ export const TextGenerateEffect = ({
       },
       {
         duration: duration ? duration : 1,
-        delay: stagger(0.2),
+        delay: stagger(delay),
       },
     );
   }, [scope.current]);
@@ -53,7 +55,7 @@ export const TextGenerateEffect = ({
   return (
     <div className={cn("font-bold", className)}>
       <div className="mt-4">
-        <div className=" text-2xl leading-snug tracking-wide text-black dark:text-white">
+        <div className="sm:text-md text-sm leading-snug tracking-wide text-black md:text-2xl dark:text-white">
           {renderWords()}
         </div>
       </div>

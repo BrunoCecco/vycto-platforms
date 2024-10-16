@@ -6,6 +6,7 @@ import MainLeaderboard from "../leaderboard/mainLeaderboard";
 import { ClockIcon, Medal, PlayCircle } from "lucide-react";
 import LoadingDots from "../icons/loadingDots";
 import Loading from "@/app/app/(dashboard)/loading";
+import { Story } from "./story";
 
 const FanZone = async ({
   siteData,

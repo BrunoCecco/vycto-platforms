@@ -13,7 +13,7 @@ import { capitalize } from "@/lib/utils";
 import LoadingDots from "@/components/icons/loadingDots";
 import PlayButton from "@/components/buttons/playButton";
 import { toast } from "sonner";
-import {getSession} from '@/lib/auth';
+import { getSession } from "@/lib/auth";
 
 export async function generateMetadata({
   params,
@@ -63,13 +63,6 @@ export async function generateMetadata({
     //   }),
   };
 }
-
-const Background = () => (
-  <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
-    {/* <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 via-transparent to-yellow-500 blur-3xl"></div>
-    <div className="absolute inset-0 bg-gradient-to-tl from-yellow-300 via-transparent to-yellow-400 blur-3xl"></div> */}
-  </div>
-);
 
 export default async function SiteLayout({
   params,

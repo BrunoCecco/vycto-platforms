@@ -35,8 +35,10 @@ import PlayButton from "../buttons/playButton";
 import { Button } from "@tremor/react";
 import { toast } from "sonner";
 import { CoolMode } from "@/components/ui/coolMode";
-import {redirect} from 'next/navigation'
-
+import { ModalBody, Modal, ModalContent } from "../ui/animatedModal";
+import { Story } from "../fanzone/story";
+import HoverBorderGradient from "../ui/hoverBorderGradient";
+import Input from "../input";
 
 export default function SiteNav({
   data,
@@ -52,7 +54,8 @@ export default function SiteNav({
   const segments = useSelectedLayoutSegments();
   const { id } = useParams() as { id?: string };
 
-  const [hovered, setHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [email, setEmail] = useState("");
 
   const tabs = useMemo(() => {
     return [
@@ -92,23 +95,26 @@ export default function SiteNav({
     setShowSidebar(false);
   }, [pathname]);
 
-  const stayNotified = async () => {
-    if (session) {
+  const subscribe = async () => {
     fetch("/api/subscribe", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        email: session.user.email,
-        group: data.senderGroup
+        email: session?.user?.email || email,
+        group: data.senderGroup,
+      }),
+    })
+      .then(async (res) => {
+        if (res.status === 200) {
+          toast.success("Successfully subscribed to notifications!");
+        }
+        setIsOpen(false);
       })
-    }).then(async (res) => {
-      if (res.status === 200) {
-        toast.success("Successfully subscribed to notifications!");
-      }
-    }).catch((err) => console.log(err))
-  } else {
-    redirect('/login')
-  }
+      .catch((err) => console.log(err));
+  };
+
+  const stayNotified = async () => {
+    setIsOpen(true);
   };
 
   return (
@@ -187,6 +193,33 @@ export default function SiteNav({
           {children}
         </div>
       </div>
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+        <ModalBody>
+          <ModalContent>
+            <div className="flex flex-col items-center justify-center gap-4">
+              <Story />
+              {session ? (
+                <HoverBorderGradient containerClassName="py-2 px-4">
+                  <button onClick={subscribe}>Subscribe</button>
+                </HoverBorderGradient>
+              ) : (
+                <div className="flex w-[400px] flex-col items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="hi@vycto.com"
+                    className="relative z-10 mt-4 w-full rounded-lg border  border-neutral-800 bg-neutral-950 text-white placeholder:text-neutral-700  focus:ring-2 focus:ring-gray-300"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />{" "}
+                  <HoverBorderGradient containerClassName="py-2 px-4">
+                    <button onClick={subscribe}>Subscribe</button>
+                  </HoverBorderGradient>
+                </div>
+              )}
+            </div>
+          </ModalContent>
+        </ModalBody>
+      </Modal>
     </>
   );
 }
