@@ -112,6 +112,15 @@ export default function Uploader({
     return !data[name] || saving;
   }, [data[name], saving]);
 
+  const removeFile = async () => {
+    fetch("/api/delete/" + data[name], {
+      method: "DELETE",
+    }).then(async (res) => {
+      toast.success("File deleted successfully");
+      upload(name, "");
+    });
+  };
+
   return (
     <div className="grid w-full gap-6 rounded-lg border border-stone-200 bg-white p-5 sm:p-10 dark:border-stone-700 dark:bg-black">
       <form className="" ref={formRef} onSubmit={handleSubmit}>
@@ -238,9 +247,7 @@ export default function Uploader({
           </div>
         </div>
       </form>
-      {data[name] != "" && (
-        <Button onClick={() => upload(name, "")}>Remove</Button>
-      )}
+      {data[name] != "" && <Button onClick={removeFile}>Remove</Button>}
     </div>
   );
 }

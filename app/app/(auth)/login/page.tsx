@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import B2BSignUp from "@/components/auth/b2BSignUp";
 import ViewUnavailable from "@/components/mobile/viewUnavailable";
 import SignUpWrapper from "@/components/auth/signUpWrapper";
+import { BackgroundGradientAnimation } from "@/components/ui/backgroundGradientAnimation";
 
 export default async function LoginPage() {
   const heads = headers();

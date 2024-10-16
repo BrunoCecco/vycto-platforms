@@ -82,86 +82,92 @@ const UserSignUp = ({
   };
 
   return (
-    <div className="w-full">
-      <p className="text-xs text-gray-500">
-        Powered by{" "}
-        <span className="text-md font-bold text-blue-700">Vycto</span>
-      </p>
-
-      <div className="mt-6 flex flex-col items-center text-center">
+    <div className="w-full text-left">
+      <div className="absolute left-0 top-0 p-8 md:p-6">
         <Image
-          src={siteData?.logo ?? "/logo.png"}
-          width={100}
-          height={100}
+          src={"/logo.png"}
+          width={40}
+          height={40}
           alt="Site Logo"
           className="object-contain"
         />
-        <h1 className="mt-4 text-2xl font-bold text-blue-700">
-          Sign Up & Play
-        </h1>
+        <p className="mt-1 text-xs text-gray-500">
+          Powered by{" "}
+          <span className="text-md font-bold text-blue-700">Vycto</span>
+        </p>
+      </div>
+      <Image
+        src={siteData?.logo ?? "/logo.png"}
+        width={100}
+        height={100}
+        alt="Site Logo"
+        className="mb-4 object-contain"
+      />
+
+      <div className="flex flex-col">
+        {emailExists && (
+          <h1 className="mt-4 text-2xl font-bold text-blue-700">
+            Sign Up & Play
+          </h1>
+        )}
 
         {emailExists && (
-          <div className="mt-6 flex w-full flex-col gap-4 md:flex-row">
-            {/* <button
-                onClick={() => handleFacebookSignIn()} // Use Firebase Facebook sign-in
-                className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-xs font-medium text-gray-700 shadow-sm md:w-1/2"
-              >
-                <Image
-                  src="/facebookIcon.svg"
-                  width={20}
-                  height={20}
-                  alt="Facebook Logo"
-                  className="mr-2 h-5 w-5"
-                />
-                <span>Continue with Facebook</span>
-              </button> */}
+          <div className="mt-4 flex w-full flex-col gap-4 md:flex-row">
             <button
               onClick={() => handleAppleSignin()} // Use Firebase Facebook sign-in
-              className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-4 text-xs font-medium text-gray-700 shadow-sm md:w-full"
+              className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-2 font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-300 md:w-full"
             >
               <Image
                 src="/appleIcon.svg"
                 width={20}
                 height={20}
                 alt="Apple Logo"
-                className="mr-2 h-5 w-5"
+                className="mr-2"
               />
               <span>Continue with Apple</span>
             </button>
           </div>
         )}
 
-        {emailExists && <p className="my-4 text-gray-400">or</p>}
-
-        <div className="w-full space-y-4 !text-xs">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-500"
-            >
-              Email Address
-            </label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              placeholder="buzz@lightyear.com"
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-xs placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-            />
+        {emailExists && (
+          <div className="mt-4 flex items-center justify-between">
+            <div className="h-[1px] w-[40%] bg-gray-300" />
+            <p className="text-gray-400">or</p>
+            <div className="h-[1px] w-[40%] bg-gray-300" />
           </div>
+        )}
+
+        <div className="flex w-full flex-col !text-xs">
+          {emailExists && (
+            <div className="mt-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-500"
+              >
+                Email Address
+              </label>
+              <input
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="buzz@lightyear.com"
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-xs placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              />
+            </div>
+          )}
           {!emailExists && (
             <>
-              <h1 className="mt-4 text-center text-lg font-bold text-blue-700">
+              <h1 className="mt-4 text-lg font-bold text-blue-700">
                 Bravo 🎉 Let the Competition begin!
               </h1>
 
-              <p className="mt-2 text-center text-sm text-gray-600">
+              <p className="mt-4 text-sm text-gray-600">
                 Choose a username. This is what people will see when you enter
                 competitions and compete on the leaderboard.
               </p>
 
-              <div>
+              <div className="mt-4">
                 <label
                   htmlFor="username"
                   className="block text-sm font-medium text-gray-700"
@@ -176,7 +182,7 @@ const UserSignUp = ({
                   className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-xs placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                 />
               </div>
-              <div>
+              <div className="mt-4">
                 <label
                   htmlFor="fullname"
                   className="block text-sm font-medium text-gray-700"
@@ -193,18 +199,20 @@ const UserSignUp = ({
               </div>
             </>
           )}
-          <LoginButton
-            email={email}
-            username={username}
-            localAnswers={localAnswers}
-            competitionSlug={competitionSlug}
-            name={name}
-            setEmailExists={setEmailExists}
-          />
+          <div className="relative mt-4 w-full">
+            <LoginButton
+              email={email}
+              username={username}
+              localAnswers={localAnswers}
+              competitionSlug={competitionSlug}
+              name={name}
+              setEmailExists={setEmailExists}
+            />
+          </div>
         </div>
       </div>
 
-      <p className="mt-4 text-center text-xs text-gray-500">
+      <p className="mt-4 text-xs text-gray-500">
         By continuing you agree to the{" "}
         <a
           className="font-semibold text-gray-800"

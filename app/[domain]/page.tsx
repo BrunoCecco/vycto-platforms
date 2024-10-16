@@ -8,6 +8,9 @@ import SettingsButton from "@/components/settings/settingsButton";
 import Image from "next/image";
 import { capitalize } from "@/lib/utils";
 import { fontMapper } from "@/styles/fonts";
+import { Suspense } from "react";
+import LoadingDots from "@/components/icons/loadingDots";
+import Loading from "../app/(dashboard)/loading";
 
 export async function generateStaticParams() {
   const allSites = await db.query.sites.findMany({
@@ -65,23 +68,25 @@ export default async function SiteHomePage({
         <h1>{capitalize(addFanzoneToString(data.name || ""))}</h1>
       </div>
       {/* Use the FanZoneHeader component */}
-      <FanZone
-        siteData={data}
-        currentCompetitions={
-          competitions.filter(
-            (competition: any) =>
-              new Date(competition.date).getTime() >= Date.now(),
-          ) as SelectCompetition[]
-        }
-        pastCompetitions={
-          competitions.filter(
-            (competition: any) =>
-              new Date(competition.date).getTime() < Date.now(),
-          ) as SelectCompetition[]
-        }
-        latestCompetition={latestCompetition}
-        user={session?.user}
-      />
+      <Suspense fallback={<Loading data={data} />}>
+        <FanZone
+          siteData={data}
+          currentCompetitions={
+            competitions.filter(
+              (competition: any) =>
+                new Date(competition.date).getTime() >= Date.now(),
+            ) as SelectCompetition[]
+          }
+          pastCompetitions={
+            competitions.filter(
+              (competition: any) =>
+                new Date(competition.date).getTime() < Date.now(),
+            ) as SelectCompetition[]
+          }
+          latestCompetition={latestCompetition}
+          user={session?.user}
+        />
+      </Suspense>
       <div className="my-4 sm:my-10" />
     </div>
   );

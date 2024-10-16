@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import { validateEmail } from "@/lib/utils";
-import Leaflet from "../modal/leaflet";
 
 export default function LoginButton({
   email,
@@ -27,7 +26,6 @@ export default function LoginButton({
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
 
   const posthog = usePostHog();
   // Get error message added by next/auth in URL.
@@ -101,7 +99,7 @@ export default function LoginButton({
 
       if (result && result.ok) {
         setMessage("Email sent - check your inbox to confirm your answers!");
-        setShowModal(true);
+        toast.success("Email sent - check your inbox to confirm your answers!");
       } else {
         setError(`Error sending email ${result?.error} - try again?`);
       }
@@ -126,7 +124,7 @@ export default function LoginButton({
       console.log(result);
       if (result && result.ok) {
         setMessage("Email sent - check your inbox to start playing!");
-        setShowModal(true);
+        toast.success("Email sent - check your inbox to start playing!");
       } else {
         setError(`Error sending email ${result?.error} - try again?`);
       }
@@ -136,7 +134,7 @@ export default function LoginButton({
   };
 
   return (
-    <div className="w-full text-center">
+    <div className="relative w-full">
       {!message && (
         <button
           disabled={loading}
@@ -153,11 +151,6 @@ export default function LoginButton({
             <p className="text-sm font-medium">Let&apos;s Play!</p>
           )}
         </button>
-      )}
-      {showModal && (
-        <Leaflet setShow={setShowModal}>
-          <p className="my-40 text-sm font-bold text-stone-700">{message}</p>
-        </Leaflet>
       )}
       {message && <p className="text-sm font-bold text-stone-700">{message}</p>}
       {error !== "" && (

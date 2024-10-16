@@ -10,6 +10,7 @@ import MovingBorder from "../ui/movingBorder";
 import PlayButton from "../buttons/playButton";
 import { BackgroundGradient } from "../ui/backgroundGradient";
 import CompetitionModal from "./competitionModal";
+import HoverBorderGradient from "../ui/hoverBorderGradient";
 
 const CompetitionCard = ({
   competition,
@@ -46,16 +47,19 @@ const CompetitionCard = ({
   }, [competition]);
 
   return (
-    <BackgroundGradient className="group h-full w-[300px] rounded-lg">
-      {" "}
+    <HoverBorderGradient
+      containerClassName="group h-full w-[300px] rounded-xl"
+      className="duration-400 h-full w-full transition-all hover:bg-slate-900"
+      color={siteData.color1}
+    >
       {/* Add onClick here */}
-      <div className="h-full w-full rounded-lg bg-slate-800 p-2 text-white transition-all duration-200">
+      <div className="h-full w-full rounded-md text-white transition-all duration-200">
         <div className="relative h-48 w-full">
           <div className="h-full w-full overflow-hidden rounded-t-lg">
             <BlurImage
               alt={competition.title ?? "Card thumbnail"}
               fill
-              className="rounded-t-lg object-cover transition-all duration-100 hover:scale-110"
+              className="rounded-t-md object-cover transition-all duration-100 group-hover:scale-110"
               src={competition.image ?? "/placeholder.png"}
               placeholder="blur"
               blurDataURL={competition.imageBlurhash ?? placeholderBlurhash}
@@ -63,7 +67,7 @@ const CompetitionCard = ({
           </div>
         </div>
 
-        <div className="flex h-28 flex-col justify-between px-1 pb-1 pt-2 text-left">
+        <div className="flex h-28 flex-col justify-between p-2 px-4 text-left">
           {/* Title, sponser & profiles bit */}
           <div className="flex items-center justify-between">
             <div>
@@ -103,7 +107,7 @@ const CompetitionCard = ({
           </div>
         </div>
       </div>
-    </BackgroundGradient>
+    </HoverBorderGradient>
   );
 };
 

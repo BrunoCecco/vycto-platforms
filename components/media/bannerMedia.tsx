@@ -63,7 +63,7 @@ export default function BannerMedia({ src }: { src: string }) {
       <BlurImage
         src={src ?? "/placeholder.png"}
         blurDataURL={placeholderBlurhash}
-        unoptimized
+        priority
         alt="Banner Image"
         fill
         className="object-cover object-center transition-all duration-100 hover:scale-110"

@@ -55,7 +55,7 @@ export default function EditFanZoneHeader({
       </div>
 
       {/* Banner Section */}
-      <div className="mb-4 hidden w-full items-center justify-center rounded-xl sm:flex">
+      <div className="mb-4 w-full items-center justify-center rounded-xl sm:flex">
         <Form
           title="Site Banner"
           description=""

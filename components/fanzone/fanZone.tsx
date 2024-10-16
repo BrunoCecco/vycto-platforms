@@ -5,6 +5,7 @@ import FanZoneHeader from "./fanzoneHeader";
 import MainLeaderboard from "../leaderboard/mainLeaderboard";
 import { ClockIcon, Medal, PlayCircle } from "lucide-react";
 import LoadingDots from "../icons/loadingDots";
+import Loading from "@/app/app/(dashboard)/loading";
 
 const FanZone = async ({
   siteData,
@@ -21,7 +22,9 @@ const FanZone = async ({
 }) => {
   return (
     <div className="w-full">
-      <FanZoneHeader data={siteData} latestCompetition={latestCompetition} />
+      <Suspense fallback={<Loading data={siteData} />}>
+        <FanZoneHeader data={siteData} latestCompetition={latestCompetition} />
+      </Suspense>
       <h2 className="flex items-center py-6 text-lg font-semibold text-white sm:text-2xl">
         <Medal className="mr-2" style={{ color: siteData.color1 }} />
         Current Competitions
