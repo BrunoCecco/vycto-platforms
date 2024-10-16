@@ -1,6 +1,6 @@
 export const runtime = "edge";
 
-const SENDER_API_KEY = process.env.SENDER_API_KEY || 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOWE2NzhkMjlmNmNkN2NkYjRiZmJhZjJhYzUzMDhjODUyNzA0NGJkODAzNWNjZWVmYTk1M2QxMzU2YTc2MTcxZWJkNWM5MTViYWM1MTBhNTUiLCJpYXQiOiIxNzI5MDcwMzU3LjE0NjE4OCIsIm5iZiI6IjE3MjkwNzAzNTcuMTQ2MTkxIiwiZXhwIjoiNDg4MjY3MDM1Ny4xNDQ2NjciLCJzdWIiOiI4ODEyMjkiLCJzY29wZXMiOltdfQ.jKq4t5WFQdmXydJl8tIZq0_2SjtL1MrWIAUWr1N4tf4heS_l3LneuwZHJcOZZSLE4Zbj54GWikgTgJ39frYrcw';
+const SENDER_API_KEY = process.env.SENDER_API_KEY;
 
 export async function POST(request: Request) {
     const { email, group } = await request.json();
