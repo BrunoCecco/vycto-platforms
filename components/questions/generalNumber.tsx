@@ -7,6 +7,7 @@ import { MinusCircle, PlusCircle } from "lucide-react";
 import Input from "../input";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import FlipText from "../ui/flipText";
+import { TextGenerateEffect } from "../ui/textGenerateEffect";
 
 const GeneralNumber = ({ ...props }) => {
   const [answer, setAnswer] = useState(props.answer.answer ?? 0);
@@ -32,8 +33,8 @@ const GeneralNumber = ({ ...props }) => {
         </div>
 
         {/* Question */}
-        <FlipText
-          word={props.question}
+        <TextGenerateEffect
+          words={props.question}
           className="mb-1 text-center text-xl font-semibold text-gray-800"
         />
         <p className="mb-6 text-center text-gray-500">

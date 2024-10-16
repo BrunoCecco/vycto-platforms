@@ -5,6 +5,7 @@ import CompetitionCard from "./competitionCard";
 import { SelectCompetition, SelectSite } from "@/lib/schema";
 import CompetitionModal from "./competitionModal";
 import { usePathname } from "next/navigation";
+import { Carousel } from "../ui/carousel";
 
 const Competitions = ({
   competitions,
@@ -51,9 +52,9 @@ const Competitions = ({
   console.log(pathname);
 
   return (
-    <div className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth">
-      <div className="flex flex-row justify-start gap-4">
-        {competitions.map((competition: SelectCompetition, index) => (
+    <div className="flex w-full">
+      <Carousel
+        items={competitions.map((competition: SelectCompetition, index) => (
           <CompetitionCard
             key={index}
             competition={competition}
@@ -62,7 +63,7 @@ const Competitions = ({
             onClick={() => handleCompetitionClick(competition)} // Pass click handler
           />
         ))}
-      </div>
+      />
       <CompetitionModal
         type={type!}
         siteData={siteData}
