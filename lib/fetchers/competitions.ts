@@ -205,6 +205,27 @@ export async function getUserCompetitions(userId: string) {
   )();
 }
 
+export async function getUserCompetition(
+  userId: string,
+  competitionId: string,
+) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.userCompetitions.findFirst({
+        where: and(
+          eq(userCompetitions.userId, userId),
+          eq(userCompetitions.competitionId, competitionId),
+        ),
+      });
+    },
+    [`${userId}-${competitionId}-comp`],
+    {
+      revalidate: 900,
+      tags: [`${userId}-${competitionId}-comp`],
+    },
+  )();
+}
+
 export async function getCompetitionFromId(competitionId: string) {
   return await unstable_cache(
     async () => {

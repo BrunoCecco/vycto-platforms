@@ -1,8 +1,14 @@
-import { getCompetitionFromId } from "@/lib/fetchers";
+import {
+  getCompetitionFromId,
+  getSiteData,
+  getSiteDataById,
+} from "@/lib/fetchers";
 import { SelectUserCompetition } from "@/lib/schema";
 import { getSession } from "next-auth/react";
 import Image from "next/image";
 import Button from "../buttons/button";
+import Link from "next/link";
+import { getSiteFromCompetitionId } from "@/lib/actions";
 
 export default async function UserCompListing({
   userComp,
@@ -12,6 +18,8 @@ export default async function UserCompListing({
   const session = await getSession();
 
   const comp = await getCompetitionFromId(userComp.competitionId);
+  const siteData = await getSiteDataById(comp?.siteId || "");
+
   const rewardDetails = () => {
     if (comp?.id.startsWith("yt")) console.log("rewardid:", userComp.rewardId);
     switch (userComp.rewardId) {
@@ -41,42 +49,9 @@ export default async function UserCompListing({
   const userReward = rewardDetails();
   const canClaim = session?.user.id === userComp.userId && userReward != null;
 
-  if (!userReward)
-    return (
-      <tr className="bg-gray-800">
-        <td className="p-4 text-left">
-          <div className="flex items-center">
-            <div className="relative h-10 w-10">
-              <Image
-                className="h-full w-full rounded-full"
-                src={comp?.image || "/placeholder.png"}
-                alt=""
-                fill
-              />
-            </div>
-            <div className="ml-4">
-              <div className="text-sm font-medium text-gray-300">
-                {comp?.title || "Unknown competition"}
-              </div>
-            </div>
-          </div>
-        </td>
-        <td className="p-4 text-left text-sm font-medium text-gray-300">
-          <div className="text-sm font-medium text-gray-300">
-            Points: {userComp.points}
-          </div>
-          <div className="text-sm font-medium text-gray-300">
-            Rank: {userComp.ranking}/{userComp.totalUsers}
-          </div>
-          <div className="text-sm font-medium text-gray-300">
-            Average: {userComp.averagePoints}
-          </div>
-        </td>
-        <td className="p-4 text-left">
-          <div className="text-sm text-gray-300">{comp?.rewardTitle}</div>
-        </td>
-      </tr>
-    );
+  const url = process.env.NEXT_PUBLIC_VERCEL_ENV
+    ? `https://${siteData?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/comp/${comp?.slug}/${userComp.userId}`
+    : `http://${siteData?.subdomain}.localhost:3000/comp/${comp?.slug}/${userComp.userId}`;
 
   // return a beautiful table row containing info about the reward that the user has won, if any
   return (
@@ -86,12 +61,18 @@ export default async function UserCompListing({
           <div className="relative h-10 w-10">
             <Image
               className="h-full w-full rounded-full"
-              src={userReward.image || "/placeholder.png"}
+              src={
+                (userReward ? userReward.image : comp?.image) ||
+                "/placeholder.png"
+              }
               alt=""
               fill
             />
           </div>
           <div className="ml-4">
+            <div className="text-sm font-medium text-gray-300">
+              {siteData?.name}
+            </div>
             <div className="text-sm font-medium text-gray-300">
               {comp?.title}
             </div>
@@ -109,14 +90,24 @@ export default async function UserCompListing({
           Average: {userComp.averagePoints}
         </div>
       </td>
-      <td className="p-4 text-left">
-        <div className="text-sm text-gray-300">{userReward.title}</div>
-        <div className="text-sm text-gray-300">{userReward.description}</div>
+      <td className="flex flex-col justify-center gap-1 p-4 text-left">
+        <div className="text-sm text-gray-300">
+          {userReward?.title || comp?.rewardTitle}
+        </div>
+        <div className="text-sm text-gray-300">{userReward?.description}</div>
         {canClaim && (
           <Button className="bg-gradient-to-tr from-blue-200 to-blue-400">
             Claim
           </Button>
         )}
+        <Link
+          href={url}
+          className="w-min rounded-lg bg-blue-100 p-2 px-4 text-sm text-purple-800 shadow-md transition-all duration-200 hover:bg-blue-300 hover:shadow-none"
+          rel="noreferrer"
+          target="_blank"
+        >
+          View
+        </Link>
       </td>
     </tr>
   );

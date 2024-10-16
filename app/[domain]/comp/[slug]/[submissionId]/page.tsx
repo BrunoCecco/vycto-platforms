@@ -5,6 +5,7 @@ import {
   getCompetitionUsers,
   getQuestionsForCompetition,
   getSiteData,
+  getUserCompetition,
 } from "@/lib/fetchers";
 import db from "@/lib/db";
 import {
@@ -106,28 +107,33 @@ export default async function SubmissionPage({
     notFound();
   }
 
-  if (!session) {
-    redirect(
-      `/login?redirect=${encodeURIComponent(
-        `/comp/${domain}/${slug}/${submissionId}`,
-      )}`,
-    );
-  }
+  // if (!session) {
+  //   redirect(
+  //     `/login?redirect=${encodeURIComponent(
+  //       `/comp/${domain}/${slug}/${submissionId}`,
+  //     )}`,
+  //   );
+  // }
 
   const questions = await getQuestionsForCompetition(data.id);
   const answers = await getAnswersForUser(submissionId, data!.id);
 
-  const userComp = await enterUserToCompetition(
-    submissionId,
-    session.user.username,
-    session.user.email,
-    data.id,
-    session.user.image,
-  );
-  console.log("DATA", userComp, submissionId);
-  if (!userComp || "submitted" in userComp == false || !userComp.submitted) {
-    notFound();
+  let userComp;
+  if (session) {
+    userComp = await enterUserToCompetition(
+      submissionId,
+      session.user.username,
+      session.user.email,
+      data.id,
+      session.user.image,
+    );
+  } else {
+    userComp = await getUserCompetition(submissionId, data.id);
   }
+  console.log("DATA", userComp, submissionId);
+  // if (!userComp || "submitted" in userComp == false || !userComp.submitted) {
+  //   notFound();
+  // }
   const users = await getCompetitionUsers(data!.id);
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
 

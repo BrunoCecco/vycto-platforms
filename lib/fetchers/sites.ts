@@ -29,3 +29,18 @@ export async function getSiteData(domain: string) {
     },
   )();
 }
+
+export async function getSiteDataById(siteId: string) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.sites.findFirst({
+        where: eq(sites.id, siteId),
+      });
+    },
+    [`${siteId}-metadata`],
+    {
+      revalidate: 900,
+      tags: [`${siteId}-metadata`],
+    },
+  )();
+}

@@ -84,7 +84,6 @@ export default function SiteNav({
   useEffect(() => {
     // hide sidebar on path change
     setShowSidebar(false);
-    toast.success("Successfully subscribed to notifications!");
   }, [pathname]);
 
   const stayNotified = () => {
