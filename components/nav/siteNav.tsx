@@ -1,27 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  ArrowLeft,
-  BarChart3,
-  Edit3,
-  Globe,
-  Layout,
-  LayoutDashboard,
-  Megaphone,
-  Menu,
-  Newspaper,
-  Settings,
-  FileCode,
-  Github,
-  Gift,
-  Wand,
-  Trophy,
-  Home,
-  Book,
-  Crown,
-  Bell,
-} from "lucide-react";
+import { Menu, Settings, Home, Book, Crown, Bell } from "lucide-react";
 import {
   useParams,
   usePathname,
@@ -32,7 +12,6 @@ import { getSiteFromCompetitionId } from "@/lib/actions";
 import Image from "next/image";
 import { SelectSite } from "@/lib/schema";
 import PlayButton from "../buttons/playButton";
-import { Button } from "@tremor/react";
 import { toast } from "sonner";
 import { CoolMode } from "@/components/ui/coolMode";
 import { ModalBody, Modal, ModalContent } from "../ui/animatedModal";
@@ -110,7 +89,10 @@ export default function SiteNav({
         }
         setIsOpen(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        toast.error("Failed to subscribe to notifications!");
+      });
   };
 
   const stayNotified = async () => {

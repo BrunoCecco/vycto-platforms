@@ -54,7 +54,7 @@ export default function SubmitAnswersForm({
   };
 
   return (
-    <div className="rounded-lg bg-white px-8 pb-8 dark:bg-black">
+    <div className="rounded-lg px-8 pb-8">
       <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-green-600 bg-stone-50 p-3">
         <p className="text-center text-sm text-stone-500 dark:text-stone-400">
           Once submitted, you will not be able to edit your answers.

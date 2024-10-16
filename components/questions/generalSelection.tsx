@@ -42,7 +42,6 @@ const GeneralSelection = ({ ...props }) => {
         <div className="mb-4 flex h-44 w-full items-center justify-center overflow-hidden rounded-lg bg-green-100">
           <Image
             src={props.image1 ?? "/placeholder.png"}
-            unoptimized
             alt="Question Image"
             width={1}
             height={1}

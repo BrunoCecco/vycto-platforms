@@ -31,7 +31,6 @@ const PlayerComponent = ({
       <Image
         src={image || "/player.png"}
         alt={name}
-        unoptimized
         width={128}
         height={96}
         className={`rounded-md object-cover object-center ${

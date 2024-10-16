@@ -50,7 +50,6 @@ const EditCompetitionDetails = async ({
                   blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
                   width={1200}
                   height={630}
-                  unoptimized
                   alt="Thumbnail Image"
                   className="h-full w-full rounded-lg object-cover"
                 />

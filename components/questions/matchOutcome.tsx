@@ -46,7 +46,6 @@ const MatchOutcome = ({ ...props }) => {
                 <div className="relative h-full w-28 items-center justify-center overflow-hidden rounded-lg md:w-36">
                   <Image
                     src={props.image1 ?? "/placeholder.png"}
-                    unoptimized
                     alt="Option 1 Image"
                     width={1}
                     height={1}
@@ -86,7 +85,6 @@ const MatchOutcome = ({ ...props }) => {
                 <div className="relative h-full w-28 items-center justify-center overflow-hidden rounded-lg md:w-36">
                   <Image
                     src={props.image2 ?? "/placeholder.png"}
-                    unoptimized
                     alt="Option 2 Image"
                     width={1}
                     height={1}
