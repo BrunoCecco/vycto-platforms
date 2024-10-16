@@ -130,10 +130,7 @@ export default async function SubmissionPage({
   } else {
     userComp = await getUserCompetition(submissionId, data.id);
   }
-  console.log("DATA", userComp, submissionId);
-  // if (!userComp || "submitted" in userComp == false || !userComp.submitted) {
-  //   notFound();
-  // }
+
   const users = await getCompetitionUsers(data!.id);
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
 

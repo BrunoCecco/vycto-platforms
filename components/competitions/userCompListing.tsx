@@ -100,6 +100,8 @@ export default async function UserCompListing({
             Claim
           </Button>
         )}
+      </td>
+      <td className="p-4 text-right">
         <Link
           href={url}
           className="w-min rounded-lg bg-blue-100 p-2 px-4 text-sm text-purple-800 shadow-md transition-all duration-200 hover:bg-blue-300 hover:shadow-none"

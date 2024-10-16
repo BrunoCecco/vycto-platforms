@@ -34,6 +34,17 @@ import { SelectSite } from "@/lib/schema";
 import PlayButton from "../buttons/playButton";
 import { Button } from "@tremor/react";
 import { toast } from "sonner";
+import { CoolMode } from "@/components/ui/coolMode";
+
+export function CoolModeDemo() {
+  return (
+    <div className="relative justify-center">
+      <CoolMode>
+        <Button>Click Me!</Button>
+      </CoolMode>
+    </div>
+  );
+}
 
 export default function SiteNav({
   data,
@@ -137,13 +148,15 @@ export default function SiteNav({
                   <span className="text-sm font-medium">{name}</span>
                 </Link>
               ))}
-              <div
-                onClick={stayNotified}
-                className={`mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 text-white transition-all duration-150  ease-in-out hover:bg-stone-700 `}
-              >
-                <Bell width={18} />
-                <span className="text-sm font-medium">Stay Notified</span>
-              </div>
+              <CoolMode>
+                <div
+                  onClick={stayNotified}
+                  className={`mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 text-white transition-all duration-150  ease-in-out hover:bg-stone-700 `}
+                >
+                  <Bell width={18} />
+                  <span className="text-sm font-medium">Stay Notified</span>
+                </div>
+              </CoolMode>
             </div>
           </div>
           <div className="mb-2">
