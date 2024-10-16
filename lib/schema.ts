@@ -132,6 +132,7 @@ export const sites = pgTable(
     message404: text("message404").default(
       "Blimey! You''ve found a page that doesn''t exist.",
     ),
+    senderGroup: text('senderGroup'),
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
     updatedAt: timestamp("updatedAt", { mode: "date" })
       .notNull()

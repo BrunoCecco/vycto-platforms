@@ -36,15 +36,6 @@ import { Button } from "@tremor/react";
 import { toast } from "sonner";
 import { CoolMode } from "@/components/ui/coolMode";
 
-export function CoolModeDemo() {
-  return (
-    <div className="relative justify-center">
-      <CoolMode>
-        <Button>Click Me!</Button>
-      </CoolMode>
-    </div>
-  );
-}
 
 export default function SiteNav({
   data,
@@ -57,6 +48,7 @@ export default function SiteNav({
 }) {
   const segments = useSelectedLayoutSegments();
   const { id } = useParams() as { id?: string };
+
   const [hovered, setHovered] = useState(false);
 
   const tabs = useMemo(() => {
@@ -97,8 +89,18 @@ export default function SiteNav({
     setShowSidebar(false);
   }, [pathname]);
 
-  const stayNotified = () => {
-    toast.success("Successfully subscribed to notifications!");
+  const stayNotified = async () => {
+    fetch("/api/subscribe", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        group: data.senderGroup
+      })
+    }).then(async (res) => {
+      if (res.status === 200) {
+        toast.success("Successfully subscribed to notifications!");
+      }
+    }).catch((err) => console.log(err))
   };
 
   return (
