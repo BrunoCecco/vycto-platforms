@@ -35,15 +35,18 @@ import PlayButton from "../buttons/playButton";
 import { Button } from "@tremor/react";
 import { toast } from "sonner";
 import { CoolMode } from "@/components/ui/coolMode";
+import {redirect} from 'next/navigation'
 
 
 export default function SiteNav({
   data,
   latestCompetitionUrl,
+  session,
   children,
 }: {
   data: SelectSite;
   latestCompetitionUrl: string;
+  session: any;
   children?: ReactNode;
 }) {
   const segments = useSelectedLayoutSegments();
@@ -90,10 +93,12 @@ export default function SiteNav({
   }, [pathname]);
 
   const stayNotified = async () => {
+    if (session) {
     fetch("/api/subscribe", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
+        email: session.user.email,
         group: data.senderGroup
       })
     }).then(async (res) => {
@@ -101,6 +106,9 @@ export default function SiteNav({
         toast.success("Successfully subscribed to notifications!");
       }
     }).catch((err) => console.log(err))
+  } else {
+    redirect('/login')
+  }
   };
 
   return (
