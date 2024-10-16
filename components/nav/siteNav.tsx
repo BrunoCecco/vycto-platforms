@@ -199,8 +199,12 @@ export default function SiteNav({
             <div className="flex flex-col items-center justify-center gap-4">
               <Story />
               {session ? (
-                <HoverBorderGradient containerClassName="py-2 px-4">
-                  <button onClick={subscribe}>Subscribe</button>
+                <HoverBorderGradient
+                  containerClassName="py-2 px-8"
+                  className="flex items-center gap-2"
+                >
+                  <button onClick={subscribe}>Stay Notified</button>
+                  <Bell width={18} />
                 </HoverBorderGradient>
               ) : (
                 <div className="flex w-[400px] flex-col items-center gap-2">
@@ -211,8 +215,12 @@ export default function SiteNav({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />{" "}
-                  <HoverBorderGradient containerClassName="py-2 px-4">
-                    <button onClick={subscribe}>Subscribe</button>
+                  <HoverBorderGradient
+                    containerClassName="py-2 px-8"
+                    className="flex items-center gap-2"
+                  >
+                    <button onClick={subscribe}>Stay Notified</button>
+                    <Bell width={18} />
                   </HoverBorderGradient>
                 </div>
               )}
