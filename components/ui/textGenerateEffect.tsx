@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export const TextGenerateEffect = ({
   words,
-  delay = 0.2,
+  delay = 0.1,
   className,
   filter = true,
   duration = 0.5,
@@ -17,7 +17,9 @@ export const TextGenerateEffect = ({
   duration?: number;
 }) => {
   const [scope, animate] = useAnimate();
-  let wordsArray = words.split(" ");
+  // Split words by spaces and new lines
+  let wordsArray = words.split(/[\n]+/);
+
   useEffect(() => {
     animate(
       "span",
@@ -35,17 +37,21 @@ export const TextGenerateEffect = ({
   const renderWords = () => {
     return (
       <motion.div ref={scope}>
-        {wordsArray.map((word, idx) => {
+        {wordsArray.map((sentence, idx) => {
           return (
-            <motion.span
-              key={word + idx}
-              className="text-black opacity-0 dark:text-white"
-              style={{
-                filter: filter ? "blur(10px)" : "none",
-              }}
-            >
-              {word}{" "}
-            </motion.span>
+            <div key={sentence + idx} className="my-1 block text-center">
+              {sentence.split(" ").map((word, idx) => (
+                <motion.span
+                  key={word + idx}
+                  className=" text-black opacity-0 dark:text-white"
+                  style={{
+                    filter: filter ? "blur(10px)" : "none",
+                  }}
+                >
+                  {word}{" "}
+                </motion.span>
+              ))}
+            </div>
           );
         })}
       </motion.div>

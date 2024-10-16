@@ -15,16 +15,23 @@ export default function ClaimRewardsCard({
       className="flex h-full w-full flex-col justify-between"
     >
       <div className="flex h-full w-full flex-col justify-between rounded-lg bg-slate-800 p-8">
-        <div className="relative h-1/3 w-full">
+        <div className="relative h-2/3 w-full">
           <Image
-            src={comp.rewardImage ?? "/placeholder.png"}
+            // src={comp.rewardImage ?? "/placeholder.png"}
+            src={"/aelShirt.png"}
             alt={comp.reward2Title ?? "Card thumbnail"}
             fill
             className="overflow-hidden rounded-lg object-contain"
           />
         </div>
-        <h2 className="text-2xl font-bold uppercase">{comp.rewardTitle}</h2>
-        <div className="flex w-full items-center justify-between gap-4">
+        <h2 className="text-2xl font-bold uppercase">
+          {comp.rewardTitle || "AEL Signed Shirt"}
+        </h2>
+        <div className="mt-2 text-xs font-bold text-slate-400">
+          {comp.rewardDescription ||
+            "This AEL signed shirt, autographed by all 22 player, stands as a powerful emblem of pride for an entire city."}
+        </div>
+        <div className="mt-4 flex w-full items-center justify-between gap-4">
           <p className="rounded-full bg-slate-200 p-1 px-2 text-xs font-bold text-black">
             EXCLUSIVE PRIZE
           </p>

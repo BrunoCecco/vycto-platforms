@@ -4,13 +4,16 @@ import { BackgroundBeams } from "@/components/ui/backgroundBeams";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
 
 export function Story() {
-  const words1 = "AEL is not just a club; it is the pride of an entire city.";
-  const words2 =
-    "A symbol of resilience, passion and unrelenting spirit since its founding in 1930.";
-  const words3 =
-    "17 trophies - 6 First Division titles, 7 Cups and 4 Super Cups - we are the most decorated club in Limassol";
-  const words4 =
-    "Our story is far from over, we want you to be a part of every victory, every chant, every unforgettable moment. Stay connected. Love, AEL.";
+  const words = `
+AEL  is not just a club; it is the pride of our city. 
+
+A symbol of resilience, passion, and unrelenting spirit since 1930.
+
+17 trophies — 6 First Division titles, 7 Cups, and 4 Super Cups
+
+ We are the most decorated club in Limassol. 
+
+Or story is far from over.`;
 
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center overflow-auto rounded-md bg-neutral-950 antialiased">
@@ -19,10 +22,7 @@ export function Story() {
           Join the AEL family
         </h1>
         <p></p>
-        <TextGenerateEffect words={words1} />
-        <TextGenerateEffect words={words2} />
-        <TextGenerateEffect words={words3} />
-        <TextGenerateEffect words={words4} />
+        <TextGenerateEffect words={words} />
       </div>
       <BackgroundBeams />
     </div>
