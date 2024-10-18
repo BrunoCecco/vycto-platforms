@@ -4,13 +4,14 @@ import { updateCompetitionMetadata } from "@/lib/actions";
 import DeleteCompetitionForm from "@/components/form/deleteCompetitionForm";
 import db from "@/lib/db";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export default async function CompetitionSettings({
   params,
 }: {
   params: { id: string };
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
     console.log("HERE");

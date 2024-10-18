@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import EditFanzone from "@/components/edit-fanzone/editFanzone";
 import db from "@/lib/db";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export default async function SiteCompetitions({
   params,
@@ -9,7 +10,7 @@ export default async function SiteCompetitions({
   params: { id: string };
 }) {
   // Fetch session
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
   }

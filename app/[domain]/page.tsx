@@ -11,6 +11,7 @@ import { fontMapper } from "@/styles/fonts";
 import { Suspense } from "react";
 import LoadingDots from "@/components/icons/loadingDots";
 import Loading from "../app/(dashboard)/loading";
+import { authOptions } from "@/lib/auth";
 
 export async function generateStaticParams() {
   const allSites = await db.query.sites.findMany({
@@ -55,7 +56,7 @@ export default async function SiteHomePage({
     (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )[0];
 
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   const addFanzoneToString = (str: string) => {
     if (str?.includes("fanzone")) return str;

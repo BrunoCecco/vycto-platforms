@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import CompetitionCard from "./editCompetitionCard";
 import CreateCompetitionButton from "./createCompetitionButton";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export default async function EditCompetitions({
   siteId,
@@ -12,7 +13,7 @@ export default async function EditCompetitions({
   siteId?: string;
   limit?: number;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session?.user) {
     redirect("/login");
   }

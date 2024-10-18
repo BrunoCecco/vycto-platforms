@@ -1,22 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { SelectSite } from "@/lib/schema";
-import LoginButton from "./loginButton";
-import { toast } from "sonner";
-import { usePostHog } from "posthog-js/react";
-import {
-  appleProvider,
-  auth,
-  facebookProvider,
-  signInWithPopup,
-} from "@/lib/firebase"; // Import Firebase auth functions
-import Button from "../buttons/button";
-import LoadingDots from "../icons/loadingDots";
-import { OAuthProvider } from "firebase/auth";
-import { signIn } from "next-auth/react";
-import BlurImage from "../media/blurImage";
 
 const SignUpWrapper = ({ children }: { children: React.ReactNode }) => {
   return (

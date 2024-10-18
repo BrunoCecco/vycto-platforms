@@ -9,13 +9,14 @@ import Button from "../buttons/button";
 import Link from "next/link";
 import { getSiteFromCompetitionId } from "@/lib/actions";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export default async function UserCompListing({
   userComp,
 }: {
   userComp: SelectUserCompetition;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   const comp = await getCompetitionFromId(userComp.competitionId);
   const siteData = await getSiteDataById(comp?.siteId || "");

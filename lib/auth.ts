@@ -136,7 +136,7 @@ export function withSuperAdminAuth(action: any) {
     userId: string,
     key: string | null,
   ) => {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session) {
       return {
         error: "Not authenticated",
@@ -159,7 +159,7 @@ export function withSiteAuth(action: any) {
     siteId: string,
     key: string | null,
   ) => {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session) {
       return {
         error: "Not authenticated",
@@ -189,7 +189,7 @@ export function withCompetitionAuth(action: any) {
     competitionId: string,
     key: string | null,
   ) => {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session?.user.id) {
       return {
         error: "Not authenticated",

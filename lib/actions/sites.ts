@@ -8,13 +8,13 @@ import {
 import { eq } from "drizzle-orm";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
-import { withSiteAuth } from "../auth";
+import { authOptions, withSiteAuth } from "../auth";
 import db from "../db";
 import { SelectSite, competitions, sites } from "../schema";
 import { getServerSession } from "next-auth";
 
 export const createSite = async (formData: FormData) => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session?.user.id) {
     return {
       error: "Not authenticated",

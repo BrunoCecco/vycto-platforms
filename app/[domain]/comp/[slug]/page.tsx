@@ -16,6 +16,7 @@ import {
 } from "@/lib/actions";
 import CompetitionPage from "@/components/competitions/competitionPage";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function generateMetadata({
   params,
@@ -93,7 +94,7 @@ export default async function SiteCompetitionPage({
   const domain = decodeURIComponent(params.domain);
   const siteData = await getSiteData(domain);
   const slug = decodeURIComponent(params.slug);
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   console.log(params);
   const data = await getCompetitionData(domain, slug);
   if (!data) {

@@ -1,6 +1,6 @@
 "use server";
 
-import { withSuperAdminAuth } from "@/lib/auth";
+import { authOptions } from "@/lib/auth";
 import { and, eq } from "drizzle-orm";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
@@ -29,7 +29,7 @@ const nanoid = customAlphabet(
 
 export const createCompetition = withSiteAuth(
   async (_: FormData, site: SelectSite) => {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session?.user.id) {
       return {
         error: "Not authenticated",
@@ -61,7 +61,7 @@ export const createCompetition = withSiteAuth(
 
 // creating a separate function for this because we're not using FormData
 export const updateCompetition = async (data: SelectCompetition) => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session?.user.id) {
     return {
       error: "Not authenticated",
@@ -227,7 +227,7 @@ export const submitAnswers = async (
   competitionId: string,
   localAnswers: { [key: string]: string },
 ) => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session?.user.id) {
     return {
       error: "Not authenticated",

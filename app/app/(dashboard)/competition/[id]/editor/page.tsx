@@ -5,13 +5,14 @@ import { getCompetitionData, getQuestionsForCompetition } from "@/lib/fetchers";
 import CompetitionCreator from "@/components/competition-creation";
 import EditCompetitionDetails from "@/components/edit-competition/editCompetitionDetails";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export default async function CompetitionPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
   }

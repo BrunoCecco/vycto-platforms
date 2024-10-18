@@ -14,6 +14,7 @@ import LoadingDots from "@/components/icons/loadingDots";
 import PlayButton from "@/components/buttons/playButton";
 import { toast } from "sonner";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function generateMetadata({
   params,
@@ -73,7 +74,7 @@ export default async function SiteLayout({
 }) {
   const domain = decodeURIComponent(params.domain);
   const data = await getSiteData(domain);
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   if (!data) {
     notFound();

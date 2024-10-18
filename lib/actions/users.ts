@@ -1,6 +1,6 @@
 "use server";
 
-import { withSuperAdminAuth } from "@/lib/auth";
+import { authOptions, withSuperAdminAuth } from "@/lib/auth";
 import { and, eq } from "drizzle-orm";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
@@ -19,7 +19,7 @@ export const editUser = async (
   _id: string,
   key: string,
 ) => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session?.user.id) {
     return {
       error: "Not authenticated",
