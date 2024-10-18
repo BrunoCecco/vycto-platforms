@@ -16,7 +16,7 @@ A symbol of resilience, passion, and unrelenting spirit since 1930.
 Or story is far from over.`;
 
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-auto rounded-md bg-neutral-950 antialiased">
+    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-auto rounded-md antialiased dark:bg-neutral-950">
       <div className="mx-auto p-4">
         <h1 className="relative z-10 bg-gradient-to-b from-neutral-200  to-neutral-600 bg-clip-text text-center font-sans text-lg  font-bold text-transparent md:text-7xl">
           Join the AEL family

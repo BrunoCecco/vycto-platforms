@@ -71,15 +71,15 @@ export const authOptions: NextAuthOptions = {
   }) as Adapter,
   session: { strategy: "jwt" },
   cookies: {
-    // pkceCodeVerifier: {
-    //   name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.pkce.code_verifier`,
-    //   options: {
-    //     httpOnly: true,
-    //     sameSite: "none",
-    //     path: "/",
-    //     secure: true,
-    //   },
-    // },
+    pkceCodeVerifier: {
+      name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.pkce.code_verifier`,
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
     sessionToken: {
       name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
       options: {
