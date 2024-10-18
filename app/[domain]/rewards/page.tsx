@@ -3,13 +3,14 @@ import ClaimedRewards from "@/components/rewards/claimedRewards";
 import PendingRewards from "@/components/rewards/pendingRewards";
 import RewardsList from "@/components/rewards/rewardsList";
 import FlipText from "@/components/ui/flipText";
-import { getSession } from "@/lib/auth";
+import { authOptions } from "@/lib/auth";
 import {
   getCompetitionsForPeriod,
   getCompetitionsForSite,
   getSiteData,
   getUserCompetitions,
 } from "@/lib/fetchers";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 
@@ -18,11 +19,13 @@ export default async function Rewards({
 }: {
   params: { domain: string };
 }) {
-  const session = await getSession();
+  const session = await getServerSession(authOptions);
 
   if (!session) {
     redirect("/login");
   }
+
+  console.log(session);
 
   const domain = decodeURIComponent(params.domain);
   const [data, compData] = await Promise.all([
@@ -59,21 +62,19 @@ export default async function Rewards({
         />
       </div>
       <FlipText word="Your Rewards" className="mb-8 text-4xl" />
-      <div className="mb-8 grid w-full grid-cols-1 items-center justify-center md:grid-cols-3">
-        <div className="col-span-1 mr-auto">
+      <div className="mb-8 grid w-full grid-cols-1 items-center justify-center gap-8 md:grid-cols-3">
+        <div className="col-span-1 md:mr-auto">
           <PendingRewards count={0} amount={0} />
         </div>
         <div className="col-span-1 mx-auto">
           <ClaimRewardsCard comp={latestCompetition} />
         </div>
-        <div className="col-span-1 ml-auto">
+        <div className="col-span-1 md:ml-auto">
           <ClaimedRewards count={0} amount={0} />
         </div>
       </div>
       <div>
-        <RewardsList
-          userCompetitions={userCompetitions}
-        />
+        <RewardsList userCompetitions={userCompetitions} />
       </div>
     </div>
   );

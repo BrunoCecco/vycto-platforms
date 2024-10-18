@@ -70,13 +70,6 @@ export default function Form({
             toast.error(res.error);
           } else {
             va.track(`Updated ${name}`, id ? { id } : {});
-            if (id) {
-              await update();
-              router.refresh();
-            } else {
-              await update();
-              router.refresh();
-            }
             toast.success(`Successfully updated ${name}!`);
           }
         });

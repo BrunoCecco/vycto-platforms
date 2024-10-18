@@ -1,13 +1,32 @@
+"use client";
 import Form from "@/components/form";
 import { editUser } from "@/lib/actions";
 import Image from "next/image";
 import { PencilIcon } from "lucide-react";
-import { redirect } from "next/navigation";
+import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
-export default async function EditProfileImage({ session }: { session: any }) {
-  if (!session) {
-    redirect("/login");
-  }
+export default function EditProfileImage() {
+  const { data: session, status, update } = useSession();
+
+  if (!session || !session.user) return;
+
+  const handleSubmit = async (data: FormData, _id: string, key: string) => {
+    const newValue = data.get(key) as string;
+    if (!session) return;
+    // @ts-expect-error
+    if (session.user[key] === newValue) return { error: "No changes made." };
+
+    // Update the user session directly
+    await update({
+      user: {
+        ...session.user,
+        [key]: newValue,
+      },
+    });
+
+    return editUser(data, _id, key);
+  };
 
   return (
     <Form
@@ -20,7 +39,7 @@ export default async function EditProfileImage({ session }: { session: any }) {
         defaultValue: session.user.image!,
         placeholder: "Profile Image",
       }}
-      handleSubmit={editUser}
+      handleSubmit={handleSubmit}
     >
       <div className="relative h-[100px] w-[100px] cursor-pointer text-black">
         {session?.user.image != null ? (

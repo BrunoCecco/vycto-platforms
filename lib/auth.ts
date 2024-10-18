@@ -25,7 +25,9 @@ declare module "next-auth" {
       name: string;
       email: string;
       username: string;
+      role: string;
       image?: string;
+      country?: string;
     };
   }
 }
@@ -95,7 +97,12 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt({ token, trigger, session, user }) {
+      if (trigger === "update" && session?.user) {
+        console.log(session, session.user, token);
+        token.user = session?.user || token.user;
+        return token;
+      }
       if (user) {
         token.user = user;
       }
@@ -103,40 +110,25 @@ export const authOptions: NextAuthOptions = {
     },
     session: async ({ session, token }) => {
       session.user = {
-        ...session.user,
         // @ts-expect-error
         id: token.sub,
         // @ts-expect-error
         username: token?.user?.username || token?.user?.gh_username,
+        // @ts-expect-error
+        name: token?.user?.name || session.user.name,
+        // @ts-expect-error
+        image: token?.user?.image || session.user.image,
+        // @ts-expect-error
+        email: token?.user?.email || session.user.email,
+        // @ts-expect-error
+        role: token?.user?.role || session.user.role,
+        // @ts-expect-error
+        country: token?.user?.country || session.user.country,
       };
       return session;
     },
   },
 };
-
-export async function getSession() {
-  const session = await getServerSession(authOptions);
-
-  if (session?.user && session.user.id) {
-    // Fetch the latest user data from the database
-    const user = await db.query.users.findFirst({
-      where: (users, { eq }) => eq(users.id, session.user.id),
-    });
-
-    // Update the session with the latest username
-    return {
-      user: {
-        ...session.user,
-        name: user?.name || session.user.name,
-        username: user?.username || session.user.username,
-        role: user?.role || "user",
-        image: user?.image || session.user.image,
-        country: user?.country || "",
-      },
-    };
-  }
-  return null;
-}
 
 export function withSuperAdminAuth(action: any) {
   return async (
@@ -144,7 +136,7 @@ export function withSuperAdminAuth(action: any) {
     userId: string,
     key: string | null,
   ) => {
-    const session = await getSession();
+    const session = await getServerSession();
     if (!session) {
       return {
         error: "Not authenticated",
@@ -167,7 +159,7 @@ export function withSiteAuth(action: any) {
     siteId: string,
     key: string | null,
   ) => {
-    const session = await getSession();
+    const session = await getServerSession();
     if (!session) {
       return {
         error: "Not authenticated",
@@ -197,7 +189,7 @@ export function withCompetitionAuth(action: any) {
     competitionId: string,
     key: string | null,
   ) => {
-    const session = await getSession();
+    const session = await getServerSession();
     if (!session?.user.id) {
       return {
         error: "Not authenticated",

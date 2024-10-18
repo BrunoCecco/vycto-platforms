@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import SiteSettingsNav from "./nav";
 import db from "@/lib/db";
@@ -11,18 +10,11 @@ export default async function SiteAnalyticsLayout({
   params: { id: string };
   children: ReactNode;
 }) {
-  const session = await getSession();
-  if (!session) {
-    redirect("/login");
-  }
   const data = await db.query.sites.findFirst({
     where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
   });
 
-  if (
-    !data ||
-    (data.userId !== session.user.id && data.admin != session.user.email)
-  ) {
+  if (!data) {
     notFound();
   }
 

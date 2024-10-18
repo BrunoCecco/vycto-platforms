@@ -1,6 +1,5 @@
 "use server";
 
-import { getSession } from "@/lib/auth";
 import {
   addDomainToVercel,
   removeDomainFromVercelProject,
@@ -12,9 +11,10 @@ import { revalidateTag } from "next/cache";
 import { withSiteAuth } from "../auth";
 import db from "../db";
 import { SelectSite, competitions, sites } from "../schema";
+import { getServerSession } from "next-auth";
 
 export const createSite = async (formData: FormData) => {
-  const session = await getSession();
+  const session = await getServerSession();
   if (!session?.user.id) {
     return {
       error: "Not authenticated",
@@ -27,31 +27,31 @@ export const createSite = async (formData: FormData) => {
 
   try {
     let headers = {
-        "Authorization": `Bearer ${process.env.SENDER_API_KEY}`,
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-    };    
-    
+      Authorization: `Bearer ${process.env.SENDER_API_KEY}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+
     const senderResponse = await fetch("https://api.sender.net/v2/groups", {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          "title": name
-        })
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        title: name,
+      }),
     });
-    const data = await senderResponse.json();    
+    const data = await senderResponse.json();
 
     const [response] = await db
-    .insert(sites)
-    .values({
-      name,
-      description,
-      subdomain,
-      userId: session.user.id,
-      admin: admin || session.user.email,
-      senderGroup: data.data.id || ""
-    })
-    .returning();
+      .insert(sites)
+      .values({
+        name,
+        description,
+        subdomain,
+        userId: session.user.id,
+        admin: admin || session.user.email,
+        senderGroup: data.data.id || "",
+      })
+      .returning();
 
     revalidateTag(
       `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,

@@ -1,9 +1,9 @@
-import { getSession } from "@/lib/auth";
 import db from "@/lib/db";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import CompetitionCard from "./editCompetitionCard";
 import CreateCompetitionButton from "./createCompetitionButton";
+import { getServerSession } from "next-auth";
 
 export default async function EditCompetitions({
   siteId,
@@ -12,10 +12,9 @@ export default async function EditCompetitions({
   siteId?: string;
   limit?: number;
 }) {
-  const session = await getSession();
+  const session = await getServerSession();
   if (!session?.user) {
     redirect("/login");
-    console.log("HERE");
   }
 
   const competitions = await db.query.competitions.findMany({

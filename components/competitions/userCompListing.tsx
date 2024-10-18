@@ -4,18 +4,18 @@ import {
   getSiteDataById,
 } from "@/lib/fetchers";
 import { SelectUserCompetition } from "@/lib/schema";
-import { getSession } from "next-auth/react";
 import Image from "next/image";
 import Button from "../buttons/button";
 import Link from "next/link";
 import { getSiteFromCompetitionId } from "@/lib/actions";
+import { getServerSession } from "next-auth";
 
 export default async function UserCompListing({
   userComp,
 }: {
   userComp: SelectUserCompetition;
 }) {
-  const session = await getSession();
+  const session = await getServerSession();
 
   const comp = await getCompetitionFromId(userComp.competitionId);
   const siteData = await getSiteDataById(comp?.siteId || "");

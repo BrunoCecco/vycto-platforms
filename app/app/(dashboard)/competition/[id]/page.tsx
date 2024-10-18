@@ -1,17 +1,16 @@
-import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import db from "@/lib/db";
 import CompetitionCreator from "@/components/competition-creation";
+import { getServerSession } from "next-auth";
 
 export default async function CompetitionPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const session = await getSession();
+  const session = await getServerSession();
   if (!session) {
     redirect("/login");
-    console.log("HERE");
   }
 
   const data = await db.query.competitions.findFirst({

@@ -46,13 +46,15 @@ export default function CombinedForm({
       action={async (data: FormData) => {
         await Promise.all(
           inputAttrs.map((inputAttr) =>
-            handleSubmit(data, id, inputAttr.name).then(async (res: any) => {
-              if (res.error) {
-                toast.error(res.error);
-              } else {
-                va.track(`Updated ${inputAttr.name}`, id ? { id } : {});
-              }
-            }),
+            handleSubmit(data, id || "", inputAttr.name).then(
+              async (res: any) => {
+                if (res.error) {
+                  toast.error(res.error);
+                } else {
+                  va.track(`Updated ${inputAttr.name}`, id ? { id } : {});
+                }
+              },
+            ),
           ),
         );
         toast.success(`Successfully updated ${title}!`);

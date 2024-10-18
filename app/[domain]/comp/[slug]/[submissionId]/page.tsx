@@ -20,8 +20,8 @@ import {
   enterUserToCompetition,
   submitAnswers,
 } from "@/lib/actions";
-import { getSession } from "@/lib/auth";
 import CompetitionPage from "@/components/competitions/competitionPage";
+import { getServerSession } from "next-auth";
 
 export async function generateMetadata({
   params,
@@ -100,7 +100,7 @@ export default async function SubmissionPage({
   const slug = decodeURIComponent(params.slug);
   const submissionId = decodeURIComponent(params.submissionId);
   const siteData = await getSiteData(domain);
-  const session = await getSession();
+  const session = await getServerSession();
   const data = await getCompetitionData(domain, slug);
 
   if (!data) {

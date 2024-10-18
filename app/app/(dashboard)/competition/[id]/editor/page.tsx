@@ -1,21 +1,19 @@
-import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import QuestionEditor from "@/components/edit-competition/questionEditor";
 import db from "@/lib/db";
 import { getCompetitionData, getQuestionsForCompetition } from "@/lib/fetchers";
 import CompetitionCreator from "@/components/competition-creation";
-import Button from "@/components/buttons/button";
 import EditCompetitionDetails from "@/components/edit-competition/editCompetitionDetails";
+import { getServerSession } from "next-auth";
 
 export default async function CompetitionPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const session = await getSession();
+  const session = await getServerSession();
   if (!session) {
     redirect("/login");
-    console.log("HERE");
   }
 
   const competitionData = await db.query.competitions.findFirst({

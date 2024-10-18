@@ -1,11 +1,11 @@
-import { getSession } from "@/lib/auth";
 import db from "@/lib/db";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import SiteCard from "./siteCard";
+import { getServerSession } from "next-auth";
 
 export default async function Sites({ limit }: { limit?: number }) {
-  const session = await getSession();
+  const session = await getServerSession();
   if (!session) {
     redirect("/login");
   }

@@ -1,25 +1,18 @@
-import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import AnalyticsMockup from "@/components/analytics/analytics";
 import db from "@/lib/db";
+import { getServerSession } from "next-auth";
 
 export default async function SiteAnalytics({
   params,
 }: {
   params: { id: string };
 }) {
-  const session = await getSession();
-  if (!session) {
-    redirect("/login");
-  }
   const data = await db.query.sites.findFirst({
     where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
   });
 
-  if (
-    !data ||
-    (data.userId !== session.user.id && data.admin != session.user.email)
-  ) {
+  if (!data) {
     notFound();
   }
 

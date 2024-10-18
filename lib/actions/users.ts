@@ -1,12 +1,13 @@
 "use server";
 
-import { getSession, withSuperAdminAuth } from "@/lib/auth";
+import { withSuperAdminAuth } from "@/lib/auth";
 import { and, eq } from "drizzle-orm";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
 import db from "../db";
 import { questions, userCompetitions, users, SelectQuestion } from "../schema";
 import { QuestionType } from "../types";
+import { getServerSession } from "next-auth";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -15,10 +16,10 @@ const nanoid = customAlphabet(
 
 export const editUser = async (
   formData: FormData,
-  _id: unknown,
+  _id: string,
   key: string,
 ) => {
-  const session = await getSession();
+  const session = await getServerSession();
   if (!session?.user.id) {
     return {
       error: "Not authenticated",

@@ -1,11 +1,12 @@
-import { getSession } from "@/lib/auth";
+"use client";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import LogoutButton from "../auth/logoutButton";
+import { useSession } from "next-auth/react";
 
-export default async function Profile() {
-  const session = await getSession();
+export default function Profile() {
+  const { data: session, status, update } = useSession();
 
   return (
     session && (

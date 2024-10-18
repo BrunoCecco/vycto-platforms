@@ -1,19 +1,45 @@
+"use client";
 import Form from "@/components/form";
-import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { editUser } from "@/lib/actions";
 import LogoutButton from "../auth/logoutButton";
 import EditProfileImage from "./editProfileImage";
 import CountryPicker from "./countryPicker";
 import CombinedForm from "../form/combined";
+import { useSession } from "next-auth/react";
+import React, { useEffect } from "react";
+import Loading from "@/app/app/(dashboard)/loading";
 
-export default async function UserSettings() {
-  const session = await getSession();
-  if (!session) {
-    redirect("/login");
-  }
+export default function UserSettings() {
+  const {
+    data: session,
+    status,
+    update,
+  } = useSession({
+    required: true,
+    onUnauthenticated: () => redirect("/login"),
+  });
 
-  return (
+  const handleSubmit = async (data: FormData, _id: string, key: string) => {
+    const newValue = data.get(key) as string;
+    if (!session) return;
+    // @ts-expect-error
+    if (session.user[key] === newValue) return { error: "No changes made." };
+
+    // Update the user session directly
+    await update({
+      user: {
+        ...session.user,
+        [key]: newValue,
+      },
+    });
+
+    return editUser(data, _id, key);
+  };
+
+  return status === "loading" ? (
+    <Loading />
+  ) : (
     <div className="flex flex-col space-y-12">
       <div className="flex flex-col space-y-6">
         <h1 className="font-cal text-3xl font-bold dark:text-white">
@@ -21,57 +47,8 @@ export default async function UserSettings() {
         </h1>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-1">
           <div className="w-full sm:w-fit">
-            <EditProfileImage session={session} />
+            <EditProfileImage />
           </div>
-          {/* <Form
-            title="Name"
-            description="Your full name."
-            helpText="Please enter your first and last name."
-            inputAttrs={{
-              name: "name",
-              type: "text",
-              defaultValue: session.user.name!,
-              placeholder: "Full Name",
-            }}
-            handleSubmit={editUser}
-          />
-          <Form
-            title="Username"
-            description="Your username displayed on leaderboards."
-            helpText="Please use 32 characters maximum."
-            inputAttrs={{
-              name: "username",
-              type: "text",
-              defaultValue: session.user.username!,
-              placeholder: "user123",
-              maxLength: 32,
-            }}
-            handleSubmit={editUser}
-          />
-          <Form
-            title="Email"
-            description="Your email."
-            helpText="Must be a valid email."
-            inputAttrs={{
-              name: "email",
-              type: "text",
-              defaultValue: session.user.email!,
-              placeholder: "Email",
-            }}
-            handleSubmit={editUser}
-          />
-          <Form
-            title="Country"
-            description="Your country of residence."
-            helpText="Used to calculate competition timings."
-            inputAttrs={{
-              name: "country",
-              type: "text",
-              defaultValue: session.user.country!,
-              placeholder: "Country",
-            }}
-            handleSubmit={editUser}
-          /> */}
           <CombinedForm
             title={"User Profile"}
             descriptions={[
@@ -108,7 +85,7 @@ export default async function UserSettings() {
                 placeholder: "Country",
               },
             ]}
-            handleSubmit={editUser}
+            handleSubmit={handleSubmit}
           />
         </div>
       </div>

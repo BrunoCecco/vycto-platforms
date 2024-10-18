@@ -13,7 +13,7 @@ import { capitalize } from "@/lib/utils";
 import LoadingDots from "@/components/icons/loadingDots";
 import PlayButton from "@/components/buttons/playButton";
 import { toast } from "sonner";
-import { getSession } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 
 export async function generateMetadata({
   params,
@@ -73,7 +73,7 @@ export default async function SiteLayout({
 }) {
   const domain = decodeURIComponent(params.domain);
   const data = await getSiteData(domain);
-  const session = await getSession();
+  const session = await getServerSession();
 
   if (!data) {
     notFound();
@@ -108,9 +108,7 @@ export default async function SiteLayout({
           latestCompetitionUrl={`/comp/${latestCompetition?.slug}`}
           session={session}
         >
-          <Suspense fallback={<LoadingDots />}>
-            <Profile />
-          </Suspense>
+          <Profile />
         </SiteNav>
       </div>
       <div className="relative w-full max-w-screen-2xl sm:w-4/5">

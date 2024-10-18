@@ -1,16 +1,16 @@
-import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import CombinedForm from "@/components/form/combined";
 import { updateCompetitionMetadata } from "@/lib/actions";
 import db from "@/lib/db";
 import Form from "@/components/form";
+import { getServerSession } from "next-auth";
 
 export default async function CompetitionRewards({
   params,
 }: {
   params: { id: string };
 }) {
-  const session = await getSession();
+  const session = await getServerSession();
   if (!session) {
     redirect("/login");
   }

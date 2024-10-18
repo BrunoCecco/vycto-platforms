@@ -179,7 +179,7 @@ export default function SiteNav({
         <ModalBody>
           <ModalContent>
             <div className="flex flex-col items-center justify-center gap-4">
-              <Story />
+              <Story siteData={data} />
               {session ? (
                 <HoverBorderGradient
                   containerClassName="py-2 px-8"

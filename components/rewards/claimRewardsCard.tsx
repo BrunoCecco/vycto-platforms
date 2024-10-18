@@ -31,7 +31,7 @@ export default function ClaimRewardsCard({
           {comp.rewardDescription ||
             "This AEL signed shirt, autographed by all 22 player, stands as a powerful emblem of pride for an entire city."}
         </div>
-        <div className="mt-4 flex w-full items-center justify-between gap-4">
+        <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4">
           <p className="rounded-full bg-slate-200 p-1 px-2 text-xs font-bold text-black">
             EXCLUSIVE PRIZE
           </p>

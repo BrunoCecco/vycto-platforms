@@ -1,15 +1,15 @@
-import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
 import db from "@/lib/db";
 import CompetitionWinners from "@/components/competitions/competitionWinners";
 import { getCompetitionWinnerData } from "@/lib/fetchers";
+import { getServerSession } from "next-auth";
 
 export default async function CompetitionResults({
   params,
 }: {
   params: { id: string };
 }) {
-  const session = await getSession();
+  const session = await getServerSession();
   if (!session) {
     redirect("/login");
   }

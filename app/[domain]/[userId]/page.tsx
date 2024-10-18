@@ -1,28 +1,5 @@
-import { notFound, redirect } from "next/navigation";
-import {
-  getAnswersForUser,
-  getCompetitionData,
-  getCompetitionUsers,
-  getQuestionsForCompetition,
-  getSiteData,
-  getUserCompetitions,
-  getUserData,
-  getUserDataById,
-} from "@/lib/fetchers";
-import db from "@/lib/db";
-import {
-  competitions,
-  SelectQuestion,
-  SelectUserCompetition,
-  sites,
-} from "@/lib/schema";
-import { eq } from "drizzle-orm";
-import {
-  answerQuestion,
-  enterUserToCompetition,
-  submitAnswers,
-} from "@/lib/actions";
-import { getSession } from "@/lib/auth";
+import { notFound } from "next/navigation";
+import { getUserCompetitions, getUserDataById } from "@/lib/fetchers";
 import UserCompListing from "@/components/competitions/userCompListing";
 
 export default async function UserCompetitionsPage({

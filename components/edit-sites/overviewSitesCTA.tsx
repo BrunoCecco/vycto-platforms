@@ -1,4 +1,3 @@
-import { getSession } from "@/lib/auth";
 import CreateSiteButton from "../edit-fanzone/createSiteButton";
 import CreateSiteModal from "../modal/create-site";
 import Link from "next/link";
@@ -6,9 +5,10 @@ import db from "@/lib/db";
 import { sites } from "@/lib/schema";
 import { count, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
 export default async function OverviewSitesCTA() {
-  const session = await getSession();
+  const session = await getServerSession();
   if (!session) {
     redirect("/login");
   }

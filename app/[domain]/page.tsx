@@ -3,7 +3,7 @@ import { getCompetitionsForSite, getSiteData } from "@/lib/fetchers";
 import db from "@/lib/db";
 import FanZone from "@/components/fanzone/fanZone";
 import { SelectCompetition } from "@/lib/schema";
-import { getSession } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 import SettingsButton from "@/components/settings/settingsButton";
 import Image from "next/image";
 import { capitalize } from "@/lib/utils";
@@ -55,7 +55,7 @@ export default async function SiteHomePage({
     (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )[0];
 
-  const session = await getSession();
+  const session = await getServerSession();
 
   const addFanzoneToString = (str: string) => {
     if (str?.includes("fanzone")) return str;

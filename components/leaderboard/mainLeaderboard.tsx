@@ -4,7 +4,6 @@ import Image from "next/image";
 import { SelectSite, SelectUser } from "@/lib/schema";
 import { getLeaderboardData } from "@/lib/fetchers";
 import LeaderboardHeader from "./leaderboardHeader";
-import { getSession } from "@/lib/auth";
 import Link from "next/link";
 import LoadingDots from "../icons/loadingDots";
 
