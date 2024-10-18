@@ -3,6 +3,7 @@ import ClaimedRewards from "@/components/rewards/claimedRewards";
 import PendingRewards from "@/components/rewards/pendingRewards";
 import RewardsList from "@/components/rewards/rewardsList";
 import FlipText from "@/components/ui/flipText";
+import { TextGenerateEffect } from "@/components/ui/textGenerateEffect";
 import { authOptions } from "@/lib/auth";
 import {
   getCompetitionsForPeriod,
@@ -61,7 +62,10 @@ export default async function Rewards({
           alt="Profile Image"
         />
       </div>
-      <FlipText word="Your Rewards" className="mb-8 text-4xl" />
+      <TextGenerateEffect
+        words="Your Rewards"
+        className="mb-8 text-2xl text-white"
+      />
       <div className="mb-8 grid w-full grid-cols-1 items-center justify-center gap-8 md:grid-cols-3">
         <div className="col-span-1 md:mr-auto">
           <PendingRewards count={0} amount={0} />

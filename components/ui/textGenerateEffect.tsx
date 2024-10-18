@@ -43,7 +43,10 @@ export const TextGenerateEffect = ({
               {sentence.split(" ").map((word, idx) => (
                 <motion.span
                   key={word + idx}
-                  className=" text-black opacity-0 dark:text-white"
+                  className={cn(
+                    "text-black opacity-0 dark:text-white",
+                    className,
+                  )}
                   style={{
                     filter: filter ? "blur(10px)" : "none",
                   }}
