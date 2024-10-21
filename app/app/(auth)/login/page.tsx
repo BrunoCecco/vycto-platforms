@@ -23,7 +23,7 @@ export default async function LoginPage() {
       <B2BSignUp />
     </div>
   ) : (
-    <SignUpWrapper>
+    <SignUpWrapper siteData={siteData}>
       <UserSignUp siteData={siteData} />
     </SignUpWrapper>
   );

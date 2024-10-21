@@ -117,6 +117,7 @@ export const sites = pgTable(
     name: text("name"),
     description: text("description"),
     logo: text("logo"),
+    loginBanner: text("loginBanner"),
     // .default("https://vycto.com/img/vycto_logo.png"),
     font: text("font").default("font-cal").notNull(),
     color1: text("color1").default("gray").notNull(),
@@ -132,7 +133,7 @@ export const sites = pgTable(
     message404: text("message404").default(
       "Blimey! You''ve found a page that doesn''t exist.",
     ),
-    senderGroup: text('senderGroup'),
+    senderGroup: text("senderGroup"),
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
     updatedAt: timestamp("updatedAt", { mode: "date" })
       .notNull()

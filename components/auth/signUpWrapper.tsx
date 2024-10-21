@@ -1,8 +1,15 @@
 "use client";
 
+import { SelectSite } from "@/lib/schema";
 import Image from "next/image";
 
-const SignUpWrapper = ({ children }: { children: React.ReactNode }) => {
+const SignUpWrapper = ({
+  siteData,
+  children,
+}: {
+  siteData?: SelectSite;
+  children: React.ReactNode;
+}) => {
   return (
     <div className="flex min-h-screen flex-col bg-white md:flex-row">
       <div className="relative z-30 mx-auto flex h-screen w-full max-w-lg flex-col items-center justify-center bg-[rgba(255,255,255,0.5)] p-8 backdrop-blur-2xl backdrop-opacity-100 md:w-1/2">
@@ -12,7 +19,7 @@ const SignUpWrapper = ({ children }: { children: React.ReactNode }) => {
       {/* Right side - Logo and Info */}
       <div className="fixed z-20 h-screen w-full flex-col items-center justify-center overflow-hidden rounded-l-lg bg-white text-white md:relative md:w-1/2">
         <Image
-          src={"/loginBanner.png"}
+          src={siteData?.loginBanner ?? "/loginBanner.png"}
           fill
           priority
           className="h-full w-full object-cover"
