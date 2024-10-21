@@ -22,7 +22,6 @@ import { usePostHog } from "posthog-js/react";
 import * as React from "react";
 import { useState } from "react";
 import LoginButton from "./loginButton";
-import Email from "next-auth/providers/email";
 
 function ColorSchemeToggle(props: IconButtonProps) {
   const { onClick, ...other } = props;
