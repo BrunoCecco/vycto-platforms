@@ -198,6 +198,7 @@ export default function UserSignUp({
               </Stack>
               {emailExists && (
                 <Button
+                  onClick={() => handleAppleSignin()}
                   className="dark:bg-gray-800 dark:hover:bg-gray-700"
                   variant="soft"
                   color="neutral"
