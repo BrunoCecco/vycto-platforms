@@ -1,10 +1,11 @@
-import UserSignUp from "@/components/auth/userSignUp";
+// import UserSignUp from "@/components/auth/userSignUp";
 import { getSiteData } from "@/lib/fetchers";
 import { headers } from "next/headers";
 import B2BSignUp from "@/components/auth/b2BSignUp";
 import ViewUnavailable from "@/components/mobile/viewUnavailable";
 import SignUpWrapper from "@/components/auth/signUpWrapper";
 import { BackgroundGradientAnimation } from "@/components/ui/backgroundGradientAnimation";
+import UserSignUp from "@/components/auth/signInSide";
 
 export default async function LoginPage() {
   const heads = headers();
@@ -19,12 +20,8 @@ export default async function LoginPage() {
   const siteData = host ? await getSiteData(host) : undefined;
 
   return host?.includes("app.") ? (
-    <div className="">
-      <B2BSignUp />
-    </div>
+    <B2BSignUp />
   ) : (
-    <SignUpWrapper siteData={siteData}>
-      <UserSignUp siteData={siteData} />
-    </SignUpWrapper>
+    <UserSignUp siteData={siteData} />
   );
 }

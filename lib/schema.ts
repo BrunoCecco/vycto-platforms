@@ -118,6 +118,7 @@ export const sites = pgTable(
     description: text("description"),
     logo: text("logo"),
     loginBanner: text("loginBanner"),
+    loginBannerDark: text("loginBannerDark"),
     // .default("https://vycto.com/img/vycto_logo.png"),
     font: text("font").default("font-cal").notNull(),
     color1: text("color1").default("gray").notNull(),

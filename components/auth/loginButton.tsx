@@ -1,12 +1,22 @@
 "use client";
 
-import LoadingDots from "@/components/icons/loadingDots";
+import Lottie from "lottie-react";
+import bouncingBall from "../../public/bouncingBall.json";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import { validateEmail } from "@/lib/utils";
+import Button from "@mui/joy/Button";
+
+const LoadingAnimation: React.FC = () => {
+  return (
+    <div className="h-20 w-32">
+      <Lottie animationData={bouncingBall} loop={true} />
+    </div>
+  );
+};
 
 export default function LoginButton({
   email,
@@ -40,7 +50,7 @@ export default function LoginButton({
   const checkEmail = async () => {
     setLoading(true);
     if (!validateEmail(email)) {
-      toast.error("Invalid email, please try again");
+      // toast.error("Invalid email, please try again");
       setLoading(false);
       return;
     }
@@ -134,28 +144,34 @@ export default function LoginButton({
   };
 
   return (
-    <div className="relative w-full">
+    <>
       {!message && (
-        <button
-          disabled={loading}
-          onClick={checkEmail}
-          className={`${
-            loading
-              ? "cursor-not-allowed bg-blue-800"
-              : "bg-blue-500  hover:bg-blue-600"
-          } group my-2 flex h-10 w-full items-center justify-center space-x-2 rounded-md border border-stone-200 text-white transition-colors duration-75 focus:outline-none dark:border-stone-400`}
-        >
+        <>
           {loading ? (
-            <LoadingDots color="#A8A29E" />
+            <div className="flex w-full items-center justify-center">
+              <LoadingAnimation />
+            </div>
           ) : (
-            <p className="text-sm font-medium">Let&apos;s Play!</p>
+            <Button
+              type="submit"
+              fullWidth
+              disabled={loading}
+              onClick={checkEmail}
+              className="cursor-pointer"
+            >
+              <p className="text-sm font-medium">Let&apos;s Play!</p>
+            </Button>
           )}
-        </button>
+        </>
       )}
-      {message && <p className="text-sm font-bold text-stone-700">{message}</p>}
+      {message && (
+        <p className="text-center text-sm font-bold text-stone-700 dark:text-gray-400">
+          {message}
+        </p>
+      )}
       {error !== "" && (
         <p className="text-sm font-bold text-red-700">{error}</p>
       )}
-    </div>
+    </>
   );
 }
