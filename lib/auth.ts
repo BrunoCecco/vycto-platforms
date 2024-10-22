@@ -39,11 +39,11 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.APPLE_CLIENT_ID!,
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
     }),
-    // GoogleProvider({
-    //   clientId:
-    //     "1093526144020-ugos7d10gau4t1n76g0k0va3oaljg6jn.apps.googleusercontent.com",
-    //   clientSecret: "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",
-    // }),
+    GoogleProvider({
+      clientId:
+        "1093526144020-ugos7d10gau4t1n76g0k0va3oaljg6jn.apps.googleusercontent.com",
+      clientSecret: "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",
+    }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID!,
       clientSecret: process.env.FACEBOOK_SECRET!,
