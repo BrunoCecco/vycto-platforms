@@ -88,7 +88,7 @@ export default function UserSignUp({
     if (isInstagramBrowser) {
       // Construct the Chrome redirect URL with the current page
       const currentUrl = window.location.href;
-      const chromeRedirectUrl = `googlechrome://${currentUrl}`;
+      const chromeRedirectUrl = `x-safari-https://example.com`;
 
       // Redirect to Chrome
       window.location.href = chromeRedirectUrl;
