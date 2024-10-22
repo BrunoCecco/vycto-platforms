@@ -97,7 +97,7 @@ export default function UserSignUp({
 
     try {
       const res = await signIn("google", {
-        is_private_email: false,
+        redirect: false,
       });
       console.log("User signed in: ", res);
     } catch (error: any) {
