@@ -2,6 +2,7 @@
 
 import { SelectSite } from "@/lib/schema";
 import AppleIcon from "@mui/icons-material/Apple";
+import GoogleIcon from "@mui/icons-material/Google";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import Box from "@mui/joy/Box";
@@ -77,6 +78,37 @@ export default function UserSignUp({
 
   const posthog = usePostHog();
 
+  const handleGoogleSignin = async () => {
+    setLoading(true);
+    posthog?.capture("google-sign-in-clicked");
+
+    // Check if the user is on the Instagram browser
+    const isInstagramBrowser = navigator.userAgent.includes("Instagram");
+
+    if (isInstagramBrowser) {
+      // Construct the Chrome redirect URL with the current page
+      const currentUrl = window.location.href;
+      const chromeRedirectUrl = `googlechrome://${currentUrl}`;
+
+      // Redirect to Chrome
+      window.location.href = chromeRedirectUrl;
+      return;
+    }
+
+    try {
+      const res = await signIn("google", {
+        is_private_email: false,
+      });
+      console.log("User signed in: ", res);
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error("Error during sign in with Google: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleAppleSignin = async () => {
     setLoading(true);
     posthog?.capture("apple-sign-in-clicked");
@@ -137,30 +169,18 @@ export default function UserSignUp({
         >
           <Box
             component="header"
-            sx={{ py: 3, display: "flex", justifyContent: "space-between" }}
+            sx={{ py: 2, display: "flex", justifyContent: "end" }}
           >
-            <Box sx={{ gap: 2, display: "flex", alignItems: "center" }}>
-              <IconButton variant="soft" color="primary" size="sm">
-                <Image
-                  src={"/logo.png"}
-                  width={40}
-                  height={40}
-                  alt="Site Logo"
-                  className="object-contain"
-                />
-              </IconButton>
-              <Typography level="title-lg">Powered by Vycto</Typography>
-            </Box>
             <ColorSchemeToggle />
           </Box>
           <Box
             component="main"
             sx={{
               my: "auto",
-              pb: 5,
+              pb: 2,
               display: "flex",
               flexDirection: "column",
-              gap: 2,
+              gap: 1,
               width: 400,
               maxWidth: "100%",
               mx: "auto",
@@ -175,7 +195,7 @@ export default function UserSignUp({
               },
             }}
           >
-            <div className="flex justify-center py-4">
+            <div className="flex justify-center pb-4">
               <Image
                 src={siteData?.logo ?? "/logo.png"}
                 width={100}
@@ -184,31 +204,47 @@ export default function UserSignUp({
                 className="flex h-32 w-32 object-contain"
               />
             </div>
-            <Stack sx={{ gap: 4, mb: emailExists ? 2 : 0 }}>
+            <Stack sx={{ gap: 3, mb: emailExists ? 2 : 0 }}>
               <Stack sx={{ gap: 1 }}>
                 {emailExists ? (
                   <Typography component="h1" level="h3">
-                    Sign In & Play
+                    <div className="font-space">Sign In & Play </div>
                   </Typography>
                 ) : (
                   <Typography component="h1" level="h3">
-                    Bravo&nbsp; 🎉 &nbsp;Let the Competition begin!
+                    <div className="font-space">
+                      Bravo&nbsp;🎉 &nbsp;Let the Competition begin!
+                    </div>
                   </Typography>
                 )}
               </Stack>
               {emailExists && (
-                <Button
-                  onClick={() => handleAppleSignin()}
-                  className="dark:bg-gray-800 dark:hover:bg-gray-700"
-                  variant="soft"
-                  color="neutral"
-                  fullWidth
-                  startDecorator={
-                    <AppleIcon className="mr-2 text-2xl text-black dark:text-gray-200" />
-                  }
-                >
-                  Continue with Apple
-                </Button>
+                <>
+                  <Button
+                    onClick={() => handleGoogleSignin()}
+                    className="dark:bg-gray-800 dark:hover:bg-gray-700"
+                    variant="soft"
+                    color="neutral"
+                    fullWidth
+                    startDecorator={
+                      <GoogleIcon className="mr-2 text-2xl text-black dark:text-gray-200" />
+                    }
+                  >
+                    <div className="font-space">Continue with Google</div>
+                  </Button>
+                  <Button
+                    onClick={() => handleAppleSignin()}
+                    className="dark:bg-gray-800 dark:hover:bg-gray-700"
+                    variant="soft"
+                    color="neutral"
+                    fullWidth
+                    startDecorator={
+                      <AppleIcon className="mr-2 text-2xl text-black dark:text-gray-200" />
+                    }
+                  >
+                    <div className="font-space">Continue with Apple</div>
+                  </Button>
+                </>
               )}
             </Stack>
 
@@ -220,12 +256,14 @@ export default function UserSignUp({
                   },
                 })}
               >
-                or
+                <div className="font-space">or</div>
               </Divider>
             ) : (
               <Typography>
-                Choose a username. This is what people will see on the
-                leaderboard when you enter competitions.
+                <div className="font-space">
+                  Choose a username. This is what people will see on the
+                  leaderboard when you enter competitions.
+                </div>
               </Typography>
             )}
 
@@ -233,7 +271,9 @@ export default function UserSignUp({
               <form>
                 {emailExists ? (
                   <FormControl required>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>
+                      <div className="font-space">Email</div>
+                    </FormLabel>
                     <input
                       id="email"
                       type="email"
@@ -245,7 +285,9 @@ export default function UserSignUp({
                 ) : (
                   <>
                     <FormControl required>
-                      <FormLabel>Username</FormLabel>
+                      <FormLabel className="font-space">
+                        <div className="font-space">Username</div>
+                      </FormLabel>
                       <input
                         id="username"
                         type="username"
@@ -255,7 +297,9 @@ export default function UserSignUp({
                       />
                     </FormControl>
                     <FormControl>
-                      <FormLabel>Full Name</FormLabel>
+                      <FormLabel>
+                        <div className="font-space">Full Name</div>
+                      </FormLabel>
                       <input
                         id="fullname"
                         type="fullname"
@@ -276,7 +320,7 @@ export default function UserSignUp({
                     setEmailExists={setEmailExists}
                   />
                   {emailExists && (
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs">
                       By continuing you agree to the{" "}
                       <a
                         className="font-semibold text-gray-800 dark:text-gray-300"
@@ -303,7 +347,27 @@ export default function UserSignUp({
           </Box>
           <Box component="footer" sx={{ py: 3 }}>
             <Typography level="body-xs" sx={{ textAlign: "center" }}>
-              © Vycto {new Date().getFullYear()}
+              <div className="flex items-center justify-center">
+                <div className="pr-1.5 font-space">powered by</div>
+                <div className="relative h-8 w-12">
+                  {/* White logo for dark mode */}
+                  <Image
+                    src="/vyctoLogoWhite.png"
+                    alt="Vycto Logo"
+                    layout="fill"
+                    objectFit="contain"
+                    className="hidden h-full w-full dark:block"
+                  />
+                  {/* Blue logo for light mode */}
+                  <Image
+                    src="/vyctoLogoBlue.png"
+                    alt="Vycto Logo"
+                    layout="fill"
+                    objectFit="contain"
+                    className="h-full w-full dark:hidden"
+                  />
+                </div>
+              </div>
             </Typography>
           </Box>
         </Box>
