@@ -86,12 +86,12 @@ export default function UserSignUp({
     const isInstagramBrowser = navigator.userAgent.includes("Instagram");
 
     if (isInstagramBrowser) {
-      // Construct the Chrome redirect URL with the current page
+      // Construct the safari redirect URL with the current page
       const currentUrl = window.location.href;
-      const chromeRedirectUrl = `x-safari-https://example.com`;
+      const safariRedirectUrl = `x-safari-${currentUrl}`;
 
-      // Redirect to Chrome
-      window.location.href = chromeRedirectUrl;
+      // Redirect to safari
+      window.location.href = safariRedirectUrl;
       return;
     }
 
