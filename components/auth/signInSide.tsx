@@ -79,9 +79,6 @@ export default function UserSignUp({
   const posthog = usePostHog();
 
   const handleGoogleSignin = async () => {
-    setLoading(true);
-    posthog?.capture("google-sign-in-clicked");
-
     // Check if the user is on the Instagram browser
     const isInstagramBrowser = navigator.userAgent.includes("Instagram");
 
@@ -92,8 +89,11 @@ export default function UserSignUp({
 
       // Redirect to safari
       window.location.href = safariRedirectUrl;
-      return;
+      // return;
     }
+
+    setLoading(true);
+    posthog?.capture("google-sign-in-clicked");
 
     try {
       const res = await signIn("google", {
