@@ -79,7 +79,9 @@ export default function UserSignUp({
   const posthog = usePostHog();
 
   React.useEffect(() => {
-    if (window.location.href.includes("fbclid=")) {
+    const isInstagramBrowser = navigator.userAgent.includes("Instagram");
+
+    if (!isInstagramBrowser && window.location.href.includes("fbclid=")) {
       handleGoogleSignin();
     }
   }, []);
