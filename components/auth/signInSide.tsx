@@ -79,7 +79,7 @@ export default function UserSignUp({
   const posthog = usePostHog();
 
   React.useEffect(() => {
-    if (window.location.href.includes("x-safari")) {
+    if (window.location.href.includes("fbclid=")) {
       handleGoogleSignin();
     }
   }, []);
