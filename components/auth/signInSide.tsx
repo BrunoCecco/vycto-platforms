@@ -78,6 +78,12 @@ export default function UserSignUp({
 
   const posthog = usePostHog();
 
+  React.useEffect(() => {
+    if (window.location.href.includes("x-safari")) {
+      handleGoogleSignin();
+    }
+  }, []);
+
   const handleGoogleSignin = async () => {
     // Check if the user is on the Instagram browser
     const isInstagramBrowser = navigator.userAgent.includes("Instagram");
@@ -89,7 +95,7 @@ export default function UserSignUp({
 
       // Redirect to safari
       window.location.href = safariRedirectUrl;
-      // return;
+      return;
     }
 
     setLoading(true);
