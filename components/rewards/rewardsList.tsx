@@ -9,13 +9,13 @@ export default async function RewardsList({
   return (
     <div>
       <h2 className="mb-4 text-2xl font-bold">Your Rewards</h2>
-      <div className="overflow-scroll bg-gray-800">
+      <div className="overflow-scroll rounded-lg bg-gray-800">
         <table className="w-full rounded-lg">
           <thead>
             <tr className="bg-gray-700">
               <th className="p-4 text-left">Competition</th>
               <th className="p-4 text-left">Result</th>
-              <th className="p-4 text-left">Reward</th>
+              <th className="p-4 text-center">Reward</th>
               <th className="p-4 text-right">Submission</th>
             </tr>
           </thead>

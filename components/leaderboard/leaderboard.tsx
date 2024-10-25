@@ -44,10 +44,10 @@ const Leaderboard = ({
               <th className="order-2 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Name
               </th>
-              <th className="order-1 hidden py-3 text-left text-xs font-medium uppercase text-gray-500 sm:table-cell">
+              <th className="order-1 hidden py-3 text-center text-xs font-medium uppercase text-gray-500 sm:table-cell">
                 Rank
               </th>
-              <th className="order-3 text-wrap py-3 text-left text-xs font-medium uppercase text-gray-500">
+              <th className="order-3 text-wrap py-3 text-center text-xs font-medium uppercase text-gray-500">
                 <span className="hidden sm:block">Points</span>
                 <span className="block sm:hidden">Pts</span>
               </th>
@@ -81,10 +81,10 @@ const Leaderboard = ({
                     @{user.username || user.email || user.name || "User"}
                   </span>
                 </td>
-                <td className="hidden py-4 text-gray-900 sm:table-cell">
+                <td className="hidden py-4 text-center text-gray-900 sm:table-cell">
                   {index + 1}
                 </td>
-                <td className="py-4 text-sm text-gray-900">
+                <td className="py-4 text-center text-sm text-gray-900">
                   {parseFloat(user.points || "0").toFixed(2)}
                 </td>
                 <td className="justify-end py-4 text-right">
