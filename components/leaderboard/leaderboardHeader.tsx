@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
+import React from "react";
 import { SelectSite } from "@/lib/schema";
 import { Crown } from "lucide-react";
-import { Button, Select, SelectItem, TextInput } from "@tremor/react";
+import { Select, SelectItem, TextInput } from "@tremor/react";
 
 const LeaderboardHeader = ({
   siteData,
@@ -15,22 +14,46 @@ const LeaderboardHeader = ({
   setRangeType: any;
   setQuery?: any;
 }) => {
-  const timeRanges = ["Monthly", "Yearly", "All Time"];
+  const timeRanges = ["Last Week", "Monthly", "Season"];
+
+  // Function to dynamically set the prize text based on rangeType
+  const getPrizeText = () => {
+    if (rangeType === "last week") {
+      return "Last Week's Prizes";
+    } else if (rangeType === "monthly") {
+      const currentMonth = new Date().toLocaleString("default", {
+        month: "long",
+      });
+      return `${currentMonth}'s Prizes`; // e.g., "December's Prize"
+    } else if (rangeType === "season") {
+      return "Season's Prizes";
+    }
+    return "";
+  };
 
   return (
-    <div className="mb-2 flex flex-col justify-between gap-4 sm:flex-row md:items-center">
-      <div className="flex items-center gap-4">
-        <Crown style={{ color: siteData.color1 }} />
-        <h1 className="text-lg font-bold">
-          Leaderboard{" "}
-          {rangeType == "monthly"
-            ? new Date().toLocaleString("default", { month: "long" })
-            : rangeType == "yearly"
-              ? new Date().getFullYear()
-              : " "}
-        </h1>
+    <div className="mb-2 flex flex-col justify-between gap-4 sm:flex-row md:items-start">
+      <div className="flex items-center justify-between sm:flex-col md:items-start">
+        <div className="flex items-center gap-4 sm:mt-2">
+          <Crown style={{ color: siteData.color1 }} />
+          <h1 className="text-lg font-bold">
+            Leaderboard{" "}
+            {rangeType === "monthly"
+              ? new Date().toLocaleString("default", { month: "long" })
+              : rangeType === "yearly"
+                ? new Date().getFullYear()
+                : " "}
+          </h1>
+        </div>
+        {/* Updated text based on rangeType */}
+        <p
+          className="cursor-pointer underline"
+          style={{ color: siteData.color1 }}
+        >
+          {getPrizeText()}
+        </p>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex gap-4">
         <TextInput placeholder="Search" onValueChange={setQuery} />
         <Select
           value={rangeType}
