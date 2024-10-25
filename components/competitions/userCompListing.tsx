@@ -59,9 +59,9 @@ export default async function UserCompListing({
     <tr className="bg-gray-800">
       <td className="p-4 text-left">
         <div className="flex items-center">
-          <div className="relative h-10 w-10">
+          <div className="relative h-10 w-10 flex-shrink-0">
             <Image
-              className="h-full w-full rounded-full"
+              className="rounded-full object-cover"
               src={
                 (userReward ? userReward.image : comp?.image) ||
                 "/placeholder.png"
@@ -82,24 +82,23 @@ export default async function UserCompListing({
       </td>
       <td className="p-4 text-left">
         <div className="text-sm font-medium text-gray-300">
-          Points: {userComp.points}
-        </div>
-        <div className="text-sm font-medium text-gray-300">
-          Rank: {userComp.ranking}/{userComp.totalUsers}
-        </div>
-        <div className="text-sm font-medium text-gray-300">
-          Average: {userComp.averagePoints}
+          {userComp.points}
         </div>
       </td>
-      <td className="flex flex-col justify-center gap-1 p-4 text-left">
+      <td className="gap-1 p-4 text-center">
         <div className="text-sm text-gray-300">
+          <div className="text-sm font-medium text-gray-300">
+            # {userComp.ranking}
+          </div>
           {userReward?.title || comp?.rewardTitle}
         </div>
         <div className="text-sm text-gray-300">{userReward?.description}</div>
         {canClaim && (
-          <Button className="bg-gradient-to-tr from-blue-200 to-blue-400">
-            Claim
-          </Button>
+          <div className="mt-2 flex items-center justify-center">
+            <Button className="bg-gradient-to-tr from-blue-200 to-blue-400">
+              Claim
+            </Button>
+          </div>
         )}
       </td>
       <td className="p-4 text-right">
