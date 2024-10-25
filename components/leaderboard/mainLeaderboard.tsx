@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import HoverBorderGradient from "../ui/hoverBorderGradient";
 import Image from "next/image";
 import { SelectSite, SelectUser } from "@/lib/schema";
 import { getLeaderboardData } from "@/lib/fetchers";
 import LeaderboardHeader from "./leaderboardHeader";
 import Link from "next/link";
 import LoadingDots from "../icons/loadingDots";
+import { motion } from "framer-motion";
 
 type LeaderboardUser = SelectUser & { points: number };
 
@@ -76,36 +78,67 @@ const MainLeaderboard = ({
           setQuery={setQuery}
         />
 
-        {data && data?.findIndex((usr) => usr.id === user?.id) > -1 && (
+        {/* {data && data?.findIndex((usr) => usr.id === user?.id) > -1 && (
           <div className="flex items-center gap-4 rounded-lg py-4">
             <span className="text-lg font-bold">Your Rank:</span>
             <span className="text-lg font-bold">
               {data.findIndex((usr) => usr.id === user.id) + 1}
             </span>
           </div>
-        )}
+        )} */}
 
         <div className="overflow-x-auto">
-          {/* Desktop Table */}
           <table className="min-w-full rounded-xl">
             <thead className="pb-4">
               <tr className="pb-4">
                 <th className="py-3 text-left text-xs font-medium uppercase">
                   Name
                 </th>
-                <th className="hidden py-3 text-left text-xs font-medium uppercase md:table-cell">
+                <th className="hidden py-3 text-center text-xs font-medium uppercase md:table-cell">
                   Rank
                 </th>
-                <th className="text-wrap py-3 text-left text-xs font-medium uppercase">
+                <th className="text-wrap py-3 text-center text-xs font-medium uppercase">
                   <span className="hidden sm:block">Points</span>
                   <span className="block sm:hidden">Pts</span>
                 </th>
-                <th className="py-3 text-right text-xs font-medium uppercase">
+                {/* <th className="py-3 text-right text-xs font-medium uppercase">
                   Submissions
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody>
+              {/* Signed in user's entry */}
+              <tr className="border-b text-left">
+                <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
+                  <div className="table-cell pr-1 sm:hidden">7</div>
+                  <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
+                    <Image
+                      src={
+                        user.image || `https://avatar.vercel.sh/${user.email}`
+                      }
+                      alt="Profile"
+                      fill={true}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="overflow-hidden rounded-full object-cover"
+                    />
+                  </div>
+                  <div className="flex w-0 flex-1 items-center text-sm font-bold">
+                    <span className="truncate">
+                      @{user.username || user.email || user.name || "User"}
+                    </span>
+                    <HoverBorderGradient
+                      containerClassName="ml-2 mr-auto w-min"
+                      className={`duration-400 w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all hover:bg-slate-900`}
+                      color={siteData.color1}
+                    >
+                      <span style={{ color: siteData.color1 }}>You</span>
+                    </HoverBorderGradient>
+                  </div>
+                </td>
+                <td className="hidden py-4 text-center md:table-cell">10</td>
+                <td className="py-4 text-center">56</td>
+              </tr>
+
               {filteredData?.length > 0 ? (
                 filteredData.map((user: any, index: number) => (
                   <tr key={index} className="border-b text-left">
@@ -129,11 +162,13 @@ const MainLeaderboard = ({
                         @{user.username || user.email || user.name || "User"}
                       </span>
                     </td>
-                    <td className="hidden py-4 md:table-cell">{index + 1}</td>
-                    <td className="py-4">
+                    <td className="hidden py-4 text-center md:table-cell">
+                      {index + 1}
+                    </td>
+                    <td className="py-4 text-center">
                       {parseFloat(user.points || "0").toFixed(2)}
                     </td>
-                    <td className="justify-end py-4 text-right">
+                    {/* <td className="justify-end py-4 text-right">
                       <Link
                         href={user.id}
                         className="rounded-lg bg-blue-100 p-2 px-4 text-sm text-purple-800 shadow-md transition-all duration-200 hover:bg-blue-300 hover:shadow-none"
@@ -144,7 +179,7 @@ const MainLeaderboard = ({
                       >
                         View
                       </Link>
-                    </td>
+                    </td> */}
                   </tr>
                 ))
               ) : (
