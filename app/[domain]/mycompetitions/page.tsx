@@ -1,4 +1,6 @@
-import ProfileCard from "@/components/profile/profileCard";
+import CurrentPredictions from "@/components/my-competitions/currentPredictions";
+import PastPredictions from "@/components/my-competitions/pastPredictions";
+import ProfileCard from "@/components/my-competitions/profileCard";
 import ClaimRewardsCard from "@/components/rewards/claimRewardsCard";
 import ClaimedRewards from "@/components/rewards/claimedRewards";
 import PendingRewards from "@/components/rewards/pendingRewards";
@@ -80,7 +82,7 @@ export default async function mycompetitions({
             </div>
 
             {/* Top Predictions Section */}
-            {/* <div className="mt-12">
+            <div className="mt-12">
               <h2 className="text-2xl font-bold">
                 top predictions{" "}
                 <span className="font-normal text-gray-400">powered by</span>{" "}
@@ -94,6 +96,9 @@ export default async function mycompetitions({
                     layout="fill"
                     objectFit="cover"
                   />
+                  <span className="absolute left-2 top-2 text-lg font-bold text-white">
+                    3 - 0
+                  </span>
                 </div>
                 <div className="relative h-40 w-full overflow-hidden rounded-lg bg-gray-800">
                   <Image
@@ -102,52 +107,19 @@ export default async function mycompetitions({
                     layout="fill"
                     objectFit="cover"
                   />
+                  <span className="absolute left-2 top-2 text-lg font-bold text-white">
+                    5 - 2
+                  </span>
                 </div>
               </div>
-            </div> */}
+            </div>
 
-            {/* Current Predictions Section */}
-            {/* <div className="mt-12">
-              <h2 className="flex justify-between text-6xl font-bold">
-                CURRENT PREDICTIONS
-                <span className="self-end text-sm font-normal text-gray-400">
-                  powered by <span className="text-yellow-500">BINANCE</span>
-                </span>
-              </h2> */}
-
-            {/* Current Predictions Content */}
-            {/* <div className="mt-8 space-y-6"> */}
-            {/* First Prediction */}
-            {/* <div className="flex items-center gap-4">
-                  <div className="relative h-20 w-20 overflow-hidden rounded-lg">
-                    <Image
-                      src="/player.png" // replace with actual image path
-                      alt="RAPID vs FCSB"
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">RAPID vs FCSB</h3>
-                    <p className="text-gray-400">November 29</p>
-                  </div>
-                </div> */}
-
-            {/* Second Prediction */}
-            {/* <div className="flex items-center gap-4">
-                  <div className="relative h-20 w-20 overflow-hidden rounded-lg">
-                    <Image
-                      src="/player.png" // replace with actual image path
-                      alt="RAPID vs CFR Cluj"
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">RAPID vs CFR Cluj</h3>
-                    <p className="text-gray-400">December 3</p>
-                  </div>
-                </div> */}
+            <div className="mt-12">
+              <CurrentPredictions />
+            </div>
+            <div className="mt-12">
+              <PastPredictions />
+            </div>
           </div>
         </div>
       </div>
