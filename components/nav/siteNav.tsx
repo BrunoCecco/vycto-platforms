@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Settings, Home, Book, Crown, Bell } from "lucide-react";
+import { Menu, Settings, Home, Book, Crown, Bell, Flag } from "lucide-react";
 import {
   useParams,
   usePathname,
@@ -49,6 +49,12 @@ export default function SiteNav({
         href: "/howtoplay",
         isActive: segments[0] === "howtoplay",
         icon: <Book width={18} />,
+      },
+      {
+        name: "My Competitions",
+        href: "/mycompetitions",
+        isActive: segments[0] === "mycompetitions",
+        icon: <Flag width={18} />,
       },
       {
         name: "My Rewards",
