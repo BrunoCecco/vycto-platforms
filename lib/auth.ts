@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
       clientId:
         "1093526144020-ugos7d10gau4t1n76g0k0va3oaljg6jn.apps.googleusercontent.com",
       clientSecret: "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",
+      allowDangerousEmailAccountLinking: true,
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID!,
