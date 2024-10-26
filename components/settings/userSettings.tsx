@@ -8,7 +8,7 @@ import CountryPicker from "./countryPicker";
 import CombinedForm from "../form/combined";
 import { useSession } from "next-auth/react";
 import React, { useEffect } from "react";
-import Loading from "@/app/app/(dashboard)/loading";
+import Loading from "@/components/ui/loading";
 
 export default function UserSettings() {
   const {

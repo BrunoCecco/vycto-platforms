@@ -1,4 +1,4 @@
-import Loading from "@/app/app/(dashboard)/loading";
+import Loading from "@/components/ui/loading";
 import { getSiteData } from "@/lib/fetchers";
 import { Suspense } from "react";
 

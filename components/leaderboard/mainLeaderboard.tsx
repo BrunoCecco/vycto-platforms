@@ -157,7 +157,7 @@ const MainLeaderboard = ({
                           <td className="py-4 text-center">
                             {parseFloat(entry.points || "0").toFixed(2)}
                           </td>
-                          {/* Display points for the signed-in user */}
+                          {/* Display the points for the signed-in user */}
                         </tr>
                       );
                     } else {
