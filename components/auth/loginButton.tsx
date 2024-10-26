@@ -37,7 +37,7 @@ export default function LoginButton({
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  const posthog = usePostHog();
+  const posthog = usePostHog(); // posthog
   // Get error message added by next/auth in URL.
   const searchParams = useSearchParams();
 
