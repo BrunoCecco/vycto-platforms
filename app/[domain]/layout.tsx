@@ -8,7 +8,7 @@ import { Metadata } from "next";
 import SettingsButton from "@/components/settings/settingsButton";
 import SiteNav from "@/components/nav/siteNav";
 import Profile from "@/components/nav/profile";
-import Loading from "../app/(dashboard)/loading";
+import Loading from "../../components/ui/loading";
 import { capitalize } from "@/lib/utils";
 import LoadingDots from "@/components/icons/loadingDots";
 import PlayButton from "@/components/buttons/playButton";

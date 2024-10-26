@@ -2,7 +2,7 @@ import { ReactNode, Suspense } from "react";
 import Profile from "@/components/nav/profile";
 import Nav from "@/components/nav/nav";
 import PoweredBadge from "@/components/nav/poweredBadge";
-import Loading from "./loading";
+import Loading from "../../../components/ui/loading";
 
 export default async function DashboardLayout({
   children,

@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import BlurImage from "./blurImage";
 import { placeholderBlurhash } from "@/lib/utils";
-import Loading from "@/app/app/(dashboard)/loading";
 import {
   Mic,
   MicOff,

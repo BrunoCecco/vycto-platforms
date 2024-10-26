@@ -17,6 +17,8 @@ import EditGeneralSelection from "../edit-questions/editGeneralSelection";
 import EditTrueFalse from "../edit-questions/editTrueFalse";
 import EditGeneralNumber from "../edit-questions/editGeneralNumber";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "../form/loadingSpinner";
+import Loading from "../ui/loading";
 
 interface SearchResult {
   name: string;
@@ -174,6 +176,7 @@ export default function SearchPage() {
           </div>
         )} */}
       </div>
+      {isLoading && <Loading />}
     </div>
   );
 }

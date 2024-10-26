@@ -10,7 +10,7 @@ import { capitalize } from "@/lib/utils";
 import { fontMapper } from "@/styles/fonts";
 import { Suspense } from "react";
 import LoadingDots from "@/components/icons/loadingDots";
-import Loading from "../app/(dashboard)/loading";
+import Loading from "../../components/ui/loading";
 import { authOptions } from "@/lib/auth";
 
 export async function generateStaticParams() {

@@ -3,7 +3,7 @@ import Sites from "@/components/edit-sites/sites";
 import Link from "next/link";
 import PlaceholderCard from "@/components/media/placeholderCard";
 import OverviewSitesCTA from "@/components/edit-sites/overviewSitesCTA";
-import Loading from "./loading";
+import Loading from "../../../components/ui/loading";
 import EditCompetitions from "@/components/edit-competition/editCompetitions";
 
 export default function Overview() {
