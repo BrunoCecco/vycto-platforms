@@ -61,6 +61,7 @@ export default function CompetitionModal({
               )}
             </h4>
             <div className="mb-8 flex items-center justify-center">
+              {" "}
               {images.map((image, idx) => (
                 <motion.div
                   key={"images" + idx}
