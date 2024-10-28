@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 import { SelectCompetition, SelectSite } from "../../lib/schema";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Crown, Sparkle, Timer } from "lucide-react";
+import { Crown, Trophy, Rocket, Sparkle, Timer } from "lucide-react";
 
 export default function CompetitionModal({
   type,
@@ -44,7 +44,7 @@ export default function CompetitionModal({
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
         <ModalBody>
           <ModalContent>
-            <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 md:text-2xl dark:text-neutral-100">
+            <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 dark:text-neutral-100 md:text-2xl">
               {type === "current" ? (
                 <span>
                   A chance to{" "}
@@ -90,9 +90,7 @@ export default function CompetitionModal({
               ))}
             </div>
             <div className="mx-auto grid max-w-md grid-cols-2 items-center gap-4 text-sm text-neutral-700 dark:text-neutral-300">
-              {/* <span className="">
-              {status}
-            </span> */}
+              {/* <span className="">{status}</span> */}
               <span className="flex items-center">
                 <Sparkle className="mr-2" /> {competition.title}
               </span>
@@ -100,16 +98,34 @@ export default function CompetitionModal({
                 <Timer className="mr-2" />{" "}
                 {new Date(competition.date).toDateString()}
               </span>
+              {competition.rewardTitle && (
+                <span className="flex items-center">
+                  <Trophy className="mr-2" />
+                  {competition.rewardTitle}
+                </span>
+              )}
+              {competition.reward2Title && (
+                <span className="flex items-center">
+                  <Trophy className="mr-2" />
+                  {competition.reward2Title}
+                </span>
+              )}
+              {competition.reward3Title && (
+                <span className="flex items-center">
+                  <Trophy className="mr-2" />
+                  {competition.reward3Title}
+                </span>
+              )}
               <span className="flex items-center">
-                <Crown className="mr-2" />{" "}
+                <Rocket className="mr-2" /> X Questions
+              </span>
+              <span className="flex items-center">
+                <Crown className="mr-2" />
                 {(competition.rewardWinners || 0) +
                   (competition.reward2Winners || 0) +
                   (competition.reward3Winners || 0)}{" "}
                 Winners
               </span>
-              <span className="">{competition.rewardTitle}</span>
-              <span className="">{competition.reward2Title}</span>
-              <span className="">{competition.reward3Title}</span>
             </div>
           </ModalContent>
           <ModalFooter className="gap-4">
