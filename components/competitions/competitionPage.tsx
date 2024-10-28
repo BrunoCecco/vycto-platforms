@@ -270,7 +270,7 @@ export default function CompetitionPage({
                   />
                 )
               ) : (
-                <div className="rounded-md border border-stone-200 p-8 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
+                <div className="rounded-md border border-stone-200 p-8 dark:border-stone-400 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md">
                   <UserSignUp
                     siteData={siteData}
                     localAnswers={localAnswers}
@@ -282,7 +282,12 @@ export default function CompetitionPage({
           </TracingBeam>
         )}
         {activeTab == "Leaderboard" && (
-          <Leaderboard siteData={siteData} competition={data} users={users} />
+          <Leaderboard
+            siteData={siteData}
+            competition={data}
+            users={users}
+            session={session}
+          />
         )}
       </div>
     </div>

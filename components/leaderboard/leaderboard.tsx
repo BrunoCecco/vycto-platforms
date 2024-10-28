@@ -7,15 +7,18 @@ import {
   SelectUserCompetition,
 } from "@/lib/schema";
 import Link from "next/link";
+import HoverBorderGradient from "../ui/hoverBorderGradient";
 
 const Leaderboard = ({
   siteData,
   competition,
   users,
+  session,
 }: {
   siteData: SelectSite;
   competition: SelectCompetition;
   users: SelectUserCompetition[];
+  session: any;
 }) => {
   const calculateBg = (index: number) => {
     if (index > 2) return "";
@@ -57,50 +60,108 @@ const Leaderboard = ({
             </tr>
           </thead>
           <tbody>
-            {users.map((user: any, index: number) => (
-              <tr
-                key={user.userId}
-                className="relative w-full columns-12 border-b text-left"
-              >
-                <td className="flex w-[150px] items-center space-x-2 py-4 md:w-[200px] lg:w-[300px]">
-                  <div className="table-cell pr-2 text-gray-900 sm:hidden">
-                    {index + 1}
-                  </div>
-                  <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
-                    <Image
-                      src={
-                        user.image || `https://avatar.vercel.sh/${user.email}`
-                      }
-                      alt="Profile"
-                      fill={true}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="rounded-full object-cover"
-                    />
-                  </div>
-                  <span className="ml-2 w-0 flex-1 truncate text-sm font-bold text-gray-900">
-                    @{user.username || user.email || user.name || "User"}
-                  </span>
-                </td>
-                <td className="hidden py-4 text-center text-gray-900 sm:table-cell">
-                  {index + 1}
-                </td>
-                <td className="py-4 text-center text-sm text-gray-900">
-                  {parseFloat(user.points || "0").toFixed(2)}
-                </td>
-                <td className="justify-end py-4 text-right">
-                  <Link
-                    href={`/comp/${competition.slug}/${user.userId}`}
-                    className="rounded-lg bg-blue-100 p-2 px-4 text-sm text-purple-800 shadow-md transition-all duration-200 hover:bg-blue-300 hover:shadow-none"
-                    style={{
-                      backgroundImage: calculateBg(index),
-                      color: "black",
-                    }}
+            {users.map((user: any, index: number) => {
+              if (session && session.user.id === user.userId) {
+                return (
+                  <tr
+                    key={user.userId}
+                    className="relative w-full columns-12 border-b text-left text-gray-900"
                   >
-                    View
-                  </Link>
-                </td>
-              </tr>
-            ))}
+                    <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
+                      <div className="table-cell pr-1 sm:hidden">1</div>
+                      <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
+                        <Image
+                          src={
+                            user.image ||
+                            `https://avatar.vercel.sh/${user.email}`
+                          }
+                          alt="Profile"
+                          fill={true}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="overflow-hidden rounded-full object-cover"
+                        />
+                      </div>
+                      <div className="flex w-0 flex-1 items-center text-sm font-bold">
+                        <span className="truncate">
+                          @{user.username || user.email || user.name || "User"}
+                        </span>
+                        <HoverBorderGradient
+                          containerClassName="ml-2 mr-auto w-min"
+                          className={`duration-400 w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all hover:bg-slate-900`}
+                          color={siteData.color1}
+                        >
+                          <span style={{ color: siteData.color1 }}>You</span>
+                        </HoverBorderGradient>
+                      </div>
+                    </td>
+                    <td className="hidden py-4 text-center text-gray-900 sm:table-cell">
+                      {index + 1}
+                    </td>
+                    <td className="py-4 text-center text-sm text-gray-900">
+                      {parseFloat(user.points || "0").toFixed(2)}
+                    </td>
+                    <td className="justify-end py-4 text-right">
+                      <Link
+                        href={`/comp/${competition.slug}/${user.userId}`}
+                        className="rounded-lg bg-blue-100 p-2 px-4 text-sm text-purple-800 shadow-md transition-all duration-200 hover:bg-blue-300 hover:shadow-none"
+                        style={{
+                          backgroundImage: calculateBg(index),
+                          color: "black",
+                        }}
+                      >
+                        View
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              } else {
+                return (
+                  <tr
+                    key={user.userId}
+                    className="relative w-full columns-12 border-b text-left"
+                  >
+                    <td className="flex w-[150px] items-center space-x-2 py-4 md:w-[200px] lg:w-[300px]">
+                      <div className="table-cell pr-2 text-gray-900 sm:hidden">
+                        {index + 1}
+                      </div>
+                      <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
+                        <Image
+                          src={
+                            user.image ||
+                            `https://avatar.vercel.sh/${user.email}`
+                          }
+                          alt="Profile"
+                          fill={true}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="rounded-full object-cover"
+                        />
+                      </div>
+                      <span className="ml-2 w-0 flex-1 truncate text-sm font-bold text-gray-900">
+                        @{user.username || user.email || user.name || "User"}
+                      </span>
+                    </td>
+                    <td className="hidden py-4 text-center text-gray-900 sm:table-cell">
+                      {index + 1}
+                    </td>
+                    <td className="py-4 text-center text-sm text-gray-900">
+                      {parseFloat(user.points || "0").toFixed(2)}
+                    </td>
+                    <td className="justify-end py-4 text-right">
+                      <Link
+                        href={`/comp/${competition.slug}/${user.userId}`}
+                        className="rounded-lg bg-blue-100 p-2 px-4 text-sm text-purple-800 shadow-md transition-all duration-200 hover:bg-blue-300 hover:shadow-none"
+                        style={{
+                          backgroundImage: calculateBg(index),
+                          color: "black",
+                        }}
+                      >
+                        View
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              }
+            })}
           </tbody>
         </table>
       </div>
