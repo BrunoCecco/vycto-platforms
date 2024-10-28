@@ -11,21 +11,21 @@ const SignUpWrapper = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="flex min-h-screen flex-col bg-white md:flex-row">
+    <div className="flex min-h-screen flex-col md:flex-row">
       <div className="relative z-30 mx-auto flex h-screen w-full max-w-lg flex-col items-center justify-center bg-[rgba(255,255,255,0.5)] p-8 backdrop-blur-2xl backdrop-opacity-100 md:w-1/2">
         {children}
       </div>
 
       {/* Right side - Logo and Info */}
-      <div className="fixed z-20 h-screen w-full flex-col items-center justify-center overflow-hidden rounded-l-lg bg-white text-white md:relative md:w-1/2">
-        <Image
-          src={siteData?.loginBanner ?? "/loginBanner.png"}
-          fill
-          priority
-          className="h-full w-full object-cover"
-          alt={""}
-        />
-        {/* <div className="flex h-1/2 flex-col items-center justify-between">
+      <div className="fixed z-20 flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#543ccc] text-white md:relative md:w-1/2">
+        {/* <Image
+    src={siteData?.loginBanner ?? "/loginBanner.png"}
+    fill
+    priority
+    className="h-full w-full object-cover"
+    alt={""}
+  /> */}
+        <div className="flex h-1/2 flex-col items-center justify-between">
           <Image src={"/vLogo.png"} width={75} height={75} alt={""} />
           <div className="flex items-center justify-center">
             <Image src={"/vyctoLogo.png"} width={110} height={110} alt={""} />
@@ -39,13 +39,16 @@ const SignUpWrapper = ({
               vycto.tech
             </a>
           </div>
-        </div> */}
-
+        </div>
         {/* <div className="absolute bottom-6 space-x-10 text-sm text-white">
           <a href="#">Product</a>
           <a href="#">Mission</a>
           <a href="#">Contact</a>
         </div> */}
+        {/* Curve effect */}
+        <div className="absolute bottom-0 left-0 h-28 w-28 bg-white">
+          <div className="h-28 w-28 rounded-bl-full bg-[#543ccc]"></div>
+        </div>
       </div>
     </div>
   );
