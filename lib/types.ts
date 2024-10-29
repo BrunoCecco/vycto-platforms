@@ -66,3 +66,5 @@ export interface DomainVerificationResponse {
     reason: string;
   }[];
 }
+
+export type LeaderboardPeriod = "last week" | "monthly" | "season" | "all time";

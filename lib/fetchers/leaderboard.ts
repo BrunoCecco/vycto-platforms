@@ -4,7 +4,7 @@ import { unstable_cache } from "next/cache";
 import db from "../db";
 import { and, desc, eq, gte, lte, not } from "drizzle-orm";
 import { userCompetitions, competitions, users } from "../schema";
-import { QuestionType } from "../types";
+import { LeaderboardPeriod, QuestionType } from "../types";
 import { updateUserPoints, updateAnswerPoints } from "../actions";
 import { getAnswersForUser, getQuestionsForCompetition } from "./competitions";
 
@@ -225,20 +225,32 @@ export async function getCompetitionsForPeriod(
 
 export async function getLeaderboardData(
   siteId: string,
-  period: "monthly" | "yearly" | "all time",
+  period: LeaderboardPeriod,
 ) {
   const startDate =
-    period === "monthly"
-      ? new Date(new Date().getFullYear(), new Date().getMonth(), 1)
-      : period === "yearly"
-        ? new Date(new Date().getFullYear(), 0, 1)
-        : new Date(0);
+    period === "last week"
+      ? new Date(
+          new Date().getFullYear(),
+          new Date().getMonth(),
+          new Date().getDate() - 7,
+        )
+      : period === "monthly"
+        ? new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+        : period === "season"
+          ? new Date(new Date().getFullYear(), 0, 1)
+          : new Date(0);
   const endDate =
-    period === "monthly"
-      ? new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
-      : period === "yearly"
-        ? new Date(new Date().getFullYear(), 11, 31)
-        : new Date();
+    period === "last week"
+      ? new Date(
+          new Date().getFullYear(),
+          new Date().getMonth(),
+          new Date().getDate(),
+        )
+      : period === "monthly"
+        ? new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+        : period === "season"
+          ? new Date(new Date().getFullYear(), 11, 31)
+          : new Date();
 
   // get all competitions for the site within the specified period
   const comps = await getCompetitionsForPeriod(siteId, startDate, endDate);

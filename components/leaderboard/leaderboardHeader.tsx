@@ -2,6 +2,7 @@ import React from "react";
 import { SelectSite } from "@/lib/schema";
 import { Crown } from "lucide-react";
 import { Select, SelectItem, TextInput } from "@tremor/react";
+import { LeaderboardPeriod } from "@/lib/types";
 
 const LeaderboardHeader = ({
   siteData,
@@ -10,11 +11,11 @@ const LeaderboardHeader = ({
   setQuery,
 }: {
   siteData: SelectSite;
-  rangeType: string;
+  rangeType: LeaderboardPeriod;
   setRangeType: any;
   setQuery?: any;
 }) => {
-  const timeRanges = ["Last Week", "Monthly", "Season"];
+  const timeRanges = ["Last Week", "Monthly", "Season", "All Time"];
 
   // Function to dynamically set the prize text based on rangeType
   const getPrizeText = () => {
@@ -40,7 +41,7 @@ const LeaderboardHeader = ({
             Leaderboard{" "}
             {rangeType === "monthly"
               ? new Date().toLocaleString("default", { month: "long" })
-              : rangeType === "yearly"
+              : rangeType === "season"
                 ? new Date().getFullYear()
                 : " "}
           </h1>
@@ -61,7 +62,11 @@ const LeaderboardHeader = ({
           className="w-min"
         >
           {timeRanges.map((range) => (
-            <SelectItem key={range} value={range.toLowerCase()}>
+            <SelectItem
+              key={range}
+              value={range.toLowerCase()}
+              className="cursor-pointer transition-all duration-200 hover:scale-105"
+            >
               {range}
             </SelectItem>
           ))}

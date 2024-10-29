@@ -18,9 +18,9 @@ const MainLeaderboard = ({
   siteData: SelectSite;
   user: SelectUser;
 }) => {
-  const [rangeType, setRangeType] = useState<"yearly" | "monthly" | "all time">(
-    "all time",
-  );
+  const [rangeType, setRangeType] = useState<
+    "last week" | "monthly" | "season" | "all time"
+  >("all time");
 
   const [data, setData] = useState<LeaderboardUser[]>();
   const [filteredData, setFilteredData] = useState<LeaderboardUser[]>();
