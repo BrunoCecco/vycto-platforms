@@ -1,22 +1,12 @@
 import CurrentPredictions from "@/components/my-competitions/currentPredictions";
 import PastPredictions from "@/components/my-competitions/pastPredictions";
-import PredictionStats from "@/components/my-competitions/predictionStats";
-import ProfileCard from "@/components/my-competitions/profileCard";
-import ClaimRewardsCard from "@/components/rewards/claimRewardsCard";
-import ClaimedRewards from "@/components/rewards/claimedRewards";
-import PendingRewards from "@/components/rewards/pendingRewards";
-import RewardsList from "@/components/rewards/rewardsList";
-import FlipText from "@/components/ui/flipText";
-import { TextGenerateEffect } from "@/components/ui/textGenerateEffect";
 import { authOptions } from "@/lib/auth";
 import {
-  getCompetitionsForPeriod,
   getCompetitionsForSite,
   getSiteData,
   getUserCompetitions,
 } from "@/lib/fetchers";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 
 export default async function mycompetitions({
