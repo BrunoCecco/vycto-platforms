@@ -58,12 +58,12 @@ export default async function mycompetitions({
       <div className="mx-auto max-w-7xl pt-3">
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* Left Profile Card with Sticky Position */}
-          <div className="w-full self-start lg:sticky lg:top-12 lg:w-1/3">
+          {/* <div className="w-full self-start lg:sticky lg:top-12 lg:w-1/3">
             <ProfileCard />
-          </div>
+          </div> */}
 
           {/* Right Stats and Top Predictions */}
-          <div className="w-full lg:w-2/3">
+          <div className="w-full">
             {/* <PredictionStats /> */}
             <div>
               <CurrentPredictions />
