@@ -6,6 +6,7 @@ import { SelectCompetition, SelectSite } from "@/lib/schema";
 import CompetitionModal from "./competitionModal";
 import { usePathname } from "next/navigation";
 import { Carousel } from "../ui/carousel";
+import { getQuestionsForCompetition } from "@/lib/fetchers";
 
 const Competitions = ({
   competitions,
@@ -18,13 +19,16 @@ const Competitions = ({
 }) => {
   const [selectedCompetition, setSelectedCompetition] =
     useState<SelectCompetition | null>(null);
+  const [selectedCompetitionQuestions, setSelectedCompetitionQuestions] =
+    useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
-
   useEffect(() => {
     if (selectedCompetition) {
       setIsOpen(true);
+      fetchQuestions(selectedCompetition);
     } else {
       setIsOpen(false);
+      setSelectedCompetitionQuestions(0);
     }
   }, [selectedCompetition]);
 
@@ -35,6 +39,11 @@ const Competitions = ({
   }, [isOpen]);
 
   const pathname = usePathname();
+
+  const fetchQuestions = async (competition: SelectCompetition) => {
+    const qs = await getQuestionsForCompetition(competition.id);
+    setSelectedCompetitionQuestions(qs.length);
+  };
 
   const handleCompetitionClick = (competition: SelectCompetition) => {
     setSelectedCompetition(competition);
@@ -68,6 +77,7 @@ const Competitions = ({
         type={type!}
         siteData={siteData}
         competition={selectedCompetition!}
+        numQuestions={selectedCompetitionQuestions}
         isOpen={isOpen}
         setIsOpen={setIsOpen} // Close handler
         status={getStatus(selectedCompetition!)} // Pass status

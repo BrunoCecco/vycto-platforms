@@ -12,6 +12,8 @@ import { BackgroundGradient } from "../ui/backgroundGradient";
 import CompetitionModal from "./competitionModal";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
 
+const COMPETITION_WINDOW = 5;
+
 const CompetitionCard = ({
   competition,
   siteData,
@@ -23,20 +25,31 @@ const CompetitionCard = ({
   type?: "current" | "past";
   onClick: () => void; // Define onClick type
 }) => {
-  const [users, setUsers] = useState<any[]>();
+  const [users, setUsers] = useState<any[]>([]);
   const [status, setStatus] = useState<string>();
+  const [compOpen, setCompOpen] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const usrs = await getCompetitionUsers(competition.slug);
+      const usrs = await getCompetitionUsers(competition.id);
+      console.log(usrs);
       setUsers(usrs);
 
-      if (new Date(competition.date) > new Date()) {
-        const days = Math.ceil(
-          (new Date(competition.date).getTime() - new Date().getTime()) /
-            (1000 * 60 * 60 * 24),
+      const days = Math.ceil(
+        (new Date(competition.date).getTime() - new Date().getTime()) /
+          (1000 * 60 * 60 * 24),
+      );
+      if (days > COMPETITION_WINDOW) {
+        setCompOpen(false);
+        setStatus(
+          "Opening in " +
+            (days - COMPETITION_WINDOW) +
+            " day" +
+            (days - COMPETITION_WINDOW > 1 ? "s" : ""),
         );
-        setStatus(days + " Days to go");
+      } else if (days > 0) {
+        setCompOpen(true);
+        setStatus(calculateTimeLeft());
       } else if (new Date(competition.date) < new Date()) {
         setStatus(usrs?.length + " Participants");
       } else {
@@ -45,6 +58,24 @@ const CompetitionCard = ({
     };
     fetchUsers();
   }, [competition]);
+
+  const calculateTimeLeft = () => {
+    const now = new Date();
+    const competitionDate = new Date(competition.date);
+    const timeDiff = competitionDate.getTime() - now.getTime();
+    const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    if (daysLeft <= 1 && timeDiff > 0) {
+      const hoursLeft = Math.floor(timeDiff / (1000 * 60 * 60));
+      const minutesLeft = Math.floor(
+        (timeDiff % (1000 * 60 * 60)) / (1000 * 60),
+      );
+      return `${hoursLeft}h ${minutesLeft}m left`;
+    }
+    return daysLeft > 0
+      ? `${daysLeft} Days to go`
+      : `${Math.abs(daysLeft)} Days ago`;
+  };
 
   return (
     <HoverBorderGradient
@@ -78,7 +109,7 @@ const CompetitionCard = ({
             <div className="relative flex items-center">
               <div className="relative h-6 w-6">
                 <Image
-                  src={`https://avatar.vercel.sh/1`}
+                  src={users[0]?.image || `https://avatar.vercel.sh/99`}
                   alt="Profile 1"
                   fill
                   className="rounded-full border-2 border-white object-cover"
@@ -86,7 +117,7 @@ const CompetitionCard = ({
               </div>
               <div className="relative -ml-2 h-6 w-6">
                 <Image
-                  src={`https://avatar.vercel.sh/99`}
+                  src={users[1]?.image || `https://avatar.vercel.sh/100`}
                   alt="Profile 2"
                   fill
                   className="rounded-full border-2 border-white object-cover"
@@ -96,11 +127,17 @@ const CompetitionCard = ({
           </div>
 
           <div className="flex items-center justify-between">
-            <p className="text-sm text-slate-200">{status}</p>
+            <p
+              className={`text-sm text-slate-200`}
+              style={{ color: compOpen ? siteData.color1 : "" }}
+            >
+              {status}
+            </p>
             <PlayButton
               color1={siteData.color1}
               color2={siteData.color2}
               onClick={onClick}
+              className={`${compOpen ? "visible" : "invisible"}`}
             >
               {type === "current" ? "Play" : "View"}
             </PlayButton>

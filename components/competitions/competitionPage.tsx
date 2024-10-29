@@ -64,10 +64,12 @@ export default function CompetitionPage({
   const posthog = usePostHog();
 
   useEffect(() => {
-    setEnded(
+    const hasEnded =
       data.correctAnswersSubmitted ||
-        new Date(data.date).getTime() < Date.now(),
-    );
+      new Date(data.date).getTime() < Date.now();
+    setEnded(hasEnded);
+    setActiveTab(hasEnded ? "Leaderboard" : "Challenge");
+
     if (session && searchParams && !userComp) {
       posthog?.identify(session?.user?.id!, {
         email: session?.user?.email,
@@ -270,7 +272,7 @@ export default function CompetitionPage({
                   />
                 )
               ) : (
-                <div className="rounded-md border border-stone-200 p-8 dark:border-stone-400 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md">
+                <div className="rounded-md border border-stone-200 p-8 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
                   <UserSignUp
                     siteData={siteData}
                     localAnswers={localAnswers}

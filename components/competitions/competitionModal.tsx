@@ -19,6 +19,7 @@ export default function CompetitionModal({
   type,
   siteData,
   competition,
+  numQuestions,
   isOpen,
   setIsOpen,
   status,
@@ -27,6 +28,7 @@ export default function CompetitionModal({
   type: string;
   siteData: SelectSite;
   competition: SelectCompetition;
+  numQuestions: number;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   status?: string;
@@ -44,7 +46,7 @@ export default function CompetitionModal({
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
         <ModalBody>
           <ModalContent>
-            <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 dark:text-neutral-100 md:text-2xl">
+            <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 md:text-2xl dark:text-neutral-100">
               {type === "current" ? (
                 <span>
                   A chance to{" "}
@@ -118,7 +120,7 @@ export default function CompetitionModal({
                 </span>
               )}
               <span className="flex items-center">
-                <Rocket className="mr-2" /> X Questions
+                <Rocket className="mr-2" /> {numQuestions} Questions
               </span>
               <span className="flex items-center">
                 <Crown className="mr-2" />
