@@ -1,15 +1,15 @@
-import CurrentPredictions from "@/components/my-competitions/currentPredictions";
-import PastPredictions from "@/components/my-competitions/pastPredictions";
+import Predictions from "@/components/my-competitions/predictions";
 import { authOptions } from "@/lib/auth";
 import {
   getCompetitionsForSite,
   getSiteData,
   getUserCompetitions,
 } from "@/lib/fetchers";
+import { SelectUserCompetition } from "@/lib/schema";
 import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
 
-export default async function mycompetitions({
+export default async function MyCompetitions({
   params,
 }: {
   params: { domain: string };
@@ -20,27 +20,31 @@ export default async function mycompetitions({
     redirect("/login");
   }
 
-  console.log(session);
-
   const domain = decodeURIComponent(params.domain);
   const [data, compData] = await Promise.all([
     getSiteData(domain),
     getCompetitionsForSite(domain),
   ]);
 
-  const competitions = compData.map(
-    (competition: any) => competition.competition,
-  );
+  // const competitions = compData.map(
+  //   (competition: any) => competition.competition,
+  // );
 
   if (!data) {
     notFound();
   }
 
-  const latestCompetition = competitions.sort(
-    (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  )[0];
-
   const userCompetitions = await getUserCompetitions(session.user.id);
+
+  console.log(userCompetitions, "comps");
+
+  const currentCompetitions = userCompetitions.filter(
+    (comp: SelectUserCompetition) => new Date(comp.submissionDate) > new Date(),
+  );
+
+  const pastCompetitions = userCompetitions.filter(
+    (comp: SelectUserCompetition) => new Date(comp.submissionDate) < new Date(),
+  );
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -55,11 +59,17 @@ export default async function mycompetitions({
           {/* Right Stats and Top Predictions */}
           <div className="w-full">
             {/* <PredictionStats /> */}
-            <div>
-              <CurrentPredictions />
+            <div className="w-full">
+              <Predictions
+                competitions={currentCompetitions}
+                title={"Current Predictions"}
+              />
             </div>
-            <div className="mt-12">
-              <PastPredictions />
+            <div className="mt-12 w-full">
+              <Predictions
+                competitions={pastCompetitions}
+                title={"Past Predictions"}
+              />
             </div>
           </div>
         </div>
