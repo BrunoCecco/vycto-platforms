@@ -14,11 +14,11 @@ const PredictionCard = async ({
   return (
     <Link
       className="group relative flex w-full items-center gap-4 hover:cursor-pointer"
-      href={"comp/" + compData.slug}
+      href={"comp/" + compData?.slug}
     >
       <div className="relative h-36 w-36 overflow-hidden rounded-lg">
         <Image
-          src={compData.image ?? "/placeholder.png"}
+          src={compData?.image ?? "/placeholder.png"}
           alt="RAPID vs CFR Cluj"
           fill
           objectFit="cover"
@@ -30,7 +30,7 @@ const PredictionCard = async ({
           {new Date(competition.submissionDate).toDateString()}
         </p>
         <p className="text-gray-400">
-          {parseFloat(competition.points).toFixed(2)} Points
+          {parseFloat(competition.points || "0").toFixed(2)} Points
         </p>
       </div>
       {/* Arrow Icon in the top-right corner */}
@@ -56,7 +56,10 @@ const Predictions = async ({
       {/* Current Predictions Content */}
       <div className="mt-8 w-full space-y-6">
         {competitions.map((competition) => (
-          <PredictionCard key={competition.id} competition={competition} />
+          <PredictionCard
+            key={competition.competitionId}
+            competition={competition}
+          />
         ))}
       </div>
     </div>
