@@ -27,6 +27,7 @@ module.exports = {
       { hostname: "vycto.com" },
       { hostname: "app.vyctorewards.com" },
       { hostname: "images.unsplash.com" },
+      { hostname: "f005.backblazeb2.com" },
     ],
   },
 };

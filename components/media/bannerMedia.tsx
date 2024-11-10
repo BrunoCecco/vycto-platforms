@@ -31,6 +31,8 @@ export default function BannerMedia({ src }: { src: string }) {
     }
   }, [src, isMuted, play]); // Run effect when src or isMuted changes
 
+  if (!src || src == undefined) return null;
+
   return src ? (
     videoFormats.includes(mediaFormat) ? (
       <div className="relative h-full w-full">
