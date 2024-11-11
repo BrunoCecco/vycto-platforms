@@ -75,6 +75,19 @@ export default function EditFanZoneHeader({
           </div>
         </Form>
       </div>
+      <div className="mb-4 w-full items-center rounded-xl sm:flex">
+        <Form
+          title="Site Story"
+          description="Add a story-style description for your site."
+          helpText=""
+          inputAttrs={{
+            name: "story",
+            type: "text",
+            defaultValue: data?.story!,
+          }}
+          handleSubmit={updateSite}
+        />
+      </div>
     </>
   );
 }
