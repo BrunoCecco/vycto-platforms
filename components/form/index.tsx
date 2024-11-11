@@ -14,7 +14,7 @@ import { USER_ROLES } from "@/lib/constants";
 import Button from "../buttons/button";
 import { Select, SelectItem } from "@tremor/react";
 import CountryPicker from "../settings/countryPicker";
-import ReactFlagsSelect from "react-flags-select/build/components/ReactFlagsSelect";
+import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
 
 export default function Form({
