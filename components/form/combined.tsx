@@ -14,6 +14,8 @@ import Button from "../buttons/button";
 import CountryPicker from "../settings/countryPicker";
 import { Select, SelectItem, TextInput } from "@tremor/react";
 import { USER_ROLES } from "@/lib/constants";
+import ReactFlagsSelect from "react-flags-select";
+import { useState } from "react";
 
 interface InputAttr {
   name: string;
@@ -40,6 +42,9 @@ export default function CombinedForm({
   const { id } = useParams() as { id?: string };
   const router = useRouter();
   const { update } = useSession();
+  const [selectedCountry, setSelectedCountry] = useState(
+    inputAttrs.find((inputAttr) => inputAttr.name === "country")?.defaultValue,
+  );
 
   return (
     <form
@@ -74,12 +79,15 @@ export default function CombinedForm({
               {descriptions[index]}
             </p>
             {inputAttr.name === "country" ? (
-              <div className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
-                <CountryPicker
-                  name="country"
-                  defaultValue={inputAttr.defaultValue}
+              <>
+                <input type="hidden" name="country" value={selectedCountry} />
+                <ReactFlagsSelect
+                  selectButtonClassName="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                  className="text-black"
+                  selected={selectedCountry || ""}
+                  onSelect={(code) => setSelectedCountry(code)}
                 />
-              </div>
+              </>
             ) : inputAttr.name === "role" ? (
               <div className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
                 <Select name="role" defaultValue={inputAttr.defaultValue}>

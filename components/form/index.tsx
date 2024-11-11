@@ -13,12 +13,9 @@ import Uploader from "./uploader";
 import { USER_ROLES } from "@/lib/constants";
 import Button from "../buttons/button";
 import { Select, SelectItem } from "@tremor/react";
-import {
-  useTimezoneSelect,
-  ITimezoneOption,
-  allTimezones,
-} from "react-timezone-select";
 import CountryPicker from "../settings/countryPicker";
+import ReactFlagsSelect from "react-flags-select/build/components/ReactFlagsSelect";
+import { useState } from "react";
 
 export default function Form({
   title,
@@ -45,12 +42,9 @@ export default function Form({
   const { id } = useParams() as { id?: string };
   const router = useRouter();
   const { update } = useSession();
-
-  const { options: timezoneOptions, parseTimezone } = useTimezoneSelect({
-    labelStyle: "original",
-    timezones: allTimezones,
-  });
-  console.log(allTimezones);
+  const [selectedCountry, setSelectedCountry] = useState(
+    inputAttrs.name === "country" ? inputAttrs.defaultValue : "",
+  );
 
   return inputAttrs.name === "image" ||
     inputAttrs.name === "logo" ||
@@ -110,13 +104,16 @@ export default function Form({
         <p className="text-sm text-stone-500 dark:text-stone-400">
           {description}
         </p>
-        {timezoneOptions && inputAttrs.name === "country" ? (
-          <div className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
-            <CountryPicker
-              name="country"
-              defaultValue={inputAttrs.defaultValue}
+        {inputAttrs.name === "country" ? (
+          <>
+            <input type="hidden" name="country" value={selectedCountry} />
+            <ReactFlagsSelect
+              selectButtonClassName="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+              className="text-black"
+              selected={selectedCountry || ""}
+              onSelect={(code) => setSelectedCountry(code)}
             />
-          </div>
+          </>
         ) : inputAttrs.name === "role" ? (
           <div className="flex max-w-md items-center rounded-lg border border-stone-600">
             <Select name="role" defaultValue={inputAttrs.defaultValue}>

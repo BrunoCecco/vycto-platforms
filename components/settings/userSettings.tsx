@@ -55,7 +55,7 @@ export default function UserSettings() {
               "Your Full Name",
               "Your username displayed on leaderboards.",
               "Your email.",
-              "Your country of residence.",
+              "Your nationality.",
             ]}
             helpText="User details"
             inputAttrs={[

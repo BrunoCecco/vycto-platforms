@@ -1,11 +1,7 @@
 "use client";
 
-import {
-  useTimezoneSelect,
-  ITimezoneOption,
-  allTimezones,
-} from "react-timezone-select";
-import { Select, SelectItem } from "@tremor/react";
+import { useState } from "react";
+import ReactFlagsSelect from "react-flags-select";
 
 export default function CountryPicker({
   name,
@@ -14,18 +10,13 @@ export default function CountryPicker({
   name: string;
   defaultValue: string;
 }) {
-  const { options, parseTimezone } = useTimezoneSelect({
-    labelStyle: "original",
-    timezones: allTimezones,
-  });
+  const [selected, setSelected] = useState("");
+
   return (
-    <Select name={name} defaultValue={defaultValue}>
-      {options?.map((timezone: ITimezoneOption) => (
-        <SelectItem key={timezone.value} value={timezone.value}>
-          {timezone.label}
-        </SelectItem>
-      ))}
-      <SelectItem value="None">None</SelectItem>
-    </Select>
+    <ReactFlagsSelect
+      selectButtonClassName="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+      selected={selected}
+      onSelect={(code) => setSelected(code)}
+    />
   );
 }
