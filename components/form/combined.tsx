@@ -16,6 +16,9 @@ import { Select, SelectItem, TextInput } from "@tremor/react";
 import { USER_ROLES } from "@/lib/constants";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
+import Image from "next/image";
+import { PencilIcon } from "lucide-react";
+import EditProfileImage from "../settings/editProfileImage";
 
 interface InputAttr {
   name: string;
@@ -32,12 +35,16 @@ export default function CombinedForm({
   helpText,
   inputAttrs,
   handleSubmit,
+  className,
+  hasImage = false,
 }: {
   title: String;
   descriptions: string[];
   helpText: string;
   inputAttrs: InputAttr[];
   handleSubmit: any;
+  className?: string;
+  hasImage?: boolean;
 }) {
   const { id } = useParams() as { id?: string };
   const router = useRouter();
@@ -66,100 +73,113 @@ export default function CombinedForm({
       }}
       className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
     >
-      <h2 className=" p-5 pb-0 font-cal text-xl text-black dark:text-white">
+      <h2 className="p-5 font-cal text-xl text-black dark:text-white">
         {title}
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2">
-        {inputAttrs.map((inputAttr, index) => (
-          <div
-            className="relative flex w-full flex-col space-y-2 p-5"
-            key={index + "reward-editor"}
-          >
-            <p className="text-sm text-stone-500 dark:text-stone-200">
-              {descriptions[index]}
-            </p>
-            {inputAttr.name === "country" ? (
-              <>
-                <input type="hidden" name="country" value={selectedCountry} />
-                <ReactFlagsSelect
-                  selectButtonClassName="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-                  className="text-black"
-                  selected={selectedCountry || ""}
-                  onSelect={(code) => setSelectedCountry(code)}
-                />
-              </>
-            ) : inputAttr.name === "role" ? (
-              <div className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
-                <Select name="role" defaultValue={inputAttr.defaultValue}>
-                  {USER_ROLES.map((role) => (
-                    <SelectItem key={role} value={role}>
-                      {role}
-                    </SelectItem>
-                  ))}
-                </Select>
-              </div>
-            ) : inputAttr.name === "font" ? (
-              <div className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
-                <Select name="font" defaultValue={inputAttr.defaultValue}>
-                  <SelectItem value="font-cal">Cal Sans</SelectItem>
-                  <SelectItem value="font-lora">Lora</SelectItem>
-                  <SelectItem value="font-work">Work Sans</SelectItem>
-                </Select>
-              </div>
-            ) : inputAttr.name === "color1" ||
-              inputAttr.name === "color2" ||
-              inputAttr.name === "color3" ? (
-              <input
-                {...inputAttr}
-                type="color"
-                className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-              />
-            ) : inputAttr.name === "subdomain" ? (
-              <div className="flex w-full max-w-md">
-                <input
-                  {...inputAttr}
-                  required
-                  className="z-10 flex-1 rounded-l-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-                />
-                <div className="flex items-center rounded-r-md border border-l-0 border-stone-300 bg-stone-100 px-3 text-sm dark:border-stone-600 dark:bg-stone-800 dark:text-stone-400">
-                  {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
-                </div>
-              </div>
-            ) : inputAttr.name === "customDomain" ? (
-              <div className="relative flex w-full max-w-md">
-                <input
-                  {...inputAttr}
-                  className="z-10 flex-1 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-                />
-                {inputAttr.defaultValue && (
-                  <div className="absolute right-3 z-10 flex h-full items-center">
-                    <DomainStatus domain={inputAttr.defaultValue} />
+      <div className="flex flex-col sm:flex-row">
+        {hasImage && (
+          <div className="w-full pl-5 pt-5 sm:w-1/3">
+            <EditProfileImage />
+          </div>
+        )}
+        <div className="flex-1">
+          {inputAttrs.map((inputAttr, index) => {
+            return (
+              <div
+                className="relative flex w-full flex-col space-y-2 px-5 pt-5"
+                key={index + "reward-editor"}
+              >
+                <p className="text-sm text-stone-500 dark:text-stone-200">
+                  {descriptions[index]}
+                </p>
+                {inputAttr.name === "country" ? (
+                  <>
+                    <input
+                      type="hidden"
+                      name="country"
+                      value={selectedCountry}
+                    />
+                    <ReactFlagsSelect
+                      selectButtonClassName="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                      className="text-black"
+                      selected={selectedCountry || ""}
+                      onSelect={(code) => setSelectedCountry(code)}
+                    />
+                  </>
+                ) : inputAttr.name === "role" ? (
+                  <div className="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
+                    <Select name="role" defaultValue={inputAttr.defaultValue}>
+                      {USER_ROLES.map((role) => (
+                        <SelectItem key={role} value={role}>
+                          {role}
+                        </SelectItem>
+                      ))}
+                    </Select>
                   </div>
+                ) : inputAttr.name === "font" ? (
+                  <div className="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
+                    <Select name="font" defaultValue={inputAttr.defaultValue}>
+                      <SelectItem value="font-cal">Cal Sans</SelectItem>
+                      <SelectItem value="font-lora">Lora</SelectItem>
+                      <SelectItem value="font-work">Work Sans</SelectItem>
+                    </Select>
+                  </div>
+                ) : inputAttr.name === "color1" ||
+                  inputAttr.name === "color2" ||
+                  inputAttr.name === "color3" ? (
+                  <input
+                    {...inputAttr}
+                    type="color"
+                    className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                  />
+                ) : inputAttr.name === "subdomain" ? (
+                  <div className="flex w-full">
+                    <input
+                      {...inputAttr}
+                      required
+                      className="z-10 flex-1 rounded-l-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                    />
+                    <div className="flex items-center rounded-r-md border border-l-0 border-stone-300 bg-stone-100 px-3 text-sm dark:border-stone-600 dark:bg-stone-800 dark:text-stone-400">
+                      {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
+                    </div>
+                  </div>
+                ) : inputAttr.name === "customDomain" ? (
+                  <div className="relative flex w-full">
+                    <input
+                      {...inputAttr}
+                      className="z-10 flex-1 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                    />
+                    {inputAttr.defaultValue && (
+                      <div className="absolute right-3 z-10 flex h-full items-center">
+                        <DomainStatus domain={inputAttr.defaultValue} />
+                      </div>
+                    )}
+                  </div>
+                ) : inputAttr.name === "description" ? (
+                  <textarea
+                    {...inputAttr}
+                    rows={3}
+                    required
+                    className="w-full max-w-2xl rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                  />
+                ) : inputAttr.name === "date" ? (
+                  <input
+                    {...inputAttr}
+                    type="date"
+                    required
+                    className="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                  />
+                ) : (
+                  <input
+                    {...inputAttr}
+                    required
+                    className="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                  />
                 )}
               </div>
-            ) : inputAttr.name === "description" ? (
-              <textarea
-                {...inputAttr}
-                rows={3}
-                required
-                className="w-full max-w-2xl rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-              />
-            ) : inputAttr.name === "date" ? (
-              <input
-                {...inputAttr}
-                type="date"
-                required
-                className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-              />
-            ) : (
-              <input
-                {...inputAttr}
-                required
-                className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-              />
-            )}
-          </div>
-        ))}
+            );
+          })}
+        </div>
       </div>
       <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10 dark:border-stone-700 dark:bg-stone-800">
         <p className="mr-2 text-sm text-stone-500 dark:text-stone-400">

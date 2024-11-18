@@ -45,18 +45,10 @@ export default function UserSettings() {
         <h1 className="font-cal text-3xl font-bold dark:text-white">
           Settings
         </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-1">
-          <div className="w-full sm:w-fit">
-            <EditProfileImage />
-          </div>
+        <div className="w-full">
           <CombinedForm
-            title={"User Profile"}
-            descriptions={[
-              "Your Full Name",
-              "Your username displayed on leaderboards.",
-              "Your email.",
-              "Your nationality.",
-            ]}
+            title={"Profile"}
+            descriptions={["Full Name", "Username", "Email", "Country"]}
             helpText="User details"
             inputAttrs={[
               {
@@ -86,6 +78,7 @@ export default function UserSettings() {
               },
             ]}
             handleSubmit={handleSubmit}
+            hasImage={true}
           />
         </div>
       </div>
