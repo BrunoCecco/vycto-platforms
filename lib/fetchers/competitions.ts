@@ -54,7 +54,7 @@ export async function getCompetitionsForSite(domain: string) {
               : eq(sites.customDomain, domain),
           ),
         )
-        .orderBy(desc(competitions.createdAt));
+        .orderBy(desc(competitions.date));
     },
     [`${domain}-competitions`],
     {
