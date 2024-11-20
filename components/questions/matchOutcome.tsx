@@ -43,13 +43,13 @@ const MatchOutcome = ({ ...props }) => {
               onClick={() => setSelectedOutcome(props.answer1)}
             >
               <div className="flex flex-col items-center">
-                <div className="relative h-full w-28 items-center justify-center overflow-hidden rounded-lg md:w-36">
+                <div className="relative items-center justify-center overflow-hidden rounded-lg">
                   <Image
                     src={props.image1 ?? "/placeholder.png"}
                     alt="Option 1 Image"
-                    width={1}
-                    height={1}
-                    className="h-100% w-auto object-cover"
+                    width={128}
+                    height={96}
+                    className="object-contain"
                   />
                 </div>
                 <p className="text-sm font-semibold text-gray-700">
@@ -82,13 +82,13 @@ const MatchOutcome = ({ ...props }) => {
               onClick={() => setSelectedOutcome(props.answer2)}
             >
               <div className="flex flex-col items-center">
-                <div className="relative h-full w-28 items-center justify-center overflow-hidden rounded-lg md:w-36">
+                <div className="relative items-center justify-center overflow-hidden rounded-lg">
                   <Image
                     src={props.image2 ?? "/placeholder.png"}
                     alt="Option 2 Image"
-                    width={1}
-                    height={1}
-                    className="h-100% w-auto object-cover"
+                    width={128}
+                    height={96}
+                    className="object-contain"
                   />
                 </div>
                 <p className="text-sm font-semibold text-gray-700">

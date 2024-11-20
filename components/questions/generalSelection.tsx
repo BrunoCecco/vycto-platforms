@@ -7,6 +7,7 @@ import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import FlipText from "../ui/flipText";
+import { WideImage } from "./wideImage";
 
 const GeneralSelection = ({ ...props }) => {
   const [selectedOption, setSelectedOption] = useState(
@@ -38,16 +39,7 @@ const GeneralSelection = ({ ...props }) => {
         {/* Points Badge */}
         <PointsBadge points={props.points} />
 
-        {/* Placeholder for Image or Graphic */}
-        <div className="mb-4 flex h-44 w-full items-center justify-center overflow-hidden rounded-lg bg-green-100">
-          <Image
-            src={props.image1 ?? "/placeholder.png"}
-            alt="Question Image"
-            width={1}
-            height={1}
-            className="h-100% w-auto object-cover"
-          />
-        </div>
+        <WideImage src={props.image1} />
 
         {/* Question */}
         <FlipText
