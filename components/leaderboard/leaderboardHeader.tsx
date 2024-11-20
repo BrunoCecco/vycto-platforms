@@ -3,6 +3,7 @@ import { SelectSite } from "@/lib/schema";
 import { Crown } from "lucide-react";
 import { Select, SelectItem, TextInput } from "@tremor/react";
 import { LeaderboardPeriod } from "@/lib/types";
+import Image from "next/image";
 
 const LeaderboardHeader = ({
   siteData,
@@ -33,10 +34,16 @@ const LeaderboardHeader = ({
   };
 
   return (
-    <div className="mb-2 flex flex-col justify-between gap-4 sm:flex-row md:items-start">
+    <div className="mb-2 flex flex-col items-center justify-between gap-4 sm:flex-row">
       <div className="flex items-center justify-between sm:flex-col md:items-start">
         <div className="flex items-center gap-4 sm:mt-2">
-          <Crown style={{ color: siteData.color1 }} />
+          <Image
+            src={siteData.logo ?? "/logo.png"}
+            height={48}
+            width={48}
+            className="w-auto object-contain"
+            alt="logo"
+          />
           <h1 className="text-lg font-bold">
             Leaderboard{" "}
             {rangeType === "monthly"
