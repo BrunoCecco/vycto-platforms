@@ -23,7 +23,9 @@ const MatchOutcome = ({ ...props }) => {
           word={props.question}
           className="mb-1 text-center text-xl font-semibold text-gray-800"
         />
-        <p className="text-sm text-gray-500">Pick the winner to score points</p>
+        <p className="text-center text-sm text-gray-500">
+          Pick the winner to score points
+        </p>
 
         {/* Teams */}
         <div className="flex w-full items-center justify-between py-4 md:justify-around md:px-4">

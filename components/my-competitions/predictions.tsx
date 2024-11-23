@@ -22,6 +22,7 @@ const PredictionCard = async ({
           alt="RAPID vs CFR Cluj"
           fill
           objectFit="cover"
+          priority
         />
       </div>
       <div>

@@ -37,7 +37,7 @@ const PlayerComponent = ({
           selectedPlayer !== name ? "opacity-50" : "opacity-100"
         }`}
       />
-      <div className="mt-2 w-fit text-wrap text-center">{name}</div>
+      <div className="mt-2 w-fit text-wrap text-center !text-black">{name}</div>
     </button>
   );
 };
@@ -91,7 +91,7 @@ const PlayerSelection = ({ ...props }) => {
               image={props.image2}
               selectedPlayer={selectedPlayer}
               setSelectedPlayer={setSelectedPlayer}
-              disabled={props.disabled}
+              disabled={false}
             />
           </Submit>
           <Submit
