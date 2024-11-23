@@ -121,13 +121,16 @@ export default async function SubmissionPage({
 
   let userComp;
   if (session) {
-    userComp = await enterUserToCompetition(
+    let enterRes = await enterUserToCompetition(
       submissionId,
       session.user.username,
       session.user.email,
       data.id,
       session.user.image,
     );
+    if (!("error" in enterRes)) {
+      userComp = enterRes;
+    }
   } else {
     userComp = await getUserCompetition(submissionId, data.id);
   }
