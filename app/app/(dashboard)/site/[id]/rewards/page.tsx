@@ -2,6 +2,8 @@ import { notFound, redirect } from "next/navigation";
 import AnalyticsMockup from "@/components/analytics/analytics";
 import db from "@/lib/db";
 import { getServerSession } from "next-auth";
+import { SelectSiteReward } from "@/lib/schema";
+import Form from "@/components/form";
 
 export default async function SiteRewards({
   params,
@@ -10,6 +12,11 @@ export default async function SiteRewards({
 }) {
   const data = await db.query.sites.findFirst({
     where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
+  });
+
+  const rewards = await db.query.siteRewards.findMany({
+    where: (rewards, { eq }) =>
+      eq(rewards.siteId, decodeURIComponent(params.id)),
   });
 
   if (!data) {
@@ -35,6 +42,26 @@ export default async function SiteRewards({
           </a>
         </div>
       </div>
+      {rewards && rewards.length > 0 ? (
+        <div className="grid grid-cols-1 gap-4 pb-4 sm:grid-cols-2 xl:grid-cols-4">
+          {rewards.map((reward: SelectSiteReward) => (
+            <div
+              key={reward.id}
+              className="rounded-lg bg-stone-800 p-4 dark:bg-stone-700"
+            >
+              <h2 className="text-lg font-bold dark:text-white">
+                {reward.title}
+              </h2>
+              <p className="text-sm dark:text-white">{reward.description}</p>
+              <p className="text-sm dark:text-white"></p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex h-96 items-center justify-center">
+          <p className="text-lg dark:text-white">No rewards available</p>
+        </div>
+      )}
     </>
   );
 }

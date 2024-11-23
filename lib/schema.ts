@@ -429,3 +429,4 @@ export type SelectAccount = typeof accounts.$inferSelect;
 export type SelectUserCompetition = typeof userCompetitions.$inferSelect;
 export type SelectQuestion = typeof questions.$inferSelect;
 export type SelectAnswer = typeof answers.$inferSelect;
+export type SelectSiteReward = typeof siteRewards.$inferSelect;
