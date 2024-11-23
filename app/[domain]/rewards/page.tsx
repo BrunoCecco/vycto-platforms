@@ -2,6 +2,7 @@ import ClaimRewardsCard from "@/components/rewards/claimRewardsCard";
 import ClaimedRewards from "@/components/rewards/claimedRewards";
 import PendingRewards from "@/components/rewards/pendingRewards";
 import RewardsList from "@/components/rewards/rewardsList";
+import { BackgroundGradient } from "@/components/ui/backgroundGradient";
 import FlipText from "@/components/ui/flipText";
 import { TextGenerateEffect } from "@/components/ui/textGenerateEffect";
 import { authOptions } from "@/lib/auth";
@@ -50,6 +51,14 @@ export default async function Rewards({
 
   return (
     <div className="min-h-screen text-white">
+      <BackgroundGradient
+        containerClassName="h-[50px] w-full rounded-lg p-1"
+        className="p-0"
+      >
+        <div className="flex h-full w-full items-center rounded-lg bg-slate-800 p-2 font-bold">
+          Coming soon!
+        </div>
+      </BackgroundGradient>
       <div className="mb-8 flex justify-center">
         <Image
           src={
