@@ -106,7 +106,7 @@ export default async function SiteCompetitionPage({
     ? await getAnswersForUser(session?.user.id!, data.id)
     : undefined;
 
-  const userComp = session
+  let userComp = session
     ? await enterUserToCompetition(
         session.user.id,
         session.user.username || session.user.name || session.user.email,
@@ -115,6 +115,9 @@ export default async function SiteCompetitionPage({
         session.user.image,
       )
     : undefined;
+  if (userComp != undefined && "error" in userComp) {
+    userComp = undefined;
+  }
   if (userComp && "submitted" in userComp && userComp.submitted) {
     redirect(`/comp/${slug}/${userComp.userId}`);
   }
