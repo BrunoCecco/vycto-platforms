@@ -58,8 +58,6 @@ const Competitions = ({
     return days > 0 ? `${days} Days to go` : `${Math.abs(days)} Days ago`;
   };
 
-  console.log(pathname);
-
   return (
     <div className="flex w-full">
       <Carousel

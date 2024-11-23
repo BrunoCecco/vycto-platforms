@@ -47,7 +47,7 @@ export default function CompetitionPage({
   siteData: any;
   questions: SelectQuestion[] | undefined;
   answers: SelectAnswer[] | undefined;
-  userComp: SelectUserCompetition | undefined | { error: string };
+  userComp: SelectUserCompetition | undefined;
   users: SelectUserCompetition[];
   slug: string;
 }) {
@@ -68,7 +68,13 @@ export default function CompetitionPage({
       data.correctAnswersSubmitted ||
       new Date(data.date).getTime() < Date.now();
     setEnded(hasEnded);
-    setActiveTab(hasEnded ? "Leaderboard" : "Challenge");
+    if (session?.user?.id != userComp?.userId) {
+      console.log("User not in competition");
+      setActiveTab("Challenge");
+    } else if (hasEnded) {
+      console.log("Competition has ended");
+      setActiveTab("Leaderboard");
+    }
 
     if (session && searchParams && !userComp) {
       posthog?.identify(session?.user?.id!, {
@@ -86,7 +92,7 @@ export default function CompetitionPage({
       }
     }
     checkUsername();
-  }, [session, searchParams]);
+  }, [session, searchParams, userComp]);
 
   const checkUsername = async () => {
     const username = searchParams.get("username");
@@ -272,7 +278,7 @@ export default function CompetitionPage({
                   />
                 )
               ) : (
-                <div className="rounded-md border border-stone-200 p-8 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md dark:border-stone-400">
+                <div className="rounded-md border border-stone-200 p-8 dark:border-stone-400 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md">
                   <UserSignUp
                     siteData={siteData}
                     localAnswers={localAnswers}
