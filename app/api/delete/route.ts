@@ -1,6 +1,7 @@
 import { del } from "@vercel/blob";
 
 export async function DELETE(request: Request) {
+  console.log("DELETE request received");
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
     return new Response(
       "Missing BLOB_READ_WRITE_TOKEN. Don't forget to add that to your .env file.",

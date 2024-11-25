@@ -115,14 +115,28 @@ export default function Uploader({
   const removeFile = async () => {
     fetch("/api/delete/" + data[name], {
       method: "DELETE",
-    }).then(async (res) => {
-      toast.success("File deleted successfully");
-      upload(name, "");
-    });
+    })
+      .then(async (res) => {
+        console.log(res);
+        toast.success("File deleted successfully");
+        upload(name, "");
+        setData((prev) => ({
+          ...prev,
+          [name]: "",
+        }));
+      })
+      .catch((err) => {
+        toast.error("Failed to delete");
+        upload(name, "");
+        setData((prev) => ({
+          ...prev,
+          [name]: "",
+        }));
+      });
   };
 
   return (
-    <div className="grid w-full gap-6 rounded-lg border border-stone-200 bg-white p-5 sm:p-10 dark:border-stone-700 dark:bg-black">
+    <div className="grid w-full gap-6 rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-700 dark:bg-black sm:p-10">
       <form className="" ref={formRef} onSubmit={handleSubmit}>
         <div>
           {title && (
