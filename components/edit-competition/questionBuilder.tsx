@@ -12,6 +12,7 @@ import EditTrueFalse from "@/components/edit-questions/editTrueFalse";
 import EditGeneralNumber from "@/components/edit-questions/editGeneralNumber";
 import { toast } from "sonner";
 import Button from "@/components/buttons/button";
+import { getQuestionsForCompetition } from "@/lib/fetchers";
 
 const QuestionBuilder = ({
   competitionId,
@@ -20,11 +21,19 @@ const QuestionBuilder = ({
   competitionId: string;
   initialQuestions: SelectQuestion[];
 }) => {
-  const [questions, setQuestions] = useState<SelectQuestion[]>(
-    initialQuestions || [],
-  );
+  const [questions, setQuestions] = useState<SelectQuestion[]>([]);
   const [showOptionsIndex, setShowOptionsIndex] = useState<number | null>(null);
   const questionsRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      console.log("fetching questions");
+      const qs = await getQuestionsForCompetition(competitionId);
+      console.log("qs", qs);
+      setQuestions(qs);
+    };
+    fetchQuestions();
+  }, [competitionId]);
 
   const getQuestionElement = (question: SelectQuestion, type: QuestionType) => {
     switch (type) {
