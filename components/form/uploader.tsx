@@ -113,8 +113,10 @@ export default function Uploader({
   }, [data[name], saving]);
 
   const removeFile = async () => {
-    fetch("/api/delete/" + data[name], {
-      method: "DELETE",
+    fetch("/api/delete/", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ url: data[name] }),
     })
       .then(async (res) => {
         console.log(res);
