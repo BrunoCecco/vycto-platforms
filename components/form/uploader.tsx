@@ -85,6 +85,7 @@ export default function Uploader({
 
   const onChangePicture = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
+      setSaving(true);
       const file = event.currentTarget.files && event.currentTarget.files[0];
       if (file) {
         if (file.size / 1024 / 1024 > 50) {
@@ -101,6 +102,7 @@ export default function Uploader({
           reader.readAsDataURL(file);
         }
       }
+      setSaving(false);
     },
     [setData],
   );
@@ -237,13 +239,18 @@ export default function Uploader({
                 </p>
                 <span className="sr-only">Photo upload</span>
               </div>
-              {data[name] != null && (
+              {saving && (
+                <div className="mx-auto flex h-20 w-20 items-center justify-center bg-transparent">
+                  <LoadingDots color="black" />
+                </div>
+              )}
+              {data[name] != null && !saving && (
                 <div className="relative h-full w-full rounded-md">
-                  <img
+                  <Image
                     src={data[name] as string}
                     alt="Preview"
-                    // fill={true}
-                    // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="h-full w-full object-contain"
                   />
                 </div>
