@@ -9,6 +9,15 @@ import QuestionResultBlock from "../competitions/questionResultBlock";
 import FlipText from "../ui/flipText";
 import { WideImage } from "./wideImage";
 
+const makeTransparent = (color: string, opacity: number) => {
+  // color is a hex string
+  const hex = color.replace("#", "");
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+};
+
 const GeneralSelection = ({ ...props }) => {
   const [selectedOption, setSelectedOption] = useState(
     props.answer.answer || "",
@@ -37,9 +46,9 @@ const GeneralSelection = ({ ...props }) => {
     <div className="flex w-full items-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
         {/* Points Badge */}
-        <PointsBadge points={props.points} />
+        <PointsBadge points={props.points} color={props.color} />
 
-        <WideImage src={props.image1} />
+        <WideImage src={props.image1} color={props.color} />
 
         {/* Question */}
         <FlipText
@@ -62,13 +71,19 @@ const GeneralSelection = ({ ...props }) => {
                 onLocalAnswer={props.onLocalAnswer}
               >
                 <button
-                  disabled={props.disabled}
-                  className={`w-max rounded-lg px-4 py-3 text-sm ${
+                  disabled={false}
+                  className={`w-max rounded-lg px-4 py-3 text-sm text-black transition-all duration-200 hover:bg-white hover:font-semibold hover:shadow-md ${
                     selectedOption === option
-                      ? "bg-white font-semibold text-blue-600 shadow-md"
+                      ? "bg-white font-semibold shadow-md"
                       : ""
                   }`}
                   onClick={() => setSelectedOption(option)}
+                  style={{
+                    backgroundColor:
+                      selectedOption === option
+                        ? makeTransparent(props.color, 0.8)
+                        : "",
+                  }}
                 >
                   {option}
                 </button>

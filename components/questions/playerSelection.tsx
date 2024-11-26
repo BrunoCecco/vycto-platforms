@@ -51,7 +51,7 @@ const PlayerSelection = ({ ...props }) => {
     <div className="flex w-full items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
         {/* Points Badge */}
-        <PointsBadge points={props.points} />
+        <PointsBadge points={props.points} color={props.color} />
 
         {/* Question */}
         <FlipText
@@ -91,7 +91,7 @@ const PlayerSelection = ({ ...props }) => {
               image={props.image2}
               selectedPlayer={selectedPlayer}
               setSelectedPlayer={setSelectedPlayer}
-              disabled={false}
+              disabled={props.disabled}
             />
           </Submit>
           <Submit

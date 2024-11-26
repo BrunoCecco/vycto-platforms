@@ -151,6 +151,7 @@ export default function CompetitionPage({
             answer={answer}
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
+            color={siteData.color1}
           />
         );
       case QuestionType.WhatMinute:
@@ -161,6 +162,7 @@ export default function CompetitionPage({
             answer={answer}
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
+            color={siteData.color1}
           />
         );
       case QuestionType.PlayerSelection:
@@ -171,6 +173,7 @@ export default function CompetitionPage({
             answer={answer}
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
+            color={siteData.color1}
           />
         );
       case QuestionType.MatchOutcome:
@@ -181,6 +184,7 @@ export default function CompetitionPage({
             answer={answer}
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
+            color={siteData.color1}
           />
         );
       case QuestionType.GuessScore:
@@ -191,6 +195,7 @@ export default function CompetitionPage({
             answer={answer}
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
+            color={siteData.color1}
           />
         );
       case QuestionType.GeneralSelection:
@@ -201,6 +206,7 @@ export default function CompetitionPage({
             answer={answer}
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
+            color={siteData.color1}
           />
         );
       case QuestionType.GeneralNumber:
@@ -211,6 +217,7 @@ export default function CompetitionPage({
             answer={answer}
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
+            color={siteData.color1}
           />
         );
       default:
@@ -239,6 +246,7 @@ export default function CompetitionPage({
                   competitionTitle={data.title!}
                   userComp={userComp}
                   users={users}
+                  color={siteData.color1}
                 />
               ) : null}
               {questions &&

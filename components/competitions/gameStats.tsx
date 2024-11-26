@@ -6,12 +6,14 @@ interface GameStatsProps {
   competitionTitle: string;
   userComp: SelectUserCompetition;
   users: SelectUserCompetition[];
+  color: string;
 }
 
 const GameStats: FC<GameStatsProps> = ({
   competitionTitle,
   userComp,
   users,
+  color,
 }) => {
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
   const rank =
@@ -45,26 +47,28 @@ const GameStats: FC<GameStatsProps> = ({
 
         {/* Statistics */}
         <div className="flex flex-wrap items-center justify-between text-center text-sm text-gray-600">
-          <div className="h-6 border-r border-green-600" />
+          <div className="h-6 border-r" style={{ borderColor: color }} />
           <div>
-            <p className="pb-2 font-semibold text-green-600">
+            <p className="font-semibol pb-2" style={{ color: color }}>
               {parseFloat(userComp.points || "0").toFixed(2)} / 100
             </p>
             <p className="text-xs">total points</p>
           </div>
-          <div className="h-6 border-r border-green-600" />
+          <div className="h-6 border-r" style={{ borderColor: color }} />
           <div>
-            <p className="pb-2 font-semibold text-green-600">{percentile}</p>
+            <p className="font-semibol pb-2" style={{ color: color }}>
+              {percentile}
+            </p>
             <p className="text-xs">percentile</p>
           </div>
-          <div className="h-6 border-r border-green-600" />
+          <div className="h-6 border-r " style={{ borderColor: color }} />
           <div>
-            <p className="pb-2 font-semibold text-green-600">
+            <p className="pb-2 font-semibold" style={{ color: color }}>
               {rank}/{users.length}
             </p>
             <p className="text-xs">rank</p>
           </div>
-          <div className="h-6 border-r border-green-600" />
+          <div className="h-6 border-r " style={{ borderColor: color }} />
           {/* <div>
             <p className="pb-2 font-semibold text-green-600">
               {bonusPoints} pt

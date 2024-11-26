@@ -12,19 +12,22 @@ const Button = ({
   selected,
   disabled,
   onClick,
+  color,
 }: {
   children: React.ReactNode;
   selected: boolean;
   disabled: boolean;
   onClick: () => void;
+  color?: string;
 }) => {
   return (
     <button
       type="submit"
       className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 transition-all duration-200 hover:bg-blue-50 hover:opacity-75"
       style={{
-        backgroundColor: selected ? "blue" : "white",
-        color: selected ? "white" : "blue",
+        backgroundColor: selected ? color || "blue" : "white",
+        color: selected ? "white" : color || "blue",
+        borderColor: color || "blue",
       }}
       disabled={disabled}
       onClick={onClick}
@@ -41,9 +44,9 @@ const TrueFalse = ({ ...props }) => {
     <div className="flex w-full items-center justify-center">
       <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
         {/* Points Badge */}
-        <PointsBadge points={props.points} />
+        <PointsBadge points={props.points} color={props.color} />
 
-        <WideImage src={props.image1} />
+        <WideImage src={props.image1} color={props.color} />
 
         {/* Question */}
         <FlipText
@@ -66,6 +69,7 @@ const TrueFalse = ({ ...props }) => {
               selected={selected == "True"}
               disabled={props.disabled}
               onClick={() => setSelected("True")}
+              color={props.color}
             >
               True
             </Button>
@@ -81,6 +85,7 @@ const TrueFalse = ({ ...props }) => {
               selected={selected == "False"}
               disabled={props.disabled}
               onClick={() => setSelected("False")}
+              color={props.color}
             >
               False
             </Button>

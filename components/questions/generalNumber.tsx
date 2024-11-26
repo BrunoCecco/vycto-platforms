@@ -19,9 +19,9 @@ const GeneralNumber = ({ ...props }) => {
     <div className="flex w-full items-center justify-center">
       <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
         {/* Points Badge */}
-        <PointsBadge points={props.points} />
+        <PointsBadge points={props.points} color={props.color} />
 
-        <WideImage src={props.image1} />
+        <WideImage src={props.image1} color={props.color} />
 
         {/* Question */}
         <TextGenerateEffect

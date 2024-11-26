@@ -16,7 +16,7 @@ const MatchOutcome = ({ ...props }) => {
     <div className="flex w-full items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
         {/* Points Badge */}
-        <PointsBadge points={props.points || 0} />
+        <PointsBadge points={props.points} color={props.color} />
 
         {/* Match Info */}
         <FlipText
@@ -63,7 +63,10 @@ const MatchOutcome = ({ ...props }) => {
 
           {/* VS */}
           <div className="text-center">
-            <div className="rounded-full border-2 border-blue-600 p-2 text-sm font-bold italic text-blue-600 md:text-xl">
+            <div
+              className="rounded-full border-2 p-2 pr-3 text-sm font-bold italic text-black md:text-xl"
+              style={{ borderColor: props.color, color: props.color }}
+            >
               VS
             </div>
           </div>
@@ -112,10 +115,11 @@ const MatchOutcome = ({ ...props }) => {
             onLocalAnswer={props.onLocalAnswer}
           >
             <button
-              className={`w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 ${
+              className={`w-24 rounded-full border-2  bg-white p-2 text-sm font-semibold ${
                 selectedOutcome == "Draw" ? "opacity-100" : "opacity-50"
               }`}
               disabled={props.disabled}
+              style={{ borderColor: props.color, color: props.color }}
               onClick={() => setSelectedOutcome("Draw")}
             >
               Draw

@@ -36,7 +36,7 @@ const GuessScore = ({ ...props }) => {
     <div className="flex w-full items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
         {/* Points Badge */}
-        <PointsBadge points={props.points} />
+        <PointsBadge points={props.points} color={props.color} />
 
         <FlipText
           word={"Guess the score"}
@@ -76,7 +76,10 @@ const GuessScore = ({ ...props }) => {
 
             {/* VS */}
             <div className="text-center">
-              <div className="rounded-full border-2 border-blue-600 p-2 text-sm font-bold italic text-blue-600 md:text-xl">
+              <div
+                className="rounded-full border-2  p-2 pr-3 text-sm font-bold italic md:text-xl"
+                style={{ color: props.color, borderColor: props.color }}
+              >
                 VS
               </div>
             </div>
