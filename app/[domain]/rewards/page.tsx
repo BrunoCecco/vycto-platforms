@@ -10,6 +10,7 @@ import {
   getCompetitionsForPeriod,
   getCompetitionsForSite,
   getSiteData,
+  getSiteRewards,
   getUserCompetitions,
 } from "@/lib/fetchers";
 import { getServerSession } from "next-auth";
@@ -49,6 +50,8 @@ export default async function Rewards({
 
   const userCompetitions = await getUserCompetitions(session.user.id);
 
+  const siteRewards = await getSiteRewards(domain);
+
   return (
     <div className="min-h-screen text-white">
       <BackgroundGradient
@@ -80,7 +83,10 @@ export default async function Rewards({
           <PendingRewards count={0} amount={0} />
         </div>
         <div className="col-span-1 mx-auto">
-          <ClaimRewardsCard comp={latestCompetition} />
+          <ClaimRewardsCard
+            comp={latestCompetition}
+            latestReward={siteRewards[siteRewards.length - 1]}
+          />
         </div>
         <div className="col-span-1 md:ml-auto">
           <ClaimedRewards count={0} amount={0} />

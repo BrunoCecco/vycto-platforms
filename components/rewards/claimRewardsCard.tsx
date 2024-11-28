@@ -1,13 +1,15 @@
 "use client";
-import { SelectCompetition } from "@/lib/schema";
+import { SelectCompetition, SelectSiteReward } from "@/lib/schema";
 import Button from "../buttons/button";
 import { BackgroundGradient } from "../ui/backgroundGradient";
 import Image from "next/image";
 
 export default function ClaimRewardsCard({
   comp,
+  latestReward,
 }: {
   comp: SelectCompetition;
+  latestReward: SelectSiteReward;
 }) {
   return (
     <BackgroundGradient
@@ -18,17 +20,17 @@ export default function ClaimRewardsCard({
         <div className="relative h-2/3 w-full">
           <Image
             // src={comp.rewardImage ?? "/placeholder.png"}
-            src={"/aelShirt.png"}
-            alt={comp.reward2Title ?? "Card thumbnail"}
+            src={latestReward.image ?? "/aelShirt.png"}
+            alt={latestReward.title ?? "Card thumbnail"}
             fill
             className="overflow-hidden rounded-lg object-contain"
           />
         </div>
         <h2 className="text-2xl font-bold uppercase">
-          {comp.rewardTitle || "AEL Signed Shirt"}
+          {latestReward.title || "AEL Signed Shirt"}
         </h2>
         <div className="mt-2 text-xs font-bold text-slate-400">
-          {comp.rewardDescription ||
+          {latestReward.description ||
             "This AEL signed shirt, autographed by all 22 player, stands as a powerful emblem of pride for an entire city."}
         </div>
         <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4">

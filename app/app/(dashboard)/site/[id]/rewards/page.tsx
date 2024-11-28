@@ -1,13 +1,8 @@
 import { notFound, redirect } from "next/navigation";
-import AnalyticsMockup from "@/components/analytics/analytics";
 import db from "@/lib/db";
-import { getServerSession } from "next-auth";
 import { SelectSiteReward } from "@/lib/schema";
-import Form from "@/components/form";
 import CombinedForm from "@/components/form/combined";
-import { createSiteReward, updateSiteReward } from "@/lib/actions";
-import Button from "@/components/buttons/button";
-import { toast } from "sonner";
+import { updateSiteReward } from "@/lib/actions";
 import CreateSiteRewardModal from "@/components/modal/createSiteReward";
 
 export default async function SiteRewards({
@@ -47,7 +42,9 @@ export default async function SiteRewards({
           </a>
         </div>
       </div>
-      <CreateSiteRewardModal siteId={decodeURIComponent(params.id)} />
+      <div className="flex w-full items-center justify-center">
+        <CreateSiteRewardModal siteId={decodeURIComponent(params.id)} />
+      </div>
 
       {rewards && rewards.length > 0 ? (
         <div className="flex flex-col gap-4">

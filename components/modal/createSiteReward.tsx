@@ -21,6 +21,10 @@ export default function CreateSiteRewardModal({ siteId }: { siteId: string }) {
     <form
       action={async (data: FormData) => {
         data.append("siteId", siteId);
+        data.append("startDate", new Date().toISOString());
+        let endDate = new Date();
+        endDate.setDate(endDate.getDate() + 30);
+        data.append("endDate", endDate.toISOString());
         createSiteReward(data).then((res: any) => {
           if (res.error) {
             toast.error(res.error);
@@ -28,6 +32,7 @@ export default function CreateSiteRewardModal({ siteId }: { siteId: string }) {
             va.track("Created Reward");
             toast.success(`Successfully created reward!`);
           }
+          setData({ siteId: siteId, title: "" });
         });
       }}
       className="w-full rounded-md bg-white dark:bg-black md:max-w-md md:border md:border-stone-200 md:shadow dark:md:border-stone-700"
@@ -47,7 +52,7 @@ export default function CreateSiteRewardModal({ siteId }: { siteId: string }) {
           <input
             name="title"
             type="text"
-            placeholder="Reward Title"
+            placeholder="Season Tickets"
             value={data.title}
             onChange={(e) => setData({ ...data, title: e.target.value })}
             maxLength={32}

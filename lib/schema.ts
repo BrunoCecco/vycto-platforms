@@ -168,8 +168,8 @@ export const siteRewards = pgTable(
     description: text("description"),
     image: text("image"),
     rewardWinners: integer("rewardWinners").default(1),
-    startDate: text("startDate").default(new Date().toISOString()),
-    endDate: text("endDate").default(new Date().toISOString()),
+    startDate: text("startDate").default(new Date().toISOString()).notNull(),
+    endDate: text("endDate").default(new Date().toISOString()).notNull(),
   },
   (table) => {
     return {
