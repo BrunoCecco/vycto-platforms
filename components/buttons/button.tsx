@@ -6,7 +6,7 @@ const Button = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: "default" | "outline" | "destructive" | "ghost";
-    pending?: Boolean;
+    loading?: 1 | 0;
   }
 >(({ className, variant = "default", children, ...props }, ref) => {
   const baseStyles =
@@ -32,7 +32,7 @@ const Button = React.forwardRef<
       {...props}
     >
       {children}
-      {props.pending && <LoadingDots color="#808080" />}
+      {props.loading == 1 ? <LoadingDots color="#808080" /> : null}
     </button>
   );
 });

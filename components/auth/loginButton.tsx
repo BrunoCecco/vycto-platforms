@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import { validateEmail } from "@/lib/utils";
-import Button from "@mui/joy/Button";
+import Button from "../buttons/button";
 
 const LoadingAnimation: React.FC = () => {
   return (
@@ -154,10 +154,9 @@ export default function LoginButton({
           ) : (
             <Button
               type="submit"
-              fullWidth
               disabled={loading}
               onClick={checkEmail}
-              className="cursor-pointer"
+              className="w-full cursor-pointer"
             >
               <p className="text-sm font-medium">Let&apos;s Play!</p>
             </Button>

@@ -9,6 +9,7 @@ export const inter = Inter({
 export const spaceGrotesk = Space_Grotesk({
   variable: "--font-space",
   subsets: ["latin"],
+  preload: true,
 });
 
 export const cal = localFont({
@@ -16,6 +17,7 @@ export const cal = localFont({
   variable: "--font-cal",
   weight: "600",
   display: "swap",
+  preload: true,
 });
 
 export const calTitle = localFont({
@@ -23,18 +25,22 @@ export const calTitle = localFont({
   variable: "--font-title",
   weight: "600",
   display: "swap",
+  preload: true,
 });
+
 export const lora = Lora({
   variable: "--font-title",
   subsets: ["latin"],
   weight: "600",
   display: "swap",
+  preload: true,
 });
 export const work = Work_Sans({
   variable: "--font-title",
   subsets: ["latin"],
   weight: "600",
   display: "swap",
+  preload: true,
 });
 
 export const fontMapper = {

@@ -1,21 +1,6 @@
 "use client";
 
 import { SelectSite } from "@/lib/schema";
-import AppleIcon from "@mui/icons-material/Apple";
-import GoogleIcon from "@mui/icons-material/Google";
-import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
-import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import Box from "@mui/joy/Box";
-import Button from "@mui/joy/Button";
-import CssBaseline from "@mui/joy/CssBaseline";
-import Divider from "@mui/joy/Divider";
-import FormControl from "@mui/joy/FormControl";
-import FormLabel from "@mui/joy/FormLabel";
-import GlobalStyles from "@mui/joy/GlobalStyles";
-import IconButton, { IconButtonProps } from "@mui/joy/IconButton";
-import Stack from "@mui/joy/Stack";
-import { CssVarsProvider, useColorScheme } from "@mui/joy/styles";
-import Typography from "@mui/joy/Typography";
 import { OAuthProvider } from "firebase/auth";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
@@ -23,9 +8,19 @@ import { usePostHog } from "posthog-js/react";
 import * as React from "react";
 import { useState } from "react";
 import LoginButton from "./loginButton";
+import Button from "../buttons/button";
+import { Apple, AppleIcon, MoonIcon, SunIcon } from "lucide-react";
 
-function ColorSchemeToggle(props: IconButtonProps) {
-  const { onClick, ...other } = props;
+const useColorScheme = () => {
+  const [mode, setMode] = React.useState<"light" | "dark">("light");
+
+  return {
+    mode,
+    setMode,
+  };
+};
+
+function ColorSchemeToggle() {
   const { mode, setMode } = useColorScheme();
   const [mounted, setMounted] = React.useState(false);
 
@@ -41,27 +36,21 @@ function ColorSchemeToggle(props: IconButtonProps) {
   }, [mode]);
 
   return (
-    <IconButton
+    <Button
       aria-label="toggle light/dark mode"
-      size="sm"
-      variant="outlined"
+      variant="outline"
       disabled={!mounted}
       onClick={(event) => {
         setMode(mode === "light" ? "dark" : "light");
-        onClick?.(event);
       }}
-      {...other}
-      sx={{
-        width: 20,
-        height: 20,
-      }}
+      className="group h-12 w-12"
     >
       {mode === "light" ? (
-        <DarkModeRoundedIcon className="text-gray-700" />
+        <MoonIcon className="text-black" size={20} />
       ) : (
-        <LightModeRoundedIcon />
+        <SunIcon className="text-white group-hover:text-black" />
       )}
-    </IconButton>
+    </Button>
   );
 }
 
@@ -144,19 +133,10 @@ export default function UserSignUp({
   };
 
   return (
-    <CssVarsProvider>
-      <CssBaseline />
-      <GlobalStyles
-        styles={{
-          ":root": {
-            "--Form-maxWidth": "800px",
-            "--Transition-duration": "0.4s", // set to `none` to disable transition
-          },
-        }}
-      />
+    <div>
       <div className="bg-white dark:bg-[rgba(19,19,24,0.4)]">
         <div
-          className="duration-[var(--Transition-duration)] delay-[calc(var(--Transition-duration)+0.1s)] relative z-10 flex w-full justify-end bg-[rgba(255,255,255,0.2)] transition-all dark:bg-[rgba(19,19,24,0.4)] md:w-[50vw]"
+          className="relative z-10 flex w-full justify-end bg-[rgba(255,255,255,0.2)] transition-all delay-100 duration-500 dark:bg-[rgba(19,19,24,0.4)] md:w-[50vw]"
           style={{ backdropFilter: "blur(12px)" }}
         >
           <div className="flex min-h-[100vh] w-full flex-col px-2">
@@ -164,7 +144,7 @@ export default function UserSignUp({
               <ColorSchemeToggle />
             </header>
             <div
-              className="m-auto pb-2"
+              className="m-auto pb-2 dark:text-white"
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -188,64 +168,56 @@ export default function UserSignUp({
               >
                 <div className="gap-1">
                   {emailExists ? (
-                    <Typography component="h1" level="h3">
-                      <div className="font-space">Sign In & Play </div>
-                    </Typography>
+                    <h1 className="dark:text-white">
+                      <div>Sign In & Play </div>
+                    </h1>
                   ) : (
-                    <Typography component="h1" level="h3">
-                      <div className="font-space">
-                        Bravo&nbsp;🎉 &nbsp;Let the Competition begin!
-                      </div>
-                    </Typography>
+                    <h1 className="dark:text-white">
+                      <div>Bravo&nbsp;🎉 &nbsp;Let the Competition begin!</div>
+                    </h1>
                   )}
                 </div>
                 {emailExists && (
                   <>
                     <Button
                       onClick={() => handleGoogleSignin()}
-                      className="dark:bg-gray-800 dark:hover:bg-gray-700"
-                      variant="soft"
-                      color="neutral"
-                      fullWidth
-                      startDecorator={
-                        <GoogleIcon className="mr-2 text-2xl text-black dark:text-gray-200" />
-                      }
+                      className="w-full bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-700"
                     >
-                      <div className="font-space">Continue with Google</div>
+                      <Image
+                        alt="google"
+                        src={"/googleIcon.svg"}
+                        width={20}
+                        height={20}
+                        className="mr-2 text-2xl text-white dark:text-gray-200"
+                      />
+                      <div>Continue with Google</div>
                     </Button>
                     <Button
                       onClick={() => handleAppleSignin()}
-                      className="dark:bg-gray-800 dark:hover:bg-gray-700"
-                      variant="soft"
-                      color="neutral"
-                      fullWidth
-                      startDecorator={
-                        <AppleIcon className="mr-2 text-2xl text-black dark:text-gray-200" />
-                      }
+                      className="w-full bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-700"
                     >
-                      <div className="font-space">Continue with Apple</div>
+                      <Image
+                        alt="apple"
+                        src={"/appleIcon.svg"}
+                        width={20}
+                        height={20}
+                        className="mr-2 text-2xl text-white dark:text-gray-200"
+                      />
+                      <div>Continue with Apple</div>
                     </Button>
                   </>
                 )}
               </div>
 
               {emailExists ? (
-                <Divider
-                  sx={(theme) => ({
-                    [theme.getColorSchemeSelector("light")]: {
-                      color: { xs: "#FFF", md: "text.tertiary" },
-                    },
-                  })}
-                >
-                  <div className="font-space">or</div>
-                </Divider>
+                <div className="text-center dark:text-white">
+                  <div>or</div>
+                </div>
               ) : (
-                <Typography>
-                  <div className="font-space">
-                    Choose a username. This is what people will see on the
-                    leaderboard when you enter competitions.
-                  </div>
-                </Typography>
+                <div className="dark:text-white">
+                  Choose a username. This is what people will see on the
+                  leaderboard when you enter competitions.
+                </div>
               )}
 
               <div
@@ -253,10 +225,10 @@ export default function UserSignUp({
               >
                 <form className="flex flex-col gap-2">
                   {emailExists ? (
-                    <FormControl required>
-                      <FormLabel>
-                        <div className="font-space">Email</div>
-                      </FormLabel>
+                    <div>
+                      <label className="dark:text-white">
+                        <div>Email</div>
+                      </label>
                       <input
                         id="email"
                         type="email"
@@ -264,13 +236,13 @@ export default function UserSignUp({
                         onChange={(e) => setEmail(e.target.value)}
                         className="mt-1 block w-full rounded-md border border-gray-300 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
                       />
-                    </FormControl>
+                    </div>
                   ) : (
                     <>
-                      <FormControl required>
-                        <FormLabel className="font-space">
-                          <div className="font-space">Username</div>
-                        </FormLabel>
+                      <div>
+                        <label className="dark:text-white">
+                          <div>Username</div>
+                        </label>
                         <input
                           id="username"
                           type="username"
@@ -278,11 +250,11 @@ export default function UserSignUp({
                           onChange={(e) => setUsername(e.target.value)}
                           className="mt-1 block w-full rounded-md border border-gray-300 px-2 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
                         />
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel>
-                          <div className="font-space">Full Name</div>
-                        </FormLabel>
+                      </div>
+                      <div>
+                        <label className="dark:text-white">
+                          <div>Full Name</div>
+                        </label>
                         <input
                           id="fullname"
                           type="fullname"
@@ -290,7 +262,7 @@ export default function UserSignUp({
                           onChange={(e) => setName(e.target.value)}
                           className="mt-1 block w-full rounded-md border border-gray-300 px-2 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
                         />
-                      </FormControl>
+                      </div>
                     </>
                   )}
                   <div className="mt-2 flex flex-col gap-4">
@@ -328,8 +300,8 @@ export default function UserSignUp({
                 </form>
               </div>
             </div>
-            <footer className="py-3">
-              <Typography level="body-xs" sx={{ textAlign: "center" }}>
+            <footer className="py-3 dark:text-white">
+              <div className="text-center">
                 <div className="flex items-center justify-center">
                   <div className="pr-1.5 font-space">powered by</div>
                   <div className="relative h-8 w-12">
@@ -351,17 +323,17 @@ export default function UserSignUp({
                     />
                   </div>
                 </div>
-              </Typography>
+              </div>
             </footer>
           </div>
         </div>
         <div
-          className={`fixed bottom-0 right-0 top-0 h-full bg-[url(/loginBanner.png)] dark:bg-[url(/loginBannerDark.png)] ${"left-0 md:left-[50vw]"} duration-[var(--Transition-duration)] delay-[calc(var(--Transition-duration)+0.1s)] bg-cover bg-center bg-no-repeat`}
+          className={`fixed bottom-0 right-0 top-0 h-full bg-[url(/loginBanner.png)] dark:bg-[url(/loginBannerDark.png)] ${"left-0 md:left-[50vw]"} bg-cover bg-center bg-no-repeat delay-100 duration-500`}
           style={{
             transition: "background-image 0.4s, left 0.4s",
           }}
         />
       </div>
-    </CssVarsProvider>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 import CreateSiteButton from "../edit-fanzone/createSiteButton";
-import CreateSiteModal from "../modal/create-site";
+import CreateSiteModal from "../modal/createSite";
 import Link from "next/link";
 import db from "@/lib/db";
 import { sites } from "@/lib/schema";

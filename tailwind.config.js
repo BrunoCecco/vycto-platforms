@@ -170,9 +170,9 @@ module.exports = {
         30: "7.5rem",
       },
       fontFamily: {
-        default: ["var(--font-inter)", ...fontFamily.sans],
+        // default: ["var(--font-inter)", ...fontFamily.sans],
         cal: ["var(--font-cal)", ...fontFamily.sans],
-        title: ["var(--font-title)", ...fontFamily.sans],
+        // title: ["var(--font-title)", ...fontFamily.sans],
         mono: ["Consolas", ...fontFamily.mono],
         space: ["var(--font-space)", ...fontFamily.sans],
       },

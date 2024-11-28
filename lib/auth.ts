@@ -7,7 +7,13 @@ import {
 import db from "./db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { Adapter } from "next-auth/adapters";
-import { accounts, sessions, users, verificationTokens } from "./schema";
+import {
+  accounts,
+  sessions,
+  siteRewards,
+  users,
+  verificationTokens,
+} from "./schema";
 import EmailProvider, {
   SendVerificationRequestParams,
 } from "next-auth/providers/email";
@@ -181,6 +187,48 @@ export function withSiteAuth(action: any) {
     }
 
     return action(formData, site, key);
+  };
+}
+
+export function withSiteRewardAuth(action: any) {
+  return async (
+    formData: FormData | null,
+    siteRewardId: string,
+    key: string | null,
+  ) => {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return {
+        error: "Not authenticated",
+      };
+    }
+
+    const siteReward = await db.query.siteRewards.findFirst({
+      where: (sites, { eq }) => eq(siteRewards.id, siteRewardId),
+    });
+
+    if (!siteReward) {
+      return {
+        error: "Site reward not found",
+      };
+    }
+
+    const siteRewardSiteId = siteReward.siteId || "";
+
+    const site = await db.query.sites.findFirst({
+      where: (sites, { eq }) => eq(sites.id, siteRewardSiteId),
+    });
+
+    if (
+      !site ||
+      (site.userId !== session.user.id && site.admin != session.user.email)
+    ) {
+      return {
+        error: "Not authorized",
+      };
+    }
+
+    return action(formData, siteReward, key);
   };
 }
 

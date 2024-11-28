@@ -8,9 +8,15 @@ import {
 import { eq } from "drizzle-orm";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
-import { authOptions, withSiteAuth } from "../auth";
+import { authOptions, withSiteAuth, withSiteRewardAuth } from "../auth";
 import db from "../db";
-import { SelectSite, competitions, sites } from "../schema";
+import {
+  SelectSite,
+  SelectSiteReward,
+  competitions,
+  siteRewards,
+  sites,
+} from "../schema";
 import { getServerSession } from "next-auth";
 
 export const createSite = async (formData: FormData) => {
@@ -181,6 +187,78 @@ export const deleteSite = withSiteAuth(
         `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
       );
       response.customDomain && revalidateTag(`${site.customDomain}-metadata`);
+      return response;
+    } catch (error: any) {
+      return {
+        error: error.message,
+      };
+    }
+  },
+);
+
+export const createSiteReward = async (formData: FormData) => {
+  console.log("Creating site reward", formData);
+  const session = await getServerSession(authOptions);
+  if (!session?.user.id) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const image = formData.get("image") as string;
+  const siteId = formData.get("siteId") as string;
+  const startDate = formData.get("startDate") as string;
+  const endDate = formData.get("endDate") as string;
+  const rewardWinnersStr = formData.get("rewardWinners") as string;
+
+  const rewardWinners = parseInt(rewardWinnersStr || "1");
+
+  try {
+    const [response] = await db
+      .insert(siteRewards)
+      .values({
+        siteId,
+        title,
+        description,
+        image,
+        rewardWinners,
+        startDate,
+        endDate,
+      })
+      .returning();
+
+    revalidateTag(
+      `${siteId}-reward.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
+    );
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const updateSiteReward = withSiteRewardAuth(
+  async (formData: FormData, siteReward: SelectSiteReward, key: string) => {
+    const value = formData.get(key) as string;
+
+    try {
+      let response;
+
+      response = await db
+        .update(siteRewards)
+        .set({
+          [key]: value,
+        })
+        .where(eq(siteRewards.id, siteReward.id))
+        .returning()
+        .then((res) => res[0]);
+
+      revalidateTag(
+        `${siteReward.id}-reward.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
+      );
+
       return response;
     } catch (error: any) {
       return {

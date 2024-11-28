@@ -3,7 +3,6 @@
 import LoadingDots from "@/components/icons/loadingDots";
 import { cn } from "@/lib/utils";
 import { useParams, useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import DomainStatus from "./domainStatus";
 import DomainConfiguration from "./domainConfiguration";
@@ -16,6 +15,7 @@ import { Select, SelectItem } from "@tremor/react";
 import CountryPicker from "../settings/countryPicker";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
+import { useFormStatus } from "react-dom";
 
 export default function Form({
   title,
@@ -188,21 +188,23 @@ export default function Form({
       {inputAttrs.name === "customDomain" && inputAttrs.defaultValue && (
         <DomainConfiguration domain={inputAttrs.defaultValue} />
       )}
-      <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10 dark:border-stone-700 dark:bg-stone-800">
+      <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 dark:border-stone-700 dark:bg-stone-800 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
         <p className="mr-2 text-sm text-stone-500 dark:text-stone-400">
           {helpText}
         </p>
+
         <FormButton />
       </div>
     </form>
   );
 }
 
-function FormButton() {
+const FormButton = () => {
   const { pending } = useFormStatus();
+
   return (
-    <Button disabled={pending} pending={pending}>
+    <Button disabled={pending} loading={pending ? 1 : 0}>
       <p>Save Changes</p>
     </Button>
   );
-}
+};

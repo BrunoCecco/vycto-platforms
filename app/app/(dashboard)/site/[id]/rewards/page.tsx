@@ -4,6 +4,11 @@ import db from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { SelectSiteReward } from "@/lib/schema";
 import Form from "@/components/form";
+import CombinedForm from "@/components/form/combined";
+import { createSiteReward, updateSiteReward } from "@/lib/actions";
+import Button from "@/components/buttons/button";
+import { toast } from "sonner";
+import CreateSiteRewardModal from "@/components/modal/createSiteReward";
 
 export default async function SiteRewards({
   params,
@@ -30,7 +35,7 @@ export default async function SiteRewards({
       <div className="flex items-center justify-center sm:justify-start">
         <div className="flex flex-col items-center space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
           <h1 className="font-cal text-xl font-bold dark:text-white sm:text-3xl">
-            Rewards for {data.name}
+            Monthly rewards for {data.name}
           </h1>
           <a
             href={`https://${url}`}
@@ -42,18 +47,62 @@ export default async function SiteRewards({
           </a>
         </div>
       </div>
+      <CreateSiteRewardModal siteId={decodeURIComponent(params.id)} />
+
       {rewards && rewards.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4 pb-4 sm:grid-cols-2 xl:grid-cols-4">
-          {rewards.map((reward: SelectSiteReward) => (
-            <div
-              key={reward.id}
-              className="rounded-lg bg-stone-800 p-4 dark:bg-stone-700"
-            >
-              <h2 className="text-lg font-bold dark:text-white">
-                {reward.title}
-              </h2>
-              <p className="text-sm dark:text-white">{reward.description}</p>
-              <p className="text-sm dark:text-white"></p>
+        <div className="flex flex-col gap-4">
+          {rewards.map((reward: SelectSiteReward, i: number) => (
+            <div key={reward.id} className="">
+              <CombinedForm
+                title={reward.title || "Reward " + i}
+                helpText="Edit the reward details."
+                descriptions={[
+                  "Title",
+                  "Description",
+                  "Image",
+                  "Start date of reward period",
+                  "End date of reward period",
+                  "Number of reward winners",
+                ]}
+                inputAttrs={[
+                  {
+                    name: "title",
+                    type: "text",
+                    defaultValue: reward.title || "",
+                  },
+                  {
+                    name: "description",
+                    type: "text",
+                    defaultValue: reward.description || "",
+                  },
+                  {
+                    name: "image",
+                    type: "image",
+                    defaultValue: reward.image || "/logo.png",
+                  },
+                  {
+                    name: "startDate",
+                    type: "date",
+                    defaultValue: new Date(reward?.startDate!)
+                      .toISOString()
+                      .split("T")[0],
+                  },
+                  {
+                    name: "endDate",
+                    type: "date",
+                    defaultValue: new Date(reward?.endDate!)
+                      .toISOString()
+                      .split("T")[0],
+                  },
+                  {
+                    name: "rewardWinners",
+                    type: "number",
+                    defaultValue: reward.rewardWinners?.toString() || "1",
+                  },
+                ]}
+                handleSubmit={updateSiteReward}
+                updateId={reward.id}
+              />
             </div>
           ))}
         </div>

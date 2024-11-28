@@ -40,12 +40,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(cal.variable, inter.variable)}>
-        <Script
+        {/* <Script
           defer
           src="https://unpkg.com/@tinybirdco/flock.js"
           data-host="https://api.eu-central-1.aws.tinybird.co"
           data-token="p.eyJ1IjogIjllOGNmNTViLTRhOTQtNGU0MC1hZDM1LWU3YjYxMzRkMTJlNyIsICJpZCI6ICIxY2YxNjgyNS0yZDQ3LTQzOTEtYTg2My01NWI2MDcxMDAwY2IiLCAiaG9zdCI6ICJhd3MtZXUtY2VudHJhbC0xIn0.nIz77lsApRDOdpKjlQhXJTHWhbX8u9wN4vWUDsUtgGY"
-        />
+        /> */}
         <Providers>
           <PostHogPageView />
           <Analytics />

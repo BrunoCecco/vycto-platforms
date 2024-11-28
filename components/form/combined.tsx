@@ -3,7 +3,6 @@
 import LoadingDots from "@/components/icons/loadingDots";
 import { cn } from "@/lib/utils";
 import { useParams, useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import DomainStatus from "./domainStatus";
 import DomainConfiguration from "./domainConfiguration";
@@ -19,6 +18,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { PencilIcon } from "lucide-react";
 import EditProfileImage from "../settings/editProfileImage";
+import { useFormStatus } from "react-dom";
 
 interface InputAttr {
   name: string;
@@ -37,6 +37,7 @@ export default function CombinedForm({
   handleSubmit,
   className,
   hasImage = false,
+  updateId,
 }: {
   title: String;
   descriptions: string[];
@@ -45,6 +46,7 @@ export default function CombinedForm({
   handleSubmit: any;
   className?: string;
   hasImage?: boolean;
+  updateId?: string;
 }) {
   const { id } = useParams() as { id?: string };
   const router = useRouter();
@@ -53,36 +55,71 @@ export default function CombinedForm({
     inputAttrs.find((inputAttr) => inputAttr.name === "country")?.defaultValue,
   );
 
-  return (
-    <form
-      action={async (data: FormData) => {
-        await Promise.all(
-          inputAttrs.map((inputAttr) =>
-            handleSubmit(data, id || "", inputAttr.name).then(
+  const imageInputAttr = inputAttrs.find((inputAttr) =>
+    inputAttr.type.includes("image"),
+  );
+
+  const ImageInput = () => {
+    if (!imageInputAttr) return null;
+    return (
+      <div className="w-full pl-5 pt-5 sm:w-1/3">
+        <Uploader
+          name={imageInputAttr?.name!}
+          id={imageInputAttr?.name || ""}
+          title={""}
+          description={""}
+          defaultValue={imageInputAttr?.defaultValue || ""}
+          upload={(name: string, value: string) => {
+            const formData = new FormData();
+            // append input as file type to form data
+            formData.append(name, value);
+            handleSubmit(formData, updateId || id, name).then(
               async (res: any) => {
                 if (res.error) {
                   toast.error(res.error);
                 } else {
-                  va.track(`Updated ${inputAttr.name}`, id ? { id } : {});
+                  va.track(`Updated ${name}`, id ? { id } : {});
+                  toast.success(`Successfully updated ${name}!`);
                 }
               },
-            ),
-          ),
-        );
-        toast.success(`Successfully updated ${title}!`);
-      }}
-      className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
-    >
+            );
+          }}
+        />
+      </div>
+    );
+  };
+
+  return (
+    <div className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black">
       <h2 className="p-5 font-cal text-xl text-black dark:text-white">
         {title}
       </h2>
       <div className="flex flex-col sm:flex-row">
-        {hasImage && (
+        {hasImage && ( //hasImage means hasProfileImage
           <div className="w-full pl-5 pt-5 sm:w-1/3">
             <EditProfileImage />
           </div>
         )}
-        <div className="flex-1">
+        {ImageInput()}
+        <form
+          action={async (data: FormData) => {
+            const res = await Promise.all(
+              inputAttrs.map((inputAttr) =>
+                handleSubmit(data, updateId || id, inputAttr.name).then(
+                  async (res: any) => {
+                    if (res.error) {
+                      toast.error(res.error);
+                    } else {
+                      va.track(`Updated ${inputAttr.name}`, id ? { id } : {});
+                    }
+                  },
+                ),
+              ),
+            );
+            toast.success(`Successfully updated ${title}!`);
+          }}
+          className="flex-1"
+        >
           {inputAttrs.map((inputAttr, index) => {
             return (
               <div
@@ -92,7 +129,8 @@ export default function CombinedForm({
                 <p className="text-sm text-stone-500 dark:text-stone-200">
                   {descriptions[index]}
                 </p>
-                {inputAttr.name === "country" ? (
+                {inputAttr.name.includes("image") ? null : inputAttr.name ===
+                  "country" ? (
                   <>
                     <input
                       type="hidden"
@@ -160,9 +198,9 @@ export default function CombinedForm({
                     {...inputAttr}
                     rows={3}
                     required
-                    className="w-full max-w-2xl rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                    className="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
                   />
-                ) : inputAttr.name === "date" ? (
+                ) : inputAttr.name.includes("date") ? (
                   <input
                     {...inputAttr}
                     type="date"
@@ -179,23 +217,24 @@ export default function CombinedForm({
               </div>
             );
           })}
-        </div>
+          <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 dark:border-stone-700 dark:bg-stone-800 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
+            <p className="mr-2 text-sm text-stone-500 dark:text-stone-400">
+              {helpText}
+            </p>
+            <FormButton />
+          </div>
+        </form>
       </div>
-      <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10 dark:border-stone-700 dark:bg-stone-800">
-        <p className="mr-2 text-sm text-stone-500 dark:text-stone-400">
-          {helpText}
-        </p>
-        <FormButton />
-      </div>
-    </form>
+    </div>
   );
 }
 
-function FormButton() {
+const FormButton = () => {
   const { pending } = useFormStatus();
+
   return (
-    <Button disabled={pending} pending={pending}>
+    <Button disabled={pending} loading={pending ? 1 : 0}>
       <p>Save Changes</p>
     </Button>
   );
-}
+};
