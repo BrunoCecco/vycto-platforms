@@ -73,7 +73,7 @@ export default function CompetitionPage({
       setActiveTab("Challenge");
     } else if (hasEnded) {
       console.log("Competition has ended");
-      setActiveTab("Leaderboard");
+      // setActiveTab("Leaderboard");
     }
 
     if (session && searchParams && !userComp) {

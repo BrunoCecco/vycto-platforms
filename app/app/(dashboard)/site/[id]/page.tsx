@@ -3,6 +3,7 @@ import EditFanzone from "@/components/edit-fanzone/editFanzone";
 import db from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { getSiteDomain } from "@/lib/utils";
 
 export default async function SiteCompetitions({
   params,
@@ -29,9 +30,7 @@ export default async function SiteCompetitions({
   }
 
   // Generate the URL
-  const url = process.env.NEXT_PUBLIC_VERCEL_ENV
-    ? `https://${data.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
-    : `http://${data.subdomain}.localhost:3000`;
+  const url = getSiteDomain(data);
 
   // Render the EditFanzone component and pass necessary props
   return (

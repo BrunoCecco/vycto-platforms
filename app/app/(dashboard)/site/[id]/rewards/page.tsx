@@ -4,6 +4,7 @@ import { SelectSiteReward } from "@/lib/schema";
 import CombinedForm from "@/components/form/combined";
 import { updateSiteReward } from "@/lib/actions";
 import CreateSiteRewardModal from "@/components/modal/createSiteReward";
+import { getSiteDomain } from "@/lib/utils";
 
 export default async function SiteRewards({
   params,
@@ -23,7 +24,7 @@ export default async function SiteRewards({
     notFound();
   }
 
-  const url = `${data.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`;
+  const url = getSiteDomain(data);
 
   return (
     <>

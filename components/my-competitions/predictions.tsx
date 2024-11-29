@@ -1,8 +1,13 @@
 import Image from "next/image";
 import { MoveUpRight } from "lucide-react";
 import { SelectUserCompetition } from "@/lib/schema";
-import { getCompetitionData, getCompetitionFromId } from "@/lib/fetchers";
+import {
+  getCompetitionData,
+  getCompetitionFromId,
+  getSiteDataById,
+} from "@/lib/fetchers";
 import Link from "next/link";
+import { getSiteDomain } from "@/lib/utils";
 
 const PredictionCard = async ({
   competition,
@@ -11,10 +16,18 @@ const PredictionCard = async ({
 }) => {
   const compData = await getCompetitionFromId(competition.competitionId);
 
+  const siteId = compData?.siteId;
+
+  const siteData = await getSiteDataById(siteId!);
+
+  const url = getSiteDomain(siteData!) + "/comp/" + compData?.slug;
+
   return (
     <Link
       className="group relative flex w-full items-center gap-4 hover:cursor-pointer"
-      href={"comp/" + compData?.slug}
+      rel="noreferrer"
+      target="_blank"
+      href={url}
     >
       <div className="relative h-36 w-36 overflow-hidden rounded-lg">
         <Image
@@ -22,7 +35,6 @@ const PredictionCard = async ({
           alt="RAPID vs CFR Cluj"
           fill
           objectFit="cover"
-          priority
         />
       </div>
       <div>

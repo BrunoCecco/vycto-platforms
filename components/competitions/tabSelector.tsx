@@ -9,6 +9,7 @@ const TabSelector = ({
   activeTab: string;
   setActiveTab: any;
 }) => {
+  console.log("activeTab", activeTab);
   return (
     <div className="mx-auto flex w-full flex-col items-center justify-center">
       <div className="flex w-full overflow-hidden border-b-2 bg-white">

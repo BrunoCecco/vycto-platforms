@@ -1,11 +1,11 @@
 import BlurImage from "@/components/media/blurImage";
 import type { SelectSite } from "@/lib/schema";
-import { placeholderBlurhash, random } from "@/lib/utils";
+import { getSiteDomain, placeholderBlurhash, random } from "@/lib/utils";
 import { BarChart, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 export default function SiteCard({ data }: { data: SelectSite }) {
-  const url = `${data.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`;
+  const url = getSiteDomain(data);
   return (
     <div className="relative rounded-lg border border-stone-200 pb-10 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
       <Link

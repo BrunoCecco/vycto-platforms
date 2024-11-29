@@ -10,6 +10,7 @@ import Link from "next/link";
 import { getSiteFromCompetitionId } from "@/lib/actions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { getSiteDomain } from "@/lib/utils";
 
 export default async function UserCompListing({
   userComp,
@@ -50,9 +51,8 @@ export default async function UserCompListing({
   const userReward = rewardDetails();
   const canClaim = session?.user.id === userComp.userId && userReward != null;
 
-  const url = process.env.NEXT_PUBLIC_VERCEL_ENV
-    ? `https://${siteData?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/comp/${comp?.slug}/${userComp.userId}`
-    : `http://${siteData?.subdomain}.localhost:3000/comp/${comp?.slug}/${userComp.userId}`;
+  const url =
+    getSiteDomain(siteData!) + `/comp/${comp?.slug}/${userComp.userId}`;
 
   // return a beautiful table row containing info about the reward that the user has won, if any
   return (

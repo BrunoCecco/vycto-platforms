@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { PgSelect } from "drizzle-orm/pg-core";
 import { twMerge } from "tailwind-merge";
+import { SelectSite } from "./schema";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -75,4 +76,13 @@ export function stripUndefined<T>(obj: T): Pick<T, NonNullableProps<T>> {
 
 export const validateEmail = (email: string) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
+
+export const getSiteDomain = (siteData: SelectSite) => {
+  // if (siteData.customDomain) {
+  //   return siteData.customDomain;
+  // }
+  return (
+    "http://" + siteData.subdomain + "." + process.env.NEXT_PUBLIC_ROOT_DOMAIN
+  );
 };
