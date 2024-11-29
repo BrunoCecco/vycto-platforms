@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { updateSite } from "@/lib/actions";
 import Uploader from "../form/uploader";
 import Form from "../form";
+import { useRouter } from "next/navigation";
 
 export default function BucketStorage({
   siteName,
@@ -28,6 +29,8 @@ export default function BucketStorage({
   const [id, setId] = useState(bucketId);
   const [files, setFiles] = useState([]);
   const [downloadUrl, setDownloadUrl] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchBucket = async () => {
@@ -61,8 +64,7 @@ export default function BucketStorage({
       formData.append("bucketId", data.bucketId);
       let updatedSite = await updateSite(formData, siteId, "bucketName");
       updatedSite = await updateSite(formData, siteId, "bucketId");
-      setId(data.bucketId);
-      setName(data.bucketName);
+      router.refresh();
     } catch (error: any) {
       toast.error("Try another name", error);
     }
@@ -87,8 +89,7 @@ export default function BucketStorage({
       newFormData.append("bucketName", "");
       let updatedSite = await updateSite(newFormData, siteId, "bucketName");
       updatedSite = await updateSite(newFormData, siteId, "bucketId");
-      setId(null);
-      setName(null);
+      router.refresh();
     } catch (error: any) {
       toast.error(error);
     }
@@ -99,39 +100,39 @@ export default function BucketStorage({
     <div className="relative mt-8 flex flex-col items-center justify-center">
       {bucketId && bucketName ? (
         <div className="flex w-full flex-col gap-4">
-          <h2 className="text-lg font-bold dark:text-white">Bucket Contents</h2>
           {isLoading ? (
             <LoadingDots />
           ) : (
             <div className="flex w-full flex-col gap-4">
-              <p>Bucket ID: {bucketId}</p>
-              <p>Bucket Name: {bucketName}</p>
-              <form className="flex flex-col gap-4" action={deleteBucket}>
+              <form className="flex items-center gap-4" action={deleteBucket}>
+                <p>{bucketName}</p>
                 <Input name="bucketName" type="hidden" value={bucketName} />
                 <Input name="bucketId" type="hidden" value={bucketId} />
                 <DeleteFormButton />
               </form>
-              <Form
-                key={"Newimage"}
-                title="New Image"
-                description=""
-                inputAttrs={{
-                  name: "image1",
-                  type: "file",
-                  defaultValue: "",
-                }}
-                handleSubmit={updateSite}
-                bucketId={bucketId}
-              />
+              {files && files?.length < 3 && (
+                <Form
+                  key={"Newimage"}
+                  title="New Image"
+                  description=""
+                  inputAttrs={{
+                    name: "image" + (files?.length + 1),
+                    type: "file",
+                    defaultValue: "",
+                  }}
+                  handleSubmit={updateSite}
+                  bucketId={bucketId}
+                />
+              )}
               {files &&
                 files?.length > 0 &&
                 files.map((file: any, i) => (
                   <Form
                     key={i}
-                    title={file.fileName}
+                    title={"Image" + (i + 1)}
                     description=""
                     inputAttrs={{
-                      name: "image1",
+                      name: "image" + (i + 2),
                       type: "file",
                       defaultValue: `${downloadUrl}/file/${bucketName}/${file.fileName}?timestamp=${file.uploadTimestamp}`,
                     }}
@@ -149,7 +150,9 @@ export default function BucketStorage({
             <Database />
           </h2>
           <p>Create a new bucket to store media.</p>
-          <p>Note: Bucket name must be alphanumeric or '-'" (no spaces).</p>
+          <p>
+            Note: Bucket name must be alphanumeric or &apos;-&apos; (no spaces).
+          </p>
           <Input
             name="bucketName"
             placeholder="Bucket Name"

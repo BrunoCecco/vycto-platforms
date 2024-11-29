@@ -121,7 +121,7 @@ export default function Uploader({
     return !data[name] || saving;
   }, [data[name], saving]);
 
-  const removeFile = async (url?: string) => {
+  const removeFile = async (url: string | null) => {
     try {
       const res = await fetch("/api/delete/", {
         method: "POST",
@@ -281,7 +281,7 @@ export default function Uploader({
         </div>
       </form>
       {data[name] != "" && (
-        <Button onClick={(e: any) => removeFile()}>Remove</Button>
+        <Button onClick={(e: any) => removeFile(null)}>Remove</Button>
       )}
     </div>
   );
