@@ -231,6 +231,7 @@ export const createSiteReward = async (formData: FormData) => {
     revalidateTag(
       `${siteId}-reward.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
     );
+    revalidateTag(`${siteId}-rewards`);
     return response;
   } catch (error: any) {
     return {
@@ -258,7 +259,7 @@ export const updateSiteReward = withSiteRewardAuth(
       revalidateTag(
         `${siteReward.id}-reward.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
       );
-
+      revalidateTag(`${siteReward.siteId}-rewards`);
       return response;
     } catch (error: any) {
       return {
