@@ -61,6 +61,21 @@ export async function getSiteDataById(siteId: string) {
   )();
 }
 
+export async function getSiteRewardsById(id: string) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.siteRewards.findMany({
+        where: eq(siteRewards.siteId, id),
+      });
+    },
+    [`${id}-rewards`],
+    {
+      revalidate: 900,
+      tags: [`${id}-rewards`],
+    },
+  )();
+}
+
 export async function getSiteRewards(domain: string) {
   const siteId = await getSiteIdByDomain(domain);
 

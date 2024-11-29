@@ -1,15 +1,14 @@
 import Form from "@/components/form";
 import { updateSite } from "@/lib/actions";
 import db from "@/lib/db";
+import { getSiteDataById } from "@/lib/fetchers";
 
 export default async function SiteSettingsDomains({
   params,
 }: {
   params: { id: string };
 }) {
-  const data = await db.query.sites.findFirst({
-    where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
-  });
+  const data = await getSiteDataById(decodeURIComponent(params.id));
 
   return (
     <div className="flex flex-col space-y-6">

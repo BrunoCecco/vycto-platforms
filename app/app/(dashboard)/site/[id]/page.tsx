@@ -4,6 +4,7 @@ import db from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getSiteDomain } from "@/lib/utils";
+import { getSiteDataById } from "@/lib/fetchers";
 
 export default async function SiteCompetitions({
   params,
@@ -17,9 +18,7 @@ export default async function SiteCompetitions({
   }
 
   // Fetch site data from the database
-  const data = await db.query.sites.findFirst({
-    where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
-  });
+  const data = await getSiteDataById(decodeURIComponent(params.id));
 
   // Handle cases where data is not found or user is not authorized
   if (

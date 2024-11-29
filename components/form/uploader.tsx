@@ -84,13 +84,17 @@ export default function Uploader({
   };
 
   const onChangePicture = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
+    async (event: ChangeEvent<HTMLInputElement>) => {
       setSaving(true);
       const file = event.currentTarget.files && event.currentTarget.files[0];
       if (file) {
         if (file.size / 1024 / 1024 > 50) {
           toast.error("File size too big (max 50MB)");
         } else {
+          // remove current file
+          if (data[name]) {
+            await removeFile(data[name]);
+          }
           setFile(file);
           const reader = new FileReader();
           reader.onload = (e) => {
@@ -114,29 +118,29 @@ export default function Uploader({
     return !data[name] || saving;
   }, [data[name], saving]);
 
-  const removeFile = async () => {
-    fetch("/api/delete/", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ url: data[name] }),
-    })
-      .then(async (res) => {
-        console.log(res);
-        toast.success("File deleted successfully");
-        upload(name, "");
-        setData((prev) => ({
-          ...prev,
-          [name]: "",
-        }));
-      })
-      .catch((err) => {
-        toast.error("Failed to delete");
-        upload(name, "");
-        setData((prev) => ({
-          ...prev,
-          [name]: "",
-        }));
+  const removeFile = async (url?: string) => {
+    try {
+      const res = await fetch("/api/delete/", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ url: url ?? data[name] }),
       });
+      console.log(res);
+      toast.success("File deleted successfully");
+      upload(name, "");
+      setData((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+      return res;
+    } catch (error) {
+      toast.error("Failed to delete");
+      upload(name, "");
+      setData((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
   };
 
   return (
@@ -270,7 +274,9 @@ export default function Uploader({
           </div>
         </div>
       </form>
-      {data[name] != "" && <Button onClick={removeFile}>Remove</Button>}
+      {data[name] != "" && (
+        <Button onClick={(e: any) => removeFile()}>Remove</Button>
+      )}
     </div>
   );
 }

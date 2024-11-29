@@ -3,15 +3,14 @@ import AnalyticsMockup from "@/components/analytics/analytics";
 import db from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { getSiteDomain } from "@/lib/utils";
+import { getSiteDataById } from "@/lib/fetchers";
 
 export default async function SiteAnalytics({
   params,
 }: {
   params: { id: string };
 }) {
-  const data = await db.query.sites.findFirst({
-    where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
-  });
+  const data = await getSiteDataById(decodeURIComponent(params.id));
 
   if (!data) {
     notFound();

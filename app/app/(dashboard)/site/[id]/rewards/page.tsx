@@ -5,20 +5,20 @@ import CombinedForm from "@/components/form/combined";
 import { updateSiteReward } from "@/lib/actions";
 import CreateSiteRewardModal from "@/components/modal/createSiteReward";
 import { getSiteDomain } from "@/lib/utils";
+import {
+  getSiteDataById,
+  getSiteRewards,
+  getSiteRewardsById,
+} from "@/lib/fetchers";
 
 export default async function SiteRewards({
   params,
 }: {
   params: { id: string };
 }) {
-  const data = await db.query.sites.findFirst({
-    where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
-  });
+  const data = await getSiteDataById(decodeURIComponent(params.id));
 
-  const rewards = await db.query.siteRewards.findMany({
-    where: (rewards, { eq }) =>
-      eq(rewards.siteId, decodeURIComponent(params.id)),
-  });
+  const rewards = await getSiteRewardsById(decodeURIComponent(params.id));
 
   if (!data) {
     notFound();

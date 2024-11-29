@@ -19,6 +19,7 @@ import {
   Trophy,
   Table2,
   Crown,
+  Camera,
 } from "lucide-react";
 import {
   useParams,
@@ -68,6 +69,12 @@ export default function Nav({
           href: `/site/${id}/rewards`,
           isActive: segments.includes("rewards"),
           icon: <Crown width={18} />,
+        },
+        {
+          name: "Media",
+          href: `/site/${id}/media`,
+          isActive: segments.includes("media"),
+          icon: <Camera width={18} />,
         },
         {
           name: "Analytics",
