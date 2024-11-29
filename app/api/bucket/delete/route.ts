@@ -22,28 +22,37 @@ export async function POST(req: Request) {
     );
   }
 
-  const { bucketName } = await req.json();
+  const { bucketId, bucketName } = await req.json();
 
-  if (!bucketName) {
-    return new Response("Missing bucketName in request body", {
+  if (!bucketId) {
+    return new Response("Missing bucketId in request body", {
       status: 400,
     });
   }
 
   const { data: authData } = await b2.authorize();
 
-  const { data } = await b2.getBucket({
-    bucketName,
+  const { data: fileData } = await b2.listFileNames({
+    bucketId: bucketId,
+    startFileName: "",
+    maxFileCount: 1000,
+    delimiter: "",
+    prefix: "",
   });
 
-  if (!data) {
-    return new Response("Bucket not found", {
-      status: 404,
-    });
-  }
+  const files = fileData.files.map((file: any) => file);
+
+  await Promise.all(
+    files.map(async (file: any) => {
+      await b2.deleteFileVersion({
+        fileId: file.fileId,
+        fileName: file.fileName,
+      });
+    }),
+  );
 
   await b2.deleteBucket({
-    bucketId: data.bucketId,
+    bucketId: bucketId,
   });
 
   return NextResponse.json({

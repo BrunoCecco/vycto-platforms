@@ -1,30 +1,3 @@
-// import { put, del } from "@vercel/blob";
-// import { nanoid } from "nanoid";
-// import { NextResponse } from "next/server";
-
-// export const runtime = "edge";
-
-// export async function POST(req: Request) {
-//   if (!process.env.BLOB_READ_WRITE_TOKEN) {
-//     return new Response(
-//       "Missing BLOB_READ_WRITE_TOKEN. Don't forget to add that to your .env file.",
-//       {
-//         status: 401,
-//       },
-//     );
-//   }
-
-//   const file = req.body || "";
-//   const contentType = req.headers.get("content-type") || "text/plain";
-//   const filename = `${nanoid()}.${contentType.split("/")[1]}`;
-//   const blob = await put(filename, file, {
-//     contentType,
-//     access: "public",
-//   });
-
-//   return NextResponse.json(blob);
-// }
-
 import B2 from "backblaze-b2"; // Import Backblaze B2 SDK
 import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
@@ -34,7 +7,10 @@ const b2 = new B2({
   applicationKey: process.env.BACKBLAZE_MASTER_KEY!,
 });
 
-export async function POST(req: Request) {
+export async function POST(
+  req: Request,
+  { params }: { params: { bucketid: string } },
+) {
   if (
     !process.env.BACKBLAZE_MASTER_KEY_ID ||
     !process.env.BACKBLAZE_MASTER_KEY
@@ -47,7 +23,11 @@ export async function POST(req: Request) {
     );
   }
 
+  const { bucketid } = params;
+
   const file = await req.arrayBuffer();
+
+  console.log(`Uploading file to bucket ${bucketid}`); // q: why is bucketId still undefined? a:
 
   const fileBuffer = Buffer.from(file);
   const contentType = req.headers.get("content-type") || "text/plain";
@@ -58,7 +38,7 @@ export async function POST(req: Request) {
   // .getUploadUrl returns the upload url and auth token
   const { data: authData } = await b2.authorize();
   const { data: uploadData } = await b2.getUploadUrl({
-    bucketId: process.env.BACKBLAZE_BUCKET_ID!,
+    bucketId: bucketid,
   });
 
   const { data } = await b2.uploadFile({

@@ -22,6 +22,7 @@ export default function Uploader({
   title,
   description,
   children,
+  bucketId,
 }: {
   id: string;
   defaultValue: string | null;
@@ -30,6 +31,7 @@ export default function Uploader({
   title?: string;
   description?: string;
   children?: React.ReactNode;
+  bucketId?: string;
 }) {
   const [data, setData] = useState({
     [name]: defaultValue,
@@ -49,7 +51,8 @@ export default function Uploader({
 
   const handleSubmit = async () => {
     setSaving(true);
-    fetch("/api/upload", {
+    const url = bucketId ? `/api/bucket/${bucketId}/upload` : "/api/upload";
+    fetch(url, {
       method: "POST",
       headers: { "content-type": file?.type || "application/json" },
       body: file || data[name],
@@ -123,7 +126,10 @@ export default function Uploader({
       const res = await fetch("/api/delete/", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ url: url ?? data[name] }),
+        body: JSON.stringify({
+          url: url ?? data[name],
+          bucketid: bucketId || process.env.BACKBLAZE_BUCKET_ID,
+        }),
       });
       console.log(res);
       toast.success("File deleted successfully");

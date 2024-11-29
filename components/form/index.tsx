@@ -23,11 +23,12 @@ export default function Form({
   helpText,
   inputAttrs,
   handleSubmit,
+  bucketId,
   children,
 }: {
   title: string;
   description: string;
-  helpText: string;
+  helpText?: string;
   inputAttrs: {
     name: string;
     type: string;
@@ -37,6 +38,7 @@ export default function Form({
     pattern?: string;
   };
   handleSubmit: any;
+  bucketId?: string;
   children?: React.ReactNode;
 }) {
   const { id } = useParams() as { id?: string };
@@ -68,6 +70,7 @@ export default function Form({
           }
         });
       }}
+      bucketId={bucketId}
     >
       {children}
     </Uploader>

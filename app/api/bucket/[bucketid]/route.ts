@@ -36,12 +36,8 @@ export async function GET(
     prefix: "",
   });
 
-  const { data: bucketData } = await b2.getFileInfo({
-    fileId: fileData.files[0].fileId,
-  });
-
   const data = {
-    ...bucketData,
+    ...authData,
     ...fileData,
   };
 

@@ -4,20 +4,21 @@ import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
 
 const b2 = new B2({
-  applicationKeyId: process.env.BACKBLAZE_APP_KEY_ID!,
-  applicationKey: process.env.BACKBLAZE_APP_KEY!,
+  applicationKeyId: process.env.BACKBLAZE_MASTER_KEY_ID!,
+  applicationKey: process.env.BACKBLAZE_MASTER_KEY!,
 });
 
 // DELETE A FILE
 export async function POST(req: Request) {
-  const body = await req.json();
-
-  const url = body.url;
+  const { url, bucketid } = await req.json();
 
   if (url.includes("backblaze")) {
     const { data: authData } = await b2.authorize();
 
-    if (!process.env.BACKBLAZE_APP_KEY_ID || !process.env.BACKBLAZE_APP_KEY) {
+    if (
+      !process.env.BACKBLAZE_MASTER_KEY_ID ||
+      !process.env.BACKBLAZE_MASTER_KEY
+    ) {
       return new Response(
         "Missing Backblaze credentials. Don't forget to add them to your .env file.",
         {
@@ -29,8 +30,10 @@ export async function POST(req: Request) {
     // name is part before ?timestamp
     const fileName = url.split("?")[0].split("/").pop() as string;
 
+    console.log(`Looking for ${fileName} in ${bucketid}`);
+
     const { data: fileData } = await b2.listFileNames({
-      bucketId: process.env.BACKBLAZE_BUCKET_ID!,
+      bucketId: bucketid || process.env.BACKBLAZE_BUCKET_ID!,
       startFileName: fileName,
       maxFileCount: 1,
       delimiter: "",

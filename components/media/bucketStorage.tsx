@@ -10,6 +10,7 @@ import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import { updateSite } from "@/lib/actions";
 import Uploader from "../form/uploader";
+import Form from "../form";
 
 export default function BucketStorage({
   siteName,
@@ -26,6 +27,7 @@ export default function BucketStorage({
   const [name, setName] = useState(bucketName);
   const [id, setId] = useState(bucketId);
   const [files, setFiles] = useState([]);
+  const [downloadUrl, setDownloadUrl] = useState("");
 
   useEffect(() => {
     const fetchBucket = async () => {
@@ -33,6 +35,7 @@ export default function BucketStorage({
       const bucket = await fetch(`/api/bucket/${id}`);
       const data = await bucket.json();
       console.log(data);
+      setDownloadUrl(data.downloadUrl);
       setFiles(data.files);
       setLoading(false);
     };
@@ -54,6 +57,7 @@ export default function BucketStorage({
         body: JSON.stringify({ bucketName: bucketname }),
       });
       const data = await res.json();
+      console.log(data);
       formData.append("bucketId", data.bucketId);
       let updatedSite = await updateSite(formData, siteId, "bucketName");
       updatedSite = await updateSite(formData, siteId, "bucketId");
@@ -65,8 +69,9 @@ export default function BucketStorage({
   };
 
   const deleteBucket = async (formData: FormData) => {
+    const bucketName = formData.get("bucketName");
     const bucketId = formData.get("bucketId");
-    if (!bucketId) {
+    if (!bucketName) {
       toast.error("Please provide a bucket ID.");
       return;
     }
@@ -74,7 +79,7 @@ export default function BucketStorage({
     try {
       const res = await fetch("/api/bucket/delete", {
         method: "POST",
-        body: JSON.stringify({ bucketId }),
+        body: JSON.stringify({ bucketId, bucketName }),
       });
       const data = await res.json();
       const newFormData = new FormData();
@@ -92,26 +97,47 @@ export default function BucketStorage({
   // if bucketId and bucketName are not provided, show a button to create a new bucket, otherwise show the bucket contents
   return (
     <div className="relative mt-8 flex flex-col items-center justify-center">
-      {bucketId ? (
+      {bucketId && bucketName ? (
         <div className="flex w-full flex-col gap-4">
           <h2 className="text-lg font-bold dark:text-white">Bucket Contents</h2>
           {isLoading ? (
             <LoadingDots />
           ) : (
-            <div>
+            <div className="flex w-full flex-col gap-4">
               <p>Bucket ID: {bucketId}</p>
               <p>Bucket Name: {bucketName}</p>
               <form className="flex flex-col gap-4" action={deleteBucket}>
+                <Input name="bucketName" type="hidden" value={bucketName} />
                 <Input name="bucketId" type="hidden" value={bucketId} />
                 <DeleteFormButton />
               </form>
+              <Form
+                key={"Newimage"}
+                title="New Image"
+                description=""
+                inputAttrs={{
+                  name: "image1",
+                  type: "file",
+                  defaultValue: "",
+                }}
+                handleSubmit={updateSite}
+                bucketId={bucketId}
+              />
               {files &&
                 files?.length > 0 &&
-                files.map((file, i) => (
-                  // <Uploader key={i} file={file} />
-                  <div key={i} className="text-wrap break-all">
-                    {JSON.stringify(file)}
-                  </div>
+                files.map((file: any, i) => (
+                  <Form
+                    key={i}
+                    title={file.fileName}
+                    description=""
+                    inputAttrs={{
+                      name: "image1",
+                      type: "file",
+                      defaultValue: `${downloadUrl}/file/${bucketName}/${file.fileName}?timestamp=${file.uploadTimestamp}`,
+                    }}
+                    handleSubmit={updateSite}
+                    bucketId={bucketId}
+                  />
                 ))}
             </div>
           )}
