@@ -14,13 +14,24 @@ export default async function SiteSettingsAppearance({
   return (
     <div className="flex flex-col space-y-6">
       <Form
-        title="Thumbnail image"
-        description="The thumbnail image for your site."
+        title="Login Page Image"
+        description="The login page image for your site."
         helpText="Max file size 50MB. Recommended size 1200x630."
         inputAttrs={{
-          name: "image",
+          name: "loginBanner",
           type: "file",
-          defaultValue: data?.image!,
+          defaultValue: data?.loginBanner!,
+        }}
+        handleSubmit={updateSite}
+      />
+      <Form
+        title="Login Page Image (Dark Mode)"
+        description="The login page image for your site when in dark mode."
+        helpText="Max file size 50MB. Recommended size 1200x630."
+        inputAttrs={{
+          name: "loginBannerDark",
+          type: "file",
+          defaultValue: data?.loginBannerDark!,
         }}
         handleSubmit={updateSite}
       />

@@ -14,13 +14,22 @@ import { Apple, AppleIcon, MoonIcon, SunIcon } from "lucide-react";
 const useColorScheme = () => {
   const [mode, setMode] = React.useState<"light" | "dark">("light");
 
+  React.useEffect(() => {
+    if (document.documentElement.classList.contains("dark")) {
+      setMode("dark");
+    }
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setMode("dark");
+    }
+  }, []);
+
   return {
     mode,
     setMode,
   };
 };
 
-function ColorSchemeToggle() {
+function ColorSchemeToggle({ click }: { click: () => void }) {
   const { mode, setMode } = useColorScheme();
   const [mounted, setMounted] = React.useState(false);
 
@@ -40,6 +49,7 @@ function ColorSchemeToggle() {
       aria-label="toggle light/dark mode"
       disabled={!mounted}
       onClick={(event) => {
+        click();
         setMode(mode === "light" ? "dark" : "light");
       }}
       className="group flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 hover:bg-gray-200"
@@ -67,6 +77,9 @@ export default function UserSignUp({
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState(true);
+  const [colorScheme, setColorScheme] = React.useState<"light" | "dark">(
+    "light",
+  );
 
   const posthog = usePostHog();
 
@@ -75,6 +88,15 @@ export default function UserSignUp({
 
     if (!isInstagramBrowser && window.location.href.includes("fbclid=")) {
       handleGoogleSignin();
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (document.documentElement.classList.contains("dark")) {
+      setColorScheme("dark");
+    }
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setColorScheme("dark");
     }
   }, []);
 
@@ -133,14 +155,18 @@ export default function UserSignUp({
 
   return (
     <div>
-      <div className="bg-white dark:bg-[rgba(19,19,24,0.4)]">
+      <div className="bg-white dark:bg-[rgba(19,19,24,0.6)]">
         <div
-          className="relative z-10 flex w-full justify-end bg-[rgba(255,255,255,0.2)] transition-all delay-100 duration-500 dark:bg-[rgba(19,19,24,0.4)] md:w-[50vw]"
+          className="relative z-10 flex w-full justify-end bg-[rgba(255,255,255,0.2)] transition-all delay-100 duration-500 dark:bg-[rgba(19,19,24,0.6)] md:w-[50vw]"
           style={{ backdropFilter: "blur(12px)" }}
         >
           <div className="flex min-h-[100vh] w-full flex-col px-2">
             <header className="flex justify-end pt-2">
-              <ColorSchemeToggle />
+              <ColorSchemeToggle
+                click={() =>
+                  setColorScheme(colorScheme === "light" ? "dark" : "light")
+                }
+              />
             </header>
             <div
               className="m-auto pb-2 dark:text-white"
@@ -237,7 +263,7 @@ export default function UserSignUp({
                         type="email"
                         autoComplete="email"
                         onChange={(e) => setEmail(e.target.value)}
-                        className="mt-1 block w-full rounded-md border border-gray-300 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-700"
+                        className="mt-1 block w-full rounded-md border border-gray-300 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
                       />
                     </div>
                   ) : (
@@ -251,7 +277,7 @@ export default function UserSignUp({
                           type="username"
                           autoComplete="username"
                           onChange={(e) => setUsername(e.target.value)}
-                          className="mt-1 block w-full rounded-md border border-gray-300 px-2 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-700"
+                          className="mt-1 block w-full rounded-md border border-gray-300 px-2 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
                         />
                       </div>
                       <div>
@@ -263,7 +289,7 @@ export default function UserSignUp({
                           type="fullname"
                           autoComplete="fullname"
                           onChange={(e) => setName(e.target.value)}
-                          className="mt-1 block w-full rounded-md border border-gray-300 px-2 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-700"
+                          className="mt-1 block w-full rounded-md border border-gray-300 px-2 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
                         />
                       </div>
                     </>
@@ -331,9 +357,14 @@ export default function UserSignUp({
           </div>
         </div>
         <div
-          className={`fixed bottom-0 right-0 top-0 h-full bg-[url(/loginBanner.png)] dark:bg-[url(/loginBannerDark.png)] ${"left-0 md:left-[50vw]"} bg-cover bg-center bg-no-repeat delay-100 duration-500`}
+          className={`fixed bottom-0 right-0 top-0 flex h-full w-full bg-cover bg-center bg-no-repeat object-cover transition-all delay-100 duration-500 md:w-[50vw]`}
           style={{
             transition: "background-image 0.4s, left 0.4s",
+            backgroundImage: `url(${
+              colorScheme == "light"
+                ? siteData?.loginBanner! || "/loginBanner.png"
+                : siteData?.loginBannerDark! || "/loginBannerDark.png"
+            })`,
           }}
         />
       </div>

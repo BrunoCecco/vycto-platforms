@@ -4,6 +4,7 @@ import BlurImage from "@/components/media/blurImage";
 import { placeholderBlurhash } from "@/lib/utils";
 import { DateTime } from "luxon";
 import { SelectSite } from "@/lib/schema";
+import BannerMedia from "../media/bannerMedia";
 
 interface CompetitionHeaderProps {
   session: any;
@@ -55,14 +56,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
 
       {/* Banner */}
       <div className="relative mt-4 h-24 w-full overflow-hidden rounded-lg md:h-32">
-        <BlurImage
-          src={siteData.image ?? "/logo.png"}
-          blurDataURL={siteData.imageBlurhash ?? placeholderBlurhash}
-          alt="Players Banner"
-          className="object-cover"
-          fill={true}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
+        <BannerMedia src={siteData.image ?? "/logo.png"} />
       </div>
       {/* Uncomment if needed */}
       {/* <div className="my-8">

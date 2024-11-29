@@ -46,9 +46,9 @@ export default function Form({
     inputAttrs.name === "country" ? inputAttrs.defaultValue : "",
   );
 
-  return inputAttrs.name === "image" ||
+  return inputAttrs.name.includes("Banner") ||
     inputAttrs.name === "logo" ||
-    inputAttrs.name.includes("Image") ? (
+    inputAttrs.name.toLowerCase().includes("image") ? (
     <Uploader
       id={inputAttrs.name}
       title={title}
