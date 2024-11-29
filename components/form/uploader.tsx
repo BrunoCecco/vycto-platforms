@@ -13,6 +13,7 @@ import LoadingDots from "@/components/icons/loadingDots";
 import Image from "next/image";
 import { capitalize } from "@/lib/utils";
 import Button from "../buttons/button";
+import { X } from "lucide-react";
 
 export default function Uploader({
   id,
@@ -150,7 +151,7 @@ export default function Uploader({
   };
 
   return (
-    <div className="grid w-full gap-6 rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-700 dark:bg-black sm:p-10">
+    <div className="relative grid w-full gap-6 rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-700 dark:bg-black sm:p-10">
       <form className="" ref={formRef} onSubmit={handleSubmit}>
         <div>
           {title && (
@@ -281,7 +282,13 @@ export default function Uploader({
         </div>
       </form>
       {data[name] != "" && (
-        <Button onClick={(e: any) => removeFile(null)}>Remove</Button>
+        <Button
+          onClick={(e: any) => removeFile(null)}
+          className="absolute right-0 top-0 border-red-500 p-2 text-red-500"
+          variant="outline"
+        >
+          <X />
+        </Button>
       )}
     </div>
   );

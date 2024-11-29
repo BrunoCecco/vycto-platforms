@@ -11,7 +11,6 @@ import { toast } from "sonner";
 import { updateSite } from "@/lib/actions";
 import Uploader from "../form/uploader";
 import Form from "../form";
-import { useRouter } from "next/navigation";
 
 export default function BucketStorage({
   siteName,
@@ -29,8 +28,6 @@ export default function BucketStorage({
   const [id, setId] = useState(bucketId);
   const [files, setFiles] = useState([]);
   const [downloadUrl, setDownloadUrl] = useState("");
-
-  const router = useRouter();
 
   useEffect(() => {
     const fetchBucket = async () => {
@@ -64,7 +61,8 @@ export default function BucketStorage({
       formData.append("bucketId", data.bucketId);
       let updatedSite = await updateSite(formData, siteId, "bucketName");
       updatedSite = await updateSite(formData, siteId, "bucketId");
-      router.refresh();
+      setId(data.bucketId);
+      setName(data.bucketName);
     } catch (error: any) {
       toast.error("Try another name", error);
     }
@@ -89,10 +87,16 @@ export default function BucketStorage({
       newFormData.append("bucketName", "");
       let updatedSite = await updateSite(newFormData, siteId, "bucketName");
       updatedSite = await updateSite(newFormData, siteId, "bucketId");
-      router.refresh();
+      setId(null);
+      setName(null);
     } catch (error: any) {
       toast.error(error);
     }
+  };
+
+  const handleSubmit = async (formData: FormData, id: string, name: string) => {
+    await updateSite(formData, id, name);
+    window.location.reload();
   };
 
   // if bucketId and bucketName are not provided, show a button to create a new bucket, otherwise show the bucket contents
@@ -110,36 +114,38 @@ export default function BucketStorage({
                 <Input name="bucketId" type="hidden" value={bucketId} />
                 <DeleteFormButton />
               </form>
-              {files && files?.length < 3 && (
-                <Form
-                  key={"Newimage"}
-                  title="New Image"
-                  description=""
-                  inputAttrs={{
-                    name: "image" + (files?.length + 1),
-                    type: "file",
-                    defaultValue: "",
-                  }}
-                  handleSubmit={updateSite}
-                  bucketId={bucketId}
-                />
-              )}
-              {files &&
-                files?.length > 0 &&
-                files.map((file: any, i) => (
+              <div className="grid grid-cols-1 items-center justify-center gap-4 md:grid-cols-3">
+                {files && files?.length < 3 && (
                   <Form
-                    key={i}
-                    title={"Image" + (i + 1)}
+                    key={"Newimage"}
+                    title="New Image"
                     description=""
                     inputAttrs={{
-                      name: "image" + (i + 2),
+                      name: "image" + (files?.length + 1),
                       type: "file",
-                      defaultValue: `${downloadUrl}/file/${bucketName}/${file.fileName}?timestamp=${file.uploadTimestamp}`,
+                      defaultValue: "",
                     }}
-                    handleSubmit={updateSite}
+                    handleSubmit={handleSubmit}
                     bucketId={bucketId}
                   />
-                ))}
+                )}
+                {files &&
+                  files?.length > 0 &&
+                  files.map((file: any, i) => (
+                    <Form
+                      key={i}
+                      title={"Image" + (i + 1)}
+                      description=""
+                      inputAttrs={{
+                        name: "image" + (i + 2),
+                        type: "file",
+                        defaultValue: `${downloadUrl}/file/${bucketName}/${file.fileName}?timestamp=${file.uploadTimestamp}`,
+                      }}
+                      handleSubmit={handleSubmit}
+                      bucketId={bucketId}
+                    />
+                  ))}
+              </div>
             </div>
           )}
         </div>
