@@ -37,7 +37,7 @@ export default function DeleteCompetitionForm({
       className="rounded-lg border border-red-600 bg-white dark:bg-black"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
-        <h2 className="font-cal text-xl dark:text-white">Delete Competition</h2>
+        <h2 className="text-xl dark:text-white">Delete Competition</h2>
         <p className="text-sm text-stone-500 dark:text-stone-400">
           Deletes your competition permanently. Type in the name of your
           competition <b>{competitionName}</b> to confirm.

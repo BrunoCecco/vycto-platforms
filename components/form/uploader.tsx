@@ -24,6 +24,7 @@ export default function Uploader({
   description,
   children,
   bucketId,
+  bucketName,
 }: {
   id: string;
   defaultValue: string | null;
@@ -33,6 +34,7 @@ export default function Uploader({
   description?: string;
   children?: React.ReactNode;
   bucketId?: string;
+  bucketName?: string;
 }) {
   const [data, setData] = useState({
     [name]: defaultValue,
@@ -52,7 +54,9 @@ export default function Uploader({
 
   const handleSubmit = async () => {
     setSaving(true);
-    const url = bucketId ? `/api/bucket/${bucketId}/upload` : "/api/upload";
+    const url = bucketId
+      ? `/api/bucket/${bucketId}/${bucketName}/upload`
+      : "/api/upload";
     fetch(url, {
       method: "POST",
       headers: { "content-type": file?.type || "application/json" },
@@ -281,7 +285,7 @@ export default function Uploader({
           </div>
         </div>
       </form>
-      {data[name] != "" && (
+      {data[name] && data[name] != "" && (
         <Button
           onClick={(e: any) => removeFile(null)}
           className="absolute right-0 top-0 border-red-500 p-2 text-red-500"

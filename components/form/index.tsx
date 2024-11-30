@@ -24,6 +24,7 @@ export default function Form({
   inputAttrs,
   handleSubmit,
   bucketId,
+  bucketName,
   children,
 }: {
   title: string;
@@ -39,6 +40,7 @@ export default function Form({
   };
   handleSubmit: any;
   bucketId?: string;
+  bucketName?: string;
   children?: React.ReactNode;
 }) {
   const { id } = useParams() as { id?: string };
@@ -55,7 +57,9 @@ export default function Form({
       id={inputAttrs.name}
       title={title}
       description={description}
-      defaultValue={inputAttrs.defaultValue}
+      defaultValue={
+        inputAttrs.defaultValue != "" ? inputAttrs.defaultValue : null
+      }
       name={inputAttrs.name}
       upload={(name: string, value: string) => {
         const formData = new FormData();
@@ -71,6 +75,7 @@ export default function Form({
         });
       }}
       bucketId={bucketId}
+      bucketName={bucketName}
     >
       {children}
     </Uploader>
@@ -103,7 +108,7 @@ export default function Form({
       className="rounded-lg border border-stone-200 bg-white text-black dark:border-stone-700 dark:bg-black dark:text-white"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
-        <h2 className="font-cal text-xl dark:text-white">{title}</h2>
+        <h2 className="text-xl dark:text-white">{title}</h2>
         <p className="text-sm text-stone-500 dark:text-stone-400">
           {description}
         </p>

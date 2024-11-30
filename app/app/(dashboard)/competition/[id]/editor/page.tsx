@@ -1,7 +1,11 @@
 import { notFound, redirect } from "next/navigation";
 import QuestionEditor from "@/components/edit-competition/questionEditor";
 import db from "@/lib/db";
-import { getCompetitionData, getQuestionsForCompetition } from "@/lib/fetchers";
+import {
+  getCompetitionData,
+  getQuestionsForCompetition,
+  getCompetitionDataWithSite,
+} from "@/lib/fetchers";
 import CompetitionCreator from "@/components/competition-creation";
 import EditCompetitionDetails from "@/components/edit-competition/editCompetitionDetails";
 import { getServerSession } from "next-auth";
@@ -17,13 +21,9 @@ export default async function CompetitionPage({
     redirect("/login");
   }
 
-  const competitionData = await db.query.competitions.findFirst({
-    where: (competitions, { eq }) =>
-      eq(competitions.id, decodeURIComponent(params.id)),
-    with: {
-      site: true,
-    },
-  });
+  const competitionData = await getCompetitionDataWithSite(
+    decodeURIComponent(params.id),
+  );
 
   if (
     !competitionData ||

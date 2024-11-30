@@ -19,7 +19,7 @@ const PointsBadge: FC<PointsBadgeProps> = ({ points, color }) => {
     <div
       className="absolute -right-6 -top-6 z-10 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white text-lg font-bold"
       style={{
-        backgroundColor: makeTransparent(color || "black", 0.6),
+        backgroundColor: makeTransparent(color || "#FFFFFF", 0.6),
       }}
     >
       <div className="z-20 flex flex-col items-center text-black">

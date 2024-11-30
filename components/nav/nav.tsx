@@ -71,12 +71,6 @@ export default function Nav({
           icon: <Crown width={18} />,
         },
         {
-          name: "Media",
-          href: `/site/${id}/media`,
-          isActive: segments.includes("media"),
-          icon: <Camera width={18} />,
-        },
-        {
           name: "Analytics",
           href: `/site/${id}/analytics`,
           isActive: segments.includes("analytics"),
@@ -113,6 +107,12 @@ export default function Nav({
           href: `/competition/${id}/rewards`,
           isActive: segments.includes("rewards"),
           icon: <Gift width={18} />,
+        },
+        {
+          name: "Media",
+          href: `/competition/${id}/media`,
+          isActive: segments.includes("media"),
+          icon: <Camera width={18} />,
         },
         {
           name: "Settings",

@@ -136,7 +136,7 @@ const QuestionBuilder = ({
         {showOptionsIndex === index ? "Cancel" : "Add Question"}
       </Button>
       {showOptionsIndex === index && (
-        <div className="absolute z-10 mt-10 w-72 rounded-lg bg-white shadow-lg">
+        <div className="absolute z-10 mt-10 w-72 rounded-lg bg-white">
           <button
             onClick={() => handleAddQuestion(QuestionType.GeneralNumber, index)}
             className="block w-full px-4 py-2 text-left hover:bg-gray-100"

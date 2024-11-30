@@ -240,3 +240,21 @@ export async function getCompetitionFromId(competitionId: string) {
     },
   )();
 }
+
+export const getCompetitionDataWithSite = async (id: string) => {
+  return await unstable_cache(
+    async () => {
+      return await db.query.competitions.findFirst({
+        where: (competitions, { eq }) => eq(competitions.id, id),
+        with: {
+          site: true,
+        },
+      });
+    },
+    [`${id}-competition-with-site`],
+    {
+      revalidate: 900,
+      tags: [`${id}-competition-with-site`],
+    },
+  )();
+};

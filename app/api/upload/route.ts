@@ -30,15 +30,12 @@ import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
 
 const b2 = new B2({
-  applicationKeyId: process.env.BACKBLAZE_MASTER_KEY_ID!,
-  applicationKey: process.env.BACKBLAZE_MASTER_KEY!,
+  applicationKeyId: process.env.BACKBLAZE_APP_KEY_ID!,
+  applicationKey: process.env.BACKBLAZE_APP_KEY!,
 });
 
 export async function POST(req: Request) {
-  if (
-    !process.env.BACKBLAZE_MASTER_KEY_ID ||
-    !process.env.BACKBLAZE_MASTER_KEY
-  ) {
+  if (!process.env.BACKBLAZE_APP_KEY_ID || !process.env.BACKBLAZE_APP_KEY) {
     return new Response(
       "Missing Backblaze credentials. Don't forget to add them to your .env file.",
       {

@@ -8,18 +8,26 @@ import Input from "../input";
 import { Database } from "lucide-react";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
-import { updateSite } from "@/lib/actions";
+import { updateCompetitionMetadata, updateSite } from "@/lib/actions";
 import Uploader from "../form/uploader";
 import Form from "../form";
+import { SelectCompetition } from "@/lib/schema";
+
+interface CompImage {
+  key: string;
+  url: string | null;
+}
 
 export default function BucketStorage({
   siteName,
   siteId,
+  competition,
   bucketName,
   bucketId,
 }: {
   siteName: string;
   siteId: string;
+  competition: SelectCompetition;
   bucketName?: string | null;
   bucketId?: string | null;
 }) {
@@ -28,6 +36,20 @@ export default function BucketStorage({
   const [id, setId] = useState(bucketId);
   const [files, setFiles] = useState([]);
   const [downloadUrl, setDownloadUrl] = useState("");
+  const [compImages, setCompImages] = useState<CompImage[]>([
+    {
+      key: "image2",
+      url: competition.image2,
+    },
+    {
+      key: "image3",
+      url: competition.image3,
+    },
+    {
+      key: "image4",
+      url: competition.image4,
+    },
+  ]);
 
   useEffect(() => {
     const fetchBucket = async () => {
@@ -45,6 +67,14 @@ export default function BucketStorage({
     }
   }, [bucketId, bucketName, id, name]);
 
+  const getImageUrl = (
+    downloadURL: string,
+    fileName: string,
+    uploadTimestamp: string,
+  ) => {
+    return `${downloadURL}/file/${name}/${fileName}?timestamp=${uploadTimestamp}`;
+  };
+
   const createBucket = async (formData: FormData) => {
     const bucketname = formData.get("bucketName");
     if (!bucketname) {
@@ -57,10 +87,9 @@ export default function BucketStorage({
         body: JSON.stringify({ bucketName: bucketname }),
       });
       const data = await res.json();
-      console.log(data);
       formData.append("bucketId", data.bucketId);
-      let updatedSite = await updateSite(formData, siteId, "bucketName");
-      updatedSite = await updateSite(formData, siteId, "bucketId");
+      await updateSite(formData, siteId, "bucketName");
+      await updateSite(formData, siteId, "bucketId");
       setId(data.bucketId);
       setName(data.bucketName);
     } catch (error: any) {
@@ -82,11 +111,11 @@ export default function BucketStorage({
         body: JSON.stringify({ bucketId, bucketName }),
       });
       const data = await res.json();
-      const newFormData = new FormData();
-      newFormData.append("bucketId", "");
+      let newFormData = new FormData();
       newFormData.append("bucketName", "");
-      let updatedSite = await updateSite(newFormData, siteId, "bucketName");
-      updatedSite = await updateSite(newFormData, siteId, "bucketId");
+      newFormData.append("bucketId", "");
+      await updateSite(newFormData, siteId, "bucketName");
+      await updateSite(newFormData, siteId, "bucketId");
       setId(null);
       setName(null);
     } catch (error: any) {
@@ -95,8 +124,8 @@ export default function BucketStorage({
   };
 
   const handleSubmit = async (formData: FormData, id: string, name: string) => {
-    await updateSite(formData, id, name);
-    window.location.reload();
+    return await updateCompetitionMetadata(formData, id, name);
+    // window.location.reload();
   };
 
   // if bucketId and bucketName are not provided, show a button to create a new bucket, otherwise show the bucket contents
@@ -108,41 +137,37 @@ export default function BucketStorage({
             <LoadingDots />
           ) : (
             <div className="flex w-full flex-col gap-4">
-              <form className="flex items-center gap-4" action={deleteBucket}>
+              {/* <form className="flex items-center gap-4" action={deleteBucket}>
                 <p>{bucketName}</p>
                 <Input name="bucketName" type="hidden" value={bucketName} />
                 <Input name="bucketId" type="hidden" value={bucketId} />
                 <DeleteFormButton />
-              </form>
+              </form> */}
               <div className="grid grid-cols-1 items-center justify-center gap-4 md:grid-cols-3">
-                {files && files?.length < 3 && (
-                  <Form
-                    key={"Newimage"}
-                    title="New Image"
-                    description=""
-                    inputAttrs={{
-                      name: "image" + (files?.length + 1),
-                      type: "file",
-                      defaultValue: "",
-                    }}
-                    handleSubmit={handleSubmit}
-                    bucketId={bucketId}
-                  />
-                )}
-                {files &&
-                  files?.length > 0 &&
-                  files.map((file: any, i) => (
+                <Form
+                  title={"Image 1"}
+                  description=""
+                  inputAttrs={{
+                    name: "image",
+                    type: "file",
+                    defaultValue: competition.image || "",
+                  }}
+                  handleSubmit={handleSubmit}
+                />
+                {compImages &&
+                  compImages.map((img: CompImage, i) => (
                     <Form
                       key={i}
-                      title={"Image" + (i + 1)}
+                      title={"Image " + (i + 2)}
                       description=""
                       inputAttrs={{
-                        name: "image" + (i + 2),
+                        name: img.key,
                         type: "file",
-                        defaultValue: `${downloadUrl}/file/${bucketName}/${file.fileName}?timestamp=${file.uploadTimestamp}`,
+                        defaultValue: img.url || "",
                       }}
                       handleSubmit={handleSubmit}
                       bucketId={bucketId}
+                      bucketName={bucketName}
                     />
                   ))}
               </div>

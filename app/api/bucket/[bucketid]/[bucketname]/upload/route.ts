@@ -9,7 +9,7 @@ const b2 = new B2({
 
 export async function POST(
   req: Request,
-  { params }: { params: { bucketid: string } },
+  { params }: { params: { bucketid: string; bucketname: string } },
 ) {
   if (
     !process.env.BACKBLAZE_MASTER_KEY_ID ||
@@ -23,7 +23,7 @@ export async function POST(
     );
   }
 
-  const { bucketid } = params;
+  const { bucketid, bucketname } = params;
 
   const file = await req.arrayBuffer();
 
@@ -53,10 +53,9 @@ export async function POST(
   });
 
   // construct friendly url to return in the response
-  const bucketName = authData.allowed.bucketName;
   const downloadURL = authData.downloadUrl;
 
-  const url = `${downloadURL}/file/${bucketName}/${data.fileName}?timestamp=${data.uploadTimestamp}`;
+  const url = `${downloadURL}/file/${bucketname}/${data.fileName}?timestamp=${data.uploadTimestamp}`;
 
   console.log(`Uploaded file to ${url}`);
 
