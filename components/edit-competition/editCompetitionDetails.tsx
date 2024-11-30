@@ -46,8 +46,8 @@ const EditCompetitionDetails = async ({
             <div className="relative flex h-[400px] w-[600px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl">
               {data.image ? (
                 <BlurImage
-                  src={data.image ?? "/placeholder.png"}
-                  blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
+                  src={data.image || "/placeholder.png"}
+                  blurDataURL={data.imageBlurhash || placeholderBlurhash}
                   width={1200}
                   height={630}
                   alt="Thumbnail Image"

@@ -17,7 +17,7 @@ export default function Profile() {
         >
           <Image
             src={
-              session.user.image ??
+              session.user.image ||
               `https://avatar.vercel.sh/${session.user.email}`
             }
             width={40}
@@ -26,7 +26,7 @@ export default function Profile() {
             className="h-6 w-6 rounded-full"
           />
           <span className="truncate text-sm font-medium">
-            {session.user.name ?? session.user.username ?? session.user.email}
+            {session.user.name || session.user.username || session.user.email}
           </span>
         </Link>
         <LogoutButton />

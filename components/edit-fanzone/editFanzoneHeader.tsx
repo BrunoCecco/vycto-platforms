@@ -46,7 +46,7 @@ export default function EditFanZoneHeader({
               </div>
             </div>
           </Form>
-          <Link href={`/comp/${latestCompetition?.slug}` ?? "/"}>
+          <Link href={`/comp/${latestCompetition?.slug}` || "/"}>
             <PlayButton color1={data.color1} color2={data.color2}>
               Play
             </PlayButton>

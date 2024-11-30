@@ -18,13 +18,6 @@ const SignUpWrapper = ({
 
       {/* Right side - Logo and Info */}
       <div className="fixed z-20 flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#543ccc] text-white md:relative md:w-1/2">
-        {/* <Image
-    src={siteData?.loginBanner ?? "/loginBanner.png"}
-    fill
-    priority
-    className="h-full w-full object-cover"
-    alt={""}
-  /> */}
         <div className="flex h-1/2 flex-col items-center justify-between">
           <Image src={"/vLogo.png"} width={75} height={75} alt={""} />
           <div className="flex items-center justify-center">

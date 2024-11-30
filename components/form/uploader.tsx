@@ -132,7 +132,7 @@ export default function Uploader({
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          url: url ?? data[name],
+          url: url || data[name],
           bucketid: bucketId || process.env.BACKBLAZE_BUCKET_ID,
         }),
       });

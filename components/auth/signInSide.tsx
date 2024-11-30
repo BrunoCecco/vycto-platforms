@@ -181,7 +181,7 @@ export default function UserSignUp({
             >
               <div className="flex justify-center pb-4">
                 <Image
-                  src={siteData?.logo ?? "/logo.png"}
+                  src={siteData?.logo || "/logo.png"}
                   width={100}
                   height={100}
                   alt="Site Logo"

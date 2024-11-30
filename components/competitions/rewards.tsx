@@ -72,8 +72,8 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
                 height={630}
                 className="h-full w-full rounded-lg object-cover"
                 placeholder="blur"
-                blurDataURL={rewards[index].src ?? placeholderBlurhash}
-                src={rewards[index].src ?? "/placeholder.png"}
+                blurDataURL={rewards[index].src || placeholderBlurhash}
+                src={rewards[index].src || "/placeholder.png"}
               />
             </div>
           ))}

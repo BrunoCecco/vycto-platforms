@@ -29,13 +29,13 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
       {/* Placeholder for Image or Graphic */}
       <div className="my-4 w-full overflow-hidden rounded-xl">
         <BlurImage
-          alt={data.title ?? "Competition image"}
+          alt={data.title || "Competition image"}
           width={1200}
           height={630}
           className="h-full w-full rounded-lg object-cover"
           placeholder="blur"
-          blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
-          src={data.image ?? "/placeholder.png"}
+          blurDataURL={data.imageBlurhash || placeholderBlurhash}
+          src={data.image || "/placeholder.png"}
         />
       </div>
 
@@ -56,7 +56,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
 
       {/* Banner */}
       <div className="relative mt-4 h-24 w-full overflow-hidden rounded-lg md:h-32">
-        <BannerMedia src={siteData.image ?? "/logo.png"} />
+        <BannerMedia src={siteData.image || "/logo.png"} />
       </div>
       {/* Uncomment if needed */}
       {/* <div className="my-8">

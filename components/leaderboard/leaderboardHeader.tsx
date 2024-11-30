@@ -38,7 +38,7 @@ const LeaderboardHeader = ({
       <div className="flex items-center justify-between sm:flex-col md:items-start">
         <div className="flex items-center gap-4 sm:mt-2">
           <Image
-            src={siteData.logo ?? "/logo.png"}
+            src={siteData.logo || "/logo.png"}
             height={48}
             width={48}
             className="w-auto object-contain"

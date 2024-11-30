@@ -126,7 +126,7 @@ export default function SiteNav({
             <div className="hidden items-center justify-between gap-2 sm:flex">
               <Link href="/">
                 <Image
-                  src={data.logo ?? "/logo.png"}
+                  src={data.logo || "/logo.png"}
                   alt="Logo"
                   width={60}
                   height={60}

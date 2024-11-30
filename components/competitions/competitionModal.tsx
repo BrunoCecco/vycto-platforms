@@ -35,10 +35,10 @@ export default function CompetitionModal({
   users?: any[];
 }) {
   const images = [
-    siteData?.logo,
     competition?.image,
-    competition?.rewardImage,
-    competition?.reward2Image,
+    competition?.image2 || siteData?.logo,
+    competition?.image3 || "/logo.png",
+    competition?.image4 || "/vLogo.png",
   ];
 
   return (
@@ -46,7 +46,7 @@ export default function CompetitionModal({
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
         <ModalBody>
           <ModalContent>
-            <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 md:text-2xl dark:text-neutral-100">
+            <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 dark:text-neutral-100 md:text-2xl">
               {type === "current" ? (
                 <span>
                   A chance to{" "}

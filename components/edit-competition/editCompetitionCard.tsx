@@ -36,9 +36,9 @@ const EditCompetitionCard = async ({
           alt={data.title ?? "Card thumbnail"}
           fill
           className="rounded-t-lg object-cover"
-          src={data.image ?? "/placeholder.png"}
+          src={data.image || "/placeholder.png"}
           placeholder="blur"
-          blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
+          blurDataURL={data.imageBlurhash || placeholderBlurhash}
         />
         {!data.published && (
           <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">

@@ -61,10 +61,10 @@ const EditPlayerSelection = ({
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
-    question.question ?? "Which player will score first?",
+    question.question || "Which player will score first?",
   );
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
-    question.correctAnswer ?? "",
+    question.correctAnswer || "",
   );
   const [points, setPoints] = useState(question.points ?? 0);
   const [answer1, setAnswer1] = useState(question.answer1 ?? "");

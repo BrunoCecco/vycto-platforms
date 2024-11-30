@@ -47,7 +47,7 @@ const MatchOutcome = ({ ...props }) => {
               <div className="flex flex-col items-center">
                 <div className="relative items-center justify-center overflow-hidden rounded-lg">
                   <Image
-                    src={props.image1 ?? "/placeholder.png"}
+                    src={props.image1 || "/placeholder.png"}
                     alt="Option 1 Image"
                     width={128}
                     height={96}
@@ -89,7 +89,7 @@ const MatchOutcome = ({ ...props }) => {
               <div className="flex flex-col items-center">
                 <div className="relative items-center justify-center overflow-hidden rounded-lg">
                   <Image
-                    src={props.image2 ?? "/placeholder.png"}
+                    src={props.image2 || "/placeholder.png"}
                     alt="Option 2 Image"
                     width={128}
                     height={96}

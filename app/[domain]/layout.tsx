@@ -117,21 +117,21 @@ export default async function SiteLayout({
           <div className="flex items-center gap-4">
             <Link href="/">
               <Image
-                src={data.logo ?? "/logo.png"}
+                src={data.logo || "/logo.png"}
                 alt="Logo"
                 width={50}
                 height={50}
                 className=""
               />
             </Link>
-            <Link href={`/comp/${latestCompetition?.slug}` ?? "/"}>
+            <Link href={`/comp/${latestCompetition?.slug}` || "/"}>
               <PlayButton color1={data.color1} color2={data.color2}>
                 Play
               </PlayButton>
             </Link>
           </div>
         </div>
-        <div className={`mx-5 pb-20 pt-8 text-white lg:mx-24 dark:text-black`}>
+        <div className={`mx-5 pb-20 pt-8 text-white dark:text-black lg:mx-24`}>
           {children}
         </div>
       </div>

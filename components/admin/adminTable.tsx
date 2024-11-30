@@ -78,13 +78,13 @@ const AdminTable = () => {
                     {/* Using Next.js Image component for avatar */}
                     <Image
                       src={user.image || "/placeholder.png"}
-                      alt={user.name ?? user.username ?? "user" + index}
+                      alt={user.name || user.username || "user" + index}
                       fill
                       className="rounded-full object-contain"
                     />
                   </div>
                   <span className="text-gray-900">
-                    {user.name ?? user.username ?? "user" + index}
+                    {user.name || user.username || "user" + index}
                   </span>
                 </td>
                 <td className="px-4 py-3">

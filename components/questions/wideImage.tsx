@@ -16,7 +16,7 @@ export const WideImage = ({ src, color }: { src: string; color: string }) => {
       style={{ backgroundColor: makeTransparent(color, 0.4) }}
     >
       <Image
-        src={src ?? "/placeholder.png"}
+        src={src || "/placeholder.png"}
         alt="Question Image"
         fill
         className="h-full w-full object-contain"

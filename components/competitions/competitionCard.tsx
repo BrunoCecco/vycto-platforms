@@ -88,12 +88,12 @@ const CompetitionCard = ({
         <div className="relative h-48 w-full">
           <div className="h-full w-full overflow-hidden rounded-t-lg">
             <BlurImage
-              alt={competition.title ?? "Card thumbnail"}
+              alt={competition.title || "Card thumbnail"}
               fill
               className="rounded-t-md object-cover transition-all duration-100 group-hover:scale-110"
-              src={competition.image ?? "/placeholder.png"}
+              src={competition.image || "/placeholder.png"}
               placeholder="blur"
-              blurDataURL={competition.imageBlurhash ?? placeholderBlurhash}
+              blurDataURL={competition.imageBlurhash || placeholderBlurhash}
             />
           </div>
         </div>

@@ -62,7 +62,7 @@ export default function BannerMedia({ src }: { src: string }) {
       </div>
     ) : (
       <BlurImage
-        src={src ?? "/placeholder.png"}
+        src={src || "/placeholder.png"}
         blurDataURL={placeholderBlurhash}
         priority
         alt="Banner Image"

@@ -19,9 +19,8 @@ export default function ClaimRewardsCard({
       <div className="flex h-full w-full flex-col justify-between rounded-lg bg-slate-800 p-8">
         <div className="relative h-2/3 w-full">
           <Image
-            // src={comp.rewardImage ?? "/placeholder.png"}
-            src={latestReward.image ?? "/aelShirt.png"}
-            alt={latestReward.title ?? "Card thumbnail"}
+            src={latestReward.image || "/aelShirt.png"}
+            alt={latestReward.title || "Card thumbnail"}
             fill
             className="overflow-hidden rounded-lg object-contain"
           />

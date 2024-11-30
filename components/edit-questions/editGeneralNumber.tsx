@@ -23,7 +23,7 @@ const EditGeneralNumber = ({
     question.correctAnswer || "",
   );
   const [points, setPoints] = useState(question.points ?? 0);
-  const [image, setImage] = useState(question.image1 ?? "/placeholder.png");
+  const [image, setImage] = useState(question.image1 || "/placeholder.png");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

@@ -8,8 +8,8 @@ import FlipText from "../ui/flipText";
 
 const GuessScore = ({ ...props }) => {
   const [scores, setScores] = useState({
-    home: parseInt(props.answer.answer?.split("-")[0] ?? "0", 10),
-    away: parseInt(props.answer.answer?.split("-")[1] ?? "0", 10),
+    home: parseInt(props.answer.answer?.split("-")[0] || "0", 10),
+    away: parseInt(props.answer.answer?.split("-")[1] || "0", 10),
   });
   const [lastClickTime, setLastClickTime] = useState(0);
   const minTimeBetweenClicks = 200; // 200ms between clicks
