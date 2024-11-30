@@ -42,6 +42,7 @@ export default function Uploader({
   const [file, setFile] = useState<File | null>(null);
 
   const [dragActive, setDragActive] = useState(false);
+  const [removing, setRemoving] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -128,6 +129,7 @@ export default function Uploader({
 
   const removeFile = async (url: string | null) => {
     try {
+      setRemoving(true);
       const res = await fetch("/api/delete/", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -143,6 +145,7 @@ export default function Uploader({
         ...prev,
         [name]: "",
       }));
+      setRemoving(false);
       return res;
     } catch (error) {
       toast.error("Failed to delete");
@@ -151,6 +154,7 @@ export default function Uploader({
         ...prev,
         [name]: "",
       }));
+      setRemoving(false);
     }
   };
 
@@ -291,7 +295,7 @@ export default function Uploader({
           className="absolute right-0 top-0 border-red-500 p-2 text-red-500"
           variant="outline"
         >
-          <X />
+          {removing ? <LoadingDots /> : <X />}
         </Button>
       )}
     </div>

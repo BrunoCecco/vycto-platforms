@@ -25,7 +25,7 @@ export async function POST(req: Request) {
   const { bucketId, bucketName } = await req.json();
 
   if (!bucketId) {
-    return new Response("Missing bucketId in request body", {
+    return new NextResponse("Missing bucketId in request body", {
       status: 400,
     });
   }

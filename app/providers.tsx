@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { ModalProvider } from "@/components/modal/provider";
 import { PostHogProvider } from "posthog-js/react";
 import posthog from "posthog-js";
+import { ThemeProvider } from "next-themes";
 
 if (typeof window !== "undefined") {
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
@@ -17,12 +18,14 @@ if (typeof window !== "undefined") {
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider>
-      <Toaster className="dark:hidden" />
-      <Toaster theme="dark" className="hidden dark:block" />
-      <ModalProvider>
-        <PostHogProvider client={posthog}>{children}</PostHogProvider>
-      </ModalProvider>
-    </SessionProvider>
+    <ThemeProvider attribute="class">
+      <SessionProvider>
+        <Toaster className="dark:hidden" />
+        <Toaster theme="dark" className="hidden dark:block" />
+        <ModalProvider>
+          <PostHogProvider client={posthog}>{children}</PostHogProvider>
+        </ModalProvider>
+      </SessionProvider>
+    </ThemeProvider>
   );
 }

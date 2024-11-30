@@ -9,8 +9,8 @@ export default async function SiteMedia({
 }) {
   const data = await getCompetitionDataWithSite(decodeURIComponent(params.id));
 
-  const bucketId = data?.site?.bucketId;
-  const bucketName = data?.site?.bucketName;
+  const bucketId = data?.site?.bucketId || undefined;
+  const bucketName = data?.site?.bucketName || undefined;
 
   if (!data || !data.site) {
     notFound();

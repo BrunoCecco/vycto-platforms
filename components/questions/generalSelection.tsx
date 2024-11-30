@@ -71,12 +71,12 @@ const GeneralSelection = ({ ...props }) => {
                 onLocalAnswer={props.onLocalAnswer}
               >
                 <button
-                  disabled={false}
-                  className={`w-max rounded-lg px-4 py-3 text-sm text-black transition-all duration-200 hover:bg-white hover:font-semibold hover:shadow-md ${
+                  disabled={props.disabled}
+                  className={`w-max rounded-lg px-4 py-3 text-sm text-black transition-all duration-200 ${
                     selectedOption === option
                       ? "bg-white font-semibold shadow-md"
                       : ""
-                  }`}
+                  } ${!props.disabled ? "hover:bg-white hover:font-semibold hover:shadow-md" : ""}`}
                   onClick={() => setSelectedOption(option)}
                   style={{
                     backgroundColor:

@@ -6,15 +6,15 @@
   font-family: var(--font-space);
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #000000;
-  }
-}
-
 @layer utilities {
   .overflow-hidden {
     -webkit-mask-image: -webkit-radial-gradient(white, black);
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-white dark:bg-gray-800;
   }
 }
 
@@ -321,12 +321,3 @@ input[type="range"]::-ms-thumb {
     --chart-5: 340 75% 55%;
   }
 }
-
-/* @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-} */

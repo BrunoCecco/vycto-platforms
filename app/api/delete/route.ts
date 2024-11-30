@@ -68,4 +68,7 @@ export async function POST(req: Request) {
       status: "deleted",
     });
   }
+  return NextResponse.json({
+    status: "not found",
+  });
 }

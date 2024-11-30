@@ -2,7 +2,7 @@
 import { getSiteData } from "@/lib/fetchers";
 import { headers } from "next/headers";
 import B2BSignUp from "@/components/auth/b2BSignUp";
-import UserSignUp from "@/components/auth/signInSide";
+import SignInSide from "@/components/auth/signInSide";
 
 export default async function LoginPage() {
   const heads = headers();
@@ -19,6 +19,6 @@ export default async function LoginPage() {
   return host?.includes("app.") ? (
     <B2BSignUp />
   ) : (
-    <UserSignUp siteData={siteData} />
+    <SignInSide siteData={siteData} />
   );
 }

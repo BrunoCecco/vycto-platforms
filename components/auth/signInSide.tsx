@@ -10,51 +10,27 @@ import { useState } from "react";
 import LoginButton from "./loginButton";
 import Button from "../buttons/button";
 import { Apple, AppleIcon, MoonIcon, SunIcon } from "lucide-react";
+import { useTheme } from "next-themes";
 
-const useColorScheme = () => {
-  const [mode, setMode] = React.useState<"light" | "dark">("light");
-
-  React.useEffect(() => {
-    if (document.documentElement.classList.contains("dark")) {
-      setMode("dark");
-    }
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setMode("dark");
-    }
-  }, []);
-
-  return {
-    mode,
-    setMode,
-  };
-};
-
-function ColorSchemeToggle({ click }: { click: () => void }) {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
+function ColorSchemeToggle() {
+  const { systemTheme, theme, setTheme } = useTheme();
+  const currentTheme = theme === "system" ? systemTheme : theme;
 
   React.useEffect(() => {
-    setMounted(true);
-
-    // Sync Tailwind's dark mode class with MUI's color scheme
-    if (mode === "dark") {
-      document.documentElement.classList.add("dark");
+    if (currentTheme === "dark") {
+      setTheme("dark");
     } else {
-      document.documentElement.classList.remove("dark");
+      setTheme("light");
     }
-  }, [mode]);
+  }, [currentTheme]);
 
   return (
     <button
       aria-label="toggle light/dark mode"
-      disabled={!mounted}
-      onClick={(event) => {
-        click();
-        setMode(mode === "light" ? "dark" : "light");
-      }}
+      onClick={() => (theme == "dark" ? setTheme("light") : setTheme("dark"))}
       className="group flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 hover:bg-gray-200"
     >
-      {mode === "light" ? (
+      {theme === "light" ? (
         <MoonIcon className="text-black" size={20} />
       ) : (
         <SunIcon className="text-white group-hover:text-black" />
@@ -63,7 +39,7 @@ function ColorSchemeToggle({ click }: { click: () => void }) {
   );
 }
 
-export default function UserSignUp({
+export default function SignInSide({
   siteData,
   localAnswers,
   competitionSlug,
@@ -77,9 +53,7 @@ export default function UserSignUp({
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState(true);
-  const [colorScheme, setColorScheme] = React.useState<"light" | "dark">(
-    "light",
-  );
+  const { systemTheme, theme, setTheme } = useTheme();
 
   const posthog = usePostHog();
 
@@ -93,10 +67,10 @@ export default function UserSignUp({
 
   React.useEffect(() => {
     if (document.documentElement.classList.contains("dark")) {
-      setColorScheme("dark");
+      setTheme("dark");
     }
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setColorScheme("dark");
+      setTheme("dark");
     }
   }, []);
 
@@ -162,11 +136,7 @@ export default function UserSignUp({
         >
           <div className="flex min-h-[100vh] w-full flex-col px-2">
             <header className="flex justify-end pt-2">
-              <ColorSchemeToggle
-                click={() =>
-                  setColorScheme(colorScheme === "light" ? "dark" : "light")
-                }
-              />
+              <ColorSchemeToggle />
             </header>
             <div
               className="m-auto pb-2 dark:text-white"
@@ -341,6 +311,7 @@ export default function UserSignUp({
                       layout="fill"
                       objectFit="contain"
                       className="hidden h-full w-full dark:block"
+                      priority
                     />
                     {/* Blue logo for light mode */}
                     <Image
@@ -349,6 +320,7 @@ export default function UserSignUp({
                       layout="fill"
                       objectFit="contain"
                       className="h-full w-full dark:hidden"
+                      priority
                     />
                   </div>
                 </div>
@@ -361,7 +333,7 @@ export default function UserSignUp({
           style={{
             transition: "background-image 0.4s, left 0.4s",
             backgroundImage: `url(${
-              colorScheme == "light"
+              theme == "light"
                 ? siteData?.loginBanner! || "/loginBanner.png"
                 : siteData?.loginBannerDark! || "/loginBannerDark.png"
             })`,

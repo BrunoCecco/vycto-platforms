@@ -7,6 +7,15 @@ const b2 = new B2({
   applicationKey: process.env.BACKBLAZE_MASTER_KEY!,
 });
 
+const createBucketName = (siteName?: string) => {
+  // get date in format "YYYY-MM-DD"
+  const date = new Date().toISOString().split("T")[0];
+  if (!siteName) {
+    return `site-vycto-${date}`;
+  }
+  return siteName.toLowerCase().replace(/[^a-z0-9]/g, "-") + "-vycto-" + date;
+};
+
 // Create a backblaze bucket with the given name
 // POST /api/bucket/create
 export async function POST(req: Request) {
@@ -22,15 +31,23 @@ export async function POST(req: Request) {
     );
   }
 
-  const { bucketName } = await req.json();
-
-  if (!bucketName) {
-    return new Response("Missing bucketName in request body", {
-      status: 400,
-    });
-  }
+  const { siteName } = await req.json();
 
   const { data: authData } = await b2.authorize();
+
+  const bucketName = createBucketName(siteName);
+
+  const { data: bucketData } = await b2.listBuckets();
+
+  if (
+    bucketData.buckets.some((bucket: any) =>
+      bucket.bucketName.includes(`${bucketName + "-vycto-"}`),
+    )
+  ) {
+    return new Response("Bucket already exists", {
+      status: 409,
+    });
+  }
 
   const { data } = await b2.createBucket({
     bucketName,

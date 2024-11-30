@@ -10,13 +10,12 @@ const Button = React.forwardRef<
   }
 >(({ className, variant = "default", children, ...props }, ref) => {
   const baseStyles =
-    "px-4 py-2 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors";
+    "px-4 py-2 rounded-md font-medium focus:outline-none transition-colors";
   const variantStyles = {
-    default: "bg-stone-800 text-white hover:bg-stone-700 focus:ring-stone-400",
-    outline:
-      "border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-400",
-    destructive: "bg-red-500 text-white hover:bg-red-600 focus:ring-red-400",
-    ghost: "text-gray-700 hover:bg-gray-100 focus:ring-gray-400",
+    default: "bg-stone-800 text-white hover:bg-stone-700",
+    outline: "border border-gray-300 text-gray-700 hover:bg-gray-50",
+    destructive: "bg-red-500 text-white hover:bg-red-600",
+    ghost: "text-gray-700 hover:bg-gray-100",
   };
 
   return (
