@@ -17,7 +17,7 @@ export default async function SiteMedia({
   }
 
   return (
-    <>
+    <div className="flex flex-col space-y-12">
       <div className="flex flex-col">
         <h1 className="text-xl font-bold dark:text-white sm:text-3xl">
           Competition Media
@@ -33,6 +33,6 @@ export default async function SiteMedia({
         bucketName={bucketName}
         bucketId={bucketId}
       />
-    </>
+    </div>
   );
 }

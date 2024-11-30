@@ -145,7 +145,7 @@ export default function BucketStorage({
                 <Input name="bucketId" type="hidden" value={bucketId} />
                 <DeleteFormButton />
               </form> */}
-            <div className="grid grid-cols-1 items-center justify-center gap-4 md:grid-cols-3">
+            <div className="grid grid-cols-1 items-center justify-center gap-4 md:grid-cols-2 lg:grid-cols-3">
               <Form
                 title={"Image 1"}
                 description=""

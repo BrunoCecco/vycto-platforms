@@ -43,7 +43,7 @@ const EditCompetitionDetails = async ({
             <h1 className="mb-4 text-left text-xl font-bold dark:text-white">
               Competition Thumbnail
             </h1>
-            <div className="relative flex h-[400px] w-[600px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl">
+            <div className="relative flex  h-[200px] w-[300px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl md:h-[300px] md:w-[450px] lg:h-[400px] lg:w-[600px]">
               {data.image ? (
                 <BlurImage
                   src={data.image || "/placeholder.png"}

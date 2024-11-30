@@ -159,7 +159,7 @@ export default function Uploader({
   };
 
   return (
-    <div className="relative grid w-full gap-6 rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-700 dark:bg-black sm:p-10">
+    <div className="relative grid w-full gap-6 rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-700 dark:bg-black">
       <form className="" ref={formRef} onSubmit={handleSubmit}>
         <div>
           {title && (
@@ -181,7 +181,7 @@ export default function Uploader({
           ) : (
             <label
               htmlFor={`${id}-upload-${name}`}
-              className="group relative mt-2 flex h-80 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50"
+              className="group relative mt-2 flex h-64 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50 lg:h-80"
             >
               <div
                 className="absolute z-[5] h-full w-full rounded-md"
