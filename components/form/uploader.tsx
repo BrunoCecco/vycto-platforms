@@ -292,10 +292,14 @@ export default function Uploader({
       {data[name] && data[name] != "" && (
         <Button
           onClick={(e: any) => removeFile(null)}
-          className="absolute right-0 top-0 border-red-500 p-2 text-red-500"
-          variant="outline"
+          className="absolute right-0 top-0 border-none p-1 font-bold"
+          variant="destructive"
         >
-          {removing ? <LoadingDots /> : <X />}
+          {removing ? (
+            <LoadingDots />
+          ) : (
+            <X size={18} absoluteStrokeWidth={true} />
+          )}
         </Button>
       )}
     </div>

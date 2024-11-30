@@ -12,6 +12,7 @@ import { Suspense } from "react";
 import LoadingDots from "@/components/icons/loadingDots";
 import Loading from "../../components/ui/loading";
 import { authOptions } from "@/lib/auth";
+import ColorSchemeToggle from "@/components/ui/colorSchemeToggle";
 
 export async function generateStaticParams() {
   const allSites = await db.query.sites.findMany({
@@ -65,8 +66,9 @@ export default async function SiteHomePage({
 
   return (
     <div>
-      <div className="pb-8 text-2xl font-bold tracking-wider text-white sm:text-4xl">
+      <div className="flex items-center justify-between pb-8 text-2xl font-bold tracking-wider text-white sm:text-4xl">
         <h1>{capitalize(addFanzoneToString(data.name || ""))}</h1>
+        {/* <ColorSchemeToggle /> */}
       </div>
       {/* Use the FanZoneHeader component */}
       <Suspense fallback={<Loading data={data} />}>
