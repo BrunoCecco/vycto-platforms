@@ -8,6 +8,7 @@ import UserForm from "../form/updateuser";
 import { USER, USER_ROLES } from "@/lib/constants";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getAllAdmins, getAllSuperAdmins, getAllUsers } from "@/lib/fetchers";
+import { Select, SelectItem } from "@nextui-org/react";
 
 const AdminTable = () => {
   const [selectedRole, setSelectedRole] = useState(USER);
@@ -54,18 +55,18 @@ const AdminTable = () => {
             <th className="px-4 py-2">Joined</th>
             <th className="px-4 py-2">
               <span>Role: </span>
-              <select
-                onChange={(e) => setSelectedRole(e.currentTarget.value)}
-                className="ml-2 rounded-lg border border-stone-200 bg-white "
-                value={selectedRole}
-                defaultValue={selectedRole}
+              <Select
+                aria-label="Role Selector"
+                placeholder={selectedRole}
+                selectedKeys={[selectedRole]}
+                onChange={(e) => setSelectedRole(e.target.value)}
               >
                 {USER_ROLES.map((role) => (
-                  <option key={role} value={role}>
+                  <SelectItem key={role} value={role}>
                     {role}
-                  </option>
+                  </SelectItem>
                 ))}
-              </select>
+              </Select>
             </th>
           </tr>
         </thead>

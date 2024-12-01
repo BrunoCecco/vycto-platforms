@@ -5,6 +5,7 @@ import { useDomainStatus } from "./useDomainStatus";
 import { getSubdomain } from "@/lib/domains";
 import { AlertCircle, XCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@nextui-org/react";
 
 export const InlineSnippet = ({
   className,
@@ -39,7 +40,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
     null;
 
   return (
-    <div className="border-t border-stone-200 px-10 pb-5 pt-7 ">
+    <div className="border-t  px-10 pb-5 pt-7 ">
       <div className="mb-4 flex items-center space-x-2">
         {status === "Pending Verification" ? (
           <AlertCircle
@@ -63,7 +64,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
             <InlineSnippet>{domainJson.apexName}</InlineSnippet> to prove
             ownership of <InlineSnippet>{domainJson.name}</InlineSnippet>:
           </p>
-          <div className="my-5 flex items-start justify-start space-x-10 rounded-md bg-stone-50 p-2 dark:bg-stone-800 ">
+          <div className="my-5 flex items-start justify-start space-x-10 rounded-md  p-2  ">
             <div>
               <p className="text-sm font-bold">Type</p>
               <p className="mt-2 font-mono text-sm">{txtVerification.type}</p>
@@ -97,8 +98,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
       ) : (
         <>
           <div className="flex justify-start space-x-4">
-            <button
-              type="button"
+            <Button
               onClick={() => setRecordType("A")}
               className={`${
                 recordType == "A"
@@ -107,9 +107,8 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}
             >
               A Record{!subdomain && " (recommended)"}
-            </button>
-            <button
-              type="button"
+            </Button>
+            <Button
               onClick={() => setRecordType("CNAME")}
               className={`${
                 recordType == "CNAME"
@@ -118,7 +117,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}
             >
               CNAME Record{subdomain && " (recommended)"}
-            </button>
+            </Button>
           </div>
           <div className="my-3 text-left">
             <p className="my-5 text-sm ">
@@ -130,7 +129,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               ), set the following {recordType} record on your DNS provider to
               continue:
             </p>
-            <div className="flex items-center justify-start space-x-10 rounded-md bg-stone-50 p-2 dark:bg-stone-800 ">
+            <div className="flex items-center justify-start space-x-10 rounded-md  p-2  ">
               <div>
                 <p className="text-sm font-bold">Type</p>
                 <p className="mt-2 font-mono text-sm">{recordType}</p>

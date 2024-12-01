@@ -10,7 +10,7 @@ export default async function DashboardLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="bg-slate-200 dark:bg-gray-950">
+    <div className=" ">
       <Nav isSuperAdmin>
         <div className="mb-8">
           <PoweredBadge />

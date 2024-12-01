@@ -26,7 +26,7 @@ const SignUpWrapper = ({
               beta
             </span>
           </div>
-          <div className="rounded-lg border-2 border-gray-400 bg-gradient-to-br from-[#868CFF] to-[#4318FF] px-12 py-4 text-center  shadow-lg">
+          <div className="rounded-lg border-2  bg-gradient-to-br from-[#868CFF] to-[#4318FF] px-12 py-4 text-center  shadow-lg">
             <p className="text-lg">Learn more about vycto on</p>
             <a href="https://vycto.tech" className="text-2xl font-semibold">
               vycto.tech

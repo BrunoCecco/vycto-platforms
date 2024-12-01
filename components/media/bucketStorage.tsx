@@ -4,14 +4,13 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Button from "../buttons/button";
 import LoadingDots from "../icons/loadingDots";
-import Input from "../input";
-import { Database } from "lucide-react";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import { updateCompetitionMetadata, updateSite } from "@/lib/actions";
 import Uploader from "../form/uploader";
 import Form from "../form";
 import { SelectCompetition } from "@/lib/schema";
+import { Spinner } from "@nextui-org/react";
 
 interface CompImage {
   key: string;
@@ -136,7 +135,7 @@ export default function BucketStorage({
     <div className="relative mt-8 flex flex-col items-center justify-center">
       <div className="flex w-full flex-col gap-4">
         {isLoading ? (
-          <LoadingDots />
+          <Spinner />
         ) : id && name ? (
           <div className="flex w-full flex-col gap-4">
             {/* <form className="flex items-center gap-4" action={deleteBucket}>

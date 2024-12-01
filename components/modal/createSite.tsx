@@ -9,6 +9,7 @@ import LoadingDots from "@/components/icons/loadingDots";
 import { useModal } from "./provider";
 import va from "@vercel/analytics";
 import { useEffect, useState } from "react";
+import { Input, Spinner, Button } from "@nextui-org/react";
 
 export default function CreateSiteModal() {
   const router = useRouter();
@@ -47,7 +48,7 @@ export default function CreateSiteModal() {
           }
         })
       }
-      className="w-full rounded-md bg-white dark:bg-black md:max-w-md md:border md:border-stone-200 md:shadow dark:md:border-stone-700"
+      className="md: w-full rounded-md  bg-white md:max-w-md md:border md:shadow "
     >
       <div className="relative flex flex-col space-y-4 p-5 md:p-10">
         <h2 className="text-2xl ">Create a new site</h2>
@@ -59,7 +60,7 @@ export default function CreateSiteModal() {
           >
             Site Name
           </label>
-          <input
+          <Input
             name="name"
             type="text"
             placeholder="My Awesome Site"
@@ -67,7 +68,7 @@ export default function CreateSiteModal() {
             onChange={(e) => setData({ ...data, name: e.target.value })}
             maxLength={32}
             required
-            className="w-full rounded-md border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black focus:outline-none focus:ring-black dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700 dark:focus:ring-white"
+            className="w-full rounded-md border   px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black focus:outline-none focus:ring-black    dark:placeholder-stone-700 dark:focus:ring-white"
           />
         </div>
 
@@ -79,7 +80,7 @@ export default function CreateSiteModal() {
             Subdomain
           </label>
           <div className="flex w-full max-w-md">
-            <input
+            <Input
               name="subdomain"
               type="text"
               placeholder="subdomain"
@@ -89,9 +90,8 @@ export default function CreateSiteModal() {
               pattern="[a-zA-Z0-9\-]+" // only allow lowercase letters, numbers, and dashes
               maxLength={32}
               required
-              className="w-full rounded-l-lg border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black focus:outline-none focus:ring-black dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700 dark:focus:ring-white"
             />
-            <div className="flex items-center rounded-r-lg border border-l-0 border-stone-200 bg-stone-100 px-3 text-sm dark:border-stone-600 dark:bg-stone-800 dark:text-stone-400">
+            <div className="flex items-center rounded-r-lg border border-l-0   px-3 text-sm   dark:text-stone-400">
               .{process.env.NEXT_PUBLIC_ROOT_DOMAIN}
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function CreateSiteModal() {
             onChange={(e) => setData({ ...data, description: e.target.value })}
             maxLength={140}
             rows={3}
-            className="w-full rounded-md border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black  focus:outline-none focus:ring-black dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700 dark:focus:ring-white"
+            className="w-full rounded-md border   px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black  focus:outline-none focus:ring-black    dark:placeholder-stone-700 dark:focus:ring-white"
           />
         </div> */}
 
@@ -128,11 +128,11 @@ export default function CreateSiteModal() {
             value={data.admin}
             onChange={(e) => setData({ ...data, admin: e.target.value })}
             maxLength={40}
-            className="w-full rounded-md border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black  focus:outline-none focus:ring-black dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700 dark:focus:ring-white"
+            className="w-full rounded-md border   px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black  focus:outline-none focus:ring-black    dark:placeholder-stone-700 dark:focus:ring-white"
           />
         </div>
       </div>
-      <div className="flex items-center justify-end rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 dark:border-stone-700 dark:bg-stone-800 md:px-10">
+      <div className="flex items-center justify-end rounded-b-lg border-t   p-3   md:px-10">
         <CreateSiteFormButton />
       </div>
     </form>
@@ -141,16 +141,8 @@ export default function CreateSiteModal() {
 function CreateSiteFormButton() {
   const { pending } = useFormStatus();
   return (
-    <button
-      className={cn(
-        "flex h-10 w-full items-center justify-center space-x-2 rounded-md border text-sm transition-all focus:outline-none",
-        pending
-          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "dark:hover: hover:  border-black bg-black hover:bg-white dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:active:bg-stone-800",
-      )}
-      disabled={pending}
-    >
-      {pending ? <LoadingDots color="#808080" /> : <p>Create Playground</p>}
-    </button>
+    <Button isDisabled={pending}>
+      {pending ? <Spinner /> : <p>Create Playground</p>}
+    </Button>
   );
 }

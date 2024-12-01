@@ -4,7 +4,7 @@ import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
 import { useRef, useState } from "react";
 import { MinusCircle, PlusCircle } from "lucide-react";
-import { Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import FlipText from "../ui/flipText";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
@@ -40,14 +40,14 @@ const GeneralNumber = ({ ...props }) => {
           <Input
             type="number"
             min={0}
-            disabled={props.disabled}
+            isDisabled={props.disabled}
             name="answer"
             value={answer}
             onChange={(e) => setAnswer(parseInt(e.target.value))}
             className="w-20 text-center"
             onBlur={() => submitButton?.current?.click()}
           />
-          <button className="hidden" type="submit" ref={submitButton}></button>
+          <Button className="hidden" type="submit" ref={submitButton}></Button>
         </Submit>
         {props.correctAnswer?.length > 0 ? (
           <QuestionResultBlock

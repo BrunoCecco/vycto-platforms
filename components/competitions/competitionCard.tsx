@@ -81,7 +81,7 @@ const CompetitionCard = ({
   return (
     <HoverBorderGradient
       containerClassName="group h-[350px] w-[300px] relative rounded-xl"
-      className="duration-400 relative h-full w-full transition-all hover:bg-slate-900"
+      className="duration-400 hover: relative h-full w-full transition-all"
       color={siteData.color1}
     >
       <Card isFooterBlurred radius="md" className="h-full w-full border-none">

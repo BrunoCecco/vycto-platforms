@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function SiteCard({ data }: { data: SelectSite }) {
   const url = getSiteDomain(data);
   return (
-    <div className="relative rounded-lg border border-stone-200 pb-10 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
+    <div className="relative rounded-lg border  border-white pb-10 shadow-md transition-all hover:shadow-xl ">
       <Link
         href={`/site/${data.id}`}
         className="flex flex-col overflow-hidden rounded-lg"
@@ -21,7 +21,7 @@ export default function SiteCard({ data }: { data: SelectSite }) {
           placeholder="blur"
           blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
         />
-        <div className="border-t border-stone-200 p-4 dark:border-stone-700">
+        <div className="border-t  p-4 ">
           <h3 className="my-0 truncate text-xl font-bold tracking-wide ">
             {data.name}
           </h3>
@@ -39,13 +39,13 @@ export default function SiteCard({ data }: { data: SelectSite }) {
           }
           target="_blank"
           rel="noreferrer"
-          className="truncate rounded-md bg-stone-100 px-2 py-1 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-400 dark:hover:bg-stone-700"
+          className="truncate rounded-md   px-2 py-1 text-sm font-medium text-stone-600 transition-colors   dark:text-stone-400"
         >
           {url} ↗
         </a>
         <Link
           href={`/site/${data.id}/analytics`}
-          className="flex items-center rounded-md bg-green-100 px-2 py-1 text-sm font-medium text-green-600 transition-colors hover:bg-green-200 dark:bg-green-900 dark:bg-opacity-50 dark:text-green-400 dark:hover:bg-green-800 dark:hover:bg-opacity-50"
+          className="flex items-center rounded-md bg-green-100 bg-green-800 bg-opacity-50 px-2 py-1 text-sm font-medium text-green-600 transition-colors hover:bg-green-200 dark:bg-green-900 dark:bg-opacity-50 dark:text-green-400"
         >
           <BarChart height={16} />
           <p>{random(10, 40)}%</p>

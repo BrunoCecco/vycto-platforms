@@ -8,6 +8,7 @@ import LoadingDots from "@/components/icons/loadingDots";
 import va from "@vercel/analytics";
 import { useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
+import { Button, Input, Spinner } from "@nextui-org/react";
 
 export default function CreateSiteRewardModal({ siteId }: { siteId: string }) {
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function CreateSiteRewardModal({ siteId }: { siteId: string }) {
           setData({ siteId: siteId, title: "" });
         });
       }}
-      className="w-full rounded-md bg-white dark:bg-black md:max-w-md md:border md:border-stone-200 md:shadow dark:md:border-stone-700"
+      className="md: w-full rounded-md  bg-white md:max-w-md md:border md:shadow "
     >
       <div className="relative flex flex-col space-y-4 p-5 md:p-10">
         <h2 className="text-2xl ">Create a new reward</h2>
@@ -47,7 +48,7 @@ export default function CreateSiteRewardModal({ siteId }: { siteId: string }) {
           >
             Reward Title
           </label>
-          <input
+          <Input
             name="title"
             type="text"
             placeholder="Season Tickets"
@@ -55,11 +56,10 @@ export default function CreateSiteRewardModal({ siteId }: { siteId: string }) {
             onChange={(e) => setData({ ...data, title: e.target.value })}
             maxLength={32}
             required
-            className="w-full rounded-md border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black focus:outline-none focus:ring-black dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700 dark:focus:ring-white"
           />
         </div>
       </div>
-      <div className="flex items-center justify-end rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 dark:border-stone-700 dark:bg-stone-800 md:px-10">
+      <div className="flex items-center justify-end rounded-b-lg border-t   p-3   md:px-10">
         <FormButton />
       </div>
     </form>
@@ -70,16 +70,8 @@ const FormButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <button
-      className={cn(
-        "flex h-10 w-full items-center justify-center space-x-2 rounded-md border text-sm transition-all focus:outline-none",
-        pending
-          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "dark:hover: hover:  border-black bg-black hover:bg-white dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:active:bg-stone-800",
-      )}
-      disabled={pending}
-    >
-      {pending ? <LoadingDots color="#808080" /> : <p>Create New Reward</p>}
-    </button>
+    <Button isDisabled={pending}>
+      {pending ? <Spinner /> : <p>Create New Reward</p>}
+    </Button>
   );
 };

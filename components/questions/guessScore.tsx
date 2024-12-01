@@ -5,6 +5,7 @@ import { PlusCircle, MinusCircle } from "lucide-react";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import FlipText from "../ui/flipText";
+import { Button } from "@nextui-org/react";
 
 const GuessScore = ({ ...props }) => {
   const [scores, setScores] = useState({
@@ -57,19 +58,21 @@ const GuessScore = ({ ...props }) => {
           >
             <div className="flex flex-col items-center gap-4">
               <div className="flex items-center gap-4 md:gap-8">
-                <button
+                <Button
                   onClick={() => updateScore("home", false)}
-                  disabled={props.disabled}
+                  variant="light"
+                  isDisabled={props.disabled}
                 >
                   <MinusCircle />
-                </button>
+                </Button>
                 <div>{scores.home}</div>
-                <button
+                <Button
                   onClick={() => updateScore("home", true)}
-                  disabled={props.disabled}
+                  isDisabled={props.disabled}
+                  variant="light"
                 >
                   <PlusCircle />
-                </button>
+                </Button>
               </div>
               <p className="text-sm font-semibold">{props.answer1}</p>
             </div>
@@ -86,31 +89,33 @@ const GuessScore = ({ ...props }) => {
 
             <div className="flex flex-col items-center gap-4">
               <div className="flex items-center gap-4 md:gap-8">
-                <button
+                <Button
                   onClick={() => updateScore("away", false)}
-                  disabled={props.disabled}
+                  isDisabled={props.disabled}
+                  variant="light"
                 >
                   <MinusCircle />
-                </button>
+                </Button>
                 <div>{scores.away}</div>
-                <button
+                <Button
                   onClick={() => updateScore("away", true)}
-                  disabled={props.disabled}
+                  isDisabled={props.disabled}
+                  variant="light"
                 >
                   <PlusCircle />
-                </button>
+                </Button>
               </div>
               <p className="text-sm font-semibold">{props.answer2}</p>
             </div>
           </div>
-          <button
+          <Button
             className="hidden"
-            disabled={props.disabled}
+            isDisabled={props.disabled}
             type="submit"
             ref={submitButton}
           >
             Submit
-          </button>
+          </Button>
         </Submit>
         {props.correctAnswer?.length > 0 ? (
           <QuestionResultBlock

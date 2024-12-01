@@ -13,6 +13,7 @@ import {
   Volume,
   Volume2,
 } from "lucide-react";
+import { Button } from "@nextui-org/react";
 
 export default function BannerMedia({ src }: { src: string }) {
   const videoFormats = ["mp4", "webm", "mov", "mkv"];
@@ -52,13 +53,13 @@ export default function BannerMedia({ src }: { src: string }) {
           <source src={src} type={`video/${mediaFormat}`} />
           Your browser does not support the video tag.
         </video>
-        <button
+        <Button
           onClick={() => setIsMuted(!isMuted)} // Toggle mute on button click
-          className="absolute right-2 top-2 rounded p-2 "
+          className="absolute right-2 top-2 rounded bg-transparent p-2"
         >
           {isMuted ? <Volume /> : <Volume2 />}{" "}
           {/* Button text based on mute state */}
-        </button>
+        </Button>
       </div>
     ) : (
       <BlurImage

@@ -12,11 +12,11 @@
   }
 }
 
-@layer base {
+/* @layer base {
   body {
-    /* @apply bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-gray-100; */
+    @apply  text-gray-900  dark:text-gray-100;
   }
-}
+} */
 
 .ProseMirror .is-editor-empty:first-child::before {
   content: attr(data-placeholder);
@@ -265,7 +265,7 @@ input[type="range"]::-ms-thumb {
     cursor: grabbing;
   }
 }
-
+/* 
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -320,4 +320,4 @@ input[type="range"]::-ms-thumb {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-}
+} */

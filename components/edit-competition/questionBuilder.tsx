@@ -137,52 +137,52 @@ const QuestionBuilder = ({
       </Button>
       {showOptionsIndex === index && (
         <div className="absolute z-10 mt-10 w-72 rounded-lg bg-white">
-          <button
+          <Button
             onClick={() => handleAddQuestion(QuestionType.GeneralNumber, index)}
-            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+            className="block w-full px-4 py-2 text-left "
           >
             Add General Number Question
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() =>
               handleAddQuestion(QuestionType.PlayerSelection, index)
             }
-            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+            className="block w-full px-4 py-2 text-left "
           >
             Add Player Selection Question
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => handleAddQuestion(QuestionType.WhatMinute, index)}
-            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+            className="block w-full px-4 py-2 text-left "
           >
             Add What Minute Question
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => handleAddQuestion(QuestionType.MatchOutcome, index)}
-            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+            className="block w-full px-4 py-2 text-left "
           >
             Add Match Outcome Question
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => handleAddQuestion(QuestionType.GuessScore, index)}
-            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+            className="block w-full px-4 py-2 text-left "
           >
             Add Guess Score Question
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() =>
               handleAddQuestion(QuestionType.GeneralSelection, index)
             }
-            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+            className="block w-full px-4 py-2 text-left "
           >
             Add Player Goals Question
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => handleAddQuestion(QuestionType.TrueFalse, index)}
-            className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+            className="block w-full px-4 py-2 text-left "
           >
             Add True/False Question
-          </button>
+          </Button>
         </div>
       )}
     </div>

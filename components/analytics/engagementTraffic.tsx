@@ -37,7 +37,7 @@ const EngagementTraffic = () => {
           <span>Instagram</span>
         </div>
         <div className="flex items-center space-x-2">
-          <span className="inline-block h-3 w-3 rounded-full bg-gray-200"></span>
+          <span className="inline-block h-3 w-3 rounded-full "></span>
           <span>Website</span>
         </div>
       </div>

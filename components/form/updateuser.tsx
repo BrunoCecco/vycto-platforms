@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import { USER_ROLES } from "@/lib/constants";
 import { useRef } from "react";
+import { Select, SelectItem } from "@nextui-org/react";
 
 export default function UserForm({
   inputAttrs,
@@ -45,22 +46,23 @@ export default function UserForm({
           }
         });
       }}
-      className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
+      className="rounded-lg border  bg-white  "
     >
       {inputAttrs.name === "role" ? (
-        <div className="flex max-w-sm items-center overflow-hidden rounded-lg border border-stone-600">
-          <select
+        <div className="flex max-w-sm items-center overflow-hidden rounded-lg border ">
+          <Select
             name="role"
-            defaultValue={inputAttrs.defaultValue}
-            className="w-full rounded-none border-none bg-white px-4 py-2 text-sm font-medium text-stone-700 focus:outline-none focus:ring-black dark:bg-black dark:text-stone-200 dark:focus:ring-white"
             onChange={() => formRef.current?.requestSubmit()}
+            aria-label="role"
+            placeholder={inputAttrs.defaultValue}
+            selectedKeys={[inputAttrs.defaultValue]}
           >
             {USER_ROLES.map((role) => (
-              <option key={role} value={role}>
+              <SelectItem key={role} value={role}>
                 {role}
-              </option>
+              </SelectItem>
             ))}
-          </select>
+          </Select>
         </div>
       ) : null}
     </form>

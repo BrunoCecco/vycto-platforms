@@ -7,6 +7,7 @@ import { ClockIcon, Medal, PlayCircle } from "lucide-react";
 import LoadingDots from "../icons/loadingDots";
 import Loading from "@/components/ui/loading";
 import { Story } from "./story";
+import { Spinner } from "@nextui-org/react";
 
 const FanZone = async ({
   siteData,
@@ -31,7 +32,7 @@ const FanZone = async ({
         Current Competitions
       </h2>
       {currentCompetitions?.length > 0 ? (
-        <Suspense fallback={<LoadingDots />}>
+        <Suspense fallback={<Spinner />}>
           <Competitions
             competitions={currentCompetitions}
             siteData={siteData}
@@ -48,7 +49,7 @@ const FanZone = async ({
         Past Competitions
       </h2>
       {pastCompetitions?.length > 0 ? (
-        <Suspense fallback={<LoadingDots />}>
+        <Suspense fallback={<Spinner />}>
           <Competitions
             competitions={pastCompetitions}
             siteData={siteData}

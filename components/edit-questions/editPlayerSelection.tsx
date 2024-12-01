@@ -1,11 +1,12 @@
 "use client";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { SelectQuestion } from "@/lib/schema";
-import { useEffect, useState } from "react";
+import { FocusEventHandler, useEffect, useState } from "react";
 import { toast } from "sonner";
 import Uploader from "../form/uploader";
 import PointsBadge from "../competitions/pointsBadge";
 import { X } from "lucide-react";
+import { Select, Button, Input, SelectItem } from "@nextui-org/react";
 
 const PlayerComponent = ({
   questionId,
@@ -39,12 +40,13 @@ const PlayerComponent = ({
         upload={handleImageChange}
       />
       <div className="mt-2 text-center">
-        <input
+        <Input
           type="text"
           defaultValue={name}
           placeholder="Player Name"
-          onBlur={(e) => handlePlayerNameChange(e.target.value)}
-          className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
+          // handle player name change
+          onChange={(e) => handlePlayerNameChange(e.target.value)}
+          className="mt-1 block w-full rounded-md border  text-center "
         />
       </div>
     </div>
@@ -148,19 +150,19 @@ const EditPlayerSelection = ({
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
         {/* Remove Button */}
-        <button
+        <Button
           onClick={handleRemove}
           className="absolute left-2 top-2 rounded-full p-2 text-red-500 hover:text-red-600 focus:outline-none"
         >
           <X className="h-6 w-6" />
-        </button>
+        </Button>
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
-            <input
+            <Input
               type="number"
               min={0}
-              value={points}
+              value={points.toString()}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
               className="w-20 text-center text-xl font-semibold "
@@ -174,7 +176,7 @@ const EditPlayerSelection = ({
 
         {/* Editable Question */}
         <div className="mb-2 text-center">
-          <input
+          <Input
             type="text"
             value={editedQuestion}
             onChange={handleQuestionInputChange}
@@ -236,19 +238,21 @@ const EditPlayerSelection = ({
           />
         </div>
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <select
+          <Select
             value={editedCorrectAnswer}
-            onChange={async (e) => {
+            aria-label="Correct Answer Selector"
+            placeholder={editedCorrectAnswer}
+            selectedKeys={[editedCorrectAnswer]}
+            onChange={(e) => {
               setEditedCorrectAnswer(e.target.value);
               handleInputBlur("correctAnswer", e.target.value);
             }}
-            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           >
-            <option value={answer1}>{answer1}</option>
-            <option value={answer2}>{answer2}</option>
-            <option value={answer3}>{answer3}</option>
-            <option value={answer4}>{answer4}</option>
-          </select>
+            <SelectItem key={answer1}>{answer1}</SelectItem>
+            <SelectItem key={answer2}>{answer2}</SelectItem>
+            <SelectItem key={answer3}>{answer3}</SelectItem>
+            <SelectItem key={answer4}>{answer4}</SelectItem>
+          </Select>
         </div>
       </div>
     </div>

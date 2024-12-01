@@ -10,7 +10,14 @@ import va from "@vercel/analytics";
 import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import CountryPicker from "../settings/countryPicker";
-import { Select, SelectItem, Button, Input, Textarea } from "@nextui-org/react";
+import {
+  Select,
+  SelectItem,
+  Button,
+  Input,
+  Textarea,
+  Spinner,
+} from "@nextui-org/react";
 import { USER_ROLES } from "@/lib/constants";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
@@ -89,7 +96,7 @@ export default function CombinedForm({
   };
 
   return (
-    <div className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black">
+    <div className="rounded-lg border  bg-white  ">
       <h2 className="p-5 text-xl  ">{title}</h2>
       <div className="flex flex-col sm:flex-row">
         {hasImage && ( //hasImage means hasProfileImage
@@ -129,13 +136,13 @@ export default function CombinedForm({
                 {inputAttr.name.includes("image") ? null : inputAttr.name ===
                   "country" ? (
                   <>
-                    <input
+                    <Input
                       type="hidden"
                       name="country"
                       value={selectedCountry}
                     />
                     <ReactFlagsSelect
-                      selectButtonClassName="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
+                      selectButtonClassName="w-full rounded-md border  text-sm text-stone-900 placeholder-stone-300 focus: focus:outline-none focus:ring-stone-500    dark:placeholder-stone-700"
                       className=""
                       selected={selectedCountry || ""}
                       onSelect={(code) => setSelectedCountry(code)}
@@ -169,12 +176,12 @@ export default function CombinedForm({
                   <Input
                     {...inputAttr}
                     type="color"
-                    className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
+                    className="focus: h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:outline-none focus:ring-stone-500    dark:placeholder-stone-700"
                   />
                 ) : inputAttr.name === "subdomain" ? (
                   <div className="flex w-full">
                     <Input {...inputAttr} required />
-                    <div className="flex items-center rounded-r-md border border-l-0 border-stone-300 bg-stone-100 px-3 text-sm dark:border-stone-600 dark:bg-stone-800 dark:text-stone-400">
+                    <div className="flex items-center rounded-r-md border border-l-0   px-3 text-sm   dark:text-stone-400">
                       {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
                     </div>
                   </div>
@@ -198,7 +205,7 @@ export default function CombinedForm({
             );
           })}
           {!hasImage ? (
-            <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 dark:border-stone-700 dark:bg-stone-800 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
+            <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t   p-3   sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
               <p className="mr-2 text-sm text-stone-500 dark:text-stone-400">
                 helpText
               </p>
@@ -219,8 +226,8 @@ const FormButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <Button disabled={pending} type="submit">
-      {pending ? <LoadingDots /> : <p>Save Changes</p>}
+    <Button isDisabled={pending} type="submit">
+      {pending ? <Spinner /> : <p>Save Changes</p>}
     </Button>
   );
 };

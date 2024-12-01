@@ -5,7 +5,7 @@ import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
 import Uploader from "../form/uploader";
-import Input from "../input";
+import { Input } from "@nextui-org/react";
 import { Check, X } from "lucide-react";
 
 const EditGeneralSelection = ({
@@ -94,14 +94,13 @@ const EditGeneralSelection = ({
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
-            <input
+            <Input
               type="number"
               min={0}
               name="points"
-              value={points}
+              value={points.toString()}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold "
             />
           ) : (
             <div onClick={() => setIsEditingPoints(true)}>

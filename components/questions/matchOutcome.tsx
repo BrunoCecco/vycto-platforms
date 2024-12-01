@@ -6,6 +6,7 @@ import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import FlipText from "../ui/flipText";
+import { Button, Card, CardFooter } from "@nextui-org/react";
 
 const MatchOutcome = ({ ...props }) => {
   const [selectedOutcome, setSelectedOutcome] = useState(
@@ -35,26 +36,27 @@ const MatchOutcome = ({ ...props }) => {
             answer={props.answer1}
             onLocalAnswer={props.onLocalAnswer}
           >
-            <button
-              className={`text-center ${
-                selectedOutcome === props.answer1 ? "opacity-100" : "opacity-50"
-              }`}
-              disabled={props.disabled}
-              onClick={() => setSelectedOutcome(props.answer1)}
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative items-center justify-center overflow-hidden rounded-lg">
-                  <Image
-                    src={props.image1 || "/placeholder.png"}
-                    alt="Option 1 Image"
-                    width={128}
-                    height={96}
-                    className="object-contain"
-                  />
-                </div>
-                <p className="text-sm font-semibold ">{props.answer1}</p>
-              </div>
-            </button>
+            <Card isFooterBlurred>
+              <Button
+                className={`relative h-[250px] w-[180px] items-center justify-center overflow-hidden text-center ${
+                  selectedOutcome === props.answer1
+                    ? "opacity-100"
+                    : "opacity-50"
+                }`}
+                isDisabled={props.disabled}
+                onClick={() => setSelectedOutcome(props.answer1)}
+              >
+                <Image
+                  src={props.image1 || "/placeholder.png"}
+                  alt="Option 1 Image"
+                  fill
+                  className="h-full w-full object-contain"
+                />
+              </Button>
+              <CardFooter className="border-1 bg-background/20 absolute bottom-1 z-10 flex w-full justify-center overflow-hidden rounded-lg border-white/20 py-1 text-center shadow-sm">
+                {props.answer1}
+              </CardFooter>
+            </Card>
           </Submit>
 
           {/* VS */}
@@ -75,26 +77,27 @@ const MatchOutcome = ({ ...props }) => {
             answer={props.answer2}
             onLocalAnswer={props.onLocalAnswer}
           >
-            <button
-              className={`text-center ${
-                selectedOutcome === props.answer2 ? "opacity-100" : "opacity-50"
-              }`}
-              disabled={props.disabled}
-              onClick={() => setSelectedOutcome(props.answer2)}
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative items-center justify-center overflow-hidden rounded-lg">
-                  <Image
-                    src={props.image2 || "/placeholder.png"}
-                    alt="Option 2 Image"
-                    width={128}
-                    height={96}
-                    className="object-contain"
-                  />
-                </div>
-                <p className="text-sm font-semibold ">{props.answer2}</p>
-              </div>
-            </button>
+            <Card isFooterBlurred>
+              <Button
+                className={`relative h-[250px] w-[180px] items-center justify-center overflow-hidden text-center ${
+                  selectedOutcome === props.answer2
+                    ? "opacity-100"
+                    : "opacity-50"
+                }`}
+                isDisabled={props.disabled}
+                onClick={() => setSelectedOutcome(props.answer2)}
+              >
+                <Image
+                  src={props.image2 || "/placeholder.png"}
+                  alt="Option 2 Image"
+                  fill
+                  className="h-full w-full object-contain"
+                />
+              </Button>
+              <CardFooter className="border-1 bg-background/20 absolute bottom-1 z-10 flex w-full justify-center overflow-hidden rounded-lg border-white/20 py-1 text-center shadow-sm">
+                {props.answer2}
+              </CardFooter>
+            </Card>
           </Submit>
         </div>
 
@@ -108,16 +111,16 @@ const MatchOutcome = ({ ...props }) => {
             answer="Draw"
             onLocalAnswer={props.onLocalAnswer}
           >
-            <button
+            <Button
               className={`w-24 rounded-full border-2 p-2 text-sm font-semibold ${
                 selectedOutcome == "Draw" ? "opacity-100" : "opacity-50"
               }`}
-              disabled={props.disabled}
+              isDisabled={props.disabled}
               style={{ borderColor: props.color, color: props.color }}
               onClick={() => setSelectedOutcome("Draw")}
             >
               Draw
-            </button>
+            </Button>
           </Submit>
         </div>
         {props.correctAnswer?.length > 0 ? (

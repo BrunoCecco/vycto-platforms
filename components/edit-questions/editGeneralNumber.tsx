@@ -4,9 +4,10 @@ import { SelectQuestion } from "@/lib/schema";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import Input from "../input";
+import { Input } from "@nextui-org/react";
 import Uploader from "../form/uploader";
 import PointsBadge from "../competitions/pointsBadge";
+import { Button } from "@nextui-org/react";
 
 const EditGeneralNumber = ({
   question,
@@ -80,19 +81,19 @@ const EditGeneralNumber = ({
     <div className="flex items-center justify-center">
       <div className="i relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
         {/* Remove Button */}
-        <button
+        <Button
           onClick={handleRemove}
           className="absolute left-2 top-2 rounded-full p-2 text-red-500 hover:text-red-600 focus:outline-none"
         >
           <X className="h-6 w-6" />
-        </button>
+        </Button>
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
-            <input
+            <Input
               type="number"
               min={0}
-              value={points}
+              value={points.toString()}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
               className="w-20 text-center text-xl font-semibold "
@@ -121,13 +122,13 @@ const EditGeneralNumber = ({
             value={editedQuestion}
             onChange={handleQuestionInputChange}
             onBlur={() => handleInputBlur("question", editedQuestion)}
-            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
+            className="mt-1 block w-full rounded-md border  text-center "
           />
         </div>
 
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
-          <input
+          <Input
             type="number"
             min={0}
             value={editedCorrectAnswer}
@@ -136,7 +137,7 @@ const EditGeneralNumber = ({
               handleInputBlur("correctAnswer", editedCorrectAnswer.toString())
             }
             placeholder="Correct Answer"
-            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
+            className="mt-1 block w-full rounded-md border  text-center "
           />
         </div>
       </div>

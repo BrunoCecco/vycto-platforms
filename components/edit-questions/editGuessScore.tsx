@@ -5,7 +5,7 @@ import { PlusCircle, MinusCircle } from "lucide-react";
 import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
-import Input from "../input";
+import { Input } from "@nextui-org/react";
 import { X } from "lucide-react";
 import Button from "../buttons/button";
 
@@ -74,23 +74,23 @@ const EditGuessScore = ({
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
         {/* Remove Button */}
-        <button
+        <Button
           onClick={handleRemove}
           className="absolute left-2 top-2 rounded-full p-2 text-red-500 hover:text-red-600 focus:outline-none"
         >
           <X className="h-6 w-6" />
-        </button>
+        </Button>
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
-            <input
+            <Input
               type="number"
               name="points"
               min={0}
-              value={points}
+              value={points.toString()}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold "
+              className="w-20 border-b-2  text-center text-xl font-semibold "
             />
           ) : (
             <div onClick={() => setIsEditingPoints(true)}>
@@ -105,22 +105,22 @@ const EditGuessScore = ({
         <div className="flex w-full items-center justify-between gap-4 py-4 md:justify-around md:px-4">
           <div className="flex flex-col items-center gap-4 ">
             <div className="flex items-center gap-4 md:gap-8">
-              <button onClick={() => setScoreHome(Math.max(scoreHome - 1, 0))}>
+              <Button onClick={() => setScoreHome(Math.max(scoreHome - 1, 0))}>
                 <MinusCircle />
-              </button>
+              </Button>
               <div>{scoreHome}</div>
-              <button onClick={() => setScoreHome(scoreHome + 1)}>
+              <Button onClick={() => setScoreHome(scoreHome + 1)}>
                 <PlusCircle />
-              </button>
+              </Button>
             </div>
             {isEditingHome ? (
               <Input
                 type="text"
                 name="answer1"
                 value={homeTeam}
-                onChange={(e) => setHomeTeam(e.target.value)}
+                onValueChange={setHomeTeam}
                 onBlur={() => handleInputBlur("answer1", homeTeam)}
-                className="border-b-2 border-gray-300 text-center text-sm font-semibold "
+                className="border-b-2  text-center text-sm font-semibold "
               />
             ) : (
               <p
@@ -141,22 +141,22 @@ const EditGuessScore = ({
 
           <div className="flex flex-col items-center gap-4 ">
             <div className="flex items-center gap-4 md:gap-8">
-              <button onClick={() => setScoreAway(Math.max(scoreAway - 1, 0))}>
+              <Button onClick={() => setScoreAway(Math.max(scoreAway - 1, 0))}>
                 <MinusCircle />
-              </button>
+              </Button>
               <div>{scoreAway}</div>
-              <button onClick={() => setScoreAway(scoreAway + 1)}>
+              <Button onClick={() => setScoreAway(scoreAway + 1)}>
                 <PlusCircle />
-              </button>
+              </Button>
             </div>
             {isEditingAway ? (
               <Input
                 type="text"
                 name="answer2"
                 value={awayTeam}
-                onChange={(e) => setAwayTeam(e.target.value)}
+                onValueChange={setAwayTeam}
                 onBlur={() => handleInputBlur("answer2", awayTeam)}
-                className="border-b-2 border-gray-300 text-center text-sm font-semibold "
+                className="border-b-2  text-center text-sm font-semibold "
               />
             ) : (
               <p

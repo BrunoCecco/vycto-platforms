@@ -29,6 +29,7 @@ import {
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import { getSiteFromCompetitionId } from "@/lib/actions";
 import Image from "next/image";
+import { Button } from "@nextui-org/react";
 
 export default function Nav({
   isSuperAdmin = false,
@@ -167,7 +168,7 @@ export default function Nav({
 
   return (
     <>
-      <button
+      <Button
         className={`fixed z-50 ${
           // left align for Editor, right align for other pages
           segments[0] === "competition" && segments.length === 2 && !showSidebar
@@ -177,24 +178,21 @@ export default function Nav({
         onClick={() => setShowSidebar(!showSidebar)}
       >
         <Menu width={20} className="" />
-      </button>
+      </Button>
       <div
         className={`transform ${
           showSidebar ? "w-full translate-x-0" : "-translate-x-full"
-        } fixed z-40 flex h-full flex-col justify-between border-r border-stone-200 bg-stone-100 p-4 transition-all dark:border-stone-700 dark:bg-stone-900 sm:w-60 sm:translate-x-0`}
+        } bg-content2 fixed z-40 flex h-full flex-col justify-between border-r   p-4 transition-all sm:w-60 sm:translate-x-0`}
       >
         <div className="grid gap-2">
           <div className="flex items-center space-x-2 rounded-lg px-2 py-1.5">
-            <Link
-              href="/"
-              className="rounded-lg p-2 hover:bg-stone-200 dark:hover:bg-stone-700"
-            >
+            <Link href="/" className="rounded-lg  p-2 ">
               <Image
                 src="/logo.png"
                 width={36}
                 height={36}
                 alt="Logo"
-                className="dark:scale-110 dark:rounded-full dark:border dark:border-stone-400"
+                className="dark:scale-110 dark:rounded-full dark:border "
               />
             </Link>
           </div>
@@ -204,8 +202,8 @@ export default function Nav({
                 key={name}
                 href={href}
                 className={`flex items-center space-x-3 ${
-                  isActive ? "bg-stone-200  dark:bg-stone-700" : ""
-                } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300  dark:hover:bg-stone-700 dark:active:bg-stone-800`}
+                  isActive ? "bg-content1" : ""
+                } active:bg-content1 rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out`}
               >
                 {icon}
                 <span className="text-sm font-medium">{name}</span>
@@ -214,7 +212,7 @@ export default function Nav({
           </div>
         </div>
         <div>
-          <div className="my-2 border-t border-stone-200 dark:border-stone-700" />
+          <div className="my-2 border-t  " />
           {children}
         </div>
       </div>

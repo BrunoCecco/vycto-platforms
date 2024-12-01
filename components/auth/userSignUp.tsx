@@ -165,7 +165,7 @@ const UserSignUp = ({
           </div>
         )}
 
-        <div className="flex w-full flex-col !text-xs">
+        <div className="flex w-full flex-col gap-4 !text-xs">
           {emailExists && (
             <div className="mt-4">
               <label htmlFor="email" className="mb-2 block text-sm font-medium">
@@ -221,16 +221,14 @@ const UserSignUp = ({
               </div>
             </>
           )}
-          <div className="relative mt-4 w-full">
-            <LoginButton
-              email={email}
-              username={username}
-              localAnswers={localAnswers}
-              competitionSlug={competitionSlug}
-              name={name}
-              setEmailExists={setEmailExists}
-            />
-          </div>
+          <LoginButton
+            email={email}
+            username={username}
+            localAnswers={localAnswers}
+            competitionSlug={competitionSlug}
+            name={name}
+            setEmailExists={setEmailExists}
+          />
         </div>
       </div>
 

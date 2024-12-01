@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Input from "@/components/input";
+import { Input } from "@nextui-org/react";
 import Button from "@/components/buttons/button";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
@@ -19,6 +19,7 @@ import EditGeneralNumber from "../edit-questions/editGeneralNumber";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../form/loadingSpinner";
 import Loading from "../ui/loading";
+import Image from "next/image";
 
 interface SearchResult {
   name: string;
@@ -141,23 +142,23 @@ export default function SearchPage() {
             {searchResults.map((result) => (
               <li
                 key={result.id}
-                className="flex items-center p-2 py-1  transition duration-150 ease-in-out hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
+                className="flex items-center p-2 py-1  transition duration-150 ease-in-out   focus:outline-none"
               >
                 <div className="relative mr-2 h-8 w-8 overflow-hidden rounded-full">
-                  <img
+                  <Image
                     src={`https://api.sofascore.com/api/v1/${result.type}/${result.id}/image`}
                     className="h-full w-full object-cover"
                     alt={result.name}
-                    //   fill={true}
+                    fill={true}
                     //   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
-                <button
+                <Button
                   onClick={() => handleResultClick(result)}
                   className="w-full px-4 py-2 text-left"
                 >
                   {result.name}
-                </button>
+                </Button>
               </li>
             ))}
           </ul>

@@ -9,6 +9,7 @@ import Link from "next/link";
 import LoadingDots from "../icons/loadingDots";
 import { motion } from "framer-motion";
 import { LeaderboardPeriod } from "@/lib/types";
+import { Spinner } from "@nextui-org/react";
 
 type LeaderboardUser = SelectUser & { points: number };
 
@@ -144,7 +145,7 @@ const MainLeaderboard = ({
                       //         </span>
                       //         <HoverBorderGradient
                       //           containerClassName="ml-2 mr-auto w-min"
-                      //           className={`duration-400 w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all hover:bg-slate-900`}
+                      //           className={`duration-400 w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all hover:`}
                       //           color={siteData.color1}
                       //         >
                       //           <span style={{ color: siteData.color1 }}>
@@ -192,7 +193,7 @@ const MainLeaderboard = ({
                               </span>
                               <HoverBorderGradient
                                 containerClassName="ml-2 mr-auto w-min"
-                                className={`duration-400 w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all hover:bg-slate-900`}
+                                className={`duration-400 hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all`}
                                 color={siteData.color1}
                               >
                                 <span style={{ color: siteData.color1 }}>
@@ -258,7 +259,7 @@ const MainLeaderboard = ({
         {filteredData.length === 0 && !loading ? (
           <div className="pt-4 text-center">No data available</div>
         ) : loading ? (
-          <LoadingDots color="gray" />
+          <Spinner />
         ) : null}
       </div>
     </div>

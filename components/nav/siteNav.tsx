@@ -17,7 +17,8 @@ import { CoolMode } from "@/components/ui/coolMode";
 import { ModalBody, Modal, ModalContent } from "../ui/animatedModal";
 import { Story } from "../fanzone/story";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
-import Input from "../input";
+import { Input } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 
 export default function SiteNav({
   data,
@@ -107,12 +108,12 @@ export default function SiteNav({
 
   return (
     <>
-      <button
+      <Button
         className={`relative z-20 rounded-md p-2 shadow-md hover:opacity-75 sm:hidden`}
         onClick={() => setShowSidebar(!showSidebar)}
       >
         <Menu width={20} className="text-stone-100" />
-      </button>
+      </Button>
       <div
         className={`transform ${
           showSidebar
@@ -182,7 +183,7 @@ export default function SiteNav({
           </div>
         </div>
         <div>
-          <div className="my-2 border-t border-stone-700" />
+          <div className="my-2 border-t " />
           {children}
         </div>
       </div>
@@ -192,7 +193,7 @@ export default function SiteNav({
             <div className="flex flex-col items-center justify-center gap-4">
               <Story siteData={data} />
               {session ? (
-                <button onClick={subscribe}>
+                <Button onClick={subscribe}>
                   <HoverBorderGradient
                     containerClassName="py-2 px-8"
                     className="flex items-center gap-2"
@@ -200,17 +201,16 @@ export default function SiteNav({
                     Stay Notified
                     <Bell width={18} />
                   </HoverBorderGradient>
-                </button>
+                </Button>
               ) : (
                 <div className="flex w-[400px] flex-col items-center gap-2">
-                  <input
+                  <Input
                     type="text"
                     placeholder="hi@vycto.com"
-                    className="relative z-10 my-4 w-full rounded-lg border  border-neutral-800 bg-neutral-950  placeholder:text-neutral-700  focus:ring-2 focus:ring-gray-300"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />{" "}
-                  <button onClick={subscribe}>
+                  <Button onClick={subscribe}>
                     <HoverBorderGradient
                       containerClassName="py-2 px-8"
                       className="flex items-center gap-2"
@@ -218,7 +218,7 @@ export default function SiteNav({
                       Stay Notified
                       <Bell width={18} />
                     </HoverBorderGradient>
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>

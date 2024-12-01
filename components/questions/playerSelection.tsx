@@ -5,6 +5,7 @@ import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import FlipText from "../ui/flipText";
+import { Button, Card, CardFooter } from "@nextui-org/react";
 
 const PlayerComponent = ({
   name,
@@ -20,25 +21,32 @@ const PlayerComponent = ({
   disabled?: boolean;
 }) => {
   return (
-    <button
-      className={`flex cursor-pointer flex-col items-center rounded-lg border-2 p-2 shadow-sm transition duration-200 ${
-        selectedPlayer === name ? "border-yellow-500" : "border-transparent"
+    <Card
+      isFooterBlurred
+      className={`relative flex h-[200px] w-[200px] overflow-hidden rounded-lg shadow-sm transition duration-200 ${
+        selectedPlayer === name ? "border-2 border-yellow-500" : "border-none"
       }`}
-      disabled={disabled}
-      type="submit"
-      onClick={() => setSelectedPlayer(name)}
     >
-      <Image
-        src={image || "/player.png"}
-        alt={name}
-        width={128}
-        height={96}
-        className={`rounded-md object-cover object-center ${
-          selectedPlayer !== name ? "opacity-50" : "opacity-100"
-        }`}
-      />
-      <div className="mt-2 w-fit text-wrap text-center">{name}</div>
-    </button>
+      <Button
+        disabled={disabled}
+        onClick={() => {
+          setSelectedPlayer(name);
+        }}
+        className="relative h-full w-full rounded-none bg-none p-0"
+      >
+        <Image
+          src={image || "/player.png"}
+          alt={name}
+          fill
+          className={`rounded-md object-cover object-center ${
+            selectedPlayer !== name ? "opacity-50" : "opacity-100"
+          }`}
+        />
+      </Button>
+      <CardFooter className="border-1 bg-background/20 absolute bottom-1 z-10 flex w-full justify-center overflow-hidden rounded-lg border-white/20 py-1 text-center shadow-sm">
+        {name}
+      </CardFooter>
+    </Card>
   );
 };
 

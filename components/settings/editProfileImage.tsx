@@ -57,8 +57,8 @@ export default function EditProfileImage() {
             src={`https://avatar.vercel.sh/${session.user.email}`}
           />
         )}
-        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-full border border-gray-400">
-          <div className="absolute -bottom-0 -right-0 h-10 w-10 rounded-full border-2 border-gray-200 bg-white p-2 hover:bg-gray-200">
+        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-full border ">
+          <div className="absolute -bottom-0 -right-0 h-10 w-10 rounded-full border-2  bg-white p-2 ">
             <PencilIcon className="h-full w-full " />
           </div>
         </div>

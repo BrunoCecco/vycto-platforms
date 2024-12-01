@@ -152,7 +152,7 @@ export default function LoginButton({
               <LoadingAnimation />
             </div>
           ) : (
-            <Button type="submit" disabled={loading} onClick={checkEmail}>
+            <Button type="submit" isDisabled={loading} onClick={checkEmail}>
               <p className="text-sm font-medium">Let&apos;s Play!</p>
             </Button>
           )}

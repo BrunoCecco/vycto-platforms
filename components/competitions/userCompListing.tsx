@@ -56,7 +56,7 @@ export default async function UserCompListing({
 
   // return a beautiful table row containing info about the reward that the user has won, if any
   return (
-    <tr className="bg-gray-800">
+    <tr className="">
       <td className="p-4 text-left">
         <div className="flex items-center">
           <div className="relative h-10 w-10 flex-shrink-0">

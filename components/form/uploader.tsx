@@ -14,6 +14,7 @@ import Image from "next/image";
 import { capitalize } from "@/lib/utils";
 import Button from "../buttons/button";
 import { X } from "lucide-react";
+import { Input, Spinner } from "@nextui-org/react";
 
 export default function Uploader({
   id,
@@ -159,7 +160,7 @@ export default function Uploader({
   };
 
   return (
-    <div className="relative grid w-full gap-6 rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-700 dark:bg-black">
+    <div className="relative grid w-full gap-6 rounded-lg border  bg-white p-5  ">
       <form className="" ref={formRef} onSubmit={handleSubmit}>
         <div>
           {title && (
@@ -172,7 +173,7 @@ export default function Uploader({
             <label htmlFor={`${id}-upload-${name}`}>
               {saving ? (
                 <div className="mx-auto flex h-20 w-20 items-center justify-center bg-transparent">
-                  <LoadingDots color="white" />
+                  <Spinner />
                 </div>
               ) : children ? (
                 children
@@ -181,7 +182,7 @@ export default function Uploader({
           ) : (
             <label
               htmlFor={`${id}-upload-${name}`}
-              className="group relative mt-2 flex h-64 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50 lg:h-80"
+              className="group relative mt-2 flex h-64 cursor-pointer flex-col items-center justify-center rounded-md border  bg-white shadow-sm transition-all  lg:h-80"
             >
               <div
                 className="absolute z-[5] h-full w-full rounded-md"
@@ -229,7 +230,7 @@ export default function Uploader({
                 } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-md px-10 transition-all ${
                   data[name]
                     ? "bg-white/80 opacity-0 hover:opacity-100 hover:backdrop-blur-md"
-                    : "bg-white opacity-100 hover:bg-gray-50"
+                    : "bg-white opacity-100 "
                 }`}
               >
                 <svg
@@ -258,7 +259,7 @@ export default function Uploader({
               </div>
               {saving && (
                 <div className="mx-auto flex h-20 w-20 items-center justify-center bg-transparent">
-                  <LoadingDots color="black" />
+                  <Spinner />
                 </div>
               )}
               {data[name] != null && !saving && (
@@ -276,7 +277,7 @@ export default function Uploader({
           )}
 
           <div className="mt-1 flex rounded-md shadow-sm">
-            <input
+            <Input
               id={`${id}-upload-${name}`}
               name={name}
               type="file"
@@ -293,11 +294,7 @@ export default function Uploader({
           className="absolute right-0 top-0 border-none p-1 font-bold"
           variant="destructive"
         >
-          {removing ? (
-            <LoadingDots />
-          ) : (
-            <X size={18} absoluteStrokeWidth={true} />
-          )}
+          {removing ? <Spinner /> : <X size={18} absoluteStrokeWidth={true} />}
         </Button>
       )}
     </div>

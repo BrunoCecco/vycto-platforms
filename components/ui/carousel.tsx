@@ -17,6 +17,7 @@ import {
   ArrowRightFromLine,
   X,
 } from "lucide-react";
+import { Button } from "@nextui-org/react";
 
 interface CarouselProps {
   items: JSX.Element[];
@@ -130,20 +131,20 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
           </div>
         </div>
         <div className="mr-10 flex justify-end gap-2">
-          <button
+          <Button
             className="bg-content3 relative z-40 flex h-10 w-10 items-center justify-center rounded-full disabled:opacity-50"
             onClick={scrollLeft}
-            disabled={!canScrollLeft}
+            isDisabled={!canScrollLeft}
           >
             <ArrowLeft className="h-4 w-4 " />
-          </button>
-          <button
+          </Button>
+          <Button
             className="bg-content3 relative z-40 flex h-10 w-10 items-center justify-center rounded-full disabled:opacity-50"
             onClick={scrollRight}
-            disabled={!canScrollRight}
+            isDisabled={!canScrollRight}
           >
             <ArrowRight className="h-4 w-4 " />
-          </button>
+          </Button>
         </div>
       </div>
     </CarouselContext.Provider>
@@ -200,7 +201,7 @@ export const Card = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 h-full w-full bg-black/80 backdrop-blur-lg"
+              className="/80 fixed inset-0 h-full w-full backdrop-blur-lg"
             />
             <motion.div
               initial={{ opacity: 0 }}
@@ -210,12 +211,12 @@ export const Card = ({
               layoutId={layout ? `card-${card.title}` : undefined}
               className="relative z-[60] mx-auto my-10 h-fit  max-w-5xl rounded-3xl  p-4 font-sans  md:p-10"
             >
-              <button
+              <Button
                 className="sticky right-0 top-4 ml-auto flex h-8 w-8 items-center justify-center rounded-full "
                 onClick={handleClose}
               >
                 <X className="h-6 w-6 " />
-              </button>
+              </Button>
               <motion.p
                 layoutId={layout ? `category-${card.title}` : undefined}
                 className="text-base font-medium "

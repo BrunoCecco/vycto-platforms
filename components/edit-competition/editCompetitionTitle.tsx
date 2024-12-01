@@ -2,7 +2,7 @@
 
 import { updateCompetitionMetadata } from "@/lib/actions";
 import { SelectCompetition } from "@/lib/schema";
-import Input from "../input";
+import { Input } from "@nextui-org/react";
 
 export default function EditCompetitionTitle({
   competition,
@@ -10,7 +10,7 @@ export default function EditCompetitionTitle({
   competition: SelectCompetition & { site: any };
 }) {
   return (
-    <div className="mb-5 flex w-full flex-col space-y-3 border-b border-stone-200 dark:border-stone-700">
+    <div className="mb-5 flex w-full flex-col space-y-3 border-b  ">
       <label htmlFor="title" className="text-xl font-bold ">
         Competition Title
       </label>
@@ -19,7 +19,7 @@ export default function EditCompetitionTitle({
         type="text"
         placeholder="Title"
         defaultValue={competition?.title || ""}
-        onBlur={async (e) => {
+        onChange={async (e) => {
           const formData = new FormData();
           formData.append("title", e.target.value);
           const response = await updateCompetitionMetadata(

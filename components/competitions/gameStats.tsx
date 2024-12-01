@@ -21,8 +21,8 @@ const GameStats: FC<GameStatsProps> = ({
   const percentile = (rank / users.length) * 100;
 
   return (
-    <div className="flex justify-center">
-      <div className="flex h-80 w-full flex-col justify-around rounded-lg border-2  px-6 py-4 shadow-sm">
+    <div className="bg-content4 flex justify-center overflow-hidden rounded-lg">
+      <div className="flex h-80 w-full flex-col justify-around px-6 py-4 shadow-sm">
         {/* Header */}
         <h2 className="text-center text-xl font-semibold ">
           Competition: {competitionTitle}

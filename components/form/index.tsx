@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import { USER_ROLES } from "@/lib/constants";
 import Button from "../buttons/button";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import CountryPicker from "../settings/countryPicker";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
@@ -105,7 +105,7 @@ export default function Form({
           }
         });
       }}
-      className="rounded-lg border border-stone-200 bg-white  dark:border-stone-700 dark:bg-black "
+      className="rounded-lg border  bg-white    "
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
         <h2 className="text-xl ">{title}</h2>
@@ -114,9 +114,9 @@ export default function Form({
         </p>
         {inputAttrs.name === "country" ? (
           <>
-            <input type="hidden" name="country" value={selectedCountry} />
+            <Input type="hidden" name="country" value={selectedCountry} />
             <ReactFlagsSelect
-              selectButtonClassName="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
+              selectButtonClassName="w-full max-w-md rounded-md border  text-sm text-stone-900 placeholder-stone-300 focus: focus:outline-none focus:ring-stone-500    dark:placeholder-stone-700"
               className=""
               selected={selectedCountry || ""}
               onSelect={(code) => setSelectedCountry(code)}
@@ -147,28 +147,21 @@ export default function Form({
         ) : inputAttrs.name === "color1" ||
           inputAttrs.name === "color2" ||
           inputAttrs.name === "color3" ? (
-          <input
+          <Input
             {...inputAttrs}
             type="color"
-            className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
+            className="focus: h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:outline-none focus:ring-stone-500    dark:placeholder-stone-700"
           />
         ) : inputAttrs.name === "subdomain" ? (
           <div className="flex w-full max-w-md">
-            <input
-              {...inputAttrs}
-              required
-              className="z-10 flex-1 rounded-l-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
-            />
-            <div className="flex items-center rounded-r-md border border-l-0 border-stone-300 bg-stone-100 px-3 text-sm dark:border-stone-600 dark:bg-stone-800 dark:text-stone-400">
+            <Input {...inputAttrs} required />
+            <div className="flex items-center rounded-r-md border border-l-0   px-3 text-sm   dark:text-stone-400">
               {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
             </div>
           </div>
         ) : inputAttrs.name === "customDomain" ? (
           <div className="relative flex w-full max-w-md">
-            <input
-              {...inputAttrs}
-              className="z-10 flex-1 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
-            />
+            <Input {...inputAttrs} />
             {inputAttrs.defaultValue && (
               <div className="absolute right-3 z-10 flex h-full items-center">
                 <DomainStatus domain={inputAttrs.defaultValue} />
@@ -176,31 +169,17 @@ export default function Form({
             )}
           </div>
         ) : inputAttrs.name === "description" || inputAttrs.name === "story" ? (
-          <textarea
-            {...inputAttrs}
-            rows={3}
-            required
-            className="w-full max-w-2xl rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
-          />
+          <Textarea {...inputAttrs} rows={3} required />
         ) : inputAttrs.name === "date" ? (
-          <input
-            {...inputAttrs}
-            type="date"
-            required
-            className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
-          />
+          <Input {...inputAttrs} type="date" required />
         ) : (
-          <input
-            {...inputAttrs}
-            required
-            className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
-          />
+          <Input {...inputAttrs} required />
         )}
       </div>
       {inputAttrs.name === "customDomain" && inputAttrs.defaultValue && (
         <DomainConfiguration domain={inputAttrs.defaultValue} />
       )}
-      <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 dark:border-stone-700 dark:bg-stone-800 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
+      <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t   p-3   sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
         <p className="mr-2 text-sm text-stone-500 dark:text-stone-400">
           {helpText}
         </p>
@@ -215,7 +194,7 @@ const FormButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <Button disabled={pending} loading={pending ? 1 : 0}>
+    <Button isDisabled={pending} loading={pending ? 1 : 0}>
       <p>Save Changes</p>
     </Button>
   );

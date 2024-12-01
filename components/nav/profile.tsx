@@ -22,7 +22,7 @@ export default function Profile() {
               `https://avatar.vercel.sh/${session.user.email}`,
           }}
         />
-        <Link href="/settings">
+        <Link href="/settings" className="text-foreground">
           <PencilIcon size={18} />
         </Link>
         <LogoutButton />

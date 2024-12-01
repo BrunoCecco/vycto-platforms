@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Uploader from "../form/uploader";
 import PointsBadge from "../competitions/pointsBadge";
-import Input from "../input";
+import { Input } from "@nextui-org/react";
 import { X } from "lucide-react";
 
 const Button = ({
@@ -115,13 +115,13 @@ const EditTrueFalse = ({
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
-            <input
+            <Input
               type="number"
               min={0}
-              value={points}
+              value={points.toString()}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 text-center text-xl font-semibold "
+              className="w-20 text-center"
             />
           ) : (
             <div className="cursor-pointer" onClick={handlePointsClick}>

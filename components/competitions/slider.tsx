@@ -2,6 +2,7 @@
 import { useState, FC, useRef, useEffect } from "react";
 import { answerQuestion } from "@/lib/actions";
 import { toast } from "sonner";
+import { Input } from "@nextui-org/react";
 
 const Slider: FC<{
   userId?: string;
@@ -55,11 +56,11 @@ const Slider: FC<{
           className="flex w-full flex-col items-center justify-center"
         >
           <div className="relative w-full">
-            <input
+            <Input
               type="range"
               min="0"
               max="90"
-              value={value}
+              value={value.toString()}
               disabled={disabled}
               onChange={handleChange}
               onBlur={handleBlur}

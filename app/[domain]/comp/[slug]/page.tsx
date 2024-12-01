@@ -143,7 +143,7 @@ export default async function SiteCompetitionPage({
           >
             <div className="w-full border-t border-stone-300 dark:border-stone-700" />
           </div>
-          <div className="relative z-20 mx-auto w-fit rounded-full bg-white px-6 text-center text-sm text-stone-500 dark:bg-black dark:text-stone-400">
+          <div className="relative z-20 mx-auto w-fit rounded-full bg-white px-6 text-center text-sm text-stone-500  dark:text-stone-400">
             More competitions
           </div>
         </div>

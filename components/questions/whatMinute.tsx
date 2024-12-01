@@ -29,7 +29,7 @@ const WhatMinute = ({ ...props }) => {
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
-            disabled={props.disabled}
+            isDisabled={props.disabled}
             onLocalAnswer={props.onLocalAnswer}
           />
         </div>

@@ -10,6 +10,7 @@ import va from "@vercel/analytics";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { usePostHog } from "posthog-js/react";
+import { Button, Spinner } from "@nextui-org/react";
 
 export default function SubmitAnswersForm({
   userId,
@@ -55,7 +56,7 @@ export default function SubmitAnswersForm({
 
   return (
     <div className="rounded-lg px-8 pb-8">
-      <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-green-600 bg-stone-50 p-3">
+      <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-green-600  p-3">
         <p className="text-center text-sm text-stone-500 dark:text-stone-400">
           Once submitted, you will not be able to edit your answers.
         </p>
@@ -73,17 +74,17 @@ function FormButton({
   isSubmitting: boolean;
 }) {
   return (
-    <button
+    <Button
       className={cn(
         "text-md flex items-center justify-center space-x-2 rounded-full border p-4 transition-all focus:outline-none sm:h-10",
         isSubmitting
-          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "border-green-600 bg-green-600  hover:bg-white hover:text-green-600 dark:hover:bg-transparent",
+          ? "cursor-not-allowed   text-stone-400   dark:text-stone-300"
+          : "border-green-600 bg-green-600  bg-transparent hover:bg-white hover:text-green-600",
       )}
-      disabled={isSubmitting}
+      isDisabled={isSubmitting}
       onClick={onClick}
     >
-      {isSubmitting ? <LoadingDots color="#808080" /> : <p>Submit Answers</p>}
-    </button>
+      {isSubmitting ? <Spinner /> : <p>Submit Answers</p>}
+    </Button>
   );
 }

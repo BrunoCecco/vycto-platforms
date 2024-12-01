@@ -1,5 +1,6 @@
 "use client";
 import { answerQuestion } from "@/lib/actions";
+import { Input } from "@nextui-org/react";
 import { toast } from "sonner";
 
 const Submit = ({
@@ -29,10 +30,10 @@ const Submit = ({
 
   return (
     <form className="flex items-center justify-center" action={handleSubmit}>
-      {userId && <input type="hidden" name="userId" value={userId} />}
-      <input type="hidden" name="questionId" value={questionId} />
-      <input type="hidden" name="competitionId" value={competitionId} />
-      <input type="hidden" name="answer" value={answer} />
+      {userId && <Input type="hidden" name="userId" value={userId} />}
+      <Input type="hidden" name="questionId" value={questionId} />
+      <Input type="hidden" name="competitionId" value={competitionId} />
+      <Input type="hidden" name="answer" value={answer} />
       {children}
     </form>
   );

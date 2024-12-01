@@ -8,6 +8,7 @@ import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import FlipText from "../ui/flipText";
 import { WideImage } from "./wideImage";
+import { Button } from "@nextui-org/react";
 
 const makeTransparent = (color: string, opacity: number) => {
   // color is a hex string
@@ -68,8 +69,8 @@ const GeneralSelection = ({ ...props }) => {
                 answer={option}
                 onLocalAnswer={props.onLocalAnswer}
               >
-                <button
-                  disabled={props.disabled}
+                <Button
+                  isDisabled={props.disabled}
                   className={`w-max rounded-lg px-4 py-3 text-sm transition-all duration-200 ${
                     selectedOption === option ? "font-semibold shadow-md" : ""
                   } ${!props.disabled ? "hover:font-semibold hover:shadow-md" : ""}`}
@@ -82,7 +83,7 @@ const GeneralSelection = ({ ...props }) => {
                   }}
                 >
                   {option}
-                </button>
+                </Button>
               </Submit>
             ))}
           </div>
