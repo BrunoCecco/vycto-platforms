@@ -62,7 +62,7 @@ export default async function Rewards({
           Coming soon!
         </div>
       </BackgroundGradient>
-      <div className="mb-8 flex justify-center">
+      <div className="my-8 flex justify-center">
         <Image
           src={
             session.user.image ||

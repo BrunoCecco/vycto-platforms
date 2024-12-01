@@ -29,7 +29,7 @@ const PredictionCard = async ({
       target="_blank"
       href={url}
     >
-      <div className="relative h-36 w-36 overflow-hidden rounded-lg">
+      <div className="relative h-28 w-28 overflow-hidden rounded-lg">
         <Image
           src={compData?.image ?? "/placeholder.png"}
           alt="RAPID vs CFR Cluj"
@@ -38,7 +38,7 @@ const PredictionCard = async ({
         />
       </div>
       <div>
-        <h3 className="text-2xl font-semibold">{compData?.title}</h3>
+        <h3 className="text-xl font-semibold">{compData?.title}</h3>
         <p className="text-gray-400">
           {new Date(competition.submissionDate).toDateString()}
         </p>
@@ -47,7 +47,10 @@ const PredictionCard = async ({
         </p>
       </div>
       {/* Arrow Icon in the top-right corner */}
-      <MoveUpRight className="absolute right-2 top-2 h-6 w-6 transform text-red-500 transition-transform duration-300 group-hover:-translate-y-3 group-hover:translate-x-3" />
+      <MoveUpRight
+        className="absolute right-2 top-2 h-6 w-6 transform transition-transform duration-300 group-hover:-translate-y-3 group-hover:translate-x-3"
+        style={{ color: siteData?.color1 || "darkred" }}
+      />
     </Link>
   );
 };
@@ -62,7 +65,7 @@ const Predictions = async ({
   console.log(competitions.length, title);
   return (
     <div className="w-full">
-      <h2 className="flex flex-col justify-between text-6xl font-bold leading-tight sm:flex-row">
+      <h2 className="flex flex-col justify-between text-4xl font-bold leading-tight sm:flex-row">
         <span className="sm:flex-1">{title}</span>
       </h2>
 

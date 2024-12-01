@@ -23,7 +23,7 @@ export default function ColorSchemeToggle() {
       className="group flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 hover:bg-gray-200"
     >
       {theme === "light" ? (
-        <MoonIcon className="text-white group-hover:text-black" size={20} />
+        <MoonIcon className="text-black" size={20} />
       ) : (
         <SunIcon className="text-white group-hover:text-black" />
       )}

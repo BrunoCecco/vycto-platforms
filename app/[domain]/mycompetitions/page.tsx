@@ -47,9 +47,9 @@ export default async function MyCompetitions({
   );
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen">
       {/* Main Container */}
-      <div className="mx-auto max-w-7xl pt-3">
+      <div className="mx-auto pt-3">
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* Left Profile Card with Sticky Position */}
           {/* <div className="w-full self-start lg:sticky lg:top-12 lg:w-1/3">
@@ -59,18 +59,22 @@ export default async function MyCompetitions({
           {/* Right Stats and Top Predictions */}
           <div className="w-full">
             {/* <PredictionStats /> */}
-            <div className="w-full">
-              <Predictions
-                competitions={currentCompetitions}
-                title={"Current Predictions"}
-              />
-            </div>
-            <div className="mt-12 w-full">
-              <Predictions
-                competitions={pastCompetitions}
-                title={"Past Predictions"}
-              />
-            </div>
+            {currentCompetitions && currentCompetitions?.length > 0 && (
+              <div className="mb-12 w-full">
+                <Predictions
+                  competitions={currentCompetitions}
+                  title={"Current Predictions"}
+                />
+              </div>
+            )}
+            {pastCompetitions && pastCompetitions?.length > 0 && (
+              <div className="w-full">
+                <Predictions
+                  competitions={pastCompetitions}
+                  title={"Past Predictions"}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

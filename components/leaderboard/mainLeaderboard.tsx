@@ -68,7 +68,7 @@ const MainLeaderboard = ({
   };
 
   return (
-    <div className="rounded-x container min-w-full text-white">
+    <div className="rounded-x container min-w-full">
       <LeaderboardHeader
         siteData={siteData}
         rangeType={rangeType}

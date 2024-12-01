@@ -60,7 +60,7 @@ export default async function EditCompetitions({
       </div>
 
       {currentCompetitions && currentCompetitions?.length > 0 && (
-        <h2 className="my-4 text-2xl font-semibold text-gray-800 dark:text-white">
+        <h2 className="my-4 text-2xl">
           Current Competitions{" "}
           <span role="img" aria-label="fire">
             🔥
@@ -74,7 +74,7 @@ export default async function EditCompetitions({
       </div>
 
       {pastCompetitions && pastCompetitions?.length > 0 && (
-        <h1 className="my-4 text-2xl dark:text-white">
+        <h1 className="my-4 text-2xl">
           Past Competitions{" "}
           <span role="img" aria-label="fire">
             👏

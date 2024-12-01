@@ -201,7 +201,7 @@ export default function SiteNav({
                   <input
                     type="text"
                     placeholder="hi@vycto.com"
-                    className="relative z-10 mt-4 w-full rounded-lg border  border-neutral-800 bg-neutral-950 text-white placeholder:text-neutral-700  focus:ring-2 focus:ring-gray-300"
+                    className="relative z-10 my-4 w-full rounded-lg border  border-neutral-800 bg-neutral-950 text-white placeholder:text-neutral-700  focus:ring-2 focus:ring-gray-300"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />{" "}
