@@ -19,7 +19,7 @@ export default function EditFanZoneHeader({
   return (
     <>
       {/* Top Header Section */}
-      <div className="ease left-0 right-0 top-0 z-30 flex transition-all duration-150 dark:text-white">
+      <div className="ease left-0 right-0 top-0 z-30 flex transition-all duration-150 ">
         <div className="my-6 mr-auto flex h-max items-center space-x-5 sm:my-12">
           <Form
             title="Site Logo"
@@ -42,7 +42,7 @@ export default function EditFanZoneHeader({
                 />
               )}
               <div className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white bg-gray-700 opacity-25">
-                <Plus className="h-10 w-10 text-white" />
+                <Plus className="h-10 w-10 " />
               </div>
             </div>
           </Form>
@@ -70,7 +70,7 @@ export default function EditFanZoneHeader({
           <div className="relative flex h-36 w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl sm:h-[30vw] xl:h-[20vw]">
             {data.image ? <BannerMedia src={data.image} /> : null}
             <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white bg-gray-700 opacity-25">
-              <Plus className="h-10 w-10 text-white" />
+              <Plus className="h-10 w-10 " />
             </div>
           </div>
         </Form>

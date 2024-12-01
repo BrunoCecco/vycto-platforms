@@ -30,7 +30,7 @@ export default async function SiteRewards({
     <>
       <div className="flex items-center justify-center sm:justify-start">
         <div className="flex flex-col items-center space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
-          <h1 className="text-xl font-bold dark:text-white sm:text-3xl">
+          <h1 className="text-xl font-bold  sm:text-3xl">
             Monthly rewards for {data.name}
           </h1>
         </div>
@@ -98,7 +98,7 @@ export default async function SiteRewards({
         </div>
       ) : (
         <div className="flex h-96 items-center justify-center">
-          <p className="text-lg dark:text-white">No rewards available</p>
+          <p className="text-lg ">No rewards available</p>
         </div>
       )}
     </>

@@ -44,7 +44,7 @@ const GeneralSelection = ({ ...props }) => {
 
   return (
     <div className="flex w-full items-center">
-      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
+      <div className="relative w-full rounded-lg p-4 shadow-xl md:p-10">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
@@ -53,14 +53,12 @@ const GeneralSelection = ({ ...props }) => {
         {/* Question */}
         <FlipText
           word={props.question}
-          className="mb-1 text-center text-xl font-semibold text-gray-800"
+          className="mb-1 text-center text-xl font-semibold "
         />
-        <p className="text-center text-gray-500">
-          Select correctly to score points
-        </p>
+        <p className="text-center">Select correctly to score points</p>
 
         <div className="flex flex-col justify-center pt-3">
-          <div className="flex w-full flex-wrap items-center justify-around rounded-lg bg-gray-200 p-2">
+          <div className="bg-content2 flex w-full flex-wrap items-center justify-around rounded-lg p-2">
             {goalOptions.map((option, index) => (
               <Submit
                 key={"option" + index}
@@ -72,11 +70,9 @@ const GeneralSelection = ({ ...props }) => {
               >
                 <button
                   disabled={props.disabled}
-                  className={`w-max rounded-lg px-4 py-3 text-sm text-black transition-all duration-200 ${
-                    selectedOption === option
-                      ? "bg-white font-semibold shadow-md"
-                      : ""
-                  } ${!props.disabled ? "hover:bg-white hover:font-semibold hover:shadow-md" : ""}`}
+                  className={`w-max rounded-lg px-4 py-3 text-sm transition-all duration-200 ${
+                    selectedOption === option ? "font-semibold shadow-md" : ""
+                  } ${!props.disabled ? "hover:font-semibold hover:shadow-md" : ""}`}
                   onClick={() => setSelectedOption(option)}
                   style={{
                     backgroundColor:

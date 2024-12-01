@@ -16,7 +16,7 @@ export default function ClaimRewardsCard({
       containerClassName="h-[350px] w-full rounded-lg p-1"
       className="flex h-full w-full flex-col justify-between"
     >
-      <div className="flex h-full w-full flex-col justify-between rounded-lg bg-slate-800 p-8">
+      <div className="bg-content3 flex h-full w-full flex-col justify-between rounded-lg p-8">
         <div className="relative h-2/3 w-full">
           <Image
             src={latestReward?.image || "/aelShirt.png"}
@@ -28,15 +28,15 @@ export default function ClaimRewardsCard({
         <h2 className="text-2xl font-bold uppercase">
           {latestReward?.title || "AEL Signed Shirt"}
         </h2>
-        <div className="mt-2 text-xs font-bold text-slate-400">
+        <div className="mt-2 text-xs font-bold">
           {latestReward?.description ||
             "This AEL signed shirt, autographed by all 22 player, stands as a powerful emblem of pride for an entire city."}
         </div>
         <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4">
-          <p className="rounded-full bg-slate-200 p-1 px-2 text-xs font-bold text-black">
+          <p className="bg-content4 rounded-full p-1 px-2 text-xs font-bold">
             EXCLUSIVE PRIZE
           </p>
-          <p className="text-sm text-slate-400">COMING SOON...</p>
+          <p className="text-sm ">COMING SOON...</p>
         </div>
       </div>
     </BackgroundGradient>

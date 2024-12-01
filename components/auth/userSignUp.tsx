@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import { OAuthProvider } from "firebase/auth";
 import { signIn } from "next-auth/react";
+import { Button, Divider, Input } from "@nextui-org/react";
 
 const UserSignUp = ({
   siteData,
@@ -50,6 +51,37 @@ const UserSignUp = ({
     }
   };
 
+  const handleGoogleSignin = async () => {
+    // Check if the user is on the Instagram browser
+    const isInstagramBrowser = navigator.userAgent.includes("Instagram");
+
+    if (isInstagramBrowser) {
+      // Construct the safari redirect URL with the current page
+      const currentUrl = window.location.href;
+      const safariRedirectUrl = `x-safari-${currentUrl}`;
+
+      // Redirect to safari
+      window.location.href = safariRedirectUrl;
+      return;
+    }
+
+    setLoading(true);
+    posthog?.capture("google-sign-in-clicked");
+
+    try {
+      const res = await signIn("google", {
+        redirect: false,
+      });
+      console.log("User signed in: ", res);
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error("Error during sign in with Google: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleAppleSignin = async () => {
     setLoading(true);
     posthog?.capture("apple-sign-in-clicked");
@@ -82,7 +114,7 @@ const UserSignUp = ({
           alt="Site Logo"
           className="object-contain"
         />
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-1 text-xs ">
           Powered by{" "}
           <span className="text-md font-bold text-blue-700">Vycto</span>
         </p>
@@ -95,65 +127,66 @@ const UserSignUp = ({
         className="mb-4 object-contain"
       />
 
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-3">
         {emailExists && (
-          <h1 className="mt-4 text-2xl font-bold text-blue-700">
-            Sign Up & Play
-          </h1>
+          <h1 className="mt-4 text-2xl font-bold ">Sign Up & Play</h1>
         )}
 
         {emailExists && (
-          <div className="mt-4 flex w-full flex-col gap-4 md:flex-row">
-            <button
-              onClick={() => handleAppleSignin()} // Use Firebase Facebook sign-in
-              className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-gray-100 p-2 font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-300 md:w-full"
-            >
+          <>
+            <Button onClick={() => handleGoogleSignin()}>
               <Image
-                src="/appleIcon.svg"
+                alt="google"
+                src={"/googleIcon.svg"}
+                width={18}
+                height={18}
+                className="mr-2 text-2xl "
+              />
+              <div className="text-sm ">Continue with Google</div>
+            </Button>
+            <Button onClick={() => handleAppleSignin()}>
+              <Image
+                alt="apple"
+                src={"/appleIcon.svg"}
                 width={20}
                 height={20}
-                alt="Apple Logo"
-                className="mr-2"
+                className="dark: mr-2 text-2xl "
               />
-              <span>Continue with Apple</span>
-            </button>
-          </div>
+              <div className="text-sm ">Continue with Apple</div>
+            </Button>
+          </>
         )}
 
         {emailExists && (
           <div className="mt-4 flex items-center justify-between">
-            <div className="h-[1px] w-[40%] bg-gray-300" />
-            <p className="text-gray-400">or</p>
-            <div className="h-[1px] w-[40%] bg-gray-300" />
+            <div className="bg-content2 h-[1px] w-[40%]" />
+            <p className="">or</p>
+            <div className="bg-content2 h-[1px] w-[40%]" />
           </div>
         )}
 
         <div className="flex w-full flex-col !text-xs">
           {emailExists && (
             <div className="mt-4">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-500"
-              >
+              <label htmlFor="email" className="mb-2 block text-sm font-medium">
                 Email Address
               </label>
-              <input
+              <Input
                 id="email"
                 type="email"
                 autoComplete="email"
                 placeholder="buzz@lightyear.com"
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-xs placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               />
             </div>
           )}
           {!emailExists && (
             <>
-              <h1 className="mt-4 text-lg font-bold text-blue-700">
+              <h1 className="mt-4 text-lg font-bold ">
                 Bravo 🎉 Let the Competition begin!
               </h1>
 
-              <p className="mt-4 text-sm text-gray-600">
+              <p className="mt-4 text-sm">
                 Choose a username. This is what people will see when you enter
                 competitions and compete on the leaderboard.
               </p>
@@ -161,31 +194,29 @@ const UserSignUp = ({
               <div className="mt-4">
                 <label
                   htmlFor="username"
-                  className="block text-sm font-medium text-gray-700"
+                  className="mb-2 block text-sm font-medium"
                 >
                   Username
                 </label>
-                <input
+                <Input
                   id="username"
                   type="username"
                   placeholder="buzz123"
                   onChange={(e) => setUsername(e.target.value)}
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-xs placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                 />
               </div>
               <div className="mt-4">
                 <label
                   htmlFor="fullname"
-                  className="block text-sm font-medium text-gray-700"
+                  className="mb-2 block text-sm font-medium"
                 >
                   Full Name
                 </label>
-                <input
+                <Input
                   id="fullname"
                   type="text"
                   placeholder="Buzz Lightyear"
                   onChange={(e) => setName(e.target.value)}
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-xs placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                 />
               </div>
             </>
@@ -203,10 +234,10 @@ const UserSignUp = ({
         </div>
       </div>
 
-      <p className="mt-4 text-xs text-gray-500">
+      <p className="mt-4 text-xs ">
         By continuing you agree to the{" "}
         <a
-          className="font-semibold text-gray-800"
+          className="font-semibold"
           href="https://vycto.com/terms&conditions"
           rel="noreferrer"
           target="_blank"
@@ -218,7 +249,7 @@ const UserSignUp = ({
           href="https://vycto.com/privacy-policy"
           rel="noreferrer"
           target="_blank"
-          className="font-semibold text-gray-800"
+          className="font-semibold "
         >
           Privacy Policy
         </a>

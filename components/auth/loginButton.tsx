@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import { validateEmail } from "@/lib/utils";
-import Button from "../buttons/button";
+import { Button } from "@nextui-org/react";
 
 const LoadingAnimation: React.FC = () => {
   return (
@@ -152,19 +152,14 @@ export default function LoginButton({
               <LoadingAnimation />
             </div>
           ) : (
-            <Button
-              type="submit"
-              disabled={loading}
-              onClick={checkEmail}
-              className="w-full cursor-pointer"
-            >
+            <Button type="submit" disabled={loading} onClick={checkEmail}>
               <p className="text-sm font-medium">Let&apos;s Play!</p>
             </Button>
           )}
         </>
       )}
       {message && (
-        <p className="text-center text-sm font-bold text-stone-700 dark:text-gray-400">
+        <p className="dark: text-center text-sm font-bold text-stone-700">
           {message}
         </p>
       )}

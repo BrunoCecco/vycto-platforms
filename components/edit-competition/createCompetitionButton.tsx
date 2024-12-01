@@ -32,7 +32,7 @@ export default function CreateCompetitionButton() {
         "flex items-center justify-center rounded-lg font-medium transition-all focus:outline-none",
         isPending
           ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "active:bg-stone-100 dark:border-stone-700 dark:bg-stone-900 dark:text-white dark:hover:border-blue-500",
+          : "active:bg-stone-100 dark:border-stone-700 dark:bg-stone-900  dark:hover:border-blue-500",
       )}
       disabled={isPending}
     >
@@ -41,9 +41,9 @@ export default function CreateCompetitionButton() {
       ) : (
         <div className="h-full w-full rounded-lg shadow-md transition-all hover:shadow-2xl">
           <div className="flex h-48 w-full items-center justify-center rounded-t-lg border border-white bg-gray-800">
-            <Plus className="h-10 w-10 text-white" />
+            <Plus className="h-10 w-10 " />
           </div>
-          <h2 className="flex h-32 items-center justify-center p-6 text-lg font-semibold text-white">
+          <h2 className="flex h-32 items-center justify-center p-6 text-lg font-semibold ">
             Create a competition
           </h2>
         </div>

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const PoweredBadge = () => {
   return (
-    <div className="relative mx-auto flex max-w-72 flex-col items-center justify-center rounded-lg bg-gradient-to-br from-[#868CFF] to-[#4318FF] p-6 text-center text-white">
+    <div className="relative mx-auto flex max-w-72 flex-col items-center justify-center rounded-lg bg-gradient-to-br from-[#868CFF] to-[#4318FF] p-6 text-center ">
       {/* V Logo Image */}
       <div className="relative -top-14 mb-2">
         <div className="h-20 w-20 rounded-full border-4 border-white bg-gradient-to-br from-[#868CFF] to-[#4318FF] p-4">

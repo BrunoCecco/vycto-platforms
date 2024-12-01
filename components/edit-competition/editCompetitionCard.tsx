@@ -50,8 +50,8 @@ const EditCompetitionCard = async ({
       <div className="flex h-32 flex-col justify-between px-4 pb-4 pt-2 text-left">
         {/* Title & Sponsor Section */}
         <div>
-          <h2 className="text-gray-80 font-semibold">{data.title}</h2>
-          <p className="text-sm text-gray-600 ">{data.sponsor}</p>
+          <h2 className="font-semibold">{data.title}</h2>
+          <p className="text-sm  ">{data.sponsor}</p>
         </div>
 
         {/* Status & Edit Button */}
@@ -74,7 +74,7 @@ const EditCompetitionCard = async ({
           </div>
           <Link
             href={`/competition/${data.id}/editor`}
-            className="w-24 rounded-lg p-2 text-center text-white hover:opacity-75"
+            className="w-24 rounded-lg p-2 text-center  hover:opacity-75"
             style={{ backgroundColor: data.site?.color2 || "black" }}
           >
             Edit

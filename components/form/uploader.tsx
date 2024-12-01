@@ -68,11 +68,11 @@ export default function Uploader({
         toast(
           <div className="relative">
             <div className="p-2">
-              <p className="font-semibold text-gray-900">File uploaded!</p>
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="font-semibold ">File uploaded!</p>
+              <p className="mt-1 text-sm ">
                 Your file has been uploaded to{" "}
                 <a
-                  className="font-medium text-gray-900 underline"
+                  className="font-medium  underline"
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -163,7 +163,7 @@ export default function Uploader({
       <form className="" ref={formRef} onSubmit={handleSubmit}>
         <div>
           {title && (
-            <div className="mb-4 space-y-1 text-black dark:text-stone-200">
+            <div className="mb-4 space-y-1  dark:text-stone-200">
               <h2 className="text-xl font-semibold">{capitalize(title)}</h2>
               <p className="text-sm  dark:text-stone-200">{description}</p>
             </div>
@@ -235,7 +235,7 @@ export default function Uploader({
                 <svg
                   className={`${
                     dragActive ? "scale-110" : "scale-100"
-                  } h-7 w-7 text-gray-500 transition-all duration-75 group-hover:scale-110 group-active:scale-95`}
+                  } h-7 w-7  transition-all duration-75 group-hover:scale-110 group-active:scale-95`}
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="24"
@@ -250,12 +250,10 @@ export default function Uploader({
                   <path d="M12 12v9"></path>
                   <path d="m16 16-4-4-4 4"></path>
                 </svg>
-                <p className="mt-2 text-center text-sm text-gray-500">
+                <p className="mt-2 text-center text-sm ">
                   Drag and drop or click to upload.
                 </p>
-                <p className="mt-2 text-center text-sm text-gray-500">
-                  Max file size: 50MB
-                </p>
+                <p className="mt-2 text-center text-sm ">Max file size: 50MB</p>
                 <span className="sr-only">Photo upload</span>
               </div>
               {saving && (

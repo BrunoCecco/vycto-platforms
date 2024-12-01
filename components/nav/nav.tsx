@@ -176,7 +176,7 @@ export default function Nav({
         } sm:hidden `}
         onClick={() => setShowSidebar(!showSidebar)}
       >
-        <Menu width={20} className="dark:text-white" />
+        <Menu width={20} className="" />
       </button>
       <div
         className={`transform ${
@@ -204,8 +204,8 @@ export default function Nav({
                 key={name}
                 href={href}
                 className={`flex items-center space-x-3 ${
-                  isActive ? "bg-stone-200 text-black dark:bg-stone-700" : ""
-                } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-stone-700 dark:active:bg-stone-800`}
+                  isActive ? "bg-stone-200  dark:bg-stone-700" : ""
+                } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300  dark:hover:bg-stone-700 dark:active:bg-stone-800`}
               >
                 {icon}
                 <span className="text-sm font-medium">{name}</span>

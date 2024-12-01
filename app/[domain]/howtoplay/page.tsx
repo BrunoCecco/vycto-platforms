@@ -7,13 +7,13 @@ export default async function HowToPlayPage() {
   // explain how to play with beautiful layouy
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="mb-6 text-3xl font-bold text-white">How to Play</h1>
+      <h1 className="mb-6 text-3xl font-bold">How to Play</h1>
 
       <CardSpotlight className="flex flex-col items-center rounded-lg p-6 shadow-lg">
-        <h2 className=" relative z-20 mb-4 text-2xl font-semibold text-white">
+        <h2 className=" relative z-20 mb-4 text-2xl font-semibold">
           1. Enter a Competition
         </h2>
-        <p className="relative z-20 mb-4 text-gray-300">
+        <p className="relative z-20 mb-4 ">
           Browse our active competitions and click &ldquo;Play&ldquo;.
         </p>
         <Image
@@ -21,17 +21,17 @@ export default async function HowToPlayPage() {
           alt="Play Button"
           width={300}
           height={300}
-          className="relative z-20"
+          className="relative z-20 overflow-hidden rounded-md"
         />
       </CardSpotlight>
 
-      <ArrowBigDown className="mx-auto h-12 w-12 text-gray-300" />
+      <ArrowBigDown className="mx-auto h-12 w-12 " />
 
       <CardSpotlight className="flex flex-col items-center rounded-lg p-6 shadow-lg">
-        <h2 className="relative z-20 mb-4 text-2xl font-semibold text-white">
+        <h2 className="relative z-20 mb-4 text-2xl font-semibold ">
           2. Answer Questions
         </h2>
-        <p className="relative z-20 mb-4 text-gray-300">Submit your answers!</p>
+        <p className="relative z-20 mb-4 ">Submit your answers!</p>
         <Image
           src={"/answerQuestion.png"}
           alt="Answer Questions"
@@ -41,13 +41,13 @@ export default async function HowToPlayPage() {
         />
       </CardSpotlight>
 
-      <ArrowBigDown className="mx-auto h-12 w-12 text-gray-300" />
+      <ArrowBigDown className="mx-auto h-12 w-12 " />
 
       <CardSpotlight className="flex flex-col items-center rounded-lg p-6 shadow-lg">
-        <h2 className="relative z-20 mb-4 text-2xl font-semibold text-white">
+        <h2 className="relative z-20 mb-4 text-2xl font-semibold ">
           3. Earn Points
         </h2>
-        <p className="relative z-20  mb-4 text-gray-300">
+        <p className="relative z-20  mb-4 ">
           Points will be calculated after the event and you will be placed on a
           leaderboard.
         </p>
@@ -60,17 +60,17 @@ export default async function HowToPlayPage() {
         />
       </CardSpotlight>
 
-      <ArrowBigDown className="mx-auto h-12 w-12 text-gray-300" />
+      <ArrowBigDown className="mx-auto h-12 w-12 " />
 
       <CardSpotlight className="flex flex-col items-center rounded-lg p-6 shadow-lg">
-        <h2 className="relative z-20  mb-4 text-2xl font-semibold text-white">
+        <h2 className="relative z-20  mb-4 text-2xl font-semibold ">
           4. Win Rewards
         </h2>
-        <p className="relative z-20  mb-4 text-gray-300">
+        <p className="relative z-20  mb-4 ">
           Top performers in each competition have a chance to win exciting
           rewards.
         </p>
-        <p className="mb-4 text-gray-300">
+        <p className="mb-4 ">
           Check the competition details for specific reward information.
         </p>
         <Image

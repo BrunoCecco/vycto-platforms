@@ -51,7 +51,7 @@ export default function CompetitionModal({
                 <span>
                   A chance to{" "}
                   <span
-                    className="rounded-lg p-2 text-white"
+                    className="rounded-lg p-2 "
                     style={{ backgroundColor: siteData.color1 }}
                   >
                     win

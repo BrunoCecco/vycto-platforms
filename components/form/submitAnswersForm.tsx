@@ -78,7 +78,7 @@ function FormButton({
         "text-md flex items-center justify-center space-x-2 rounded-full border p-4 transition-all focus:outline-none sm:h-10",
         isSubmitting
           ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "border-green-600 bg-green-600 text-white hover:bg-white hover:text-green-600 dark:hover:bg-transparent",
+          : "border-green-600 bg-green-600  hover:bg-white hover:text-green-600 dark:hover:bg-transparent",
       )}
       disabled={isSubmitting}
       onClick={onClick}

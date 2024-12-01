@@ -9,14 +9,14 @@ const PredictionStats = () => {
         <div className="mt-12 flex flex-col items-center justify-between gap-4 sm:flex-row sm:items-start">
           <div className="text-5xl font-bold">
             12.3K
-            <p className="text-sm font-normal text-gray-400">points</p>
+            <p className="text-sm font-normal ">points</p>
           </div>
           <div className="text-5xl font-bold">
             13
-            <p className="text-sm font-normal text-gray-400">victories</p>
+            <p className="text-sm font-normal ">victories</p>
           </div>
           <div className="text-5xl font-bold">
-            1<p className="text-sm font-normal text-gray-400">mvp</p>
+            1<p className="text-sm font-normal ">mvp</p>
           </div>
         </div>
       </div>
@@ -24,8 +24,7 @@ const PredictionStats = () => {
       {/* Top Predictions Section */}
       <div className="mt-12">
         <h2 className="text-2xl font-bold">
-          top predictions{" "}
-          <span className="font-normal text-gray-400">powered by</span>{" "}
+          top predictions <span className="font-normal ">powered by</span>{" "}
           <span className="text-red-500">Superbet</span>
         </h2>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -36,7 +35,7 @@ const PredictionStats = () => {
               layout="fill"
               objectFit="cover"
             />
-            <span className="absolute left-2 top-2 text-lg font-bold text-white">
+            <span className="absolute left-2 top-2 text-lg font-bold ">
               3 - 0
             </span>
           </div>
@@ -47,7 +46,7 @@ const PredictionStats = () => {
               layout="fill"
               objectFit="cover"
             />
-            <span className="absolute left-2 top-2 text-lg font-bold text-white">
+            <span className="absolute left-2 top-2 text-lg font-bold ">
               5 - 2
             </span>
           </div>

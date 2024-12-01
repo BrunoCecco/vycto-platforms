@@ -25,7 +25,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
     users.find((u: { userId: any }) => u.userId === session.user.id);
 
   return (
-    <div className="mx-auto flex w-full flex-col items-center justify-center bg-white md:rounded-3xl">
+    <div className="mx-auto flex w-full flex-col items-center justify-center md:rounded-3xl">
       {/* Placeholder for Image or Graphic */}
       <div className="my-4 w-full overflow-hidden rounded-xl">
         <BlurImage
@@ -40,14 +40,14 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
       </div>
 
       {/* Text section */}
-      <div className="text-center text-stone-800">
+      <div className="text-center ">
         <h1 className="text-2xl font-bold md:text-3xl ">
           Competition: {data.title}
         </h1>
         <div className="pt-2 text-xl ">
-          by <span style={{ color: data.site?.color2 }}>{data.site?.name}</span>
+          by <span className="font-bold italic">{data.site?.name}</span>
         </div>
-        <div className="m-auto w-10/12 pt-4 text-sm font-light text-stone-800 md:text-base ">
+        <div className="m-auto w-10/12 pt-4 text-sm font-light md:text-base">
           {DateTime.fromISO(data.date)
             .setLocale("en-UK")
             .toLocaleString(DateTime.DATE_FULL)}
@@ -71,7 +71,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
             width={80}
           />
         </div>
-        <div className="text-md ml-3 inline-block align-middle md:text-lg dark:text-white">
+        <div className="text-md ml-3 inline-block align-middle md:text-lg ">
           by{" "}
           <span className="font-semibold">
             {data?.site?.user?.name ??

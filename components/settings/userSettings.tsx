@@ -42,9 +42,7 @@ export default function UserSettings() {
   ) : (
     <div className="flex flex-col space-y-12">
       <div className="flex flex-col space-y-6">
-        <h1 className="font-cal text-3xl font-bold dark:text-white">
-          Settings
-        </h1>
+        <h1 className="font-cal text-3xl font-bold ">Settings</h1>
         <div className="w-full">
           <CombinedForm
             title={"Profile"}

@@ -83,7 +83,7 @@ const AdminTable = () => {
                       className="rounded-full object-contain"
                     />
                   </div>
-                  <span className="text-gray-900">
+                  <span className="">
                     {user.name || user.username || "user" + index}
                   </span>
                 </td>
@@ -95,7 +95,7 @@ const AdminTable = () => {
                     {user.email}
                   </a>
                 </td>
-                <td className="px-4 py-3 text-gray-500">
+                <td className="px-4 py-3 ">
                   {new Date(user.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-3">

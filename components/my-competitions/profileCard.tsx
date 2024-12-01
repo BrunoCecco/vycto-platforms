@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const ProfileCard = () => {
   return (
-    <div className="relative flex w-full flex-col items-center rounded-lg bg-white p-6 text-black shadow-md">
+    <div className="relative flex w-full flex-col items-center rounded-lg bg-white p-6  shadow-md">
       {/* Image */}
       <div className="relative h-60 w-52 overflow-hidden rounded-lg">
         <Image

@@ -4,7 +4,7 @@ import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
 import { useRef, useState } from "react";
 import { MinusCircle, PlusCircle } from "lucide-react";
-import Input from "../input";
+import { Input } from "@nextui-org/react";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import FlipText from "../ui/flipText";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
@@ -17,7 +17,7 @@ const GeneralNumber = ({ ...props }) => {
 
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
+      <div className="relative h-full w-full rounded-lg p-6 shadow-xl">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
@@ -26,11 +26,9 @@ const GeneralNumber = ({ ...props }) => {
         {/* Question */}
         <TextGenerateEffect
           words={props.question}
-          className="mb-1 text-center text-xl font-semibold text-gray-800"
+          className="mb-1 text-center text-xl font-semibold "
         />
-        <p className="mb-6 text-center text-gray-500">
-          Answer correctly to score points.
-        </p>
+        <p className="mb-6 text-center">Answer correctly to score points.</p>
 
         <Submit
           userId={props.userId}

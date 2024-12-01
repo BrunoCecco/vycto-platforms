@@ -121,7 +121,7 @@ const EditTrueFalse = ({
               value={points}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 text-center text-xl font-semibold text-gray-800"
+              className="w-20 text-center text-xl font-semibold "
             />
           ) : (
             <div className="cursor-pointer" onClick={handlePointsClick}>
@@ -150,9 +150,7 @@ const EditTrueFalse = ({
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
         </div>
-        <p className="mb-4 text-center text-gray-500">
-          Select correctly to score points.
-        </p>
+        <p className="mb-4 text-center ">Select correctly to score points.</p>
 
         <div className="flex justify-around gap-4 text-center">
           <Button

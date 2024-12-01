@@ -17,14 +17,14 @@ export default async function UserCompetitionsPage({
   }
 
   return (
-    <div className="overflow-scroll text-white">
+    <div className="overflow-scroll">
       <h1 className="mb-4 text-lg font-bold">
         {user?.username || user?.name || "User " + user?.id.substring(0, 5)}{" "}
         competitions
       </h1>
       <table className="w-full overflow-hidden rounded-lg">
         <thead>
-          <tr className="bg-gray-700">
+          <tr className="">
             <th className="p-4 text-left">Competition</th>
             <th className="p-4 text-left">Result</th>
             <th className="p-4 text-left">Reward</th>

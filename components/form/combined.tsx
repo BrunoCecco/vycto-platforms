@@ -9,9 +9,8 @@ import DomainConfiguration from "./domainConfiguration";
 import va from "@vercel/analytics";
 import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
-import Button from "../buttons/button";
 import CountryPicker from "../settings/countryPicker";
-import { Select, SelectItem } from "../select";
+import { Select, SelectItem, Button, Input, Textarea } from "@nextui-org/react";
 import { USER_ROLES } from "@/lib/constants";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
@@ -91,7 +90,7 @@ export default function CombinedForm({
 
   return (
     <div className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black">
-      <h2 className="p-5 text-xl text-black dark:text-white">{title}</h2>
+      <h2 className="p-5 text-xl  ">{title}</h2>
       <div className="flex flex-col sm:flex-row">
         {hasImage && ( //hasImage means hasProfileImage
           <div className="w-full pl-5 pt-5 sm:w-1/3">
@@ -136,55 +135,52 @@ export default function CombinedForm({
                       value={selectedCountry}
                     />
                     <ReactFlagsSelect
-                      selectButtonClassName="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-                      className="text-black"
+                      selectButtonClassName="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
+                      className=""
                       selected={selectedCountry || ""}
                       onSelect={(code) => setSelectedCountry(code)}
                     />
                   </>
                 ) : inputAttr.name === "role" ? (
-                  <div className="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
-                    <Select name="role" defaultValue={inputAttr.defaultValue}>
-                      {USER_ROLES.map((role) => (
-                        <SelectItem key={role} value={role}>
-                          {role}
-                        </SelectItem>
-                      ))}
-                    </Select>
-                  </div>
+                  <Select
+                    aria-label="role"
+                    name="role"
+                    defaultSelectedKeys={[inputAttr.defaultValue]}
+                  >
+                    {USER_ROLES.map((role) => (
+                      <SelectItem key={role} value={role}>
+                        {role}
+                      </SelectItem>
+                    ))}
+                  </Select>
                 ) : inputAttr.name === "font" ? (
-                  <div className="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700">
-                    <Select name="font" defaultValue={inputAttr.defaultValue}>
-                      <SelectItem value="font-cal">Cal Sans</SelectItem>
-                      <SelectItem value="font-lora">Lora</SelectItem>
-                      <SelectItem value="font-work">Work Sans</SelectItem>
-                    </Select>
-                  </div>
+                  <Select
+                    aria-label="Font"
+                    name="font"
+                    defaultSelectedKeys={[inputAttr.defaultValue]}
+                  >
+                    <SelectItem key="font-cal">Cal Sans</SelectItem>
+                    <SelectItem key="font-lora">Lora</SelectItem>
+                    <SelectItem key="font-work">Work Sans</SelectItem>
+                  </Select>
                 ) : inputAttr.name === "color1" ||
                   inputAttr.name === "color2" ||
                   inputAttr.name === "color3" ? (
-                  <input
+                  <Input
                     {...inputAttr}
                     type="color"
-                    className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+                    className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
                   />
                 ) : inputAttr.name === "subdomain" ? (
                   <div className="flex w-full">
-                    <input
-                      {...inputAttr}
-                      required
-                      className="z-10 flex-1 rounded-l-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-                    />
+                    <Input {...inputAttr} required />
                     <div className="flex items-center rounded-r-md border border-l-0 border-stone-300 bg-stone-100 px-3 text-sm dark:border-stone-600 dark:bg-stone-800 dark:text-stone-400">
                       {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
                     </div>
                   </div>
                 ) : inputAttr.name === "customDomain" ? (
                   <div className="relative flex w-full">
-                    <input
-                      {...inputAttr}
-                      className="z-10 flex-1 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-                    />
+                    <Input {...inputAttr} />
                     {inputAttr.defaultValue && (
                       <div className="absolute right-3 z-10 flex h-full items-center">
                         <DomainStatus domain={inputAttr.defaultValue} />
@@ -192,25 +188,11 @@ export default function CombinedForm({
                     )}
                   </div>
                 ) : inputAttr.name === "description" ? (
-                  <textarea
-                    {...inputAttr}
-                    rows={3}
-                    required
-                    className="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-                  />
+                  <Textarea {...inputAttr} rows={3} required />
                 ) : inputAttr.name.includes("date") ? (
-                  <input
-                    {...inputAttr}
-                    type="date"
-                    required
-                    className="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-                  />
+                  <Input {...inputAttr} type="date" required />
                 ) : (
-                  <input
-                    {...inputAttr}
-                    required
-                    className="w-full rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-                  />
+                  <Input {...inputAttr} required />
                 )}
               </div>
             );
@@ -237,8 +219,8 @@ const FormButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <Button disabled={pending} loading={pending ? 1 : 0}>
-      <p>Save Changes</p>
+    <Button disabled={pending} type="submit">
+      {pending ? <LoadingDots /> : <p>Save Changes</p>}
     </Button>
   );
 };

@@ -14,18 +14,16 @@ const MatchOutcome = ({ ...props }) => {
 
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
+      <div className="relative w-full rounded-lg p-4 shadow-xl md:p-10">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
         {/* Match Info */}
         <FlipText
           word={props.question}
-          className="mb-1 text-center text-xl font-semibold text-gray-800"
+          className="mb-1 text-center text-xl font-semibold "
         />
-        <p className="text-center text-sm text-gray-500">
-          Pick the winner to score points
-        </p>
+        <p className="text-center text-sm">Pick the winner to score points</p>
 
         {/* Teams */}
         <div className="flex w-full items-center justify-between py-4 md:justify-around md:px-4">
@@ -54,9 +52,7 @@ const MatchOutcome = ({ ...props }) => {
                     className="object-contain"
                   />
                 </div>
-                <p className="text-sm font-semibold text-gray-700">
-                  {props.answer1}
-                </p>
+                <p className="text-sm font-semibold ">{props.answer1}</p>
               </div>
             </button>
           </Submit>
@@ -64,7 +60,7 @@ const MatchOutcome = ({ ...props }) => {
           {/* VS */}
           <div className="text-center">
             <div
-              className="rounded-full border-2 p-2 pr-3 text-sm font-bold italic text-black md:text-xl"
+              className="rounded-full border-2 p-2 pr-3 text-sm font-bold italic md:text-xl"
               style={{ borderColor: props.color, color: props.color }}
             >
               VS
@@ -96,9 +92,7 @@ const MatchOutcome = ({ ...props }) => {
                     className="object-contain"
                   />
                 </div>
-                <p className="text-sm font-semibold text-gray-700">
-                  {props.answer2}
-                </p>
+                <p className="text-sm font-semibold ">{props.answer2}</p>
               </div>
             </button>
           </Submit>
@@ -115,7 +109,7 @@ const MatchOutcome = ({ ...props }) => {
             onLocalAnswer={props.onLocalAnswer}
           >
             <button
-              className={`w-24 rounded-full border-2  bg-white p-2 text-sm font-semibold ${
+              className={`w-24 rounded-full border-2 p-2 text-sm font-semibold ${
                 selectedOutcome == "Draw" ? "opacity-100" : "opacity-50"
               }`}
               disabled={props.disabled}

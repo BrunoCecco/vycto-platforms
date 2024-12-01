@@ -14,11 +14,11 @@ const B2BSignUp: React.FC = () => {
   return (
     <SignUpWrapper>
       <div className="mx-auto w-full max-w-md">
-        <h2 className="mb-6 text-3xl font-bold text-gray-900">Sign In</h2>
-        {/* <p className="mb-8 text-gray-600">
+        <h2 className="mb-6 text-3xl font-bold ">Sign In</h2>
+        {/* <p className="mb-8 ">
             Enter your email and password to sign in!
           </p>
-          <button className="mb-6 flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 py-2 text-gray-700 shadow-sm hover:bg-gray-50">
+          <button className="mb-6 flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 py-2  shadow-sm hover:bg-gray-50">
             <Image src={"/googleIcon.svg"} width={20} height={20} alt={""} />
             Sign in with Google
           </button>
@@ -27,16 +27,13 @@ const B2BSignUp: React.FC = () => {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-2 text-gray-500">or</span>
+              <span className="bg-white px-2 ">or</span>
             </div>
           </div> */}
         <div className="space-y-6">
           {/* Email Field */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="email" className="block text-sm font-medium ">
               Email <span>*</span>
             </label>
             <div className="mt-1">
@@ -53,12 +50,12 @@ const B2BSignUp: React.FC = () => {
             </div>
             {!emailExists && (
               <div>
-                <p className="mt-2 text-center text-sm text-gray-600">
+                <p className="mt-2 text-center text-sm ">
                   Welcome! Please choose a username.
                 </p>
                 <label
                   htmlFor="username"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium "
                 >
                   Username
                 </label>
@@ -81,7 +78,7 @@ const B2BSignUp: React.FC = () => {
           {/* <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium "
               >
                 Password <span>*</span>
               </label>
@@ -101,9 +98,9 @@ const B2BSignUp: React.FC = () => {
                   className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-500" />
+                    <EyeOff className="h-5 w-5 " />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-500" />
+                    <Eye className="h-5 w-5 " />
                   )}
                 </button>
               </div>
@@ -118,7 +115,7 @@ const B2BSignUp: React.FC = () => {
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
+                  className="ml-2 block text-sm "
                 >
                   Keep me logged in
                 </label>

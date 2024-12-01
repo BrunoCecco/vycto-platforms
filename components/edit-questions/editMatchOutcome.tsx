@@ -91,7 +91,7 @@ const EditMatchOutcome = ({
               value={points}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
+              className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold "
             />
           ) : (
             <div onClick={() => setIsEditingPoints(true)}>
@@ -101,10 +101,10 @@ const EditMatchOutcome = ({
         </div>
 
         {/* Match Info */}
-        <h2 className="text-lg font-semibold text-gray-800 md:text-xl">
+        <h2 className="text-lg font-semibold  md:text-xl">
           {homeTeam} vs {awayTeam}
         </h2>
-        <p className="text-sm text-gray-500">Pick the winner to score points</p>
+        <p className="text-sm ">Pick the winner to score points</p>
 
         {/* Teams */}
         <div className="flex w-full flex-col items-center justify-between gap-4 py-4 md:justify-around md:px-4">
@@ -125,17 +125,17 @@ const EditMatchOutcome = ({
                 value={homeTeam}
                 onChange={(e) => setHomeTeam(e.target.value)}
                 onBlur={() => handleInputBlur("answer1", homeTeam)}
-                className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
+                className="border-b-2 border-gray-300 text-center text-sm font-semibold "
               />
             ) : (
               <p
-                className="cursor-pointer border-2 text-sm font-semibold text-gray-700"
+                className="cursor-pointer border-2 text-sm font-semibold "
                 onClick={() => setIsEditingHome(true)}
               >
                 {homeTeam}
               </p>
             )}
-            <p className="text-xs text-gray-500">Home Team</p>{" "}
+            <p className="text-xs ">Home Team</p>{" "}
             {/* Add dynamic position if needed */}
           </div>
 
@@ -163,17 +163,17 @@ const EditMatchOutcome = ({
                 value={awayTeam}
                 onChange={(e) => setAwayTeam(e.target.value)}
                 onBlur={() => handleInputBlur("answer2", awayTeam)}
-                className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
+                className="border-b-2 border-gray-300 text-center text-sm font-semibold "
               />
             ) : (
               <p
-                className="cursor-pointer border-2 text-sm font-semibold text-gray-700"
+                className="cursor-pointer border-2 text-sm font-semibold "
                 onClick={() => setIsEditingAway(true)}
               >
                 {awayTeam}
               </p>
             )}
-            <p className="text-xs text-gray-500">Away Team</p>{" "}
+            <p className="text-xs ">Away Team</p>{" "}
             {/* Add dynamic position if needed */}
           </div>
         </div>

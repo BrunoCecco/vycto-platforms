@@ -101,7 +101,7 @@ const EditGeneralSelection = ({
               value={points}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
+              className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold "
             />
           ) : (
             <div onClick={() => setIsEditingPoints(true)}>
@@ -128,12 +128,10 @@ const EditGeneralSelection = ({
             value={editedQuestion}
             onChange={handleQuestionChange}
             onBlur={() => handleInputBlur("question", editedQuestion)}
-            className="w-full border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
+            className="w-full border-b-2 border-gray-300 text-center text-xl font-semibold "
           />
         </div>
-        <p className="text-center text-gray-500">
-          Select correctly to score points
-        </p>
+        <p className="text-center ">Select correctly to score points</p>
 
         {/* Editable GoalSelector Options */}
         <div className="flex flex-col items-center justify-center pt-3">
@@ -153,7 +151,7 @@ const EditGeneralSelection = ({
                     setEditedCorrectAnswer(option);
                     handleInputBlur("correctAnswer", option);
                   }}
-                  className={`flex h-10 w-10 items-center justify-center rounded-md border border-gray-400 text-gray-500 hover:border-green-500 hover:text-green-500 focus:outline-none
+                  className={`flex h-10 w-10 items-center justify-center rounded-md border border-gray-400  hover:border-green-500 hover:text-green-500 focus:outline-none
                   ${editedCorrectAnswer == option ? "border-green-500 text-green-500" : ""}`}
                 >
                   <Check />

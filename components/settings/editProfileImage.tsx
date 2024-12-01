@@ -41,7 +41,7 @@ export default function EditProfileImage() {
       }}
       handleSubmit={handleSubmit}
     >
-      <div className="relative mx-auto h-[150px] w-[150px] cursor-pointer text-black">
+      <div className="relative mx-auto h-[150px] w-[150px] cursor-pointer ">
         {session?.user.image != null ? (
           <Image
             className="h-full w-full rounded-full object-contain"
@@ -59,7 +59,7 @@ export default function EditProfileImage() {
         )}
         <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-full border border-gray-400">
           <div className="absolute -bottom-0 -right-0 h-10 w-10 rounded-full border-2 border-gray-200 bg-white p-2 hover:bg-gray-200">
-            <PencilIcon className="h-full w-full text-black" />
+            <PencilIcon className="h-full w-full " />
           </div>
         </div>
       </div>

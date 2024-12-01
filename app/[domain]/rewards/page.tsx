@@ -53,12 +53,12 @@ export default async function Rewards({
   const siteRewards = await getSiteRewards(domain);
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen">
       <BackgroundGradient
-        containerClassName="h-[50px] w-full rounded-lg p-1"
+        containerClassName="h-[50px] w-full rounded-lg"
         className="p-0"
       >
-        <div className="flex h-full w-full items-center rounded-lg bg-slate-800 p-2 font-bold">
+        <div className="bg-content3 flex h-full w-full items-center rounded-lg p-2 font-bold">
           Coming soon!
         </div>
       </BackgroundGradient>
@@ -74,10 +74,7 @@ export default async function Rewards({
           alt="Profile Image"
         />
       </div>
-      <TextGenerateEffect
-        words="Your Rewards"
-        className="mb-8 text-2xl text-white"
-      />
+      <TextGenerateEffect words="Your Rewards" className="mb-8 text-2xl" />
       <div className="mb-8 grid w-full grid-cols-1 items-center justify-center gap-8 md:grid-cols-3">
         <div className="col-span-1 md:mr-auto">
           <PendingRewards count={0} amount={0} />

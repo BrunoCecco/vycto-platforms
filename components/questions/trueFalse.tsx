@@ -23,10 +23,10 @@ const Button = ({
   return (
     <button
       type="submit"
-      className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 transition-all duration-200 hover:bg-blue-50 hover:opacity-75"
+      className="border-background w-24 rounded-full border-2 p-2 text-sm font-semibold transition-all duration-200 hover:opacity-75"
       style={{
-        backgroundColor: selected ? color || "blue" : "white",
-        color: selected ? "white" : color || "blue",
+        backgroundColor: selected ? color || "blue" : "background",
+        color: selected ? "background" : color || "blue",
         borderColor: color || "blue",
       }}
       disabled={disabled}
@@ -42,7 +42,7 @@ const TrueFalse = ({ ...props }) => {
 
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
+      <div className="relative h-full w-full rounded-lg p-6 shadow-xl">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
@@ -51,11 +51,9 @@ const TrueFalse = ({ ...props }) => {
         {/* Question */}
         <FlipText
           word={props.question}
-          className="mb-1 text-center text-xl font-semibold text-gray-800"
+          className="mb-1 text-center text-xl font-semibold "
         />
-        <p className="mb-6 text-center text-gray-500">
-          Select correctly to score points
-        </p>
+        <p className="mb-6 text-center ">Select correctly to score points</p>
 
         <div className="flex justify-around">
           <Submit

@@ -56,7 +56,7 @@ const FanZone = async ({
           />
         </Suspense>
       ) : (
-        <h2 className="mb-24 py-4 text-lg font-semibold italic text-slate-200">
+        <h2 className="mb-24 py-4 text-lg font-semibold italic ">
           No past competitions yet. Stay tuned for more! Coming soon! 🔥
         </h2>
       )}

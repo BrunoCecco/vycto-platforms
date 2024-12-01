@@ -19,7 +19,7 @@ const EngagementTime = () => {
           <span className="text-lg font-medium">Engagement</span>
         </div>
         <div className="flex items-center space-x-8">
-          <span className="text-lg font-medium text-gray-600">Game Time</span>
+          <span className="text-lg font-medium ">Game Time</span>
           <BarChart2 size={24} className="h-8 w-8 pb-1" color="#6C63FF" />
         </div>
       </div>
@@ -27,7 +27,7 @@ const EngagementTime = () => {
       <div className="flex items-start space-x-10">
         <div>
           <h2 className="text-2xl font-bold">350.4hrs</h2>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs ">
             Total Spent
             <span className="ml-2 text-green-500">+2.45%</span>
           </p>
@@ -58,7 +58,7 @@ const EngagementTime = () => {
               />
             </LineChart>
           </ResponsiveContainer>
-          <div className="flex justify-between pt-4 text-sm text-gray-400">
+          <div className="flex justify-between pt-4 text-sm ">
             {data.map((entry, index) => (
               <span key={index}>{entry.name}</span>
             ))}

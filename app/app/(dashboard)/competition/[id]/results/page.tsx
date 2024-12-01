@@ -46,9 +46,7 @@ export default async function CompetitionResults({
   return (
     <div className="flex flex-col space-y-12">
       <div className="flex flex-col space-y-6">
-        <h1 className="text-3xl font-bold dark:text-white">
-          Competition Results
-        </h1>
+        <h1 className="text-3xl font-bold">Competition Results</h1>
         <CompetitionWinners
           winnerData={winnerData}
           url={url}

@@ -1,9 +1,10 @@
 "use client";
 import { redirect } from "next/navigation";
-import Link from "next/link";
+import { Link, User } from "@nextui-org/react";
 import Image from "next/image";
 import LogoutButton from "../auth/logoutButton";
 import { useSession } from "next-auth/react";
+import { PencilIcon } from "lucide-react";
 
 export default function Profile() {
   const { data: session, status, update } = useSession();
@@ -11,23 +12,18 @@ export default function Profile() {
   return (
     session && (
       <div className="flex w-full items-center justify-between">
-        <Link
-          href="/settings"
-          className="flex w-5/6 flex-1 items-center space-x-3 rounded-lg px-2 py-1.5 text-white transition-all duration-150 ease-in-out hover:bg-stone-700 active:bg-stone-800"
-        >
-          <Image
-            src={
+        <User
+          name={
+            session.user.name || session.user.username || session.user.email
+          }
+          avatarProps={{
+            src:
               session.user.image ||
-              `https://avatar.vercel.sh/${session.user.email}`
-            }
-            width={40}
-            height={40}
-            alt={session.user.name ?? "User avatar"}
-            className="h-6 w-6 rounded-full"
-          />
-          <span className="truncate text-sm font-medium">
-            {session.user.name || session.user.username || session.user.email}
-          </span>
+              `https://avatar.vercel.sh/${session.user.email}`,
+          }}
+        />
+        <Link href="/settings">
+          <PencilIcon size={18} />
         </Link>
         <LogoutButton />
       </div>

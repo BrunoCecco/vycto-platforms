@@ -268,7 +268,7 @@ input[type="range"]::-ms-thumb {
 
 @layer base {
   :root {
-    --background: white;
+    --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -295,7 +295,7 @@ input[type="range"]::-ms-thumb {
     --radius: 0.5rem;
   }
   .dark {
-    --background: red;
+    --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;

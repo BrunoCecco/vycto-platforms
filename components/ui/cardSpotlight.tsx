@@ -35,7 +35,7 @@ export const CardSpotlight = ({
   return (
     <div
       className={cn(
-        "group/spotlight relative rounded-md border border-neutral-800 bg-black p-10 dark:border-neutral-800",
+        "group/spotlight border-content3 relative rounded-md border p-10",
         className,
       )}
       onMouseMove={handleMouseMove}
@@ -44,9 +44,9 @@ export const CardSpotlight = ({
       {...props}
     >
       <motion.div
-        className="pointer-events-none absolute -inset-px z-0 rounded-md opacity-0 transition duration-300 group-hover/spotlight:opacity-100"
+        className="bg-content3 pointer-events-none absolute -inset-px z-0 rounded-md opacity-0 transition duration-300 group-hover/spotlight:opacity-100"
         style={{
-          backgroundColor: color,
+          // backgroundColor: color,
           maskImage: useMotionTemplate`
             radial-gradient(
               ${radius}px circle at ${mouseX}px ${mouseY}px,

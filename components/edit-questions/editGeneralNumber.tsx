@@ -95,7 +95,7 @@ const EditGeneralNumber = ({
               value={points}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 text-center text-xl font-semibold text-gray-800"
+              className="w-20 text-center text-xl font-semibold "
             />
           ) : (
             <div className="cursor-pointer" onClick={handlePointsClick}>

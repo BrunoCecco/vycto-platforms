@@ -18,21 +18,21 @@ const Retention = () => {
               <CheckCircle2 size={28} className="text-emerald-400" />
               <div>
                 <h3 className="font-semibold">Participant Growth</h3>
-                <span className="text-sm text-gray-500">March</span>
+                <span className="text-sm ">March</span>
               </div>
             </div>
             <div className="flex items-center space-x-2">
               <ArrowRight size={28} className="text-blue-500" />
               <div>
                 <h3 className="font-semibold">Fan Retention</h3>
-                <span className="text-sm text-gray-500">March</span>
+                <span className="text-sm ">March</span>
               </div>
             </div>
             <div className="flex items-center space-x-2">
               <Flame size={28} className="text-red-500" />
               <div>
                 <h3 className="font-semibold">Word of Mouth</h3>
-                <span className="text-sm text-gray-500">March</span>
+                <span className="text-sm ">March</span>
               </div>
             </div>
           </div>
@@ -41,15 +41,15 @@ const Retention = () => {
         {/* Right Section (Grid) */}
         <div className="grid w-2/3 grid-cols-3 justify-evenly">
           {/* Column Titles */}
-          <span className="text-center text-gray-500">Growth</span>
-          <span className="text-center text-gray-500">March</span>
-          <span className="text-center text-gray-500">April</span>
+          <span className="text-center ">Growth</span>
+          <span className="text-center ">March</span>
+          <span className="text-center ">April</span>
 
           {/* Participant Growth Data */}
           <span className="text-center text-lg font-semibold text-emerald-500">
             + 35%
           </span>
-          <span className="text-center text-gray-600">3.2K</span>
+          <span className="text-center ">3.2K</span>
           <div className="flex justify-center">
             <span className="text-green-500">4.1K</span>
           </div>
@@ -58,7 +58,7 @@ const Retention = () => {
           <span className="text-center text-lg font-semibold text-emerald-500">
             + 13%
           </span>
-          <span className="text-center text-gray-600">570</span>
+          <span className="text-center ">570</span>
           <div className="flex justify-center">
             <span className="text-green-500">690</span>
           </div>
@@ -67,7 +67,7 @@ const Retention = () => {
           <span className="text-center text-lg font-semibold text-red-500">
             - 2.3%
           </span>
-          <span className="text-center text-gray-600">132</span>
+          <span className="text-center ">132</span>
           <div className="flex justify-center">
             <span className="text-red-500">127</span>
           </div>

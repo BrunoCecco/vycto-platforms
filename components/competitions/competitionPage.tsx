@@ -227,7 +227,7 @@ export default function CompetitionPage({
 
   return (
     <div className="w-full pb-5 sm:pb-20">
-      <div className="h-max overflow-hidden bg-white px-8 py-8 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
+      <div className="bg-content1 h-max overflow-hidden px-8 py-8 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
         <CompetitionHeader
           session={session}
           users={users}
@@ -240,7 +240,7 @@ export default function CompetitionPage({
         )}
         {activeTab == "Challenge" && (
           <TracingBeam color1={siteData.color1} color2={siteData.color2}>
-            <div className="mx-auto flex w-full flex-col justify-center gap-12 bg-white py-12 md:gap-20 md:rounded-3xl">
+            <div className="mx-auto flex w-full flex-col justify-center gap-12 py-12 md:gap-20 md:rounded-3xl">
               {userComp && "submitted" in userComp && userComp.submitted ? (
                 <GameStats
                   competitionTitle={data.title!}
@@ -268,13 +268,13 @@ export default function CompetitionPage({
                     </div>
                   );
                 })}
-              {ended ? (
-                <div className="text-md mx-auto rounded-xl border-red-600 bg-red-600 p-4 text-white">
+              {!ended ? (
+                <div className="text-md mx-auto rounded-xl border-red-600 bg-red-400 p-4">
                   Competition Ended
                 </div>
               ) : session ? (
                 userComp && "submitted" in userComp && userComp.submitted ? (
-                  <div className="text-md mx-auto rounded-xl border-green-600 bg-green-600 p-4 text-white">
+                  <div className="text-md mx-auto rounded-xl border-green-600 bg-green-400 p-4">
                     Answers Submitted
                   </div>
                 ) : (
@@ -286,13 +286,11 @@ export default function CompetitionPage({
                   />
                 )
               ) : (
-                <div className="rounded-md border border-stone-200 p-8 dark:border-stone-400 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md">
-                  <UserSignUp
-                    siteData={siteData}
-                    localAnswers={localAnswers}
-                    competitionSlug={slug}
-                  />
-                </div>
+                <UserSignUp
+                  siteData={siteData}
+                  localAnswers={localAnswers}
+                  competitionSlug={slug}
+                />
               )}
             </div>
           </TracingBeam>

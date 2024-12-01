@@ -34,13 +34,13 @@ const GuessScore = ({ ...props }) => {
 
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
+      <div className="relative w-full rounded-lg p-4 shadow-xl md:p-10">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
         <FlipText
           word={"Guess the score"}
-          className="mb-1 text-center text-xl font-semibold text-gray-800"
+          className="mb-1 text-center text-xl font-semibold"
         />
 
         {/* Teams */}
@@ -55,7 +55,7 @@ const GuessScore = ({ ...props }) => {
             className="flex w-full items-center justify-between gap-4 py-4 md:justify-around md:px-4"
             onBlur={() => submitButton?.current?.click()}
           >
-            <div className="flex flex-col items-center gap-4 text-gray-500">
+            <div className="flex flex-col items-center gap-4">
               <div className="flex items-center gap-4 md:gap-8">
                 <button
                   onClick={() => updateScore("home", false)}
@@ -84,7 +84,7 @@ const GuessScore = ({ ...props }) => {
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-4 text-gray-500">
+            <div className="flex flex-col items-center gap-4">
               <div className="flex items-center gap-4 md:gap-8">
                 <button
                   onClick={() => updateScore("away", false)}

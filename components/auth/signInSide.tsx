@@ -8,10 +8,8 @@ import { usePostHog } from "posthog-js/react";
 import * as React from "react";
 import { useState } from "react";
 import LoginButton from "./loginButton";
-import Button from "../buttons/button";
-import { Apple, AppleIcon, MoonIcon, SunIcon } from "lucide-react";
+import { Button, Input } from "@nextui-org/react";
 import { useTheme } from "next-themes";
-import ColorSchemeToggle from "../ui/colorSchemeToggle";
 
 export default function SignInSide({
   siteData,
@@ -103,17 +101,14 @@ export default function SignInSide({
 
   return (
     <div>
-      <div className="bg-white dark:bg-[rgba(19,19,24,0.6)]">
+      <div className="">
         <div
-          className="relative z-10 flex w-full justify-end bg-[rgba(255,255,255,0.2)] transition-all delay-100 duration-500 dark:bg-[rgba(19,19,24,0.6)] md:w-[50vw]"
+          className="relative z-10 flex w-full justify-end transition-all delay-100 duration-500 md:w-[50vw]"
           style={{ backdropFilter: "blur(12px)" }}
         >
           <div className="flex min-h-[100vh] w-full flex-col px-2">
-            <header className="flex justify-end pt-2">
-              <ColorSchemeToggle />
-            </header>
             <div
-              className="m-auto pb-2 dark:text-white"
+              className="m-auto pb-2 "
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -137,57 +132,47 @@ export default function SignInSide({
               >
                 <div className="gap-1">
                   {emailExists ? (
-                    <h1 className="text-2xl font-bold dark:text-white">
+                    <h1 className="text-2xl font-bold ">
                       <div>Sign In & Play </div>
                     </h1>
                   ) : (
-                    <h1 className="mb-2 dark:text-white">
+                    <h1 className="mb-2 ">
                       <div>Bravo&nbsp;🎉 &nbsp;Let the Competition begin!</div>
                     </h1>
                   )}
                 </div>
                 {emailExists && (
                   <>
-                    <Button
-                      onClick={() => handleGoogleSignin()}
-                      className="w-full bg-gray-200 hover:bg-gray-300 dark:border-none dark:bg-gray-800 dark:hover:bg-gray-700"
-                    >
+                    <Button onClick={() => handleGoogleSignin()}>
                       <Image
                         alt="google"
                         src={"/googleIcon.svg"}
                         width={18}
                         height={18}
-                        className="mr-2 text-2xl text-white dark:text-gray-200"
+                        className="dark: mr-2 text-2xl "
                       />
-                      <div className="text-sm text-black dark:text-white">
-                        Continue with Google
-                      </div>
+                      <div className="text-sm ">Continue with Google</div>
                     </Button>
-                    <Button
-                      onClick={() => handleAppleSignin()}
-                      className="w-full bg-gray-200 hover:bg-gray-300 dark:border-none dark:bg-gray-800 dark:hover:bg-gray-700"
-                    >
+                    <Button onClick={() => handleAppleSignin()}>
                       <Image
                         alt="apple"
                         src={"/appleIcon.svg"}
                         width={20}
                         height={20}
-                        className="mr-2 text-2xl text-white dark:text-gray-200"
+                        className="dark: mr-2 text-2xl "
                       />
-                      <div className="text-sm text-black dark:text-white">
-                        Continue with Apple
-                      </div>
+                      <div className="e text-sm">Continue with Apple</div>
                     </Button>
                   </>
                 )}
               </div>
 
               {emailExists ? (
-                <div className="text-center dark:text-white">
+                <div className="text-center ">
                   <div>or</div>
                 </div>
               ) : (
-                <div className="mb-2 text-sm dark:text-white">
+                <div className="mb-2 text-sm ">
                   Choose a username. This is what people will see on the
                   leaderboard when you enter competitions.
                 </div>
@@ -199,41 +184,38 @@ export default function SignInSide({
                 <form className="flex flex-col gap-2">
                   {emailExists ? (
                     <div>
-                      <label className="dark:text-white">
+                      <label className="">
                         <div>Email</div>
                       </label>
-                      <input
+                      <Input
                         id="email"
                         type="email"
                         autoComplete="email"
                         onChange={(e) => setEmail(e.target.value)}
-                        className="mt-1 block w-full rounded-md border border-gray-300 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
                       />
                     </div>
                   ) : (
                     <>
                       <div>
-                        <label className="dark:text-white">
+                        <label className="">
                           <div>Username</div>
                         </label>
-                        <input
+                        <Input
                           id="username"
                           type="username"
                           autoComplete="username"
                           onChange={(e) => setUsername(e.target.value)}
-                          className="mt-1 block w-full rounded-md border border-gray-300 px-2 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
                         />
                       </div>
                       <div>
-                        <label className="dark:text-white">
+                        <label className="">
                           <div>Full Name</div>
                         </label>
-                        <input
+                        <Input
                           id="fullname"
                           type="fullname"
                           autoComplete="fullname"
                           onChange={(e) => setName(e.target.value)}
-                          className="mt-1 block w-full rounded-md border border-gray-300 px-2 py-1.5 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800"
                         />
                       </div>
                     </>
@@ -251,7 +233,7 @@ export default function SignInSide({
                       <p className="text-xs">
                         By continuing you agree to the{" "}
                         <a
-                          className="font-semibold text-gray-800 dark:text-gray-300"
+                          className="dark: font-semibold "
                           href="https://vycto.com/terms&conditions"
                           rel="noreferrer"
                           target="_blank"
@@ -263,7 +245,7 @@ export default function SignInSide({
                           href="https://vycto.com/privacy-policy"
                           rel="noreferrer"
                           target="_blank"
-                          className="font-semibold text-gray-800 dark:text-gray-300"
+                          className="dark: font-semibold "
                         >
                           Privacy Policy
                         </a>
@@ -273,7 +255,7 @@ export default function SignInSide({
                 </form>
               </div>
             </div>
-            <footer className="py-3 dark:text-white">
+            <footer className="py-3 ">
               <div className="text-center">
                 <div className="flex items-center justify-center">
                   <div className="pr-1.5 font-space">powered by</div>

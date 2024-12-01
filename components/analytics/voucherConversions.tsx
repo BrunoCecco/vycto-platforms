@@ -26,18 +26,16 @@ const VoucherConversions: React.FC = () => {
           </span>
         </div>
         <div className="flex items-center space-x-4">
-          <span className="text-lg font-medium text-gray-600">
-            Voucher Conversions
-          </span>
-          <MoreHorizontal className="h-6 w-6 text-gray-500" />
+          <span className="text-lg font-medium ">Voucher Conversions</span>
+          <MoreHorizontal className="h-6 w-6 " />
         </div>
       </div>
 
       {/* Month and Arrows for Pie Chart */}
       <div className="flex items-center justify-between border-2 pb-4 pr-4 md:w-1/2">
-        <ChevronLeft className="h-5 w-5 cursor-pointer text-gray-400" />
-        <span className="px-2 text-gray-600">April</span>
-        <ChevronRight className="h-5 w-5 cursor-pointer text-gray-400" />
+        <ChevronLeft className="h-5 w-5 cursor-pointer " />
+        <span className="px-2 ">April</span>
+        <ChevronRight className="h-5 w-5 cursor-pointer " />
       </div>
 
       {/* Pie Chart and Details */}
@@ -69,38 +67,32 @@ const VoucherConversions: React.FC = () => {
             {/* Details with Subheading for April */}
             <div className="border-b pb-2">
               <div className="flex items-center justify-between">
-                <div className="text-sm font-bold text-gray-800">
-                  Vouchers Sent
-                </div>
-                <div className="text-base font-bold text-gray-800">
+                <div className="text-sm font-bold ">Vouchers Sent</div>
+                <div className="text-base font-bold ">
                   1512 <span className="text-green-500">↑</span>
                 </div>
               </div>
-              <div className="-mt-1 text-xs text-gray-500">April</div>
+              <div className="-mt-1 text-xs ">April</div>
             </div>
 
             <div className="border-b pb-2">
               <div className="flex items-center justify-between">
-                <div className="text-sm font-bold text-gray-800">
-                  Vouchers Opened
-                </div>
-                <div className="text-base font-bold text-gray-800">
+                <div className="text-sm font-bold ">Vouchers Opened</div>
+                <div className="text-base font-bold ">
                   940 <span className="text-green-500">↑</span>
                 </div>
               </div>
-              <div className="-mt-1 text-xs text-gray-500">April</div>
+              <div className="-mt-1 text-xs ">April</div>
             </div>
 
             <div className="border-b pb-2">
               <div className="flex items-center justify-between">
-                <div className="text-sm font-bold text-gray-800">
-                  Vouchers Used
-                </div>
-                <div className="text-base font-bold text-gray-800">
+                <div className="text-sm font-bold ">Vouchers Used</div>
+                <div className="text-base font-bold ">
                   382 <span className="text-green-500">↑</span>
                 </div>
               </div>
-              <div className="-mt-1 text-xs text-gray-500">April</div>
+              <div className="-mt-1 text-xs ">April</div>
             </div>
           </div>
         </div>

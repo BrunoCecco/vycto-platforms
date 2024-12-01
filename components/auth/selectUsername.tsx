@@ -21,17 +21,14 @@ const SelectUsername = () => {
         Bravo 🎉 Let the Competition begin!
       </h1>
 
-      <p className="mt-2 text-gray-600">
+      <p className="mt-2 ">
         Choose a username. This is what people will see when you enter
         competitions and compete on the leaderboard.
       </p>
 
       <form onSubmit={handleSubmit} className="w-full space-y-10">
         <div className="text-left">
-          <label
-            htmlFor="username"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="username" className="block text-sm font-medium ">
             Username
           </label>
           <input
@@ -45,7 +42,7 @@ const SelectUsername = () => {
         </div>
         <button
           type="submit"
-          className="w-full rounded-md border border-transparent bg-blue-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="w-full rounded-md border border-transparent bg-blue-700 px-4 py-2 text-sm font-medium  shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           Next
         </button>

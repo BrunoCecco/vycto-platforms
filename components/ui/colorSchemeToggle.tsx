@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@nextui-org/react";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
@@ -17,16 +18,16 @@ export default function ColorSchemeToggle() {
   }, [currentTheme]);
 
   return (
-    <button
+    <Button
       aria-label="toggle light/dark mode"
       onClick={() => (theme == "dark" ? setTheme("light") : setTheme("dark"))}
-      className="group flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 hover:bg-gray-200"
+      className="group z-50 min-w-0 cursor-pointer rounded-md px-2"
     >
       {theme === "light" ? (
-        <MoonIcon className="text-black" size={20} />
+        <MoonIcon className="" size={20} />
       ) : (
-        <SunIcon className="text-white group-hover:text-black" />
+        <SunIcon className=" group-hover:" size={20} />
       )}
-    </button>
+    </Button>
   );
 }

@@ -90,7 +90,7 @@ const EditGuessScore = ({
               value={points}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold text-gray-800"
+              className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold "
             />
           ) : (
             <div onClick={() => setIsEditingPoints(true)}>
@@ -99,13 +99,11 @@ const EditGuessScore = ({
           )}
         </div>
 
-        <h2 className="mb-12 text-xl font-semibold text-gray-800">
-          Guess the score 🔥
-        </h2>
+        <h2 className="mb-12 text-xl font-semibold ">Guess the score 🔥</h2>
 
         {/* Teams */}
         <div className="flex w-full items-center justify-between gap-4 py-4 md:justify-around md:px-4">
-          <div className="flex flex-col items-center gap-4 text-gray-500">
+          <div className="flex flex-col items-center gap-4 ">
             <div className="flex items-center gap-4 md:gap-8">
               <button onClick={() => setScoreHome(Math.max(scoreHome - 1, 0))}>
                 <MinusCircle />
@@ -122,7 +120,7 @@ const EditGuessScore = ({
                 value={homeTeam}
                 onChange={(e) => setHomeTeam(e.target.value)}
                 onBlur={() => handleInputBlur("answer1", homeTeam)}
-                className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
+                className="border-b-2 border-gray-300 text-center text-sm font-semibold "
               />
             ) : (
               <p
@@ -141,7 +139,7 @@ const EditGuessScore = ({
             </div>
           </div>
 
-          <div className="flex flex-col items-center gap-4 text-gray-500">
+          <div className="flex flex-col items-center gap-4 ">
             <div className="flex items-center gap-4 md:gap-8">
               <button onClick={() => setScoreAway(Math.max(scoreAway - 1, 0))}>
                 <MinusCircle />
@@ -158,7 +156,7 @@ const EditGuessScore = ({
                 value={awayTeam}
                 onChange={(e) => setAwayTeam(e.target.value)}
                 onBlur={() => handleInputBlur("answer2", awayTeam)}
-                className="border-b-2 border-gray-300 text-center text-sm font-semibold text-gray-800"
+                className="border-b-2 border-gray-300 text-center text-sm font-semibold "
               />
             ) : (
               <p

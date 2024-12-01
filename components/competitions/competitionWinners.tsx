@@ -17,7 +17,7 @@ const User = ({
 }) => {
   return (
     <div key={user.userId} className="flex w-full items-center gap-4 border-b">
-      <div className="pr-2 text-gray-900">{index + 1}</div>
+      <div className="pr-2 ">{index + 1}</div>
       <div className="flex items-center py-4">
         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
           <Image
@@ -28,13 +28,11 @@ const User = ({
             className="overflow-hidden rounded-full object-cover"
           />
         </div>
-        <span className="ml-2 font-bold text-gray-900">
+        <span className="ml-2 font-bold ">
           {adminView ? user.email : user.username}
         </span>
       </div>
-      <div className="py-4 text-gray-900">
-        {parseFloat(user.points || "0").toFixed(2)}
-      </div>
+      <div className="py-4 ">{parseFloat(user.points || "0").toFixed(2)}</div>
       <div className="py-4">
         <Link
           href={`${url}/${user.userId}`}

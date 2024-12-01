@@ -44,17 +44,17 @@ const Leaderboard = ({
         <table className="min-w-full table-auto border-separate sm:border-spacing-x-2">
           <thead className="pb-4">
             <tr className="pb-4">
-              <th className="order-2 py-3 text-left text-xs font-medium uppercase text-gray-500">
+              <th className="order-2 py-3 text-left text-xs font-medium uppercase ">
                 Name
               </th>
-              <th className="order-1 hidden py-3 text-center text-xs font-medium uppercase text-gray-500 sm:table-cell">
+              <th className="order-1 hidden py-3 text-center text-xs font-medium uppercase  sm:table-cell">
                 Rank
               </th>
-              <th className="order-3 text-wrap py-3 text-center text-xs font-medium uppercase text-gray-500">
+              <th className="order-3 text-wrap py-3 text-center text-xs font-medium uppercase ">
                 <span className="hidden sm:block">Points</span>
                 <span className="block sm:hidden">Pts</span>
               </th>
-              <th className="order-4 py-3 text-right text-xs font-medium uppercase text-gray-500 sm:table-cell">
+              <th className="order-4 py-3 text-right text-xs font-medium uppercase  sm:table-cell">
                 Submission
               </th>
             </tr>
@@ -65,7 +65,7 @@ const Leaderboard = ({
                 return (
                   <tr
                     key={user.userId}
-                    className="relative w-full columns-12 border-b text-left text-gray-900"
+                    className="relative w-full columns-12 border-b text-left"
                   >
                     <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
                       <div className="table-cell pr-1 sm:hidden">1</div>
@@ -87,17 +87,17 @@ const Leaderboard = ({
                         </span>
                         <HoverBorderGradient
                           containerClassName="ml-2 mr-auto w-min"
-                          className={`duration-400 w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all hover:bg-slate-900`}
+                          className={`duration-400 w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all`}
                           color={siteData.color1}
                         >
                           <span style={{ color: siteData.color1 }}>You</span>
                         </HoverBorderGradient>
                       </div>
                     </td>
-                    <td className="hidden py-4 text-center text-gray-900 sm:table-cell">
+                    <td className="hidden py-4 text-center sm:table-cell">
                       {index + 1}
                     </td>
-                    <td className="py-4 text-center text-sm text-gray-900">
+                    <td className="py-4 text-center text-sm">
                       {parseFloat(user.points || "0").toFixed(2)}
                     </td>
                     <td className="justify-end py-4 text-right">
@@ -121,7 +121,7 @@ const Leaderboard = ({
                     className="relative w-full columns-12 border-b text-left"
                   >
                     <td className="flex w-[150px] items-center space-x-2 py-4 md:w-[200px] lg:w-[300px]">
-                      <div className="table-cell pr-2 text-gray-900 sm:hidden">
+                      <div className="table-cell pr-2 sm:hidden">
                         {index + 1}
                       </div>
                       <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
@@ -136,14 +136,14 @@ const Leaderboard = ({
                           className="rounded-full object-cover"
                         />
                       </div>
-                      <span className="ml-2 w-0 flex-1 truncate text-sm font-bold text-gray-900">
+                      <span className="ml-2 w-0 flex-1 truncate text-sm font-bold">
                         @{user.username || user.email || user.name || "User"}
                       </span>
                     </td>
-                    <td className="hidden py-4 text-center text-gray-900 sm:table-cell">
+                    <td className="hidden py-4 text-center sm:table-cell">
                       {index + 1}
                     </td>
-                    <td className="py-4 text-center text-sm text-gray-900">
+                    <td className="py-4 text-center text-sm">
                       {parseFloat(user.points || "0").toFixed(2)}
                     </td>
                     <td className="justify-end py-4 text-right">

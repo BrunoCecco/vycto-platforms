@@ -22,7 +22,7 @@ const EngagementTraffic = () => {
           <span className="text-lg font-medium">Engagement</span>
         </div>
         <div className="flex items-center space-x-8">
-          <span className="text-lg font-medium text-gray-600">Traffic</span>
+          <span className="text-lg font-medium ">Traffic</span>
           <BarChart2 className="h-8 w-8 pb-1" color="#6C63FF" />
         </div>
       </div>
@@ -57,7 +57,7 @@ const EngagementTraffic = () => {
         </BarChart>
       </ResponsiveContainer>
 
-      <div className="flex justify-between pt-4 text-sm text-gray-400">
+      <div className="flex justify-between pt-4 text-sm ">
         {data.map((entry, index) => (
           <span key={index}>{entry.name}</span>
         ))}

@@ -6,7 +6,8 @@ import { ModalProvider } from "@/components/modal/provider";
 import { PostHogProvider } from "posthog-js/react";
 import posthog from "posthog-js";
 import { ThemeProvider } from "next-themes";
-import { NextUIProvider } from "@nextui-org/system";
+import { NextUIProvider } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 if (typeof window !== "undefined") {
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
@@ -18,9 +19,11 @@ if (typeof window !== "undefined") {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
   return (
     <ThemeProvider attribute="class">
-      <NextUIProvider>
+      <NextUIProvider navigate={router.push}>
         <SessionProvider>
           <ModalProvider>
             <Toaster className="dark:hidden" />

@@ -17,24 +17,9 @@ importers:
       '@next-auth/firebase-adapter':
         specifier: ^2.0.1
         version: 2.0.1(firebase-admin@11.11.1)(next-auth@4.24.7(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.6))(nodemailer@6.9.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
-      '@nextui-org/button':
-        specifier: ^2.0.38
-        version: 2.0.38(@nextui-org/system@2.2.6(@nextui-org/theme@2.2.11(tailwindcss@3.4.4))(framer-motion@10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@nextui-org/theme@2.2.11(tailwindcss@3.4.4))(framer-motion@10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nextui-org/input':
-        specifier: ^2.2.5
-        version: 2.2.5(@nextui-org/system@2.2.6(@nextui-org/theme@2.2.11(tailwindcss@3.4.4))(framer-motion@10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@nextui-org/theme@2.2.11(tailwindcss@3.4.4))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@nextui-org/react':
         specifier: ^2.4.8
         version: 2.4.8(@types/react@18.3.3)(framer-motion@10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.4)
-      '@nextui-org/select':
-        specifier: ^2.2.7
-        version: 2.2.7(@nextui-org/system@2.2.6(@nextui-org/theme@2.2.11(tailwindcss@3.4.4))(framer-motion@10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@nextui-org/theme@2.2.11(tailwindcss@3.4.4))(@types/react@18.3.3)(framer-motion@10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nextui-org/system':
-        specifier: ^2.2.6
-        version: 2.2.6(@nextui-org/theme@2.2.11(tailwindcss@3.4.4))(framer-motion@10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nextui-org/theme':
-        specifier: ^2.2.11
-        version: 2.2.11(tailwindcss@3.4.4)
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2

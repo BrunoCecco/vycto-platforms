@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import Script from "next/script";
 import dynamic from "next/dynamic";
+import ColorSchemeToggle from "@/components/ui/colorSchemeToggle";
 
 const PostHogPageView = dynamic(() => import("./postHogPageView"), {
   ssr: false,
@@ -39,7 +40,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(cal.variable, inter.variable)}>
+      <body
+        className={cn(
+          cal.variable,
+          inter.variable,
+          "text-foreground bg-background",
+        )}
+      >
         {/* <Script
           defer
           src="https://unpkg.com/@tinybirdco/flock.js"
@@ -50,6 +57,9 @@ export default function RootLayout({
           <PostHogPageView />
           <Analytics />
           {children}
+          <div className="fixed right-0 top-0 z-50 sm:right-2 sm:top-2">
+            <ColorSchemeToggle />
+          </div>
         </Providers>
       </body>
     </html>

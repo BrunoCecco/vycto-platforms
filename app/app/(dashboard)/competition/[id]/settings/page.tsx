@@ -29,9 +29,7 @@ export default async function CompetitionSettings({
   return (
     <div className="flex  flex-col space-y-12">
       <div className="flex flex-col space-y-6">
-        <h1 className="text-3xl font-bold dark:text-white">
-          Competition Settings
-        </h1>
+        <h1 className="text-3xl font-bold">Competition Settings</h1>
         <Form
           title="Competition Slug"
           description="The slug is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."

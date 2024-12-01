@@ -21,7 +21,7 @@ const PlayerComponent = ({
 }) => {
   return (
     <button
-      className={`flex  cursor-pointer flex-col items-center rounded-lg border-2 p-2 shadow-sm transition duration-200 ${
+      className={`flex cursor-pointer flex-col items-center rounded-lg border-2 p-2 shadow-sm transition duration-200 ${
         selectedPlayer === name ? "border-yellow-500" : "border-transparent"
       }`}
       disabled={disabled}
@@ -37,7 +37,7 @@ const PlayerComponent = ({
           selectedPlayer !== name ? "opacity-50" : "opacity-100"
         }`}
       />
-      <div className="mt-2 w-fit text-wrap text-center !text-black">{name}</div>
+      <div className="mt-2 w-fit text-wrap text-center">{name}</div>
     </button>
   );
 };
@@ -49,18 +49,16 @@ const PlayerSelection = ({ ...props }) => {
 
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
+      <div className="relative w-full rounded-lg p-4 shadow-xl md:p-10">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
         {/* Question */}
         <FlipText
           word={props.question}
-          className="mb-1 text-center text-xl font-semibold text-gray-800"
+          className="mb-1 text-center text-xl font-semibold "
         />
-        <p className="mb-6 text-center text-gray-500">
-          Select the correct answer
-        </p>
+        <p className="mb-6 text-center ">Select the correct answer</p>
 
         {/* Player Options */}
         <div className="grid grid-cols-2 gap-4">

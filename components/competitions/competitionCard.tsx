@@ -11,6 +11,7 @@ import PlayButton from "../buttons/playButton";
 import { BackgroundGradient } from "../ui/backgroundGradient";
 import CompetitionModal from "./competitionModal";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
+import { Card, CardFooter, CardHeader } from "@nextui-org/react";
 
 const COMPETITION_WINDOW = 5;
 
@@ -42,7 +43,7 @@ const CompetitionCard = ({
       if (days > COMPETITION_WINDOW) {
         setCompOpen(false);
         setStatus(
-          "Opening in " +
+          "Opens in " +
             (days - COMPETITION_WINDOW) +
             " day" +
             (days - COMPETITION_WINDOW > 1 ? "s" : ""),
@@ -79,27 +80,46 @@ const CompetitionCard = ({
 
   return (
     <HoverBorderGradient
-      containerClassName="group h-full w-[300px] rounded-xl"
-      className="duration-400 h-full w-full transition-all hover:bg-slate-900"
+      containerClassName="group h-[350px] w-[300px] relative rounded-xl"
+      className="duration-400 relative h-full w-full transition-all hover:bg-slate-900"
       color={siteData.color1}
     >
-      {/* Add onClick here */}
-      <div className="h-full w-full rounded-md text-white transition-all duration-200">
-        <div className="relative h-48 w-full">
-          <div className="h-full w-full overflow-hidden rounded-t-lg">
-            <BlurImage
-              alt={competition.title || "Card thumbnail"}
-              fill
-              className="rounded-t-md object-cover transition-all duration-100 group-hover:scale-110"
-              src={competition.image || "/placeholder.png"}
-              placeholder="blur"
-              blurDataURL={competition.imageBlurhash || placeholderBlurhash}
-            />
+      <Card isFooterBlurred radius="md" className="h-full w-full border-none">
+        <BlurImage
+          alt={competition.title || "Card thumbnail"}
+          className="h-full w-full rounded-t-md object-cover transition-all duration-100 group-hover:scale-110"
+          src={competition.image || "/placeholder.png"}
+          placeholder="blur"
+          fill
+          blurDataURL={competition.imageBlurhash || placeholderBlurhash}
+        />
+        <CardFooter className="border-1 rounded-large shadow-small bg-background/60 absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden border-white/20 py-1 before:rounded-xl">
+          <div className="flex w-full flex-col gap-1">
+            <h2 className="font-semibold">
+              {competition.title || "Competition by " + competition.sponsor}
+            </h2>
+            <p
+              className={`text-sm font-bold`}
+              style={{ color: siteData.color1 }}
+            >
+              {status}
+            </p>
           </div>
-        </div>
+          {compOpen ? (
+            <PlayButton
+              color1={siteData.color1}
+              color2={siteData.color2}
+              onClick={onClick}
+            >
+              {type === "current" ? "Play" : "View"}
+            </PlayButton>
+          ) : null}
+        </CardFooter>
+      </Card>
+      {/* <div className="h-full w-full rounded-md  transition-all duration-200">
+        
 
-        <div className="flex h-28 flex-col justify-between p-2 px-4 text-left">
-          {/* Title, sponser & profiles bit */}
+        <div className="flex h-28 flex-col justify-between p-2 px-4 text-left">          
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-semibold">
@@ -128,7 +148,7 @@ const CompetitionCard = ({
 
           <div className="flex items-center justify-between">
             <p
-              className={`text-sm text-slate-200`}
+              className={`text-sm `}
               style={{ color: compOpen ? siteData.color1 : "" }}
             >
               {status}
@@ -143,7 +163,7 @@ const CompetitionCard = ({
             </PlayButton>
           </div>
         </div>
-      </div>
+      </div> */}
     </HoverBorderGradient>
   );
 };

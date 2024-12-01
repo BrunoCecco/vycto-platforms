@@ -89,7 +89,7 @@ const EditWhatMinute = ({
               value={points}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 text-center text-xl font-semibold text-gray-800"
+              className="w-20 text-center text-xl font-semibold "
             />
           ) : (
             <div className="cursor-pointer" onClick={handlePointsClick}>
@@ -118,7 +118,7 @@ const EditWhatMinute = ({
             className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
         </div>
-        <p className="text-center text-gray-500">
+        <p className="text-center ">
           The closer you get, the more points you score
         </p>
 

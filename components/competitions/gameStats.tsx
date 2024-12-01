@@ -22,19 +22,17 @@ const GameStats: FC<GameStatsProps> = ({
 
   return (
     <div className="flex justify-center">
-      <div className="flex h-80 w-full flex-col justify-around rounded-lg border-2 bg-white px-6 py-4 shadow-sm">
+      <div className="flex h-80 w-full flex-col justify-around rounded-lg border-2  px-6 py-4 shadow-sm">
         {/* Header */}
-        <h2 className="text-center text-xl font-semibold text-blue-900">
+        <h2 className="text-center text-xl font-semibold ">
           Competition: {competitionTitle}
         </h2>
 
         {/* Username */}
-        <p className="text-center text-lg text-black">
-          @{userComp.username || "User"}
-        </p>
+        <p className="text-center text-lg ">@{userComp.username || "User"}</p>
 
         {/* Submission Info */}
-        <div className="flex flex-col items-center justify-center text-center text-gray-600">
+        <div className="flex flex-col items-center justify-center text-center">
           <p className="text-sm">
             Submitted Prediction:{" "}
             {new Date(userComp.submissionDate).toDateString()}
@@ -42,11 +40,11 @@ const GameStats: FC<GameStatsProps> = ({
           {/* <span className="ml-1" role="img" aria-label="tick">
             ✅
           </span> */}
-          {/* <Share className="ml-1 cursor-pointer text-gray-400 hover:text-gray-600" /> */}
+          {/* <Share className="ml-1 cursor-pointer  hover:" /> */}
         </div>
 
         {/* Statistics */}
-        <div className="flex flex-wrap items-center justify-between text-center text-sm text-gray-600">
+        <div className="flex flex-wrap items-center justify-between text-center text-sm ">
           <div className="h-6 border-r" style={{ borderColor: color }} />
           <div>
             <p className="font-semibol pb-2" style={{ color: color }}>

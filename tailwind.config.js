@@ -147,11 +147,11 @@ module.exports = {
     },
   ],
   plugins: [
+    nextui({ addCommonColors: false }),
     require("@tailwindcss/typography"),
-    require("@tailwindcss/forms"),
+    // require("@tailwindcss/forms"),
     require("tailwindcss-animate"),
     addVariablesForColors,
-    nextui(),
   ],
 };
 

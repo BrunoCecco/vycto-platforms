@@ -11,7 +11,7 @@ export default function EditCompetitionTitle({
 }) {
   return (
     <div className="mb-5 flex w-full flex-col space-y-3 border-b border-stone-200 dark:border-stone-700">
-      <label htmlFor="title" className="text-xl font-bold dark:text-white">
+      <label htmlFor="title" className="text-xl font-bold ">
         Competition Title
       </label>
       <Input

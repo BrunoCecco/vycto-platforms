@@ -118,7 +118,7 @@ export default function SiteNav({
           showSidebar
             ? "w-[100vw] translate-x-0"
             : "w-[15vw] -translate-x-[15vw]"
-        } fixed top-0 z-10 flex h-full flex-col justify-between overflow-hidden border-r border-stone-700 bg-stone-900 p-4 transition-all duration-200 sm:w-1/5 sm:translate-x-0`}
+        } bg-content2 fixed top-0 z-10 flex h-full flex-col justify-between overflow-hidden border-r p-4 transition-all duration-200 sm:w-1/5 sm:translate-x-0`}
         style={{ borderColor: data.color1 }}
       >
         <div className="flex h-full flex-col justify-between">
@@ -145,8 +145,8 @@ export default function SiteNav({
                   key={name}
                   href={href}
                   className={`flex items-center space-x-3 ${
-                    isActive ? "bg-stone-700" : ""
-                  } rounded-lg px-2 py-1.5 text-white transition-all duration-150  ease-in-out hover:bg-stone-700 active:bg-stone-300 active:bg-stone-800`}
+                    isActive ? "bg-content3" : ""
+                  } hover:bg-content3 active:bg-content3 rounded-lg px-2 py-1.5  transition-all duration-150 ease-in-out`}
                 >
                   {icon}
                   <span className="text-sm font-medium">{name}</span>
@@ -155,7 +155,7 @@ export default function SiteNav({
               <CoolMode>
                 <div
                   onClick={stayNotified}
-                  className={`mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 text-white transition-all duration-150  ease-in-out hover:bg-stone-700 `}
+                  className={`hover:bg-content3 mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 transition-all  duration-150 ease-in-out `}
                 >
                   <Bell width={18} />
                   <span className="text-sm font-medium">Stay Notified</span>
@@ -164,15 +164,20 @@ export default function SiteNav({
             </div>
           </div>
           <div className="mb-2">
-            <div className="mb-1 font-semibold tracking-wide text-white">
-              POWERED BY
-            </div>
+            <div className="mb-1 font-semibold tracking-wide">POWERED BY</div>
             <Image
               src={"/vyctoLogoWhite.png"}
               alt="Vycto Logo"
               width={80}
               height={60}
-              className=""
+              className="hidden dark:block"
+            />
+            <Image
+              src={"/vyctoLogoBlue.png"}
+              alt="Vycto Logo Dark"
+              width={80}
+              height={60}
+              className="block dark:hidden"
             />
           </div>
         </div>
@@ -201,7 +206,7 @@ export default function SiteNav({
                   <input
                     type="text"
                     placeholder="hi@vycto.com"
-                    className="relative z-10 my-4 w-full rounded-lg border  border-neutral-800 bg-neutral-950 text-white placeholder:text-neutral-700  focus:ring-2 focus:ring-gray-300"
+                    className="relative z-10 my-4 w-full rounded-lg border  border-neutral-800 bg-neutral-950  placeholder:text-neutral-700  focus:ring-2 focus:ring-gray-300"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />{" "}

@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import { USER_ROLES } from "@/lib/constants";
 import Button from "../buttons/button";
-import { Select, SelectItem } from "../select";
+import { Select, SelectItem } from "@nextui-org/react";
 import CountryPicker from "../settings/countryPicker";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
@@ -105,10 +105,10 @@ export default function Form({
           }
         });
       }}
-      className="rounded-lg border border-stone-200 bg-white text-black dark:border-stone-700 dark:bg-black dark:text-white"
+      className="rounded-lg border border-stone-200 bg-white  dark:border-stone-700 dark:bg-black "
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
-        <h2 className="text-xl dark:text-white">{title}</h2>
+        <h2 className="text-xl ">{title}</h2>
         <p className="text-sm text-stone-500 dark:text-stone-400">
           {description}
         </p>
@@ -116,44 +116,48 @@ export default function Form({
           <>
             <input type="hidden" name="country" value={selectedCountry} />
             <ReactFlagsSelect
-              selectButtonClassName="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-              className="text-black"
+              selectButtonClassName="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
+              className=""
               selected={selectedCountry || ""}
               onSelect={(code) => setSelectedCountry(code)}
             />
           </>
         ) : inputAttrs.name === "role" ? (
-          <div className="flex max-w-md items-center rounded-lg border border-stone-600">
-            <Select name="role" defaultValue={inputAttrs.defaultValue}>
-              {USER_ROLES.map((role) => (
-                <SelectItem key={role} value={role}>
-                  {role}
-                </SelectItem>
-              ))}
-            </Select>
-          </div>
+          <Select
+            aria-label="role"
+            name="role"
+            defaultSelectedKeys={[inputAttrs.defaultValue]}
+          >
+            {USER_ROLES.map((role) => (
+              <SelectItem key={role} value={role}>
+                {role}
+              </SelectItem>
+            ))}
+          </Select>
         ) : inputAttrs.name === "font" ? (
-          <div className="flex max-w-md items-center overflow-hidden rounded-lg border border-stone-600">
-            <Select name="font" defaultValue={inputAttrs.defaultValue}>
-              <SelectItem value="font-cal">Cal Sans</SelectItem>
-              <SelectItem value="font-lora">Lora</SelectItem>
-              <SelectItem value="font-work">Work Sans</SelectItem>
-            </Select>
-          </div>
+          <Select
+            aria-label="Font"
+            name="font"
+            defaultSelectedKeys={[inputAttrs.defaultValue]}
+          >
+            <SelectItem key="font-cal">Cal Sans</SelectItem>
+            <SelectItem key="font-lora">Lora</SelectItem>
+            <SelectItem key="font-work">Work Sans</SelectItem>
+          </Select>
         ) : inputAttrs.name === "color1" ||
           inputAttrs.name === "color2" ||
           inputAttrs.name === "color3" ? (
           <input
             {...inputAttrs}
             type="color"
-            className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+            className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
           />
         ) : inputAttrs.name === "subdomain" ? (
           <div className="flex w-full max-w-md">
             <input
               {...inputAttrs}
               required
-              className="z-10 flex-1 rounded-l-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+              className="z-10 flex-1 rounded-l-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
             />
             <div className="flex items-center rounded-r-md border border-l-0 border-stone-300 bg-stone-100 px-3 text-sm dark:border-stone-600 dark:bg-stone-800 dark:text-stone-400">
               {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
@@ -163,7 +167,7 @@ export default function Form({
           <div className="relative flex w-full max-w-md">
             <input
               {...inputAttrs}
-              className="z-10 flex-1 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+              className="z-10 flex-1 rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
             />
             {inputAttrs.defaultValue && (
               <div className="absolute right-3 z-10 flex h-full items-center">
@@ -176,20 +180,20 @@ export default function Form({
             {...inputAttrs}
             rows={3}
             required
-            className="w-full max-w-2xl rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+            className="w-full max-w-2xl rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
           />
         ) : inputAttrs.name === "date" ? (
           <input
             {...inputAttrs}
             type="date"
             required
-            className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+            className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
           />
         ) : (
           <input
             {...inputAttrs}
             required
-            className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+            className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black  dark:placeholder-stone-700"
           />
         )}
       </div>

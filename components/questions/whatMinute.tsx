@@ -9,7 +9,7 @@ import { WideImage } from "./wideImage";
 const WhatMinute = ({ ...props }) => {
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative h-full w-full rounded-lg bg-white p-6 shadow-xl md:shadow-2xl">
+      <div className="relative h-full w-full rounded-lg  p-6 shadow-xl md:shadow-2xl">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
@@ -18,9 +18,9 @@ const WhatMinute = ({ ...props }) => {
         {/* Question */}
         <FlipText
           word={props.question}
-          className="mb-1 text-center text-xl font-semibold text-gray-800"
+          className="mb-1 text-center text-xl font-semibold "
         />
-        <p className="text-center text-gray-500">
+        <p className="text-center ">
           The closer you get, the more points you score
         </p>
         <div className="flex items-center justify-center">

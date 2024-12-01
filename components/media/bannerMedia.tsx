@@ -54,7 +54,7 @@ export default function BannerMedia({ src }: { src: string }) {
         </video>
         <button
           onClick={() => setIsMuted(!isMuted)} // Toggle mute on button click
-          className="absolute right-2 top-2 rounded p-2 text-white"
+          className="absolute right-2 top-2 rounded p-2 "
         >
           {isMuted ? <Volume /> : <Volume2 />}{" "}
           {/* Button text based on mute state */}

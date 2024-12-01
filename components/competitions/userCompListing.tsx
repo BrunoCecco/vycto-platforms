@@ -71,28 +71,20 @@ export default async function UserCompListing({
             />
           </div>
           <div className="ml-4">
-            <div className="text-sm font-medium text-gray-300">
-              {siteData?.name}
-            </div>
-            <div className="text-sm font-medium text-gray-300">
-              {comp?.title}
-            </div>
+            <div className="text-sm font-medium ">{siteData?.name}</div>
+            <div className="text-sm font-medium ">{comp?.title}</div>
           </div>
         </div>
       </td>
       <td className="p-4 text-left">
-        <div className="text-sm font-medium text-gray-300">
-          {userComp.points}
-        </div>
+        <div className="text-sm font-medium ">{userComp.points}</div>
       </td>
       <td className="gap-1 p-4 text-center">
-        <div className="text-sm text-gray-300">
-          <div className="text-sm font-medium text-gray-300">
-            # {userComp.ranking}
-          </div>
+        <div className="text-sm ">
+          <div className="text-sm font-medium "># {userComp.ranking}</div>
           {userReward?.title || comp?.rewardTitle}
         </div>
-        <div className="text-sm text-gray-300">{userReward?.description}</div>
+        <div className="text-sm ">{userReward?.description}</div>
         {canClaim && (
           <div className="mt-2 flex items-center justify-center">
             <Button className="bg-gradient-to-tr from-blue-200 to-blue-400">

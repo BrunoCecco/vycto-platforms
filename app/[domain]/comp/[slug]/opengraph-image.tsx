@@ -46,10 +46,10 @@ export default async function CompetitionOG({
     (
       <div tw="flex flex-col items-center w-full h-full bg-white">
         <div tw="flex flex-col items-center justify-center mt-8">
-          <h1 tw="text-6xl font-bold text-gray-900 leading-none tracking-tight">
+          <h1 tw="text-6xl font-bold  leading-none tracking-tight">
             {data.title}
           </h1>
-          <p tw="mt-4 text-xl text-gray-600 max-w-2xl text-center">
+          <p tw="mt-4 text-xl  max-w-2xl text-center">
             {truncate(data.description, 120)}
           </p>
           <div tw="flex items-center justify-center">
@@ -58,7 +58,7 @@ export default async function CompetitionOG({
               src={data.authorImage}
               alt={data.authorName}
             />
-            <p tw="text-xl font-medium text-gray-900">by {data.authorName}</p>
+            <p tw="text-xl font-medium ">by {data.authorName}</p>
           </div>
           <img
             tw="mt-4 w-5/6 rounded-2xl border border-gray-200 shadow-md"

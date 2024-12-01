@@ -170,7 +170,7 @@ export default function SearchPage() {
             </h2>
             {isLoading && (
               <div className="flex h-24 items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+                <Loader2 className="h-8 w-8 animate-spin " />
               </div>
             )}
           </div>

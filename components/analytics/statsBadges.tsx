@@ -48,7 +48,7 @@ const StatsBadges = () => {
               <div className="rounded-full bg-purple-100 p-3">{stat.icon}</div>
             )}
             <div className="flex-grow">
-              <div className="text-xs text-gray-500">{stat.label}</div>
+              <div className="text-xs ">{stat.label}</div>
               <div className="text-xl font-semibold">{stat.value}</div>
             </div>
             {stat.flag && (

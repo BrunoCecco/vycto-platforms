@@ -12,10 +12,10 @@ const Button = React.forwardRef<
   const baseStyles =
     "px-4 py-2 rounded-md font-medium focus:outline-none transition-colors";
   const variantStyles = {
-    default: "bg-stone-800 text-white hover:bg-stone-700",
-    outline: "border border-gray-300 text-gray-700 hover:bg-gray-50",
-    destructive: "bg-red-500 text-white hover:bg-red-600",
-    ghost: "text-gray-700 hover:bg-gray-100",
+    default: "bg-stone-800  hover:bg-stone-700",
+    outline: "border border-gray-300  hover:bg-gray-50",
+    destructive: "bg-red-500  hover:bg-red-600",
+    ghost: " hover:bg-gray-100",
   };
 
   return (

@@ -223,7 +223,7 @@ const CloseIcon = () => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="h-4 w-4 text-black transition duration-200 group-hover:rotate-3 group-hover:scale-125 dark:text-white"
+        className="h-4 w-4  transition duration-200 group-hover:rotate-3 group-hover:scale-125 "
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M18 6l-12 12" />

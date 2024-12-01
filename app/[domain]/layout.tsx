@@ -100,9 +100,7 @@ export default async function SiteLayout({
   }
 
   return (
-    <div
-      className={`${fontMapper["font-space"]} bg-background flex min-h-screen font-space`}
-    >
+    <div className={`${fontMapper["font-space"]} flex min-h-screen font-space`}>
       <div className="relative z-50 w-0 sm:w-1/5">
         <SiteNav
           data={data}

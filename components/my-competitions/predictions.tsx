@@ -24,7 +24,7 @@ const PredictionCard = async ({
 
   return (
     <Link
-      className="group relative flex w-full items-center gap-4 hover:cursor-pointer"
+      className="bg-content2 group relative flex w-full items-center gap-4 rounded-md hover:cursor-pointer"
       rel="noreferrer"
       target="_blank"
       href={url}
@@ -39,10 +39,10 @@ const PredictionCard = async ({
       </div>
       <div>
         <h3 className="text-xl font-semibold">{compData?.title}</h3>
-        <p className="text-gray-400">
+        <p className="">
           {new Date(competition.submissionDate).toDateString()}
         </p>
-        <p className="text-gray-400">
+        <p className="">
           {parseFloat(competition.points || "0").toFixed(2)} Points
         </p>
       </div>

@@ -19,12 +19,8 @@ export default async function SiteMedia({
   return (
     <div className="flex flex-col space-y-12">
       <div className="flex flex-col">
-        <h1 className="text-xl font-bold dark:text-white sm:text-3xl">
-          Competition Media
-        </h1>
-        <h1 className="text-md font-light dark:text-white sm:text-lg">
-          {data.title}
-        </h1>
+        <h1 className="text-xl font-bold sm:text-3xl">Competition Media</h1>
+        <h1 className="text-md font-light sm:text-lg">{data.title}</h1>
       </div>
       <BucketStorage
         siteName={data.site.name || ""}

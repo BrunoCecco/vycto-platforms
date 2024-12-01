@@ -163,7 +163,7 @@ const EditPlayerSelection = ({
               value={points}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 text-center text-xl font-semibold text-gray-800"
+              className="w-20 text-center text-xl font-semibold "
             />
           ) : (
             <div className="cursor-pointer" onClick={handlePointsClick}>
@@ -179,12 +179,10 @@ const EditPlayerSelection = ({
             value={editedQuestion}
             onChange={handleQuestionInputChange}
             onBlur={() => handleInputBlur("question", editedQuestion)}
-            className="w-full text-center text-xl font-semibold text-gray-800"
+            className="w-full text-center text-xl font-semibold "
           />
         </div>
-        <p className="mb-6 text-center text-gray-500">
-          Select the correct answer
-        </p>
+        <p className="mb-6 text-center ">Select the correct answer</p>
 
         {/* Editable Player Options */}
         <div className="grid grid-cols-2 gap-4">

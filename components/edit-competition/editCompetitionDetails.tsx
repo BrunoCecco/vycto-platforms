@@ -40,7 +40,7 @@ const EditCompetitionDetails = async ({
           handleSubmit={updateCompetitionMetadata}
         >
           <div className="flex flex-col">
-            <h1 className="mb-4 text-left text-xl font-bold dark:text-white">
+            <h1 className="mb-4 text-left text-xl font-bold ">
               Competition Thumbnail
             </h1>
             <div className="relative flex  h-[200px] w-[300px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl md:h-[300px] md:w-[450px] lg:h-[400px] lg:w-[600px]">
@@ -55,7 +55,7 @@ const EditCompetitionDetails = async ({
                 />
               ) : null}
               <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-lg border-white bg-gray-700 opacity-25">
-                <Plus className="h-10 w-10 text-white" />
+                <Plus className="h-10 w-10 " />
               </div>
             </div>
           </div>

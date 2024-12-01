@@ -50,7 +50,7 @@ export default async function EditCompetitions({
   return (
     <div className="mt-10">
       {draftedCompetitions && draftedCompetitions?.length > 0 && (
-        <h1 className="my-4 text-2xl dark:text-white">Drafted Competitions</h1>
+        <h1 className="my-4 text-2xl ">Drafted Competitions</h1>
       )}
       <div className="grid grid-cols-1 gap-4 pb-4 sm:grid-cols-2 xl:grid-cols-4">
         <CreateCompetitionButton />

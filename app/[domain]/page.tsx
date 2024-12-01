@@ -66,9 +66,8 @@ export default async function SiteHomePage({
 
   return (
     <div>
-      <div className="bg-background flex items-center justify-between pb-8 text-2xl font-bold tracking-wider sm:text-4xl">
+      <div className="flex items-center justify-between pb-8 text-2xl font-bold tracking-wider sm:text-4xl">
         <h1>{capitalize(addFanzoneToString(data.name || ""))}</h1>
-        <ColorSchemeToggle />
       </div>
       {/* Use the FanZoneHeader component */}
       <Suspense fallback={<Loading data={data} />}>

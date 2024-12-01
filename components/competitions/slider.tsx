@@ -49,7 +49,7 @@ const Slider: FC<{
   return (
     <div className="w-full px-4 py-6">
       <div className="flex items-center justify-center space-x-4">
-        <span className="text-sm text-gray-600">{MIN}</span>
+        <span className="text-sm ">{MIN}</span>
         <div
           id={questionId}
           className="flex w-full flex-col items-center justify-center"
@@ -67,9 +67,9 @@ const Slider: FC<{
             />
           </div>
         </div>
-        <span className="text-sm font-bold text-black">{MAX}</span>
+        <span className="text-sm font-bold ">{MAX}</span>
       </div>
-      <div className="pointer-events-none mt-4 transform text-center text-lg font-extrabold text-black">
+      <div className="pointer-events-none mt-4 transform text-center text-lg font-extrabold ">
         {value}
       </div>
     </div>

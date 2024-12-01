@@ -1,6 +1,6 @@
 import React from "react";
 import { SelectSite } from "@/lib/schema";
-import { Crown } from "lucide-react";
+import { Crown, SearchIcon } from "lucide-react";
 import { Select, SelectItem, Input } from "@nextui-org/react";
 import { LeaderboardPeriod } from "@/lib/types";
 import Image from "next/image";
@@ -67,7 +67,12 @@ const LeaderboardHeader = ({
         </p>
       </div>
       <div className="flex gap-4">
-        <Input label="Search" placeholder="Search" onValueChange={setQuery} />
+        <Input
+          placeholder="Search..."
+          onValueChange={setQuery}
+          startContent={<SearchIcon size={18} />}
+          type="search"
+        />
         <Select
           aria-label="Time Range"
           placeholder={rangeType}
