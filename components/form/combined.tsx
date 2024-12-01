@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import Button from "../buttons/button";
 import CountryPicker from "../settings/countryPicker";
-import { Select, SelectItem, TextInput } from "@tremor/react";
+import { Select, SelectItem } from "../select";
 import { USER_ROLES } from "@/lib/constants";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";

@@ -14,7 +14,7 @@
 
 @layer base {
   body {
-    @apply bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-gray-100;
+    /* @apply bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-gray-100; */
   }
 }
 
@@ -268,7 +268,7 @@ input[type="range"]::-ms-thumb {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: white;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -295,7 +295,7 @@ input[type="range"]::-ms-thumb {
     --radius: 0.5rem;
   }
   .dark {
-    --background: 0 0% 3.9%;
+    --background: red;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;

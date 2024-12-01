@@ -6,6 +6,7 @@ import { ModalProvider } from "@/components/modal/provider";
 import { PostHogProvider } from "posthog-js/react";
 import posthog from "posthog-js";
 import { ThemeProvider } from "next-themes";
+import { NextUIProvider } from "@nextui-org/system";
 
 if (typeof window !== "undefined") {
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
@@ -19,13 +20,15 @@ if (typeof window !== "undefined") {
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="class">
-      <SessionProvider>
-        <Toaster className="dark:hidden" />
-        <Toaster theme="dark" className="hidden dark:block" />
-        <ModalProvider>
-          <PostHogProvider client={posthog}>{children}</PostHogProvider>
-        </ModalProvider>
-      </SessionProvider>
+      <NextUIProvider>
+        <SessionProvider>
+          <ModalProvider>
+            <Toaster className="dark:hidden" />
+            <Toaster theme="dark" className="hidden dark:block" />
+            <PostHogProvider client={posthog}>{children}</PostHogProvider>
+          </ModalProvider>
+        </SessionProvider>
+      </NextUIProvider>
     </ThemeProvider>
   );
 }

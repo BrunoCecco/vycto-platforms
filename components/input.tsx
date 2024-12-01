@@ -6,11 +6,9 @@ const Input = React.forwardRef<
 >(({ className, ...props }, ref) => {
   return (
     <input
-      className={`w-full rounded-md border px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-        props.disabled ? "cursor-not-allowed bg-gray-100" : "bg-white"
-      } ${className}`}
-      ref={ref}
       {...props}
+      ref={ref}
+      className={`w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700 ${className}`}
     />
   );
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import { SelectSite } from "@/lib/schema";
 import { Crown } from "lucide-react";
-import { Select, SelectItem, TextInput } from "@tremor/react";
+import { Select, SelectItem, Input } from "@nextui-org/react";
 import { LeaderboardPeriod } from "@/lib/types";
 import Image from "next/image";
 
@@ -16,7 +16,12 @@ const LeaderboardHeader = ({
   setRangeType: any;
   setQuery?: any;
 }) => {
-  const timeRanges = ["Last Week", "Monthly", "Season", "All Time"];
+  const timeRanges = [
+    { key: "last week", label: "Last Week" },
+    { key: "monthly", label: "Monthly" },
+    { key: "season", label: "Season" },
+    { key: "all time", label: "All Time" },
+  ];
 
   // Function to dynamically set the prize text based on rangeType
   const getPrizeText = () => {
@@ -62,20 +67,17 @@ const LeaderboardHeader = ({
         </p>
       </div>
       <div className="flex gap-4">
-        <TextInput placeholder="Search" onValueChange={setQuery} />
+        <Input label="Search" placeholder="Search" onValueChange={setQuery} />
         <Select
-          value={rangeType}
-          onValueChange={(value) => setRangeType(value)}
-          className="w-min"
+          aria-label="Time Range"
+          placeholder={rangeType}
+          selectedKeys={[rangeType]}
+          variant="flat"
+          className="max-w-xs"
+          onChange={setRangeType}
         >
           {timeRanges.map((range) => (
-            <SelectItem
-              key={range}
-              value={range.toLowerCase()}
-              className="cursor-pointer transition-all duration-200 hover:scale-105"
-            >
-              {range}
-            </SelectItem>
+            <SelectItem key={range.key}>{range.label}</SelectItem>
           ))}
         </Select>
       </div>

@@ -1,16 +1,5 @@
 "use client";
 
-import {
-  Card,
-  Text,
-  Title,
-  BarList,
-  Flex,
-  Grid,
-  Bold,
-  AreaChart,
-} from "@tremor/react";
-import Image from "next/image";
 import AnalyticsPage from "./analyticsPage";
 
 const chartdata = [

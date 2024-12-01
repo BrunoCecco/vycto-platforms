@@ -8,6 +8,7 @@ import LeaderboardHeader from "./leaderboardHeader";
 import Link from "next/link";
 import LoadingDots from "../icons/loadingDots";
 import { motion } from "framer-motion";
+import { LeaderboardPeriod } from "@/lib/types";
 
 type LeaderboardUser = SelectUser & { points: number };
 
@@ -50,6 +51,10 @@ const MainLeaderboard = ({
     }
   }, [query, data]);
 
+  const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setRangeType(e.target.value as LeaderboardPeriod);
+  };
+
   const calculateBg = (index: number) => {
     if (index > 2) return "";
     switch (index) {
@@ -68,11 +73,11 @@ const MainLeaderboard = ({
   };
 
   return (
-    <div className="rounded-x container min-w-full">
+    <div className="container min-w-full rounded-xl">
       <LeaderboardHeader
         siteData={siteData}
         rangeType={rangeType}
-        setRangeType={setRangeType}
+        setRangeType={handleSelectionChange}
         setQuery={setQuery}
       />
 
