@@ -87,7 +87,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               </p>
             </div>
           </div>
-          <p className="text-sm dark:text-stone-400">
+          <p className="text-sm ">
             Warning: if you are using this domain for another site, setting this
             TXT record will transfer domain ownership away from that site and
             break it. Please exercise caution when setting this record.
@@ -103,7 +103,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               className={`${
                 recordType == "A"
                   ? "border-black  dark:border-white "
-                  : "border-white text-stone-400 dark:border-black dark:text-stone-600"
+                  : "border-white text-stone-400 dark:border-black "
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}
             >
               A Record{!subdomain && " (recommended)"}
@@ -113,7 +113,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               className={`${
                 recordType == "CNAME"
                   ? "border-black  dark:border-white "
-                  : "border-white text-stone-400 dark:border-black dark:text-stone-600"
+                  : "border-white text-stone-400 dark:border-black "
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}
             >
               CNAME Record{subdomain && " (recommended)"}

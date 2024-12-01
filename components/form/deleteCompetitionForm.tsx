@@ -39,7 +39,7 @@ export default function DeleteCompetitionForm({
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
         <h2 className="text-xl ">Delete Competition</h2>
-        <p className="text-sm text-stone-500 dark:text-stone-400">
+        <p className="text-sm  ">
           Deletes your competition permanently. Type in the name of your
           competition <b>{competitionName}</b> to confirm.
         </p>
@@ -54,7 +54,7 @@ export default function DeleteCompetitionForm({
       </div>
 
       <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t   p-3   sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
-        <p className="text-center text-sm text-stone-500 dark:text-stone-400">
+        <p className="text-center text-sm  ">
           This action is irreversible. Please proceed with caution.
         </p>
         <div className="w-32">
@@ -69,7 +69,7 @@ const FormButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <Button isDisabled={pending}>
+    <Button type="submit" isDisabled={pending}>
       {pending ? <Spinner /> : <p>Confirm Delete</p>}
     </Button>
   );

@@ -159,9 +159,7 @@ export default function LoginButton({
         </>
       )}
       {message && (
-        <p className="dark: text-center text-sm font-bold text-stone-700">
-          {message}
-        </p>
+        <p className="dark: text-center text-sm font-bold ">{message}</p>
       )}
       {error !== "" && (
         <p className="text-sm font-bold text-red-700">{error}</p>

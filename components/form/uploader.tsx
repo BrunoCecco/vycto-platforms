@@ -164,9 +164,9 @@ export default function Uploader({
       <form className="" ref={formRef} onSubmit={handleSubmit}>
         <div>
           {title && (
-            <div className="mb-4 space-y-1  dark:text-stone-200">
+            <div className="mb-4 space-y-1  ">
               <h2 className="text-xl font-semibold">{capitalize(title)}</h2>
-              <p className="text-sm  dark:text-stone-200">{description}</p>
+              <p className="text-sm  ">{description}</p>
             </div>
           )}
           {children ? (

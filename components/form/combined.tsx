@@ -130,9 +130,7 @@ export default function CombinedForm({
                 className="relative flex w-full flex-col space-y-2 px-5 pt-5"
                 key={index + "reward-editor"}
               >
-                <p className="text-sm text-stone-500 dark:text-stone-200">
-                  {descriptions[index]}
-                </p>
+                <p className="text-sm  ">{descriptions[index]}</p>
                 {inputAttr.name.includes("image") ? null : inputAttr.name ===
                   "country" ? (
                   <>
@@ -181,7 +179,7 @@ export default function CombinedForm({
                 ) : inputAttr.name === "subdomain" ? (
                   <div className="flex w-full">
                     <Input {...inputAttr} required />
-                    <div className="flex items-center rounded-r-md border border-l-0   px-3 text-sm   dark:text-stone-400">
+                    <div className="flex items-center rounded-r-md border border-l-0   px-3 text-sm   ">
                       {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
                     </div>
                   </div>
@@ -206,9 +204,7 @@ export default function CombinedForm({
           })}
           {!hasImage ? (
             <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t   p-3   sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
-              <p className="mr-2 text-sm text-stone-500 dark:text-stone-400">
-                helpText
-              </p>
+              <p className="mr-2 text-sm  ">helpText</p>
               <FormButton />
             </div>
           ) : (

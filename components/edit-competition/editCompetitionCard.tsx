@@ -41,7 +41,7 @@ const EditCompetitionCard = async ({
           blurDataURL={data.imageBlurhash || placeholderBlurhash}
         />
         {!data.published && (
-          <span className="absolute bottom-2 right-2 rounded-md border  bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
+          <span className="absolute bottom-2 right-2 rounded-md border  bg-white px-3 py-0.5 text-sm font-medium  shadow-md">
             Draft
           </span>
         )}
@@ -66,7 +66,7 @@ const EditCompetitionCard = async ({
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                className="ml-2 truncate rounded-md  px-2 py-1 font-medium text-stone-600 transition-colors "
+                className="ml-2 truncate rounded-md  px-2 py-1 font-medium  transition-colors "
               >
                 <ExternalLink height={16} width={16} />
               </a>

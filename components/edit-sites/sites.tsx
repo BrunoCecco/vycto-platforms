@@ -32,7 +32,7 @@ export default async function Sites({ limit }: { limit?: number }) {
     <div className="mt-20 flex flex-col items-center space-x-4">
       <h1 className="text-4xl">No Sites Yet</h1>
       <Image alt="missing site" src="/logo.png" width={400} height={400} />
-      <p className="text-lg text-stone-500">
+      <p className="text-lg ">
         You do not have any sites yet. Create one to get started.
       </p>
     </div>

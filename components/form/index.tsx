@@ -109,9 +109,7 @@ export default function Form({
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
         <h2 className="text-xl ">{title}</h2>
-        <p className="text-sm text-stone-500 dark:text-stone-400">
-          {description}
-        </p>
+        <p className="text-sm  ">{description}</p>
         {inputAttrs.name === "country" ? (
           <>
             <Input type="hidden" name="country" value={selectedCountry} />
@@ -155,7 +153,7 @@ export default function Form({
         ) : inputAttrs.name === "subdomain" ? (
           <div className="flex w-full max-w-md">
             <Input {...inputAttrs} required />
-            <div className="flex items-center rounded-r-md border border-l-0   px-3 text-sm   dark:text-stone-400">
+            <div className="flex items-center rounded-r-md border border-l-0   px-3 text-sm   ">
               {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
             </div>
           </div>
@@ -180,9 +178,7 @@ export default function Form({
         <DomainConfiguration domain={inputAttrs.defaultValue} />
       )}
       <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t   p-3   sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
-        <p className="mr-2 text-sm text-stone-500 dark:text-stone-400">
-          {helpText}
-        </p>
+        <p className="mr-2 text-sm  ">{helpText}</p>
 
         <FormButton />
       </div>
@@ -194,7 +190,7 @@ const FormButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <Button isDisabled={pending}>
+    <Button isDisabled={pending} type="submit">
       {pending ? <Spinner /> : <p>Save Changes</p>}
     </Button>
   );

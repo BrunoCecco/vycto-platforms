@@ -9,7 +9,7 @@ import LoadingDots from "@/components/icons/loadingDots";
 import { useModal } from "./provider";
 import va from "@vercel/analytics";
 import { useEffect, useState } from "react";
-import { Input, Spinner, Button } from "@nextui-org/react";
+import { Input, Spinner, Button, Textarea } from "@nextui-org/react";
 
 export default function CreateSiteModal() {
   const router = useRouter();
@@ -54,10 +54,7 @@ export default function CreateSiteModal() {
         <h2 className="text-2xl ">Create a new site</h2>
 
         <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="name"
-            className="text-sm font-medium text-stone-500 dark:text-stone-400"
-          >
+          <label htmlFor="name" className="text-sm font-medium  ">
             Site Name
           </label>
           <Input
@@ -68,15 +65,11 @@ export default function CreateSiteModal() {
             onChange={(e) => setData({ ...data, name: e.target.value })}
             maxLength={32}
             required
-            className="w-full rounded-md border   px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black focus:outline-none focus:ring-black    dark:placeholder-stone-700 dark:focus:ring-white"
           />
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="subdomain"
-            className="text-sm font-medium text-stone-500"
-          >
+          <label htmlFor="subdomain" className="text-sm font-medium">
             Subdomain
           </label>
           <div className="flex w-full max-w-md">
@@ -91,7 +84,7 @@ export default function CreateSiteModal() {
               maxLength={32}
               required
             />
-            <div className="flex items-center rounded-r-lg border border-l-0   px-3 text-sm   dark:text-stone-400">
+            <div className="flex items-center rounded-r-lg border border-l-0   px-3 text-sm">
               .{process.env.NEXT_PUBLIC_ROOT_DOMAIN}
             </div>
           </div>
@@ -100,7 +93,7 @@ export default function CreateSiteModal() {
         <div className="flex flex-col space-y-2">
           <label
             htmlFor="description"
-            className="text-sm font-medium text-stone-500"
+            className="text-sm font-medium "
           >
             Description
           </label>
@@ -111,28 +104,24 @@ export default function CreateSiteModal() {
             onChange={(e) => setData({ ...data, description: e.target.value })}
             maxLength={140}
             rows={3}
-            className="w-full rounded-md border   px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black  focus:outline-none focus:ring-black    dark:placeholder-stone-700 dark:focus:ring-white"
+            className="w-full rounded-md border   px-4 py-2 text-sm  placeholder:text-stone-400 focus:border-black  focus:outline-none focus:ring-black    dark:placeholder-stone-700 dark:focus:ring-white"
           />
         </div> */}
 
         <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="adminEmail"
-            className="text-sm font-medium text-stone-500"
-          >
+          <label htmlFor="adminEmail" className="text-sm font-medium ">
             Sponsor Admin Email
           </label>
-          <textarea
+          <Textarea
             name="admin"
             placeholder="johndoe@mail.com"
             value={data.admin}
             onChange={(e) => setData({ ...data, admin: e.target.value })}
             maxLength={40}
-            className="w-full rounded-md border   px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black  focus:outline-none focus:ring-black    dark:placeholder-stone-700 dark:focus:ring-white"
           />
         </div>
       </div>
-      <div className="flex items-center justify-end rounded-b-lg border-t   p-3   md:px-10">
+      <div className="flex items-center justify-end rounded-b-lg border-t p-3 md:px-10">
         <CreateSiteFormButton />
       </div>
     </form>
@@ -141,7 +130,7 @@ export default function CreateSiteModal() {
 function CreateSiteFormButton() {
   const { pending } = useFormStatus();
   return (
-    <Button isDisabled={pending}>
+    <Button type="submit" isDisabled={pending}>
       {pending ? <Spinner /> : <p>Create Playground</p>}
     </Button>
   );

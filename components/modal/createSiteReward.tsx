@@ -42,10 +42,7 @@ export default function CreateSiteRewardModal({ siteId }: { siteId: string }) {
         <h2 className="text-2xl ">Create a new reward</h2>
 
         <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="name"
-            className="text-sm font-medium text-stone-500 dark:text-stone-400"
-          >
+          <label htmlFor="name" className="text-sm font-medium  ">
             Reward Title
           </label>
           <Input
@@ -70,7 +67,7 @@ const FormButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <Button isDisabled={pending}>
+    <Button isDisabled={pending} type="submit">
       {pending ? <Spinner /> : <p>Create New Reward</p>}
     </Button>
   );

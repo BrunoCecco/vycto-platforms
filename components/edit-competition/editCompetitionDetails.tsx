@@ -63,7 +63,7 @@ const EditCompetitionDetails = async ({
       </div>
 
       {/* Text section */}
-      <div className="mb-8 w-full text-stone-800">
+      <div className="mb-8 w-full ">
         <EditCompetitionTitle competition={competitionData!} />
         <CombinedForm
           title="Competition Details"

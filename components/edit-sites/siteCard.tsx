@@ -25,7 +25,7 @@ export default function SiteCard({ data }: { data: SelectSite }) {
           <h3 className="my-0 truncate text-xl font-bold tracking-wide ">
             {data.name}
           </h3>
-          <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
+          <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug  ">
             {data.description}
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function SiteCard({ data }: { data: SelectSite }) {
           }
           target="_blank"
           rel="noreferrer"
-          className="truncate rounded-md   px-2 py-1 text-sm font-medium text-stone-600 transition-colors   dark:text-stone-400"
+          className="truncate rounded-md   px-2 py-1 text-sm font-medium  transition-colors   "
         >
           {url} ↗
         </a>
