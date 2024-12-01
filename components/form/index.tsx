@@ -10,7 +10,7 @@ import va from "@vercel/analytics";
 import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import { USER_ROLES } from "@/lib/constants";
-import Button from "../buttons/button";
+import { Button, Spinner } from "@nextui-org/react";
 import { Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import CountryPicker from "../settings/countryPicker";
 import ReactFlagsSelect from "react-flags-select";
@@ -194,8 +194,8 @@ const FormButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <Button isDisabled={pending} loading={pending ? 1 : 0}>
-      <p>Save Changes</p>
+    <Button isDisabled={pending}>
+      {pending ? <Spinner /> : <p>Save Changes</p>}
     </Button>
   );
 };
