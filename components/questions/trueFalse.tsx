@@ -29,7 +29,7 @@ const Button = ({
         color: selected ? "background" : color || "blue",
         borderColor: color || "blue",
       }}
-      isDisabled={disabled}
+      disabled={disabled}
       onClick={onClick}
     >
       {children}
@@ -65,7 +65,7 @@ const TrueFalse = ({ ...props }) => {
           >
             <Button
               selected={selected == "True"}
-              isDisabled={props.disabled}
+              disabled={props.disabled}
               onClick={() => setSelected("True")}
               color={props.color}
             >
@@ -81,7 +81,7 @@ const TrueFalse = ({ ...props }) => {
           >
             <Button
               selected={selected == "False"}
-              isDisabled={props.disabled}
+              disabled={props.disabled}
               onClick={() => setSelected("False")}
               color={props.color}
             >
