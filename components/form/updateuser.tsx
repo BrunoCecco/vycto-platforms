@@ -12,7 +12,8 @@ import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import { USER_ROLES } from "@/lib/constants";
 import { useRef } from "react";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Button, Select, SelectItem } from "@nextui-org/react";
+import { Check } from "lucide-react";
 
 export default function UserForm({
   inputAttrs,
@@ -46,25 +47,24 @@ export default function UserForm({
           }
         });
       }}
-      className="rounded-lg border  bg-white  "
+      className="flex w-max items-center gap-2 rounded-lg"
     >
       {inputAttrs.name === "role" ? (
-        <div className="flex max-w-sm items-center overflow-hidden rounded-lg border ">
-          <Select
-            name="role"
-            onChange={() => formRef.current?.requestSubmit()}
-            aria-label="role"
-            placeholder={inputAttrs.defaultValue}
-            selectedKeys={[inputAttrs.defaultValue]}
-          >
-            {USER_ROLES.map((role) => (
-              <SelectItem key={role} value={role}>
-                {role}
-              </SelectItem>
-            ))}
-          </Select>
-        </div>
+        <Select
+          name="role"
+          aria-label="role"
+          placeholder={inputAttrs.defaultValue}
+          defaultSelectedKeys={[inputAttrs.defaultValue]}
+          className="w-40"
+        >
+          {USER_ROLES.map((role) => (
+            <SelectItem key={role}>{role}</SelectItem>
+          ))}
+        </Select>
       ) : null}
+      <Button type="submit" className="w-32">
+        <Check />
+      </Button>
     </form>
   );
 }

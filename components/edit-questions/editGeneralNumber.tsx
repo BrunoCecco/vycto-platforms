@@ -122,7 +122,6 @@ const EditGeneralNumber = ({
             value={editedQuestion}
             onChange={handleQuestionInputChange}
             onBlur={() => handleInputBlur("question", editedQuestion)}
-            className="mt-1 block w-full rounded-md border  text-center "
           />
         </div>
 
@@ -137,7 +136,6 @@ const EditGeneralNumber = ({
               handleInputBlur("correctAnswer", editedCorrectAnswer.toString())
             }
             placeholder="Correct Answer"
-            className="mt-1 block w-full rounded-md border  text-center "
           />
         </div>
       </div>

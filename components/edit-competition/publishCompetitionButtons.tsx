@@ -9,7 +9,7 @@ import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import LoadingDots from "../icons/loadingDots";
 import { cn } from "@/lib/utils";
-import Button from "../buttons/button";
+import { Button } from "@nextui-org/react";
 import {
   calculateCompetitionPoints,
   validateCorrectAnswers,
@@ -81,13 +81,7 @@ export default function PublishCompetitionButtons({
             });
           });
         }}
-        className={cn(
-          "flex items-center justify-center space-x-2 rounded-lg border transition-all focus:outline-none",
-          isPendingPublishing
-            ? "cursor-not-allowed   text-stone-400   dark:text-stone-300"
-            : " hover: border  border-black   hover:bg-white    ",
-        )}
-        disabled={isPendingPublishing}
+        isDisabled={isPendingPublishing}
       >
         {isPendingPublishing ? (
           <Spinner />

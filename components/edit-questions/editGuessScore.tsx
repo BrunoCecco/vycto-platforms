@@ -90,7 +90,6 @@ const EditGuessScore = ({
               value={points.toString()}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 border-b-2  text-center text-xl font-semibold "
             />
           ) : (
             <div onClick={() => setIsEditingPoints(true)}>
@@ -120,7 +119,6 @@ const EditGuessScore = ({
                 value={homeTeam}
                 onValueChange={setHomeTeam}
                 onBlur={() => handleInputBlur("answer1", homeTeam)}
-                className="border-b-2  text-center text-sm font-semibold "
               />
             ) : (
               <p
@@ -156,7 +154,6 @@ const EditGuessScore = ({
                 value={awayTeam}
                 onValueChange={setAwayTeam}
                 onBlur={() => handleInputBlur("answer2", awayTeam)}
-                className="border-b-2  text-center text-sm font-semibold "
               />
             ) : (
               <p

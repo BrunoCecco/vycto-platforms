@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import LoadingDots from "@/components/icons/loadingDots";
 import Image from "next/image";
 import { capitalize } from "@/lib/utils";
-import Button from "../buttons/button";
+import { Button } from "@nextui-org/react";
 import { X } from "lucide-react";
 import { Input, Spinner } from "@nextui-org/react";
 
@@ -291,10 +291,14 @@ export default function Uploader({
       {data[name] && data[name] != "" && (
         <Button
           onClick={(e: any) => removeFile(null)}
-          className="absolute right-0 top-0 border-none p-1 font-bold"
-          variant="destructive"
+          className="absoluteright-0 top-0 border-none p-1 font-bold"
+          variant="bordered"
         >
-          {removing ? <Spinner /> : <X size={18} absoluteStrokeWidth={true} />}
+          {removing ? (
+            <Spinner />
+          ) : (
+            <X size={18} absoluteStrokeWidth={true} color="red" />
+          )}
         </Button>
       )}
     </div>

@@ -147,7 +147,6 @@ const EditTrueFalse = ({
             value={editedQuestion}
             onChange={handleQuestionInputChange}
             onBlur={() => handleInputBlur("question", editedQuestion)}
-            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
         </div>
         <p className="mb-4 text-center ">Select correctly to score points.</p>

@@ -1,6 +1,5 @@
 "use client";
 import { SelectCompetition, SelectSiteReward } from "@/lib/schema";
-import Button from "../buttons/button";
 import { BackgroundGradient } from "../ui/backgroundGradient";
 import Image from "next/image";
 
@@ -16,7 +15,7 @@ export default function ClaimRewardsCard({
       containerClassName="h-[350px] w-full rounded-lg p-1"
       className="flex h-full w-full flex-col justify-between"
     >
-      <div className="bg-content3 flex h-full w-full flex-col justify-between rounded-lg p-8">
+      <div className="flex h-full w-full flex-col justify-between rounded-lg bg-content3 p-8">
         <div className="relative h-2/3 w-full">
           <Image
             src={latestReward?.image || "/aelShirt.png"}
@@ -33,7 +32,7 @@ export default function ClaimRewardsCard({
             "This AEL signed shirt, autographed by all 22 player, stands as a powerful emblem of pride for an entire city."}
         </div>
         <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4">
-          <p className="bg-content4 rounded-full p-1 px-2 text-xs font-bold">
+          <p className="rounded-full bg-content4 p-1 px-2 text-xs font-bold">
             EXCLUSIVE PRIZE
           </p>
           <p className="text-sm ">COMING SOON...</p>

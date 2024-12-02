@@ -7,7 +7,8 @@ import Uploader from "../form/uploader";
 import PointsBadge from "../competitions/pointsBadge";
 import Slider from "../competitions/slider";
 import { X } from "lucide-react";
-import Button from "../buttons/button";
+import { Button } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 
 const EditWhatMinute = ({
   question,
@@ -83,13 +84,12 @@ const EditWhatMinute = ({
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
-            <input
+            <Input
               type="number"
               min={0}
-              value={points}
+              value={points.toString()}
               onChange={handlePointsInputChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 text-center text-xl font-semibold "
             />
           ) : (
             <div className="cursor-pointer" onClick={handlePointsClick}>
@@ -110,12 +110,11 @@ const EditWhatMinute = ({
 
         {/* Editable Question */}
         <div className="mb-1 text-center">
-          <input
+          <Input
             type="text"
             value={editedQuestion}
             onChange={handleQuestionInputChange}
             onBlur={() => handleInputBlur("question", editedQuestion)}
-            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           />
         </div>
         <p className="text-center ">

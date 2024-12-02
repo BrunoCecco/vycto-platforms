@@ -2,9 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Button from "../buttons/button";
-import LoadingDots from "../icons/loadingDots";
-import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import { updateCompetitionMetadata, updateSite } from "@/lib/actions";
 import Uploader from "../form/uploader";

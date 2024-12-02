@@ -7,6 +7,7 @@ import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
 import Uploader from "../form/uploader";
 import { X } from "lucide-react";
+import { Input, Select, SelectItem } from "@nextui-org/react";
 
 const EditMatchOutcome = ({
   question,
@@ -85,13 +86,12 @@ const EditMatchOutcome = ({
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
-            <input
+            <Input
               type="number"
               min={0}
-              value={points}
+              value={points.toString()}
               onChange={handlePointsChange}
               onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 border-b-2 border-gray-300 text-center text-xl font-semibold "
             />
           ) : (
             <div onClick={() => setIsEditingPoints(true)}>
@@ -119,13 +119,12 @@ const EditMatchOutcome = ({
               />
             </div>
             {isEditingHome ? (
-              <input
+              <Input
                 type="text"
                 name="answer1"
                 value={homeTeam}
                 onChange={(e) => setHomeTeam(e.target.value)}
                 onBlur={() => handleInputBlur("answer1", homeTeam)}
-                className="border-b-2 border-gray-300 text-center text-sm font-semibold "
               />
             ) : (
               <p
@@ -157,13 +156,12 @@ const EditMatchOutcome = ({
               />
             </div>
             {isEditingAway ? (
-              <input
+              <Input
                 type="text"
                 name="answer2"
                 value={awayTeam}
                 onChange={(e) => setAwayTeam(e.target.value)}
                 onBlur={() => handleInputBlur("answer2", awayTeam)}
-                className="border-b-2 border-gray-300 text-center text-sm font-semibold "
               />
             ) : (
               <p
@@ -181,18 +179,17 @@ const EditMatchOutcome = ({
         {/* Save Button */}
         <div className="mt-4 flex flex-col items-center justify-center gap-4">
           {/* select element to edit the correct answer */}
-          <select
+          <Select
             value={editedCorrectAnswer}
             onChange={async (e) => {
               setEditedCorrectAnswer(e.target.value);
               handleInputBlur("correctAnswer", e.target.value);
             }}
-            className="mt-1 block w-full rounded-md border border-stone-200 text-center dark:border-stone-700"
           >
-            <option value={homeTeam}>{homeTeam}</option>
-            <option value={awayTeam}>{awayTeam}</option>
-            <option value="Draw">Draw</option>
-          </select>
+            <SelectItem key={homeTeam}>{homeTeam}</SelectItem>
+            <SelectItem key={awayTeam}>{awayTeam}</SelectItem>
+            <SelectItem key="Draw">Draw</SelectItem>
+          </Select>
         </div>
       </div>
     </div>

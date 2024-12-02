@@ -2,8 +2,8 @@ import BlurImage from "@/components/media/blurImage";
 import { getCompetitionUsers } from "@/lib/fetchers";
 import type { SelectCompetition, SelectSite } from "@/lib/schema";
 import { placeholderBlurhash } from "@/lib/utils";
+import { Link } from "@nextui-org/react";
 import { ExternalLink, LinkIcon } from "lucide-react";
-import Link from "next/link";
 
 const EditCompetitionCard = async ({
   data,
@@ -74,8 +74,7 @@ const EditCompetitionCard = async ({
           </div>
           <Link
             href={`/competition/${data.id}/editor`}
-            className="w-24 rounded-lg p-2 text-center  hover:opacity-75"
-            style={{ backgroundColor: data.site?.color2 || "black" }}
+            className="w-24 rounded-lg p-2 text-center hover:opacity-75"
           >
             Edit
           </Link>

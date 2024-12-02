@@ -5,7 +5,7 @@ import {
 } from "@/lib/fetchers";
 import { SelectUserCompetition } from "@/lib/schema";
 import Image from "next/image";
-import Button from "../buttons/button";
+import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { getSiteFromCompetitionId } from "@/lib/actions";
 import { getServerSession } from "next-auth";

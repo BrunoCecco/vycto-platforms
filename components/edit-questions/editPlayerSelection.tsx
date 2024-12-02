@@ -46,7 +46,6 @@ const PlayerComponent = ({
           placeholder="Player Name"
           // handle player name change
           onChange={(e) => handlePlayerNameChange(e.target.value)}
-          className="mt-1 block w-full rounded-md border  text-center "
         />
       </div>
     </div>

@@ -19,7 +19,7 @@ export default async function DashboardLayout({
           <Profile />
         </Suspense>
       </Nav>
-      <div className="min-h-screen sm:pl-60">{children}</div>
+      <div className="min-h-screen sm:pl-80">{children}</div>
     </div>
   );
 }

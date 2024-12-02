@@ -182,7 +182,7 @@ export default function Nav({
       <div
         className={`transform ${
           showSidebar ? "w-full translate-x-0" : "-translate-x-full"
-        } bg-content2 fixed z-40 flex h-full flex-col justify-between border-r   p-4 transition-all sm:w-60 sm:translate-x-0`}
+        } fixed z-40 flex h-full flex-col justify-between border-r bg-content2 p-4 transition-all sm:w-80 sm:translate-x-0`}
       >
         <div className="grid gap-2">
           <div className="flex items-center space-x-2 rounded-lg px-2 py-1.5">
@@ -202,8 +202,8 @@ export default function Nav({
                 key={name}
                 href={href}
                 className={`flex items-center space-x-3 ${
-                  isActive ? "bg-content1" : ""
-                } active:bg-content1 rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out`}
+                  isActive ? "bg-content3" : ""
+                } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-content3 active:bg-content3`}
               >
                 {icon}
                 <span className="text-sm font-medium">{name}</span>

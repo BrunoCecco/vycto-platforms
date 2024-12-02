@@ -5,7 +5,7 @@ import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
 import Uploader from "../form/uploader";
-import { Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { Check, X } from "lucide-react";
 
 const EditGeneralSelection = ({
@@ -127,7 +127,6 @@ const EditGeneralSelection = ({
             value={editedQuestion}
             onChange={handleQuestionChange}
             onBlur={() => handleInputBlur("question", editedQuestion)}
-            className="w-full border-b-2 border-gray-300 text-center text-xl font-semibold "
           />
         </div>
         <p className="text-center ">Select correctly to score points</p>
@@ -142,10 +141,9 @@ const EditGeneralSelection = ({
                 value={option}
                 onChange={(e) => handleOptionChange(index, e.target.value)}
                 onBlur={() => handleInputBlur("answer" + (index + 1), option)}
-                className="mr-2 border-b-2 border-gray-300 text-center"
               />
               {option?.length > 0 && (
-                <button
+                <Button
                   onClick={async () => {
                     setEditedCorrectAnswer(option);
                     handleInputBlur("correctAnswer", option);
@@ -154,7 +152,7 @@ const EditGeneralSelection = ({
                   ${editedCorrectAnswer == option ? "border-green-500 text-green-500" : ""}`}
                 >
                   <Check />
-                </button>
+                </Button>
               )}
             </div>
           ))}

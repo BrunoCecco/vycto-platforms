@@ -42,13 +42,13 @@ const AdminTable = () => {
   };
 
   return (
-    <div className="overflow-x-auto rounded-2xl bg-white px-4 py-6">
+    <div className="overflow-x-auto rounded-2xl px-4 py-6">
       <div className="flex items-center gap-4">
         <ArrowLeft className="cursor-pointer" onClick={prevPage} />
         <ArrowRight className="cursor-pointer" onClick={nextPage} />
       </div>
       <table className="min-w-full table-auto border-collapse">
-        <thead className="text-md border-b-2 bg-white text-left font-medium">
+        <thead className="text-md border-b-2 text-left font-medium">
           <tr>
             <th className="px-4 py-2">User</th>
             <th className="px-4 py-2">Email</th>
@@ -70,7 +70,7 @@ const AdminTable = () => {
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white">
+        <tbody className="">
           {currentUsers &&
             currentUsers.map((user, index) => (
               <tr key={user.id}>
