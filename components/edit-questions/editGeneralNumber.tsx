@@ -79,7 +79,7 @@ const EditGeneralNumber = ({
 
   return (
     <div className="flex items-center justify-center">
-      <div className="i relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
+      <div className="i relative h-full w-full rounded-lg  p-6 shadow-xl">
         {/* Remove Button */}
         <Button
           onClick={handleRemove}

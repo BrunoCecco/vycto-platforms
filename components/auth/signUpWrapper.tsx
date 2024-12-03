@@ -39,7 +39,7 @@ const SignUpWrapper = ({
           <a href="#">Contact</a>
         </div> */}
         {/* Curve effect */}
-        <div className="absolute bottom-0 left-0 h-28 w-28 bg-white">
+        <div className="absolute bottom-0 left-0 h-28 w-28 ">
           <div className="h-28 w-28 rounded-bl-full bg-[#543ccc]"></div>
         </div>
       </div>

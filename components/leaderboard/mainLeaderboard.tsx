@@ -9,7 +9,7 @@ import Link from "next/link";
 import LoadingDots from "../icons/loadingDots";
 import { motion } from "framer-motion";
 import { LeaderboardPeriod } from "@/lib/types";
-import { Spinner } from "@nextui-org/react";
+import { Spinner, User } from "@nextui-org/react";
 
 type LeaderboardUser = SelectUser & { points: number };
 
@@ -112,8 +112,7 @@ const MainLeaderboard = ({
           </thead>
           <tbody>
             {filteredData?.length > 0
-              ? // Create a new array to include the signed-in user at the top
-                [user, ...filteredData].map((entry: any, index: number) => {
+              ? filteredData.map((entry: LeaderboardUser, index: number) => {
                   // Check if the current entry is the signed-in user
                   if (user && entry.id === user.id) {
                     // For the first instance (at the top)
@@ -171,29 +170,23 @@ const MainLeaderboard = ({
                         <tr key={entry.id} className="border-b text-left">
                           <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
                             <div className="table-cell pr-1 sm:hidden">1</div>
-                            <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
-                              <Image
-                                src={
+                            <User
+                              name={
+                                entry.username ||
+                                entry.name ||
+                                entry.email ||
+                                "User"
+                              }
+                              avatarProps={{
+                                src:
                                   entry.image ||
-                                  `https://avatar.vercel.sh/${entry.email}`
-                                }
-                                alt="Profile"
-                                fill={true}
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                className="overflow-hidden rounded-full object-cover"
-                              />
-                            </div>
+                                  `https://avatar.vercel.sh/${entry.email}`,
+                              }}
+                            />
                             <div className="flex w-0 flex-1 items-center text-sm font-bold">
-                              <span className="truncate">
-                                @
-                                {entry.username ||
-                                  entry.email ||
-                                  entry.name ||
-                                  "User"}
-                              </span>
                               <HoverBorderGradient
                                 containerClassName="ml-2 mr-auto w-min"
-                                className={`duration-400 hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all`}
+                                className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
                                 color={siteData.color1}
                               >
                                 <span style={{ color: siteData.color1 }}>
@@ -208,7 +201,9 @@ const MainLeaderboard = ({
                             ) + 1}
                           </td>
                           <td className="py-4 text-center">
-                            {parseFloat(entry.points || "0").toFixed(2)}
+                            {parseFloat(entry.points.toString() || "0").toFixed(
+                              2,
+                            )}
                           </td>
                           {/* Display the points for the signed-in user */}
                         </tr>
@@ -246,7 +241,9 @@ const MainLeaderboard = ({
                           {index}
                         </td>
                         <td className="py-4 text-center">
-                          {parseFloat(entry.points || "0").toFixed(2)}
+                          {parseFloat(entry.points.toString() || "0").toFixed(
+                            2,
+                          )}
                         </td>
                         {/* Display points for the other user */}
                       </tr>

@@ -8,6 +8,7 @@ import {
 } from "@/lib/schema";
 import Link from "next/link";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
+import { User } from "@nextui-org/react";
 
 const Leaderboard = ({
   siteData,
@@ -69,25 +70,20 @@ const Leaderboard = ({
                   >
                     <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
                       <div className="table-cell pr-1 sm:hidden">1</div>
-                      <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
-                        <Image
-                          src={
+                      <User
+                        name={
+                          user.username || user.name || user.email || "User"
+                        }
+                        avatarProps={{
+                          src:
                             user.image ||
-                            `https://avatar.vercel.sh/${user.email}`
-                          }
-                          alt="Profile"
-                          fill={true}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="overflow-hidden rounded-full object-cover"
-                        />
-                      </div>
+                            `https://avatar.vercel.sh/${user.email}`,
+                        }}
+                      />
                       <div className="flex w-0 flex-1 items-center text-sm font-bold">
-                        <span className="truncate">
-                          @{user.username || user.email || user.name || "User"}
-                        </span>
                         <HoverBorderGradient
                           containerClassName="ml-2 mr-auto w-min"
-                          className={`duration-400 w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all`}
+                          className={`w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
                           color={siteData.color1}
                         >
                           <span style={{ color: siteData.color1 }}>You</span>

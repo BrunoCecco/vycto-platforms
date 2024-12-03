@@ -54,7 +54,7 @@ const EditCompetitionDetails = async ({
                   className="h-full w-full rounded-lg object-cover"
                 />
               ) : null}
-              <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-lg border-white  opacity-25">
+              <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-lg border  opacity-25">
                 <Plus className="h-10 w-10 " />
               </div>
             </div>

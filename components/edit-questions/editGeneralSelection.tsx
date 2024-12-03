@@ -83,7 +83,7 @@ const EditGeneralSelection = ({
 
   return (
     <div className="flex items-center justify-center">
-      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
+      <div className="relative w-full rounded-lg  p-4 shadow-xl md:p-10">
         {/* Remove Button */}
         <button
           onClick={handleRemove}
@@ -148,7 +148,7 @@ const EditGeneralSelection = ({
                     setEditedCorrectAnswer(option);
                     handleInputBlur("correctAnswer", option);
                   }}
-                  className={`flex h-10 w-10 items-center justify-center rounded-md border border-gray-400  hover:border-green-500 hover:text-green-500 focus:outline-none
+                  className={`flex h-10 w-10 items-center justify-center rounded-md border hover:border-green-500 hover:text-green-500 focus:outline-none
                   ${editedCorrectAnswer == option ? "border-green-500 text-green-500" : ""}`}
                 >
                   <Check />

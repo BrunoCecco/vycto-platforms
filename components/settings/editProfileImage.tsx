@@ -58,7 +58,7 @@ export default function EditProfileImage() {
           />
         )}
         <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-full border ">
-          <div className="absolute -bottom-0 -right-0 h-10 w-10 rounded-full border-2  bg-white p-2 ">
+          <div className="absolute -bottom-0 -right-0 h-10 w-10 rounded-full border-2 bg-background p-2">
             <PencilIcon className="h-full w-full " />
           </div>
         </div>

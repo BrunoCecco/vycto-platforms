@@ -42,11 +42,17 @@ export default function UserSettings() {
   ) : (
     <div className="flex flex-col space-y-12">
       <div className="flex flex-col space-y-6">
-        <h1 className="font-cal text-3xl font-bold ">Settings</h1>
-        <div className="w-full">
+        <h1 className="font-cal text-3xl font-bold">Settings</h1>
+        <div className="w-full rounded-lg border border-content3">
           <CombinedForm
             title={"Profile"}
-            descriptions={["Full Name", "Username", "Email", "Country"]}
+            descriptions={[
+              "Full Name",
+              "Username",
+              "Email",
+              "Country",
+              "Favourite Player",
+            ]}
             helpText="User details"
             inputAttrs={[
               {
@@ -73,6 +79,12 @@ export default function UserSettings() {
                 type: "text",
                 defaultValue: session.user.country!,
                 placeholder: "Country",
+              },
+              {
+                name: "favouritePlayer",
+                type: "text",
+                defaultValue: session.user.favouritePlayer!,
+                placeholder: "Favourite Player",
               },
             ]}
             handleSubmit={handleSubmit}

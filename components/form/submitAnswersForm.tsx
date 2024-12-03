@@ -78,8 +78,8 @@ function FormButton({
       className={cn(
         "text-md flex items-center justify-center space-x-2 rounded-full border p-4 transition-all focus:outline-none sm:h-10",
         isSubmitting
-          ? "cursor-not-allowed   text-stone-400   "
-          : "border-green-600 bg-green-600  bg-transparent hover:bg-white hover:text-green-600",
+          ? "cursor-not-allowed "
+          : "border-green-600 bg-green-600  bg-transparent hover:text-green-600",
       )}
       isDisabled={isSubmitting}
       onClick={onClick}

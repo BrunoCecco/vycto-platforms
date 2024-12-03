@@ -26,6 +26,7 @@ export const users = pgTable("users", {
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
   role: text("role").default("user"),
   country: text("country"),
+  favouritePlayer: text("favouritePlayer"),
   updatedAt: timestamp("updatedAt", { mode: "date" })
     .notNull()
     .$onUpdate(() => new Date()),

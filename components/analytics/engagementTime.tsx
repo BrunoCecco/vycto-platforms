@@ -12,7 +12,7 @@ const data = [
 
 const EngagementTime = () => {
   return (
-    <div className="h-full w-full rounded-2xl bg-white p-6 shadow-lg">
+    <div className="h-full w-full rounded-2xl p-6 shadow-lg">
       <div className="flex items-center justify-between pb-4">
         <div className="flex items-center space-x-2">
           <Calendar size={24} color="#6C63FF" />

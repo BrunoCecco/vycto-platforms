@@ -1,13 +1,37 @@
 import Image from "next/image";
 import { MoveUpRight } from "lucide-react";
-import { SelectUserCompetition } from "@/lib/schema";
+import { SelectSite, SelectUserCompetition } from "@/lib/schema";
 import {
   getCompetitionData,
   getCompetitionFromId,
+  getQuestionsForCompetition,
   getSiteDataById,
 } from "@/lib/fetchers";
 import Link from "next/link";
 import { getSiteDomain } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { Carousel } from "../ui/carousel";
+import BlurImage from "@/components/media/blurImage";
+import { placeholderBlurhash, random } from "@/lib/utils";
+import PlayButton from "../buttons/playButton";
+import HoverBorderGradient from "../ui/hoverBorderGradient";
+import { Card, CardFooter, CardHeader } from "@nextui-org/react";
+
+const Predictions = ({
+  competitions,
+}: {
+  competitions: SelectUserCompetition[];
+}) => {
+  return (
+    <div className="flex w-full">
+      <Carousel
+        items={competitions.map((competition: SelectUserCompetition, index) => (
+          <PredictionCard key={index} competition={competition} />
+        ))}
+      />
+    </div>
+  );
+};
 
 const PredictionCard = async ({
   competition,
@@ -18,67 +42,47 @@ const PredictionCard = async ({
 
   const siteId = compData?.siteId;
 
-  const siteData = await getSiteDataById(siteId!);
+  const compSiteData = await getSiteDataById(siteId!);
 
-  const url = getSiteDomain(siteData!) + "/comp/" + compData?.slug;
+  if (!compData || !compSiteData) return null;
+
+  const url = getSiteDomain(compSiteData!) + "/comp/" + compData?.slug;
 
   return (
-    <Link
-      className="bg-content2 group relative flex w-full items-center gap-4 rounded-md hover:cursor-pointer"
-      rel="noreferrer"
-      target="_blank"
-      href={url}
+    <HoverBorderGradient
+      containerClassName="group h-[350px] w-[300px] relative rounded-xl"
+      className="hover: relative h-full w-full transition-all duration-400"
+      color={compSiteData.color1}
     >
-      <div className="relative h-28 w-28 overflow-hidden rounded-lg">
-        <Image
-          src={compData?.image ?? "/placeholder.png"}
-          alt="RAPID vs CFR Cluj"
+      <Card isFooterBlurred radius="md" className="h-full w-full border-none">
+        <BlurImage
+          alt={"Card thumbnail"}
+          className="h-full w-full rounded-t-md object-cover transition-all duration-100 group-hover:scale-110"
+          src={competition.image || "/placeholder.png"}
+          placeholder="blur"
           fill
-          objectFit="cover"
+          blurDataURL={placeholderBlurhash}
         />
-      </div>
-      <div>
-        <h3 className="text-xl font-semibold">{compData?.title}</h3>
-        <p className="">
-          {new Date(competition.submissionDate).toDateString()}
-        </p>
-        <p className="">
-          {parseFloat(competition.points || "0").toFixed(2)} Points
-        </p>
-      </div>
-      {/* Arrow Icon in the top-right corner */}
-      <MoveUpRight
-        className="absolute right-2 top-2 h-6 w-6 transform transition-transform duration-300 group-hover:-translate-y-3 group-hover:translate-x-3"
-        style={{ color: siteData?.color1 || "darkred" }}
-      />
-    </Link>
-  );
-};
-
-const Predictions = async ({
-  competitions,
-  title,
-}: {
-  competitions: SelectUserCompetition[];
-  title: string;
-}) => {
-  console.log(competitions.length, title);
-  return (
-    <div className="w-full">
-      <h2 className="flex flex-col justify-between text-4xl font-bold leading-tight sm:flex-row">
-        <span className="sm:flex-1">{title}</span>
-      </h2>
-
-      {/* Current Predictions Content */}
-      <div className="mt-8 w-full space-y-6">
-        {competitions.map((competition) => (
-          <PredictionCard
-            key={competition.competitionId}
-            competition={competition}
-          />
-        ))}
-      </div>
-    </div>
+        <CardFooter className="absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large border-1 border-white/20 bg-background/60 py-1 shadow-small before:rounded-xl">
+          <div className="flex w-full flex-col gap-1">
+            <p className="">
+              {new Date(competition.submissionDate).toDateString()}
+            </p>
+            <p className="">
+              {parseFloat(competition.points || "0").toFixed(2)} Points
+            </p>
+          </div>
+          <Link href={url} target="_blank" rel="noreferrer">
+            <PlayButton
+              color1={compSiteData.color1}
+              color2={compSiteData.color2}
+            >
+              View
+            </PlayButton>
+          </Link>
+        </CardFooter>
+      </Card>
+    </HoverBorderGradient>
   );
 };
 

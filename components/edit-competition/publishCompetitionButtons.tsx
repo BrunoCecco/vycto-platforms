@@ -109,7 +109,7 @@ export default function PublishCompetitionButtons({
     </div>
   ) : (
     <div>
-      <p className="text-sm text-stone-700 ">
+      <p className="text-sm ">
         The competition date is invalid - please select a date in the future.
       </p>
     </div>

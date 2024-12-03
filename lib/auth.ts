@@ -34,6 +34,7 @@ declare module "next-auth" {
       role: string;
       image?: string;
       country?: string;
+      favouritePlayer?: string;
     };
   }
 }
@@ -131,6 +132,9 @@ export const authOptions: NextAuthOptions = {
         role: token?.user?.role || session.user.role,
         // @ts-expect-error
         country: token?.user?.country || session.user.country,
+        favouritePlayer:
+          // @ts-expect-error
+          token?.user?.favouritePlayer || session.user.favouritePlayer,
       };
       return session;
     },

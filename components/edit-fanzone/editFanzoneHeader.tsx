@@ -41,7 +41,7 @@ export default function EditFanZoneHeader({
                   src={data.logo || ""}
                 />
               )}
-              <div className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white  opacity-25">
+              <div className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2  opacity-25">
                 <Plus className="h-10 w-10 " />
               </div>
             </div>
@@ -69,7 +69,7 @@ export default function EditFanZoneHeader({
         >
           <div className="relative flex h-36 w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl sm:h-[30vw] xl:h-[20vw]">
             {data.image ? <BannerMedia src={data.image} /> : null}
-            <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 border-white  opacity-25">
+            <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 opacity-25">
               <Plus className="h-10 w-10 " />
             </div>
           </div>

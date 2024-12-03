@@ -53,7 +53,7 @@ const MatchOutcome = ({ ...props }) => {
                   className="h-full w-full object-contain"
                 />
               </Button>
-              <CardFooter className="border-1 bg-background/20 absolute bottom-1 z-10 flex w-full justify-center overflow-hidden rounded-lg border-white/20 py-1 text-center shadow-sm">
+              <CardFooter className="absolute bottom-0 z-10 flex w-full justify-center overflow-hidden rounded-b-lg bg-background/20 py-1 text-center shadow-sm">
                 {props.answer1}
               </CardFooter>
             </Card>
@@ -94,7 +94,7 @@ const MatchOutcome = ({ ...props }) => {
                   className="h-full w-full object-contain"
                 />
               </Button>
-              <CardFooter className="border-1 bg-background/20 absolute bottom-1 z-10 flex w-full justify-center overflow-hidden rounded-lg border-white/20 py-1 text-center shadow-sm">
+              <CardFooter className="absolute bottom-0 z-10 flex w-full justify-center overflow-hidden rounded-b-lg bg-background/20 py-1 text-center shadow-sm">
                 {props.answer2}
               </CardFooter>
             </Card>

@@ -96,8 +96,8 @@ export default function CombinedForm({
   };
 
   return (
-    <div className="rounded-lg border  bg-white  ">
-      <h2 className="p-5 text-xl  ">{title}</h2>
+    <div className="borde rounded-lg">
+      <h2 className="p-5 text-xl">{title}</h2>
       <div className="flex flex-col sm:flex-row">
         {hasImage && ( //hasImage means hasProfileImage
           <div className="w-full pl-5 pt-5 sm:w-1/3">
@@ -140,8 +140,8 @@ export default function CombinedForm({
                       value={selectedCountry}
                     />
                     <ReactFlagsSelect
-                      selectButtonClassName="w-full rounded-md border  text-sm text-stone-900 placeholder-stone-300 focus: focus:outline-none focus:ring-stone-500    dark:placeholder-stone-700"
-                      className=""
+                      selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2"
+                      className="!rounded-xl !border-none !bg-content2 !p-0 !text-background"
                       selected={selectedCountry || ""}
                       onSelect={(code) => setSelectedCountry(code)}
                     />

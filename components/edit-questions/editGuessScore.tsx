@@ -72,7 +72,7 @@ const EditGuessScore = ({
 
   return (
     <div className="flex items-center justify-center">
-      <div className="relative w-full rounded-lg bg-white p-4 shadow-xl md:p-10">
+      <div className="relative w-full rounded-lg  p-4 shadow-xl md:p-10">
         {/* Remove Button */}
         <Button
           onClick={handleRemove}

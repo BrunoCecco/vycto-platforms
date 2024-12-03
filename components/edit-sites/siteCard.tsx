@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function SiteCard({ data }: { data: SelectSite }) {
   const url = getSiteDomain(data);
   return (
-    <div className="relative rounded-lg border  border-white pb-10 shadow-md transition-all hover:shadow-xl ">
+    <div className="relative rounded-lg border  pb-10 shadow-md transition-all hover:shadow-xl ">
       <Link
         href={`/site/${data.id}`}
         className="flex flex-col overflow-hidden rounded-lg"

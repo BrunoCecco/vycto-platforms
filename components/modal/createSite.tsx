@@ -48,7 +48,7 @@ export default function CreateSiteModal() {
           }
         })
       }
-      className="md: w-full rounded-md  bg-white md:max-w-md md:border md:shadow "
+      className="md: w-full rounded-md md:max-w-md md:border md:shadow "
     >
       <div className="relative flex flex-col space-y-4 p-5 md:p-10">
         <h2 className="text-2xl ">Create a new site</h2>

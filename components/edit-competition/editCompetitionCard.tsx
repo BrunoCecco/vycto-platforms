@@ -30,7 +30,7 @@ const EditCompetitionCard = async ({
   }
 
   return (
-    <div className="rounded-lg border  bg-white shadow-md transition-all hover:shadow-xl">
+    <div className="rounded-lg border shadow-md transition-all hover:shadow-xl">
       <div className="relative h-48 w-full">
         <BlurImage
           alt={data.title ?? "Card thumbnail"}
@@ -41,7 +41,7 @@ const EditCompetitionCard = async ({
           blurDataURL={data.imageBlurhash || placeholderBlurhash}
         />
         {!data.published && (
-          <span className="absolute bottom-2 right-2 rounded-md border  bg-white px-3 py-0.5 text-sm font-medium  shadow-md">
+          <span className="absolute bottom-2 right-2 rounded-md border  px-3 py-0.5 text-sm font-medium  shadow-md">
             Draft
           </span>
         )}

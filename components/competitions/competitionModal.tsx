@@ -80,7 +80,7 @@ export default function CompetitionModal({
                     rotate: 0,
                     zIndex: 100,
                   }}
-                  className="-mr-4 mt-4 flex-shrink-0 overflow-hidden rounded-xl border border-neutral-100 bg-white p-1 dark:border-neutral-700 dark:bg-neutral-800"
+                  className="-mr-4 mt-4 flex-shrink-0 overflow-hidden rounded-xl  p-1 "
                 >
                   <Image
                     src={image || "/logo.png"}

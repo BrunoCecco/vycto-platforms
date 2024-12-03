@@ -2,7 +2,7 @@ import { Calendar, CheckCircle2, ArrowRight, Flame } from "lucide-react";
 
 const Retention = () => {
   return (
-    <div className="h-full w-full rounded-2xl bg-white p-6 shadow-lg">
+    <div className="h-full w-full rounded-2xl  p-6 shadow-lg">
       <div className="flex">
         <div>
           <div className="flex items-center justify-between pb-4">

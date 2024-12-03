@@ -160,7 +160,7 @@ export default function Uploader({
   };
 
   return (
-    <div className="relative grid w-full gap-6 rounded-lg border  bg-white p-5  ">
+    <div className="relative grid w-full gap-6 rounded-lg border p-5">
       <form className="" ref={formRef} onSubmit={handleSubmit}>
         <div>
           {title && (
@@ -182,7 +182,7 @@ export default function Uploader({
           ) : (
             <label
               htmlFor={`${id}-upload-${name}`}
-              className="group relative mt-2 flex h-64 cursor-pointer flex-col items-center justify-center rounded-md border  bg-white shadow-sm transition-all  lg:h-80"
+              className="group relative mt-2 flex h-64 cursor-pointer flex-col items-center justify-center rounded-md border shadow-sm transition-all  lg:h-80"
             >
               <div
                 className="absolute z-[5] h-full w-full rounded-md"
@@ -226,11 +226,11 @@ export default function Uploader({
               />
               <div
                 className={`${
-                  dragActive ? "border-2 border-black" : ""
+                  dragActive ? "border-2 border-background" : ""
                 } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-md px-10 transition-all ${
                   data[name]
-                    ? "bg-white/80 opacity-0 hover:opacity-100 hover:backdrop-blur-md"
-                    : "bg-white opacity-100 "
+                    ? "opacity-0 hover:opacity-100 hover:backdrop-blur-md"
+                    : "opacity-100 "
                 }`}
               >
                 <svg
@@ -276,16 +276,16 @@ export default function Uploader({
             </label>
           )}
 
-          <div className="mt-1 flex rounded-md shadow-sm">
-            <Input
-              id={`${id}-upload-${name}`}
-              name={name}
-              type="file"
-              accept="image/*, video/*"
-              className="sr-only"
-              onChange={onChangePicture}
-            />
-          </div>
+          {/* <div className="mt-1 flex rounded-md shadow-sm"> */}
+          <Input
+            id={`${id}-upload-${name}`}
+            name={name}
+            type="file"
+            accept="image/*, video/*"
+            className="sr-only hidden"
+            onChange={onChangePicture}
+          />
+          {/* </div> */}
         </div>
       </form>
       {data[name] && data[name] != "" && (

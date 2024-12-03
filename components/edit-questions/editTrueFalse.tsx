@@ -22,7 +22,7 @@ const Button = ({
   return (
     <button
       type="submit"
-      className="w-24 rounded-full border-2 border-blue-600 bg-white p-2 text-sm font-semibold text-blue-600 transition-all duration-200 hover:bg-blue-50 hover:opacity-75"
+      className="w-24 rounded-full border-2 border-blue-600  p-2 text-sm font-semibold text-blue-600 transition-all duration-200 hover:bg-blue-50 hover:opacity-75"
       style={{
         backgroundColor: selected ? "blue" : "white",
         color: selected ? "white" : "blue",
@@ -104,7 +104,7 @@ const EditTrueFalse = ({
 
   return (
     <div className="flex items-center justify-center">
-      <div className="i relative h-full w-full rounded-lg bg-white p-6 shadow-xl">
+      <div className="i relative h-full w-full rounded-lg  p-6 shadow-xl">
         {/* Remove Button */}
         <button
           onClick={handleRemove}

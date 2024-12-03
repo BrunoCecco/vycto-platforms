@@ -105,7 +105,7 @@ export default function Form({
           }
         });
       }}
-      className="rounded-lg border  bg-white    "
+      className="rounded-lg border"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
         <h2 className="text-xl ">{title}</h2>
@@ -114,8 +114,8 @@ export default function Form({
           <>
             <Input type="hidden" name="country" value={selectedCountry} />
             <ReactFlagsSelect
-              selectButtonClassName="w-full max-w-md rounded-md border  text-sm text-stone-900 placeholder-stone-300 focus: focus:outline-none focus:ring-stone-500    dark:placeholder-stone-700"
-              className=""
+              selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2"
+              className="!rounded-xl !border-none !bg-content2 !p-0 !text-background"
               selected={selectedCountry || ""}
               onSelect={(code) => setSelectedCountry(code)}
             />
@@ -145,11 +145,7 @@ export default function Form({
         ) : inputAttrs.name === "color1" ||
           inputAttrs.name === "color2" ||
           inputAttrs.name === "color3" ? (
-          <Input
-            {...inputAttrs}
-            type="color"
-            className="focus: h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:outline-none focus:ring-stone-500    dark:placeholder-stone-700"
-          />
+          <Input {...inputAttrs} type="color" className="h-12 w-12 text-sm" />
         ) : inputAttrs.name === "subdomain" ? (
           <div className="flex w-full max-w-md">
             <Input {...inputAttrs} required />

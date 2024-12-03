@@ -41,7 +41,7 @@ const StatsBadges = () => {
       {stats.map((stat, index) => (
         <div
           key={index}
-          className="relative flex min-w-[200px] flex-col justify-center rounded-3xl bg-white p-4 shadow-sm"
+          className=" relative flex min-w-[200px] flex-col justify-center rounded-3xl p-4 shadow-sm"
         >
           <div className="flex items-center space-x-4">
             {stat.icon && (
