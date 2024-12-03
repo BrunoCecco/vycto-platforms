@@ -109,7 +109,7 @@ export default function SiteNav({
   return (
     <>
       <Button
-        className={`relative z-20 rounded-md p-2 shadow-md hover:opacity-75 sm:hidden`}
+        className={`relative z-20 min-w-10 rounded-md p-2 shadow-md hover:opacity-75 sm:hidden`}
         onClick={() => setShowSidebar(!showSidebar)}
       >
         <Menu width={20} className="text-stone-100" />
@@ -119,7 +119,7 @@ export default function SiteNav({
           showSidebar
             ? "w-[100vw] translate-x-0"
             : "w-[15vw] -translate-x-[15vw]"
-        } bg-content2 fixed top-0 z-10 flex h-full flex-col justify-between overflow-hidden border-r p-4 transition-all duration-200 sm:w-1/5 sm:translate-x-0`}
+        } fixed top-0 z-10 flex h-full flex-col justify-between overflow-hidden border-r bg-content2 p-4 transition-all duration-200 sm:w-1/5 sm:translate-x-0`}
         style={{ borderColor: data.color1 }}
       >
         <div className="flex h-full flex-col justify-between">
@@ -147,7 +147,7 @@ export default function SiteNav({
                   href={href}
                   className={`flex items-center space-x-3 ${
                     isActive ? "bg-content3" : ""
-                  } hover:bg-content3 active:bg-content3 rounded-lg px-2 py-1.5  transition-all duration-150 ease-in-out`}
+                  } rounded-lg px-2 py-1.5 transition-all duration-150  ease-in-out hover:bg-content3 active:bg-content3`}
                 >
                   {icon}
                   <span className="text-sm font-medium">{name}</span>
@@ -156,7 +156,7 @@ export default function SiteNav({
               <CoolMode>
                 <div
                   onClick={stayNotified}
-                  className={`hover:bg-content3 mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 transition-all  duration-150 ease-in-out `}
+                  className={`mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 transition-all duration-150  ease-in-out hover:bg-content3 `}
                 >
                   <Bell width={18} />
                   <span className="text-sm font-medium">Stay Notified</span>

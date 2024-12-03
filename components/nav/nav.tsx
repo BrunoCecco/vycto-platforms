@@ -169,7 +169,7 @@ export default function Nav({
   return (
     <>
       <Button
-        className={`fixed z-50 ${
+        className={`fixed z-50 min-w-10 ${
           // left align for Editor, right align for other pages
           segments[0] === "competition" && segments.length === 2 && !showSidebar
             ? "left-5 top-5"
