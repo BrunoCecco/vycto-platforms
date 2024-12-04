@@ -3,8 +3,8 @@ import { FC, useState } from "react";
 import Slider from "../competitions/slider";
 import PointsBadge from "../competitions/pointsBadge";
 import QuestionResultBlock from "../competitions/questionResultBlock";
-import FlipText from "@/components/ui/flipText";
 import { WideImage } from "./wideImage";
+import { TextGenerateEffect } from "../ui/textGenerateEffect";
 
 const WhatMinute = ({ ...props }) => {
   return (
@@ -15,14 +15,14 @@ const WhatMinute = ({ ...props }) => {
 
         <WideImage src={props.image1} color={props.color} />
 
-        {/* Question */}
-        <FlipText
-          word={props.question}
-          className="mb-1 text-center text-xl font-semibold "
+        <TextGenerateEffect
+          words={props.question}
+          className="mb-1 text-center text-xs font-semibold md:text-xl "
         />
-        <p className="text-center ">
+        <p className="mb-6 text-center text-xs md:text-sm">
           The closer you get, the more points you score
         </p>
+
         <div className="flex items-center justify-center">
           <Slider
             initialValue={props.answer.answer}

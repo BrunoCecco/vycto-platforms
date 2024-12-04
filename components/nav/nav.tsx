@@ -169,15 +169,16 @@ export default function Nav({
   return (
     <>
       <Button
-        className={`fixed z-50 min-w-10 ${
+        className={`fixed z-50 min-w-10 rounded-none md:rounded-md ${
           // left align for Editor, right align for other pages
           segments[0] === "competition" && segments.length === 2 && !showSidebar
             ? "left-5 top-5"
             : "right-5 top-7"
-        } sm:hidden `}
+        } bg-transparent sm:hidden`}
+        style={{ backdropFilter: "blur(12px)" }}
         onClick={() => setShowSidebar(!showSidebar)}
       >
-        <Menu width={20} className="" />
+        <Menu width={20} className="text-foreground" />
       </Button>
       <div
         className={`transform ${

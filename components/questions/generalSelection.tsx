@@ -6,9 +6,9 @@ import PointsBadge from "../competitions/pointsBadge";
 import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
-import FlipText from "../ui/flipText";
 import { WideImage } from "./wideImage";
 import { Button } from "@nextui-org/react";
+import { TextGenerateEffect } from "../ui/textGenerateEffect";
 
 const makeTransparent = (color: string, opacity: number) => {
   // color is a hex string
@@ -51,15 +51,16 @@ const GeneralSelection = ({ ...props }) => {
 
         <WideImage src={props.image1} color={props.color} />
 
-        {/* Question */}
-        <FlipText
-          word={props.question}
-          className="mb-1 text-center text-xl font-semibold "
+        <TextGenerateEffect
+          words={props.question || ""}
+          className="mb-1 text-center text-sm font-semibold md:text-xl "
         />
-        <p className="text-center">Select correctly to score points</p>
+        <p className="text-center text-xs md:text-sm">
+          Select correctly to score points
+        </p>
 
         <div className="flex flex-col justify-center pt-3">
-          <div className="bg-content2 flex w-full flex-wrap items-center justify-around rounded-lg p-2">
+          <div className="flex w-full flex-wrap items-center justify-center gap-2 rounded-lg p-2">
             {goalOptions.map((option, index) => (
               <Submit
                 key={"option" + index}
@@ -71,9 +72,9 @@ const GeneralSelection = ({ ...props }) => {
               >
                 <Button
                   isDisabled={props.disabled}
-                  className={`w-max rounded-lg px-4 py-3 text-sm transition-all duration-200 ${
-                    selectedOption === option ? "font-semibold shadow-md" : ""
-                  } ${!props.disabled ? "hover:font-semibold hover:shadow-md" : ""}`}
+                  className={`w-max rounded-lg bg-content2 px-4 py-3 text-sm transition-all duration-200 ${
+                    selectedOption === option ? "shadow-lg" : ""
+                  } ${!props.disabled ? "hover:scale-105 hover:font-extrabold" : ""}`}
                   onClick={() => setSelectedOption(option)}
                   style={{
                     backgroundColor:

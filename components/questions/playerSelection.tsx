@@ -4,8 +4,8 @@ import Image from "next/image";
 import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
-import FlipText from "../ui/flipText";
 import { Button, Card, CardFooter } from "@nextui-org/react";
+import { TextGenerateEffect } from "../ui/textGenerateEffect";
 
 const PlayerComponent = ({
   name,
@@ -23,7 +23,7 @@ const PlayerComponent = ({
   return (
     <Card
       isFooterBlurred
-      className={`relative flex h-[200px] w-[200px] overflow-hidden rounded-lg shadow-sm transition duration-200 ${
+      className={`relative flex h-[140px] w-[100px] overflow-hidden rounded-lg shadow-sm transition duration-200 md:h-[220px] md:w-[180px] ${
         selectedPlayer === name ? "border-2 border-yellow-500" : "border-none"
       }`}
     >
@@ -43,7 +43,7 @@ const PlayerComponent = ({
           }`}
         />
       </Button>
-      <CardFooter className="absolute bottom-0 z-10 flex w-full justify-center overflow-hidden rounded-b-lg bg-background/20 py-1 text-center shadow-sm">
+      <CardFooter className="absolute bottom-0 z-10 flex w-full justify-center overflow-hidden rounded-b-lg bg-background/20 py-1 text-center text-xs shadow-sm md:text-sm">
         {name}
       </CardFooter>
     </Card>
@@ -62,11 +62,13 @@ const PlayerSelection = ({ ...props }) => {
         <PointsBadge points={props.points} color={props.color} />
 
         {/* Question */}
-        <FlipText
-          word={props.question}
-          className="mb-1 text-center text-xl font-semibold "
+        <TextGenerateEffect
+          words={props.question}
+          className="mb-1 text-center text-xs font-semibold md:text-xl "
         />
-        <p className="mb-6 text-center ">Select the correct answer</p>
+        <p className="mb-6 text-center text-xs md:text-sm">
+          Select the correct answer
+        </p>
 
         {/* Player Options */}
         <div className="grid grid-cols-2 gap-4">

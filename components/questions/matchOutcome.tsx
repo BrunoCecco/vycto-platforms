@@ -5,8 +5,8 @@ import PointsBadge from "../competitions/pointsBadge";
 import { answerQuestion } from "@/lib/actions";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
-import FlipText from "../ui/flipText";
 import { Button, Card, CardFooter } from "@nextui-org/react";
+import { TextGenerateEffect } from "../ui/textGenerateEffect";
 
 const MatchOutcome = ({ ...props }) => {
   const [selectedOutcome, setSelectedOutcome] = useState(
@@ -19,15 +19,16 @@ const MatchOutcome = ({ ...props }) => {
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
-        {/* Match Info */}
-        <FlipText
-          word={props.question}
-          className="mb-1 text-center text-xl font-semibold "
+        <TextGenerateEffect
+          words={props.question || ""}
+          className="mb-1 text-center text-sm font-semibold md:text-xl "
         />
-        <p className="text-center text-sm">Pick the winner to score points</p>
+        <p className="text-center text-xs md:text-sm">
+          Pick the winner to score points
+        </p>
 
         {/* Teams */}
-        <div className="flex w-full items-center justify-between py-4 md:justify-around md:px-4">
+        <div className="flex w-full flex-col items-center justify-between gap-2 py-4 md:flex-row md:justify-around md:px-4">
           {/* Home Team */}
           <Submit
             userId={props.userId}
@@ -38,7 +39,7 @@ const MatchOutcome = ({ ...props }) => {
           >
             <Card isFooterBlurred>
               <Button
-                className={`relative h-[250px] w-[180px] items-center justify-center overflow-hidden text-center ${
+                className={`relative h-[140px] w-[100px] items-center justify-center overflow-hidden text-center md:h-[250px] md:w-[180px] ${
                   selectedOutcome === props.answer1
                     ? "opacity-100"
                     : "opacity-50"
@@ -53,7 +54,7 @@ const MatchOutcome = ({ ...props }) => {
                   className="h-full w-full object-contain"
                 />
               </Button>
-              <CardFooter className="absolute bottom-0 z-10 flex w-full justify-center overflow-hidden rounded-b-lg bg-background/20 py-1 text-center shadow-sm">
+              <CardFooter className="absolute bottom-0 z-10 flex w-full justify-center overflow-hidden rounded-b-lg bg-background/20 py-1 text-center text-xs shadow-sm md:text-sm">
                 {props.answer1}
               </CardFooter>
             </Card>
@@ -79,7 +80,7 @@ const MatchOutcome = ({ ...props }) => {
           >
             <Card isFooterBlurred>
               <Button
-                className={`relative h-[250px] w-[180px] items-center justify-center overflow-hidden text-center ${
+                className={`relative h-[140px] w-[100px] items-center justify-center overflow-hidden text-center md:h-[250px] md:w-[180px] ${
                   selectedOutcome === props.answer2
                     ? "opacity-100"
                     : "opacity-50"
@@ -94,7 +95,7 @@ const MatchOutcome = ({ ...props }) => {
                   className="h-full w-full object-contain"
                 />
               </Button>
-              <CardFooter className="absolute bottom-0 z-10 flex w-full justify-center overflow-hidden rounded-b-lg bg-background/20 py-1 text-center shadow-sm">
+              <CardFooter className="absolute bottom-0 z-10 flex w-full justify-center overflow-hidden rounded-b-lg bg-background/20 py-1 text-center text-xs shadow-sm md:text-sm">
                 {props.answer2}
               </CardFooter>
             </Card>
@@ -116,7 +117,7 @@ const MatchOutcome = ({ ...props }) => {
                 selectedOutcome == "Draw" ? "opacity-100" : "opacity-50"
               }`}
               isDisabled={props.disabled}
-              style={{ borderColor: props.color, color: props.color }}
+              style={{ borderColor: props.color }}
               onClick={() => setSelectedOutcome("Draw")}
             >
               Draw

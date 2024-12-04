@@ -4,8 +4,8 @@ import PointsBadge from "../competitions/pointsBadge";
 import { PlusCircle, MinusCircle } from "lucide-react";
 import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
-import FlipText from "../ui/flipText";
 import { Button } from "@nextui-org/react";
+import { TextGenerateEffect } from "../ui/textGenerateEffect";
 
 const GuessScore = ({ ...props }) => {
   const [scores, setScores] = useState({
@@ -39,11 +39,10 @@ const GuessScore = ({ ...props }) => {
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
-        <FlipText
-          word={"Guess the score"}
-          className="mb-1 text-center text-xl font-semibold"
+        <TextGenerateEffect
+          words={"Guess the score"}
+          className="mb-1 text-center text-sm font-semibold md:text-xl"
         />
-
         {/* Teams */}
         <Submit
           userId={props.userId}
@@ -53,14 +52,15 @@ const GuessScore = ({ ...props }) => {
           onLocalAnswer={props.onLocalAnswer}
         >
           <div
-            className="flex w-full items-center justify-between gap-4 py-4 md:justify-around md:px-4"
+            className="flex w-full items-center justify-between gap-4 py-4 text-center md:justify-around md:px-4"
             onBlur={() => submitButton?.current?.click()}
           >
             <div className="flex flex-col items-center gap-4">
-              <div className="flex items-center gap-4 md:gap-8">
+              <div className="flex items-center gap-2 md:gap-8">
                 <Button
                   onClick={() => updateScore("home", false)}
                   variant="light"
+                  className="min-w-0 !p-0"
                   isDisabled={props.disabled}
                 >
                   <MinusCircle />
@@ -69,6 +69,7 @@ const GuessScore = ({ ...props }) => {
                 <Button
                   onClick={() => updateScore("home", true)}
                   isDisabled={props.disabled}
+                  className="min-w-0 !p-0"
                   variant="light"
                 >
                   <PlusCircle />
@@ -88,10 +89,11 @@ const GuessScore = ({ ...props }) => {
             </div>
 
             <div className="flex flex-col items-center gap-4">
-              <div className="flex items-center gap-4 md:gap-8">
+              <div className="flex items-center gap-2 md:gap-8">
                 <Button
                   onClick={() => updateScore("away", false)}
                   isDisabled={props.disabled}
+                  className="min-w-0 !p-0"
                   variant="light"
                 >
                   <MinusCircle />
@@ -100,6 +102,7 @@ const GuessScore = ({ ...props }) => {
                 <Button
                   onClick={() => updateScore("away", true)}
                   isDisabled={props.disabled}
+                  className="min-w-0 !p-0"
                   variant="light"
                 >
                   <PlusCircle />

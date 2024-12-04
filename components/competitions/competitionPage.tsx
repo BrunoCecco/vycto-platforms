@@ -227,7 +227,7 @@ export default function CompetitionPage({
 
   return (
     <div className="w-full pb-5 sm:pb-20">
-      <div className="bg-content1 h-max overflow-hidden px-8 py-8 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
+      <div className="h-max overflow-hidden bg-content1 px-8 py-8 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
         <CompetitionHeader
           session={session}
           users={users}
@@ -240,7 +240,7 @@ export default function CompetitionPage({
         )}
         {activeTab == "Challenge" && (
           <TracingBeam color1={siteData.color1} color2={siteData.color2}>
-            <div className="mx-auto flex w-full flex-col justify-center gap-12 py-12 md:gap-20 md:rounded-3xl">
+            <div className="relative z-50 mx-auto flex w-full flex-col justify-center gap-12 py-12 md:gap-20 md:rounded-3xl">
               {userComp && "submitted" in userComp && userComp.submitted ? (
                 <GameStats
                   competitionTitle={data.title!}

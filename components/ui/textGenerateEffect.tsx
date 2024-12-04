@@ -39,7 +39,10 @@ export const TextGenerateEffect = ({
       <motion.div ref={scope}>
         {wordsArray.map((sentence, idx) => {
           return (
-            <div key={sentence + idx} className="my-1 block text-center">
+            <div
+              key={sentence + idx}
+              className="my-1 block text-center text-xs"
+            >
               {sentence.split(" ").map((word, idx) => (
                 <motion.span
                   key={word + idx}

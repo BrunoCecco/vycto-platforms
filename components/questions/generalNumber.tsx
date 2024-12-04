@@ -6,7 +6,6 @@ import { useRef, useState } from "react";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import { Button, Input } from "@nextui-org/react";
 import QuestionResultBlock from "../competitions/questionResultBlock";
-import FlipText from "../ui/flipText";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
 import { WideImage } from "./wideImage";
 
@@ -26,9 +25,11 @@ const GeneralNumber = ({ ...props }) => {
         {/* Question */}
         <TextGenerateEffect
           words={props.question}
-          className="mb-1 text-center text-xl font-semibold "
+          className="mb-1 text-center text-sm font-semibold md:text-xl "
         />
-        <p className="mb-6 text-center">Answer correctly to score points.</p>
+        <p className="mb-6 text-center text-xs md:text-sm">
+          Answer correctly to score points.
+        </p>
 
         <Submit
           userId={props.userId}

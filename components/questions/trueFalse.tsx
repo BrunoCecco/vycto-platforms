@@ -4,8 +4,8 @@ import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
 import { useState } from "react";
 import QuestionResultBlock from "../competitions/questionResultBlock";
-import FlipText from "../ui/flipText";
 import { WideImage } from "./wideImage";
+import { TextGenerateEffect } from "../ui/textGenerateEffect";
 
 const Button = ({
   children,
@@ -23,7 +23,7 @@ const Button = ({
   return (
     <button
       type="submit"
-      className="border-background w-24 rounded-full border-2 p-2 text-sm font-semibold transition-all duration-200 hover:opacity-75"
+      className="w-24 rounded-full border-2 border-background p-2 text-sm font-semibold transition-all duration-200 hover:opacity-75"
       style={{
         backgroundColor: selected ? color || "blue" : "background",
         color: selected ? "background" : color || "blue",
@@ -49,11 +49,13 @@ const TrueFalse = ({ ...props }) => {
         <WideImage src={props.image1} color={props.color} />
 
         {/* Question */}
-        <FlipText
-          word={props.question}
-          className="mb-1 text-center text-xl font-semibold "
+        <TextGenerateEffect
+          words={props.question}
+          className="mb-1 text-center text-sm font-semibold md:text-xl "
         />
-        <p className="mb-6 text-center ">Select correctly to score points</p>
+        <p className="mb-6 text-center text-xs md:text-sm">
+          Select correctly to score points
+        </p>
 
         <div className="flex justify-around">
           <Submit

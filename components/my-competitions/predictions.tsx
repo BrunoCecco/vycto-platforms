@@ -58,7 +58,7 @@ const PredictionCard = async ({
         <BlurImage
           alt={"Card thumbnail"}
           className="h-full w-full rounded-t-md object-cover transition-all duration-100 group-hover:scale-110"
-          src={competition.image || "/placeholder.png"}
+          src={compData.image || "/vLogo.png"}
           placeholder="blur"
           fill
           blurDataURL={placeholderBlurhash}

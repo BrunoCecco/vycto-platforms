@@ -109,10 +109,11 @@ export default function SiteNav({
   return (
     <>
       <Button
-        className={`relative z-20 min-w-10 rounded-md p-2 shadow-md hover:opacity-75 sm:hidden`}
+        className={`fixed z-20 min-w-10 bg-transparent p-2 shadow-md hover:opacity-75 sm:hidden`}
         onClick={() => setShowSidebar(!showSidebar)}
+        style={{ backdropFilter: "blur(12px)" }}
       >
-        <Menu width={20} className="text-stone-100" />
+        <Menu width={20} className="text-foreground" />
       </Button>
       <div
         className={`transform ${
