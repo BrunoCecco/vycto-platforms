@@ -5,9 +5,8 @@ import { PlusCircle, MinusCircle } from "lucide-react";
 import { SelectQuestion } from "@/lib/schema";
 import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
-import { Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { X } from "lucide-react";
-import Button from "../buttons/button";
 
 const EditGuessScore = ({
   question,

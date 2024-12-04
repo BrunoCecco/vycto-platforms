@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@nextui-org/react";
-import Button from "@/components/buttons/button";
+import { Button, Input, Spinner } from "@nextui-org/react";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { SelectQuestion } from "@/lib/schema";
@@ -129,12 +128,8 @@ export default function SearchPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-grow"
           />
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              "Search"
-            )}
+          <Button type="submit" isDisabled={isLoading}>
+            {isLoading ? <Spinner /> : "Search"}
           </Button>
         </form>
         {searchResults.length > 0 && !selectedResult && (

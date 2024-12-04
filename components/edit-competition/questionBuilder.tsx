@@ -11,8 +11,8 @@ import EditGeneralSelection from "@/components/edit-questions/editGeneralSelecti
 import EditTrueFalse from "@/components/edit-questions/editTrueFalse";
 import EditGeneralNumber from "@/components/edit-questions/editGeneralNumber";
 import { toast } from "sonner";
-import Button from "@/components/buttons/button";
 import { getQuestionsForCompetition } from "@/lib/fetchers";
+import { Button } from "@nextui-org/react";
 
 const QuestionBuilder = ({
   competitionId,
@@ -131,7 +131,7 @@ const QuestionBuilder = ({
         onClick={() =>
           setShowOptionsIndex(showOptionsIndex === index ? null : index)
         }
-        className="flex items-center justify-center rounded-full bg-blue-500 px-4 py-2  hover:bg-blue-600"
+        className="flex items-center justify-center rounded-full px-4 py-2"
       >
         {showOptionsIndex === index ? "Cancel" : "Add Question"}
       </Button>
