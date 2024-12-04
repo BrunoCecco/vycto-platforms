@@ -1,8 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { SelectCompetition, SelectUserCompetition } from "@/lib/schema";
+import {
+  SelectCompetition,
+  SelectSite,
+  SelectUserCompetition,
+} from "@/lib/schema";
 import { useEffect, useState } from "react";
+import { Button } from "@nextui-org/react";
+import { Parser } from "@json2csv/plainjs";
 
 const User = ({
   user,
@@ -36,6 +42,8 @@ const User = ({
       <div className="py-4">
         <Link
           href={`${url}/${user.userId}`}
+          target="_blank"
+          rel="noreferrer"
           className="rounded-full bg-blue-100 p-2 px-4 text-purple-800 hover:bg-blue-300"
         >
           View
@@ -45,11 +53,19 @@ const User = ({
   );
 };
 
+type Site = {
+  site: {
+    subdomain: string | null;
+  } | null;
+};
+
 export default function CompetitionWinners({
+  compData,
   winnerData,
   url,
   adminView,
 }: {
+  compData: SelectCompetition & Site;
   winnerData: any;
   url: string;
   adminView: boolean;
@@ -87,41 +103,83 @@ export default function CompetitionWinners({
     }
   }, [winnerData]);
 
+  const downloadCSVFile = () => {
+    const data = [
+      ["Rank", "Email", "Points", "SubmissionLink"],
+      ...rewardWinners.map((user, index) => [
+        user.ranking,
+        user.email,
+        parseFloat(user.points || "0").toFixed(2),
+        `${url}/${user.userId}`,
+      ]),
+      ...reward2Winners.map((user, index) => [
+        user.ranking,
+        user.email,
+        parseFloat(user.points || "0").toFixed(2),
+        `${url}/${user.userId}`,
+      ]),
+      ...reward3Winners.map((user, index) => [
+        user.ranking,
+        user.email,
+        parseFloat(user.points || "0").toFixed(2),
+        `${url}/${user.userId}`,
+      ]),
+    ];
+    const parser = new Parser({});
+    const csv = parser.parse(data);
+    alert(csv);
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url_ = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url_;
+    a.download =
+      compData.title + " winners " + new Date().toDateString() + ".xlsx";
+    a.click();
+    document.body.removeChild(a);
+  };
+
   return (
     <div className="flex  flex-col space-y-12 p-6">
-      <div className="flex flex-col space-y-6">
-        <div className="font-bold">1st Reward Winners</div>
-        {rewardWinners.map((user, index) => (
-          <User
-            key={user.userId}
-            user={user}
-            index={index}
-            url={url}
-            adminView={adminView}
-          />
-        ))}
+      <Button onClick={downloadCSVFile}>Download Excel</Button>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
+          <div className="font-bold">1st Reward Winners</div>
+          {rewardWinners.map((user, index) => (
+            <User
+              key={user.userId}
+              user={user}
+              index={index}
+              url={url}
+              adminView={adminView}
+            />
+          ))}
+        </div>
 
-        <div className="font-bold">2nd Reward Winners</div>
-        {reward2Winners.map((user, index) => (
-          <User
-            key={user.userId}
-            user={user}
-            index={index}
-            url={url}
-            adminView={adminView}
-          />
-        ))}
+        <div className="flex flex-col gap-6">
+          <div className="font-bold">2nd Reward Winners</div>
+          {reward2Winners.map((user, index) => (
+            <User
+              key={user.userId}
+              user={user}
+              index={index}
+              url={url}
+              adminView={adminView}
+            />
+          ))}
+        </div>
 
-        <div className="font-bold">3rd Reward Winners</div>
-        {reward3Winners.map((user, index) => (
-          <User
-            key={user.userId}
-            user={user}
-            index={index}
-            url={url}
-            adminView={adminView}
-          />
-        ))}
+        <div className="flex flex-col gap-6">
+          <div className="font-bold">3rd Reward Winners</div>
+          {reward3Winners.map((user, index) => (
+            <User
+              key={user.userId}
+              user={user}
+              index={index}
+              url={url}
+              adminView={adminView}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

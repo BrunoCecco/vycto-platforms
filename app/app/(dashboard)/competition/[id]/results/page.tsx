@@ -48,6 +48,7 @@ export default async function CompetitionResults({
       <div className="flex flex-col space-y-6">
         <h1 className="text-3xl font-bold">Competition Results</h1>
         <CompetitionWinners
+          compData={data}
           winnerData={winnerData}
           url={url}
           adminView={true}

@@ -5,6 +5,11 @@ const { hostname } = require("os");
  */
 module.exports = {
   reactStrictMode: false,
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false };
+
+    return config;
+  },
   experimental: {
     serverActions: {
       allowedOrigins: ["app.localhost:3000"],

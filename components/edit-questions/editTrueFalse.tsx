@@ -7,8 +7,9 @@ import Uploader from "../form/uploader";
 import PointsBadge from "../competitions/pointsBadge";
 import { Input } from "@nextui-org/react";
 import { X } from "lucide-react";
+import { Button } from "@nextui-org/react";
 
-const Button = ({
+const TFButton = ({
   children,
   selected,
   disabled,
@@ -106,12 +107,12 @@ const EditTrueFalse = ({
     <div className="flex items-center justify-center">
       <div className="i relative h-full w-full rounded-lg  p-6 shadow-xl">
         {/* Remove Button */}
-        <button
+        <Button
           onClick={handleRemove}
           className="absolute left-2 top-2 rounded-full p-2 text-red-500 hover:text-red-600 focus:outline-none"
         >
           <X className="h-6 w-6" />
-        </button>
+        </Button>
         {/* Editable Points Badge */}
         <div className="mb-4 flex justify-center">
           {isEditingPoints ? (
@@ -152,7 +153,7 @@ const EditTrueFalse = ({
         <p className="mb-4 text-center ">Select correctly to score points.</p>
 
         <div className="flex justify-around gap-4 text-center">
-          <Button
+          <TFButton
             selected={editedCorrectAnswer == "True"}
             disabled={false}
             onClick={async () => {
@@ -161,8 +162,8 @@ const EditTrueFalse = ({
             }}
           >
             True
-          </Button>
-          <Button
+          </TFButton>
+          <TFButton
             selected={editedCorrectAnswer == "False"}
             disabled={false}
             onClick={async () => {
@@ -171,7 +172,7 @@ const EditTrueFalse = ({
             }}
           >
             False
-          </Button>
+          </TFButton>
         </div>
       </div>
     </div>
