@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import SiteSettingsNav from "./nav";
 import db from "@/lib/db";
 import { getSiteDomain } from "@/lib/utils";
+import { Link } from "@nextui-org/react";
 
 export default async function SiteAnalyticsLayout({
   params,
@@ -27,7 +28,7 @@ export default async function SiteAnalyticsLayout({
         <h1 className="text-xl font-bold  sm:text-3xl">
           Settings for {data.name}
         </h1>
-        <a
+        <Link
           href={
             process.env.NEXT_PUBLIC_VERCEL_ENV
               ? `https://${url}`
@@ -35,10 +36,10 @@ export default async function SiteAnalyticsLayout({
           }
           target="_blank"
           rel="noreferrer"
-          className="truncate rounded-md bg-stone-100 px-2 py-1 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-400 dark:hover:bg-stone-700"
+          className="truncate rounded-md px-2 py-1 text-sm font-medium  transition-colors"
         >
           {url} ↗
-        </a>
+        </Link>
       </div>
       <SiteSettingsNav />
       {children}

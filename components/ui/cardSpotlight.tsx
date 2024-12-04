@@ -3,7 +3,12 @@
 import { useMotionValue, motion, useMotionTemplate } from "framer-motion";
 import React, { MouseEvent as ReactMouseEvent, useState } from "react";
 import { CanvasRevealEffect } from "@/components/ui/canvasRevealEffect";
-import { cn } from "@/lib/utils";
+import { cn, makeTransparent } from "@/lib/utils";
+
+const hexToRgb = (hex: string) => {
+  const bigint = parseInt(hex.slice(1), 16);
+  return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+};
 
 export const CardSpotlight = ({
   children,
@@ -35,7 +40,7 @@ export const CardSpotlight = ({
   return (
     <div
       className={cn(
-        "group/spotlight border-content3 relative rounded-md border p-10",
+        "group/spotlight relative rounded-md border border-content3 p-10",
         className,
       )}
       onMouseMove={handleMouseMove}
@@ -44,9 +49,9 @@ export const CardSpotlight = ({
       {...props}
     >
       <motion.div
-        className="bg-content3 pointer-events-none absolute -inset-px z-0 rounded-md opacity-0 transition duration-300 group-hover/spotlight:opacity-100"
+        className="pointer-events-none absolute -inset-px z-0 rounded-md bg-content3 opacity-0 transition duration-300 group-hover/spotlight:opacity-100"
         style={{
-          // backgroundColor: color,
+          backgroundColor: makeTransparent(color, 0.8),
           maskImage: useMotionTemplate`
             radial-gradient(
               ${radius}px circle at ${mouseX}px ${mouseY}px,
@@ -60,10 +65,7 @@ export const CardSpotlight = ({
           <CanvasRevealEffect
             animationSpeed={5}
             containerClassName="bg-transparent absolute inset-0 pointer-events-none"
-            colors={[
-              [59, 130, 246],
-              [139, 92, 246],
-            ]}
+            colors={[[128, 128, 128], hexToRgb(color)]}
             dotSize={3}
           />
         )}

@@ -51,10 +51,10 @@ export default function CompetitionModal({
                 <span>
                   A chance to{" "}
                   <span
-                    className="rounded-lg p-2 "
+                    className="rounded-lg px-2 py-1 text-background"
                     style={{ backgroundColor: siteData.color1 }}
                   >
-                    win
+                    WIN
                   </span>{" "}
                   your favourite {siteData.name} prizes
                 </span>

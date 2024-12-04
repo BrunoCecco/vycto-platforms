@@ -13,7 +13,7 @@ export default async function NotFound() {
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-4xl">{data ? `${data.name}: ` : ""}404</h1>
       <Image alt="missing site" src="/logo.png" width={400} height={400} />
-      <p className="text-lg text-stone-500">
+      <p className="text-lg ">
         {data
           ? data.message404
           : "Blimey! You've found a page that doesn't exist."}

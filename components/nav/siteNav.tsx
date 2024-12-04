@@ -19,6 +19,7 @@ import { Story } from "../fanzone/story";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
+import { makeTransparent } from "@/lib/utils";
 
 export default function SiteNav({
   data,
@@ -143,16 +144,21 @@ export default function SiteNav({
             </div>
             <div className="mt-4 grid gap-1">
               {tabs.map(({ name, href, isActive, icon }) => (
-                <Link
+                <div
                   key={name}
-                  href={href}
-                  className={`flex items-center space-x-3 ${
-                    isActive ? "bg-content3" : ""
-                  } rounded-lg px-2 py-1.5 transition-all duration-150  ease-in-out hover:bg-content3 active:bg-content3`}
+                  className="rounded-lg"
+                  style={{ backgroundColor: makeTransparent(data.color1, 0.8) }}
                 >
-                  {icon}
-                  <span className="text-sm font-medium">{name}</span>
-                </Link>
+                  <Link
+                    href={href}
+                    className={`flex items-center space-x-3 ${
+                      isActive ? "bg-transparent" : ""
+                    } rounded-lg bg-content2 px-2 py-1.5 hover:bg-transparent active:bg-transparent`}
+                  >
+                    {icon}
+                    <span className="text-sm font-medium">{name}</span>
+                  </Link>
+                </div>
               ))}
               <CoolMode>
                 <div
@@ -194,32 +200,37 @@ export default function SiteNav({
             <div className="flex flex-col items-center justify-center gap-4">
               <Story siteData={data} />
               {session ? (
-                <Button onClick={subscribe}>
+                <div onClick={subscribe}>
                   <HoverBorderGradient
-                    containerClassName="py-2 px-8"
-                    className="flex items-center gap-2"
+                    containerClassName="rounded-full"
+                    as="button"
+                    className="group relative flex items-center gap-2 px-8 py-2 transition-all duration-200 hover:scale-105 hover:bg-transparent"
+                    color={data.color1}
                   >
                     Stay Notified
                     <Bell width={18} />
                   </HoverBorderGradient>
-                </Button>
+                </div>
               ) : (
-                <div className="flex w-[400px] flex-col items-center gap-2">
+                <div className="flex w-[400px] flex-col items-center gap-4">
                   <Input
                     type="text"
                     placeholder="hi@vycto.com"
+                    label="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />{" "}
-                  <Button onClick={subscribe}>
+                  <div onClick={subscribe}>
                     <HoverBorderGradient
-                      containerClassName="py-2 px-8"
-                      className="flex items-center gap-2"
+                      containerClassName="rounded-full"
+                      as="button"
+                      className="group relative flex items-center gap-2 px-8 py-2 transition-all duration-200 hover:scale-105 hover:bg-transparent"
+                      color={data.color1}
                     >
                       Stay Notified
                       <Bell width={18} />
                     </HoverBorderGradient>
-                  </Button>
+                  </div>
                 </div>
               )}
             </div>

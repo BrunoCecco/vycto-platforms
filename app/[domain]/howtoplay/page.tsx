@@ -1,49 +1,72 @@
 import UserSettings from "@/components/settings/userSettings";
 import { CardSpotlight } from "@/components/ui/cardSpotlight";
+import { getSiteData } from "@/lib/fetchers";
 import { ArrowBigDown, ArrowDownNarrowWide } from "lucide-react";
 import Image from "next/image";
 
-export default async function HowToPlayPage() {
-  // explain how to play with beautiful layouy
+const Arrow = () => (
+  <div className="rounded-full">
+    <ArrowBigDown className="mx-auto h-12 w-12 " />
+  </div>
+);
+
+const HelpCard = ({
+  src,
+  color,
+  children,
+}: {
+  src: string;
+  color?: string;
+  children: React.ReactNode;
+}) => (
+  <CardSpotlight
+    className="flex flex-col items-center rounded-lg p-6 shadow-lg"
+    color={color}
+  >
+    {children}
+    <Image
+      src={src}
+      alt="Answer Questions"
+      width={300}
+      height={300}
+      className="relative z-20 overflow-hidden rounded-md"
+    />
+  </CardSpotlight>
+);
+
+export default async function HowToPlayPage({
+  params,
+}: {
+  params: { domain: string };
+}) {
+  const domain = decodeURIComponent(params.domain);
+  const data = await getSiteData(domain);
+
   return (
     <div className="flex flex-col gap-8">
       <h1 className="mb-6 text-3xl font-bold">How to Play</h1>
 
-      <CardSpotlight className="flex flex-col items-center rounded-lg p-6 shadow-lg">
+      <HelpCard src="/playButton.png" color={data?.color1}>
         <h2 className=" relative z-20 mb-4 text-2xl font-semibold">
           1. Enter a Competition
         </h2>
         <p className="relative z-20 mb-4 ">
           Browse our active competitions and click &ldquo;Play&ldquo;.
         </p>
-        <Image
-          src={"/playButton.png"}
-          alt="Play Button"
-          width={300}
-          height={300}
-          className="relative z-20 overflow-hidden rounded-md"
-        />
-      </CardSpotlight>
+      </HelpCard>
 
-      <ArrowBigDown className="mx-auto h-12 w-12 " />
+      <Arrow />
 
-      <CardSpotlight className="flex flex-col items-center rounded-lg p-6 shadow-lg">
+      <HelpCard src="/answerQuestion.png" color={data?.color1}>
         <h2 className="relative z-20 mb-4 text-2xl font-semibold ">
           2. Answer Questions
         </h2>
         <p className="relative z-20 mb-4 ">Submit your answers!</p>
-        <Image
-          src={"/answerQuestion.png"}
-          alt="Answer Questions"
-          width={300}
-          height={300}
-          className="relative z-20 overflow-hidden rounded-md"
-        />
-      </CardSpotlight>
+      </HelpCard>
 
-      <ArrowBigDown className="mx-auto h-12 w-12 " />
+      <Arrow />
 
-      <CardSpotlight className="flex flex-col items-center rounded-lg p-6 shadow-lg">
+      <HelpCard src="/leaderboard.png" color={data?.color1}>
         <h2 className="relative z-20 mb-4 text-2xl font-semibold ">
           3. Earn Points
         </h2>
@@ -51,18 +74,11 @@ export default async function HowToPlayPage() {
           Points will be calculated after the event and you will be placed on a
           leaderboard.
         </p>
-        <Image
-          src={"/leaderboard.png"}
-          alt="Leaderboard"
-          width={400}
-          height={400}
-          className="relative z-20 overflow-hidden rounded-md"
-        />
-      </CardSpotlight>
+      </HelpCard>
 
-      <ArrowBigDown className="mx-auto h-12 w-12 " />
+      <Arrow />
 
-      <CardSpotlight className="flex flex-col items-center rounded-lg p-6 shadow-lg">
+      <HelpCard src="/reward.png" color={data?.color1}>
         <h2 className="relative z-20  mb-4 text-2xl font-semibold ">
           4. Win Rewards
         </h2>
@@ -73,14 +89,7 @@ export default async function HowToPlayPage() {
         <p className="mb-4 ">
           Check the competition details for specific reward information.
         </p>
-        <Image
-          src={"/reward.png"}
-          alt="Rewards"
-          width={300}
-          height={300}
-          className="relative z-20 overflow-hidden rounded-md"
-        />
-      </CardSpotlight>
+      </HelpCard>
     </div>
   );
 }

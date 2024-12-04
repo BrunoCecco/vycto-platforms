@@ -41,7 +41,7 @@ export const TextGenerateEffect = ({
           return (
             <div
               key={sentence + idx}
-              className="my-1 block text-center text-xs"
+              className="my-1 block text-center text-lg"
             >
               {sentence.split(" ").map((word, idx) => (
                 <motion.span

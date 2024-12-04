@@ -1,19 +1,27 @@
 "use client";
-import { SelectCompetition, SelectSiteReward } from "@/lib/schema";
+import { SelectCompetition, SelectSite, SelectSiteReward } from "@/lib/schema";
 import { BackgroundGradient } from "../ui/backgroundGradient";
 import Image from "next/image";
+import { makeTransparent } from "@/lib/utils";
 
 export default function ClaimRewardsCard({
   comp,
   latestReward,
+  data,
 }: {
   comp: SelectCompetition;
   latestReward: SelectSiteReward;
+  data: SelectSite;
 }) {
   return (
     <BackgroundGradient
       containerClassName="h-[350px] w-full rounded-lg p-1"
       className="flex h-full w-full flex-col justify-between"
+      color1={data.color1}
+      color2={makeTransparent(data.color1, 0.7)}
+      color3={"#FFFFFF"}
+      color4={makeTransparent(data.color1, 0)}
+      color5={makeTransparent(data.color1, 0.7)}
     >
       <div className="flex h-full w-full flex-col justify-between rounded-lg bg-content3 p-8">
         <div className="relative h-2/3 w-full">

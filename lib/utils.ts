@@ -86,3 +86,12 @@ export const getSiteDomain = (siteData: SelectSite) => {
     "http://" + siteData.subdomain + "." + process.env.NEXT_PUBLIC_ROOT_DOMAIN
   );
 };
+
+export const makeTransparent = (color: string, opacity: number) => {
+  // color is a hex string
+  const hex = color.replace("#", "");
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+};

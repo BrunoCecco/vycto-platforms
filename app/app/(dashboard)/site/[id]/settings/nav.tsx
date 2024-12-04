@@ -27,17 +27,15 @@ export default function SiteSettingsNav() {
   ];
 
   return (
-    <div className="flex space-x-4 border-b border-stone-200 pb-4 pt-2 dark:border-stone-700">
+    <div className="flex space-x-4 border-b  pb-4 pt-2">
       {navItems.map((item) => (
         <Link
           key={item.name}
           href={item.href}
           // Change style depending on whether the link is active
           className={cn(
-            "rounded-md px-2 py-1 text-sm font-medium transition-colors active:bg-stone-200 dark:active:bg-stone-600",
-            segment === item.segment
-              ? "bg-stone-100 text-stone-800 dark:bg-stone-800 dark:text-stone-200"
-              : "text-stone-800 hover:bg-stone-100 dark:text-stone-200 dark:hover:bg-stone-800",
+            "rounded-md px-2 py-1 text-sm font-medium transition-colors hover:bg-content3 active:bg-content3",
+            segment === item.segment ? "bg-content3" : "",
           )}
         >
           {item.name}

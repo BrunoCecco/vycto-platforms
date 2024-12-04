@@ -13,6 +13,7 @@ import {
   getSiteRewards,
   getUserCompetitions,
 } from "@/lib/fetchers";
+import { makeTransparent } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
@@ -55,22 +56,26 @@ export default async function Rewards({
   return (
     <div className="min-h-screen">
       <BackgroundGradient
-        containerClassName="h-[50px] w-full rounded-lg"
+        containerClassName="h-[50px] w-full rounded-lg mb-4"
         className="p-0"
+        color1={data.color1}
+        color2={makeTransparent(data.color1, 0.7)}
+        color3={"#FFFFFF"}
+        color4={makeTransparent(data.color1, 0)}
+        color5={makeTransparent(data.color1, 0.7)}
       >
-        <div className="bg-content3 flex h-full w-full items-center rounded-lg p-2 font-bold">
+        <div className="flex h-full w-full items-center rounded-lg bg-content3 p-2 font-bold">
           Coming soon!
         </div>
       </BackgroundGradient>
-      <div className="my-8 flex justify-center">
+      <div className="relative mx-auto mb-4 flex h-20 w-20 justify-center">
         <Image
           src={
             session.user.image ||
             `https://avatar.vercel.sh/${session.user.email}`
           }
-          width={100}
-          height={100}
-          className="rounded-full"
+          fill
+          className="h-full w-full rounded-full object-cover"
           alt="Profile Image"
         />
       </div>
@@ -83,6 +88,7 @@ export default async function Rewards({
           <ClaimRewardsCard
             comp={latestCompetition}
             latestReward={siteRewards[siteRewards.length - 1]}
+            data={data}
           />
         </div>
         <div className="col-span-1 md:ml-auto">

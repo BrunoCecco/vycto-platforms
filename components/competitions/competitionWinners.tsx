@@ -88,7 +88,7 @@ export default function CompetitionWinners({
   }, [winnerData]);
 
   return (
-    <div className="flex  flex-col space-y-12 p-6 dark:text-stone-200">
+    <div className="flex  flex-col space-y-12 p-6">
       <div className="flex flex-col space-y-6">
         <div className="font-bold">1st Reward Winners</div>
         {rewardWinners.map((user, index) => (

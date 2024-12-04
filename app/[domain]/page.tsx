@@ -74,16 +74,26 @@ export default async function SiteHomePage({
         <FanZone
           siteData={data}
           currentCompetitions={
-            competitions.filter(
-              (competition: any) =>
-                new Date(competition.date).getTime() >= Date.now(),
-            ) as SelectCompetition[]
+            competitions
+              .filter(
+                (competition: any) =>
+                  new Date(competition.date).getTime() >= Date.now(),
+              )
+              .sort(
+                (a: any, b: any) =>
+                  new Date(a.date).getTime() - new Date(b.date).getTime(),
+              ) as SelectCompetition[]
           }
           pastCompetitions={
-            competitions.filter(
-              (competition: any) =>
-                new Date(competition.date).getTime() < Date.now(),
-            ) as SelectCompetition[]
+            competitions
+              .filter(
+                (competition: any) =>
+                  new Date(competition.date).getTime() < Date.now(),
+              )
+              .sort(
+                (a: any, b: any) =>
+                  new Date(a.date).getTime() - new Date(b.date).getTime(),
+              ) as SelectCompetition[]
           }
           latestCompetition={latestCompetition}
           user={session?.user}
