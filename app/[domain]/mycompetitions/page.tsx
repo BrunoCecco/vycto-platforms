@@ -55,7 +55,7 @@ export default async function MyCompetitions({
               <div className="mb-12 w-full">
                 <h1 className="mb-4 text-2xl font-semibold">
                   <MedalIcon color={data.color1} size={24} className="mr-2" />
-                  Current Predictions
+                  Current Competitions
                 </h1>
                 <Predictions competitions={currentCompetitions} />
               </div>
@@ -64,7 +64,7 @@ export default async function MyCompetitions({
               <div className="w-full">
                 <h1 className="mb-4 flex items-center text-2xl font-semibold">
                   <ClockIcon color={data.color1} size={24} className="mr-2" />
-                  Past Predictions
+                  Past Competitions
                 </h1>
                 <Predictions competitions={pastCompetitions} />
               </div>
