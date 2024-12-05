@@ -84,7 +84,11 @@ const CompetitionCard = ({
       className="hover: relative h-full w-full transition-all duration-400"
       color={siteData.color1}
     >
-      <Card isFooterBlurred radius="md" className="h-full w-full border-none">
+      <Card
+        isFooterBlurred
+        radius="md"
+        className="h-full w-full rounded-xl border-none"
+      >
         <BlurImage
           alt={competition.title || "Card thumbnail"}
           className="h-full w-full rounded-xl object-cover transition-all duration-100 group-hover:scale-110"
