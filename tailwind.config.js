@@ -132,6 +132,7 @@ module.exports = {
         DEFAULT: "#d4d4d8",
         foreground: "#000",
       },
+      transparent: "transparent",
       focus: "#006FEE",
       overlay: "#000000",
       divider: "#111111",
