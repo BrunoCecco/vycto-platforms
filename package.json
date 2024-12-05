@@ -33,7 +33,7 @@
     "drizzle-orm": "^0.31.2",
     "firebase": "^10.14.0",
     "focus-trap-react": "^10.2.3",
-    "framer-motion": "^10.18.0",
+    "framer-motion": "^11.13.1",
     "gray-matter": "^4.0.3",
     "js-cookie": "^3.0.5",
     "lottie-react": "^2.4.0",
