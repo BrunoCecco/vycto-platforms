@@ -46,7 +46,7 @@ export default function CompetitionModal({
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
         <ModalBody>
           <ModalContent>
-            <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 dark:text-neutral-100 md:text-2xl">
+            <h4 className="mb-8 text-center text-lg font-bold md:text-2xl">
               {type === "current" ? (
                 <span>
                   A chance to{" "}
@@ -92,7 +92,7 @@ export default function CompetitionModal({
                 </motion.div>
               ))}
             </div>
-            <div className="mx-auto grid max-w-md grid-cols-2 items-center gap-4 text-sm text-neutral-700 dark:text-neutral-300">
+            <div className="mx-auto grid max-w-md grid-cols-2 items-center gap-4 text-sm">
               {/* <span className="">{status}</span> */}
               <span className="flex items-center">
                 <Sparkle className="mr-2" /> {competition.title}
