@@ -80,20 +80,20 @@ const CompetitionCard = ({
 
   return (
     <HoverBorderGradient
-      containerClassName="group h-[350px] w-[300px] relative rounded-xl"
-      className="duration-400 hover: relative h-full w-full transition-all"
+      containerClassName="group h-[350px] w-[300px] relative rounded-xl overflow-hidden"
+      className="hover: relative h-full w-full transition-all duration-400"
       color={siteData.color1}
     >
       <Card isFooterBlurred radius="md" className="h-full w-full border-none">
         <BlurImage
           alt={competition.title || "Card thumbnail"}
-          className="h-full w-full rounded-t-md object-cover transition-all duration-100 group-hover:scale-110"
+          className="h-full w-full rounded-xl object-cover transition-all duration-100 group-hover:scale-110"
           src={competition.image || "/placeholder.png"}
           placeholder="blur"
           fill
           blurDataURL={competition.imageBlurhash || placeholderBlurhash}
         />
-        <CardFooter className="border-1 rounded-large shadow-small bg-background/60 absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden border-white/20 py-1 before:rounded-xl">
+        <CardFooter className="absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large border-1 border-white/20 bg-background/60 py-1 shadow-small before:rounded-xl">
           <div className="flex w-full flex-col gap-1">
             <h2 className="font-semibold">
               {competition.title || "Competition by " + competition.sponsor}

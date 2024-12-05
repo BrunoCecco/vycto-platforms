@@ -50,14 +50,14 @@ const PredictionCard = async ({
 
   return (
     <HoverBorderGradient
-      containerClassName="group h-[350px] w-[300px] relative rounded-xl"
+      containerClassName="group h-[350px] w-[300px] relative rounded-xl overflow-hidden"
       className="hover: relative h-full w-full transition-all duration-400"
       color={compSiteData.color1}
     >
       <Card isFooterBlurred radius="md" className="h-full w-full border-none">
         <BlurImage
           alt={"Card thumbnail"}
-          className="h-full w-full rounded-t-md object-cover transition-all duration-100 group-hover:scale-110"
+          className="h-full w-full rounded-xl object-cover transition-all duration-100 group-hover:scale-110"
           src={compData.image || "/vLogo.png"}
           placeholder="blur"
           fill
