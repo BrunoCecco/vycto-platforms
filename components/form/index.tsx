@@ -112,7 +112,12 @@ export default function Form({
         <p className="text-sm  ">{description}</p>
         {inputAttrs.name === "country" ? (
           <>
-            <Input hidden name="country" value={selectedCountry} />
+            <input
+              type="hidden"
+              hidden
+              name="country"
+              value={selectedCountry}
+            />
             <ReactFlagsSelect
               selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2"
               className="!rounded-xl !border-none !bg-content2 !p-0 !text-background"
