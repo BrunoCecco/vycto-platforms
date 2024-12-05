@@ -30,10 +30,10 @@ const Submit = ({
 
   return (
     <form className="flex items-center justify-center" action={handleSubmit}>
-      {userId && <Input type="hidden" name="userId" value={userId} />}
-      <Input type="hidden" name="questionId" value={questionId} />
-      <Input type="hidden" name="competitionId" value={competitionId} />
-      <Input type="hidden" name="answer" value={answer} />
+      {userId && <Input hidden name="userId" value={userId} />}
+      <Input name="questionId" value={questionId} />
+      <Input name="competitionId" value={competitionId} />
+      <Input name="answer" value={answer} />
       {children}
     </form>
   );

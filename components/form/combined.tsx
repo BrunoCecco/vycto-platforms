@@ -134,11 +134,7 @@ export default function CombinedForm({
                 {inputAttr.name.includes("image") ? null : inputAttr.name ===
                   "country" ? (
                   <>
-                    <Input
-                      type="hidden"
-                      name="country"
-                      value={selectedCountry}
-                    />
+                    <Input hidden name="country" value={selectedCountry} />
                     <ReactFlagsSelect
                       selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2"
                       className="!rounded-xl !border-none !bg-content2 !p-0 !text-background"

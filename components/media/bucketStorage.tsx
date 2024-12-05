@@ -135,12 +135,6 @@ export default function BucketStorage({
           <Spinner />
         ) : id && name ? (
           <div className="flex w-full flex-col gap-4">
-            {/* <form className="flex items-center gap-4" action={deleteBucket}>
-                <p>{bucketName}</p>
-                <Input name="bucketName" type="hidden" value={bucketName} />
-                <Input name="bucketId" type="hidden" value={bucketId} />
-                <DeleteFormButton />
-              </form> */}
             <div className="grid grid-cols-1 items-center justify-center gap-4 md:grid-cols-2 lg:grid-cols-3">
               <Form
                 title={"Image 1"}
