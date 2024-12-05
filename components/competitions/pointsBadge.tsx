@@ -17,7 +17,7 @@ const makeTransparent = (color: string, opacity: number) => {
 const PointsBadge: FC<PointsBadgeProps> = ({ points, color }) => {
   return (
     <div
-      className="absolute -right-6 -top-6 z-10 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white text-lg font-bold"
+      className="absolute -right-6 -top-6 z-10 flex h-16 w-16 items-center justify-center rounded-full border border-white text-lg font-bold"
       style={{
         backgroundColor: makeTransparent(color || "#FFFFFF", 0.6),
       }}
