@@ -51,6 +51,7 @@ const MatchOutcome = ({ ...props }) => {
                   src={props.image1 || "/placeholder.png"}
                   alt="Option 1 Image"
                   fill
+                  unoptimized
                   className="h-full w-full object-contain"
                 />
               </Button>
@@ -92,6 +93,7 @@ const MatchOutcome = ({ ...props }) => {
                   src={props.image2 || "/placeholder.png"}
                   alt="Option 2 Image"
                   fill
+                  unoptimized
                   className="h-full w-full object-contain"
                 />
               </Button>

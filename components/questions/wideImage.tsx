@@ -11,6 +11,7 @@ export const WideImage = ({ src, color }: { src: string; color: string }) => {
         src={src || "/placeholder.png"}
         alt="Question Image"
         fill
+        unoptimized
         className="h-full w-full object-contain"
       />
     </div>
