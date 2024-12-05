@@ -176,7 +176,7 @@ module.exports = {
       },
     }),
     require("@tailwindcss/typography"),
-    require("@tailwindcss/forms"),
+    // require("@tailwindcss/forms"),
     require("tailwindcss-animate"),
     addVariablesForColors,
   ],
