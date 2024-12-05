@@ -37,6 +37,7 @@ const PlayerComponent = ({
         <Image
           src={image || "/player.png"}
           alt={name}
+          unoptimized
           fill
           className={`rounded-md object-cover object-center ${
             selectedPlayer !== name ? "opacity-50" : "opacity-100"

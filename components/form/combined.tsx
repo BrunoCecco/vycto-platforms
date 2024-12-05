@@ -142,7 +142,7 @@ export default function CombinedForm({
                     />
                     <ReactFlagsSelect
                       selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2"
-                      className="!rounded-xl !border-none !bg-content2 !p-0 !text-background"
+                      className="!rounded-xl !border-none !p-0 !text-black"
                       selected={selectedCountry || ""}
                       onSelect={(code) => setSelectedCountry(code)}
                     />
@@ -175,7 +175,7 @@ export default function CombinedForm({
                   <Input
                     {...inputAttr}
                     type="color"
-                    className="focus: h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:outline-none focus:ring-stone-500    dark:placeholder-stone-700"
+                    className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:outline-none focus:ring-stone-500    dark:placeholder-stone-700"
                   />
                 ) : inputAttr.name === "subdomain" ? (
                   <div className="flex w-full">
