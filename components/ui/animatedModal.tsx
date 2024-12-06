@@ -119,7 +119,7 @@ export const ModalBody = ({
           <motion.div
             ref={modalRef}
             className={cn(
-              "relative z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col overflow-hidden border border-transparent bg-background bg-white md:max-w-[55%] md:rounded-2xl lg:max-w-[40%]",
+              "relative z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col overflow-hidden border border-transparent bg-background md:max-w-[55%] md:rounded-2xl lg:max-w-[40%]",
               className,
             )}
             initial={{
@@ -162,7 +162,12 @@ export const ModalContent = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-1 flex-col p-8 md:p-10", className)}>
+    <div
+      className={cn(
+        "flex flex-1 flex-col bg-background p-8 md:p-10",
+        className,
+      )}
+    >
       {children}
     </div>
   );
