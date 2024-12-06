@@ -19,7 +19,7 @@ const TabSelector = ({
             onClick={() => setActiveTab(tab)}
             className={`w-full py-4 font-normal md:text-xl ${
               activeTab === tab
-                ? "border-b-2 border-green-600 text-green-600"
+                ? "border-b-2 border-success-600 text-success-600"
                 : ""
             }`}
           >

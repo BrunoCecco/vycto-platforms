@@ -25,10 +25,10 @@ const PredictionStats = () => {
       <div className="mt-12">
         <h2 className="text-2xl font-bold">
           top predictions <span className="font-normal ">powered by</span>{" "}
-          <span className="text-red-500">Superbet</span>
+          <span className="text-danger-500">Superbet</span>
         </h2>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="relative h-40 w-full overflow-hidden rounded-lg bg-gray-800">
+          <div className="relative h-40 w-full overflow-hidden rounded-lg">
             <Image
               src="/player.png"
               alt="Prediction 3-0"
@@ -39,7 +39,7 @@ const PredictionStats = () => {
               3 - 0
             </span>
           </div>
-          <div className="relative h-40 w-full overflow-hidden rounded-lg bg-gray-800">
+          <div className="relative h-40 w-full overflow-hidden rounded-lg">
             <Image
               src="/player.png"
               alt="Prediction 5-2"

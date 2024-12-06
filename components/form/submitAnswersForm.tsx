@@ -56,7 +56,7 @@ export default function SubmitAnswersForm({
 
   return (
     <div className="rounded-lg px-8 pb-8">
-      <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-green-600  p-3">
+      <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-success-600  p-3">
         <p className="text-center text-sm  ">
           Once submitted, you will not be able to edit your answers.
         </p>
@@ -79,7 +79,7 @@ function FormButton({
         "text-md flex items-center justify-center space-x-2 rounded-full border p-4 transition-all focus:outline-none sm:h-10",
         isSubmitting
           ? "cursor-not-allowed "
-          : "border-green-600 bg-green-600  bg-transparent hover:text-green-600",
+          : "border-success-600 bg-success-600  bg-transparent hover:text-success-600",
       )}
       isDisabled={isSubmitting}
       onClick={onClick}

@@ -103,7 +103,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               className={`${
                 recordType == "A"
                   ? "border-black  dark:border-white "
-                  : "border-white text-stone-400 dark:border-black "
+                  : "border-white dark:border-black"
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}
             >
               A Record{!subdomain && " (recommended)"}
@@ -113,7 +113,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               className={`${
                 recordType == "CNAME"
                   ? "border-black  dark:border-white "
-                  : "border-white text-stone-400 dark:border-black "
+                  : "border-white dark:border-black "
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}
             >
               CNAME Record{subdomain && " (recommended)"}

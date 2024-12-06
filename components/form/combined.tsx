@@ -175,12 +175,12 @@ export default function CombinedForm({
                   <Input
                     {...inputAttr}
                     type="color"
-                    className="h-12 w-12 text-sm text-stone-900 placeholder-stone-300 focus:outline-none focus:ring-stone-500    dark:placeholder-stone-700"
+                    className="h-12 w-12 text-sm focus:outline-none"
                   />
                 ) : inputAttr.name === "subdomain" ? (
                   <div className="flex w-full">
                     <Input {...inputAttr} required />
-                    <div className="flex items-center rounded-r-md border border-l-0   px-3 text-sm   ">
+                    <div className="flex items-center rounded-r-md border border-l-0 px-3 text-sm">
                       {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
                     </div>
                   </div>

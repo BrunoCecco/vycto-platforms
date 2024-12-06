@@ -87,7 +87,7 @@ const EditGeneralSelection = ({
         {/* Remove Button */}
         <Button
           onClick={handleRemove}
-          className="absolute left-2 top-2 rounded-full p-2 text-red-500 hover:text-red-600 focus:outline-none"
+          className="absolute left-2 top-2 rounded-full p-2 text-danger-500 hover:text-danger-600 focus:outline-none"
         >
           <X className="h-6 w-6" />
         </Button>
@@ -148,8 +148,8 @@ const EditGeneralSelection = ({
                     setEditedCorrectAnswer(option);
                     handleInputBlur("correctAnswer", option);
                   }}
-                  className={`flex h-10 w-10 items-center justify-center rounded-md border hover:border-green-500 hover:text-green-500 focus:outline-none
-                  ${editedCorrectAnswer == option ? "border-green-500 text-green-500" : ""}`}
+                  className={`flex h-10 w-10 items-center justify-center rounded-md border hover:border-success-500 hover:text-success-500 focus:outline-none
+                  ${editedCorrectAnswer == option ? "border-success-500 text-success-500" : ""}`}
                 >
                   <Check />
                 </Button>

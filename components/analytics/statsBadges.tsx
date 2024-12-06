@@ -15,7 +15,7 @@ const stats = [
     label: "Sales (Lifetime Value)",
     value: "$5,774.34",
     subtext: "+23% since last month",
-    subtextColor: "text-green-500",
+    subtextColor: "text-success-500",
   },
   {
     icon: <FileText size={24} color="#6C63FF" />,

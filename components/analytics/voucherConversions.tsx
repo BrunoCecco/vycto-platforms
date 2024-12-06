@@ -69,7 +69,7 @@ const VoucherConversions: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="text-sm font-bold ">Vouchers Sent</div>
                 <div className="text-base font-bold ">
-                  1512 <span className="text-green-500">↑</span>
+                  1512 <span className="text-success-500">↑</span>
                 </div>
               </div>
               <div className="-mt-1 text-xs ">April</div>
@@ -79,7 +79,7 @@ const VoucherConversions: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="text-sm font-bold ">Vouchers Opened</div>
                 <div className="text-base font-bold ">
-                  940 <span className="text-green-500">↑</span>
+                  940 <span className="text-success-500">↑</span>
                 </div>
               </div>
               <div className="-mt-1 text-xs ">April</div>
@@ -89,7 +89,7 @@ const VoucherConversions: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="text-sm font-bold ">Vouchers Used</div>
                 <div className="text-base font-bold ">
-                  382 <span className="text-green-500">↑</span>
+                  382 <span className="text-success-500">↑</span>
                 </div>
               </div>
               <div className="-mt-1 text-xs ">April</div>

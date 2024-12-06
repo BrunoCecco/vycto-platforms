@@ -269,12 +269,12 @@ export default function CompetitionPage({
                   );
                 })}
               {!ended ? (
-                <div className="text-md mx-auto rounded-xl border-red-600 bg-red-400 p-4">
+                <div className="text-md mx-auto rounded-xl border-danger-600 bg-danger-400 p-4">
                   Competition Ended
                 </div>
               ) : session ? (
                 userComp && "submitted" in userComp && userComp.submitted ? (
-                  <div className="text-md mx-auto rounded-xl border-green-600 bg-green-400 p-4">
+                  <div className="text-md mx-auto rounded-xl border-success-600 bg-success-400 p-4">
                     Answers Submitted
                   </div>
                 ) : (

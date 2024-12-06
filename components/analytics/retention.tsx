@@ -29,7 +29,7 @@ const Retention = () => {
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              <Flame size={28} className="text-red-500" />
+              <Flame size={28} className="text-danger-500" />
               <div>
                 <h3 className="font-semibold">Word of Mouth</h3>
                 <span className="text-sm ">March</span>
@@ -51,7 +51,7 @@ const Retention = () => {
           </span>
           <span className="text-center ">3.2K</span>
           <div className="flex justify-center">
-            <span className="text-green-500">4.1K</span>
+            <span className="text-success-500">4.1K</span>
           </div>
 
           {/* Fan Retention Data */}
@@ -60,16 +60,16 @@ const Retention = () => {
           </span>
           <span className="text-center ">570</span>
           <div className="flex justify-center">
-            <span className="text-green-500">690</span>
+            <span className="text-success-500">690</span>
           </div>
 
           {/* Word of Mouth Data */}
-          <span className="text-center text-lg font-semibold text-red-500">
+          <span className="text-center text-lg font-semibold text-danger-500">
             - 2.3%
           </span>
           <span className="text-center ">132</span>
           <div className="flex justify-center">
-            <span className="text-red-500">127</span>
+            <span className="text-danger-500">127</span>
           </div>
         </div>
       </div>

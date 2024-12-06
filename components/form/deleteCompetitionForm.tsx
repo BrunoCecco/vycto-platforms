@@ -35,7 +35,7 @@ export default function DeleteCompetitionForm({
           });
         }
       }}
-      className="rounded-lg border border-red-600  "
+      className="rounded-lg border border-danger-600  "
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
         <h2 className="text-xl ">Delete Competition</h2>

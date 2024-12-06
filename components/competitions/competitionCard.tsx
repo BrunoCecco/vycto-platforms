@@ -97,7 +97,7 @@ const CompetitionCard = ({
           fill
           blurDataURL={competition.imageBlurhash || placeholderBlurhash}
         />
-        <CardFooter className="absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large border-1 border-white/20 bg-background/60 py-1 shadow-small before:rounded-xl">
+        <CardFooter className="absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-background/60 py-1 shadow-small before:rounded-xl">
           <div className="flex w-full flex-col gap-1">
             <h2 className="font-semibold">
               {competition.title || "Competition by " + competition.sponsor}

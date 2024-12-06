@@ -45,7 +45,7 @@ export default function SiteCard({ data }: { data: SelectSite }) {
         </a>
         <Link
           href={`/site/${data.id}/analytics`}
-          className="flex items-center rounded-md bg-green-100 bg-green-800 bg-opacity-50 px-2 py-1 text-sm font-medium text-green-600 transition-colors hover:bg-green-200 dark:bg-green-900 dark:bg-opacity-50 dark:text-green-400"
+          className="flex items-center rounded-md bg-success-100 bg-success-800 bg-opacity-50 px-2 py-1 text-sm font-medium text-success-600 transition-colors hover:bg-success-200 dark:bg-success-900 dark:bg-opacity-50 dark:text-success-400"
         >
           <BarChart height={16} />
           <p>{random(10, 40)}%</p>

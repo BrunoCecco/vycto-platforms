@@ -21,7 +21,7 @@ const GameStats: FC<GameStatsProps> = ({
   const percentile = (rank / users.length) * 100;
 
   return (
-    <div className="bg-content4 flex justify-center overflow-hidden rounded-lg">
+    <div className="flex justify-center overflow-hidden rounded-lg bg-content4">
       <div className="flex h-80 w-full flex-col justify-around px-6 py-4 shadow-sm">
         {/* Header */}
         <h2 className="text-center text-xl font-semibold ">
@@ -68,7 +68,7 @@ const GameStats: FC<GameStatsProps> = ({
           </div>
           <div className="h-6 border-r " style={{ borderColor: color }} />
           {/* <div>
-            <p className="pb-2 font-semibold text-green-600">
+            <p className="pb-2 font-semibold text-success-600">
               {bonusPoints} pt
             </p>
             <p className="text-xs">

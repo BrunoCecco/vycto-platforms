@@ -28,7 +28,7 @@ export default function DeleteSiteForm({ siteName }: { siteName: string }) {
           })
           .catch((err: Error) => toast.error(err.message))
       }
-      className="rounded-lg border border-red-600"
+      className="rounded-lg border border-danger-600"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
         <h2 className="text-xl ">Delete Site</h2>
@@ -66,8 +66,8 @@ function FormButton() {
       className={cn(
         "flex h-8 w-32 items-center justify-center space-x-2 rounded-md border text-sm transition-all focus:outline-none sm:h-10",
         pending
-          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "border-red-600 bg-red-600  hover:bg-white hover:text-red-600 dark:hover:bg-transparent",
+          ? "cursor-not-allowed"
+          : "border-danger-600 bg-danger-600  hover:bg-foreground hover:text-danger-600 dark:hover:bg-transparent",
       )}
       disabled={pending}
     >

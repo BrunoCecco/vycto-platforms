@@ -113,9 +113,7 @@ export default function SearchPage() {
   return (
     <div className="flex min-h-screen ">
       <div className="w-full space-y-4">
-        <h1 className="text-2xl font-bold dark:text-stone-200">
-          Competition Creator
-        </h1>
+        <h1 className="text-2xl font-bold">Competition Creator</h1>
         <form
           action={(data: FormData) => handleSearch(data)}
           className="flex space-x-2"
@@ -133,7 +131,7 @@ export default function SearchPage() {
           </Button>
         </form>
         {searchResults.length > 0 && !selectedResult && (
-          <ul className="divide-y divide-gray-200 rounded-md bg-white shadow-md">
+          <ul className="divide-y divide-content3 rounded-md bg-white shadow-md">
             {searchResults.map((result) => (
               <li
                 key={result.id}

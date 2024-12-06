@@ -29,7 +29,7 @@ const EngagementTime = () => {
           <h2 className="text-2xl font-bold">350.4hrs</h2>
           <p className="text-xs ">
             Total Spent
-            <span className="ml-2 text-green-500">+2.45%</span>
+            <span className="ml-2 text-success-500">+2.45%</span>
           </p>
           <div className="mt-4 flex items-center space-x-1">
             <CheckCircle2 size={24} fill="#34d399" color="#ffffff" />

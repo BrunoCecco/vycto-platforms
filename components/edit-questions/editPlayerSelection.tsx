@@ -151,7 +151,7 @@ const EditPlayerSelection = ({
         {/* Remove Button */}
         <Button
           onClick={handleRemove}
-          className="absolute left-2 top-2 rounded-full p-2 text-red-500 hover:text-red-600 focus:outline-none"
+          className="absolute left-2 top-2 rounded-full p-2 text-danger-500 hover:text-danger-600 focus:outline-none"
         >
           <X className="h-6 w-6" />
         </Button>

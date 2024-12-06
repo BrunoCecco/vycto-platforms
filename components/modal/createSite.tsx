@@ -89,24 +89,6 @@ export default function CreateSiteModal() {
             </div>
           </div>
         </div>
-        {/* 
-        <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="description"
-            className="text-sm font-medium "
-          >
-            Description
-          </label>
-          <textarea
-            name="description"
-            placeholder="Description about why my site is so awesome"
-            value={data.description}
-            onChange={(e) => setData({ ...data, description: e.target.value })}
-            maxLength={140}
-            rows={3}
-            className="w-full rounded-md border   px-4 py-2 text-sm  placeholder:text-stone-400 focus:border-black  focus:outline-none focus:ring-black    dark:placeholder-stone-700 dark:focus:ring-white"
-          />
-        </div> */}
 
         <div className="flex flex-col space-y-2">
           <label htmlFor="adminEmail" className="text-sm font-medium ">
