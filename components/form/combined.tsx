@@ -100,7 +100,7 @@ export default function CombinedForm({
       <h2 className="p-5 text-xl">{title}</h2>
       <div className="flex flex-col sm:flex-row">
         {hasImage && ( //hasImage means hasProfileImage
-          <div className="w-full pl-5 pt-5 sm:w-1/3">
+          <div className="w-full px-5 pt-5 sm:w-1/3 sm:pr-0">
             <EditProfileImage />
           </div>
         )}

@@ -40,7 +40,7 @@ const LeaderboardHeader = ({
 
   return (
     <div className="mb-2 flex flex-col items-center justify-between gap-4 sm:flex-row">
-      <div className="flex items-center justify-between sm:flex-col md:items-start">
+      <div className="flex items-center justify-between gap-4 sm:flex-col md:items-start">
         <div className="flex items-center gap-4 sm:mt-2">
           <Image
             src={siteData.logo || "/logo.png"}
