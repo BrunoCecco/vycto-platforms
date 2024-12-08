@@ -340,7 +340,7 @@ export const createQuestion = async ({
       .insert(questions)
       .values({
         id: question?.id || nanoid(),
-        competitionId: competitionId || question?.competitionId,
+        competitionId: competitionId || question?.competitionId!,
         type: type || question?.type,
         answer1:
           type === QuestionType.TrueFalse
