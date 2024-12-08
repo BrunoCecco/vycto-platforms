@@ -21,28 +21,28 @@ const Slider: FC<{
   onBlur,
   onLocalAnswer,
 }) => {
-  const [value, setValue] = useState(parseInt(initialValue) || 0);
+  const [value, setValue] = useState(initialValue || "0");
   const MIN = 0;
   const MAX = 90;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(parseInt(e.target.value));
+    setValue(e.target.value);
   };
 
   const handleBlur = async () => {
-    if (onBlur) onBlur(value);
+    if (onBlur) onBlur(parseInt(value));
     if (!competitionId) return;
 
     if (userId) {
       const data = new FormData();
       data.append("userId", userId);
       data.append("questionId", questionId);
-      data.append("answer", value.toString());
+      data.append("answer", value);
       data.append("competitionId", competitionId);
       await answerQuestion(data);
       toast.success("Answer saved!");
     } else if (onLocalAnswer) {
-      onLocalAnswer(questionId, value.toString());
+      onLocalAnswer(questionId, value);
       toast.success("Answer saved locally!");
     }
   };
@@ -61,7 +61,7 @@ const Slider: FC<{
               max="90"
               startContent={<div className="">{MIN}</div>}
               endContent={<div className="relative">{MAX}</div>}
-              value={value.toString()}
+              value={initialValue}
               disabled={disabled}
               onChange={handleChange}
               onBlur={handleBlur}

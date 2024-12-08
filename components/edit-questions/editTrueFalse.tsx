@@ -45,13 +45,13 @@ const EditTrueFalse = ({
 }) => {
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
-    question.question ?? "Griezmann will score",
+    question.question || "Griezmann will score",
   );
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
-    question.correctAnswer ?? "",
+    question.correctAnswer || "",
   );
-  const [points, setPoints] = useState(question.points ?? 0);
-  const [image, setImage] = useState(question.image1 ?? "/placeholder.png");
+  const [points, setPoints] = useState(question.points || 0);
+  const [image, setImage] = useState(question.image1 || "/placeholder.png");
 
   const [mounted, setMounted] = useState(false);
 

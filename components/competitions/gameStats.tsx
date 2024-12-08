@@ -18,7 +18,8 @@ const GameStats: FC<GameStatsProps> = ({
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
   const rank =
     sortedUsers.findIndex((user: any) => user.userId === userComp.userId) + 1;
-  const percentile = (rank / users.length) * 100;
+  const percentileNum = (rank / users.length) * 100;
+  const percentile = percentileNum.toFixed(2) + "%";
 
   return (
     <div className="flex justify-center overflow-hidden rounded-lg bg-content4">

@@ -108,7 +108,7 @@ export const authOptions: NextAuthOptions = {
         token.user = session?.user || token.user;
         token.name = session?.user?.name || token.name;
         token.email = session?.user?.email || token.email;
-        token.picture = session?.user?.image ?? token.picture;
+        token.picture = session?.user?.image || token.picture;
         console.log(token);
         return token;
       }

@@ -67,15 +67,15 @@ const EditPlayerSelection = ({
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
     question.correctAnswer || "",
   );
-  const [points, setPoints] = useState(question.points ?? 0);
-  const [answer1, setAnswer1] = useState(question.answer1 ?? "");
-  const [answer2, setAnswer2] = useState(question.answer2 ?? "");
-  const [answer3, setAnswer3] = useState(question.answer3 ?? "");
-  const [answer4, setAnswer4] = useState(question.answer4 ?? "");
-  const [image1, setImage1] = useState(question.image1 ?? "");
-  const [image2, setImage2] = useState(question.image2 ?? "");
-  const [image3, setImage3] = useState(question.image3 ?? "");
-  const [image4, setImage4] = useState(question.image4 ?? "");
+  const [points, setPoints] = useState(question.points || 0);
+  const [answer1, setAnswer1] = useState(question.answer1 || "");
+  const [answer2, setAnswer2] = useState(question.answer2 || "");
+  const [answer3, setAnswer3] = useState(question.answer3 || "");
+  const [answer4, setAnswer4] = useState(question.answer4 || "");
+  const [image1, setImage1] = useState(question.image1 || "");
+  const [image2, setImage2] = useState(question.image2 || "");
+  const [image3, setImage3] = useState(question.image3 || "");
+  const [image4, setImage4] = useState(question.image4 || "");
 
   const [mounted, setMounted] = useState(false);
 

@@ -135,6 +135,14 @@ export default function CombinedForm({
   };
 
   const SpecialInputAttrs = () => {
+    if (
+      !imageInputAttr &&
+      !usernameInputAttr &&
+      !countryInputAttr &&
+      !favouritePlayerInputAttr
+    ) {
+      return null;
+    }
     return (
       <div className="flex w-full flex-col gap-6 pl-5 pt-5 sm:w-1/3">
         {imageInputAttr && (
@@ -291,7 +299,7 @@ export default function CombinedForm({
           })}
           {!imageInputAttr ? (
             <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t   p-3   sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
-              <p className="mr-2 text-sm">helpText</p>
+              <p className="mr-2 text-sm">{helpText}</p>
               <FormButton />
             </div>
           ) : (

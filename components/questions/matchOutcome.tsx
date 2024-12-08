@@ -84,7 +84,7 @@ const MatchOutcome = ({ ...props }) => {
                 className={`relative h-[140px] w-[100px] items-center justify-center overflow-hidden text-center md:h-[250px] md:w-[180px] ${
                   selectedOutcome === props.answer2
                     ? "opacity-100"
-                    : "opacity-50"
+                    : "opacity-25"
                 }`}
                 isDisabled={props.disabled}
                 onClick={() => setSelectedOutcome(props.answer2)}

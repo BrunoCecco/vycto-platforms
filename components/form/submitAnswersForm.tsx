@@ -23,19 +23,16 @@ export default function SubmitAnswersForm({
   slug: string;
   localAnswers: { [key: string]: string };
 }) {
-  const router = useRouter();
   const { data: session } = useSession();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const posthog = usePostHog();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (formData: FormData) => {
     if (!session && !userId) {
       // If not logged in, redirect to login page
       signIn(undefined, { callbackUrl: `/comp/${slug}` });
       return;
     }
 
-    setIsSubmitting(true);
     try {
       const res = await submitAnswers(userId!, competitionId, localAnswers);
       if ("error" in res && res.error) {
@@ -43,49 +40,41 @@ export default function SubmitAnswersForm({
       } else {
         posthog?.capture("answers_submitted");
         va.track("Submitted Answers");
-        router.refresh();
-        router.push(`/comp/${slug}/${userId}`);
         toast.success(`Successfully submitted answers!`);
+        window.location.reload();
       }
     } catch (error) {
       toast.error("An error occurred while submitting answers.");
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="rounded-lg px-8 pb-8">
+    <form action={handleSubmit} className="rounded-lg px-8 pb-8">
       <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-success-600  p-3">
         <p className="text-center text-sm  ">
           Once submitted, you will not be able to edit your answers.
         </p>
-        <FormButton onClick={handleSubmit} isSubmitting={isSubmitting} />
+        <FormButton />
       </div>
-    </div>
+    </form>
   );
 }
 
-function FormButton({
-  onClick,
-  isSubmitting,
-}: {
-  onClick: () => void;
-  isSubmitting: boolean;
-}) {
+function FormButton() {
+  const { pending } = useFormStatus();
+
   return (
     <Button
       className={cn(
         "text-md flex items-center justify-center space-x-2 rounded-full border p-4 transition-all focus:outline-none sm:h-10",
-        isSubmitting
+        pending
           ? "cursor-not-allowed "
           : "border-success-600 bg-success-600  bg-transparent hover:text-success-600",
       )}
-      isDisabled={isSubmitting}
-      onClick={onClick}
+      isDisabled={pending}
       type="submit"
     >
-      {isSubmitting ? <Spinner /> : <p>Submit Answers</p>}
+      {pending ? <Spinner /> : <p>Submit Answers</p>}
     </Button>
   );
 }

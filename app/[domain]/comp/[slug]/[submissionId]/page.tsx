@@ -109,7 +109,7 @@ export default async function SubmissionPage({
   }
 
   const questions = await getQuestionsForCompetition(data.id);
-  const answers = await getAnswersForUser(submissionId, data!.id);
+  const answers = await getAnswersForUser(submissionId, data.id);
 
   let userComp: SelectUserCompetition | undefined;
   if (session) {

@@ -10,7 +10,7 @@ export default function EditCompetitionTitle({
   competition: SelectCompetition & { site: any };
 }) {
   return (
-    <div className="mb-5 flex w-full flex-col space-y-3 border-b  ">
+    <div className="mb-5 flex w-full flex-col space-y-3">
       <label htmlFor="title" className="text-xl font-bold ">
         Competition Title
       </label>

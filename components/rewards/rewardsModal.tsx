@@ -44,7 +44,7 @@ export default function RewardModal({
         <ModalBody>
           <ModalContent>
             <h4 className="mb-8 text-center text-lg font-bold md:text-2xl">
-              {MONTHS.find((m) => m.value === reward.month)?.label}
+              {MONTHS.find((m) => m.value === reward.month)?.label} Challenge
             </h4>
             <div className="mb-8 flex items-center justify-center">
               {" "}

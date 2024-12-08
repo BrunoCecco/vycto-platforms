@@ -137,7 +137,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               <div>
                 <p className="text-sm font-bold">Name</p>
                 <p className="mt-2 font-mono text-sm">
-                  {recordType === "A" ? "@" : subdomain ?? "www"}
+                  {recordType === "A" ? "@" : subdomain || "www"}
                 </p>
               </div>
               <div>

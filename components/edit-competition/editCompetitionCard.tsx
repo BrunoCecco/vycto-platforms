@@ -33,7 +33,7 @@ const EditCompetitionCard = async ({
     <div className="rounded-lg border shadow-md transition-all hover:shadow-xl">
       <div className="relative h-48 w-full">
         <BlurImage
-          alt={data.title ?? "Card thumbnail"}
+          alt={data.title || "Card thumbnail"}
           fill
           className="rounded-t-lg object-cover"
           src={data.image || "/placeholder.png"}

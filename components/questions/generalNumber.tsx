@@ -10,7 +10,7 @@ import { TextGenerateEffect } from "../ui/textGenerateEffect";
 import { WideImage } from "./wideImage";
 
 const GeneralNumber = ({ ...props }) => {
-  const [answer, setAnswer] = useState(props.answer.answer ?? 0);
+  const [answer, setAnswer] = useState<string>(props.answer.answer || "0");
 
   const submitButton = useRef<HTMLButtonElement | null>(null);
 
@@ -45,7 +45,7 @@ const GeneralNumber = ({ ...props }) => {
             name="answer"
             value={answer}
             defaultValue="1"
-            onChange={(e) => setAnswer(parseInt(e.target.value))}
+            onChange={(e) => setAnswer(e.target.value)}
             className="w-20 text-center"
             onBlur={() => submitButton?.current?.click()}
           />

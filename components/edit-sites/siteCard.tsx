@@ -13,13 +13,13 @@ export default function SiteCard({ data }: { data: SelectSite }) {
         className="flex flex-col overflow-hidden rounded-lg"
       >
         <BlurImage
-          alt={data.name ?? "Card thumbnail"}
+          alt={data.name || "Card thumbnail"}
           width={500}
           height={400}
           className="h-44 object-cover"
           src={data.image || "/placeholder.png"}
           placeholder="blur"
-          blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
+          blurDataURL={data.imageBlurhash || placeholderBlurhash}
         />
         <div className="border-t  p-4 ">
           <h3 className="my-0 truncate text-xl font-bold tracking-wide ">

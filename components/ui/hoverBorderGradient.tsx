@@ -61,14 +61,14 @@ export default function HoverBorderGradient({
       }}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "bg-background/20 hover:bg-background/10 dark:bg-foreground/20 relative flex h-min w-fit flex-col flex-nowrap content-center items-center justify-center gap-10 overflow-visible rounded-full decoration-clone p-1 transition duration-500",
+        "relative flex h-min w-fit flex-col flex-nowrap content-center items-center justify-center gap-10 overflow-visible rounded-full bg-background/20 decoration-clone p-1 transition duration-500 hover:bg-background/10 dark:bg-foreground/20",
         containerClassName,
       )}
       {...props}
     >
       <div
         className={cn(
-          "bg-background text-foreground z-10 w-auto rounded-[inherit]",
+          "z-10 w-auto rounded-[inherit] bg-background text-foreground",
           className,
         )}
       >
@@ -90,9 +90,9 @@ export default function HoverBorderGradient({
             ? [movingMap[direction], highlight]
             : movingMap[direction],
         }}
-        transition={{ ease: "linear", duration: duration ?? 1 }}
+        transition={{ ease: "linear", duration: duration || 1 }}
       />
-      <div className="z-1 bg-background absolute inset-[2px] flex-none rounded-[inherit]" />
+      <div className="z-1 absolute inset-[2px] flex-none rounded-[inherit] bg-background" />
     </Tag>
   );
 }

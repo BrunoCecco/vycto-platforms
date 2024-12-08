@@ -7,6 +7,7 @@ import { WideImage } from "./wideImage";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
 
 const WhatMinute = ({ ...props }) => {
+  console.log(props.answer.answer);
   return (
     <div className="flex w-full items-center justify-center">
       <div className="relative h-full w-full rounded-lg  p-6 shadow-xl md:shadow-2xl">

@@ -58,16 +58,24 @@ export default function CompetitionPage({
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [ended, setEnded] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const posthog = usePostHog();
+
+  console.log(answers);
 
   useEffect(() => {
     const hasEnded =
       data.correctAnswersSubmitted ||
       new Date(data.date).getTime() < Date.now();
     setEnded(hasEnded);
+
+    const hasSubmitted =
+      (userComp && "submitted" in userComp && userComp.submitted) || false;
+    setSubmitted(hasSubmitted);
+
     if (session?.user?.id != userComp?.userId) {
       console.log("User not in competition");
       setActiveTab("Challenge");
@@ -241,7 +249,7 @@ export default function CompetitionPage({
         {activeTab == "Challenge" && (
           <TracingBeam color1={siteData.color1} color2={siteData.color2}>
             <div className="relative z-50 mx-auto flex w-full flex-col justify-center gap-12 py-12 md:gap-20 md:rounded-3xl">
-              {userComp && "submitted" in userComp && userComp.submitted ? (
+              {submitted && userComp ? (
                 <GameStats
                   competitionTitle={data.title!}
                   userComp={userComp}
@@ -254,8 +262,7 @@ export default function CompetitionPage({
                   const answer = answers?.find(
                     (a: any) => a.questionId === question.id,
                   ) || { answer: searchParams.get(question.id) };
-                  const disabled =
-                    userComp && "submitted" in userComp && userComp?.submitted;
+                  const disabled = submitted;
                   return (
                     <div key={"compquestion" + index}>
                       {getQuestionType(
@@ -273,7 +280,7 @@ export default function CompetitionPage({
                   Competition Ended
                 </div>
               ) : session ? (
-                userComp && "submitted" in userComp && userComp.submitted ? (
+                submitted ? (
                   <div className="text-md mx-auto rounded-xl border-success-600 bg-success-400 p-4">
                     Answers Submitted
                   </div>

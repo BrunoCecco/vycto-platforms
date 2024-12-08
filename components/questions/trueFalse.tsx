@@ -38,7 +38,7 @@ const Button = ({
 };
 
 const TrueFalse = ({ ...props }) => {
-  const [selected, setSelected] = useState(props.answer.answer ?? "");
+  const [selected, setSelected] = useState(props.answer.answer || "");
 
   return (
     <div className="flex w-full items-center justify-center">

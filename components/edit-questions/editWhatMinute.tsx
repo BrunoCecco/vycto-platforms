@@ -19,13 +19,13 @@ const EditWhatMinute = ({
 }) => {
   const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
-    question.question ?? "What minute?",
+    question.question || "What minute?",
   );
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
-    question.correctAnswer ?? "",
+    question.correctAnswer || "",
   );
-  const [points, setPoints] = useState(question.points ?? 0);
-  const [image, setImage] = useState(question.image1 ?? "/placeholder.png");
+  const [points, setPoints] = useState(question.points || 0);
+  const [image, setImage] = useState(question.image1 || "/placeholder.png");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

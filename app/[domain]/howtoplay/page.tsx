@@ -10,6 +10,7 @@ import WhatMinute from "@/components/questions/whatMinute";
 import ClaimRewardsCard from "@/components/rewards/claimRewardsCard";
 import UserSettings from "@/components/settings/userSettings";
 import { CardSpotlight } from "@/components/ui/cardSpotlight";
+import { authOptions } from "@/lib/auth";
 import {
   getLatestCompetitionForSite,
   getQuestionsForCompetition,
@@ -53,7 +54,7 @@ export default async function HowToPlayPage({
     getSiteData(domain),
     getLatestCompetitionForSite(domain),
   ]);
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   const questions = await getQuestionsForCompetition(
     latestCompData[0].competition.id,
   );

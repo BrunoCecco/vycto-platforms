@@ -21,7 +21,7 @@ export default function BannerMedia({ src }: { src: string }) {
   const [isMuted, setIsMuted] = useState(true); // State to track mute status
   const [play, setPlay] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const mediaFormat = src.split(".").pop() ?? "";
+  const mediaFormat = src.split(".").pop() || "";
 
   useEffect(() => {
     const videoElement = videoRef.current;

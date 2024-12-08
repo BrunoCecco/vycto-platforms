@@ -210,7 +210,7 @@ export const enterUserToCompetition = async (
         username,
         email,
         competitionId,
-        image: image ?? "",
+        image: image || "",
       })
       .returning();
 
@@ -339,29 +339,29 @@ export const createQuestion = async ({
     const response = await db
       .insert(questions)
       .values({
-        id: question?.id ?? nanoid(),
-        competitionId: competitionId ?? question?.competitionId,
-        type: type ?? question?.type,
+        id: question?.id || nanoid(),
+        competitionId: competitionId || question?.competitionId,
+        type: type || question?.type,
         answer1:
           type === QuestionType.TrueFalse
             ? "True"
-            : question?.answer1 ?? "answer1",
+            : question?.answer1 || "answer1",
         answer2:
           type === QuestionType.TrueFalse
             ? "False"
-            : question?.answer2 ?? "answer2",
+            : question?.answer2 || "answer2",
         answer3:
           type === QuestionType.MatchOutcome
             ? "Draw"
-            : question?.answer3 ?? "answer3",
-        answer4: question?.answer4 ?? "answer4",
-        correctAnswer: question?.correctAnswer ?? "",
-        points: question?.points ?? 0,
-        image1: question?.image1 ?? "",
-        image2: question?.image2 ?? "",
-        image3: question?.image3 ?? "",
-        image4: question?.image4 ?? "",
-        question: question?.question ?? "",
+            : question?.answer3 || "answer3",
+        answer4: question?.answer4 || "answer4",
+        correctAnswer: question?.correctAnswer || "",
+        points: question?.points || 0,
+        image1: question?.image1 || "",
+        image2: question?.image2 || "",
+        image3: question?.image3 || "",
+        image4: question?.image4 || "",
+        question: question?.question || "",
       })
       .returning()
       .then((res) => res[0]);

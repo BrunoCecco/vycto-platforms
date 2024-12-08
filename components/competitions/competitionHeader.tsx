@@ -65,7 +65,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
             alt={"User Avatar"}
             height={80}
             src={
-              data.site?.user?.image ??
+              data.site?.user?.image ||
               `https://avatar.vercel.sh/${data.title}`
             }
             width={80}
@@ -74,8 +74,8 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
         <div className="text-md ml-3 inline-block align-middle md:text-lg ">
           by{" "}
           <span className="font-semibold">
-            {data?.site?.user?.name ??
-              data?.site?.user?.username ??
+            {data?.site?.user?.name ||
+              data?.site?.user?.username ||
               data?.site?.user?.email}
           </span>
         </div>
