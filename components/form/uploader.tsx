@@ -130,7 +130,7 @@ export default function Uploader({
 
   const [saving, setSaving] = useState(false);
 
-  const replaceFile = async (url: string, file: File) => {
+  const replaceFile = async (url: string | null, file: File) => {
     try {
       setRemoving(true);
       const res = await fetch("/api/delete/", {
