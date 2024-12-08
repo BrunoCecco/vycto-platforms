@@ -1,16 +1,16 @@
 "use client";
 
-import { SelectSite } from "@/lib/schema";
+import { SelectSite, SelectUser } from "@/lib/schema";
 import { Button, Link, User } from "@nextui-org/react";
 import { Session } from "next-auth";
 import Image from "next/image";
 import ReactFlagsSelect from "react-flags-select";
 
 export default function ProfileBanner({
-  session,
+  user,
   siteData,
 }: {
-  session: Session;
+  user: SelectUser;
   siteData: SelectSite;
 }) {
   return (
@@ -23,19 +23,16 @@ export default function ProfileBanner({
         <Image
           alt="Profile Picture"
           className="h-full w-full object-cover"
-          src={
-            session.user.image ||
-            `https://avatar.vercel.sh/${session.user.email}`
-          }
+          src={user.image || `https://avatar.vercel.sh/${user.email}`}
           fill
         />
       </div>
       <div className="z-20 ml-2 flex flex-col md:ml-4">
         <h1 className="text-sm font-semibold md:text-2xl">
-          {session.user.name || session.user.email}
+          {user.name || user.email}
         </h1>
         <p className="w-fit rounded-md text-xs md:bg-background md:p-1 md:px-2 md:text-sm">
-          @{session.user.username || session.user.email}
+          @{user.username || user.email}
         </p>
       </div>
       <div className="z-20 ml-auto flex flex-col gap-2 pl-2">
@@ -43,14 +40,14 @@ export default function ProfileBanner({
           <ReactFlagsSelect
             selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2 after:!content-none"
             className="!rounded-xl !border-none !bg-content2 !p-0 !text-background after:!content-none"
-            selected={session.user.country || ""}
+            selected={user.country || ""}
             onSelect={() => null}
             disabled
           />
         </div>
-        {session.user.favouritePlayer ? (
+        {user.favouritePlayer ? (
           <h2 className="break-words text-xs font-semibold md:text-lg">
-            Favourite Player: {session.user.favouritePlayer}
+            Favourite Player: {user.favouritePlayer}
           </h2>
         ) : null}
       </div>

@@ -6,6 +6,7 @@ import {
   getCompetitionsForSite,
   getSiteData,
   getUserCompetitions,
+  getUserData,
 } from "@/lib/fetchers";
 import { SelectUserCompetition } from "@/lib/schema";
 import { ClockIcon, MedalIcon } from "lucide-react";
@@ -21,6 +22,12 @@ export default async function MyCompetitions({
 
   if (!session) {
     redirect("/login");
+  }
+
+  const user = await getUserData(session.user.email);
+
+  if (!user) {
+    notFound();
   }
 
   const domain = decodeURIComponent(params.domain);
@@ -48,7 +55,7 @@ export default async function MyCompetitions({
       {/* Main Container */}
       <div className="mx-auto pt-3">
         <div className="flex flex-col gap-8">
-          <ProfileBanner session={session} siteData={data} />
+          <ProfileBanner user={user} siteData={data} />
           {/* Right Stats and Top Predictions */}
           <div className="w-full">
             {currentCompetitions && currentCompetitions?.length > 0 && (

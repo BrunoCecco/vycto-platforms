@@ -44,7 +44,7 @@ export default function RootLayout({
         className={cn(
           cal.variable,
           inter.variable,
-          "text-foreground bg-background",
+          "bg-background text-foreground",
         )}
       >
         {/* <Script

@@ -108,14 +108,6 @@ export default async function SubmissionPage({
     notFound();
   }
 
-  // if (!session) {
-  //   redirect(
-  //     `/login?redirect=${encodeURIComponent(
-  //       `/comp/${domain}/${slug}/${submissionId}`,
-  //     )}`,
-  //   );
-  // }
-
   const questions = await getQuestionsForCompetition(data.id);
   const answers = await getAnswersForUser(submissionId, data!.id);
 
@@ -123,10 +115,10 @@ export default async function SubmissionPage({
   if (session) {
     let enterRes = await enterUserToCompetition(
       submissionId,
-      session.user.username,
+      session.user.username || session.user.email,
       session.user.email,
       data.id,
-      session.user.image,
+      session.user.image || "",
     );
     if (!("error" in enterRes)) {
       userComp = enterRes;

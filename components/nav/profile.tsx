@@ -5,26 +5,27 @@ import Image from "next/image";
 import LogoutButton from "../auth/logoutButton";
 import { useSession } from "next-auth/react";
 import { PencilIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { SelectUser } from "@/lib/schema";
+import useUserSession from "@/lib/hooks/useUserSession";
 
 export default function Profile() {
-  const { data: session, status, update } = useSession();
+  const { user, session, status, update } = useUserSession({});
 
   return (
     session && (
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between gap-1">
         <User
-          name={
-            session.user.name || session.user.username || session.user.email
-          }
+          name={session.user.username || user?.name || session.user.email}
           avatarProps={{
             src:
-              session.user.image ||
+              session.user?.image ||
               `https://avatar.vercel.sh/${session.user.email}`,
           }}
         />
-        <Link href="/settings" className="text-foreground">
+        {/* <Link href="/settings" className="text-foreground">
           <PencilIcon size={18} />
-        </Link>
+        </Link> */}
         <LogoutButton />
       </div>
     )

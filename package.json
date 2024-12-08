@@ -12,10 +12,12 @@
   "dependencies": {
     "@auth/drizzle-adapter": "^1.2.0",
     "@fontsource/inter": "^5.1.0",
+    "@internationalized/date": "^3.6.0",
     "@json2csv/plainjs": "^7.0.6",
     "@next-auth/firebase-adapter": "^2.0.1",
     "@nextui-org/react": "^2.4.8",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@react-aria/i18n": "^3.12.4",
     "@react-three/fiber": "^8.17.10",
     "@types/three": "^0.170.0",
     "@upstash/ratelimit": "^0.4.4",

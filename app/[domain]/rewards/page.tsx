@@ -84,7 +84,7 @@ export default async function Rewards({
         <div className="col-span-1 md:mr-auto">
           <PendingRewards count={0} amount={0} />
         </div>
-        <div className="col-span-1 mx-auto">
+        <div className="col-span-1">
           <ClaimRewardsCard
             comp={latestCompetition}
             latestReward={siteRewards[siteRewards.length - 1]}

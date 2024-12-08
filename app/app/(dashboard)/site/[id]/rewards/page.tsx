@@ -46,29 +46,24 @@ export default async function SiteRewards({
               <CombinedForm
                 title={reward.title || "Reward " + i}
                 helpText="Edit the reward details."
-                descriptions={[
-                  "Title",
-                  "Description",
-                  "Image",
-                  "Start date of reward period",
-                  "End date of reward period",
-                  "Number of reward winners",
-                ]}
                 inputAttrs={[
                   {
                     name: "title",
                     type: "text",
                     defaultValue: reward.title || "",
+                    label: "Title",
                   },
                   {
                     name: "description",
                     type: "text",
                     defaultValue: reward.description || "",
+                    label: "Description",
                   },
                   {
                     name: "image",
-                    type: "image",
-                    defaultValue: reward.image || "/logo.png",
+                    type: "file",
+                    defaultValue: reward.image || "",
+                    label: "Image",
                   },
                   {
                     name: "startDate",
@@ -76,6 +71,7 @@ export default async function SiteRewards({
                     defaultValue: new Date(reward?.startDate!)
                       .toISOString()
                       .split("T")[0],
+                    label: "Start date of reward period",
                   },
                   {
                     name: "endDate",
@@ -83,11 +79,13 @@ export default async function SiteRewards({
                     defaultValue: new Date(reward?.endDate!)
                       .toISOString()
                       .split("T")[0],
+                    label: "End date of reward period",
                   },
                   {
                     name: "rewardWinners",
                     type: "number",
                     defaultValue: reward.rewardWinners?.toString() || "1",
+                    label: "Number of reward winners",
                   },
                 ]}
                 handleSubmit={updateSiteReward}

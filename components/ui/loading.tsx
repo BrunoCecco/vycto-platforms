@@ -16,7 +16,7 @@ export default function Loading({ data }: { data?: SelectSite | null }) {
         >
           <svg
             aria-hidden="true"
-            className="-600 h-[200px] w-[200px] animate-spin fill-foreground "
+            className="h-[200px] w-[200px] animate-spin fill-foreground text-background"
             style={{ color: data?.color1 }}
             viewBox="0 0 100 101"
             fill="none"

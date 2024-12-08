@@ -13,7 +13,7 @@ import LoadingDots from "@/components/icons/loadingDots";
 import Image from "next/image";
 import { capitalize } from "@/lib/utils";
 import { Button } from "@nextui-org/react";
-import { X } from "lucide-react";
+import { PencilIcon, X } from "lucide-react";
 import { Input, Spinner } from "@nextui-org/react";
 
 export default function Uploader({
@@ -26,6 +26,8 @@ export default function Uploader({
   children,
   bucketId,
   bucketName,
+  maxFileSize = 50,
+  circular = false,
 }: {
   id: string;
   defaultValue: string | null;
@@ -36,9 +38,11 @@ export default function Uploader({
   children?: React.ReactNode;
   bucketId?: string;
   bucketName?: string;
+  maxFileSize?: number;
+  circular?: boolean;
 }) {
   const [data, setData] = useState({
-    [name]: defaultValue,
+    [name]: defaultValue == "" ? null : defaultValue,
   });
   const [file, setFile] = useState<File | null>(null);
 
@@ -54,15 +58,17 @@ export default function Uploader({
     }
   }, [file]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (file_?: File) => {
     setSaving(true);
     const url = bucketId
       ? `/api/bucket/${bucketId}/${bucketName}/upload`
       : "/api/upload";
     fetch(url, {
       method: "POST",
-      headers: { "content-type": file?.type || "application/json" },
-      body: file || data[name],
+      headers: {
+        "content-type": file?.type || file_?.type || "application/json",
+      },
+      body: file_ || file || data[name],
     }).then(async (res) => {
       if (res.status === 200) {
         const { url } = await res.json();
@@ -98,22 +104,23 @@ export default function Uploader({
       setSaving(true);
       const file = event.currentTarget.files && event.currentTarget.files[0];
       if (file) {
-        if (file.size / 1024 / 1024 > 50) {
-          toast.error("File size too big (max 50MB)");
+        if (file.size / 1024 / 1024 > maxFileSize) {
+          toast.error(`File size too big (max ${maxFileSize}MB)`);
         } else {
           // remove current file
-          if (data[name]) {
-            await removeFile(data[name]);
+          if (data[name] != null) {
+            await replaceFile(data[name], file);
+          } else {
+            setFile(file);
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              setData((prev) => ({
+                ...prev,
+                [name]: e.target?.result as string,
+              }));
+            };
+            reader.readAsDataURL(file);
           }
-          setFile(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            setData((prev) => ({
-              ...prev,
-              [name]: e.target?.result as string,
-            }));
-          };
-          reader.readAsDataURL(file);
         }
       }
       setSaving(false);
@@ -123,10 +130,39 @@ export default function Uploader({
 
   const [saving, setSaving] = useState(false);
 
-  const saveDisabled = useMemo(() => {
-    // if object data is empty, return true
-    return !data[name] || saving;
-  }, [data[name], saving]);
+  const replaceFile = async (url: string, file: File) => {
+    try {
+      setRemoving(true);
+      const res = await fetch("/api/delete/", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          url,
+          bucketid: bucketId || process.env.BACKBLAZE_BUCKET_ID,
+        }),
+      });
+      console.log(res);
+      toast.success("File deleted successfully");
+      handleSubmit(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setData((prev) => ({
+          ...prev,
+          [name]: e.target?.result as string,
+        }));
+        setRemoving(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      toast.error("Failed to delete");
+      upload(name, "");
+      setData((prev) => ({
+        ...prev,
+        [name]: null,
+      }));
+      setRemoving(false);
+    }
+  };
 
   const removeFile = async (url: string | null) => {
     try {
@@ -144,7 +180,7 @@ export default function Uploader({
       upload(name, "");
       setData((prev) => ({
         ...prev,
-        [name]: "",
+        [name]: null,
       }));
       setRemoving(false);
       return res;
@@ -153,7 +189,7 @@ export default function Uploader({
       upload(name, "");
       setData((prev) => ({
         ...prev,
-        [name]: "",
+        [name]: null,
       }));
       setRemoving(false);
     }
@@ -161,7 +197,7 @@ export default function Uploader({
 
   return (
     <div className="relative grid w-full gap-6 rounded-lg border p-5">
-      <form className="" ref={formRef} onSubmit={handleSubmit}>
+      <form className="" ref={formRef} onSubmit={() => handleSubmit()}>
         <div>
           {title && (
             <div className="mb-4 space-y-1  ">
@@ -171,19 +207,33 @@ export default function Uploader({
           )}
           {children ? (
             <label htmlFor={`${id}-upload-${name}`}>
-              {saving ? (
-                <div className="mx-auto flex h-20 w-20 items-center justify-center bg-transparent">
-                  <Spinner />
-                </div>
-              ) : children ? (
-                children
-              ) : null}
+              {saving || removing ? <Spinner /> : children ? children : null}
             </label>
           ) : (
             <label
               htmlFor={`${id}-upload-${name}`}
-              className="group relative mt-2 flex h-64 cursor-pointer flex-col items-center justify-center rounded-md border shadow-sm transition-all  lg:h-80"
+              className={`group relative mt-2 flex cursor-pointer flex-col items-center justify-center border shadow-sm transition-all 
+                ${circular ? "mx-auto h-[150px] w-[150px] rounded-full" : "h-64  rounded-md lg:h-80"}`}
             >
+              {/* <div className="relative mx-auto h-[150px] w-[150px] cursor-pointer ">
+        {image && image != null && image != "" ? (
+          <Image
+            className="h-full w-full rounded-full object-contain"
+            fill
+            alt={"Image"}
+            src={image}
+          />
+        ) : (
+          <Image
+            className="h-full w-full rounded-full object-contain"
+            fill
+            alt="Profile Image"
+            src={`https://avatar.vercel.sh/image`}
+          />
+        )}
+
+      </div> */}
+
               <div
                 className="absolute z-[5] h-full w-full rounded-md"
                 onDragOver={(e) => {
@@ -208,8 +258,8 @@ export default function Uploader({
 
                   const file = e.dataTransfer.files && e.dataTransfer.files[0];
                   if (file) {
-                    if (file.size / 1024 / 1024 > 50) {
-                      toast.error("File size too big (max 50MB)");
+                    if (file.size / 1024 / 1024 > maxFileSize) {
+                      toast.error(`File size too big (max ${maxFileSize}MB)`);
                     } else {
                       setFile(file);
                       const reader = new FileReader();
@@ -254,7 +304,9 @@ export default function Uploader({
                 <p className="mt-2 text-center text-sm ">
                   Drag and drop or click to upload.
                 </p>
-                <p className="mt-2 text-center text-sm ">Max file size: 50MB</p>
+                <p className="mt-2 text-center text-sm ">
+                  Max file size: {maxFileSize}MB
+                </p>
                 <span className="sr-only">Photo upload</span>
               </div>
               {saving && (
@@ -262,17 +314,22 @@ export default function Uploader({
                   <Spinner />
                 </div>
               )}
-              {data[name] != null && !saving && (
-                <div className="relative h-full w-full rounded-md">
+              {data[name] && !saving && (
+                <div
+                  className={`relative h-full w-full ${circular ? "rounded-full" : "rounded-md"}`}
+                >
                   <Image
                     src={data[name] as string}
                     alt="Preview"
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="h-full w-full object-contain"
+                    className={`h-full w-full object-contain ${circular ? "rounded-full" : "rounded-md"}`}
                   />
                 </div>
               )}
+              <div className="absolute -bottom-0 -right-0 h-10 w-10 rounded-full border-2 bg-background p-2">
+                <PencilIcon className="h-full w-full " />
+              </div>
             </label>
           )}
 
@@ -291,12 +348,10 @@ export default function Uploader({
       {data[name] && data[name] != "" && (
         <Button
           onClick={(e: any) => removeFile(null)}
-          className="absoluteright-0 top-0 border-none p-1 font-bold"
+          className="absolute right-0 top-0 min-w-0 border-none !p-2 font-bold"
           variant="bordered"
         >
-          {removing ? (
-            <Spinner />
-          ) : (
+          {removing ? null : (
             <X size={18} absoluteStrokeWidth={true} color="red" />
           )}
         </Button>

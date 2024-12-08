@@ -49,7 +49,7 @@ export default async function UserCompListing({
   };
 
   const userReward = rewardDetails();
-  const canClaim = session?.user.id === userComp.userId && userReward != null;
+  const canClaim = session?.user.id === userComp.userId && userReward;
 
   const url =
     getSiteDomain(siteData!) + `/comp/${comp?.slug}/${userComp.userId}`;

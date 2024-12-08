@@ -95,7 +95,6 @@ export default async function SiteCompetitionPage({
   const siteData = await getSiteData(domain);
   const slug = decodeURIComponent(params.slug);
   const session = await getServerSession(authOptions);
-  console.log(params);
   const data = await getCompetitionData(domain, slug);
   if (!data) {
     notFound();
@@ -109,10 +108,10 @@ export default async function SiteCompetitionPage({
   let userComp = session
     ? await enterUserToCompetition(
         session.user.id,
-        session.user.username || session.user.name || session.user.email,
+        session.user.username || session.user.email,
         session.user.email,
         data.id,
-        session.user.image,
+        session.user.image || "",
       )
     : undefined;
   if (userComp != undefined && "error" in userComp) {

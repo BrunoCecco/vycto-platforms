@@ -1,5 +1,9 @@
 import { notFound } from "next/navigation";
-import { getCompetitionsForSite, getSiteData } from "@/lib/fetchers";
+import {
+  getCompetitionsForSite,
+  getSiteData,
+  getUserData,
+} from "@/lib/fetchers";
 import db from "@/lib/db";
 import FanZone from "@/components/fanzone/fanZone";
 import { SelectCompetition } from "@/lib/schema";
@@ -59,6 +63,8 @@ export default async function SiteHomePage({
 
   const session = await getServerSession(authOptions);
 
+  const user = await getUserData(session?.user?.email || "");
+
   const addFanzoneToString = (str: string) => {
     if (str?.includes("fanzone")) return str;
     return str + " FANZONE";
@@ -96,7 +102,7 @@ export default async function SiteHomePage({
               ) as SelectCompetition[]
           }
           latestCompetition={latestCompetition}
-          user={session?.user}
+          user={user}
         />
       </Suspense>
       <div className="my-4 sm:my-10" />

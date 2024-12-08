@@ -67,7 +67,6 @@ const EditCompetitionDetails = async ({
         <EditCompetitionTitle competition={competitionData!} />
         <CombinedForm
           title="Competition Details"
-          descriptions={["Competition Sponsor", "Date"]}
           helpText=""
           inputAttrs={[
             {
@@ -75,12 +74,14 @@ const EditCompetitionDetails = async ({
               type: "text",
               defaultValue: data?.sponsor!,
               placeholder: "sponsor",
+              label: "Competition Sponsor",
             },
             {
               name: "date",
               type: "date",
               defaultValue: new Date(data?.date!).toISOString().split("T")[0],
               placeholder: "Date",
+              label: "Competition Date",
             },
           ]}
           handleSubmit={updateCompetitionMetadata}

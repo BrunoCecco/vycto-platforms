@@ -31,11 +31,6 @@ export default async function CompetitionRewards({
         <h1 className="text-3xl font-bold ">Competition Rewards</h1>
         <CombinedForm
           title="Reward #1"
-          descriptions={[
-            "Title of the main reward for this competition.",
-            "Description",
-            "Number of winners for the main reward.",
-          ]}
           helpText="Please enter the details for the main reward."
           inputAttrs={[
             {
@@ -43,18 +38,27 @@ export default async function CompetitionRewards({
               type: "text",
               defaultValue: data?.rewardTitle!,
               placeholder: "Season Ticket",
+              label: "Title of the main reward for this competition.",
             },
             {
               name: "rewardDescription",
               type: "text",
               defaultValue: data?.rewardDescription!,
               placeholder: "Win a season ticket worth $2000",
+              label: "Description",
             },
             {
               name: "rewardWinners",
               type: "number",
               min: "0",
               defaultValue: data?.rewardWinners?.toString() || "1",
+              label: "Number of winners for the main reward.",
+            },
+            {
+              name: "rewardImage",
+              type: "file",
+              defaultValue: data?.rewardImage!,
+              label: "The thumbnail image for the main reward.",
             },
           ]}
           handleSubmit={updateCompetitionMetadata}
@@ -74,11 +78,6 @@ export default async function CompetitionRewards({
 
         <CombinedForm
           title="Reward #2"
-          descriptions={[
-            "Title of the secondary rewards for this competition.",
-            "Description",
-            "Number of winners for the secondary reward.",
-          ]}
           helpText="Please enter the details for the secondary reward."
           inputAttrs={[
             {
@@ -86,24 +85,33 @@ export default async function CompetitionRewards({
               type: "text",
               defaultValue: data?.reward2Title!,
               placeholder: "%15 off all games",
+              label: "Title of the secondary reward for this competition.",
             },
             {
               name: "reward2Description",
               type: "text",
               defaultValue: data?.reward2Description!,
               placeholder: "Win a %15 discount on all games",
+              label: "Description",
             },
             {
               name: "reward2Winners",
               type: "number",
               min: "0",
               defaultValue: data?.reward2Winners?.toString() || "1",
+              label: "Number of winners for the secondary reward.",
+            },
+            {
+              name: "reward2Image",
+              type: "file",
+              defaultValue: data?.reward2Image!,
+              label: "The thumbnail image for the secondary reward.",
             },
           ]}
           handleSubmit={updateCompetitionMetadata}
         />
 
-        <Form
+        {/* <Form
           title="Secondary Reward Image"
           description="The thumbnail image for the secondary reward."
           helpText="Please enter the image for the secondary reward."
@@ -113,7 +121,7 @@ export default async function CompetitionRewards({
             defaultValue: data?.reward2Image!,
           }}
           handleSubmit={updateCompetitionMetadata}
-        />
+        /> */}
       </div>
     </div>
   );

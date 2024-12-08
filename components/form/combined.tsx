@@ -17,80 +17,172 @@ import {
   Input,
   Textarea,
   Spinner,
+  DatePicker,
+  Switch,
 } from "@nextui-org/react";
 import { USER_ROLES } from "@/lib/constants";
 import ReactFlagsSelect from "react-flags-select";
-import { useState } from "react";
-import Image from "next/image";
-import { PencilIcon } from "lucide-react";
-import EditProfileImage from "../settings/editProfileImage";
+import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
+import { useDateFormatter } from "@react-aria/i18n";
+import { parseDate, getLocalTimeZone } from "@internationalized/date";
+import CombinedFormImage from "./combinedFormImage";
 
 interface InputAttr {
   name: string;
   type: string;
   defaultValue: string;
+  label?: string;
   placeholder?: string;
   maxLength?: number;
   pattern?: string;
   min?: string;
 }
+
+interface ICheckboxValues {
+  [key: string]: string;
+}
+
 export default function CombinedForm({
   title,
-  descriptions,
   helpText,
   inputAttrs,
   handleSubmit,
   className,
-  hasImage = false,
   updateId,
 }: {
   title: String;
-  descriptions: string[];
   helpText: string;
   inputAttrs: InputAttr[];
   handleSubmit: any;
   className?: string;
-  hasImage?: boolean;
   updateId?: string;
 }) {
+  const form2 = useRef<HTMLFormElement>(null);
+  const form2button = useRef<HTMLButtonElement>(null);
   const { id } = useParams() as { id?: string };
   const router = useRouter();
   const { update } = useSession();
   const [selectedCountry, setSelectedCountry] = useState(
     inputAttrs.find((inputAttr) => inputAttr.name === "country")?.defaultValue,
   );
-
-  const imageInputAttr = inputAttrs.find((inputAttr) =>
-    inputAttr.type.includes("image"),
+  const [checkboxValues, setCheckboxValues] = useState<ICheckboxValues>({
+    fanzoneNotifications:
+      inputAttrs.find((inputAttr) => inputAttr.name == "fanzoneNotifications")
+        ?.defaultValue || "false",
+    prizeNotifications:
+      inputAttrs.find((inputAttr) => inputAttr.name == "prizeNotifications")
+        ?.defaultValue || "false",
+    newsletter:
+      inputAttrs.find((inputAttr) => inputAttr.name === "newsletter")
+        ?.defaultValue || "false",
+  });
+  const [imageInputAttr, setImageInputAttr] = useState(
+    inputAttrs.find((inputAttr) => inputAttr.type.includes("file")),
+  );
+  const [usernameInputAttr, setUsernameInputAttr] = useState(
+    inputAttrs.find((inputAttr) => inputAttr.name === "username"),
+  );
+  const [countryInputAttr, setCountryInputAttr] = useState(
+    inputAttrs.find((inputAttr) => inputAttr.name === "country"),
+  );
+  const [favouritePlayerInputAttr, setFavouritePlayerInputAttr] = useState(
+    inputAttrs.find((inputAttr) => inputAttr.name === "favouritePlayer"),
   );
 
-  const ImageInput = () => {
-    if (!imageInputAttr) return null;
+  useEffect(() => {
+    if (
+      form2button.current &&
+      selectedCountry !=
+        inputAttrs.find((inputAttr) => inputAttr.name === "country")
+          ?.defaultValue
+    ) {
+      form2button.current.click();
+    }
+  }, [selectedCountry]);
+
+  const editCheckboxValues = (isSelected: boolean, name: string) => {
+    console.log(isSelected, name, isSelected.toString());
+    setCheckboxValues({ ...checkboxValues, [name]: isSelected.toString() });
+  };
+
+  const formAction = async (data: FormData) => {
+    let fields = Array.from(data.entries());
+    let changedFields = fields.filter(
+      ([key, value]) =>
+        value !==
+        inputAttrs.find((inputAttr) => inputAttr.name === key)?.defaultValue,
+    );
+    const res = await Promise.all(
+      changedFields.map((field) =>
+        handleSubmit(data, updateId || id, field[0]).then(async (res: any) => {
+          if (!res) return;
+          if (res.error) {
+            toast.error(res.error);
+          } else {
+            va.track(`Updated ${field[0]}`, id ? { id } : {});
+          }
+        }),
+      ),
+    );
+    // toast.success(`Successfully updated ${title}!`);
+  };
+
+  const submitForm2 = () => {
+    if (form2.current) {
+      form2.current.requestSubmit();
+    }
+  };
+
+  const SpecialInputAttrs = () => {
     return (
-      <div className="w-full pl-5 pt-5 sm:w-1/3">
-        <Uploader
-          name={imageInputAttr?.name!}
-          id={imageInputAttr?.name || ""}
-          title={""}
-          description={""}
-          defaultValue={imageInputAttr?.defaultValue || ""}
-          upload={(name: string, value: string) => {
-            const formData = new FormData();
-            // append input as file type to form data
-            formData.append(name, value);
-            handleSubmit(formData, updateId || id, name).then(
-              async (res: any) => {
-                if (res.error) {
-                  toast.error(res.error);
-                } else {
-                  va.track(`Updated ${name}`, id ? { id } : {});
-                  toast.success(`Successfully updated ${name}!`);
-                }
-              },
-            );
-          }}
-        />
+      <div className="flex w-full flex-col gap-6 pl-5 pt-5 sm:w-1/3">
+        {imageInputAttr && (
+          <CombinedFormImage
+            image={imageInputAttr.defaultValue}
+            handleSubmit={handleSubmit}
+            updateId={updateId}
+          />
+        )}
+        <form
+          action={formAction}
+          className="flex w-full flex-1 flex-col gap-6"
+          ref={form2}
+        >
+          {usernameInputAttr && (
+            <Input
+              key={"username"}
+              {...usernameInputAttr}
+              onBlur={submitForm2}
+            />
+          )}
+          {countryInputAttr && (
+            <>
+              <input
+                type="hidden"
+                key={"country"}
+                hidden
+                name="country"
+                value={selectedCountry}
+              />
+              <ReactFlagsSelect
+                key={"country-select"}
+                selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2"
+                className="!rounded-xl !border-none !p-0 !text-black"
+                selected={selectedCountry || ""}
+                onSelect={(code) => setSelectedCountry(code)}
+              />
+            </>
+          )}
+          {favouritePlayerInputAttr && (
+            <Input
+              key={"favouritePlayer"}
+              {...favouritePlayerInputAttr}
+              onBlur={submitForm2}
+            />
+          )}
+          <button type="submit" hidden ref={form2button}></button>
+        </form>
       </div>
     );
   };
@@ -99,55 +191,23 @@ export default function CombinedForm({
     <div className="borde rounded-lg">
       <h2 className="p-5 text-xl">{title}</h2>
       <div className="flex flex-col sm:flex-row">
-        {hasImage && ( //hasImage means hasProfileImage
-          <div className="w-full px-5 pt-5 sm:w-1/3 sm:pr-0">
-            <EditProfileImage />
-          </div>
-        )}
-        {ImageInput()}
+        {SpecialInputAttrs()}
         <form
-          action={async (data: FormData) => {
-            const res = await Promise.all(
-              inputAttrs.map((inputAttr) =>
-                handleSubmit(data, updateId || id, inputAttr.name).then(
-                  async (res: any) => {
-                    if (res.error) {
-                      toast.error(res.error);
-                    } else {
-                      va.track(`Updated ${inputAttr.name}`, id ? { id } : {});
-                    }
-                  },
-                ),
-              ),
-            );
-            toast.success(`Successfully updated ${title}!`);
-          }}
-          className="flex-1"
+          action={formAction}
+          className="flex w-full flex-1 flex-col gap-6 px-5"
         >
           {inputAttrs.map((inputAttr, index) => {
+            if (
+              ["favouritePlayer", "username", "country"].includes(
+                inputAttr.name,
+              )
+            ) {
+              return null;
+            }
             return (
-              <div
-                className="relative flex w-full flex-col space-y-2 px-5 pt-5"
-                key={index + "reward-editor"}
-              >
-                <p className="text-sm  ">{descriptions[index]}</p>
+              <div className="relative w-full" key={inputAttr.name}>
                 {inputAttr.name.includes("image") ? null : inputAttr.name ===
-                  "country" ? (
-                  <>
-                    <input
-                      type="hidden"
-                      hidden
-                      name="country"
-                      value={selectedCountry}
-                    />
-                    <ReactFlagsSelect
-                      selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2"
-                      className="!rounded-xl !border-none !p-0 !text-black"
-                      selected={selectedCountry || ""}
-                      onSelect={(code) => setSelectedCountry(code)}
-                    />
-                  </>
-                ) : inputAttr.name === "role" ? (
+                  "role" ? (
                   <Select
                     aria-label="role"
                     name="role"
@@ -179,7 +239,7 @@ export default function CombinedForm({
                   />
                 ) : inputAttr.name === "subdomain" ? (
                   <div className="flex w-full">
-                    <Input {...inputAttr} required />
+                    <Input {...inputAttr} />
                     <div className="flex items-center rounded-r-md border border-l-0 px-3 text-sm">
                       {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
                     </div>
@@ -194,18 +254,45 @@ export default function CombinedForm({
                     )}
                   </div>
                 ) : inputAttr.name === "description" ? (
-                  <Textarea {...inputAttr} rows={3} required />
+                  <Textarea {...inputAttr} rows={3} />
                 ) : inputAttr.name.includes("date") ? (
-                  <Input {...inputAttr} type="date" required />
+                  <DatePicker
+                    {...inputAttr}
+                    defaultValue={parseDate(inputAttr.defaultValue)}
+                    showMonthAndYearPickers
+                    label="Birth Date"
+                    variant="bordered"
+                  />
+                ) : inputAttr.type == "checkbox" ? (
+                  <>
+                    <input
+                      id={inputAttr.name}
+                      key={inputAttr.name}
+                      type="hidden"
+                      hidden
+                      name={inputAttr.name}
+                      value={checkboxValues[inputAttr.name] || "false"}
+                    />
+                    <Switch
+                      id={inputAttr.name + "switch"}
+                      key={inputAttr.name + "switch"}
+                      isSelected={checkboxValues[inputAttr.name] == "true"}
+                      onValueChange={(isSelected: boolean) =>
+                        editCheckboxValues(isSelected, inputAttr.name)
+                      }
+                    >
+                      {inputAttr.label}
+                    </Switch>
+                  </>
                 ) : (
-                  <Input {...inputAttr} required />
+                  <Input {...inputAttr} />
                 )}
               </div>
             );
           })}
-          {!hasImage ? (
+          {!imageInputAttr ? (
             <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t   p-3   sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
-              <p className="mr-2 text-sm  ">helpText</p>
+              <p className="mr-2 text-sm">helpText</p>
               <FormButton />
             </div>
           ) : (

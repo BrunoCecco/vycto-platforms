@@ -25,6 +25,8 @@ export default function Form({
   handleSubmit,
   bucketId,
   bucketName,
+  updateId,
+  circular = false,
   children,
 }: {
   title: string;
@@ -41,6 +43,8 @@ export default function Form({
   handleSubmit: any;
   bucketId?: string;
   bucketName?: string;
+  updateId?: string;
+  circular?: boolean;
   children?: React.ReactNode;
 }) {
   const { id } = useParams() as { id?: string };
@@ -50,9 +54,7 @@ export default function Form({
     inputAttrs.name === "country" ? inputAttrs.defaultValue : "",
   );
 
-  return inputAttrs.name.includes("Banner") ||
-    inputAttrs.name === "logo" ||
-    inputAttrs.name.toLowerCase().includes("image") ? (
+  return inputAttrs.type == "file" ? (
     <Uploader
       id={inputAttrs.name}
       title={title}
@@ -65,7 +67,7 @@ export default function Form({
         const formData = new FormData();
         // append input as file type to form data
         formData.append(name, value);
-        handleSubmit(formData, id, name).then(async (res: any) => {
+        handleSubmit(formData, updateId || id, name).then(async (res: any) => {
           if (res.error) {
             toast.error(res.error);
           } else {
@@ -76,6 +78,7 @@ export default function Form({
       }}
       bucketId={bucketId}
       bucketName={bucketName}
+      circular={circular}
     >
       {children}
     </Uploader>

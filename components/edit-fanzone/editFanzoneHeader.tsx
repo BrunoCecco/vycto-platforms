@@ -33,7 +33,7 @@ export default function EditFanZoneHeader({
             handleSubmit={updateSite}
           >
             <div className="relative h-[100px] w-[100px]">
-              {data?.logo != null && (
+              {data?.logo && (
                 <Image
                   className="h-full w-full rounded-xl object-contain"
                   fill
