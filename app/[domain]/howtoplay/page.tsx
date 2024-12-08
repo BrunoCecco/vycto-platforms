@@ -1,6 +1,12 @@
 import CompetitionCard from "@/components/competitions/competitionCard";
 import MainLeaderboard from "@/components/leaderboard/mainLeaderboard";
+import GeneralNumber from "@/components/questions/generalNumber";
+import GeneralSelection from "@/components/questions/generalSelection";
+import GuessScore from "@/components/questions/guessScore";
+import MatchOutcome from "@/components/questions/matchOutcome";
+import PlayerSelection from "@/components/questions/playerSelection";
 import TrueFalse from "@/components/questions/trueFalse";
+import WhatMinute from "@/components/questions/whatMinute";
 import ClaimRewardsCard from "@/components/rewards/claimRewardsCard";
 import UserSettings from "@/components/settings/userSettings";
 import { CardSpotlight } from "@/components/ui/cardSpotlight";
@@ -10,6 +16,7 @@ import {
   getSiteData,
   getSiteRewards,
 } from "@/lib/fetchers";
+import { SelectAnswer, SelectQuestion } from "@/lib/schema";
 import { QuestionType } from "@/lib/types";
 import { ArrowBigDown, ArrowDownNarrowWide } from "lucide-react";
 import { getServerSession } from "next-auth";
@@ -51,11 +58,86 @@ export default async function HowToPlayPage({
     latestCompData[0].competition.id,
   );
 
-  const tfQuestion = questions.find((q) => q.type === QuestionType.TrueFalse);
+  const question = questions[0];
+
   const reward = await getSiteRewards(domain);
   const seasonReward = reward.find(
     (r) => r.year === new Date().getFullYear() && r.month === -1,
   );
+
+  const getQuestionType = (
+    question: SelectQuestion,
+    answer: SelectAnswer | { answer: string | null } | undefined,
+    disabled: boolean,
+  ) => {
+    switch (question.type) {
+      case QuestionType.TrueFalse:
+        return (
+          <TrueFalse
+            {...question}
+            answer={answer}
+            disabled={disabled}
+            color={data?.color1}
+          />
+        );
+      case QuestionType.WhatMinute:
+        return (
+          <WhatMinute
+            {...question}
+            answer={answer}
+            disabled={disabled}
+            color={data?.color1}
+          />
+        );
+      case QuestionType.PlayerSelection:
+        return (
+          <PlayerSelection
+            {...question}
+            answer={answer}
+            disabled={disabled}
+            color={data?.color1}
+          />
+        );
+      case QuestionType.MatchOutcome:
+        return (
+          <MatchOutcome
+            {...question}
+            answer={answer}
+            disabled={disabled}
+            color={data?.color1}
+          />
+        );
+      case QuestionType.GuessScore:
+        return (
+          <GuessScore
+            {...question}
+            answer={answer}
+            disabled={disabled}
+            color={data?.color1}
+          />
+        );
+      case QuestionType.GeneralSelection:
+        return (
+          <GeneralSelection
+            {...question}
+            answer={answer}
+            disabled={disabled}
+            color={data?.color1}
+          />
+        );
+      case QuestionType.GeneralNumber:
+        return (
+          <GeneralNumber
+            {...question}
+            answer={answer}
+            disabled={disabled}
+            color={data?.color1}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="flex flex-col gap-8">
@@ -73,7 +155,6 @@ export default async function HowToPlayPage({
             competition={latestCompData[0].competition}
             siteData={data}
             type="current"
-            // onClick={() => {}}
           />
         ) : (
           <Image
@@ -93,15 +174,8 @@ export default async function HowToPlayPage({
           2. Answer Questions
         </h2>
         <p className="relative z-20 mb-4 ">Submit your answers!</p>
-        {data && questions && tfQuestion ? (
-          <TrueFalse
-            {...tfQuestion}
-            userId={session?.user.id}
-            answer={{ answer: "" }}
-            disabled={true}
-            // onLocalAnswer={() => {}}
-            color={data.color1}
-          />
+        {data && questions && question ? (
+          getQuestionType(question, { answer: "" }, true)
         ) : (
           <Image
             src={"/answerQuestion.png"}

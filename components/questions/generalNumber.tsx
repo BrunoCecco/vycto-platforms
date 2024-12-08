@@ -44,6 +44,7 @@ const GeneralNumber = ({ ...props }) => {
             isDisabled={props.disabled}
             name="answer"
             value={answer}
+            defaultValue="1"
             onChange={(e) => setAnswer(parseInt(e.target.value))}
             className="w-20 text-center"
             onBlur={() => submitButton?.current?.click()}
