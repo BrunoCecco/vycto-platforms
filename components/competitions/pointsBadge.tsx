@@ -23,7 +23,9 @@ const PointsBadge: FC<PointsBadgeProps> = ({ points, color }) => {
       }}
     >
       <div className="z-20 flex flex-col items-center ">
-        <span className="text-xs">{points.toString().padStart(2, "0")}</span>
+        <span className="text-xs">
+          {points?.toString().padStart(2, "0") || 5}
+        </span>
         <span className="-mt-1 text-xs font-normal">Points</span>
       </div>
     </div>

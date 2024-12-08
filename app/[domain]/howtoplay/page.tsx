@@ -1,12 +1,14 @@
 import CompetitionCard from "@/components/competitions/competitionCard";
 import MainLeaderboard from "@/components/leaderboard/mainLeaderboard";
 import TrueFalse from "@/components/questions/trueFalse";
+import ClaimRewardsCard from "@/components/rewards/claimRewardsCard";
 import UserSettings from "@/components/settings/userSettings";
 import { CardSpotlight } from "@/components/ui/cardSpotlight";
 import {
   getLatestCompetitionForSite,
   getQuestionsForCompetition,
   getSiteData,
+  getSiteRewards,
 } from "@/lib/fetchers";
 import { QuestionType } from "@/lib/types";
 import { ArrowBigDown, ArrowDownNarrowWide } from "lucide-react";
@@ -50,6 +52,10 @@ export default async function HowToPlayPage({
   );
 
   const tfQuestion = questions.find((q) => q.type === QuestionType.TrueFalse);
+  const reward = await getSiteRewards(domain);
+  const seasonReward = reward.find(
+    (r) => r.year === new Date().getFullYear() && r.month === -1,
+  );
 
   return (
     <div className="flex flex-col gap-8">
@@ -87,7 +93,7 @@ export default async function HowToPlayPage({
           2. Answer Questions
         </h2>
         <p className="relative z-20 mb-4 ">Submit your answers!</p>
-        {data && questions ? (
+        {data && questions && tfQuestion ? (
           <TrueFalse
             {...tfQuestion}
             userId={session?.user.id}
@@ -143,13 +149,19 @@ export default async function HowToPlayPage({
         <p className="mb-4 ">
           Check the competition details for specific reward information.
         </p>
-        <Image
-          src={"/reward.png"}
-          alt="Reward"
-          width={300}
-          height={300}
-          className="relative z-20 overflow-hidden rounded-md"
-        />
+        {seasonReward && data ? (
+          <div className="relative w-[300px]">
+            <ClaimRewardsCard data={data} reward={seasonReward} />
+          </div>
+        ) : (
+          <Image
+            src={"/reward.png"}
+            alt="Reward"
+            width={300}
+            height={300}
+            className="relative z-20 overflow-hidden rounded-md"
+          />
+        )}
       </HelpCard>
     </div>
   );

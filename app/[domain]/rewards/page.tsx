@@ -89,11 +89,7 @@ export default async function Rewards({
           <PendingRewards count={0} amount={0} />
         </div>
         <div className="col-span-1">
-          <ClaimRewardsCard
-            comp={latestCompetition}
-            reward={yearReward || siteRewards[0]}
-            data={data}
-          />
+          <ClaimRewardsCard reward={yearReward || siteRewards[0]} data={data} />
         </div>
         <div className="col-span-1 md:ml-auto">
           <ClaimedRewards count={0} amount={0} />

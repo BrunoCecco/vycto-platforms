@@ -5,11 +5,9 @@ import Image from "next/image";
 import { makeTransparent } from "@/lib/utils";
 
 export default function ClaimRewardsCard({
-  comp,
   reward,
   data,
 }: {
-  comp: SelectCompetition;
   reward: SelectSiteReward;
   data: SelectSite;
 }) {
