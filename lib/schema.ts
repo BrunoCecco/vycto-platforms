@@ -27,6 +27,10 @@ export const users = pgTable("users", {
   role: text("role").default("user"),
   country: text("country"),
   favouritePlayer: text("favouritePlayer"),
+  birthDate: text("birthDate"),
+  fanzoneNotifications: boolean("emailNotifications").default(true),
+  prizeNotifications: boolean("prizeNotifications").default(true),
+  newsletter: boolean("newsletter").default(true),
   updatedAt: timestamp("updatedAt", { mode: "date" })
     .notNull()
     .$onUpdate(() => new Date()),

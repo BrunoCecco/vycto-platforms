@@ -15,7 +15,7 @@ export async function getUserData(email: string) {
     },
     [`${email}-user`],
     {
-      revalidate: 900,
+      revalidate: 9000,
       tags: [`${email}-user`],
     },
   )();
@@ -30,7 +30,7 @@ export async function getUserDataById(userId: string) {
     },
     [`${userId}-user`],
     {
-      revalidate: 900,
+      revalidate: 9000,
       tags: [`${userId}-user`],
     },
   )();
@@ -39,12 +39,20 @@ export async function getUserDataById(userId: string) {
 export async function getAllUsers(role: string, offset: number, limit: number) {
   return await unstable_cache(
     async () => {
-      return await db.query.users.findMany({
-        where: eq(users.role, role),
-        orderBy: [desc(users.createdAt)],
-        limit: limit,
-        offset: offset,
-      });
+      return await db
+        .select({
+          id: users.id,
+          email: users.email,
+          role: users.role,
+          createdAt: users.createdAt,
+          updatedAt: users.updatedAt,
+          username: users.username,
+        })
+        .from(users)
+        .where(eq(users.role, role))
+        .orderBy(desc(users.createdAt))
+        .limit(limit)
+        .offset(offset);
     },
     ["all-users"],
     {
@@ -57,10 +65,18 @@ export async function getAllUsers(role: string, offset: number, limit: number) {
 export async function getAllSuperAdmins() {
   return await unstable_cache(
     async () => {
-      return await db.query.users.findMany({
-        where: eq(users.role, SUPER_ADMIN),
-        orderBy: [desc(users.createdAt)],
-      });
+      return await db
+        .select({
+          id: users.id,
+          email: users.email,
+          role: users.role,
+          createdAt: users.createdAt,
+          updatedAt: users.updatedAt,
+          username: users.username,
+        })
+        .from(users)
+        .where(eq(users.role, SUPER_ADMIN))
+        .orderBy(desc(users.createdAt));
     },
     ["all-super-admins"],
     {
@@ -73,10 +89,18 @@ export async function getAllSuperAdmins() {
 export async function getAllAdmins() {
   return await unstable_cache(
     async () => {
-      return await db.query.users.findMany({
-        where: eq(users.role, ADMIN),
-        orderBy: [desc(users.createdAt)],
-      });
+      return await db
+        .select({
+          id: users.id,
+          email: users.email,
+          role: users.role,
+          createdAt: users.createdAt,
+          updatedAt: users.updatedAt,
+          username: users.username,
+        })
+        .from(users)
+        .where(eq(users.role, ADMIN))
+        .orderBy(desc(users.createdAt));
     },
     ["all-admins"],
     {

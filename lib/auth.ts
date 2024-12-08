@@ -28,13 +28,10 @@ declare module "next-auth" {
   interface Session {
     user: {
       id: string;
-      name: string;
-      email: string;
       username: string;
       role: string;
-      image?: string;
-      country?: string;
-      favouritePlayer?: string;
+      email: string;
+      image: string;
     };
   }
 }
@@ -107,8 +104,11 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt({ token, trigger, session, user }) {
       if (trigger === "update" && session?.user) {
-        console.log(session, session.user, token);
         token.user = session?.user || token.user;
+        token.name = session?.user?.name || token.name;
+        token.email = session?.user?.email || token.email;
+        token.picture = session?.user?.image ?? token.picture;
+        console.log(token);
         return token;
       }
       if (user) {
@@ -122,19 +122,11 @@ export const authOptions: NextAuthOptions = {
         id: token.sub,
         // @ts-expect-error
         username: token?.user?.username || token?.user?.gh_username,
-        // @ts-expect-error
-        name: token?.user?.name || session.user.name,
-        // @ts-expect-error
-        image: token?.user?.image || session.user.image,
+        image: token?.picture || session.user.image,
         // @ts-expect-error
         email: token?.user?.email || session.user.email,
         // @ts-expect-error
         role: token?.user?.role || session.user.role,
-        // @ts-expect-error
-        country: token?.user?.country || session.user.country,
-        favouritePlayer:
-          // @ts-expect-error
-          token?.user?.favouritePlayer || session.user.favouritePlayer,
       };
       return session;
     },
@@ -206,6 +198,7 @@ export function withSiteRewardAuth(action: any) {
         error: "Not authenticated",
       };
     }
+    console.log(siteRewardId);
 
     const siteReward = await db.query.siteRewards.findFirst({
       where: (sites, { eq }) => eq(siteRewards.id, siteRewardId),
