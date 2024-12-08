@@ -24,32 +24,10 @@ const UserSignUp = ({
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState(true);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const posthog = usePostHog();
-
-  // Handle Facebook sign in using Firebase
-  const handleFacebookSignIn = async () => {
-    setLoading(true);
-    posthog?.capture("facebook-sign-in-clicked");
-
-    try {
-      // Sign in with Facebook
-      const result = await signIn("google");
-      // Get the signed-in user info
-      // const user = result.user;
-      // console.log("User signed in: ", user);
-
-      // Here, you can handle additional logic like redirecting or fetching user data
-
-      // If needed, set emailExists to false to show the username and name fields
-      setEmailExists(false);
-    } catch (error) {
-      console.error("Error during sign in with Facebook: ", error);
-      toast.error("Failed to sign in with Facebook.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleGoogleSignin = async () => {
     // Check if the user is on the Instagram browser
@@ -69,8 +47,26 @@ const UserSignUp = ({
     posthog?.capture("google-sign-in-clicked");
 
     try {
+      var callbackUrl = "/";
+      if (localAnswers || competitionSlug) {
+        const answersQuery = Object.entries(localAnswers || {})
+          .map(
+            ([questionId, answer]) =>
+              `${encodeURIComponent(questionId)}=${encodeURIComponent(answer)}`,
+          )
+          .join("&");
+        callbackUrl = `/comp/${competitionSlug}?${answersQuery}`;
+        if (username && username?.trim() != "") {
+          callbackUrl += `&username=${username}`;
+        }
+        if (name && name?.trim() != "") {
+          callbackUrl += `&name=${name}`;
+        }
+      }
+
       const res = await signIn("google", {
         redirect: false,
+        callbackUrl: callbackUrl,
       });
       console.log("User signed in: ", res);
     } catch (error: any) {
@@ -87,8 +83,25 @@ const UserSignUp = ({
     posthog?.capture("apple-sign-in-clicked");
 
     try {
+      var callbackUrl = "/";
+      if (localAnswers || competitionSlug) {
+        const answersQuery = Object.entries(localAnswers || {})
+          .map(
+            ([questionId, answer]) =>
+              `${encodeURIComponent(questionId)}=${encodeURIComponent(answer)}`,
+          )
+          .join("&");
+        callbackUrl = `/comp/${competitionSlug}?${answersQuery}`;
+        if (username && username?.trim() != "") {
+          callbackUrl += `&username=${username}`;
+        }
+        if (name && name?.trim() != "") {
+          callbackUrl += `&name=${name}`;
+        }
+      }
       const res = await signIn("apple", {
         is_private_email: false,
+        callbackUrl: callbackUrl,
       });
       console.log("User signed in: ", res);
     } catch (error: any) {
@@ -159,9 +172,9 @@ const UserSignUp = ({
 
         {emailExists && (
           <div className="mt-4 flex items-center justify-between">
-            <div className="bg-content2 h-[1px] w-[40%]" />
+            <div className="h-[1px] w-[40%] bg-content2" />
             <p className="">or</p>
-            <div className="bg-content2 h-[1px] w-[40%]" />
+            <div className="h-[1px] w-[40%] bg-content2" />
           </div>
         )}
 

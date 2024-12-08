@@ -268,7 +268,7 @@ export default function CompetitionPage({
                     </div>
                   );
                 })}
-              {!ended ? (
+              {ended ? (
                 <div className="text-md mx-auto rounded-xl border-danger-600 bg-danger-400 p-4">
                   Competition Ended
                 </div>

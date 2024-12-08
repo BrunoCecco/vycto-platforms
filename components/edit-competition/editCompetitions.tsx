@@ -5,6 +5,7 @@ import CompetitionCard from "./editCompetitionCard";
 import CreateCompetitionButton from "./createCompetitionButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { or } from "drizzle-orm";
 
 export default async function EditCompetitions({
   siteId,
@@ -21,7 +22,10 @@ export default async function EditCompetitions({
   const competitions = await db.query.competitions.findMany({
     where: (competitions, { and, eq }) =>
       and(
-        eq(competitions.userId, session.user.id),
+        or(
+          eq(competitions.userId, session.user.id),
+          eq(competitions.admin, session.user.email),
+        ),
         siteId ? eq(competitions.siteId, siteId) : undefined,
       ),
     with: {

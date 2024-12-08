@@ -42,7 +42,7 @@ const MatchOutcome = ({ ...props }) => {
                 className={`relative h-[140px] w-[100px] items-center justify-center overflow-hidden text-center md:h-[250px] md:w-[180px] ${
                   selectedOutcome === props.answer1
                     ? "opacity-100"
-                    : "opacity-50"
+                    : "opacity-25"
                 }`}
                 isDisabled={props.disabled}
                 onClick={() => setSelectedOutcome(props.answer1)}
@@ -116,7 +116,7 @@ const MatchOutcome = ({ ...props }) => {
           >
             <Button
               className={`w-24 rounded-full border-2 p-2 text-sm font-semibold ${
-                selectedOutcome == "Draw" ? "opacity-100" : "opacity-50"
+                selectedOutcome == "Draw" ? "opacity-100" : "opacity-25"
               }`}
               isDisabled={props.disabled}
               style={{ borderColor: props.color }}
