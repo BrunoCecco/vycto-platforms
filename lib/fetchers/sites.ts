@@ -4,7 +4,7 @@
 import { unstable_cache } from "next/cache";
 import db from "../db";
 import { siteRewards, sites } from "../schema";
-import { eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 
 async function getSiteIdByDomain(domain: string) {
   const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
@@ -66,6 +66,7 @@ export async function getSiteRewardsById(id: string) {
     async () => {
       return await db.query.siteRewards.findMany({
         where: eq(siteRewards.siteId, id),
+        orderBy: desc(siteRewards.month),
       });
     },
     [`${id}-rewards`],
@@ -93,28 +94,25 @@ export async function getSiteRewards(domain: string) {
   )();
 }
 
-export async function getSiteRewardsForPeriod(
-  domain: string,
-  startDate: string,
-  endDate: string,
+export async function getSiteRewardByDate(
+  siteId: string,
+  month: number,
+  year: number,
 ) {
-  const siteId = await getSiteIdByDomain(domain);
-
   return await unstable_cache(
     async () => {
       return await db.query.siteRewards.findMany({
-        where: (rewards, { and, gte, lte }) =>
-          and(
-            gte(siteRewards.startDate, startDate),
-            lte(siteRewards.endDate, endDate),
-            eq(siteRewards.siteId, siteId),
-          ),
+        where: and(
+          eq(siteRewards.siteId, siteId),
+          eq(siteRewards.month, month),
+          eq(siteRewards.year, year),
+        ),
       });
     },
-    [`${siteId}-rewards-${startDate}-${endDate}`],
+    [`${siteId}-reward-${month}-${year}`],
     {
       revalidate: 900,
-      tags: [`${siteId}-rewards-${startDate}-${endDate}`],
+      tags: [`${siteId}-reward-${month}-${year}`],
     },
   )();
 }

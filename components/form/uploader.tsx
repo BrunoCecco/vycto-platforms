@@ -197,7 +197,12 @@ export default function Uploader({
 
   return (
     <div className="relative grid w-full gap-6 rounded-lg border p-5">
-      <form className="" ref={formRef} onSubmit={() => handleSubmit()}>
+      <form
+        className=""
+        key={`${id}-upload-${name}-form`}
+        ref={formRef}
+        onSubmit={() => handleSubmit()}
+      >
         <div>
           {title && (
             <div className="mb-4 space-y-1  ">
@@ -336,6 +341,7 @@ export default function Uploader({
           {/* <div className="mt-1 flex rounded-md shadow-sm"> */}
           <Input
             id={`${id}-upload-${name}`}
+            key={`${id}-upload-${name}`}
             name={name}
             type="file"
             accept="image/*, video/*"

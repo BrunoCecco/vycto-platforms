@@ -2,32 +2,50 @@
 import React, { useState, useEffect } from "react";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
 import Image from "next/image";
-import { SelectSite, SelectUser } from "@/lib/schema";
-import { getLeaderboardData } from "@/lib/fetchers";
+import { SelectSite, SelectSiteReward, SelectUser } from "@/lib/schema";
+import {
+  getLeaderboardData,
+  getSiteRewardByDate,
+  getSiteRewards,
+} from "@/lib/fetchers";
 import LeaderboardHeader from "./leaderboardHeader";
 import Link from "next/link";
 import LoadingDots from "../icons/loadingDots";
 import { motion } from "framer-motion";
 import { LeaderboardPeriod } from "@/lib/types";
 import { Spinner, User } from "@nextui-org/react";
+import { Session } from "next-auth";
+import RewardModal from "../rewards/rewardsModal";
 
 type LeaderboardUser = SelectUser & { points: number };
+type IRangeType = "last week" | "monthly" | "season" | "all time";
 
 const MainLeaderboard = ({
   siteData,
-  user,
+  session,
 }: {
   siteData: SelectSite;
-  user: SelectUser;
+  session: Session | null;
 }) => {
-  const [rangeType, setRangeType] = useState<
-    "last week" | "monthly" | "season" | "all time"
-  >("all time");
+  const [rangeType, setRangeType] = useState<IRangeType>("all time");
 
   const [data, setData] = useState<LeaderboardUser[]>([]);
   const [filteredData, setFilteredData] = useState<LeaderboardUser[]>([]);
   const [query, setQuery] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [monthReward, setMonthReward] = useState<SelectSiteReward>();
+  const [seasonReward, setSeasonReward] = useState<SelectSiteReward>();
+  const [selectedReward, setSelectedReward] = useState<SelectSiteReward>();
+
+  const user = session?.user;
+
+  useEffect(() => {
+    const fetchRewards = async () => {
+      await getModalRewards();
+    };
+    fetchRewards();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +55,13 @@ const MainLeaderboard = ({
       setLoading(false);
     };
     fetchData();
+    if (rangeType === "season") {
+      setSelectedReward(seasonReward);
+    } else if (rangeType === "monthly") {
+      setSelectedReward(monthReward);
+    } else {
+      setSelectedReward(seasonReward);
+    }
   }, [rangeType]);
 
   useEffect(() => {
@@ -51,6 +76,17 @@ const MainLeaderboard = ({
       );
     }
   }, [query, data]);
+
+  const getModalRewards = async () => {
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const monthRew = await getSiteRewardByDate(siteData.id, month, year);
+    setMonthReward(monthRew[0]);
+    const seasonRew = await getSiteRewardByDate(siteData.id, -1, year);
+    setSeasonReward(seasonRew[0]);
+    setSelectedReward(monthRew[0]);
+  };
 
   const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRangeType(e.target.value as LeaderboardPeriod);
@@ -80,6 +116,8 @@ const MainLeaderboard = ({
         rangeType={rangeType}
         setRangeType={handleSelectionChange}
         setQuery={setQuery}
+        selectedReward={selectedReward}
+        onClick={() => setIsOpen(true)}
       />
 
       {/* {data && data?.findIndex((usr) => usr.id === user?.id) > -1 && (
@@ -259,6 +297,13 @@ const MainLeaderboard = ({
           <Spinner />
         ) : null}
       </div>
+
+      <RewardModal
+        reward={selectedReward}
+        siteData={siteData}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen} // Close handler
+      />
     </div>
   );
 };

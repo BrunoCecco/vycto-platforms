@@ -3,59 +3,62 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { updateCompetitionMetadata, updateSite } from "@/lib/actions";
 import Uploader from "../form/uploader";
 import Form from "../form";
-import { SelectCompetition } from "@/lib/schema";
 import { Spinner } from "@nextui-org/react";
+import { updateCompetitionMetadata, updateSiteReward } from "@/lib/actions";
+import { SelectCompetition, SelectSiteReward } from "@/lib/schema";
 
-interface CompImage {
+interface IImage {
   key: string;
   url: string | null;
+}
+
+interface BucketStorageProps {
+  siteName: string;
+  siteId: string;
+  entity: "competition" | "siteReward";
+  entityData: SelectCompetition | SelectSiteReward;
+  bucketName?: string;
+  bucketId?: string;
 }
 
 export default function BucketStorage({
   siteName,
   siteId,
-  competition,
+  entity,
+  entityData,
   bucketName,
   bucketId,
-}: {
-  siteName: string;
-  siteId: string;
-  competition: SelectCompetition;
-  bucketName?: string;
-  bucketId?: string;
-}) {
+}: BucketStorageProps) {
   const [isLoading, setLoading] = useState(true);
   const [name, setName] = useState(bucketName);
   const [id, setId] = useState(bucketId);
   const [files, setFiles] = useState([]);
   const [downloadUrl, setDownloadUrl] = useState("");
-  const [compImages, setCompImages] = useState<CompImage[]>([
+  const [compImages, setCompImages] = useState<IImage[]>([
+    { key: "image1", url: entityData.image1 },
     {
       key: "image2",
-      url: competition.image2,
+      url: entityData.image2,
     },
     {
       key: "image3",
-      url: competition.image3,
+      url: entityData.image3,
     },
     {
       key: "image4",
-      url: competition.image4,
+      url: entityData.image4,
     },
   ]);
 
   useEffect(() => {
     const fetchBucket = async () => {
       setLoading(true);
-      console.log("FETCHING ");
       try {
         if (bucketId && bucketName) {
           const bucket = await fetch(`/api/bucket/${id}`);
           const data = await bucket.json();
-          console.log(data);
           setDownloadUrl(data.downloadUrl);
           setFiles(data.files);
         } else {
@@ -87,12 +90,20 @@ export default function BucketStorage({
       const formData = new FormData();
       formData.append("bucketId", data.bucketId);
       formData.append("bucketName", data.bucketName);
-      await updateSite(formData, siteId, "bucketName");
-      await updateSite(formData, siteId, "bucketId");
+      await updateEntity(formData, siteId, "bucketName");
+      await updateEntity(formData, siteId, "bucketId");
       setId(data.bucketId);
       setName(data.bucketName);
     } catch (error: any) {
       toast.error("Try another name", error);
+    }
+  };
+
+  const updateEntity = async (formData: FormData, id: string, key: string) => {
+    if (entity === "competition") {
+      await updateCompetitionMetadata(formData, id, key);
+    } else if (entity === "siteReward") {
+      await updateSiteReward(formData, entityData.id, key);
     }
   };
 
@@ -113,8 +124,8 @@ export default function BucketStorage({
       let newFormData = new FormData();
       newFormData.append("bucketName", "");
       newFormData.append("bucketId", "");
-      await updateSite(newFormData, siteId, "bucketName");
-      await updateSite(newFormData, siteId, "bucketId");
+      await updateEntity(newFormData, siteId, "bucketName");
+      await updateEntity(newFormData, siteId, "bucketId");
       setId(undefined);
       setName(undefined);
     } catch (error: any) {
@@ -123,11 +134,9 @@ export default function BucketStorage({
   };
 
   const handleSubmit = async (formData: FormData, id: string, name: string) => {
-    return await updateCompetitionMetadata(formData, id, name);
-    // window.location.reload();
+    return await updateEntity(formData, id, name);
   };
 
-  // if bucketId and bucketName are not provided, show a button to create a new bucket, otherwise show the bucket contents
   return (
     <div className="relative mt-8 flex flex-col items-center justify-center">
       <div className="flex w-full flex-col gap-4">
@@ -136,21 +145,11 @@ export default function BucketStorage({
         ) : id && name ? (
           <div className="flex w-full flex-col gap-4">
             <div className="grid grid-cols-1 items-center justify-center gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <Form
-                title={"Image 1"}
-                description=""
-                inputAttrs={{
-                  name: "image",
-                  type: "file",
-                  defaultValue: competition.image || "",
-                }}
-                handleSubmit={handleSubmit}
-              />
               {compImages &&
-                compImages.map((img: CompImage, i) => (
+                compImages.map((img: IImage, i) => (
                   <Form
                     key={i}
-                    title={"Image " + (i + 2)}
+                    title={"Image " + (i + 1)}
                     description=""
                     inputAttrs={{
                       name: img.key,

@@ -64,6 +64,39 @@ export async function getCompetitionsForSite(domain: string) {
   )();
 }
 
+export async function getLatestCompetitionForSite(domain: string) {
+  const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
+    ? domain.replace(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`, "")
+    : null;
+
+  return await unstable_cache(
+    async () => {
+      // select all competitions (all fields) for the site
+      return await db
+        .select({
+          competition: competitions,
+        })
+        .from(competitions)
+        .leftJoin(sites, eq(competitions.siteId, sites.id))
+        .where(
+          and(
+            eq(competitions.published, true),
+            subdomain
+              ? eq(sites.subdomain, subdomain)
+              : eq(sites.customDomain, domain),
+          ),
+        )
+        .orderBy(desc(competitions.date))
+        .limit(1);
+    },
+    [`${domain}-latest-competition`],
+    {
+      revalidate: 900,
+      tags: [`${domain}-latest-competition`],
+    },
+  )();
+}
+
 export async function getCompetitionData(domain: string, slug: string) {
   const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
     ? domain.replace(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`, "")

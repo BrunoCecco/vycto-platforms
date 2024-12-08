@@ -142,6 +142,7 @@ export default function CombinedForm({
             image={imageInputAttr.defaultValue}
             handleSubmit={handleSubmit}
             updateId={updateId}
+            placeholder={imageInputAttr.name + imageInputAttr.label}
           />
         )}
         <form
@@ -188,7 +189,7 @@ export default function CombinedForm({
   };
 
   return (
-    <div className="borde rounded-lg">
+    <div className="rounded-lg border">
       <h2 className="p-5 text-xl">{title}</h2>
       <div className="flex flex-col sm:flex-row">
         {SpecialInputAttrs()}
@@ -240,7 +241,7 @@ export default function CombinedForm({
                 ) : inputAttr.name === "subdomain" ? (
                   <div className="flex w-full">
                     <Input {...inputAttr} />
-                    <div className="flex items-center rounded-r-md border border-l-0 px-3 text-sm">
+                    <div className="flex -translate-x-2 items-center rounded-r-xl bg-content2 px-3 text-sm">
                       {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
                     </div>
                   </div>
@@ -260,8 +261,6 @@ export default function CombinedForm({
                     {...inputAttr}
                     defaultValue={parseDate(inputAttr.defaultValue)}
                     showMonthAndYearPickers
-                    label="Birth Date"
-                    variant="bordered"
                   />
                 ) : inputAttr.type == "checkbox" ? (
                   <>

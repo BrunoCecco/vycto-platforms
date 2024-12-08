@@ -19,12 +19,12 @@ const CompetitionCard = ({
   competition,
   siteData,
   type,
-  onClick, // Accept onClick prop
+  onClick = () => {},
 }: {
   competition: SelectCompetition;
   siteData: SelectSite;
   type?: "current" | "past";
-  onClick: () => void; // Define onClick type
+  onClick?: () => void; // Define onClick type
 }) => {
   const [users, setUsers] = useState<any[]>([]);
   const [status, setStatus] = useState<string>();
@@ -120,54 +120,6 @@ const CompetitionCard = ({
           ) : null}
         </CardFooter>
       </Card>
-      {/* <div className="h-full w-full rounded-md  transition-all duration-200">
-        
-
-        <div className="flex h-28 flex-col justify-between p-2 px-4 text-left">          
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="font-semibold">
-                {competition.title || "Competition by " + competition.sponsor}
-              </h2>
-            </div>
-            <div className="relative flex items-center">
-              <div className="relative h-6 w-6">
-                <Image
-                  src={users[0]?.image || `https://avatar.vercel.sh/99`}
-                  alt="Profile 1"
-                  fill
-                  className="rounded-full border-2 border-white object-cover"
-                />
-              </div>
-              <div className="relative -ml-2 h-6 w-6">
-                <Image
-                  src={users[1]?.image || `https://avatar.vercel.sh/100`}
-                  alt="Profile 2"
-                  fill
-                  className="rounded-full border-2 border-white object-cover"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <p
-              className={`text-sm `}
-              style={{ color: compOpen ? siteData.color1 : "" }}
-            >
-              {status}
-            </p>
-            <PlayButton
-              color1={siteData.color1}
-              color2={siteData.color2}
-              onClick={onClick}
-              className={`${compOpen ? "visible" : "invisible"}`}
-            >
-              {type === "current" ? "Play" : "View"}
-            </PlayButton>
-          </div>
-        </div>
-      </div> */}
     </HoverBorderGradient>
   );
 };

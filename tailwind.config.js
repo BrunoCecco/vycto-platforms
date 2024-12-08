@@ -235,7 +235,7 @@ module.exports = {
               600: "#ffffff",
               700: "#ffffff",
               foreground: "#000",
-              DEFAULT: "#c6c6c6",
+              DEFAULT: "#EFEFEF",
             },
             content1: {
               DEFAULT: "#18181b",

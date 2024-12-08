@@ -53,6 +53,10 @@ export default async function Rewards({
 
   const siteRewards = await getSiteRewards(domain);
 
+  const yearReward = siteRewards.find(
+    (reward) => reward.year === new Date().getFullYear() && reward.month === -1,
+  );
+
   return (
     <div className="min-h-screen">
       <BackgroundGradient
@@ -87,7 +91,7 @@ export default async function Rewards({
         <div className="col-span-1">
           <ClaimRewardsCard
             comp={latestCompetition}
-            latestReward={siteRewards[siteRewards.length - 1]}
+            reward={yearReward || siteRewards[0]}
             data={data}
           />
         </div>

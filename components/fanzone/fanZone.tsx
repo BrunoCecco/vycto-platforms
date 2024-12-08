@@ -8,19 +8,20 @@ import LoadingDots from "../icons/loadingDots";
 import Loading from "@/components/ui/loading";
 import { Story } from "./story";
 import { Spinner } from "@nextui-org/react";
+import { Session } from "next-auth";
 
 const FanZone = async ({
   siteData,
   currentCompetitions,
   pastCompetitions,
   latestCompetition,
-  user,
+  session,
 }: {
   siteData: SelectSite;
   currentCompetitions: SelectCompetition[];
   pastCompetitions: SelectCompetition[];
   latestCompetition: any;
-  user: any;
+  session: Session | null;
 }) => {
   return (
     <div className="w-full">
@@ -62,7 +63,7 @@ const FanZone = async ({
         </h2>
       )}
       <div className="my-14" />
-      <MainLeaderboard siteData={siteData} user={user} />
+      <MainLeaderboard siteData={siteData} session={session} />
     </div>
   );
 };

@@ -25,7 +25,8 @@ export default async function SiteMedia({
       <BucketStorage
         siteName={data.site.name || ""}
         siteId={data.site.id}
-        competition={data}
+        entity="competition"
+        entityData={data}
         bucketName={bucketName}
         bucketId={bucketId}
       />

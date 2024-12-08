@@ -11,10 +11,12 @@ export default function CombinedFormImage({
   image,
   handleSubmit,
   updateId,
+  placeholder,
 }: {
   image: string;
   handleSubmit: (data: FormData, _id: string, key: string) => Promise<void>;
   updateId?: string;
+  placeholder?: string;
 }) {
   return (
     <Form
@@ -25,7 +27,7 @@ export default function CombinedFormImage({
         name: "image",
         type: "file",
         defaultValue: image,
-        placeholder: "Image",
+        placeholder: placeholder,
       }}
       handleSubmit={handleSubmit}
       updateId={updateId}

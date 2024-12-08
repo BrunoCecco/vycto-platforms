@@ -63,8 +63,6 @@ export default async function SiteHomePage({
 
   const session = await getServerSession(authOptions);
 
-  const user = await getUserData(session?.user?.email || "");
-
   const addFanzoneToString = (str: string) => {
     if (str?.includes("fanzone")) return str;
     return str + " FANZONE";
@@ -102,7 +100,7 @@ export default async function SiteHomePage({
               ) as SelectCompetition[]
           }
           latestCompetition={latestCompetition}
-          user={user}
+          session={session}
         />
       </Suspense>
       <div className="my-4 sm:my-10" />

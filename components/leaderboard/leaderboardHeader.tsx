@@ -1,5 +1,5 @@
-import React from "react";
-import { SelectSite } from "@/lib/schema";
+import React, { useState } from "react";
+import { SelectSite, SelectSiteReward } from "@/lib/schema";
 import { Crown, SearchIcon } from "lucide-react";
 import { Select, SelectItem, Input } from "@nextui-org/react";
 import { LeaderboardPeriod } from "@/lib/types";
@@ -10,11 +10,15 @@ const LeaderboardHeader = ({
   rangeType,
   setRangeType,
   setQuery,
+  selectedReward,
+  onClick,
 }: {
   siteData: SelectSite;
   rangeType: LeaderboardPeriod;
   setRangeType: any;
   setQuery?: any;
+  selectedReward?: SelectSiteReward;
+  onClick?: any;
 }) => {
   const timeRanges = [
     { key: "last week", label: "Last Week" },
@@ -25,8 +29,8 @@ const LeaderboardHeader = ({
 
   // Function to dynamically set the prize text based on rangeType
   const getPrizeText = () => {
-    if (rangeType === "last week") {
-      return "Last Week's Prizes";
+    if (rangeType === "all time") {
+      return "Season Prizes";
     } else if (rangeType === "monthly") {
       const currentMonth = new Date().toLocaleString("default", {
         month: "long",
@@ -43,7 +47,7 @@ const LeaderboardHeader = ({
       <div className="flex items-center justify-between gap-4 sm:flex-col md:items-start">
         <div className="flex items-center gap-4 sm:mt-2">
           <Image
-            src={siteData.logo || "/logo.png"}
+            src={selectedReward?.image || siteData.logo || "/logo.png"}
             height={48}
             width={48}
             className="w-auto object-contain"
@@ -59,12 +63,13 @@ const LeaderboardHeader = ({
           </h1>
         </div>
         {/* Updated text based on rangeType */}
-        <p
+        <div
           className="cursor-pointer underline"
           style={{ color: siteData.color1 }}
+          onClick={onClick}
         >
           {getPrizeText()}
-        </p>
+        </div>
       </div>
       <div className="flex gap-4">
         <Input

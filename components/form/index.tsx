@@ -56,7 +56,10 @@ export default function Form({
 
   return inputAttrs.type == "file" ? (
     <Uploader
-      id={inputAttrs.name}
+      id={inputAttrs.defaultValue + inputAttrs.placeholder + title + "uploader"}
+      key={
+        inputAttrs.defaultValue + inputAttrs.placeholder + title + "uploader"
+      }
       title={title}
       description={description}
       defaultValue={
@@ -157,7 +160,7 @@ export default function Form({
         ) : inputAttrs.name === "subdomain" ? (
           <div className="flex w-full max-w-md">
             <Input {...inputAttrs} required />
-            <div className="flex items-center rounded-r-md border border-l-0   px-3 text-sm   ">
+            <div className="flex -translate-x-2 items-center rounded-r-xl bg-content2 px-3 text-sm">
               {process.env.NEXT_PUBLIC_ROOT_DOMAIN}
             </div>
           </div>

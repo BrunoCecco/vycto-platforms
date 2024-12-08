@@ -6,11 +6,11 @@ import { makeTransparent } from "@/lib/utils";
 
 export default function ClaimRewardsCard({
   comp,
-  latestReward,
+  reward,
   data,
 }: {
   comp: SelectCompetition;
-  latestReward: SelectSiteReward;
+  reward: SelectSiteReward;
   data: SelectSite;
 }) {
   return (
@@ -26,17 +26,17 @@ export default function ClaimRewardsCard({
       <div className="flex h-[350px] w-full flex-col justify-around overflow-hidden rounded-lg bg-content3 p-4 text-center">
         <div className="relative h-[90px] w-full">
           <Image
-            src={latestReward?.image || "/aelShirt.png"}
-            alt={latestReward?.title || "Card thumbnail"}
+            src={reward?.image || "/aelShirt.png"}
+            alt={reward?.title || "Card thumbnail"}
             fill
             className="overflow-hidden rounded-lg object-contain"
           />
         </div>
         <h2 className="text-lg font-bold uppercase">
-          {latestReward?.title || "AEL Signed Shirt"}
+          {reward?.title || "AEL Signed Shirt"}
         </h2>
         <div className="mt-2 text-xs font-bold">
-          {latestReward?.description ||
+          {reward?.description ||
             "This AEL signed shirt, autographed by all 22 player, stands as a powerful emblem of pride for an entire city."}
         </div>
         <div className="mt-4 flex w-full flex-col items-center justify-center gap-4">

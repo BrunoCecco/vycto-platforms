@@ -208,11 +208,10 @@ export const createSiteReward = async (formData: FormData) => {
   const description = formData.get("description") as string;
   const image = formData.get("image") as string;
   const siteId = formData.get("siteId") as string;
-  const startDate = formData.get("startDate") as string;
-  const endDate = formData.get("endDate") as string;
-  const rewardWinnersStr = formData.get("rewardWinners") as string;
-
-  const rewardWinners = parseInt(rewardWinnersStr || "1");
+  const month = formData.get("month") as string;
+  const year = formData.get("year") as string;
+  const rewardWinners = formData.get("rewardWinners") as string;
+  const sponsor = formData.get("sponsor") as string;
 
   try {
     const [response] = await db
@@ -221,10 +220,11 @@ export const createSiteReward = async (formData: FormData) => {
         siteId,
         title,
         description,
+        sponsor,
         image,
-        rewardWinners,
-        startDate,
-        endDate,
+        rewardWinners: parseInt(rewardWinners),
+        month: parseInt(month),
+        year: parseInt(year),
       })
       .returning();
 

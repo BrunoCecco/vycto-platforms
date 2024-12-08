@@ -48,7 +48,7 @@ export default function CreateSiteModal() {
           }
         })
       }
-      className="md: w-full rounded-md md:max-w-md md:border md:shadow "
+      className="md: w-full rounded-md bg-background md:max-w-md md:border md:shadow"
     >
       <div className="relative flex flex-col space-y-4 p-5 md:p-10">
         <h2 className="text-2xl ">Create a new site</h2>
@@ -84,7 +84,7 @@ export default function CreateSiteModal() {
               maxLength={32}
               required
             />
-            <div className="flex items-center rounded-r-lg border border-l-0   px-3 text-sm">
+            <div className="flex -translate-x-2 items-center rounded-r-xl bg-content2 px-3 text-sm">
               .{process.env.NEXT_PUBLIC_ROOT_DOMAIN}
             </div>
           </div>
