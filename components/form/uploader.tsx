@@ -329,6 +329,8 @@ export default function Uploader({
                     src={data[name] as string}
                     alt="Preview"
                     fill
+                    quality={50}
+                    unoptimized
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className={`h-full w-full object-contain ${circular ? "rounded-full" : "rounded-md"}`}
                   />
