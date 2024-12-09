@@ -54,13 +54,15 @@ const EditGuessScore = ({
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);
-    await updateQuestionMetadata(formData, question, key);
+    const res = await updateQuestionMetadata(formData, question, key);
     toast.success("Question updated successfully");
+    return res;
   };
 
   const handleInputBlur = async (key: string, value: string) => {
     setIsEditingPoints(false);
-    await updateQuestion(key, value);
+    const res = await updateQuestion(key, value);
+    return res;
   };
 
   const handleCorrectAnswerInputChange = (

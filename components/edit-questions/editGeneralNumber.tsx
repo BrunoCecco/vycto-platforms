@@ -8,6 +8,7 @@ import { Input } from "@nextui-org/react";
 import Uploader from "../form/uploader";
 import PointsBadge from "../competitions/pointsBadge";
 import { Button } from "@nextui-org/react";
+import Form from "../form";
 
 const EditGeneralNumber = ({
   question,
@@ -36,8 +37,9 @@ const EditGeneralNumber = ({
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);
-    await updateQuestionMetadata(formData, question, key);
+    const res = await updateQuestionMetadata(formData, question, key);
     toast.success("Question updated successfully");
+    return res;
   };
 
   const handlePointsClick = () => {
@@ -71,10 +73,17 @@ const EditGeneralNumber = ({
     removeQuestion(question.id);
   };
 
-  const handleImageChange = async (key: string, value: string) => {
+  const handleImageChange = async (
+    formData: FormData,
+    id: string,
+    name: string,
+  ) => {
+    const key = name;
+    const value = formData.get(name) as string;
     console.log("handleImageChange", key, value);
     setImage(value);
-    await updateQuestion(key, value);
+    const res = await updateQuestion(key, value);
+    return res;
   };
 
   return (
@@ -107,11 +116,17 @@ const EditGeneralNumber = ({
 
         {/* Placeholder for Image or Graphic */}
         <div className="mb-4 w-full rounded-md">
-          <Uploader
-            id={question.id}
-            defaultValue={image}
-            name="image1"
-            upload={handleImageChange}
+          <Form
+            title=""
+            description=""
+            helpText=""
+            inputAttrs={{
+              name: "image1",
+              type: "file",
+              defaultValue: image,
+              placeholder: "image general number",
+            }}
+            handleSubmit={handleImageChange}
           />
         </div>
 

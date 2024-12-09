@@ -7,6 +7,7 @@ import Uploader from "../form/uploader";
 import PointsBadge from "../competitions/pointsBadge";
 import { X } from "lucide-react";
 import { Select, Button, Input, SelectItem } from "@nextui-org/react";
+import Form from "../form";
 
 const PlayerComponent = ({
   questionId,
@@ -25,7 +26,7 @@ const PlayerComponent = ({
   selectedPlayer: string | null;
   setSelectedPlayer: (player: string) => void;
   handlePlayerNameChange: (newName: string) => void;
-  handleImageChange: (key: string, value: string) => void;
+  handleImageChange: (formData: FormData, id: string, name: string) => void;
 }) => {
   return (
     <div
@@ -33,12 +34,19 @@ const PlayerComponent = ({
         selectedPlayer === name ? "border-yellow-500" : "border-transparent"
       }`}
     >
-      <Uploader
-        id={questionId}
-        defaultValue={image}
-        name={"image" + index}
-        upload={handleImageChange}
+      <Form
+        title=""
+        description=""
+        helpText=""
+        inputAttrs={{
+          name: "image" + index,
+          type: "file",
+          defaultValue: image,
+          placeholder: "player selection image" + index,
+        }}
+        handleSubmit={handleImageChange}
       />
+
       <div className="mt-2 text-center">
         <Input
           type="text"
@@ -87,9 +95,11 @@ const EditPlayerSelection = ({
     if (!mounted) return;
     const formData = new FormData();
     formData.append(key, value);
-    await updateQuestionMetadata(formData, question, key);
+    const res = await updateQuestionMetadata(formData, question, key);
     toast.success("Question updated successfully");
+    return res;
   };
+
   const handlePointsClick = () => {
     setIsEditingPoints(true);
   };
@@ -132,7 +142,14 @@ const EditPlayerSelection = ({
     removeQuestion(question.id);
   };
 
-  const handleImageChange = async (key: string, value: string) => {
+  const handleImageChange = async (
+    formData: FormData,
+    id: string,
+    name: string,
+  ) => {
+    const key = name;
+    const value = formData.get(name) as string;
+    console.log("updateQuestion", key, value);
     if (key === "image1") {
       setImage1(value);
     } else if (key === "image2") {
@@ -142,7 +159,9 @@ const EditPlayerSelection = ({
     } else if (key === "image4") {
       setImage4(value);
     }
-    await updateQuestion(key, value);
+    const res = await updateQuestion(key, value);
+    console.log("res", res);
+    return res;
   };
 
   return (

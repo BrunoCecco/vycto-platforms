@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import Uploader from "../form/uploader";
 import { X } from "lucide-react";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import Form from "../form";
 
 const EditMatchOutcome = ({
   question,
@@ -48,8 +49,9 @@ const EditMatchOutcome = ({
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);
-    await updateQuestionMetadata(formData, question, key);
+    const res = await updateQuestionMetadata(formData, question, key);
     toast.success("Question updated successfully");
+    return res;
   };
 
   const handleInputBlur = async (key: string, value: string) => {
@@ -63,14 +65,28 @@ const EditMatchOutcome = ({
     setEditedCorrectAnswer(e.target.value);
   };
 
-  const handleImage1Change = async (key: string, value: string) => {
+  const handleImage1Change = async (
+    formData: FormData,
+    id: string,
+    name: string,
+  ) => {
+    const key = name;
+    const value = formData.get(name) as string;
     setImage1(value);
-    await updateQuestion(key, value);
+    const res = await updateQuestion(key, value);
+    return res;
   };
 
-  const handleImage2Change = async (key: string, value: string) => {
+  const handleImage2Change = async (
+    formData: FormData,
+    id: string,
+    name: string,
+  ) => {
+    const key = name;
+    const value = formData.get(name) as string;
     setImage2(value);
-    await updateQuestion(key, value);
+    const res = await updateQuestion(key, value);
+    return res;
   };
 
   return (
@@ -111,11 +127,17 @@ const EditMatchOutcome = ({
           {/* Home Team */}
           <div className={`w-full text-center`}>
             <div className="relative mb-2 h-auto w-full overflow-hidden rounded-lg md:h-auto md:w-full">
-              <Uploader
-                id={question.id}
-                defaultValue={image1}
-                name={"image1"}
-                upload={handleImage1Change}
+              <Form
+                title=""
+                description=""
+                helpText=""
+                inputAttrs={{
+                  name: "image1",
+                  type: "file",
+                  defaultValue: image1,
+                  placeholder: "image 1 match outcome",
+                }}
+                handleSubmit={handleImage1Change}
               />
             </div>
             {isEditingHome ? (
@@ -148,11 +170,17 @@ const EditMatchOutcome = ({
           {/* Away Team */}
           <div className={`w-full text-center`}>
             <div className="relative mb-2 h-auto w-full overflow-hidden rounded-lg md:h-full md:w-full">
-              <Uploader
-                id={question.id}
-                defaultValue={image2}
-                name={"image2"}
-                upload={handleImage2Change}
+              <Form
+                title=""
+                description=""
+                helpText=""
+                inputAttrs={{
+                  name: "image2",
+                  type: "file",
+                  defaultValue: image2,
+                  placeholder: "image 2 match outcome",
+                }}
+                handleSubmit={handleImage2Change}
               />
             </div>
             {isEditingAway ? (

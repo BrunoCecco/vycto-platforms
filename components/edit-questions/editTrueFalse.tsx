@@ -8,6 +8,7 @@ import PointsBadge from "../competitions/pointsBadge";
 import { Input } from "@nextui-org/react";
 import { X } from "lucide-react";
 import { Button } from "@nextui-org/react";
+import Form from "../form";
 
 const TFButton = ({
   children,
@@ -64,8 +65,9 @@ const EditTrueFalse = ({
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);
-    await updateQuestionMetadata(formData, question, key);
+    const res = await updateQuestionMetadata(formData, question, key);
     toast.success(key + " updated successfully");
+    return res;
   };
 
   const handlePointsClick = () => {
@@ -98,9 +100,16 @@ const EditTrueFalse = ({
     removeQuestion(question.id);
   };
 
-  const handleImageChange = async (key: string, value: string) => {
+  const handleImageChange = async (
+    formData: FormData,
+    id: string,
+    name: string,
+  ) => {
+    const key = name;
+    const value = formData.get(name) as string;
     setImage(value);
-    await updateQuestion(key, value);
+    const res = await updateQuestion(key, value);
+    return res;
   };
 
   return (
@@ -133,11 +142,17 @@ const EditTrueFalse = ({
 
         {/* Placeholder for Image or Graphic */}
         <div className="mb-4 w-full rounded-md">
-          <Uploader
-            id={question.id}
-            defaultValue={image}
-            name="image1"
-            upload={handleImageChange}
+          <Form
+            title=""
+            description=""
+            helpText=""
+            inputAttrs={{
+              name: "image1",
+              type: "file",
+              defaultValue: image,
+              placeholder: "true false image",
+            }}
+            handleSubmit={handleImageChange}
           />
         </div>
 

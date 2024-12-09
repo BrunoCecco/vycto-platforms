@@ -375,7 +375,7 @@ export const createQuestion = async ({
 
 export const updateQuestionMetadata = async (
   formData: FormData,
-  question: any,
+  question: SelectQuestion,
   key: string,
 ) => {
   const value = formData.get(key) as string;

@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import Uploader from "../form/uploader";
 import { Button, Input } from "@nextui-org/react";
 import { Check, X } from "lucide-react";
+import Form from "../form";
 
 const EditGeneralSelection = ({
   question,
@@ -61,13 +62,15 @@ const EditGeneralSelection = ({
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);
-    await updateQuestionMetadata(formData, question, key);
+    const res = await updateQuestionMetadata(formData, question, key);
     toast.success("Question updated successfully");
+    return res;
   };
 
   const handleInputBlur = async (key: string, value: string) => {
     setIsEditingPoints(false);
-    await updateQuestion(key, value);
+    const res = await updateQuestion(key, value);
+    return res;
   };
 
   const handleCorrectAnswerInputChange = (
@@ -76,9 +79,16 @@ const EditGeneralSelection = ({
     setEditedCorrectAnswer(e.target.value);
   };
 
-  const handleImageChange = async (key: string, value: string) => {
+  const handleImageChange = async (
+    formData: FormData,
+    id: string,
+    name: string,
+  ) => {
+    const key = name;
+    const value = formData.get(name) as string;
     setImage1(value);
-    await updateQuestion(key, value);
+    const res = await updateQuestion(key, value);
+    return res;
   };
 
   return (
@@ -111,11 +121,17 @@ const EditGeneralSelection = ({
 
         {/* Placeholder for Image or Graphic */}
         <div className="mb-4 h-auto w-full overflow-hidden rounded-lg ">
-          <Uploader
-            id={question.id}
-            defaultValue={image1}
-            name={"image1"}
-            upload={handleImageChange}
+          <Form
+            title=""
+            description=""
+            helpText=""
+            inputAttrs={{
+              name: "image1",
+              type: "file",
+              defaultValue: image1,
+              placeholder: "image 1 general selection",
+            }}
+            handleSubmit={handleImageChange}
           />
         </div>
 
