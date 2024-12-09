@@ -29,37 +29,18 @@ const EditCompetitionDetails = async ({
       <PublishCompetitionButtons competition={competitionData!} />
       <div className="my-4 w-full overflow-hidden rounded-xl">
         <Form
-          title=""
+          title="Thumbnail Image"
           description=""
           helpText=""
           inputAttrs={{
             name: "image",
             type: "file",
             defaultValue: data?.image!,
+            placeholder: "Thumbnail Image",
+            label: "Thumbnail Image"
           }}
           handleSubmit={updateCompetitionMetadata}
-        >
-          <div className="flex flex-col">
-            <h1 className="mb-4 text-left text-xl font-bold ">
-              Competition Thumbnail
-            </h1>
-            <div className="relative flex  h-[200px] w-[300px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl md:h-[300px] md:w-[450px] lg:h-[400px] lg:w-[600px]">
-              {data.image ? (
-                <BlurImage
-                  src={data.image || "/placeholder.png"}
-                  blurDataURL={data.imageBlurhash || placeholderBlurhash}
-                  width={1200}
-                  height={630}
-                  alt="Thumbnail Image"
-                  className="h-full w-full rounded-lg object-cover"
-                />
-              ) : null}
-              <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-lg border  opacity-25">
-                <Plus className="h-10 w-10 " />
-              </div>
-            </div>
-          </div>
-        </Form>
+        />
       </div>
 
       {/* Text section */}
