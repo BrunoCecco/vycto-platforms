@@ -30,7 +30,6 @@ export default function EditFanZoneHeader({
               type: "file",
               defaultValue: data?.logo!,
               placeholder: "site logo",
-              label: "site logo"
             }}
             handleSubmit={updateSite}
           />
@@ -53,7 +52,6 @@ export default function EditFanZoneHeader({
             type: "file",
             defaultValue: data?.image!,
             placeholder: "site banner",
-            label: "site banner",
           }}
           handleSubmit={updateSite}
         />          
