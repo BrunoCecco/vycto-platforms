@@ -139,7 +139,7 @@ export default function SearchPage() {
               >
                 <div className="relative mr-2 h-8 w-8 overflow-hidden rounded-full">
                   <Image
-                    src={`https://api.sofascore.com/api/v1/${result.type}/${result.id}/image`}
+                    src={`https://api.sofascore.com/api/v1/${result.type}/${result.id}/image?w=200&h=75`}
                     className="h-full w-full object-cover"
                     alt={result.name}
                     fill={true}
