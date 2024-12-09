@@ -37,7 +37,6 @@ const EditCompetitionDetails = async ({
             type: "file",
             defaultValue: data?.image!,
             placeholder: "Thumbnail Image",
-            label: "Thumbnail Image"
           }}
           handleSubmit={updateCompetitionMetadata}
         />
