@@ -29,23 +29,11 @@ export default function EditFanZoneHeader({
               name: "logo",
               type: "file",
               defaultValue: data?.logo!,
+              placeholder: "site logo",
+              label: "site logo"
             }}
             handleSubmit={updateSite}
-          >
-            <div className="relative h-[100px] w-[100px]">
-              {data?.logo && (
-                <Image
-                  className="h-full w-full rounded-xl object-contain"
-                  fill
-                  alt={data.name || ""}
-                  src={data.logo || ""}
-                />
-              )}
-              <div className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2  opacity-25">
-                <Plus className="h-10 w-10 " />
-              </div>
-            </div>
-          </Form>
+          />
           <Link href={`/comp/${latestCompetition?.slug}` || "/"}>
             <PlayButton color1={data.color1} color2={data.color2}>
               Play
@@ -64,16 +52,11 @@ export default function EditFanZoneHeader({
             name: "image",
             type: "file",
             defaultValue: data?.image!,
+            placeholder: "site banner",
+            label: "site banner",
           }}
           handleSubmit={updateSite}
-        >
-          <div className="relative flex h-36 w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl sm:h-[30vw] xl:h-[20vw]">
-            {data.image ? <BannerMedia src={data.image} /> : null}
-            <div className="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-xl border-2 opacity-25">
-              <Plus className="h-10 w-10 " />
-            </div>
-          </div>
-        </Form>
+        />          
       </div>
       <div className="mb-4 w-full">
         <Form
