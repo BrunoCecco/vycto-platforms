@@ -196,7 +196,9 @@ export default function Uploader({
   };
 
   return (
-    <div className="relative grid w-full gap-6 rounded-lg border p-5">
+    <div
+      className={`relative grid w-full gap-6 rounded-lg p-5 ${circular ? "" : "border"}`}
+    >
       <form
         className=""
         key={`${id}-upload-${name}-form`}
@@ -282,7 +284,7 @@ export default function Uploader({
               <div
                 className={`${
                   dragActive ? "border-2 border-background" : ""
-                } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-md px-10 transition-all ${
+                } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-md px-5 transition-all ${
                   data[name]
                     ? "opacity-0 hover:opacity-100 hover:backdrop-blur-md"
                     : "opacity-100 "
@@ -306,10 +308,10 @@ export default function Uploader({
                   <path d="M12 12v9"></path>
                   <path d="m16 16-4-4-4 4"></path>
                 </svg>
-                <p className="mt-2 text-center text-sm ">
+                <p className="mt-1 text-center text-xs">
                   Drag and drop or click to upload.
                 </p>
-                <p className="mt-2 text-center text-sm ">
+                <p className="mt-1 text-center text-xs">
                   Max file size: {maxFileSize}MB
                 </p>
                 <span className="sr-only">Photo upload</span>

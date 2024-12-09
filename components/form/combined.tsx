@@ -144,54 +144,56 @@ export default function CombinedForm({
       return null;
     }
     return (
-      <div className="flex w-full flex-col gap-6 pl-5 pt-5 sm:w-1/3">
-        {imageInputAttr && (
-          <CombinedFormImage
-            image={imageInputAttr.defaultValue}
-            handleSubmit={handleSubmit}
-            updateId={updateId}
-            placeholder={imageInputAttr.name + imageInputAttr.label}
-          />
-        )}
-        <form
-          action={formAction}
-          className="flex w-full flex-1 flex-col gap-6"
-          ref={form2}
-        >
-          {usernameInputAttr && (
-            <Input
-              key={"username"}
-              {...usernameInputAttr}
-              onBlur={submitForm2}
+      <div className="w-full pl-5 pt-5 sm:w-1/3">
+        <div className="flex w-full flex-col gap-6 rounded-lg border p-4">
+          {imageInputAttr && (
+            <CombinedFormImage
+              image={imageInputAttr.defaultValue}
+              handleSubmit={handleSubmit}
+              updateId={updateId}
+              placeholder={imageInputAttr.name + imageInputAttr.label}
             />
           )}
-          {countryInputAttr && (
-            <>
-              <input
-                type="hidden"
-                key={"country"}
-                hidden
-                name="country"
-                value={selectedCountry}
+          <form
+            action={formAction}
+            className="flex w-full flex-1 flex-col gap-6"
+            ref={form2}
+          >
+            {usernameInputAttr && (
+              <Input
+                key={"username"}
+                {...usernameInputAttr}
+                onBlur={submitForm2}
               />
-              <ReactFlagsSelect
-                key={"country-select"}
-                selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2"
-                className="!rounded-xl !border-none !p-0 !text-black"
-                selected={selectedCountry || ""}
-                onSelect={(code) => setSelectedCountry(code)}
+            )}
+            {countryInputAttr && (
+              <>
+                <input
+                  type="hidden"
+                  key={"country"}
+                  hidden
+                  name="country"
+                  value={selectedCountry}
+                />
+                <ReactFlagsSelect
+                  key={"country-select"}
+                  selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2"
+                  className="!rounded-xl !border-none !p-0 !text-black"
+                  selected={selectedCountry || ""}
+                  onSelect={(code) => setSelectedCountry(code)}
+                />
+              </>
+            )}
+            {favouritePlayerInputAttr && (
+              <Input
+                key={"favouritePlayer"}
+                {...favouritePlayerInputAttr}
+                onBlur={submitForm2}
               />
-            </>
-          )}
-          {favouritePlayerInputAttr && (
-            <Input
-              key={"favouritePlayer"}
-              {...favouritePlayerInputAttr}
-              onBlur={submitForm2}
-            />
-          )}
-          <button type="submit" hidden ref={form2button}></button>
-        </form>
+            )}
+            <button type="submit" hidden ref={form2button}></button>
+          </form>
+        </div>
       </div>
     );
   };
