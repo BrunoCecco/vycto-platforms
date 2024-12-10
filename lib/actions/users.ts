@@ -37,6 +37,9 @@ export const editUser = async (
       .where(eq(users.id, session.user.id))
       .returning();
 
+    revalidateTag(`${session.user.id}-user`);
+    revalidateTag(`${session.user.email}-user`);
+
     return response;
   } catch (error: any) {
     if (error.code === "P2002") {
@@ -60,6 +63,8 @@ export const updateName = async (name: string, email: string) => {
       })
       .where(eq(users.email, email))
       .returning();
+
+    revalidateTag(`${email}-user`);
     return response;
   } catch (error: any) {
     return {
@@ -77,6 +82,8 @@ export const updateUsername = async (username: string, email: string) => {
       })
       .where(eq(users.email, email))
       .returning();
+
+    revalidateTag(`${email}-user`);
     return response;
   } catch (error: any) {
     return {
@@ -98,6 +105,13 @@ export const updateUser = withSuperAdminAuth(
         })
         .where(eq(users.id, userId))
         .returning();
+
+      const user = await db.query.users.findFirst({
+        where: eq(users.id, userId),
+      });
+
+      revalidateTag(`${userId}-user`);
+      revalidateTag(`${user?.email}-user`);
 
       revalidateTag("all-users");
       revalidateTag("all-admins");
