@@ -34,12 +34,6 @@ const EditGuessScore = ({
     parseInt(question.correctAnswer?.split("-")[1] || "0"),
   );
 
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPoints(parseInt(e.target.value) || 0);
   };
@@ -50,7 +44,6 @@ const EditGuessScore = ({
   };
 
   const updateQuestion = async (key: string, value: string) => {
-    if (!mounted) return;
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);

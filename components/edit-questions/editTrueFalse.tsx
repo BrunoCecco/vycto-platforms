@@ -54,14 +54,7 @@ const EditTrueFalse = ({
   const [points, setPoints] = useState(question.points || 0);
   const [image, setImage] = useState(question.image1 || "/placeholder.png");
 
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const updateQuestion = async (key: string, value: string) => {
-    if (!mounted) return;
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);

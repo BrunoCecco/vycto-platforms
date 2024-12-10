@@ -32,11 +32,6 @@ const EditGeneralSelection = ({
     question.correctAnswer || "",
   );
   const [image1, setImage1] = useState(question.image1 || "/placeholder.png");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedQuestion(e.target.value);
@@ -58,7 +53,6 @@ const EditGeneralSelection = ({
   };
 
   const updateQuestion = async (key: string, value: string) => {
-    if (!mounted) return;
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);

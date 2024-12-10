@@ -29,11 +29,6 @@ const EditMatchOutcome = ({
   );
   const [image1, setImage1] = useState(question.image1 || "/placeholder.png");
   const [image2, setImage2] = useState(question.image2 || "/placeholder.png");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPoints(parseInt(e.target.value) || 0);
@@ -45,7 +40,6 @@ const EditMatchOutcome = ({
   };
 
   const updateQuestion = async (key: string, value: string) => {
-    if (!mounted) return;
     const formData = new FormData();
     formData.append(key, value);
     console.log("formData", key, value);

@@ -85,14 +85,7 @@ const EditPlayerSelection = ({
   const [image3, setImage3] = useState(question.image3 || "");
   const [image4, setImage4] = useState(question.image4 || "");
 
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const updateQuestion = async (key: string, value: string) => {
-    if (!mounted) return;
     const formData = new FormData();
     formData.append(key, value);
     const res = await updateQuestionMetadata(formData, question, key);
