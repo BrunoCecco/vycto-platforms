@@ -366,6 +366,8 @@ export const createQuestion = async ({
       .returning()
       .then((res) => res[0]);
 
+    revalidateTag(`${competitionId}-questions`);
+
     console.log("Created question: ", response);
     return response;
   } catch (error: any) {
@@ -390,6 +392,8 @@ export const updateQuestionMetadata = async (
       .returning()
       .then((res) => res[0]);
 
+    revalidateTag(`${question.competitionId}-questions`);
+
     return response;
   } catch (error: any) {
     return {
@@ -405,6 +409,12 @@ export const deleteQuestion = async (questionId: string) => {
       .where(eq(questions.id, questionId))
       .returning()
       .then((res) => res[0]);
+
+    const question = await db.query.questions.findFirst({
+      where: eq(questions.id, questionId),
+    });
+
+    revalidateTag(`${question?.competitionId}-questions`);
 
     return response;
   } catch (error: any) {
