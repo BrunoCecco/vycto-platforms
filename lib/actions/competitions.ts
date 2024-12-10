@@ -402,7 +402,10 @@ export const updateQuestionMetadata = async (
   }
 };
 
-export const deleteQuestion = async (questionId: string) => {
+export const deleteQuestion = async (
+  questionId: string,
+  competitionId: string,
+) => {
   try {
     const response = await db
       .delete(questions)
@@ -410,11 +413,7 @@ export const deleteQuestion = async (questionId: string) => {
       .returning()
       .then((res) => res[0]);
 
-    const question = await db.query.questions.findFirst({
-      where: eq(questions.id, questionId),
-    });
-
-    revalidateTag(`${question?.competitionId}-questions`);
+    revalidateTag(`${competitionId}-questions`);
 
     return response;
   } catch (error: any) {

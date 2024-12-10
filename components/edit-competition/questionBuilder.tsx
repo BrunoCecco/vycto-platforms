@@ -99,13 +99,20 @@ const QuestionBuilder = ({
   };
 
   const handleRemoveQuestion = async (id: string) => {
+    setLoading(true);
     const newQuestions = [...initialQuestions];
     const index = newQuestions.findIndex((question) => question.id === id);
-    if (index === -1) return;
+    setLoading(false);
+    if (index === -1) {
+      window.location.reload();
+      return toast.error("Question not found");
+    }
     newQuestions.splice(index, 1);
     setQuestions(newQuestions);
-    await deleteQuestion(id);
+    const res = await deleteQuestion(id, competitionId);
     toast.success("Question deleted successfully");
+    setLoading(false);
+    return res;
   };
 
   const handleAddQuestion = async (
@@ -114,16 +121,25 @@ const QuestionBuilder = ({
   ) => {
     setShowOptionsIndex(null);
 
-    const question = await createQuestion({
-      competitionId,
-      type: questionType,
-    });
+    try {
+      setLoading(true);
+      const question = await createQuestion({
+        competitionId,
+        type: questionType,
+      });
 
-    console.log("question", question);
+      console.log("question", question);
 
-    if (!question) return;
+      if (!question) return;
 
-    setQuestions([question, ...questions]);
+      setQuestions([question, ...questions]);
+      toast.success("Question added successfully");
+    } catch (e) {
+      console.error("Error adding question", e);
+      toast.error("Error adding question");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const renderAddButton = (index: number | null) => (
@@ -196,6 +212,7 @@ const QuestionBuilder = ({
       {questions.map((question, index) => (
         <div key={index + "editable" + question.id} className="">
           {getQuestionElement(question, question.type as QuestionType)}
+          {loading && <Spinner />}
         </div>
       ))}
     </div>
