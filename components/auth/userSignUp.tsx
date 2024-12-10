@@ -118,16 +118,16 @@ const UserSignUp = ({
   };
 
   return (
-    <div className="w-full text-left">
-      <div className="absolute left-0 top-0 p-8 md:p-6">
+    <div className="relative w-full text-left">
+      <div className="absolute right-0 top-0">
         <Image
           src={"/logo.png"}
           width={40}
           height={40}
           alt="Site Logo"
-          className="object-contain"
+          className="ml-auto object-contain"
         />
-        <p className="mt-1 text-xs ">
+        <p className="mt-1 text-right text-xs">
           Powered by{" "}
           <span className="text-md font-bold text-blue-700">Vycto</span>
         </p>

@@ -111,6 +111,7 @@ export const createFootballQuestions = async ({
           ? `https://api.sofascore.com/api/v1/player/${players[2].id}/image`
           : `https://api.sofascore.com/api/v1/team/${teamId}/image`,
       points: 5,
+      createdAt: new Date(),
     });
   });
   return questions;

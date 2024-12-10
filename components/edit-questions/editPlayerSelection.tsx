@@ -45,6 +45,7 @@ const PlayerComponent = ({
           placeholder: "player selection image" + index,
         }}
         handleSubmit={handleImageChange}
+        bordered={false}
       />
 
       <div className="mt-2 text-center">
@@ -68,7 +69,6 @@ const EditPlayerSelection = ({
   removeQuestion: (id: string) => void;
 }) => {
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
-  const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
     question.question || "Which player will score first?",
   );
@@ -91,10 +91,6 @@ const EditPlayerSelection = ({
     const res = await updateQuestionMetadata(formData, question, key);
     toast.success("Question updated successfully");
     return res;
-  };
-
-  const handlePointsClick = () => {
-    setIsEditingPoints(true);
   };
 
   const handleQuestionInputChange = (
@@ -126,7 +122,6 @@ const EditPlayerSelection = ({
   // };
 
   const handleInputBlur = async (key: string, value: string) => {
-    setIsEditingPoints(false);
     await updateQuestion(key, value);
   };
 
@@ -168,21 +163,16 @@ const EditPlayerSelection = ({
           <X className="h-6 w-6" />
         </Button>
         {/* Editable Points Badge */}
-        <div className="mb-4 flex justify-center">
-          {isEditingPoints ? (
-            <Input
-              type="number"
-              min={0}
-              value={points.toString()}
-              onChange={handlePointsInputChange}
-              onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 text-center text-xl font-semibold "
-            />
-          ) : (
-            <div className="cursor-pointer" onClick={handlePointsClick}>
-              <PointsBadge points={points} />
-            </div>
-          )}
+        <div className="mb-4 ml-auto flex w-fit justify-center">
+          <Input
+            type="number"
+            min={0}
+            value={points.toString()}
+            label="Points"
+            onChange={handlePointsInputChange}
+            onBlur={() => handleInputBlur("points", points.toString())}
+            className="w-20 text-center text-xl font-semibold "
+          />
         </div>
 
         {/* Editable Question */}
@@ -198,7 +188,7 @@ const EditPlayerSelection = ({
         <p className="mb-6 text-center ">Select the correct answer</p>
 
         {/* Editable Player Options */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <PlayerComponent
             questionId={question.id}
             index={1}

@@ -44,7 +44,6 @@ const EditTrueFalse = ({
   question: SelectQuestion;
   removeQuestion: (id: string) => void;
 }) => {
-  const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
     question.question || "Griezmann will score",
   );
@@ -61,10 +60,6 @@ const EditTrueFalse = ({
     const res = await updateQuestionMetadata(formData, question, key);
     toast.success(key + " updated successfully");
     return res;
-  };
-
-  const handlePointsClick = () => {
-    setIsEditingPoints(true);
   };
 
   const handleQuestionInputChange = (
@@ -84,7 +79,6 @@ const EditTrueFalse = ({
   };
 
   const handleInputBlur = async (key: string, value: string) => {
-    setIsEditingPoints(false);
     await updateQuestion(key, value);
   };
 
@@ -116,21 +110,16 @@ const EditTrueFalse = ({
           <X className="h-6 w-6" />
         </Button>
         {/* Editable Points Badge */}
-        <div className="mb-4 flex justify-center">
-          {isEditingPoints ? (
-            <Input
-              type="number"
-              min={0}
-              value={points.toString()}
-              onChange={handlePointsInputChange}
-              onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 text-center"
-            />
-          ) : (
-            <div className="cursor-pointer" onClick={handlePointsClick}>
-              <PointsBadge points={points} />
-            </div>
-          )}
+        <div className="mb-4 ml-auto flex w-fit justify-center">
+          <Input
+            type="number"
+            min={0}
+            label="Points"
+            value={points.toString()}
+            onChange={handlePointsInputChange}
+            onBlur={() => handleInputBlur("points", points.toString())}
+            className="w-20 text-center"
+          />
         </div>
 
         {/* Placeholder for Image or Graphic */}
@@ -146,6 +135,7 @@ const EditTrueFalse = ({
               placeholder: "true false image",
             }}
             handleSubmit={handleImageChange}
+            bordered={false}
           />
         </div>
 

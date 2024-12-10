@@ -1,12 +1,7 @@
 import Image from "next/image";
 import { MoveUpRight } from "lucide-react";
 import { SelectSite, SelectUserCompetition } from "@/lib/schema";
-import {
-  getCompetitionData,
-  getCompetitionFromId,
-  getQuestionsForCompetition,
-  getSiteDataById,
-} from "@/lib/fetchers";
+import { getCompetitionFromId, getSiteDataById } from "@/lib/fetchers";
 import Link from "next/link";
 import { getSiteDomain } from "@/lib/utils";
 import { useEffect, useState } from "react";

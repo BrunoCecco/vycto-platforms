@@ -28,6 +28,7 @@ export default function Uploader({
   bucketName,
   maxFileSize = 50,
   circular = false,
+  bordered = true,
 }: {
   id: string;
   defaultValue: string | null;
@@ -40,6 +41,7 @@ export default function Uploader({
   bucketName?: string;
   maxFileSize?: number;
   circular?: boolean;
+  bordered?: boolean;
 }) {
   const [data, setData] = useState({
     [name]: defaultValue == "" ? null : defaultValue,
@@ -197,7 +199,7 @@ export default function Uploader({
 
   return (
     <div
-      className={`relative grid w-full gap-6 rounded-lg p-5 ${circular ? "" : "border"}`}
+      className={`relative grid w-full gap-6 rounded-lg p-5 ${circular ? "" : bordered ? "border" : ""}`}
     >
       <form
         className=""

@@ -10,6 +10,7 @@ import CompetitionCreator from "@/components/competition-creation";
 import EditCompetitionDetails from "@/components/edit-competition/editCompetitionDetails";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { SelectQuestion } from "@/lib/schema";
 
 export default async function CompetitionPage({
   params,

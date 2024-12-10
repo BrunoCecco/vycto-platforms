@@ -17,7 +17,6 @@ const EditGeneralNumber = ({
   question: SelectQuestion;
   removeQuestion: (id: string) => void;
 }) => {
-  const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
     question.question || "Edit your question here",
   );
@@ -34,10 +33,6 @@ const EditGeneralNumber = ({
     const res = await updateQuestionMetadata(formData, question, key);
     toast.success("Question updated successfully");
     return res;
-  };
-
-  const handlePointsClick = () => {
-    setIsEditingPoints(true);
   };
 
   const handleQuestionInputChange = (
@@ -58,7 +53,6 @@ const EditGeneralNumber = ({
 
   const handleInputBlur = async (key: string, value: string) => {
     console.log("handleInputBlur", key, value);
-    setIsEditingPoints(false);
     await updateQuestion(key, value);
   };
 
@@ -91,21 +85,16 @@ const EditGeneralNumber = ({
           <X className="h-6 w-6" />
         </Button>
         {/* Editable Points Badge */}
-        <div className="mb-4 flex justify-center">
-          {isEditingPoints ? (
-            <Input
-              type="number"
-              min={0}
-              value={points.toString()}
-              onChange={handlePointsInputChange}
-              onBlur={() => handleInputBlur("points", points.toString())}
-              className="w-20 text-center text-xl font-semibold "
-            />
-          ) : (
-            <div className="cursor-pointer" onClick={handlePointsClick}>
-              <PointsBadge points={points} />
-            </div>
-          )}
+        <div className="mb-4 ml-auto flex w-fit justify-center">
+          <Input
+            type="number"
+            label="Points"
+            min={0}
+            value={points.toString()}
+            onChange={handlePointsInputChange}
+            onBlur={() => handleInputBlur("points", points.toString())}
+            className="w-20 text-center text-xl font-semibold "
+          />
         </div>
 
         {/* Placeholder for Image or Graphic */}
@@ -121,6 +110,7 @@ const EditGeneralNumber = ({
               placeholder: "image general number",
             }}
             handleSubmit={handleImageChange}
+            bordered={false}
           />
         </div>
 

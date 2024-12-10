@@ -18,7 +18,6 @@ const EditWhatMinute = ({
   question: SelectQuestion;
   removeQuestion: (id: string) => void;
 }) => {
-  const [isEditingPoints, setIsEditingPoints] = useState(false);
   const [editedQuestion, setEditedQuestion] = useState(
     question.question || "What minute?",
   );
@@ -37,10 +36,6 @@ const EditWhatMinute = ({
     return res;
   };
 
-  const handlePointsClick = () => {
-    setIsEditingPoints(true);
-  };
-
   const handleQuestionInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -52,7 +47,6 @@ const EditWhatMinute = ({
   };
 
   const handleInputBlur = async (key: string, value: string) => {
-    setIsEditingPoints(false);
     await updateQuestion(key, value);
   };
 
@@ -85,20 +79,15 @@ const EditWhatMinute = ({
           <X className="h-6 w-6" />
         </Button>
         {/* Editable Points Badge */}
-        <div className="mb-4 flex justify-center">
-          {isEditingPoints ? (
-            <Input
-              type="number"
-              min={0}
-              value={points.toString()}
-              onChange={handlePointsInputChange}
-              onBlur={() => handleInputBlur("points", points.toString())}
-            />
-          ) : (
-            <div className="cursor-pointer" onClick={handlePointsClick}>
-              <PointsBadge points={points} />
-            </div>
-          )}
+        <div className="mb-4 ml-auto flex w-fit justify-center">
+          <Input
+            type="number"
+            label="Points"
+            min={0}
+            value={points.toString()}
+            onChange={handlePointsInputChange}
+            onBlur={() => handleInputBlur("points", points.toString())}
+          />
         </div>
 
         {/* Placeholder for Image or Graphic */}
@@ -114,6 +103,7 @@ const EditWhatMinute = ({
               placeholder: "what minute image",
             }}
             handleSubmit={handleImageChange}
+            bordered={false}
           />
         </div>
 

@@ -96,21 +96,16 @@ const EditGeneralSelection = ({
           <X className="h-6 w-6" />
         </Button>
         {/* Editable Points Badge */}
-        <div className="mb-4 flex justify-center">
-          {isEditingPoints ? (
-            <Input
-              type="number"
-              min={0}
-              name="points"
-              value={points.toString()}
-              onChange={handlePointsChange}
-              onBlur={() => handleInputBlur("points", points.toString())}
-            />
-          ) : (
-            <div onClick={() => setIsEditingPoints(true)}>
-              <PointsBadge points={points} />
-            </div>
-          )}
+        <div className="mb-4 ml-auto flex w-fit justify-center">
+          <Input
+            type="number"
+            min={0}
+            label="Points"
+            name="points"
+            value={points.toString()}
+            onChange={handlePointsChange}
+            onBlur={() => handleInputBlur("points", points.toString())}
+          />
         </div>
 
         {/* Placeholder for Image or Graphic */}
@@ -126,6 +121,7 @@ const EditGeneralSelection = ({
               placeholder: "image 1 general selection",
             }}
             handleSubmit={handleImageChange}
+            bordered={false}
           />
         </div>
 

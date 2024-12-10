@@ -17,10 +17,6 @@ const EditMatchOutcome = ({
   question: SelectQuestion;
   removeQuestion: (id: string) => void;
 }) => {
-  const [isEditingHome, setIsEditingHome] = useState(false);
-  const [isEditingAway, setIsEditingAway] = useState(false);
-  const [isEditingPoints, setIsEditingPoints] = useState(false);
-
   const [homeTeam, setHomeTeam] = useState(question.answer1 || "Real Madrid");
   const [awayTeam, setAwayTeam] = useState(question.answer2 || "Chelsea");
   const [points, setPoints] = useState(question.points || 0);
@@ -49,14 +45,7 @@ const EditMatchOutcome = ({
   };
 
   const handleInputBlur = async (key: string, value: string) => {
-    setIsEditingPoints(false);
     await updateQuestion(key, value);
-  };
-
-  const handleCorrectAnswerInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setEditedCorrectAnswer(e.target.value);
   };
 
   const handleImage1Change = async (
@@ -94,20 +83,15 @@ const EditMatchOutcome = ({
           <X className="h-6 w-6" />
         </Button>
         {/* Editable Points Badge */}
-        <div className="mb-4 flex justify-center">
-          {isEditingPoints ? (
-            <Input
-              type="number"
-              min={0}
-              value={points.toString()}
-              onChange={handlePointsChange}
-              onBlur={() => handleInputBlur("points", points.toString())}
-            />
-          ) : (
-            <div onClick={() => setIsEditingPoints(true)}>
-              <PointsBadge points={points} />
-            </div>
-          )}
+        <div className="mb-4 ml-auto flex w-fit justify-center">
+          <Input
+            type="number"
+            min={0}
+            label="Points"
+            value={points.toString()}
+            onChange={handlePointsChange}
+            onBlur={() => handleInputBlur("points", points.toString())}
+          />
         </div>
 
         {/* Match Info */}
@@ -132,24 +116,16 @@ const EditMatchOutcome = ({
                   placeholder: "image 1 match outcome",
                 }}
                 handleSubmit={handleImage1Change}
+                bordered={false}
               />
             </div>
-            {isEditingHome ? (
-              <Input
-                type="text"
-                name="answer1"
-                value={homeTeam}
-                onChange={(e) => setHomeTeam(e.target.value)}
-                onBlur={() => handleInputBlur("answer1", homeTeam)}
-              />
-            ) : (
-              <p
-                className="cursor-pointer border-2 text-sm font-semibold "
-                onClick={() => setIsEditingHome(true)}
-              >
-                {homeTeam}
-              </p>
-            )}
+            <Input
+              type="text"
+              name="answer1"
+              value={homeTeam}
+              onChange={(e) => setHomeTeam(e.target.value)}
+              onBlur={() => handleInputBlur("answer1", homeTeam)}
+            />
             <p className="text-xs ">Home Team</p>{" "}
             {/* Add dynamic position if needed */}
           </div>
@@ -175,24 +151,16 @@ const EditMatchOutcome = ({
                   placeholder: "image 2 match outcome",
                 }}
                 handleSubmit={handleImage2Change}
+                bordered={false}
               />
             </div>
-            {isEditingAway ? (
-              <Input
-                type="text"
-                name="answer2"
-                value={awayTeam}
-                onChange={(e) => setAwayTeam(e.target.value)}
-                onBlur={() => handleInputBlur("answer2", awayTeam)}
-              />
-            ) : (
-              <p
-                className="cursor-pointer border-2 text-sm font-semibold "
-                onClick={() => setIsEditingAway(true)}
-              >
-                {awayTeam}
-              </p>
-            )}
+            <Input
+              type="text"
+              name="answer2"
+              value={awayTeam}
+              onChange={(e) => setAwayTeam(e.target.value)}
+              onBlur={() => handleInputBlur("answer2", awayTeam)}
+            />
             <p className="text-xs ">Away Team</p>{" "}
             {/* Add dynamic position if needed */}
           </div>

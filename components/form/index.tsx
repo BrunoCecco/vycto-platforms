@@ -27,6 +27,7 @@ export default function Form({
   bucketName,
   updateId,
   circular = false,
+  bordered = true,
   children,
 }: {
   title: string;
@@ -45,6 +46,7 @@ export default function Form({
   bucketName?: string;
   updateId?: string;
   circular?: boolean;
+  bordered?: boolean;
   children?: React.ReactNode;
 }) {
   const { id } = useParams() as { id?: string };
@@ -82,6 +84,7 @@ export default function Form({
       bucketId={bucketId}
       bucketName={bucketName}
       circular={circular}
+      bordered={bordered}
     >
       {children}
     </Uploader>

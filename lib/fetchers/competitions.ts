@@ -179,7 +179,7 @@ export async function getQuestionsForCompetition(competitionId: string) {
     async () => {
       return await db.query.questions.findMany({
         where: eq(questions.competitionId, competitionId),
-        orderBy: desc(questions.id),
+        orderBy: desc(questions.createdAt),
       });
     },
     [`${competitionId}-questions`],

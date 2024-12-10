@@ -12,7 +12,7 @@ import EditTrueFalse from "@/components/edit-questions/editTrueFalse";
 import EditGeneralNumber from "@/components/edit-questions/editGeneralNumber";
 import { toast } from "sonner";
 import { getQuestionsForCompetition } from "@/lib/fetchers";
-import { Button } from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 
 const QuestionBuilder = ({
   competitionId,
@@ -24,13 +24,20 @@ const QuestionBuilder = ({
   const [questions, setQuestions] = useState<SelectQuestion[]>([]);
   const [showOptionsIndex, setShowOptionsIndex] = useState<number | null>(null);
   const questionsRef = useRef<HTMLDivElement | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchQuestions = async () => {
       console.log("fetching questions");
       const qs = await getQuestionsForCompetition(competitionId);
-      console.log("qs", qs);
-      setQuestions(qs);
+      setQuestions(
+        qs.sort((a: SelectQuestion, b: SelectQuestion) => {
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+        }),
+      );
+      setLoading(false);
     };
     fetchQuestions();
   }, [competitionId]);
@@ -116,13 +123,7 @@ const QuestionBuilder = ({
 
     if (!question) return;
 
-    setQuestions([...questions, question]);
-
-    window.scrollTo({
-      left: 0,
-      top: (questionsRef.current?.getBoundingClientRect().bottom || 0) + 100,
-      behavior: "smooth",
-    });
+    setQuestions([question, ...questions]);
   };
 
   const renderAddButton = (index: number | null) => (
@@ -191,6 +192,7 @@ const QuestionBuilder = ({
   return (
     <div className="flex flex-col gap-4" ref={questionsRef}>
       {renderAddButton(0)}
+      {loading && <Spinner />}
       {questions.map((question, index) => (
         <div key={index + "editable" + question.id} className="">
           {getQuestionElement(question, question.type as QuestionType)}

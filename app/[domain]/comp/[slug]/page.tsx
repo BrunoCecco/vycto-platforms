@@ -7,7 +7,12 @@ import {
   getSiteData,
 } from "@/lib/fetchers";
 import db from "@/lib/db";
-import { competitions, SelectUserCompetition, sites } from "@/lib/schema";
+import {
+  competitions,
+  SelectQuestion,
+  SelectUserCompetition,
+  sites,
+} from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import {
   answerQuestion,

@@ -319,6 +319,7 @@ export const questions = pgTable(
     image3: text("image3"),
     image4: text("image4"),
     points: integer("points").default(1),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
   },
   (table) => {
     return {

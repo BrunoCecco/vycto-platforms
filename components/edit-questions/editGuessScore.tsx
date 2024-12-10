@@ -15,10 +15,6 @@ const EditGuessScore = ({
   question: SelectQuestion;
   removeQuestion: (id: string) => void;
 }) => {
-  const [isEditingHome, setIsEditingHome] = useState(false);
-  const [isEditingAway, setIsEditingAway] = useState(false);
-  const [isEditingPoints, setIsEditingPoints] = useState(false);
-
   const [homeTeam, setHomeTeam] = useState(question.answer1 || "Home Team");
   const [awayTeam, setAwayTeam] = useState(question.answer2 || "Away Team");
   const [points, setPoints] = useState(question.points || 0);
@@ -53,7 +49,6 @@ const EditGuessScore = ({
   };
 
   const handleInputBlur = async (key: string, value: string) => {
-    setIsEditingPoints(false);
     const res = await updateQuestion(key, value);
     return res;
   };
@@ -75,27 +70,22 @@ const EditGuessScore = ({
           <X className="h-6 w-6" />
         </Button>
         {/* Editable Points Badge */}
-        <div className="mb-4 flex justify-center">
-          {isEditingPoints ? (
-            <Input
-              type="number"
-              name="points"
-              min={0}
-              value={points.toString()}
-              onChange={handlePointsChange}
-              onBlur={() => handleInputBlur("points", points.toString())}
-            />
-          ) : (
-            <div onClick={() => setIsEditingPoints(true)}>
-              <PointsBadge points={points} />
-            </div>
-          )}
+        <div className="mb-4 ml-auto flex w-fit justify-center">
+          <Input
+            type="number"
+            name="points"
+            label="Points"
+            min={0}
+            value={points.toString()}
+            onChange={handlePointsChange}
+            onBlur={() => handleInputBlur("points", points.toString())}
+          />
         </div>
 
         <h2 className="mb-12 text-xl font-semibold ">Guess the score 🔥</h2>
 
         {/* Teams */}
-        <div className="flex w-full items-center justify-between gap-4 py-4 md:justify-around md:px-4">
+        <div className="flex w-full flex-col items-center justify-between gap-4 py-4 md:justify-around md:px-4">
           <div className="flex flex-col items-center gap-4 ">
             <div className="flex items-center gap-4 md:gap-8">
               <Button onClick={() => setScoreHome(Math.max(scoreHome - 1, 0))}>
@@ -106,22 +96,13 @@ const EditGuessScore = ({
                 <PlusCircle />
               </Button>
             </div>
-            {isEditingHome ? (
-              <Input
-                type="text"
-                name="answer1"
-                value={homeTeam}
-                onValueChange={setHomeTeam}
-                onBlur={() => handleInputBlur("answer1", homeTeam)}
-              />
-            ) : (
-              <p
-                className="cursor-pointer border-2 text-sm font-semibold"
-                onClick={() => setIsEditingHome(true)}
-              >
-                {homeTeam}
-              </p>
-            )}
+            <Input
+              type="text"
+              name="answer1"
+              value={homeTeam}
+              onValueChange={setHomeTeam}
+              onBlur={() => handleInputBlur("answer1", homeTeam)}
+            />
           </div>
 
           {/* VS */}
@@ -141,22 +122,13 @@ const EditGuessScore = ({
                 <PlusCircle />
               </Button>
             </div>
-            {isEditingAway ? (
-              <Input
-                type="text"
-                name="answer2"
-                value={awayTeam}
-                onValueChange={setAwayTeam}
-                onBlur={() => handleInputBlur("answer2", awayTeam)}
-              />
-            ) : (
-              <p
-                className="cursor-pointer border-2 text-sm font-semibold"
-                onClick={() => setIsEditingAway(true)}
-              >
-                {awayTeam}
-              </p>
-            )}
+            <Input
+              type="text"
+              name="answer2"
+              value={awayTeam}
+              onValueChange={setAwayTeam}
+              onBlur={() => handleInputBlur("answer2", awayTeam)}
+            />
           </div>
         </div>
 
