@@ -10,6 +10,7 @@ import { X } from "lucide-react";
 import { Button } from "@nextui-org/react";
 import { Input } from "@nextui-org/react";
 import Form from "../form";
+import { nanoid } from "nanoid";
 
 const EditWhatMinute = ({
   question,
@@ -100,7 +101,7 @@ const EditWhatMinute = ({
               name: "image1",
               type: "file",
               defaultValue: image,
-              placeholder: "what minute image",
+              placeholder: nanoid(),
             }}
             handleSubmit={handleImageChange}
             bordered={false}

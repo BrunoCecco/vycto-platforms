@@ -132,8 +132,14 @@ const QuestionBuilder = ({
 
       if (!question) return;
 
-      setQuestions([question, ...questions]);
+      setQuestions([...questions, question]);
       toast.success("Question added successfully");
+
+      window.scrollTo({
+        left: 0,
+        top: (questionsRef.current?.getBoundingClientRect().bottom || 0) + 100,
+        behavior: "smooth",
+      });
     } catch (e) {
       console.error("Error adding question", e);
       toast.error("Error adding question");

@@ -9,6 +9,7 @@ import { Input } from "@nextui-org/react";
 import { X } from "lucide-react";
 import { Button } from "@nextui-org/react";
 import Form from "../form";
+import { nanoid } from "nanoid";
 
 const TFButton = ({
   children,
@@ -132,7 +133,7 @@ const EditTrueFalse = ({
               name: "image1",
               type: "file",
               defaultValue: image,
-              placeholder: "true false image",
+              placeholder: nanoid(),
             }}
             handleSubmit={handleImageChange}
             bordered={false}

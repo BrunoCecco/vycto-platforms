@@ -9,6 +9,7 @@ import Uploader from "../form/uploader";
 import PointsBadge from "../competitions/pointsBadge";
 import { Button } from "@nextui-org/react";
 import Form from "../form";
+import { nanoid } from "nanoid";
 
 const EditGeneralNumber = ({
   question,
@@ -107,7 +108,7 @@ const EditGeneralNumber = ({
               name: "image1",
               type: "file",
               defaultValue: image,
-              placeholder: "image general number",
+              placeholder: nanoid(),
             }}
             handleSubmit={handleImageChange}
             bordered={false}

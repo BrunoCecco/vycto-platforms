@@ -9,6 +9,7 @@ import Uploader from "../form/uploader";
 import { X } from "lucide-react";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import Form from "../form";
+import { nanoid } from "nanoid";
 
 const EditMatchOutcome = ({
   question,
@@ -113,7 +114,7 @@ const EditMatchOutcome = ({
                   name: "image1",
                   type: "file",
                   defaultValue: image1,
-                  placeholder: "image 1 match outcome",
+                  placeholder: nanoid(),
                 }}
                 handleSubmit={handleImage1Change}
                 bordered={false}
@@ -148,7 +149,7 @@ const EditMatchOutcome = ({
                   name: "image2",
                   type: "file",
                   defaultValue: image2,
-                  placeholder: "image 2 match outcome",
+                  placeholder: nanoid(),
                 }}
                 handleSubmit={handleImage2Change}
                 bordered={false}

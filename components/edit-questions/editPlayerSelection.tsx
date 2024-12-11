@@ -8,6 +8,7 @@ import PointsBadge from "../competitions/pointsBadge";
 import { X } from "lucide-react";
 import { Select, Button, Input, SelectItem } from "@nextui-org/react";
 import Form from "../form";
+import { nanoid } from "nanoid";
 
 const PlayerComponent = ({
   questionId,
@@ -42,7 +43,7 @@ const PlayerComponent = ({
           name: "image" + index,
           type: "file",
           defaultValue: image,
-          placeholder: "player selection image" + index,
+          placeholder: "player selection image" + nanoid(),
         }}
         handleSubmit={handleImageChange}
         bordered={false}

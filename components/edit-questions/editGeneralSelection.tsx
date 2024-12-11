@@ -8,6 +8,7 @@ import Uploader from "../form/uploader";
 import { Button, Input } from "@nextui-org/react";
 import { Check, X } from "lucide-react";
 import Form from "../form";
+import { nanoid } from "nanoid";
 
 const EditGeneralSelection = ({
   question,
@@ -118,7 +119,7 @@ const EditGeneralSelection = ({
               name: "image1",
               type: "file",
               defaultValue: image1,
-              placeholder: "image 1 general selection",
+              placeholder: nanoid(),
             }}
             handleSubmit={handleImageChange}
             bordered={false}
