@@ -43,8 +43,8 @@ export default function CreateSiteReward({
           } else {
             va.track("Created Reward");
             toast.success(`Successfully created reward!`);
+            window.location.reload();
           }
-          setData({ siteId: siteId, title: "" });
         });
       }}
     >

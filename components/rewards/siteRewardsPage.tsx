@@ -3,7 +3,7 @@ import { MONTHS } from "@/lib/constants";
 import { SelectSite, SelectSiteReward } from "@/lib/schema";
 import CreateSiteReward from "../modal/createSiteReward";
 import SiteReward from "./siteReward";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Select, SelectItem } from "@nextui-org/react";
 
 export default function SiteRewardsPage({
@@ -24,6 +24,12 @@ export default function SiteRewardsPage({
       rewards.find((reward) => reward.month === parseInt(e.target.value)),
     );
   };
+
+  useEffect(() => {
+    setSelectedReward(
+      rewards.find((reward) => reward.month === parseInt(selectedMonth)),
+    );
+  }, [rewards]);
 
   return (
     <div className="flex flex-col gap-4">

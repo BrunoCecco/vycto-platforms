@@ -39,13 +39,19 @@ export async function POST(req: Request) {
 
   const { data: bucketData } = await b2.listBuckets();
 
+  console.log(bucketData);
+
   if (
     bucketData.buckets.some((bucket: any) =>
-      bucket.bucketName.includes(`${bucketName + "-vycto-"}`),
+      bucket.bucketName.includes(bucketName),
     )
   ) {
-    return new Response("Bucket already exists", {
-      status: 409,
+    const existingBucket = bucketData.buckets.find((bucket: any) =>
+      bucket.bucketName.includes(bucketName),
+    );
+    return NextResponse.json({
+      bucketId: existingBucket.bucketId,
+      bucketName: existingBucket.bucketName,
     });
   }
 

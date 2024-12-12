@@ -90,8 +90,8 @@ export default function BucketStorage({
       const formData = new FormData();
       formData.append("bucketId", data.bucketId);
       formData.append("bucketName", data.bucketName);
-      await updateEntity(formData, siteId, "bucketName");
-      await updateEntity(formData, siteId, "bucketId");
+      const res1 = await updateEntity(formData, siteId, "bucketName");
+      const res2 = await updateEntity(formData, siteId, "bucketId");
       setId(data.bucketId);
       setName(data.bucketName);
     } catch (error: any) {
@@ -101,9 +101,11 @@ export default function BucketStorage({
 
   const updateEntity = async (formData: FormData, id: string, key: string) => {
     if (entity === "competition") {
-      await updateCompetitionMetadata(formData, id, key);
+      const res = await updateCompetitionMetadata(formData, id, key);
+      return res;
     } else if (entity === "siteReward") {
-      await updateSiteReward(formData, entityData.id, key);
+      const res1 = await updateSiteReward(formData, entityData.id, key);
+      return res1;
     }
   };
 

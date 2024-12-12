@@ -5,7 +5,7 @@ import CombinedForm from "@/components/form/combined";
 import { updateSiteReward } from "@/lib/actions";
 import BucketStorage from "@/components/media/bucketStorage";
 
-export default async function SiteReward({
+export default function SiteReward({
   month,
   data,
   reward,
