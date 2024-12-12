@@ -218,8 +218,8 @@ export default function CombinedForm({
             }
             return (
               <div className="relative w-full" key={inputAttr.name}>
-                {inputAttr.name.includes("image") ? null : inputAttr.name ===
-                  "role" ? (
+                {inputAttr.name.toLowerCase().includes("image") ||
+                inputAttr.type == "file" ? null : inputAttr.name === "role" ? (
                   <Select
                     aria-label="role"
                     name="role"
