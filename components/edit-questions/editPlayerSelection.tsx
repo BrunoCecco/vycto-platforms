@@ -9,6 +9,8 @@ import { X } from "lucide-react";
 import { Select, Button, Input, SelectItem } from "@nextui-org/react";
 import Form from "../form";
 import { nanoid } from "nanoid";
+import EditQuestionHeader from "./editQuestionHeader";
+import { QuestionType } from "@/lib/types";
 
 const PlayerComponent = ({
   questionId,
@@ -156,25 +158,12 @@ const EditPlayerSelection = ({
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg  p-4 shadow-xl md:p-10">
-        {/* Remove Button */}
-        <Button
-          onClick={handleRemove}
-          className="absolute left-2 top-2 rounded-full p-2 text-danger-500 hover:text-danger-600 focus:outline-none"
-        >
-          <X className="h-6 w-6" />
-        </Button>
-        {/* Editable Points Badge */}
-        <div className="mb-4 ml-auto flex w-fit justify-center">
-          <Input
-            type="number"
-            min={0}
-            value={points.toString()}
-            label="Points"
-            onChange={handlePointsInputChange}
-            onBlur={() => handleInputBlur("points", points.toString())}
-            className="w-20 text-center text-xl font-semibold "
-          />
-        </div>
+        <EditQuestionHeader
+          type={question.type as QuestionType}
+          question={question}
+          removeQuestion={removeQuestion}
+          updateQuestion={updateQuestion}
+        />
 
         {/* Editable Question */}
         <div className="mb-2 text-center">

@@ -360,12 +360,9 @@ export default function Uploader({
       {data[name] && data[name] != "" && (
         <Button
           onClick={(e: any) => removeFile(null)}
-          className="absolute right-0 top-0 min-w-0 border-none !p-2 font-bold"
-          variant="bordered"
+          className="absolute right-2 top-2 min-w-0 border-none !p-2 font-bold"
         >
-          {removing ? null : (
-            <X size={18} absoluteStrokeWidth={true} color="red" />
-          )}
+          {removing ? null : <X absoluteStrokeWidth={true} color="red" />}
         </Button>
       )}
     </div>

@@ -7,6 +7,8 @@ import { updateQuestionMetadata } from "@/lib/actions";
 import { toast } from "sonner";
 import { Button, Input } from "@nextui-org/react";
 import { X } from "lucide-react";
+import EditQuestionHeader from "./editQuestionHeader";
+import { QuestionType } from "@/lib/types";
 
 const EditGuessScore = ({
   question,
@@ -62,25 +64,12 @@ const EditGuessScore = ({
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg  p-4 shadow-xl md:p-10">
-        {/* Remove Button */}
-        <Button
-          onClick={handleRemove}
-          className="absolute left-2 top-2 rounded-full p-2 text-danger-500 hover:text-danger-600 focus:outline-none"
-        >
-          <X className="h-6 w-6" />
-        </Button>
-        {/* Editable Points Badge */}
-        <div className="mb-4 ml-auto flex w-fit justify-center">
-          <Input
-            type="number"
-            name="points"
-            label="Points"
-            min={0}
-            value={points.toString()}
-            onChange={handlePointsChange}
-            onBlur={() => handleInputBlur("points", points.toString())}
-          />
-        </div>
+        <EditQuestionHeader
+          type={question.type as QuestionType}
+          question={question}
+          removeQuestion={removeQuestion}
+          updateQuestion={updateQuestion}
+        />
 
         <h2 className="mb-12 text-xl font-semibold ">Guess the score 🔥</h2>
 

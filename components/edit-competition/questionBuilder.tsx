@@ -13,6 +13,7 @@ import EditGeneralNumber from "@/components/edit-questions/editGeneralNumber";
 import { toast } from "sonner";
 import { getQuestionsForCompetition } from "@/lib/fetchers";
 import { Button, Spinner } from "@nextui-org/react";
+import EditQuestion from "../edit-questions/editQuestion";
 
 const QuestionBuilder = ({
   competitionId,

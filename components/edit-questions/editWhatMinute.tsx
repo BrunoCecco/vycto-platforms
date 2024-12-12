@@ -11,6 +11,8 @@ import { Button } from "@nextui-org/react";
 import { Input } from "@nextui-org/react";
 import Form from "../form";
 import { nanoid } from "nanoid";
+import EditQuestionHeader from "./editQuestionHeader";
+import { QuestionType } from "@/lib/types";
 
 const EditWhatMinute = ({
   question,
@@ -72,24 +74,12 @@ const EditWhatMinute = ({
   return (
     <div className="flex items-center justify-center">
       <div className="relative h-full w-full rounded-lg  p-6 shadow-xl">
-        {/* Remove Button */}
-        <Button
-          onClick={handleRemove}
-          className="absolute left-2 top-2 rounded-full p-2 text-danger-500 hover:text-danger-600 focus:outline-none"
-        >
-          <X className="h-6 w-6" />
-        </Button>
-        {/* Editable Points Badge */}
-        <div className="mb-4 ml-auto flex w-fit justify-center">
-          <Input
-            type="number"
-            label="Points"
-            min={0}
-            value={points.toString()}
-            onChange={handlePointsInputChange}
-            onBlur={() => handleInputBlur("points", points.toString())}
-          />
-        </div>
+        <EditQuestionHeader
+          type={question.type as QuestionType}
+          question={question}
+          removeQuestion={removeQuestion}
+          updateQuestion={updateQuestion}
+        />
 
         {/* Placeholder for Image or Graphic */}
         <div className="mb-4 w-full rounded-md">

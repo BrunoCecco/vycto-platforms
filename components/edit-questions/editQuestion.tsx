@@ -10,24 +10,26 @@ import PointsBadge from "../competitions/pointsBadge";
 import { Button } from "@nextui-org/react";
 import Form from "../form";
 import { nanoid } from "nanoid";
-import EditQuestionHeader from "./editQuestionHeader";
 import { QuestionType } from "@/lib/types";
+import EditQuestionHeader from "./editQuestionHeader";
 
-const EditGeneralNumber = ({
+const EditQuestion = ({
+  type,
   question,
   removeQuestion,
 }: {
+  type: QuestionType;
   question: SelectQuestion;
   removeQuestion: (id: string) => void;
 }) => {
   const [editedQuestion, setEditedQuestion] = useState(
-    question.question || "Edit your question here",
+    question?.question || "Edit your question here",
   );
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
-    question.correctAnswer || "",
+    question?.correctAnswer || "",
   );
-  const [points, setPoints] = useState(question.points || 0);
-  const [image, setImage] = useState(question.image1 || "/placeholder.png");
+  const [points, setPoints] = useState(question?.points || 0);
+  const [image, setImage] = useState(question?.image1 || "/placeholder.png");
 
   const updateQuestion = async (key: string, value: string) => {
     const formData = new FormData();
@@ -61,7 +63,7 @@ const EditGeneralNumber = ({
 
   const handleRemove = async () => {
     if (!confirm("Are you sure you want to remove this question?")) return;
-    removeQuestion(question.id);
+    removeQuestion(question?.id);
   };
 
   const handleImageChange = async (
@@ -81,7 +83,7 @@ const EditGeneralNumber = ({
     <div className="flex items-center justify-center">
       <div className="relative h-full w-full rounded-lg  p-6 shadow-xl">
         <EditQuestionHeader
-          type={question.type as QuestionType}
+          type={type}
           question={question}
           removeQuestion={removeQuestion}
           updateQuestion={updateQuestion}
@@ -132,4 +134,4 @@ const EditGeneralNumber = ({
   );
 };
 
-export default EditGeneralNumber;
+export default EditQuestion;
