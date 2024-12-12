@@ -37,14 +37,14 @@ export default async function CompetitionRewards({
               name: "rewardTitle",
               type: "text",
               defaultValue: data?.rewardTitle!,
-              placeholder: "Season Ticket",
+              placeholder: "Title",
               label: "Title of the main reward for this competition.",
             },
             {
               name: "rewardDescription",
               type: "text",
               defaultValue: data?.rewardDescription!,
-              placeholder: "Win a season ticket worth $2000",
+              placeholder: "Description",
               label: "Description",
             },
             {
@@ -72,14 +72,14 @@ export default async function CompetitionRewards({
               name: "reward2Title",
               type: "text",
               defaultValue: data?.reward2Title!,
-              placeholder: "%15 off all games",
+              placeholder: "Title secondary",
               label: "Title of the secondary reward for this competition.",
             },
             {
               name: "reward2Description",
               type: "text",
               defaultValue: data?.reward2Description!,
-              placeholder: "Win a %15 discount on all games",
+              placeholder: "Description secondary",
               label: "Description",
             },
             {
