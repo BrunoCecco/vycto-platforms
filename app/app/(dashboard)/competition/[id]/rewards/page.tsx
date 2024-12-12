@@ -64,18 +64,6 @@ export default async function CompetitionRewards({
           handleSubmit={updateCompetitionMetadata}
         />
 
-        <Form
-          title="Main Reward Image"
-          description="The thumbnail image for the main reward."
-          helpText="Please enter the image for the main reward."
-          inputAttrs={{
-            name: "rewardImage",
-            type: "file",
-            defaultValue: data?.rewardImage!,
-          }}
-          handleSubmit={updateCompetitionMetadata}
-        />
-
         <CombinedForm
           title="Reward #2"
           helpText="Please enter the details for the secondary reward."

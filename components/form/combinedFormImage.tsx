@@ -8,11 +8,13 @@ import { useSession } from "next-auth/react";
 import useUserSession from "@/lib/hooks/useUserSession";
 
 export default function CombinedFormImage({
+  name,
   image,
   handleSubmit,
   updateId,
   placeholder,
 }: {
+  name: string;
   image: string;
   handleSubmit: (data: FormData, _id: string, key: string) => Promise<void>;
   updateId?: string;
@@ -24,7 +26,7 @@ export default function CombinedFormImage({
       description=""
       helpText=""
       inputAttrs={{
-        name: "image",
+        name: name,
         type: "file",
         defaultValue: image,
         placeholder: placeholder,

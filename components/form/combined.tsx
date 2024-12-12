@@ -148,6 +148,7 @@ export default function CombinedForm({
         <div className="flex w-full flex-col gap-6 rounded-lg border p-4">
           {imageInputAttr && (
             <CombinedFormImage
+              name={imageInputAttr.name}
               image={imageInputAttr.defaultValue}
               handleSubmit={handleSubmit}
               updateId={updateId}
@@ -294,7 +295,11 @@ export default function CombinedForm({
                     </Switch>
                   </>
                 ) : (
-                  <Input {...inputAttr} />
+                  <Input
+                    id={inputAttr.name}
+                    key={inputAttr.name}
+                    {...inputAttr}
+                  />
                 )}
               </div>
             );

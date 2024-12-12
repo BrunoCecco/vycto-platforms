@@ -39,18 +39,7 @@ export default function DeleteCompetitionForm({
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
         <h2 className="text-xl ">Delete Competition</h2>
-        <p className="text-sm  ">
-          Deletes your competition permanently. Type in the name of your
-          competition <b>{competitionName}</b> to confirm.
-        </p>
-
-        <Input
-          name="confirm"
-          type="text"
-          required
-          pattern={competitionName}
-          placeholder={competitionName}
-        />
+        <p className="text-sm  ">Deletes your competition permanently.</p>
       </div>
 
       <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t   p-3   sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">

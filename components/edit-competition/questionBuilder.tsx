@@ -31,13 +31,7 @@ const QuestionBuilder = ({
     const fetchQuestions = async () => {
       console.log("fetching questions");
       const qs = await getQuestionsForCompetition(competitionId);
-      setQuestions(
-        qs.sort((a: SelectQuestion, b: SelectQuestion) => {
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
-        }),
-      );
+      setQuestions(qs);
       setLoading(false);
     };
     fetchQuestions();

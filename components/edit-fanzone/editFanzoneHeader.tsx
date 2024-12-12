@@ -32,6 +32,7 @@ export default function EditFanZoneHeader({
               placeholder: "site logo",
             }}
             handleSubmit={updateSite}
+            bordered={false}
           />
           <Link href={`/comp/${latestCompetition?.slug}` || "/"}>
             <PlayButton color1={data.color1} color2={data.color2}>
@@ -54,7 +55,7 @@ export default function EditFanZoneHeader({
             placeholder: "site banner",
           }}
           handleSubmit={updateSite}
-        />          
+        />
       </div>
       <div className="mb-4 w-full">
         <Form

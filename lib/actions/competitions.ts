@@ -125,6 +125,7 @@ export const updateCompetitionMetadata = withCompetitionAuth(
     try {
       let response;
 
+      console.log(value, key, "HERHEHERHERE");
       response = await db
         .update(competitions)
         .set({

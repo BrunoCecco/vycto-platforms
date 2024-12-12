@@ -54,29 +54,32 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
           className="flex justify-between transition-transform duration-500"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {[0, 1].map((index) => (
-            <div
-              key={index}
-              className="flex min-w-full items-center justify-center overflow-hidden rounded-lg"
-            >
-              {/* <Image
-                src={rewards[index].src || "/placeholder.png"}
-                alt={`Slide ${index + 1}`}
-                height={200}
-                width={200}
-                className="object-contain"
-              /> */}
+          {competition?.rewardTitle ? (
+            <div className="flex min-w-full items-center justify-center overflow-hidden rounded-lg">
               <BlurImage
-                alt={`Slide ${index + 1}`}
+                alt={`Slide ${1}`}
                 width={1200}
                 height={630}
                 className="h-full w-full rounded-lg object-cover"
                 placeholder="blur"
-                blurDataURL={rewards[index].src || placeholderBlurhash}
-                src={rewards[index].src || "/placeholder.png"}
+                blurDataURL={rewards[0].src || placeholderBlurhash}
+                src={rewards[0].src || "/placeholder.png"}
               />
             </div>
-          ))}
+          ) : null}
+          {competition?.reward2Title ? (
+            <div className="flex min-w-full items-center justify-center overflow-hidden rounded-lg">
+              <BlurImage
+                alt={`Slide ${1}`}
+                width={1200}
+                height={630}
+                className="h-full w-full rounded-lg object-cover"
+                placeholder="blur"
+                blurDataURL={rewards[1].src || placeholderBlurhash}
+                src={rewards[1].src || "/placeholder.png"}
+              />
+            </div>
+          ) : null}
         </div>
         <button
           onClick={handlePrev}
