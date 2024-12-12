@@ -264,6 +264,10 @@ export const updateSiteReward = withSiteRewardAuth(
         `${siteReward.id}-reward.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
       );
       revalidateTag(`${siteReward.siteId}-rewards`);
+      revalidateTag(
+        `${siteReward.siteId}-reward-${siteReward.month}-${siteReward.year}`,
+      );
+
       return response;
     } catch (error: any) {
       return {
