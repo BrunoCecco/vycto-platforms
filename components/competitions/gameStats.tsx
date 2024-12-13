@@ -7,6 +7,7 @@ interface GameStatsProps {
   userComp: SelectUserCompetition;
   users: SelectUserCompetition[];
   color: string;
+  compFinished: boolean;
 }
 
 const GameStats: FC<GameStatsProps> = ({
@@ -14,6 +15,7 @@ const GameStats: FC<GameStatsProps> = ({
   userComp,
   users,
   color,
+  compFinished,
 }) => {
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
   const rank =
@@ -45,30 +47,31 @@ const GameStats: FC<GameStatsProps> = ({
         </div>
 
         {/* Statistics */}
-        <div className="flex flex-wrap items-center justify-between text-center text-sm ">
-          <div className="h-6 border-r" style={{ borderColor: color }} />
-          <div>
-            <p className="font-semibol pb-2" style={{ color: color }}>
-              {parseFloat(userComp.points || "0").toFixed(2)} / 100
-            </p>
-            <p className="text-xs">total points</p>
-          </div>
-          <div className="h-6 border-r" style={{ borderColor: color }} />
-          <div>
-            <p className="font-semibol pb-2" style={{ color: color }}>
-              {percentile}
-            </p>
-            <p className="text-xs">percentile</p>
-          </div>
-          <div className="h-6 border-r " style={{ borderColor: color }} />
-          <div>
-            <p className="pb-2 font-semibold" style={{ color: color }}>
-              {rank}/{users.length}
-            </p>
-            <p className="text-xs">rank</p>
-          </div>
-          <div className="h-6 border-r " style={{ borderColor: color }} />
-          {/* <div>
+        {compFinished ? (
+          <div className="flex flex-wrap items-center justify-between text-center text-sm ">
+            <div className="h-6 border-r" style={{ borderColor: color }} />
+            <div>
+              <p className="font-semibol pb-2" style={{ color: color }}>
+                {parseFloat(userComp.points || "0").toFixed(2)} / 100
+              </p>
+              <p className="text-xs">total points</p>
+            </div>
+            <div className="h-6 border-r" style={{ borderColor: color }} />
+            <div>
+              <p className="font-semibol pb-2" style={{ color: color }}>
+                {percentile}
+              </p>
+              <p className="text-xs">percentile</p>
+            </div>
+            <div className="h-6 border-r " style={{ borderColor: color }} />
+            <div>
+              <p className="pb-2 font-semibold" style={{ color: color }}>
+                {rank}/{users.length}
+              </p>
+              <p className="text-xs">rank</p>
+            </div>
+            <div className="h-6 border-r " style={{ borderColor: color }} />
+            {/* <div>
             <p className="pb-2 font-semibold text-success-600">
               {bonusPoints} pt
             </p>
@@ -79,7 +82,8 @@ const GameStats: FC<GameStatsProps> = ({
               </span>
             </p>
           </div> */}
-        </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

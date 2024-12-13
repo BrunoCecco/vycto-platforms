@@ -255,6 +255,7 @@ export default function CompetitionPage({
                   userComp={userComp}
                   users={users}
                   color={siteData.color1}
+                  compFinished={data.correctAnswersSubmitted}
                 />
               ) : null}
               {questions &&
