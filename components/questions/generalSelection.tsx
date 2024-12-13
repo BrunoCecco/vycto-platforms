@@ -64,6 +64,7 @@ const GeneralSelection = ({ ...props }) => {
               >
                 <Button
                   isDisabled={props.disabled}
+                  type="submit"
                   className={`w-max rounded-lg bg-content2 px-4 py-3 text-sm transition-all duration-200 ${
                     selectedOption === option ? "shadow-lg" : ""
                   } ${!props.disabled ? "hover:scale-105 hover:font-extrabold" : ""}`}

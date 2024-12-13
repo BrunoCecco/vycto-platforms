@@ -29,6 +29,7 @@ const PlayerComponent = ({
     >
       <Button
         disabled={disabled}
+        type="submit"
         onClick={() => {
           setSelectedPlayer(name);
         }}

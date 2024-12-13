@@ -49,7 +49,7 @@ export default async function Rewards({
     (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )[0];
 
-  const userCompetitions = await getUserCompetitions(session.user.id);
+  const userCompetitions = await getUserCompetitions(session.user.id, data.id);
 
   const siteRewards = await getSiteRewards(domain);
 
@@ -96,7 +96,9 @@ export default async function Rewards({
         </div>
       </div>
       <div>
-        <RewardsList userCompetitions={userCompetitions} />
+        <RewardsList
+          userCompetitions={userCompetitions.map((comp) => comp.userComp)}
+        />
       </div>
     </div>
   );

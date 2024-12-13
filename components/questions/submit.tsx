@@ -29,7 +29,12 @@ const Submit = ({
   };
 
   return (
-    <form className="flex items-center justify-center" action={handleSubmit}>
+    <form
+      className="flex items-center justify-center"
+      action={handleSubmit}
+      id={questionId}
+      key={questionId}
+    >
       {userId && <input type="hidden" hidden name="userId" value={userId} />}
       <input type="hidden" hidden name="questionId" value={questionId} />
       <input type="hidden" hidden name="competitionId" value={competitionId} />

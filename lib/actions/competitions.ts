@@ -168,12 +168,20 @@ export const updateCompetitionMetadata = withCompetitionAuth(
 export const deleteCompetition = withCompetitionAuth(
   async (_: FormData, competition: SelectCompetition) => {
     try {
+      const site = await db.query.sites.findFirst({
+        where: eq(sites.id, competition.siteId!),
+      });
+
       const [response] = await db
         .delete(competitions)
         .where(eq(competitions.id, competition.id))
         .returning({
           siteId: competitions.siteId,
         });
+
+      revalidateTag(
+        `${site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-competitions`,
+      );
 
       return response;
     } catch (error: any) {
@@ -214,6 +222,10 @@ export const enterUserToCompetition = async (
         image: image || "",
       })
       .returning();
+
+    revalidateTag(`${userId}-${competitionId}-comp`);
+    revalidateTag(`${userId}-comps`);
+    revalidateTag(`${competitionId}-users`);
 
     return response;
   } catch (error: any) {

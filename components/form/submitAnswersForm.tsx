@@ -62,6 +62,7 @@ export default function SubmitAnswersForm({
 
 function FormButton() {
   const { pending } = useFormStatus();
+  const [clicked, setClicked] = useState(false);
 
   return (
     <Button
@@ -73,8 +74,15 @@ function FormButton() {
       )}
       isDisabled={pending}
       type="submit"
+      onClick={() => setClicked(true)}
     >
-      {pending ? <Spinner /> : <p>Submit Answers</p>}
+      {pending ? (
+        <Spinner />
+      ) : clicked ? (
+        <p>Submitted</p>
+      ) : (
+        <p>Submit Answers</p>
+      )}
     </Button>
   );
 }

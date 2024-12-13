@@ -8,7 +8,7 @@ import {
   getUserCompetitions,
   getUserData,
 } from "@/lib/fetchers";
-import { SelectUserCompetition } from "@/lib/schema";
+import { SelectCompetition, SelectUserCompetition } from "@/lib/schema";
 import { ClockIcon, MedalIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
@@ -40,14 +40,15 @@ export default async function MyCompetitions({
     notFound();
   }
 
-  const userCompetitions = await getUserCompetitions(session.user.id);
+  const userCompetitions = await getUserCompetitions(session.user.id, data.id);
+  console.log(userCompetitions, "userCompetitions");
 
   const currentCompetitions = userCompetitions.filter(
-    (comp: SelectUserCompetition) => new Date(comp.submissionDate) > new Date(),
+    (comp) => new Date(comp.competition?.date!) >= new Date(),
   );
 
   const pastCompetitions = userCompetitions.filter(
-    (comp: SelectUserCompetition) => new Date(comp.submissionDate) < new Date(),
+    (comp) => new Date(comp.competition?.date!) < new Date(),
   );
 
   return (
@@ -60,11 +61,15 @@ export default async function MyCompetitions({
           <div className="w-full">
             {currentCompetitions && currentCompetitions?.length > 0 && (
               <div className="mb-12 w-full">
-                <h1 className="mb-4 text-2xl font-semibold">
+                <h1 className="mb-4 flex items-center text-2xl font-semibold">
                   <MedalIcon color={data.color1} size={24} className="mr-2" />
                   Current Competitions
                 </h1>
-                <Predictions competitions={currentCompetitions} />
+                <Predictions
+                  competitions={currentCompetitions.map(
+                    (comp) => comp.userComp,
+                  )}
+                />
               </div>
             )}
             {pastCompetitions && pastCompetitions?.length > 0 && (
@@ -73,7 +78,9 @@ export default async function MyCompetitions({
                   <ClockIcon color={data.color1} size={24} className="mr-2" />
                   Past Competitions
                 </h1>
-                <Predictions competitions={pastCompetitions} />
+                <Predictions
+                  competitions={pastCompetitions.map((comp) => comp.userComp)}
+                />
               </div>
             )}
           </div>

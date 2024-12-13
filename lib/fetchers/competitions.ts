@@ -223,17 +223,32 @@ export async function getCompetitionUsers(competitionId: string) {
   )();
 }
 
-export async function getUserCompetitions(userId: string) {
+export async function getUserCompetitions(userId: string, siteId: string) {
   return await unstable_cache(
     async () => {
-      return await db.query.userCompetitions.findMany({
-        where: eq(userCompetitions.userId, userId),
-      });
+      // get userCompetitions with userId = userId and join on competitions where competition.siteId = siteId
+      return await db
+        .select({
+          userComp: userCompetitions,
+          competition: competitions,
+        })
+        .from(userCompetitions)
+        .leftJoin(
+          competitions,
+          eq(competitions.id, userCompetitions.competitionId),
+        )
+        .where(
+          and(
+            eq(userCompetitions.userId, userId),
+            eq(competitions.siteId, siteId),
+          ),
+        )
+        .orderBy(desc(userCompetitions.submissionDate));
     },
-    [`${userId}-users`],
+    [`${userId}-comps`],
     {
       revalidate: 900,
-      tags: [`${userId}-users`],
+      tags: [`${userId}-comps`],
     },
   )();
 }

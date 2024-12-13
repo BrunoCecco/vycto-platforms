@@ -1,5 +1,9 @@
 import { notFound } from "next/navigation";
-import { getUserCompetitions, getUserDataById } from "@/lib/fetchers";
+import {
+  getSiteData,
+  getUserCompetitions,
+  getUserDataById,
+} from "@/lib/fetchers";
 import UserCompListing from "@/components/competitions/userCompListing";
 
 export default async function UserCompetitionsPage({
@@ -9,8 +13,13 @@ export default async function UserCompetitionsPage({
 }) {
   const domain = decodeURIComponent(params.domain);
   const userId = decodeURIComponent(params.userId);
+
+  const siteData = await getSiteData(domain);
+  if (!siteData) {
+    notFound();
+  }
   const user = await getUserDataById(userId);
-  const competitions = await getUserCompetitions(userId);
+  const competitions = await getUserCompetitions(userId, siteData.id);
 
   if (!competitions) {
     notFound();
@@ -35,8 +44,8 @@ export default async function UserCompetitionsPage({
           {competitions &&
             competitions.map((userComp, index) => (
               <UserCompListing
-                key={userComp.competitionId}
-                userComp={userComp}
+                key={index + "-usercomp"}
+                userComp={userComp.userComp}
               />
             ))}
         </tbody>

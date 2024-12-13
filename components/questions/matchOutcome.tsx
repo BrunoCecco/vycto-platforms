@@ -44,6 +44,7 @@ const MatchOutcome = ({ ...props }) => {
                     ? "opacity-100"
                     : "opacity-25"
                 }`}
+                type="submit"
                 isDisabled={props.disabled}
                 onClick={() => setSelectedOutcome(props.answer1)}
               >
@@ -86,6 +87,7 @@ const MatchOutcome = ({ ...props }) => {
                     ? "opacity-100"
                     : "opacity-25"
                 }`}
+                type="submit"
                 isDisabled={props.disabled}
                 onClick={() => setSelectedOutcome(props.answer2)}
               >
@@ -118,6 +120,7 @@ const MatchOutcome = ({ ...props }) => {
               className={`w-24 rounded-full border-2 p-2 text-sm font-semibold ${
                 selectedOutcome == "Draw" ? "opacity-100" : "opacity-25"
               }`}
+              type="submit"
               isDisabled={props.disabled}
               style={{ borderColor: props.color }}
               onClick={() => setSelectedOutcome("Draw")}
