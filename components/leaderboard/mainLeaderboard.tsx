@@ -151,142 +151,47 @@ const MainLeaderboard = ({
           <tbody>
             {filteredData?.length > 0
               ? filteredData.map((entry: LeaderboardUser, index: number) => {
-                  // Check if the current entry is the signed-in user
-                  if (user && entry.id === user.id) {
-                    // For the first instance (at the top)
-                    if (index === 0) {
-                      return;
-                      // return (
-                      //   <tr key={entry.id} className="border-b text-left">
-                      //     <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
-                      //       <div className="table-cell pr-1 sm:hidden">1</div>
-                      //       <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
-                      //         <Image
-                      //           src={
-                      //             entry.image ||
-                      //             `https://avatar.vercel.sh/${entry.email}`
-                      //           }
-                      //           alt="Profile"
-                      //           fill={true}
-                      //           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      //           className="overflow-hidden rounded-full object-cover"
-                      //         />
-                      //       </div>
-                      //       <div className="flex w-0 flex-1 items-center text-sm font-bold">
-                      //         <span className="truncate">
-                      //           @
-                      //           {entry.username ||
-                      //             entry.email ||
-                      //             entry.name ||
-                      //             "User"}
-                      //         </span>
-                      //         <HoverBorderGradient
-                      //           containerClassName="ml-2 mr-auto w-min"
-                      //           className={`duration-400 w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all hover:`}
-                      //           color={siteData.color1}
-                      //         >
-                      //           <span style={{ color: siteData.color1 }}>
-                      //             You
-                      //           </span>
-                      //         </HoverBorderGradient>
-                      //       </div>
-                      //     </td>
-                      //     <td className="hidden py-4 text-center md:table-cell">
-                      //       {filteredData.findIndex(
-                      //         (usr) => usr.id === user.id,
-                      //       ) + 1}
-                      //     </td>
-                      //     <td className="py-4 text-center">
-                      //       {parseFloat(entry.points || "0").toFixed(2)}
-                      //     </td>
-                      //     {/* Display the points for the signed-in user */}
-                      //   </tr>
-                      // );
-                    } else {
-                      // For the second instance (where they appear in their actual position)
-                      return (
-                        <tr key={entry.id} className="border-b text-left">
-                          <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
-                            <span className="table-cell pr-1 sm:hidden">1</span>
-                            <User
-                              name={
-                                entry.username ||
-                                entry.name ||
-                                entry.email ||
-                                "User"
-                              }
-                              avatarProps={{
-                                src:
-                                  entry.image ||
-                                  `https://avatar.vercel.sh/${entry.email}`,
-                              }}
-                            />
-                            <span className="flex w-0 flex-1 items-center text-sm font-bold">
-                              {/* <HoverBorderGradient
-                                containerClassName="ml-2 mr-auto w-min"
-                                className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
-                                color={siteData.color1}
-                              >
-                                <span style={{ color: siteData.color1 }}>
-                                  You
-                                </span>
-                              </HoverBorderGradient> */}
-                            </span>
-                          </td>
-                          <td className="hidden py-4 text-center md:table-cell">
-                            {filteredData.findIndex(
-                              (usr) => usr.id === user.id,
-                            ) + 1}
-                          </td>
-                          <td className="py-4 text-center">
-                            {parseFloat(entry.points.toString() || "0").toFixed(
-                              2,
-                            )}
-                          </td>
-                          {/* Display the points for the signed-in user */}
-                        </tr>
-                      );
-                    }
-                  } else if (index > 0) {
-                    // Render the row for other users
-                    return (
-                      <tr key={entry.id} className="border-b text-left">
-                        <td className="flex w-[150px] items-center space-x-2 py-4 md:w-[200px] lg:w-[300px]">
-                          <span className="table-cell pr-1 sm:hidden">
-                            {index}
-                          </span>
-                          <span className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
-                            <Image
-                              src={
-                                entry.image ||
-                                `https://avatar.vercel.sh/${entry.email}`
-                              }
-                              alt="Profile"
-                              fill={true}
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                              className="overflow-hidden rounded-full object-cover"
-                            />
-                          </span>
-                          <span className="ml-2 w-0 flex-1 truncate text-sm font-bold">
-                            @
-                            {entry.username ||
-                              entry.email ||
-                              entry.name ||
-                              "User"}
-                          </span>
-                        </td>
-                        <td className="hidden py-4 text-center md:table-cell">
-                          {index}
-                        </td>
-                        <td className="py-4 text-center">
-                          {parseFloat(entry.points.toString() || "0").toFixed(
-                            2,
-                          )}
-                        </td>
-                        {/* Display points for the other user */}
-                      </tr>
-                    );
-                  }
+                  return (
+                    <tr key={entry.id} className="border-b text-left">
+                      <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
+                        <div className="table-cell pr-1 sm:hidden">
+                          {filteredData.findIndex(
+                            (usr) => usr.id === entry.id,
+                          ) + 1}
+                        </div>
+                        <User
+                          name={
+                            entry.username ||
+                            entry.name ||
+                            entry.email ||
+                            "User"
+                          }
+                          avatarProps={{
+                            src:
+                              entry.image ||
+                              `https://avatar.vercel.sh/${entry.email}`,
+                          }}
+                        />
+                        <div className="flex w-0 flex-1 items-center text-sm font-bold">
+                          <HoverBorderGradient
+                            containerClassName="ml-2 mr-auto w-min"
+                            className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
+                            color={siteData.color1}
+                          >
+                            <span style={{ color: siteData.color1 }}>You</span>
+                          </HoverBorderGradient>
+                        </div>
+                      </td>
+                      <td className="hidden py-4 text-center md:table-cell">
+                        {filteredData.findIndex((usr) => usr.id === entry.id) +
+                          1}
+                      </td>
+                      <td className="py-4 text-center">
+                        {parseFloat(entry.points.toString() || "0").toFixed(2)}
+                      </td>
+                      {/* Display the points for the signed-in user */}
+                    </tr>
+                  );
                 })
               : null}
           </tbody>

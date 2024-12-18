@@ -69,7 +69,9 @@ const Leaderboard = ({
                     className="relative w-full columns-12 border-b text-left"
                   >
                     <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
-                      <span className="table-cell pr-1 sm:hidden">1</span>
+                      <span className="table-cell pr-1 sm:hidden">
+                        {index + 1}
+                      </span>
                       <User
                         name={
                           user.username || user.name || user.email || "User"
@@ -80,15 +82,15 @@ const Leaderboard = ({
                             `https://avatar.vercel.sh/${user.email}`,
                         }}
                       />
-                      <span className="flex w-0 flex-1 items-center text-sm font-bold">
-                        {/* <HoverBorderGradient
+                      <div className="flex w-0 flex-1 items-center text-sm font-bold">
+                        <HoverBorderGradient
                           containerClassName="ml-2 mr-auto w-min"
                           className={`w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
                           color={siteData.color1}
                         >
                           <span style={{ color: siteData.color1 }}>You</span>
-                        </HoverBorderGradient> */}
-                      </span>
+                        </HoverBorderGradient>
+                      </div>
                     </td>
                     <td className="hidden py-4 text-center sm:table-cell">
                       {index + 1}
@@ -120,21 +122,16 @@ const Leaderboard = ({
                       <span className="table-cell pr-2 sm:hidden">
                         {index + 1}
                       </span>
-                      <span className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
-                        <Image
-                          src={
+                      <User
+                        name={
+                          user.username || user.name || user.email || "User"
+                        }
+                        avatarProps={{
+                          src:
                             user.image ||
-                            `https://avatar.vercel.sh/${user.email}`
-                          }
-                          alt="Profile"
-                          fill={true}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="rounded-full object-cover"
-                        />
-                      </span>
-                      <span className="ml-2 w-0 flex-1 truncate text-sm font-bold">
-                        @{user.username || user.email || user.name || "User"}
-                      </span>
+                            `https://avatar.vercel.sh/${user.email}`,
+                        }}
+                      />
                     </td>
                     <td className="hidden py-4 text-center sm:table-cell">
                       {index + 1}
