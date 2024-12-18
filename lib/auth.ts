@@ -43,6 +43,13 @@ export const authOptions: NextAuthOptions = {
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID!,
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          scope: "name email",
+          response_mode: "form_post",
+          response_type: "code",
+        },
+      },
     }),
     GoogleProvider({
       clientId:
@@ -79,6 +86,15 @@ export const authOptions: NextAuthOptions = {
   }) as Adapter,
   session: { strategy: "jwt" },
   cookies: {
+    callbackUrl: {
+      name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.callback-url`,
+      options: {
+        httpOnly: false,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
     pkceCodeVerifier: {
       name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.pkce.code_verifier`,
       options: {
