@@ -68,7 +68,7 @@ const Leaderboard = ({
                   className="relative w-full columns-12 border-b text-left"
                 >
                   <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
-                    <span className="table-cell pr-1 sm:hidden">
+                    <span className="table-cell min-w-4 pr-1 sm:hidden">
                       {index + 1}
                     </span>
                     <User

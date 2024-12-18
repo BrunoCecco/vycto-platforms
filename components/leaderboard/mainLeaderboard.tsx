@@ -154,11 +154,11 @@ const MainLeaderboard = ({
                   return (
                     <tr key={entry.id} className="border-b text-left">
                       <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
-                        <div className="table-cell pr-1 sm:hidden">
+                        <span className="table-cell min-w-4 pr-1 sm:hidden">
                           {filteredData.findIndex(
                             (usr) => usr.id === entry.id,
                           ) + 1}
-                        </div>
+                        </span>
                         <User
                           name={
                             entry.username ||
