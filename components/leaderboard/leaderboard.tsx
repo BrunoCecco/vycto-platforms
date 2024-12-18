@@ -62,26 +62,24 @@ const Leaderboard = ({
           </thead>
           <tbody>
             {users.map((user: any, index: number) => {
-              if (session && session.user.id === user.userId) {
-                return (
-                  <tr
-                    key={user.userId}
-                    className="relative w-full columns-12 border-b text-left"
-                  >
-                    <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
-                      <span className="table-cell pr-1 sm:hidden">
-                        {index + 1}
-                      </span>
-                      <User
-                        name={
-                          user.username || user.name || user.email || "User"
-                        }
-                        avatarProps={{
-                          src:
-                            user.image ||
-                            `https://avatar.vercel.sh/${user.email}`,
-                        }}
-                      />
+              return (
+                <tr
+                  key={user.userId}
+                  className="relative w-full columns-12 border-b text-left"
+                >
+                  <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
+                    <span className="table-cell pr-1 sm:hidden">
+                      {index + 1}
+                    </span>
+                    <User
+                      name={user.username || user.name || user.email || "User"}
+                      avatarProps={{
+                        src:
+                          user.image ||
+                          `https://avatar.vercel.sh/${user.email}`,
+                      }}
+                    />
+                    {session && session.user.id === user.userId ? (
                       <div className="flex w-0 flex-1 items-center text-sm font-bold">
                         <HoverBorderGradient
                           containerClassName="ml-2 mr-auto w-min"
@@ -91,69 +89,28 @@ const Leaderboard = ({
                           <span style={{ color: siteData.color1 }}>You</span>
                         </HoverBorderGradient>
                       </div>
-                    </td>
-                    <td className="hidden py-4 text-center sm:table-cell">
-                      {index + 1}
-                    </td>
-                    <td className="py-4 text-center text-sm">
-                      {parseFloat(user.points || "0").toFixed(2)}
-                    </td>
-                    <td className="justify-end py-4 text-right">
-                      <Link
-                        href={`/comp/${competition.slug}/${user.userId}`}
-                        className="bg-blue-100 text-purple-800 hover:bg-blue-300 rounded-lg p-2 px-4 text-sm shadow-md transition-all duration-200 hover:shadow-none"
-                        style={{
-                          backgroundImage: calculateBg(index),
-                          color: "black",
-                        }}
-                      >
-                        View
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              } else {
-                return (
-                  <tr
-                    key={user.userId}
-                    className="relative w-full columns-12 border-b text-left"
-                  >
-                    <td className="flex w-[150px] items-center space-x-2 py-4 md:w-[200px] lg:w-[300px]">
-                      <span className="table-cell pr-2 sm:hidden">
-                        {index + 1}
-                      </span>
-                      <User
-                        name={
-                          user.username || user.name || user.email || "User"
-                        }
-                        avatarProps={{
-                          src:
-                            user.image ||
-                            `https://avatar.vercel.sh/${user.email}`,
-                        }}
-                      />
-                    </td>
-                    <td className="hidden py-4 text-center sm:table-cell">
-                      {index + 1}
-                    </td>
-                    <td className="py-4 text-center text-sm">
-                      {parseFloat(user.points || "0").toFixed(2)}
-                    </td>
-                    <td className="justify-end py-4 text-right">
-                      <Link
-                        href={`/comp/${competition.slug}/${user.userId}`}
-                        className="bg-blue-100 text-purple-800 hover:bg-blue-300 rounded-lg p-2 px-4 text-sm shadow-md transition-all duration-200 hover:shadow-none"
-                        style={{
-                          backgroundImage: calculateBg(index),
-                          color: "black",
-                        }}
-                      >
-                        View
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              }
+                    ) : null}
+                  </td>
+                  <td className="hidden py-4 text-center sm:table-cell">
+                    {index + 1}
+                  </td>
+                  <td className="py-4 text-center text-sm">
+                    {parseFloat(user.points || "0").toFixed(2)}
+                  </td>
+                  <td className="justify-end py-4 text-right">
+                    <Link
+                      href={`/comp/${competition.slug}/${user.userId}`}
+                      className="bg-blue-100 text-purple-800 hover:bg-blue-300 rounded-lg p-2 px-4 text-sm shadow-md transition-all duration-200 hover:shadow-none"
+                      style={{
+                        backgroundImage: calculateBg(index),
+                        color: "black",
+                      }}
+                    >
+                      View
+                    </Link>
+                  </td>
+                </tr>
+              );
             })}
           </tbody>
         </table>
