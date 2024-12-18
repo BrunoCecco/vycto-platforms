@@ -14,7 +14,7 @@ export default function Profile() {
 
   return (
     session && (
-      <div className="flex w-full items-center justify-between gap-1">
+      <div className="flex w-full flex-wrap items-center justify-between gap-1">
         <User
           name={session.user.username || user?.name || session.user.email}
           avatarProps={{

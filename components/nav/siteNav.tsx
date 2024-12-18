@@ -125,8 +125,8 @@ export default function SiteNav({
         style={{ borderColor: data.color1 }}
       >
         <div className="flex h-full flex-col justify-between">
-          <div className="flex flex-col gap-4 px-2 py-2">
-            <div className="hidden items-center justify-between gap-2 sm:flex">
+          <div className="flex flex-col gap-4 py-2">
+            <div className="hidden flex-wrap items-center justify-between gap-2 sm:flex">
               <Link href="/">
                 <Image
                   src={data.logo || "/logo.png"}

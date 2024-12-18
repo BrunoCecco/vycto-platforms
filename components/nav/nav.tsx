@@ -187,7 +187,7 @@ export default function Nav({
       >
         <div className="grid gap-2">
           <div className="flex items-center space-x-2 rounded-lg px-2 py-1.5">
-            <Link href="/" className="rounded-lg  p-2 ">
+            <Link href="/" className="rounded-lg p-2">
               <Image
                 src="/logo.png"
                 width={36}
@@ -213,7 +213,7 @@ export default function Nav({
           </div>
         </div>
         <div>
-          <div className="my-2 border-t  " />
+          <div className="my-2 border-t" />
           {children}
         </div>
       </div>

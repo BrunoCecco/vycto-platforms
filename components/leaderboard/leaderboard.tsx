@@ -69,7 +69,7 @@ const Leaderboard = ({
                     className="relative w-full columns-12 border-b text-left"
                   >
                     <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
-                      <div className="table-cell pr-1 sm:hidden">1</div>
+                      <span className="table-cell pr-1 sm:hidden">1</span>
                       <User
                         name={
                           user.username || user.name || user.email || "User"
@@ -80,15 +80,15 @@ const Leaderboard = ({
                             `https://avatar.vercel.sh/${user.email}`,
                         }}
                       />
-                      <div className="flex w-0 flex-1 items-center text-sm font-bold">
-                        <HoverBorderGradient
+                      <span className="flex w-0 flex-1 items-center text-sm font-bold">
+                        {/* <HoverBorderGradient
                           containerClassName="ml-2 mr-auto w-min"
                           className={`w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
                           color={siteData.color1}
                         >
                           <span style={{ color: siteData.color1 }}>You</span>
-                        </HoverBorderGradient>
-                      </div>
+                        </HoverBorderGradient> */}
+                      </span>
                     </td>
                     <td className="hidden py-4 text-center sm:table-cell">
                       {index + 1}
@@ -99,7 +99,7 @@ const Leaderboard = ({
                     <td className="justify-end py-4 text-right">
                       <Link
                         href={`/comp/${competition.slug}/${user.userId}`}
-                        className="rounded-lg bg-blue-100 p-2 px-4 text-sm text-purple-800 shadow-md transition-all duration-200 hover:bg-blue-300 hover:shadow-none"
+                        className="bg-blue-100 text-purple-800 hover:bg-blue-300 rounded-lg p-2 px-4 text-sm shadow-md transition-all duration-200 hover:shadow-none"
                         style={{
                           backgroundImage: calculateBg(index),
                           color: "black",
@@ -117,10 +117,10 @@ const Leaderboard = ({
                     className="relative w-full columns-12 border-b text-left"
                   >
                     <td className="flex w-[150px] items-center space-x-2 py-4 md:w-[200px] lg:w-[300px]">
-                      <div className="table-cell pr-2 sm:hidden">
+                      <span className="table-cell pr-2 sm:hidden">
                         {index + 1}
-                      </div>
-                      <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
+                      </span>
+                      <span className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
                         <Image
                           src={
                             user.image ||
@@ -131,7 +131,7 @@ const Leaderboard = ({
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="rounded-full object-cover"
                         />
-                      </div>
+                      </span>
                       <span className="ml-2 w-0 flex-1 truncate text-sm font-bold">
                         @{user.username || user.email || user.name || "User"}
                       </span>
@@ -145,7 +145,7 @@ const Leaderboard = ({
                     <td className="justify-end py-4 text-right">
                       <Link
                         href={`/comp/${competition.slug}/${user.userId}`}
-                        className="rounded-lg bg-blue-100 p-2 px-4 text-sm text-purple-800 shadow-md transition-all duration-200 hover:bg-blue-300 hover:shadow-none"
+                        className="bg-blue-100 text-purple-800 hover:bg-blue-300 rounded-lg p-2 px-4 text-sm shadow-md transition-all duration-200 hover:shadow-none"
                         style={{
                           backgroundImage: calculateBg(index),
                           color: "black",

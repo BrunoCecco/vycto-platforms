@@ -11,7 +11,6 @@ export function Story({ siteData }: { siteData: SelectSite }) {
         <h1 className="relative z-10 bg-gradient-to-b from-content2 to-content4  bg-clip-text p-2 text-center font-sans text-lg  font-bold text-transparent md:text-6xl">
           Join the {siteData.name} family
         </h1>
-        <p></p>
         <TextGenerateEffect words={siteData.story || ""} />
       </div>
       <BackgroundBeams />
