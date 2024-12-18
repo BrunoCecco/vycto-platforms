@@ -172,15 +172,19 @@ const MainLeaderboard = ({
                               `https://avatar.vercel.sh/${entry.email}`,
                           }}
                         />
-                        <div className="flex w-0 flex-1 items-center text-sm font-bold">
-                          <HoverBorderGradient
-                            containerClassName="ml-2 mr-auto w-min"
-                            className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
-                            color={siteData.color1}
-                          >
-                            <span style={{ color: siteData.color1 }}>You</span>
-                          </HoverBorderGradient>
-                        </div>
+                        {user && user.id == entry.id ? (
+                          <div className="flex w-0 flex-1 items-center text-sm font-bold">
+                            <HoverBorderGradient
+                              containerClassName="ml-2 mr-auto w-min"
+                              className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
+                              color={siteData.color1}
+                            >
+                              <span style={{ color: siteData.color1 }}>
+                                You
+                              </span>
+                            </HoverBorderGradient>
+                          </div>
+                        ) : null}
                       </td>
                       <td className="hidden py-4 text-center md:table-cell">
                         {filteredData.findIndex((usr) => usr.id === entry.id) +
