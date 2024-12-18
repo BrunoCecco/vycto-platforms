@@ -100,7 +100,7 @@ export default function SignInSide({
   };
 
   return (
-    <div>
+    <div className="h-screen">
       <div className="">
         <div
           className="relative z-10 flex w-full justify-end transition-all delay-100 duration-500 md:w-[50vw]"
@@ -258,7 +258,7 @@ export default function SignInSide({
             <footer className="py-3 ">
               <div className="text-center">
                 <div className="flex items-center justify-center">
-                  <div className="pr-1.5 font-space">powered by</div>
+                  <div className="font-space pr-1.5">powered by</div>
                   <div className="relative h-8 w-12">
                     {/* White logo for dark mode */}
                     <Image

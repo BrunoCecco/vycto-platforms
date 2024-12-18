@@ -11,6 +11,7 @@ export default function ClaimRewardsCard({
   reward: SelectSiteReward;
   data: SelectSite;
 }) {
+  console.log(reward);
   return (
     <BackgroundGradient
       containerClassName="h-[350px] w-full rounded-lg p-1"
