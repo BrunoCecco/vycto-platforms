@@ -61,10 +61,11 @@ const Slider: FC<{
               max="90"
               startContent={<div className="">{MIN}</div>}
               endContent={<div className="relative">{MAX}</div>}
+              defaultValue={initialValue}
               value={initialValue}
               disabled={disabled}
               onChange={handleChange}
-              onBlur={handleBlur}
+              onDragLeave={handleBlur}
               className="h-3 w-full appearance-none"
             />
           </div>
