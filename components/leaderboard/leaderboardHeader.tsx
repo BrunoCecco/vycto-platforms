@@ -24,7 +24,7 @@ const LeaderboardHeader = ({
     { key: "last week", label: "Last Week" },
     { key: "monthly", label: "Monthly" },
     { key: "season", label: "Season" },
-    { key: "all time", label: "All Time" },
+    // { key: "all time", label: "All Time" },
   ];
 
   // Function to dynamically set the prize text based on rangeType
