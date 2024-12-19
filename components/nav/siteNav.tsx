@@ -167,10 +167,6 @@ export default function SiteNav({
                 >
                   <Bell width={18} />
                   <span className="text-sm font-medium">Stay Notified</span>
-                  <div
-                    className="h-full rounded-full bg-content4 absolute"
-                    style={{transform: 'translateX(-30px)', height: '60px', width: '10px'}}
-                  ></div>
                 </div>
               </CoolMode>
             </div>
