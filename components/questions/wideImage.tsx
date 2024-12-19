@@ -12,7 +12,7 @@ export const WideImage = ({ src, color }: { src: string; color: string }) => {
         alt="Question Image"
         fill
         unoptimized
-        className="h-full w-full object-contain"
+        className="h-full w-full object-cover"
       />
     </div>
   );
