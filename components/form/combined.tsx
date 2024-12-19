@@ -27,6 +27,7 @@ import { useFormStatus } from "react-dom";
 import { useDateFormatter } from "@react-aria/i18n";
 import { parseDate, getLocalTimeZone } from "@internationalized/date";
 import CombinedFormImage from "./combinedFormImage";
+import Toggle from "@/ui/toggle";
 
 interface InputAttr {
   name: string;
@@ -283,16 +284,15 @@ export default function CombinedForm({
                       name={inputAttr.name}
                       value={checkboxValues[inputAttr.name] || "false"}
                     />
-                    <Switch
+                    <Toggle 
                       id={inputAttr.name + "switch"}
                       key={inputAttr.name + "switch"}
                       isSelected={checkboxValues[inputAttr.name] == "true"}
-                      onValueChange={(isSelected: boolean) =>
+                      onToggle={(isSelected: boolean) =>
                         editCheckboxValues(isSelected, inputAttr.name)
                       }
-                    >
-                      {inputAttr.label}
-                    </Switch>
+                      label={inputAttr.label}
+                    />
                   </>
                 ) : (
                   <Input
