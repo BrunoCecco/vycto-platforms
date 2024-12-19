@@ -24,7 +24,7 @@ export default function ColorSchemeToggle() {
       <Button
         aria-label="toggle light/dark mode"
         onClick={() => (theme == "dark" ? setTheme("light") : setTheme("dark"))}
-        className="group z-50 min-w-0 cursor-pointer rounded-md bg-transparent px-2"
+        className="group z-50 min-w-0 cursor-pointer rounded-tr-none bg-transparent px-2 sm:rounded-tr-lg"
         style={{ backdropFilter: "blur(12px)" }}
       >
         {theme === "light" ? (

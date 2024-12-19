@@ -57,7 +57,11 @@ ul[data-type="taskList"] li > label {
 }
 
 .text-shadow {
-  text-shadow: #3f3f3f 1px 0 5px;
+  text-shadow: #333 1px 1px 1px;
+}
+
+.dark .text-shadow {
+  text-shadow: #eee 1px 0 1px;
 }
 
 @media screen and (max-width: 768px) {

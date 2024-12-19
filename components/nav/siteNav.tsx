@@ -110,7 +110,7 @@ export default function SiteNav({
   return (
     <>
       <Button
-        className={`fixed z-20 min-w-10 bg-transparent p-2 shadow-md hover:opacity-75 sm:hidden`}
+        className={`fixed z-20 min-w-10 rounded-tl-none bg-transparent p-2 shadow-md hover:opacity-75 sm:hidden`}
         onClick={() => setShowSidebar(!showSidebar)}
         style={{ backdropFilter: "blur(12px)" }}
       >
@@ -163,7 +163,7 @@ export default function SiteNav({
               <CoolMode>
                 <div
                   onClick={stayNotified}
-                  className={`mt-12 relative flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 transition-all duration-150  ease-in-out hover:bg-content3 `}
+                  className={`relative mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 transition-all duration-150  ease-in-out hover:bg-content3 `}
                 >
                   <Bell width={18} />
                   <span className="text-sm font-medium">Stay Notified</span>
