@@ -29,7 +29,7 @@ const Toggle = ({
         id={id}
         key={key}      
         className={
-          'relative cursor-pointer h-[25px] w-[45px] translate-x-1 translate-y-1 cursor-pointer rounded-full bg-foreground'
+          'relative cursor-pointer h-[25px] w-[45px] translate-x-1 translate-y-1 cursor-pointer rounded-sm bg-foreground'
         }
         onClick={handleToggle}
       >
