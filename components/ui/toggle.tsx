@@ -24,12 +24,12 @@ const Toggle = ({
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <button
+    <div className="flex items-center">
+      <div
         id={id}
         key={key}      
         className={
-          'relative h-[25px] w-[45px] translate-x-1 translate-y-1 cursor-pointer  rounded-full bg-[#222222]'
+          'relative cursor-pointer h-[25px] w-[45px] translate-x-1 translate-y-1 cursor-pointer  rounded-full bg-[#222222]'
         }
         onClick={handleToggle}
       >
@@ -40,8 +40,8 @@ const Toggle = ({
             className={`aspect-square h-full transform rounded-full border-[2px] border-[#222222] bg-white shadow-lg ${toggled ? 'translate-x-[10px]' : 'translate-x-[-10px]'} transition-all duration-300`}
           />
         </span>
-      </button>
-      <div>{label}</div>
+      </div>
+      <div className="ml-4">{label}</div>
     </div>
   )
 }
