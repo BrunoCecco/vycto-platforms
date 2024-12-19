@@ -1,9 +1,8 @@
-const { hostname } = require("os");
+// const withBundleAnalyzer = require("@next/bundle-analyzer")({
+//   enabled: process.env.ANALYZE === "true",
+// });
 
-/**
- * @type {import('next').NextConfig}
- */
-module.exports = {
+const nextConfig = {
   reactStrictMode: false,
   webpack: (config) => {
     config.resolve.fallback = { fs: false };
@@ -38,3 +37,8 @@ module.exports = {
     ],
   },
 };
+
+/**
+ * @type {import('next').NextConfig}
+ */
+module.exports = nextConfig;

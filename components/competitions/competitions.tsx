@@ -74,7 +74,7 @@ const Competitions = ({
             siteData={siteData}
             type={type}
             played={userCompetitions?.some(
-              (uc) => uc.competitionId === competition.id,
+              (uc) => uc.competitionId === competition.id && uc.submitted,
             )}
             onClick={() => handleCompetitionClick(competition)} // Pass click handler
           />
