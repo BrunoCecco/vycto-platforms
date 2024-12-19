@@ -64,7 +64,7 @@ const LeaderboardHeader = ({
         </div>
         {/* Updated text based on rangeType */}
         <div
-          className="cursor-pointer underline"
+          className="text-shadow cursor-pointer underline"
           style={{ color: siteData.color1 }}
           onClick={onClick}
         >

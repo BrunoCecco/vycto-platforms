@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import {
   getCompetitionsForSite,
   getSiteData,
+  getUserCompetitions,
   getUserData,
 } from "@/lib/fetchers";
 import db from "@/lib/db";
@@ -63,6 +64,11 @@ export default async function SiteHomePage({
 
   const session = await getServerSession(authOptions);
 
+  const userCompetitions = await getUserCompetitions(
+    session?.user.id || "",
+    data.id,
+  );
+
   const addFanzoneToString = (str: string) => {
     if (str?.includes("fanzone")) return str;
     return str + " FANZONE";
@@ -101,6 +107,7 @@ export default async function SiteHomePage({
           }
           latestCompetition={latestCompetition}
           session={session}
+          userCompetitions={userCompetitions?.map((uc) => uc.userComp)}
         />
       </Suspense>
       <div className="my-4 sm:my-10" />

@@ -19,11 +19,13 @@ const CompetitionCard = ({
   competition,
   siteData,
   type,
+  played = false,
   onClick = () => {},
 }: {
   competition: SelectCompetition;
   siteData: SelectSite;
   type?: "current" | "past";
+  played?: boolean;
   onClick?: () => void; // Define onClick type
 }) => {
   const [users, setUsers] = useState<any[]>([]);
@@ -103,7 +105,7 @@ const CompetitionCard = ({
               {competition.title || "Competition by " + competition.sponsor}
             </h2>
             <p
-              className={`text-sm font-bold`}
+              className={`text-shadow text-sm font-bold`}
               style={{ color: siteData.color1 }}
             >
               {status}
@@ -115,7 +117,7 @@ const CompetitionCard = ({
               color2={siteData.color2}
               onClick={onClick}
             >
-              {type === "current" ? "Play" : "View"}
+              {played ? "View" : type === "current" ? "Play" : "View"}
             </PlayButton>
           ) : null}
         </CardFooter>

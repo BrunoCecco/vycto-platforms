@@ -15,7 +15,7 @@ const Slider: FC<{
 }> = ({
   userId,
   questionId,
-  initialValue,
+  initialValue = "0",
   competitionId,
   disabled,
   onBlur,
@@ -61,11 +61,11 @@ const Slider: FC<{
               max="90"
               startContent={<div className="">{MIN}</div>}
               endContent={<div className="relative">{MAX}</div>}
-              defaultValue={initialValue}
               value={initialValue}
               disabled={disabled}
               onChange={handleChange}
-              onDragLeave={handleBlur}
+              onMouseUp={handleBlur}
+              onDragEnd={handleBlur}
               className="h-3 w-full appearance-none"
             />
           </div>

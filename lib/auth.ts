@@ -92,7 +92,7 @@ export const authOptions: NextAuthOptions = {
         httpOnly: false,
         sameSite: "none",
         path: "/",
-        secure: true,
+        secure: VERCEL_DEPLOYMENT,
       },
     },
     pkceCodeVerifier: {

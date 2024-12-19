@@ -56,6 +56,10 @@ ul[data-type="taskList"] li > label {
   user-select: none;
 }
 
+.text-shadow {
+  text-shadow: #3f3f3f 1px 0 5px;
+}
+
 @media screen and (max-width: 768px) {
   ul[data-type="taskList"] li > label {
     margin-right: 0.5rem;

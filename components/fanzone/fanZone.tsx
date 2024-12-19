@@ -1,6 +1,11 @@
 import { FC, Suspense } from "react";
 import Competitions from "@/components/competitions/competitions";
-import { competitions, SelectCompetition, SelectSite } from "@/lib/schema";
+import {
+  competitions,
+  SelectCompetition,
+  SelectSite,
+  SelectUserCompetition,
+} from "@/lib/schema";
 import FanZoneHeader from "./fanzoneHeader";
 import MainLeaderboard from "../leaderboard/mainLeaderboard";
 import { ClockIcon, Medal, PlayCircle } from "lucide-react";
@@ -16,12 +21,14 @@ const FanZone = async ({
   pastCompetitions,
   latestCompetition,
   session,
+  userCompetitions,
 }: {
   siteData: SelectSite;
   currentCompetitions: SelectCompetition[];
   pastCompetitions: SelectCompetition[];
   latestCompetition: any;
   session: Session | null;
+  userCompetitions?: SelectUserCompetition[];
 }) => {
   return (
     <div className="w-full">
@@ -37,6 +44,7 @@ const FanZone = async ({
           <Competitions
             competitions={currentCompetitions}
             siteData={siteData}
+            userCompetitions={userCompetitions}
             type="current"
           />
         </Suspense>
@@ -54,6 +62,7 @@ const FanZone = async ({
           <Competitions
             competitions={pastCompetitions}
             siteData={siteData}
+            userCompetitions={userCompetitions}
             type="past"
           />
         </Suspense>

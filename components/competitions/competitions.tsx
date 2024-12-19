@@ -2,7 +2,11 @@
 
 import { FC, use, useEffect, useState } from "react";
 import CompetitionCard from "./competitionCard";
-import { SelectCompetition, SelectSite } from "@/lib/schema";
+import {
+  SelectCompetition,
+  SelectSite,
+  SelectUserCompetition,
+} from "@/lib/schema";
 import CompetitionModal from "./competitionModal";
 import { usePathname } from "next/navigation";
 import { Carousel } from "../ui/carousel";
@@ -11,10 +15,12 @@ import { getQuestionsForCompetition } from "@/lib/fetchers";
 const Competitions = ({
   competitions,
   siteData,
+  userCompetitions,
   type,
 }: {
   competitions: SelectCompetition[];
   siteData: SelectSite;
+  userCompetitions?: SelectUserCompetition[];
   type?: "current" | "past";
 }) => {
   const [selectedCompetition, setSelectedCompetition] =
@@ -67,6 +73,9 @@ const Competitions = ({
             competition={competition}
             siteData={siteData}
             type={type}
+            played={userCompetitions?.some(
+              (uc) => uc.competitionId === competition.id,
+            )}
             onClick={() => handleCompetitionClick(competition)} // Pass click handler
           />
         ))}
