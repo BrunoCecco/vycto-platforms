@@ -20,7 +20,7 @@ export default function EditFanZoneHeader({
     <>
       {/* Top Header Section */}
       <div className="ease left-0 right-0 top-0 z-30 flex transition-all duration-150 ">
-        <div className="my-6 mr-auto flex h-max items-center space-x-5 sm:my-12">
+        <div className="relative my-6 mr-auto flex h-fit items-center space-x-5 sm:my-12">
           <Form
             title="Site Logo"
             description=""
@@ -32,6 +32,7 @@ export default function EditFanZoneHeader({
               placeholder: "site logo",
             }}
             handleSubmit={updateSite}
+            size="sm"
             bordered={false}
           />
           <Link href={`/comp/${latestCompetition?.slug}` || "/"}>

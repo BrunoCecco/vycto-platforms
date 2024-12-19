@@ -26,6 +26,7 @@ export default function Form({
   bucketId,
   bucketName,
   updateId,
+  size = "md",
   circular = false,
   bordered = true,
   children,
@@ -45,6 +46,7 @@ export default function Form({
   bucketId?: string;
   bucketName?: string;
   updateId?: string;
+  size?: "sm" | "md" | "lg";
   circular?: boolean;
   bordered?: boolean;
   children?: React.ReactNode;
@@ -83,6 +85,7 @@ export default function Form({
       }}
       bucketId={bucketId}
       bucketName={bucketName}
+      size={size}
       circular={circular}
       bordered={bordered}
     >

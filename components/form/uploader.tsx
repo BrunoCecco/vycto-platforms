@@ -27,6 +27,7 @@ export default function Uploader({
   bucketId,
   bucketName,
   maxFileSize = 50,
+  size = "md",
   circular = false,
   bordered = true,
 }: {
@@ -40,6 +41,7 @@ export default function Uploader({
   bucketId?: string;
   bucketName?: string;
   maxFileSize?: number;
+  size?: "sm" | "md" | "lg";
   circular?: boolean;
   bordered?: boolean;
 }) {
@@ -222,27 +224,9 @@ export default function Uploader({
             <label
               htmlFor={`${id}-upload-${name}`}
               className={`group relative mt-2 flex cursor-pointer flex-col items-center justify-center border shadow-sm transition-all 
-                ${circular ? "mx-auto h-[150px] w-[150px] rounded-full" : "h-64  rounded-md lg:h-80"}`}
+                ${circular ? "mx-auto h-[150px] w-[150px] rounded-full" : "h-64 rounded-md lg:h-80"} 
+                ${size == "sm" ? "h-12 lg:h-20" : ""}`}
             >
-              {/* <div className="relative mx-auto h-[150px] w-[150px] cursor-pointer ">
-        {image && image != null && image != "" ? (
-          <Image
-            className="h-full w-full rounded-full object-contain"
-            fill
-            alt={"Image"}
-            src={image}
-          />
-        ) : (
-          <Image
-            className="h-full w-full rounded-full object-contain"
-            fill
-            alt="Profile Image"
-            src={`https://avatar.vercel.sh/image`}
-          />
-        )}
-
-      </div> */}
-
               <div
                 className="absolute z-[5] h-full w-full rounded-md"
                 onDragOver={(e) => {

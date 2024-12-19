@@ -67,18 +67,23 @@ const Competitions = ({
   return (
     <div className="flex w-full">
       <Carousel
-        items={competitions.map((competition: SelectCompetition, index) => (
-          <CompetitionCard
-            key={index}
-            competition={competition}
-            siteData={siteData}
-            type={type}
-            played={userCompetitions?.some(
-              (uc) => uc.competitionId === competition.id && uc.submitted,
-            )}
-            onClick={() => handleCompetitionClick(competition)} // Pass click handler
-          />
-        ))}
+        items={competitions.map((competition: SelectCompetition, index) => {
+          console.log(
+            userCompetitions?.find((uc) => uc.competitionId == competition.id),
+          );
+          return (
+            <CompetitionCard
+              key={index}
+              competition={competition}
+              siteData={siteData}
+              type={type}
+              played={userCompetitions?.some(
+                (uc) => uc.competitionId == competition.id && uc.submitted,
+              )}
+              onClick={() => handleCompetitionClick(competition)} // Pass click handler
+            />
+          );
+        })}
       />
       <CompetitionModal
         type={type!}

@@ -31,6 +31,8 @@ export default function PublishCompetitionButtons({
       competition.published ||
         new Date(competition.date).getTime() >= Date.now(),
     );
+    console.log(new Date(competition.date));
+    console.log(Date.now());
   }, [competition]);
 
   const submitCorrectAnswers = async () => {

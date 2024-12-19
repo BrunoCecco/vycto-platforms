@@ -269,6 +269,7 @@ export const submitAnswers = async (
       .update(userCompetitions)
       .set({
         submitted: true,
+        submissionDate: new Date().toISOString(),
       })
       .where(
         and(
