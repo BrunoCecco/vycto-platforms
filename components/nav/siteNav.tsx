@@ -163,8 +163,12 @@ export default function SiteNav({
               <CoolMode>
                 <div
                   onClick={stayNotified}
-                  className={`mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 transition-all duration-150  ease-in-out hover:bg-content3 `}
+                  className={`mt-12 relative flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 transition-all duration-150  ease-in-out hover:bg-content3 `}
                 >
+                  <div
+                    className="h-full rounded-full bg-content4 absolute"
+                    style={{transform: 'translateX(-30px)', height: '60px', width: '10px'}}
+                  ></div>
                   <Bell width={18} />
                   <span className="text-sm font-medium">Stay Notified</span>
                 </div>
