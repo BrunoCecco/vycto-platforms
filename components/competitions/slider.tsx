@@ -2,7 +2,7 @@
 import { useState, FC, useRef, useEffect } from "react";
 import { answerQuestion } from "@/lib/actions";
 import { toast } from "sonner";
-import { Input } from "@nextui-org/react";
+import { Input, Slider as NextSlider, SliderValue } from "@nextui-org/react";
 
 const Slider: FC<{
   userId?: string;
@@ -10,6 +10,7 @@ const Slider: FC<{
   initialValue: string;
   competitionId?: string;
   disabled: boolean;
+  color?: string;
   onBlur?: (value: number) => void;
   onLocalAnswer?: (questionId: string, answer: string) => void;
 }> = ({
@@ -18,6 +19,7 @@ const Slider: FC<{
   initialValue = "0",
   competitionId,
   disabled,
+  color,
   onBlur,
   onLocalAnswer,
 }) => {
@@ -48,7 +50,7 @@ const Slider: FC<{
   };
 
   return (
-    <div className="w-full px-4 py-6">
+    <div className="w-full">
       <div className="flex items-center justify-center space-x-4">
         <div
           id={questionId}
@@ -59,19 +61,40 @@ const Slider: FC<{
               type="range"
               min="0"
               max="90"
-              startContent={<div className="">{MIN}</div>}
+              startContent={<div className="ml-2">{MIN}</div>}
               endContent={<div className="relative">{MAX}</div>}
               value={initialValue}
               disabled={disabled}
               onChange={handleChange}
               onMouseUp={handleBlur}
               onDragEnd={handleBlur}
-              className="h-3 w-full appearance-none"
+              className="sm:text-md h-3 w-full appearance-none text-xs"
             />
+            {/* <NextSlider
+              className="sm:text-md w-full text-xs"
+              value={parseInt(value)}
+              onChange={(value: SliderValue) => setValue(value.toString())}
+              label="Minute"
+              maxValue={90}
+              minValue={0}
+              onDragEnd={handleBlur}
+              onMouseUp={handleBlur}
+              // isDisabled={disabled}
+              startContent={<div className="ml-2">{MIN}</div>}
+              endContent={<div className="relative">{MAX}</div>}
+              step={1}
+              classNames={{
+                base: "max-w-md gap-3",
+                track: "border-s-secondary-100",
+                filler: "bg-gradient-to-r from-secondary-100 to-secondary-500",
+                label: "text-xs",
+              }}
+              showTooltip={true}
+            /> */}
           </div>
         </div>
       </div>
-      <div className="pointer-events-none mt-4 transform text-center text-lg font-extrabold ">
+      <div className="pointer-events-none mt-4 transform text-center text-xs font-extrabold sm:text-lg ">
         {value}
       </div>
     </div>

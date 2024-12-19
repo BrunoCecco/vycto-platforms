@@ -1,49 +1,49 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 const Toggle = ({
   id,
   key,
   isSelected,
   onToggle,
-  label
+  label,
 }: {
-  id: string,
-  key: string,
-  isSelected: boolean,  
-  onToggle?: (toggled: boolean) => void,
-  label?: string
+  id: string;
+  key: string;
+  isSelected: boolean;
+  onToggle?: (toggled: boolean) => void;
+  label?: string;
 }) => {
-  const [toggled, setToggled] = useState(isSelected)
+  const [toggled, setToggled] = useState(isSelected);
 
   const handleToggle = () => {
-    const newState = !toggled
-    setToggled(newState)
+    const newState = !toggled;
+    setToggled(newState);
     if (onToggle) {
-      onToggle(newState)
+      onToggle(newState);
     }
-  }
+  };
 
   return (
     <div className="flex items-center">
       <div
         id={id}
-        key={key}      
+        key={key}
         className={
-          'relative cursor-pointer h-[25px] w-[45px] translate-x-1 translate-y-1 cursor-pointer rounded-sm bg-foreground'
+          "relative h-[20px] w-[50px] translate-x-1 translate-y-1 cursor-pointer rounded-md bg-foreground"
         }
         onClick={handleToggle}
       >
         <span
-          className={`flex h-full w-full items-center justify-center rounded-sm border-[2px]  ${toggled ? 'translate-x-[3px] translate-y-[-3px] bg-primary' : ' bg-content3'} p-[2px] transition-all duration-300`}
+          className={`flex h-full w-full translate-x-[3px] translate-y-[-3px] items-center justify-center rounded-md border-[2px] ${toggled ? " bg-primary" : " bg-content3"} transition-all duration-300`}
         >
           <span
-            className={`aspect-square h-full transform border-[2px] rounded-sm bg-background shadow-lg ${toggled ? 'translate-x-[10px]' : 'translate-x-[-10px]'} transition-all duration-300`}
+            className={`h-[20px] w-[20px] transform rounded-md border-[2px] bg-background shadow-lg ${toggled ? "translate-x-[15px]" : "translate-x-[-15px]"} transition-all duration-300`}
           />
         </span>
       </div>
       <div className="ml-4">{label}</div>
     </div>
-  )
-}
+  );
+};
 
-export default Toggle
+export default Toggle;

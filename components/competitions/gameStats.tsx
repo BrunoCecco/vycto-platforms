@@ -1,4 +1,5 @@
 import { SelectUser, SelectUserCompetition } from "@/lib/schema";
+import { makeTransparent } from "@/lib/utils";
 import { Share } from "lucide-react"; // Importing the icons
 import { FC } from "react";
 
@@ -24,8 +25,11 @@ const GameStats: FC<GameStatsProps> = ({
   const percentile = percentileNum.toFixed(2) + "%";
 
   return (
-    <div className="flex justify-center overflow-hidden rounded-lg bg-content4">
-      <div className="flex h-80 w-full flex-col justify-around px-6 py-4 shadow-sm">
+    <div
+      className="flex justify-center overflow-hidden rounded-lg"
+      style={{ backgroundColor: makeTransparent(color, 0.6) }}
+    >
+      <div className="flex w-full flex-col justify-around gap-4 px-6 py-4 shadow-sm sm:gap-16">
         {/* Header */}
         <h2 className="text-center text-xl font-semibold ">
           Competition: {competitionTitle}

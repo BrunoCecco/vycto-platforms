@@ -10,16 +10,12 @@ const WhatMinute = ({ ...props }) => {
   console.log(props.answer.answer);
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative h-full w-full rounded-lg  p-6 shadow-xl md:shadow-2xl">
+      <div className="relative h-full w-full rounded-lg p-4 shadow-xl md:shadow-2xl">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
         <WideImage src={props.image1} color={props.color} />
-
-        <TextGenerateEffect
-          words={props.question}
-          className="mb-1 text-center text-xs font-semibold md:text-xl "
-        />
+        <TextGenerateEffect words={props.question || ""} color={props.color} />
         <p className="mb-6 text-center text-xs md:text-sm">
           The closer you get, the more points you score
         </p>

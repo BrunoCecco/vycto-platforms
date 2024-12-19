@@ -15,20 +15,17 @@ const MatchOutcome = ({ ...props }) => {
 
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative w-full rounded-lg p-4 shadow-xl md:p-10">
+      <div className="relative w-full rounded-lg p-4 shadow-xl">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
-        <TextGenerateEffect
-          words={props.question || ""}
-          className="mb-1 text-center text-sm font-semibold md:text-xl "
-        />
+        <TextGenerateEffect words={props.question || ""} color={props.color} />
         <p className="text-center text-xs md:text-sm">
           Pick the winner to score points
         </p>
 
         {/* Teams */}
-        <div className="flex w-full items-center justify-between gap-1 sm:gap-2 py-4 md:justify-around md:px-4">
+        <div className="flex w-full items-center justify-between gap-1 py-4 sm:gap-2 md:justify-around md:px-4">
           {/* Home Team */}
           <Submit
             userId={props.userId}
@@ -65,7 +62,7 @@ const MatchOutcome = ({ ...props }) => {
           {/* VS */}
           <div className="text-center">
             <div
-              className="rounded-full border-2 p-1 pr-1.5 sm:p-2 sm:pr-3 text-sm font-bold italic text-xs sm:text-xl"
+              className="rounded-full border-2 p-1 pr-1.5 text-sm text-xs font-bold italic sm:p-2 sm:pr-3 sm:text-xl"
               style={{ borderColor: props.color, color: props.color }}
             >
               VS

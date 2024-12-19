@@ -37,16 +37,13 @@ const GeneralSelection = ({ ...props }) => {
 
   return (
     <div className="flex w-full items-center">
-      <div className="relative w-full rounded-lg p-4 shadow-xl md:p-10">
+      <div className="relative w-full rounded-lg p-4 shadow-xl">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
         <WideImage src={props.image1} color={props.color} />
 
-        <TextGenerateEffect
-          words={props.question || ""}
-          className="mb-1 text-center text-sm font-semibold md:text-xl "
-        />
+        <TextGenerateEffect words={props.question || ""} color={props.color} />
         <p className="text-center text-xs md:text-sm">
           Select correctly to score points
         </p>
@@ -65,7 +62,7 @@ const GeneralSelection = ({ ...props }) => {
                 <Button
                   isDisabled={props.disabled}
                   type="submit"
-                  className={`w-max rounded-lg bg-content2 px-4 py-3 text-sm transition-all duration-200 ${
+                  className={`w-max min-w-12 rounded-lg bg-content4 px-4 py-3 text-sm transition-all duration-200 ${
                     selectedOption === option ? "shadow-lg" : ""
                   } ${!props.disabled ? "hover:scale-105 hover:font-extrabold" : ""}`}
                   onClick={() => setSelectedOption(option)}

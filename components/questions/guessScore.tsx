@@ -6,6 +6,7 @@ import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import { Button } from "@nextui-org/react";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
+import Counter from "./counter";
 
 const GuessScore = ({ ...props }) => {
   const [scores, setScores] = useState({
@@ -35,14 +36,11 @@ const GuessScore = ({ ...props }) => {
 
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative w-full rounded-lg p-4 shadow-xl md:p-10">
+      <div className="relative w-full rounded-lg p-4 shadow-xl">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
-        <TextGenerateEffect
-          words={"Guess the score"}
-          className="mb-1 text-center text-sm font-semibold md:text-xl"
-        />
+        <TextGenerateEffect words={"Guess the score"} color={props.color} />
         {/* Teams */}
         <Submit
           userId={props.userId}
@@ -52,30 +50,21 @@ const GuessScore = ({ ...props }) => {
           onLocalAnswer={props.onLocalAnswer}
         >
           <div
-            className="flex w-full items-center justify-between gap-4 py-4 text-center md:justify-around md:px-4"
+            className="flex w-full justify-around gap-4 py-4 text-center md:justify-around md:px-4"
             onBlur={() => submitButton?.current?.click()}
           >
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex basis-1/3 flex-col items-center gap-4">
               <div className="flex items-center gap-2 md:gap-8">
-                <Button
-                  onClick={() => updateScore("home", false)}
-                  variant="light"
-                  className="min-w-0 !p-0"
-                  isDisabled={props.disabled}
-                >
-                  <MinusCircle />
-                </Button>
-                <div>{scores.home}</div>
-                <Button
-                  onClick={() => updateScore("home", true)}
-                  isDisabled={props.disabled}
-                  className="min-w-0 !p-0"
-                  variant="light"
-                >
-                  <PlusCircle />
-                </Button>
+                <Counter
+                  disabled={props.disabled}
+                  team="home"
+                  defaultValue={scores.home}
+                  onChange={(val: 1 | -1) => updateScore("home", val === 1)}
+                />
               </div>
-              <p className="text-sm font-semibold">{props.answer1}</p>
+              <p className="break-words text-sm font-semibold">
+                {props.answer1}
+              </p>
             </div>
 
             {/* VS */}
@@ -88,27 +77,18 @@ const GuessScore = ({ ...props }) => {
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex basis-1/3 flex-col items-center gap-4">
               <div className="flex items-center gap-2 md:gap-8">
-                <Button
-                  onClick={() => updateScore("away", false)}
-                  isDisabled={props.disabled}
-                  className="min-w-0 !p-0"
-                  variant="light"
-                >
-                  <MinusCircle />
-                </Button>
-                <div>{scores.away}</div>
-                <Button
-                  onClick={() => updateScore("away", true)}
-                  isDisabled={props.disabled}
-                  className="min-w-0 !p-0"
-                  variant="light"
-                >
-                  <PlusCircle />
-                </Button>
+                <Counter
+                  disabled={props.disabled}
+                  team="away"
+                  defaultValue={scores.away}
+                  onChange={(val: 1 | -1) => updateScore("away", val === 1)}
+                />
               </div>
-              <p className="text-sm font-semibold">{props.answer2}</p>
+              <p className="break-words text-sm font-semibold">
+                {props.answer2}
+              </p>
             </div>
           </div>
           <Button

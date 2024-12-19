@@ -16,17 +16,14 @@ const GeneralNumber = ({ ...props }) => {
 
   return (
     <div className="flex w-full items-center justify-center">
-      <div className="relative h-full w-full rounded-lg p-6 shadow-xl">
+      <div className="relative h-full w-full rounded-lg p-4 shadow-xl">
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
         <WideImage src={props.image1} color={props.color} />
 
         {/* Question */}
-        <TextGenerateEffect
-          words={props.question}
-          className="mb-1 text-center text-sm font-semibold md:text-xl "
-        />
+        <TextGenerateEffect words={props.question || ""} color={props.color} />
         <p className="mb-6 text-center text-xs md:text-sm">
           Answer correctly to score points.
         </p>
@@ -47,6 +44,10 @@ const GeneralNumber = ({ ...props }) => {
             defaultValue="1"
             onChange={(e) => setAnswer(e.target.value)}
             className="w-20 text-center"
+            classNames={{
+              input: " text-md sm:text-xl",
+              inputWrapper: "bg-content4",
+            }}
             onBlur={() => submitButton?.current?.click()}
           />
           <Button className="hidden" type="submit" ref={submitButton}></Button>

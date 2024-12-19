@@ -9,12 +9,14 @@ export const TextGenerateEffect = ({
   className,
   filter = true,
   duration = 0.5,
+  color,
 }: {
   words: string;
   delay?: number;
   className?: string;
   filter?: boolean;
   duration?: number;
+  color?: string;
 }) => {
   const [scope, animate] = useAnimate();
   // Split words by spaces and new lines
@@ -41,14 +43,15 @@ export const TextGenerateEffect = ({
           return (
             <div
               key={sentence + idx}
-              className="my-1 block text-center text-lg"
+              className="my-1 flex flex-wrap items-center justify-center gap-x-1 text-center text-xs sm:gap-x-2 md:text-lg"
             >
               {sentence.split(" ").map((word, idx) => (
                 <motion.span
                   key={word + idx}
-                  className={cn(" opacity-0 ", className)}
+                  className={cn("!mb-0 opacity-0", className)}
                   style={{
                     filter: filter ? "blur(10px)" : "none",
+                    color: color,
                   }}
                 >
                   {word}{" "}
@@ -64,7 +67,7 @@ export const TextGenerateEffect = ({
   return (
     <div className={cn("font-bold", className)}>
       <div className="mt-4">
-        <div className="sm:text-md text-sm leading-snug tracking-wide  md:text-2xl ">
+        <div className="sm:text-md text-sm leading-none md:text-2xl ">
           {renderWords()}
         </div>
       </div>
