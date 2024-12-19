@@ -178,8 +178,8 @@ export default function CombinedForm({
                 />
                 <ReactFlagsSelect
                   key={"country-select"}
-                  selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2"
-                  className="!rounded-xl !border-none !p-0 !text-black"
+                  selectButtonClassName="!bg-content2 !text-sm !rounded-xl !border-none !text-foreground !py-1 !px-2"
+                  className="!rounded-xl !border-none !text-sm !p-0 !text-black"
                   selected={selectedCountry || ""}
                   onSelect={(code) => setSelectedCountry(code)}
                 />
