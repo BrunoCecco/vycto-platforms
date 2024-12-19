@@ -28,7 +28,7 @@ const MatchOutcome = ({ ...props }) => {
         </p>
 
         {/* Teams */}
-        <div className="flex w-full flex-col items-center justify-between gap-2 py-4 md:flex-row md:justify-around md:px-4">
+        <div className="flex w-full items-center justify-between gap-1 sm:gap-2 py-4 md:justify-around md:px-4">
           {/* Home Team */}
           <Submit
             userId={props.userId}
@@ -53,7 +53,7 @@ const MatchOutcome = ({ ...props }) => {
                   alt="Option 1 Image"
                   fill
                   unoptimized
-                  className="h-full w-full object-contain"
+                  className="h-full w-full object-cover"
                 />
               </Button>
               <CardFooter className="absolute bottom-0 z-10 flex w-full justify-center overflow-hidden rounded-b-lg bg-background/20 py-1 text-center text-xs shadow-sm md:text-sm">
@@ -65,7 +65,7 @@ const MatchOutcome = ({ ...props }) => {
           {/* VS */}
           <div className="text-center">
             <div
-              className="rounded-full border-2 p-2 pr-3 text-sm font-bold italic md:text-xl"
+              className="rounded-full border-2 p-1 pr-1.5 sm:p-2 sm:pr-3 text-sm font-bold italic text-xs sm:text-xl"
               style={{ borderColor: props.color, color: props.color }}
             >
               VS
@@ -96,7 +96,7 @@ const MatchOutcome = ({ ...props }) => {
                   alt="Option 2 Image"
                   fill
                   unoptimized
-                  className="h-full w-full object-contain"
+                  className="h-full w-full object-cover"
                 />
               </Button>
               <CardFooter className="absolute bottom-0 z-10 flex w-full justify-center overflow-hidden rounded-b-lg bg-background/20 py-1 text-center text-xs shadow-sm md:text-sm">
