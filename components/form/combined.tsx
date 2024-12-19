@@ -27,7 +27,7 @@ import { useFormStatus } from "react-dom";
 import { useDateFormatter } from "@react-aria/i18n";
 import { parseDate, getLocalTimeZone } from "@internationalized/date";
 import CombinedFormImage from "./combinedFormImage";
-import Toggle from "@/ui/toggle";
+import Toggle from "@/components/ui/toggle";
 
 interface InputAttr {
   name: string;
