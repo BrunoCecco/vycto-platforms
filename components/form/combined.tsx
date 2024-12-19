@@ -145,7 +145,7 @@ export default function CombinedForm({
       return null;
     }
     return (
-      <div className="w-full pl-5 pt-5 sm:w-1/3">
+      <div className="w-full px-5 pt-5 sm:pr-0 sm:pt-0 sm:w-1/3">
         <div className="flex w-full flex-col gap-6 rounded-lg border p-4">
           {imageInputAttr && (
             <CombinedFormImage
