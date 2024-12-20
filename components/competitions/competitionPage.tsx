@@ -248,7 +248,7 @@ export default function CompetitionPage({
         )}
         {activeTab == "Challenge" && (
           <TracingBeam color1={siteData.color1} color2={siteData.color2}>
-            <div className="relative z-50 mx-auto flex w-full flex-col justify-center gap-12 py-12 md:gap-20 md:rounded-3xl">
+            <div className="mx-auto flex w-full flex-col justify-center gap-12 py-12 md:gap-20 md:rounded-3xl">
               {submitted && userComp ? (
                 <GameStats
                   competitionTitle={data.title!}

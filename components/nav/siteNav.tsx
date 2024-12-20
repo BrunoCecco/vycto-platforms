@@ -153,7 +153,7 @@ export default function SiteNav({
                     href={href}
                     className={`flex items-center space-x-3 ${
                       isActive ? "bg-transparent" : ""
-                    } rounded-md bg-content2 px-2 py-1.5 hover:bg-transparent active:bg-transparent`}
+                    } bg-content2 px-2 py-1.5 hover:bg-transparent active:bg-transparent`}
                   >
                     {icon}
                     <span className="text-sm font-medium">{name}</span>

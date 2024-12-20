@@ -19,6 +19,8 @@ import {
   Spinner,
   DatePicker,
   Switch,
+  Card,
+  CardBody,
 } from "@nextui-org/react";
 import { USER_ROLES } from "@/lib/constants";
 import ReactFlagsSelect from "react-flags-select";
@@ -145,7 +147,7 @@ export default function CombinedForm({
       return null;
     }
     return (
-      <div className="w-full px-5 pt-5 sm:pr-0 sm:pt-0 sm:w-1/3">
+      <div className="w-full px-5 pt-5 sm:w-1/3 sm:pr-0 sm:pt-0">
         <div className="flex w-full flex-col gap-6 rounded-lg border p-4">
           {imageInputAttr && (
             <CombinedFormImage
@@ -177,13 +179,17 @@ export default function CombinedForm({
                   name="country"
                   value={selectedCountry}
                 />
-                <ReactFlagsSelect
-                  key={"country-select"}
-                  selectButtonClassName="!bg-content2 !text-sm !rounded-xl !border-none !text-foreground !py-1 !px-2"
-                  className="!rounded-xl !border-none !text-sm !p-0 !text-black"
-                  selected={selectedCountry || ""}
-                  onSelect={(code) => setSelectedCountry(code)}
-                />
+                <div className="rounded-xl bg-content2 pt-2">
+                  <div className="px-3 text-xs text-default-600">Country</div>
+                  <ReactFlagsSelect
+                    key={"country-select"}
+                    selectButtonClassName="!bg-content2 !text-sm !rounded-xl !border-none !text-foreground !py-1 !px-2"
+                    className="!rounded-xl !border-none !p-0 !text-sm !text-black"
+                    selected={selectedCountry || ""}
+                    onSelect={(code) => setSelectedCountry(code)}
+                    optionsSize={14}
+                  />
+                </div>
               </>
             )}
             {favouritePlayerInputAttr && (
@@ -216,6 +222,14 @@ export default function CombinedForm({
               )
             ) {
               return null;
+            }
+            if (inputAttr.name === "divider") {
+              return (
+                <div
+                  key={index}
+                  className="my-4 w-full border-1.5 border-b border-content4"
+                ></div>
+              );
             }
             return (
               <div className="relative w-full" key={inputAttr.name}>
@@ -284,7 +298,7 @@ export default function CombinedForm({
                       name={inputAttr.name}
                       value={checkboxValues[inputAttr.name] || "false"}
                     />
-                    <Toggle 
+                    <Toggle
                       id={inputAttr.name + "switch"}
                       key={inputAttr.name + "switch"}
                       isSelected={checkboxValues[inputAttr.name] == "true"}

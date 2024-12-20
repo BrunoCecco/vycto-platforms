@@ -88,6 +88,12 @@ export default function UserSettings() {
                 label: "Birth Date",
               },
               {
+                name: "divider",
+                type: "none",
+                defaultValue: "",
+                label: "",
+              },
+              {
                 name: "fanzoneNotifications",
                 type: "checkbox",
                 defaultValue: user.fanzoneNotifications ? "true" : "false",
