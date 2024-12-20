@@ -226,6 +226,7 @@ export const enterUserToCompetition = async (
     revalidateTag(`${userId}-${competitionId}-comp`);
     revalidateTag(`${userId}-comps`);
     revalidateTag(`${competitionId}-users`);
+    revalidateTag(`${userId}-${competitionId}-answers`);
 
     return response;
   } catch (error: any) {
@@ -279,6 +280,8 @@ export const submitAnswers = async (
       )
       .returning();
 
+    revalidateTag(`${userId}-${competitionId}-answers`);
+
     return response;
   } catch (error: any) {
     return {
@@ -306,6 +309,8 @@ export const updateUserPoints = async (
         ),
       )
       .returning();
+
+    revalidateTag(`${userId}-${competitionId}-answers`);
 
     return response;
   } catch (error: any) {
