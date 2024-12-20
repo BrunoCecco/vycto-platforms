@@ -74,7 +74,6 @@ function FormButton() {
       )}
       isDisabled={pending}
       type="submit"
-      onClick={() => setClicked(true)}
     >
       {pending ? (
         <Spinner />
