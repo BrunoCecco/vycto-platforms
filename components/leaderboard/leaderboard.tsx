@@ -100,10 +100,10 @@ const Leaderboard = ({
                   <td className="justify-end py-4 text-right">
                     <Link
                       href={`/comp/${competition.slug}/${user.userId}`}
-                      className="bg-blue-100 text-purple-800 hover:bg-blue-300 rounded-lg p-2 px-4 text-sm shadow-md transition-all duration-200 hover:shadow-none"
+                      className="bg-content3 rounded-lg p-2 px-4 text-sm shadow-md transition-all duration-200 hover:shadow-none"
                       style={{
                         backgroundImage: calculateBg(index),
-                        color: "black",
+                      
                       }}
                     >
                       View
