@@ -39,6 +39,7 @@ declare module "next-auth" {
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
+  debug: true,
   providers: [
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID!,
@@ -108,7 +109,7 @@ export const authOptions: NextAuthOptions = {
       name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
       options: {
         httpOnly: true,
-        sameSite: "none",
+        sameSite: "lax",
         path: "/",
         // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
         domain: VERCEL_DEPLOYMENT
@@ -120,6 +121,8 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     jwt({ token, trigger, session, user }) {
+      console.log(token, "TOKEN");
+      console.log(trigger, session, user, "REST");
       if (trigger === "update" && session?.user) {
         token.user = session?.user || token.user;
         token.name = session?.user?.name || token.name;
@@ -134,6 +137,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     session: async ({ session, token }) => {
+      console.log(session, token, "SESSION");
       session.user = {
         // @ts-expect-error
         id: token.sub,

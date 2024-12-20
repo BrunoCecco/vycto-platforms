@@ -55,6 +55,8 @@ export default async function HowToPlayPage({
     getLatestCompetitionForSite(domain),
   ]);
   const session = await getServerSession(authOptions);
+  console.log(session, "session");
+  console.log("here");
   const questions = await getQuestionsForCompetition(
     latestCompData[0].competition.id,
   );

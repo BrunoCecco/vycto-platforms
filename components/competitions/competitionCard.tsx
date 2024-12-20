@@ -35,7 +35,6 @@ const CompetitionCard = ({
   useEffect(() => {
     const fetchUsers = async () => {
       const usrs = await getCompetitionUsers(competition.id);
-      console.log(usrs);
       setUsers(usrs);
 
       const days = Math.ceil(
