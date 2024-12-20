@@ -76,15 +76,7 @@ export default function CompetitionPage({
       (userComp && "submitted" in userComp && userComp.submitted) || false;
     setSubmitted(hasSubmitted);
 
-    if (session?.user?.id != userComp?.userId) {
-      console.log("User not in competition");
-      setActiveTab("Challenge");
-    } else if (hasEnded) {
-      console.log("Competition has ended");
-      // setActiveTab("Leaderboard");
-    }
-
-    if (session && searchParams && !userComp) {
+    if (session && searchParams) {
       posthog?.identify(session?.user?.id!, {
         email: session?.user?.email,
       });
@@ -96,7 +88,7 @@ export default function CompetitionPage({
       });
       if (Object.keys(extractedAnswers).length > 0) {
         setLocalAnswers(extractedAnswers);
-        submitExtractedAnswers(extractedAnswers);
+        //submitExtractedAnswers(extractedAnswers);
       }
     }
     checkUsername();
