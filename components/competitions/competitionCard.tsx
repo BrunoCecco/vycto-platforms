@@ -82,7 +82,7 @@ const CompetitionCard = ({
 
   return (
     <HoverBorderGradient
-      containerClassName="group h-[350px] w-[300px] relative rounded-xl overflow-hidden"
+      containerClassName="group sm:h-[350px] sm:w-[300px] h-[235px] w-[200px] relative rounded-xl overflow-hidden"
       className="hover: relative h-full w-full transition-all duration-400"
       color={siteData.color1}
     >
@@ -101,11 +101,11 @@ const CompetitionCard = ({
         />
         <CardFooter className="absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-background/60 py-1 shadow-small before:rounded-xl">
           <div className="flex w-full flex-col gap-1">
-            <h2 className="font-semibold">
+            <h2 className="sm:text-md text-sm font-semibold">
               {competition.title || "Competition by " + competition.sponsor}
             </h2>
             <p
-              className={`text-sm font-bold`}
+              className={`text-xs font-bold sm:text-sm`}
               style={{ color: siteData.color2 }}
             >
               {status}

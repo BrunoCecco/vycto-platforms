@@ -223,9 +223,9 @@ export default function Uploader({
           ) : (
             <label
               htmlFor={`${id}-upload-${name}`}
-              className={`group relative mt-2 flex cursor-pointer flex-col items-center justify-center border shadow-sm transition-all 
-                ${circular ? "mx-auto h-[150px] w-[150px] rounded-full" : "h-64 rounded-md lg:h-80"} 
-                ${size == "sm" ? "h-12 lg:h-20" : ""}`}
+              className={`group relative mt-2 flex cursor-pointer flex-col items-center justify-center border shadow-sm transition-all                 
+                ${size == "sm" ? "h-12 lg:h-20" : "h-64 lg:h-80"}
+                ${circular ? "mx-auto !h-[150px] !w-[150px] rounded-full sm:h-[150px] sm:w-[150px]" : "rounded-md"}`}
             >
               <div
                 className="absolute z-[5] h-full w-full rounded-md"
@@ -318,7 +318,7 @@ export default function Uploader({
                     quality={50}
                     unoptimized
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className={`h-full w-full object-contain ${circular ? "rounded-full" : "rounded-md"}`}
+                    className={`h-full w-full object-cover ${circular ? "rounded-full" : "rounded-md"}`}
                   />
                 </div>
               )}

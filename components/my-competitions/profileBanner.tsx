@@ -19,7 +19,7 @@ export default function ProfileBanner({
       style={{ borderBottomColor: siteData.color1 }}
     >
       <div className="absolute left-0 right-0 z-0 mx-auto h-80 w-80 rounded-full bg-background/20" />
-      <div className="relative z-20 h-12 w-12 overflow-hidden rounded-full md:h-32 md:w-32">
+      <div className="relative z-20 h-12 w-12 min-w-12 overflow-hidden rounded-full md:h-32 md:w-32">
         <Image
           alt="Profile Picture"
           className="h-full w-full object-cover"
@@ -46,8 +46,9 @@ export default function ProfileBanner({
           />
         </div>
         {user.favouritePlayer ? (
-          <h2 className="break-words text-xs font-semibold md:text-lg">
-            Favourite Player: {user.favouritePlayer}
+          <h2 className="break-words text-xs md:text-lg">
+            Favourite Player: <br />{" "}
+            <span className="font-semibold">{user.favouritePlayer}</span>
           </h2>
         ) : null}
       </div>

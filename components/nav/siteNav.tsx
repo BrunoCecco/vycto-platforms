@@ -142,7 +142,7 @@ export default function SiteNav({
                 </PlayButton>
               </Link>
             </div>
-            <div className="mt-4 grid gap-1">
+            <div className="mt-12 grid gap-1 sm:mt-4">
               {tabs.map(({ name, href, isActive, icon }) => (
                 <div
                   key={name}

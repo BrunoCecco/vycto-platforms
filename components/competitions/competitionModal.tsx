@@ -46,7 +46,7 @@ export default function CompetitionModal({
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
         <ModalBody>
           <ModalContent>
-            <h4 className="mb-8 text-center text-lg font-bold md:text-2xl">
+            <h4 className="mb-8 text-center text-xl font-bold md:text-2xl">
               {type === "current" ? (
                 <span>
                   A chance to{" "}
@@ -87,7 +87,7 @@ export default function CompetitionModal({
                     alt="images"
                     width="500"
                     height="500"
-                    className="h-20 w-20 flex-shrink-0 rounded-lg object-cover md:h-40 md:w-40"
+                    className="h-28 w-28 flex-shrink-0 rounded-lg object-cover md:h-40 md:w-40"
                   />
                 </motion.div>
               ))}

@@ -16,7 +16,7 @@ const PlayButton = ({ children, ...props }: ShinyButtonProps) => {
       <HoverBorderGradient
         containerClassName="rounded-full"
         as="button"
-        className="group relative px-8 py-2 transition-all duration-200 hover:scale-105 hover:bg-transparent"
+        className="sm:text-md group relative px-2 py-1 text-xs transition-all duration-200 hover:scale-105 hover:bg-transparent sm:px-8 sm:py-2"
         color={props.color1}
       >
         {children}
