@@ -115,40 +115,19 @@ ul[data-type="taskList"] li[data-checked="true"] > div > p {
   text-decoration-thickness: 2px;
 }
 
-/* RangeSlider.css */
-/* input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  width: 24px;
-  height: 24px; 
-  background-color: #1f2937; 
-  border-radius: 50%;
-  cursor: pointer;
-} */
-/* 
-input[type="range"]::-moz-range-thumb {
-  width: 24px; 
-  height: 24px; 
-  background-color: #1f2937;
-  border-radius: 50%;
-  cursor: pointer;
-} */
-
 input[type="range"]::-webkit-slider-runnable-track {
   -webkit-appearance: none;
   appearance: none;
   height: 3px;
-  background: rgb(246, 114, 128);
+  background: var(--input-track-color);
   background: -webkit-linear-gradient(
     left,
-    rgba(246, 114, 128, 1) 0%,
-    rgba(192, 108, 132, 1) 50%,
+    var(--input-track-color) 50%,
     rgba(53, 92, 125, 1) 100%
   );
   background: linear-gradient(
     to right,
-    rgba(246, 114, 128, 1) 0%,
-    rgba(192, 108, 132, 1) 50%,
-    rgba(53, 92, 125, 1) 100%
+    var(--input-track-color) 50% rgba(53, 92, 125, 1) 100%
   );
   filter: progid:DXImageTransform.Microsoft.gradient(
     startColorstr="#f67280",
@@ -161,17 +140,14 @@ input[type="range"]::-moz-range-track {
   -moz-appearance: none;
   appearance: none;
   height: 3px;
-  background: rgb(246, 114, 128);
+  background: var(--input-track-color);
   background: -moz-linear-gradient(
     left,
-    rgba(246, 114, 128, 1) 0%,
-    rgba(192, 108, 132, 1) 50%,
-    rgba(53, 92, 125, 1) 100%
+    var(--input-track-color) 50% rgba(53, 92, 125, 1) 100%
   );
   background: linear-gradient(
     to right,
-    rgba(246, 114, 128, 1) 0%,
-    rgba(192, 108, 132, 1) 50%,
+    var(--input-track-color) 50%,
     rgba(53, 92, 125, 1) 100%
   );
   filter: progid:DXImageTransform.Microsoft.gradient(
@@ -186,22 +162,22 @@ input[type="range"]::-ms-track {
   -moz-appearance: none;
   appearance: none;
   height: 3px;
-  background: rgb(246, 114, 128);
+  background: var(--input-track-color);
   background: -moz-linear-gradient(
     left,
-    rgba(246, 114, 128, 1) 0%,
+    var(--input-track-color) 50%,
     rgba(192, 108, 132, 1) 50%,
     rgba(53, 92, 125, 1) 100%
   );
   background: -webkit-linear-gradient(
     left,
-    rgba(246, 114, 128, 1) 0%,
+    var(--input-track-color) 50%,
     rgba(192, 108, 132, 1) 50%,
     rgba(53, 92, 125, 1) 100%
   );
   background: linear-gradient(
     to right,
-    rgba(246, 114, 128, 1) 0%,
+    var(--input-track-color) 50%,
     rgba(192, 108, 132, 1) 50%,
     rgba(53, 92, 125, 1) 100%
   );
@@ -215,7 +191,7 @@ input[type="range"]::-ms-track {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  border: 2px solid #f8b195;
+  border: 2px solid var(--input-track-color);
   border-radius: 50%;
   height: 25px;
   width: 25px;
@@ -234,7 +210,7 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   -moz-appearance: none;
   appearance: none;
-  border: 2px solid #f8b195;
+  border: 2px solid var(--input-track-color);
   border-radius: 50%;
   height: 20px;
   width: 20px;
@@ -256,7 +232,7 @@ input[type="range"]::-ms-thumb {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  border: 2px solid #f8b195;
+  border: 2px solid var(--input-track-color);
   border-radius: 50%;
   height: 20px;
   width: 20px;
@@ -273,6 +249,7 @@ input[type="range"]::-ms-thumb {
     cursor: grabbing;
   }
 }
+
 /* 
 @layer base {
   :root {

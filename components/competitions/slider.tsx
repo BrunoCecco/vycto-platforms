@@ -27,6 +27,13 @@ const Slider: FC<{
   const MIN = 0;
   const MAX = 90;
 
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--input-track-color",
+      color || "#000",
+    );
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
@@ -61,8 +68,8 @@ const Slider: FC<{
               type="range"
               min="0"
               max="90"
-              startContent={<div className="ml-2">{MIN}</div>}
-              endContent={<div className="relative">{MAX}</div>}
+              startContent={<div className="ml-2 mr-1">{MIN}</div>}
+              endContent={<div className="relative ml-1">{MAX}</div>}
               value={initialValue}
               disabled={disabled}
               onChange={handleChange}
