@@ -43,7 +43,7 @@ export const TextGenerateEffect = ({
           return (
             <div
               key={sentence + idx}
-              className="my-1 flex flex-wrap items-center justify-center gap-x-1 text-center text-xs sm:gap-x-2 md:text-lg"
+              className="my-1 flex flex-wrap items-center justify-center gap-x-1 text-center text-sm sm:gap-x-2 md:text-lg"
             >
               {sentence.split(" ").map((word, idx) => (
                 <motion.span
