@@ -241,12 +241,12 @@ export const submitAnswers = async (
   competitionId: string,
   localAnswers: { [key: string]: string },
 ) => {
-  const session = await getServerSession(authOptions);
-  if (!session?.user.id) {
-    return {
-      error: "Not authenticated",
-    };
-  }
+  //const session = await getServerSession(authOptions);
+  //if (!session?.user.id) {
+    //return {
+      //error: "Not authenticated",
+    //};
+  //}
 
   try {
     // First, submit any local answers that haven't been saved to the database yet
@@ -254,7 +254,7 @@ export const submitAnswers = async (
       await db
         .insert(answers)
         .values({
-          userId: session.user.id,
+          userId,
           competitionId,
           questionId,
           answer,
@@ -274,7 +274,7 @@ export const submitAnswers = async (
       })
       .where(
         and(
-          eq(userCompetitions.userId, session.user.id),
+          eq(userCompetitions.userId, userId),
           eq(userCompetitions.competitionId, competitionId),
         ),
       )
