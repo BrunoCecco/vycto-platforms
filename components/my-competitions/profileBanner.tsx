@@ -36,7 +36,7 @@ export default function ProfileBanner({
         </p>
       </div>
       <div className="z-20 ml-auto flex flex-col gap-2 pl-2">
-        <div className="hidden md:block">
+        {user.country ? <div className="hidden md:block">
           <ReactFlagsSelect
             selectButtonClassName="!bg-content2 !rounded-xl !border-none !text-foreground !py-1 !px-2 after:!content-none"
             className="!rounded-xl !border-none !bg-content2 !p-0 !text-background after:!content-none"
@@ -44,7 +44,7 @@ export default function ProfileBanner({
             onSelect={() => null}
             disabled
           />
-        </div>
+        </div> : null}
         {user.favouritePlayer ? (
           <h2 className="break-words text-xs md:text-lg">
             Favourite Player: <br />{" "}
