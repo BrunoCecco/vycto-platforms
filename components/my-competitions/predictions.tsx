@@ -45,7 +45,7 @@ const PredictionCard = async ({
 
   return (
     <HoverBorderGradient
-      containerClassName="group h-[235px] w-[200px] sm:h-[350px] sm:w-[300px] relative rounded-xl overflow-hidden"
+      containerClassName="group h-[275px] w-[240px] sm:h-[350px] sm:w-[300px] relative rounded-xl overflow-hidden"
       className="hover: relative h-full w-full transition-all duration-400"
       color={compSiteData.color1}
     >

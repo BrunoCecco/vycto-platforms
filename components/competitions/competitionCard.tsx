@@ -82,7 +82,7 @@ const CompetitionCard = ({
 
   return (
     <HoverBorderGradient
-      containerClassName="group sm:h-[350px] sm:w-[300px] h-[235px] w-[200px] relative rounded-xl overflow-hidden"
+      containerClassName="group sm:h-[350px] sm:w-[300px] h-[275px] w-[240px] relative rounded-xl overflow-hidden"
       className="hover: relative h-full w-full transition-all duration-400"
       color={siteData.color1}
     >
