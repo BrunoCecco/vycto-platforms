@@ -8,8 +8,6 @@ import DomainStatus from "./domainStatus";
 import DomainConfiguration from "./domainConfiguration";
 import va from "@vercel/analytics";
 import { useSession } from "next-auth/react";
-import Uploader from "./uploader";
-import CountryPicker from "../settings/countryPicker";
 import {
   Select,
   SelectItem,
@@ -26,8 +24,12 @@ import { USER_ROLES } from "@/lib/constants";
 import ReactFlagsSelect from "react-flags-select";
 import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { useDateFormatter } from "@react-aria/i18n";
-import { parseDate, getLocalTimeZone } from "@internationalized/date";
+import {
+  parseDate,
+  parseZonedDateTime,
+  getLocalTimeZone,
+  parseAbsoluteToLocal,
+} from "@internationalized/date";
 import CombinedFormImage from "./combinedFormImage";
 import Toggle from "@/components/ui/toggle";
 
@@ -128,7 +130,7 @@ export default function CombinedForm({
         }),
       ),
     );
-    // toast.success(`Successfully updated ${title}!`);
+    toast.success(`Successfully updated ${title}!`);
   };
 
   const submitForm2 = () => {
@@ -282,10 +284,14 @@ export default function CombinedForm({
                   </div>
                 ) : inputAttr.name === "description" ? (
                   <Textarea {...inputAttr} rows={3} />
-                ) : inputAttr.name.includes("date") ? (
+                ) : inputAttr.type == "date" ? (
                   <DatePicker
                     {...inputAttr}
-                    defaultValue={parseDate(inputAttr.defaultValue)}
+                    defaultValue={
+                      inputAttr.defaultValue.includes("[UTC]")
+                        ? parseZonedDateTime(inputAttr.defaultValue)
+                        : parseDate(inputAttr.defaultValue)
+                    }
                     showMonthAndYearPickers
                   />
                 ) : inputAttr.type == "checkbox" ? (

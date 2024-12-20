@@ -48,10 +48,9 @@ export const TextGenerateEffect = ({
               {sentence.split(" ").map((word, idx) => (
                 <motion.span
                   key={word + idx}
-                  className={cn("text-shadow !mb-0 opacity-0", className)}
+                  className={cn("!mb-0 opacity-0", className)}
                   style={{
                     filter: filter ? "blur(10px)" : "none",
-                    color: color,
                   }}
                 >
                   {word}{" "}

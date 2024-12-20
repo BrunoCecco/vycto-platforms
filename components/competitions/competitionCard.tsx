@@ -105,8 +105,8 @@ const CompetitionCard = ({
               {competition.title || "Competition by " + competition.sponsor}
             </h2>
             <p
-              className={`text-shadow text-sm font-bold`}
-              style={{ color: siteData.color1 }}
+              className={`text-sm font-bold`}
+              style={{ color: siteData.color2 }}
             >
               {status}
             </p>
