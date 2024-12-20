@@ -35,13 +35,14 @@ export default function SubmitAnswersForm({
 
     try {
       const res = await submitAnswers(userId!, competitionId, localAnswers);
+      console.log('res', res);
       if ("error" in res && res.error) {
         toast.error(res.error);
       } else {
         posthog?.capture("answers_submitted");
         va.track("Submitted Answers");
         toast.success(`Successfully submitted answers!`);
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (error) {
       toast.error("An error occurred while submitting answers.");
