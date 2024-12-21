@@ -113,7 +113,8 @@ export default async function SiteCompetitionPage({
   let userComp = session
     ? await enterUserToCompetition(
         session.user.id,
-        session.user.username || session.user.email,
+        session.user.username,
+        session.user.name,
         session.user.email,
         data.id,
         session.user.image || "",

@@ -195,6 +195,7 @@ export const deleteCompetition = withCompetitionAuth(
 export const enterUserToCompetition = async (
   userId: string,
   username: string,
+  name: string,
   email: string,
   competitionId: string,
   image?: string,
@@ -217,6 +218,7 @@ export const enterUserToCompetition = async (
       .values({
         userId,
         username,
+        name,
         email,
         competitionId,
         image: image || "",
@@ -243,9 +245,9 @@ export const submitAnswers = async (
 ) => {
   //const session = await getServerSession(authOptions);
   //if (!session?.user.id) {
-    //return {
-      //error: "Not authenticated",
-    //};
+  //return {
+  //error: "Not authenticated",
+  //};
   //}
 
   try {

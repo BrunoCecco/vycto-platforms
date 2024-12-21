@@ -70,7 +70,7 @@ const Slider: FC<{
               max="90"
               startContent={<div className="ml-2 mr-1">{MIN}</div>}
               endContent={<div className="relative ml-1">{MAX}</div>}
-              value={initialValue}
+              value={initialValue || "0"}
               disabled={disabled}
               onChange={handleChange}
               onMouseUp={handleBlur}

@@ -16,6 +16,7 @@ import { LeaderboardPeriod } from "@/lib/types";
 import { Spinner, User } from "@nextui-org/react";
 import { Session } from "next-auth";
 import RewardModal from "../rewards/rewardsModal";
+import { getLeaderboardName } from "@/lib/utils";
 
 type LeaderboardUser = SelectUser & { points: number };
 type IRangeType = "last week" | "monthly" | "season" | "all time";
@@ -160,12 +161,8 @@ const MainLeaderboard = ({
                           ) + 1}
                         </span>
                         <User
-                          name={
-                            entry.username ||
-                            entry.name ||
-                            entry.email ||
-                            "User"
-                          }
+                          name={getLeaderboardName(entry)}
+                          className="break-all"
                           avatarProps={{
                             src:
                               entry.image ||

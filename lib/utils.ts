@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { PgSelect } from "drizzle-orm/pg-core";
 import { twMerge } from "tailwind-merge";
-import { SelectSite } from "./schema";
+import { SelectSite, SelectUserCompetition } from "./schema";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -94,4 +94,13 @@ export const makeTransparent = (color: string, opacity: number) => {
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+};
+
+export const getLeaderboardName = (user: any) => {
+  return (
+    user.username?.split("@")[0] ||
+    user.name ||
+    user.email?.split("@")[0] ||
+    "user" + user.userId.substring(0, 3)
+  );
 };

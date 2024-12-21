@@ -9,6 +9,7 @@ import {
 import Link from "next/link";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
 import { User } from "@nextui-org/react";
+import { getLeaderboardName } from "@/lib/utils";
 
 const Leaderboard = ({
   siteData,
@@ -37,6 +38,7 @@ const Leaderboard = ({
         return "";
     }
   };
+  console.log(users);
 
   return (
     <div className="container mt-2 w-full">
@@ -72,7 +74,8 @@ const Leaderboard = ({
                       {index + 1}
                     </span>
                     <User
-                      name={user.username || user.name || user.email || "User"}
+                      name={getLeaderboardName(user)}
+                      className="break-all"
                       avatarProps={{
                         src:
                           user.image ||
@@ -100,10 +103,9 @@ const Leaderboard = ({
                   <td className="justify-end py-4 text-right">
                     <Link
                       href={`/comp/${competition.slug}/${user.userId}`}
-                      className="bg-content3 rounded-lg p-2 px-4 text-sm shadow-md transition-all duration-200 hover:shadow-none"
+                      className="rounded-lg bg-content3 p-2 px-4 text-sm shadow-md transition-all duration-200 hover:shadow-none"
                       style={{
                         backgroundImage: calculateBg(index),
-                      
                       }}
                     >
                       View
