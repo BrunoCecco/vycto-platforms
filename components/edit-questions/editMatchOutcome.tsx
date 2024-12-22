@@ -29,15 +29,6 @@ const EditMatchOutcome = ({
   const [image1, setImage1] = useState(question.image1 || "/placeholder.png");
   const [image2, setImage2] = useState(question.image2 || "/placeholder.png");
 
-  const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPoints(parseInt(e.target.value) || 0);
-  };
-
-  const handleRemove = async () => {
-    if (!confirm("Are you sure you want to remove this question?")) return;
-    removeQuestion(question.id);
-  };
-
   const updateQuestion = async (key: string, value: string) => {
     const formData = new FormData();
     formData.append(key, value);
@@ -123,7 +114,7 @@ const EditMatchOutcome = ({
 
           {/* VS */}
           <div className="text-center">
-            <div className="rounded-full border-2 border-blue-600 p-2 text-sm font-bold italic text-blue-600 md:text-xl">
+            <div className="border-blue-600 text-blue-600 rounded-full border-2 p-2 text-sm font-bold italic md:text-xl">
               VS
             </div>
           </div>
@@ -162,6 +153,7 @@ const EditMatchOutcome = ({
           {/* select element to edit the correct answer */}
           <Select
             value={editedCorrectAnswer}
+            defaultSelectedKeys={[editedCorrectAnswer]}
             onChange={async (e) => {
               setEditedCorrectAnswer(e.target.value);
               handleInputBlur("correctAnswer", e.target.value);
