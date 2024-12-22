@@ -322,6 +322,7 @@ export default function CombinedForm({
                     id={inputAttr.name}
                     key={inputAttr.name}
                     {...inputAttr}
+                    className="text-foreground"
                   />
                 )}
               </div>
