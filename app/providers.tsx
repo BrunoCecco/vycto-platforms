@@ -23,7 +23,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
-      <NextUIProvider navigate={router.push}>
+      <NextUIProvider locale="en-GB" navigate={router.push}>
         <SessionProvider>
           <ModalProvider>
             <Toaster className="dark:hidden" />

@@ -286,18 +286,18 @@ export default function CombinedForm({
                 ) : inputAttr.name === "description" ? (
                   <Textarea {...inputAttr} rows={3} />
                 ) : inputAttr.type == "date" ? (
-                  <I18nProvider locale="en-GB">
-                    <DatePicker
-                      {...inputAttr}
-                      defaultValue={
-                        inputAttr.defaultValue.includes("[UTC]")
-                          ? parseZonedDateTime(inputAttr.defaultValue)
-                          : parseDate(inputAttr.defaultValue)
-                      }
-                      showMonthAndYearPickers
-                    />
-                  </I18nProvider>
-                ) : inputAttr.type == "checkbox" ? (
+                  // <I18nProvider locale="en-GB">
+                  <DatePicker
+                    {...inputAttr}
+                    defaultValue={
+                      inputAttr.defaultValue.includes("[UTC]")
+                        ? parseZonedDateTime(inputAttr.defaultValue)
+                        : parseDate(inputAttr.defaultValue)
+                    }
+                    showMonthAndYearPickers
+                  />
+                ) : // </I18nProvider>
+                inputAttr.type == "checkbox" ? (
                   <>
                     <input
                       id={inputAttr.name}
@@ -323,6 +323,7 @@ export default function CombinedForm({
                     key={inputAttr.name}
                     {...inputAttr}
                     className="text-foreground"
+                    autoComplete=""
                   />
                 )}
               </div>
