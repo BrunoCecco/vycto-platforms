@@ -150,6 +150,8 @@ export const updateCompetitionMetadata = withCompetitionAuth(
         (revalidateTag(`${competition.site?.customDomain}-competitions`),
         revalidateTag(`${competition.site?.customDomain}-${competition.slug}`));
 
+      revalidateTag(`${competition.id}-users`);
+
       return response;
     } catch (error: any) {
       if (error.code === "P2002") {
@@ -586,6 +588,8 @@ export const updateUserCompetitionStats = async (competitionId: string) => {
     const updatedCompetitionUsers = await db.query.userCompetitions.findMany({
       where: eq(userCompetitions.competitionId, competitionId),
     });
+
+    revalidateTag(`${competitionId}-users`);
 
     return updatedCompetitionUsers;
   } catch (error: any) {

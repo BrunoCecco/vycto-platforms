@@ -1,6 +1,6 @@
 "use server";
 
-import { unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 import db from "../db";
 import { and, desc, eq, gte, lte, not } from "drizzle-orm";
 import { userCompetitions, competitions, users } from "../schema";
@@ -196,6 +196,7 @@ export async function calculateCompetitionPoints(competitionId: string) {
     });
   }
   var sortedUsers = usersWithPoints.sort((a, b) => b.points - a.points);
+  revalidateTag(`${competitionId}-users`);
   return usersWithPoints;
 }
 
