@@ -117,6 +117,7 @@ export default async function SiteCompetitionPage({
         session.user.name,
         session.user.email,
         data.id,
+        siteData?.id!,
         session.user.image || "",
       )
     : undefined;

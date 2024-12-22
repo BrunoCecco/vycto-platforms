@@ -1,5 +1,5 @@
 import { SelectUser, SelectUserCompetition } from "@/lib/schema";
-import { makeTransparent } from "@/lib/utils";
+import { getLeaderboardName, makeTransparent } from "@/lib/utils";
 import { Share } from "lucide-react"; // Importing the icons
 import { FC } from "react";
 
@@ -36,7 +36,7 @@ const GameStats: FC<GameStatsProps> = ({
         </h2>
 
         {/* Username */}
-        <p className="text-center text-lg ">@{userComp.username || "User"}</p>
+        <p className="text-center text-lg ">@{getLeaderboardName(userComp)}</p>
 
         {/* Submission Info */}
         <div className="flex flex-col items-center justify-center text-center">

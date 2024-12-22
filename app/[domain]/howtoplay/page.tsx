@@ -157,7 +157,7 @@ export default async function HowToPlayPage({
           <CompetitionCard
             competition={latestCompData[0].competition}
             siteData={data}
-            type="current"
+            type="past"
           />
         ) : (
           <Image

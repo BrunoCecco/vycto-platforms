@@ -200,6 +200,7 @@ export const enterUserToCompetition = async (
   name: string,
   email: string,
   competitionId: string,
+  siteId: string,
   image?: string,
 ) => {
   try {
@@ -228,7 +229,7 @@ export const enterUserToCompetition = async (
       .returning();
 
     revalidateTag(`${userId}-${competitionId}-comp`);
-    revalidateTag(`${userId}-comps`);
+    revalidateTag(`${userId}-${siteId}-comps`);
     revalidateTag(`${competitionId}-users`);
     revalidateTag(`${userId}-${competitionId}-answers`);
 

@@ -45,13 +45,6 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.APPLE_CLIENT_ID!,
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
       allowDangerousEmailAccountLinking: true,
-      authorization: {
-        params: {
-          scope: "name email",
-          response_mode: "form_post",
-          response_type: "code",
-        },
-      },
     }),
     GoogleProvider({
       clientId:
@@ -122,8 +115,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     jwt({ token, trigger, session, user }) {
-      console.log(token, "TOKEN");
-      console.log(trigger, session, user, "REST");
       if (trigger === "update" && session?.user) {
         token.user = session?.user || token.user;
         token.name = session?.user?.name || token.name;

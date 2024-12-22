@@ -22,7 +22,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   return (
-    <ThemeProvider attribute="class">
+    <ThemeProvider attribute="class" defaultTheme="dark">
       <NextUIProvider navigate={router.push}>
         <SessionProvider>
           <ModalProvider>

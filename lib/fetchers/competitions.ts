@@ -245,10 +245,10 @@ export async function getUserCompetitions(userId: string, siteId: string) {
         )
         .orderBy(desc(userCompetitions.submissionDate));
     },
-    [`${userId}-comps`],
+    [`${userId}-${siteId}-comps`],
     {
       revalidate: 900,
-      tags: [`${userId}-comps`],
+      tags: [`${userId}-${siteId}-comps`],
     },
   )();
 }

@@ -12,6 +12,7 @@ import { BackgroundGradient } from "../ui/backgroundGradient";
 import CompetitionModal from "./competitionModal";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
 import { Card, CardFooter, CardHeader } from "@nextui-org/react";
+import { CoolMode } from "../ui/coolMode";
 
 const COMPETITION_WINDOW = 5;
 
@@ -20,7 +21,7 @@ const CompetitionCard = ({
   siteData,
   type,
   played = false,
-  onClick = () => {},
+  onClick,
 }: {
   competition: SelectCompetition;
   siteData: SelectSite;
@@ -110,15 +111,23 @@ const CompetitionCard = ({
               {status}
             </p>
           </div>
-          {compOpen ? (
-            <PlayButton
-              color1={siteData.color1}
-              color2={siteData.color2}
-              onClick={onClick}
-            >
-              {played ? "View" : type === "current" ? "Play" : "View"}
+          {onClick ? (
+            compOpen ? (
+              <PlayButton
+                color1={siteData.color1}
+                color2={siteData.color2}
+                onClick={onClick}
+              >
+                {played ? "View" : type === "current" ? "Play" : "View"}
+              </PlayButton>
+            ) : null
+          ) : (
+            <PlayButton color1={siteData.color1} color2={siteData.color2}>
+              <CoolMode options={{ color: siteData.color1 }}>
+                <div>Play</div>
+              </CoolMode>
             </PlayButton>
-          ) : null}
+          )}
         </CardFooter>
       </Card>
     </HoverBorderGradient>

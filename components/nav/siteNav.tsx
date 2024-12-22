@@ -160,7 +160,7 @@ export default function SiteNav({
                   </Link>
                 </div>
               ))}
-              <CoolMode>
+              <CoolMode options={{ color: data.color1 }}>
                 <div
                   onClick={stayNotified}
                   className={`relative mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 transition-all duration-150  ease-in-out hover:bg-content3 `}

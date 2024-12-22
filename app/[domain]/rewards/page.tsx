@@ -13,7 +13,7 @@ import {
   getSiteRewards,
   getUserCompetitions,
 } from "@/lib/fetchers";
-import { makeTransparent } from "@/lib/utils";
+import { getLeaderboardName, makeTransparent } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
@@ -72,7 +72,7 @@ export default async function Rewards({
           Coming soon!
         </div>
       </BackgroundGradient>
-      <div className="relative mx-auto mb-4 flex h-20 w-20 justify-center">
+      <div className="relative mx-auto mb-4 mt-8 flex h-20 w-20 justify-center">
         <Image
           src={
             session.user.image ||
@@ -83,7 +83,10 @@ export default async function Rewards({
           alt="Profile Image"
         />
       </div>
-      <TextGenerateEffect words="Your Rewards" className="mb-8 text-2xl" />
+      <TextGenerateEffect words="Your Rewards" className="mb-2 text-2xl" />
+      <div className="mx-auto mb-8 text-center">
+        @{getLeaderboardName(session.user)}
+      </div>
       <div className="mb-8 grid w-full grid-cols-1 items-center justify-center gap-8 md:grid-cols-3">
         <div className="col-span-1 md:mr-auto">
           <PendingRewards count={0} amount={0} />

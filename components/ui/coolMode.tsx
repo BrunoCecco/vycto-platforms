@@ -24,6 +24,7 @@ export interface CoolParticleOptions extends BaseParticleOptions {
   particleCount?: number;
   speedHorz?: number;
   speedUp?: number;
+  color?: string;
 }
 
 const getContainer = () => {
@@ -86,7 +87,7 @@ const applyParticleEffect = (
       circle.setAttributeNS(null, "cx", (size / 2).toString());
       circle.setAttributeNS(null, "cy", (size / 2).toString());
       circle.setAttributeNS(null, "r", (size / 2).toString());
-      circle.setAttributeNS(null, "fill", `rgb(132,124,132)`);
+      circle.setAttributeNS(null, "fill", options?.color || `rgb(128,128,128)`);
 
       circleSVG.appendChild(circle);
       circleSVG.setAttribute("width", size.toString());

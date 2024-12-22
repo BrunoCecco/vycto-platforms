@@ -32,6 +32,7 @@ import {
 } from "@internationalized/date";
 import CombinedFormImage from "./combinedFormImage";
 import Toggle from "@/components/ui/toggle";
+import { I18nProvider } from "@react-aria/i18n";
 
 interface InputAttr {
   name: string;
@@ -285,15 +286,17 @@ export default function CombinedForm({
                 ) : inputAttr.name === "description" ? (
                   <Textarea {...inputAttr} rows={3} />
                 ) : inputAttr.type == "date" ? (
-                  <DatePicker
-                    {...inputAttr}
-                    defaultValue={
-                      inputAttr.defaultValue.includes("[UTC]")
-                        ? parseZonedDateTime(inputAttr.defaultValue)
-                        : parseDate(inputAttr.defaultValue)
-                    }
-                    showMonthAndYearPickers
-                  />
+                  <I18nProvider locale="en-GB">
+                    <DatePicker
+                      {...inputAttr}
+                      defaultValue={
+                        inputAttr.defaultValue.includes("[UTC]")
+                          ? parseZonedDateTime(inputAttr.defaultValue)
+                          : parseDate(inputAttr.defaultValue)
+                      }
+                      showMonthAndYearPickers
+                    />
+                  </I18nProvider>
                 ) : inputAttr.type == "checkbox" ? (
                   <>
                     <input
