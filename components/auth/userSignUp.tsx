@@ -129,7 +129,7 @@ const UserSignUp = ({
         />
         <p className="mt-1 text-right text-xs">
           Powered by{" "}
-          <span className="text-md font-bold text-blue-700">Vycto</span>
+          <span className="text-blue-700 text-sm font-bold">Vycto</span>
         </p>
       </div>
       <Image

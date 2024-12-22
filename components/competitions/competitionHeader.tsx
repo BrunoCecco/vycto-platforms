@@ -71,7 +71,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
             width={80}
           />
         </div>
-        <div className="text-md ml-3 inline-block align-middle md:text-lg ">
+        <div className="text-sm ml-3 inline-block align-middle md:text-lg ">
           by{" "}
           <span className="font-semibold">
             {data?.site?.user?.name ||

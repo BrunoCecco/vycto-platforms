@@ -100,7 +100,7 @@ const CompetitionCard = ({
         />
         <CardFooter className="absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-background/60 py-1 shadow-small before:rounded-xl">
           <div className="flex w-full flex-col gap-1">
-            <h2 className="sm:text-md text-sm font-semibold">
+            <h2 className="text-sm font-semibold sm:text-sm">
               {competition.title || "Competition by " + competition.sponsor}
             </h2>
             <p

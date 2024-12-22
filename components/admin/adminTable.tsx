@@ -48,7 +48,7 @@ const AdminTable = () => {
         <ArrowRight className="cursor-pointer" onClick={nextPage} />
       </div>
       <table className="min-w-full table-auto border-collapse">
-        <thead className="text-md border-b-2 text-left font-medium">
+        <thead className="border-b-2 text-left text-sm font-medium">
           <tr>
             <th className="px-4 py-2">User</th>
             <th className="px-4 py-2">Email</th>

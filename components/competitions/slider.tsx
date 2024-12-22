@@ -75,10 +75,10 @@ const Slider: FC<{
               onChange={handleChange}
               onMouseUp={handleBlur}
               onDragEnd={handleBlur}
-              className="sm:text-md h-3 w-full appearance-none text-xs"
+              className="h-3 w-full appearance-none text-xs sm:text-sm"
             />
             {/* <NextSlider
-              className="sm:text-md w-full text-xs"
+              className="sm:text-sm w-full text-xs"
               value={parseInt(value)}
               onChange={(value: SliderValue) => setValue(value.toString())}
               label="Minute"

@@ -45,7 +45,7 @@ const GeneralNumber = ({ ...props }) => {
             onChange={(e) => setAnswer(e.target.value)}
             className="w-20 text-center"
             classNames={{
-              input: " text-md sm:text-xl",
+              input: " text-sm sm:text-xl",
               inputWrapper: "bg-content4",
             }}
             onBlur={() => submitButton?.current?.click()}

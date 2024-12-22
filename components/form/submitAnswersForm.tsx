@@ -35,7 +35,7 @@ export default function SubmitAnswersForm({
 
     try {
       const res = await submitAnswers(userId!, competitionId, localAnswers);
-      console.log('res', res);
+      console.log("res", res);
       if ("error" in res && res.error) {
         toast.error(res.error);
       } else {
@@ -68,7 +68,7 @@ function FormButton() {
   return (
     <Button
       className={cn(
-        "text-md flex items-center justify-center space-x-2 rounded-full border p-4 transition-all focus:outline-none sm:h-10",
+        "flex items-center justify-center space-x-2 rounded-full border p-4 text-sm transition-all focus:outline-none sm:h-10",
         pending
           ? "cursor-not-allowed "
           : "border-success-600 bg-success-600  bg-transparent hover:text-success-600",

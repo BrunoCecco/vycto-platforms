@@ -83,13 +83,13 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
         </div>
         <button
           onClick={handlePrev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 transform rounded-full bg-yellow-500 p-2"
+          className="bg-yellow-500 absolute left-4 top-1/2 -translate-y-1/2 transform rounded-full p-2"
         >
           <ChevronLeft className="h-6 w-6" />
         </button>
         <button
           onClick={handleNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 transform rounded-full bg-yellow-500 p-2"
+          className="bg-yellow-500 absolute right-4 top-1/2 -translate-y-1/2 transform rounded-full p-2"
         >
           <ChevronRight className="h-6 w-6" />
         </button>
@@ -98,7 +98,7 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
         <h3 className="text-center text-lg font-bold">
           {rewards[currentIndex].title}
         </h3>
-        <p className="text-md mt-2 text-left md:text-center">
+        <p className="mt-2 text-left text-sm md:text-center">
           {rewards[currentIndex].description}
         </p>
       </div>

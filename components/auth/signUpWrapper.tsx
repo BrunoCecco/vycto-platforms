@@ -22,7 +22,7 @@ const SignUpWrapper = ({
           <Image src={"/vLogo.png"} width={75} height={75} alt={""} />
           <div className="flex items-center justify-center">
             <Image src={"/vyctoLogo.png"} width={110} height={110} alt={""} />
-            <span className="text-md ml-3 rounded-lg border-2 border-[#FFC700] p-1 font-medium text-[#FFC700]">
+            <span className="ml-3 rounded-lg border-2 border-[#FFC700] p-1 text-sm font-medium text-[#FFC700]">
               beta
             </span>
           </div>
