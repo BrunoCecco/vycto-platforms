@@ -16,6 +16,14 @@ module.exports = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    extend: {
+      keyframes: {
+        "bg-position": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "100%": { backgroundPosition: "100% 50%" },
+        },
+      },
+    },
     colors: {
       white: "#ffffff",
       black: "#000000",
