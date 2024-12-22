@@ -29,7 +29,7 @@ const GameStats: FC<GameStatsProps> = ({
       className="flex justify-center overflow-hidden rounded-lg"
       style={{ backgroundColor: makeTransparent(color, 0.6) }}
     >
-      <div className="flex w-full flex-col justify-around gap-4 px-6 py-4 shadow-sm sm:gap-16">
+      <div className="flex w-full flex-col justify-around gap-4 px-6 py-4 shadow-sm sm:gap-12">
         {/* Header */}
         <h2 className="text-center text-xl font-semibold ">
           Competition: {competitionTitle}
@@ -52,29 +52,25 @@ const GameStats: FC<GameStatsProps> = ({
 
         {/* Statistics */}
         {compFinished ? (
-          <div className="flex flex-wrap items-center justify-between text-center text-sm ">
-            <div className="h-6 border-r" style={{ borderColor: color }} />
-            <div>
+          <div className="grid grid-cols-1 items-center justify-center gap-4 text-center text-sm sm:grid-cols-3">
+            <div className="rounded-md bg-background p-2">
               <p className="font-semibol pb-2" style={{ color: color }}>
                 {parseFloat(userComp.points || "0").toFixed(2)} / 100
               </p>
               <p className="text-xs">total points</p>
             </div>
-            <div className="h-6 border-r" style={{ borderColor: color }} />
-            <div>
+            <div className="rounded-md bg-background p-2">
               <p className="font-semibol pb-2" style={{ color: color }}>
                 {percentile}
               </p>
               <p className="text-xs">percentile</p>
             </div>
-            <div className="h-6 border-r " style={{ borderColor: color }} />
-            <div>
+            <div className="rounded-md bg-background p-2">
               <p className="pb-2 font-semibold" style={{ color: color }}>
                 {rank}/{users.length}
               </p>
               <p className="text-xs">rank</p>
             </div>
-            <div className="h-6 border-r " style={{ borderColor: color }} />
             {/* <div>
             <p className="pb-2 font-semibold text-success-600">
               {bonusPoints} pt
