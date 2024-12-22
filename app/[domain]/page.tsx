@@ -18,6 +18,7 @@ import LoadingDots from "@/components/icons/loadingDots";
 import Loading from "../../components/ui/loading";
 import { authOptions } from "@/lib/auth";
 import ColorSchemeToggle from "@/components/ui/colorSchemeToggle";
+import Link from "next/link";
 
 export async function generateStaticParams() {
   const allSites = await db.query.sites.findMany({
@@ -76,7 +77,16 @@ export default async function SiteHomePage({
 
   return (
     <div>
-      <div className="flex items-center justify-between pb-8 text-2xl font-bold tracking-wider sm:text-4xl">
+      <div className="flex items-center pb-8 text-2xl font-bold tracking-wider sm:text-4xl">
+        <Link href="/">
+          <Image
+            src={data.logo || "/logo.png"}
+            alt="Logo"
+            width={50}
+            height={50}
+            className=""
+          />
+        </Link>
         <h1>{capitalize(addFanzoneToString(data.name || ""))}</h1>
       </div>
       {/* Use the FanZoneHeader component */}

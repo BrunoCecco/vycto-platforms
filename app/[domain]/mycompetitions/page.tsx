@@ -56,6 +56,7 @@ export default async function MyCompetitions({
       {/* Main Container */}
       <div className="mx-auto pt-3">
         <div className="flex flex-col gap-8">
+          <div className="text-2xl">My Competitions</div>
           <ProfileBanner user={user} siteData={data} />
           {/* Right Stats and Top Predictions */}
           <div className="w-full">

@@ -22,9 +22,9 @@ export default async function RewardsList({
           <tbody>
             <tr className="border-b text-sm">
               <td className="p-4 text-left">COMING SOON...</td>
-              <td className="p-4 text-left">COMING SOON...</td>
-              <td className="p-4 text-center">COMING SOON...</td>
-              <td className="p-4 text-right">COMING SOON...</td>
+              <td className="p-4 text-left"></td>
+              <td className="p-4 text-center"></td>
+              <td className="p-4 text-right"></td>
             </tr>
             {/* {userCompetitions &&
               userCompetitions.map((userComp, index) => (

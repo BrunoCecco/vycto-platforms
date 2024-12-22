@@ -100,7 +100,7 @@ export default async function SiteLayout({
   }
 
   return (
-    <div className={`${fontMapper["font-space"]} flex min-h-screen font-space`}>
+    <div className={`${fontMapper["font-space"]} font-space flex min-h-screen`}>
       <div className="relative z-50 w-0 sm:w-1/5">
         <SiteNav
           data={data}
@@ -113,7 +113,7 @@ export default async function SiteLayout({
       <div className="relative w-full max-w-screen-2xl sm:w-4/5">
         <div className="mx-5 flex flex-col items-center justify-between gap-4 pt-5 sm:mx-24 sm:hidden sm:items-start">
           <div className="flex items-center gap-4">
-            <Link href="/">
+            {/* <Link href="/">
               <Image
                 src={data.logo || "/logo.png"}
                 alt="Logo"
@@ -121,12 +121,12 @@ export default async function SiteLayout({
                 height={50}
                 className=""
               />
-            </Link>
-            <Link href={`/comp/${latestCompetition?.slug}` || "/"}>
+            </Link> */}
+            {/* <Link href={`/comp/${latestCompetition?.slug}` || "/"}>
               <PlayButton color1={data.color1} color2={data.color2}>
                 Play
               </PlayButton>
-            </Link>
+            </Link> */}
           </div>
         </div>
         <div className={`mx-5 pb-20 pt-8 lg:mx-24`}>{children}</div>

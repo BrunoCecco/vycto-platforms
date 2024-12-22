@@ -112,14 +112,14 @@ export const ModalBody = ({
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className="fixed inset-0 z-50 flex h-full w-full  items-center justify-center [perspective:800px] [transform-style:preserve-3d]"
+          className="fixed inset-0 z-50 flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]"
         >
           <Overlay />
 
           <motion.div
             ref={modalRef}
             className={cn(
-              "relative z-50 flex max-h-[90%] min-h-[50%] flex-1 flex-col overflow-hidden border border-transparent bg-background md:max-w-[55%] md:rounded-2xl lg:max-w-[40%]",
+              "relative z-50 flex max-h-[90%] min-h-[50%] max-w-[90%] flex-1 flex-col overflow-hidden overflow-hidden rounded-lg border-2 bg-background md:max-w-[55%] md:rounded-2xl lg:max-w-[40%]",
               className,
             )}
             initial={{
