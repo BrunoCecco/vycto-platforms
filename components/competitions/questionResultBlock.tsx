@@ -13,7 +13,7 @@ const QuestionResultBlock: React.FC<QuestionResultBlockProps> = ({
 }) => {
   return (
     <div className="flex items-center justify-center pt-6">
-      <div className="sm:text-md w-1/2 rounded-lg border border-success-600 p-2 text-center text-xs shadow-md sm:p-4">
+      <div className="w-1/2 rounded-lg border border-success-600 p-2 text-center text-xs shadow-md sm:p-4 sm:text-sm">
         <div className="mb-2">
           Correct answer: <br className="block sm:hidden" />{" "}
           <span className="font-semibold">{correctAnswer}</span>
