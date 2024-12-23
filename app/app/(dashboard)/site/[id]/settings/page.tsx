@@ -38,7 +38,7 @@ export default async function SiteSettingsIndex({
         }}
         handleSubmit={updateSite}
       />
-
+      {/* 
       <Form
         title="Description"
         description="The description of your site. This will be used as the meta description on Google as well."
@@ -48,6 +48,32 @@ export default async function SiteSettingsIndex({
           type: "text",
           defaultValue: data?.description!,
           placeholder: "A blog about really interesting things.",
+        }}
+        handleSubmit={updateSite}
+      /> */}
+
+      <Form
+        title="Terms & Conditions"
+        description="The terms and conditions for your site."
+        helpText="Please enter the T&Cs for your site."
+        inputAttrs={{
+          name: "terms",
+          type: "file",
+          defaultValue: data?.terms!,
+          placeholder: "terms",
+        }}
+        handleSubmit={updateSite}
+      />
+
+      <Form
+        title="Privacy Policy"
+        description="The privacy policy for your site."
+        helpText="Please enter the privacy policy for your site."
+        inputAttrs={{
+          name: "privacypolicy",
+          type: "file",
+          defaultValue: data?.privacypolicy!,
+          placeholder: "privacypolicy",
         }}
         handleSubmit={updateSite}
       />

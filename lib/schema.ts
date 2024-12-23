@@ -129,6 +129,8 @@ export const sites = pgTable(
     color1: text("color1").default("gray").notNull(),
     color2: text("color2").default("black").notNull(),
     color3: text("color3").default("white").notNull(),
+    terms: text("terms"),
+    privacypolicy: text("privacypolicy"),
     image: text("image"),
     imageBlurhash: text("imageBlurhash").default(
       "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAhCAYAAACbffiEAAAACXBIWXMAABYlAAAWJQFJUiTwAAABfUlEQVR4nN3XyZLDIAwE0Pz/v3q3r55JDlSBplsIEI49h76k4opexCK/juP4eXjOT149f2Tf9ySPgcjCc7kdpBTgDPKByKK2bTPFEdMO0RDrusJ0wLRBGCIuelmWJAjkgPGDSIQEMBDCfA2CEPM80+Qwl0JkNxBimiaYGOTUlXYI60YoehzHJDEm7kxjV3whOQTD3AaCuhGKHoYhyb+CBMwjIAFz647kTqyapdV4enGINuDJMSScPmijSwjCaHeLcT77C7EC0C1ugaCTi2HYfAZANgj6Z9A8xY5eiYghDMNQBJNCWhASot0jGsSCUiHWZcSGQjaWWCDaGMOWnsCcn2QhVkRuxqqNxMSdUSElCDbp1hbNOsa6Ugxh7xXauF4DyM1m5BLtCylBXgaxvPXVwEoOBjeIFVODtW74oj1yBQah3E8tyz3SkpolKS9Geo9YMD1QJR1Go4oJkgO1pgbNZq0AOUPChyjvh7vlXaQa+X1UXwKxgHokB2XPxbX+AnijwIU4ahazAAAAAElFTkSuQmCC",
@@ -233,6 +235,8 @@ export const competitions = pgTable(
     rewardWinners: integer("rewardWinners").default(1),
     reward2Winners: integer("reward2Winners").default(1),
     reward3Winners: integer("reward3Winners").default(1),
+    rules: text("guidelines"),
+    consent: text("consent"),
     color1: text("color1").default("gray").notNull(),
     color2: text("color2").default("black").notNull(),
     color3: text("color3").default("white").notNull(),

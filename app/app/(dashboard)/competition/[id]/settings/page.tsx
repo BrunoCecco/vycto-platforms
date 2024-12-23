@@ -80,6 +80,31 @@ export default async function CompetitionSettings({
           }}
           handleSubmit={updateCompetitionMetadata}
         />
+
+        <Form
+          title="Competition Guidelines"
+          description="The guidelines for the competition."
+          helpText="Please enter the specific guidelines for the competition."
+          inputAttrs={{
+            name: "rules",
+            type: "file",
+            defaultValue: data?.rules!,
+          }}
+          handleSubmit={updateCompetitionMetadata}
+        />
+
+        <Form
+          title="Additional User Consent (Optional)"
+          description="Additional user consent for the competition."
+          helpText="Please enter any additional user consent for the competition."
+          inputAttrs={{
+            name: "consent",
+            type: "text",
+            defaultValue: data?.consent!,
+          }}
+          handleSubmit={updateCompetitionMetadata}
+        />
+
         <DeleteCompetitionForm competitionName={data?.title!} />
       </div>
     </div>
