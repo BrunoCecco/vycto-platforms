@@ -128,7 +128,7 @@ const CompetitionCard = ({
                 ref={titleRef}
                 style={{
                   animation: shouldScroll
-                    ? `scroll-title ${((scrollWidth - containerWidth) / 50) * 2}s ease-in-out infinite alternate`
+                    ? `scroll-title 5s ease-in-out infinite alternate`
                     : "none",
                   display: "inline-block",
                 }}
