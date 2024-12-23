@@ -45,6 +45,13 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.APPLE_CLIENT_ID!,
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
       allowDangerousEmailAccountLinking: true,
+      authorization: {
+        params: {
+          scope: "name email",
+          response_mode: "form_post",
+          response_type: "code",
+        },
+      },
     }),
     GoogleProvider({
       clientId:
@@ -114,6 +121,33 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      console.error(
+        "SIGN IN CALLBACK",
+        user,
+        account,
+        profile,
+        email,
+        credentials,
+      );
+      const isAllowedToSignIn = true;
+      if (isAllowedToSignIn) {
+        return true;
+      } else {
+        // Return false to display a default error message
+        return false;
+        // Or you can return a URL to redirect to:
+        // return '/unauthorized'
+      }
+    },
+    async redirect({ url, baseUrl }) {
+      console.error("REDIRECT CALLBACK", url, baseUrl);
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
     jwt({ token, trigger, session, user }) {
       if (trigger === "update" && session?.user) {
         token.user = session?.user || token.user;
