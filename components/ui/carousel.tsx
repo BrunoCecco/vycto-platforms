@@ -194,46 +194,45 @@ export const Card = ({
 
   return (
     <>
-      <AnimatePresence>
-        {open && (
-          <div className="fixed inset-0 z-50 h-screen overflow-auto">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="/80 fixed inset-0 h-full w-full backdrop-blur-lg"
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              ref={containerRef}
-              layoutId={layout ? `card-${card.title}` : undefined}
-              className="relative z-[60] mx-auto my-10 h-fit  max-w-5xl rounded-3xl  p-4 font-sans  md:p-10"
+      {" "}
+      {open && (
+        <div className="fixed inset-0 z-50 h-screen overflow-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="/80 fixed inset-0 h-full w-full backdrop-blur-lg"
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            ref={containerRef}
+            layoutId={layout ? `card-${card.title}` : undefined}
+            className="relative z-[60] mx-auto my-10 h-fit  max-w-5xl rounded-3xl  p-4 font-sans  md:p-10"
+          >
+            <Button
+              className="sticky right-0 top-4 ml-auto flex h-8 w-8 items-center justify-center rounded-full "
+              onClick={handleClose}
             >
-              <Button
-                className="sticky right-0 top-4 ml-auto flex h-8 w-8 items-center justify-center rounded-full "
-                onClick={handleClose}
-              >
-                <X className="h-6 w-6 " />
-              </Button>
-              <motion.p
-                layoutId={layout ? `category-${card.title}` : undefined}
-                className="text-base font-medium "
-              >
-                {card.category}
-              </motion.p>
-              <motion.p
-                layoutId={layout ? `title-${card.title}` : undefined}
-                className="mt-4 text-2xl font-semibold md:text-5xl"
-              >
-                {card.title}
-              </motion.p>
-              <div className="py-10">{card.content}</div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+              <X className="h-6 w-6 " />
+            </Button>
+            <motion.p
+              layoutId={layout ? `category-${card.title}` : undefined}
+              className="text-base font-medium "
+            >
+              {card.category}
+            </motion.p>
+            <motion.p
+              layoutId={layout ? `title-${card.title}` : undefined}
+              className="mt-4 text-2xl font-semibold md:text-5xl"
+            >
+              {card.title}
+            </motion.p>
+            <div className="py-10">{card.content}</div>
+          </motion.div>
+        </div>
+      )}
       <motion.button
         layoutId={layout ? `card-${card.title}` : undefined}
         onClick={handleOpen}

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import BlurImage from "@/components/media/blurImage";
 import { placeholderBlurhash, random } from "@/lib/utils";
 import { getCompetitionUsers, getSiteData } from "@/lib/fetchers";
@@ -32,6 +32,23 @@ const CompetitionCard = ({
   const [users, setUsers] = useState<any[]>([]);
   const [status, setStatus] = useState<string>();
   const [compOpen, setCompOpen] = useState(true);
+
+  const titleRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [shouldScroll, setShouldScroll] = useState(false);
+  const [scrollWidth, setScrollWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    if (titleRef.current && containerRef.current) {
+      const titleWidth = titleRef.current.scrollWidth;
+      const containerWidth = containerRef.current.offsetWidth;
+
+      setScrollWidth(titleWidth);
+      setContainerWidth(containerWidth);
+      setShouldScroll(titleWidth > containerWidth);
+    }
+  }, [competition.title]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -99,35 +116,65 @@ const CompetitionCard = ({
           fill
           blurDataURL={competition.imageBlurhash || placeholderBlurhash}
         />
-        <CardFooter className="absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-background/60 py-1 shadow-small before:rounded-xl">
-          <div className="flex w-full flex-col gap-1">
-            <h2 className="text-sm font-semibold sm:text-sm">
-              {competition.title || "Competition by " + competition.sponsor}
-            </h2>
-            <p
-              className={`text-xs font-bold sm:text-sm`}
-              style={{ color: siteData.color2 }}
+        <CardFooter className="absolute bottom-1 z-10 ml-[4px] w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-background/60 py-1 !pl-0 pr-2 shadow-small before:rounded-xl">
+          <div className="flex w-full items-center gap-2">
+            {/* Scrolling text */}
+            <div
+              className="flex w-2/3 flex-col overflow-hidden whitespace-nowrap"
+              ref={containerRef}
             >
-              {status}
-            </p>
-          </div>
-          {onClick ? (
-            compOpen ? (
-              <PlayButton
-                color1={siteData.color1}
-                color2={siteData.color2}
-                onClick={onClick}
+              <h2
+                className="translate-x-2 text-sm font-semibold sm:text-sm"
+                ref={titleRef}
+                style={{
+                  animation: shouldScroll
+                    ? `scroll-title ${((scrollWidth - containerWidth) / 50) * 2}s ease-in-out infinite alternate`
+                    : "none",
+                  display: "inline-block",
+                }}
               >
-                {played ? "View" : type === "current" ? "Play" : "View"}
+                {competition.title || "Competition by " + competition.sponsor}
+              </h2>
+
+              <p
+                className={`mt-1 pl-2 text-xs font-bold sm:text-sm`}
+                style={{ color: siteData.color2 }}
+              >
+                {status}
+              </p>
+            </div>
+
+            {/* Play button */}
+            {/* <div className="flex w-1/2 justify-end"> */}
+            {onClick ? (
+              compOpen ? (
+                <PlayButton
+                  color1={siteData.color1}
+                  color2={siteData.color2}
+                  onClick={onClick}
+                >
+                  {played ? "View" : type === "current" ? "Play" : "View"}
+                </PlayButton>
+              ) : null
+            ) : (
+              <PlayButton color1={siteData.color1} color2={siteData.color2}>
+                <CoolMode options={{ color: siteData.color1 }}>
+                  <div>Play</div>
+                </CoolMode>
               </PlayButton>
-            ) : null
-          ) : (
-            <PlayButton color1={siteData.color1} color2={siteData.color2}>
-              <CoolMode options={{ color: siteData.color1 }}>
-                <div>Play</div>
-              </CoolMode>
-            </PlayButton>
-          )}
+            )}
+          </div>
+          <style jsx>{`
+            @keyframes scroll-title {
+              0% {
+                transform: translateX(8px);
+              }
+              100% {
+                transform: translateX(-${scrollWidth - containerWidth}px);
+              }
+            }
+          `}</style>
+          {/* </div> */}
         </CardFooter>
       </Card>
     </HoverBorderGradient>

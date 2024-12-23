@@ -98,59 +98,56 @@ export const ModalBody = ({
   useOutsideClick(modalRef, () => setOpen(false));
 
   return (
-    <AnimatePresence mode="sync">
-      {open && (
+    open && (
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+          backdropFilter: "blur(10px)",
+        }}
+        exit={{
+          opacity: 0,
+          backdropFilter: "blur(0px)",
+        }}
+        className="fixed inset-0 z-50 flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]"
+      >
+        <Overlay />
         <motion.div
+          ref={modalRef}
+          className={cn(
+            "relative z-50 flex max-h-[90%] min-h-[50%] max-w-[90%] flex-1 flex-col overflow-hidden rounded-lg border-2 bg-background md:max-w-[55%] md:rounded-2xl lg:max-w-[40%]",
+            className,
+          )}
           initial={{
             opacity: 0,
+            scale: 0.5,
+            rotateX: 40,
+            y: 40,
           }}
           animate={{
             opacity: 1,
-            backdropFilter: "blur(10px)",
+            scale: 1,
+            rotateX: 0,
+            y: 0,
           }}
           exit={{
             opacity: 0,
-            backdropFilter: "blur(0px)",
+            scale: 0.8,
+            rotateX: 10,
           }}
-          className="fixed inset-0 z-50 flex h-full w-full items-center justify-center [perspective:800px] [transform-style:preserve-3d]"
+          transition={{
+            type: "spring",
+            stiffness: 260,
+            damping: 15,
+          }}
         >
-          <Overlay />
-
-          <motion.div
-            ref={modalRef}
-            className={cn(
-              "relative z-50 flex max-h-[90%] min-h-[50%] max-w-[90%] flex-1 flex-col overflow-hidden overflow-hidden rounded-lg border-2 bg-background md:max-w-[55%] md:rounded-2xl lg:max-w-[40%]",
-              className,
-            )}
-            initial={{
-              opacity: 0,
-              scale: 0.5,
-              rotateX: 40,
-              y: 40,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              rotateX: 0,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0.8,
-              rotateX: 10,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 260,
-              damping: 15,
-            }}
-          >
-            <CloseIcon />
-            {children}
-          </motion.div>
+          <CloseIcon />
+          {children}
         </motion.div>
-      )}
-    </AnimatePresence>
+      </motion.div>
+    )
   );
 };
 

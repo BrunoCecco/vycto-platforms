@@ -6,6 +6,7 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import ReactFlagsSelect from "react-flags-select";
 import MovingGradient from "../ui/movingGradient";
+import { CardSpotlight } from "../ui/cardSpotlight";
 
 export default function ProfileBanner({
   user,
@@ -15,12 +16,11 @@ export default function ProfileBanner({
   siteData: SelectSite;
 }) {
   return (
-    // <MovingGradient>
     <div
-      className="relative flex h-28 w-full items-center overflow-hidden rounded-md border-b-2 p-4 md:h-40 md:p-8"
+      className="relative flex h-28 w-full items-center overflow-hidden rounded-md border-b-2 bg-transparent p-4 md:h-40 md:p-8"
       style={{ borderBottomColor: siteData.color1 }}
     >
-      <div className="absolute left-0 right-0 z-0 mx-auto h-80 w-80 rounded-full bg-background/20" />
+      {/* <div className="absolute left-0 right-0 z-0 mx-auto h-80 w-80 rounded-full bg-background/20" /> */}
       <div className="relative z-20 h-12 w-12 min-w-12 overflow-hidden rounded-full md:h-32 md:w-32">
         <Image
           alt="Profile Picture"
@@ -33,7 +33,7 @@ export default function ProfileBanner({
         <h1 className="text-sm font-semibold md:text-2xl">
           {user.name || user.email}
         </h1>
-        <p className="w-fit rounded-md text-xs md:bg-background md:p-1 md:px-2 md:text-sm">
+        <p className="w-fit rounded-md text-xs md:text-sm">
           @{user.username || user.email}
         </p>
       </div>
@@ -57,6 +57,5 @@ export default function ProfileBanner({
         ) : null}
       </div>
     </div>
-    // </MovingGradient>
   );
 }
