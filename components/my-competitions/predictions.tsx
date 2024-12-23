@@ -58,7 +58,7 @@ const PredictionCard = async ({
           fill
           blurDataURL={placeholderBlurhash}
         />
-        <CardFooter className="absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-background/60 py-1 shadow-small before:rounded-xl">
+        <CardFooter className="absolute bottom-1 z-10 ml-[4px] w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-black/60 py-1 !pl-0 pr-2 text-white shadow-small before:rounded-xl">
           <div className="flex w-full flex-col gap-1">
             <p className="text-sm sm:text-sm">
               {new Date(competition.submissionDate).toDateString()}

@@ -116,7 +116,7 @@ const CompetitionCard = ({
           fill
           blurDataURL={competition.imageBlurhash || placeholderBlurhash}
         />
-        <CardFooter className="absolute bottom-1 z-10 ml-[4px] w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-background/60 py-1 !pl-0 pr-2 shadow-small before:rounded-xl">
+        <CardFooter className="absolute bottom-1 z-10 ml-[4px] w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-black/60 py-1 !pl-0 pr-2 text-white shadow-small before:rounded-xl">
           <div className="flex w-full items-center gap-2">
             {/* Scrolling text */}
             <div
