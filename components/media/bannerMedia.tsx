@@ -19,7 +19,7 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
-export default function BannerMedia({ src }: { src: string }) {
+export default function BannerMedia({ src }: { src: string | null }) {
   const videoFormats = ["mp4", "webm", "mov", "mkv"];
   const imageFormats = ["jpg", "jpeg", "png", "gif", "svg", "webp", "avif"];
   const pdfFormats = ["pdf"];
@@ -27,6 +27,8 @@ export default function BannerMedia({ src }: { src: string }) {
   const [isMuted, setIsMuted] = useState(true); // State to track mute status
   const [play, setPlay] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  if (!src || src == undefined) return null;
 
   var mediaFormat = src.split(".").pop() || "";
   mediaFormat = mediaFormat.split("?")[0];
