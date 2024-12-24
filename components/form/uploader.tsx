@@ -314,7 +314,7 @@ export default function Uploader({
                 <div
                   className={`relative h-full w-full overflow-hidden ${circular ? "rounded-full" : "rounded-md"}`}
                 >
-                  {data[name] != null && <BannerMedia src={data[name]} />}
+                  <BannerMedia src={data[name]!} />
                 </div>
               )}
               <div className="absolute -bottom-0 -right-0 h-10 w-10 rounded-full border-2 bg-background p-2">
