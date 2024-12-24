@@ -37,6 +37,7 @@ export default function SubmitAnswersForm({
   const [modalOpen, setModalOpen] = useState(false);
   const [modalUrl, setModalUrl] = useState<string>("");
   const [hasChecked, setHasChecked] = useState(true);
+  const [hasCheckedAdditional, setHasCheckedAdditional] = useState(true);
 
   const handleSubmit = async (formData: FormData) => {
     if (!session && !userId) {
@@ -95,7 +96,11 @@ export default function SubmitAnswersForm({
           </p>
           <p>
             <CheckboxGroup
-              defaultValue={["rules-consent", "newsletter-consent"]}
+              defaultValue={[
+                "rules-consent",
+                "consent-additional",
+                "newsletter-consent",
+              ]}
               className="text-sm"
             >
               <Checkbox
@@ -106,7 +111,7 @@ export default function SubmitAnswersForm({
                 }}
                 onChange={(e) => setHasChecked(e.target.checked)}
               >
-                Accept to participate in the '{competitionData.title}'
+                Accept to participate in the &apos;{competitionData.title}&apos;
                 competition.
               </Checkbox>
               <div>
@@ -134,6 +139,18 @@ export default function SubmitAnswersForm({
                 </span>
                 .
               </div>
+              {competitionData.consent ? (
+                <Checkbox
+                  value="consent-additional"
+                  defaultChecked
+                  classNames={{
+                    label: "text-xs sm:text-sm",
+                  }}
+                  onChange={(e) => setHasCheckedAdditional(e.target.checked)}
+                >
+                  {competitionData.consent}
+                </Checkbox>
+              ) : null}
               <Checkbox
                 value="newsletter-consent"
                 defaultChecked
@@ -147,7 +164,7 @@ export default function SubmitAnswersForm({
               </Checkbox>
             </CheckboxGroup>
           </p>
-          <FormButton disabled={!hasChecked} />
+          <FormButton disabled={!hasChecked || !hasCheckedAdditional} />
         </div>
       </form>
       <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
