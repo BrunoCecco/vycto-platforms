@@ -116,28 +116,25 @@ const CompetitionCard = ({
           fill
           blurDataURL={competition.imageBlurhash || placeholderBlurhash}
         />
-        <CardFooter className="absolute bottom-1 z-10 ml-[4px] w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-black/60 py-1 !pl-0 pr-2 text-white shadow-small before:rounded-xl">
+        <CardFooter className="absolute bottom-1 z-10 ml-[4px] w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-black/60 px-2 py-1 text-white shadow-small before:rounded-xl">
           <div className="flex w-full items-center gap-2">
             {/* Scrolling text */}
-            <div
-              className="flex w-2/3 flex-col overflow-hidden whitespace-nowrap"
-              ref={containerRef}
-            >
+            <div className="flex w-2/3 flex-col" ref={containerRef}>
               <h2
-                className="translate-x-2 text-sm font-semibold sm:text-sm"
+                className="h-10 overflow-auto text-sm font-semibold sm:text-sm"
                 ref={titleRef}
-                style={{
-                  animation: shouldScroll
-                    ? `scroll-title 5s ease-in-out infinite alternate`
-                    : "none",
-                  display: "inline-block",
-                }}
+                // style={{
+                //   animation: shouldScroll
+                //     ? `scroll-title 5s ease-in-out infinite alternate`
+                //     : "none",
+                //   display: "inline-block",
+                // }}
               >
                 {competition.title || "Competition by " + competition.sponsor}
               </h2>
 
               <p
-                className={`mt-1 pl-2 text-xs font-bold sm:text-sm`}
+                className={`mt-1 text-xs font-bold sm:text-sm`}
                 style={{ color: siteData.color2 }}
               >
                 {status}
