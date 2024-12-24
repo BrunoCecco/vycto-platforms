@@ -6,6 +6,7 @@ const nextConfig = {
   reactStrictMode: false,
   webpack: (config) => {
     config.resolve.fallback = { fs: false };
+    // config.resolve.alias.canvas = false;
 
     return config;
   },

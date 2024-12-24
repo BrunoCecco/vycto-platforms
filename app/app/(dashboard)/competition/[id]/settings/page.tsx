@@ -87,7 +87,7 @@ export default async function CompetitionSettings({
           helpText="Please enter the specific guidelines for the competition."
           inputAttrs={{
             name: "rules",
-            type: "file",
+            type: "generalfile",
             defaultValue: data?.rules!,
           }}
           handleSubmit={updateCompetitionMetadata}

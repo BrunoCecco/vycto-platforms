@@ -10,21 +10,33 @@ import va from "@vercel/analytics";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { usePostHog } from "posthog-js/react";
-import { Button, Spinner } from "@nextui-org/react";
+import { Button, Checkbox, CheckboxGroup, Spinner } from "@nextui-org/react";
+import { SelectCompetition, SelectSite } from "@/lib/schema";
+import Link from "next/link";
+import { Modal, ModalBody, ModalContent } from "@/components/ui/animatedModal";
+import { Viewer, Worker } from "@react-pdf-viewer/core";
+
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
 export default function SubmitAnswersForm({
   userId,
-  competitionId,
+  competitionData,
+  siteData,
   slug,
   localAnswers,
 }: {
   userId: string | null;
-  competitionId: string;
+  competitionData: SelectCompetition;
+  siteData: SelectSite;
   slug: string;
   localAnswers: { [key: string]: string };
 }) {
   const { data: session } = useSession();
   const posthog = usePostHog();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalUrl, setModalUrl] = useState<string>("");
+  const [hasChecked, setHasChecked] = useState(true);
 
   const handleSubmit = async (formData: FormData) => {
     if (!session && !userId) {
@@ -34,7 +46,11 @@ export default function SubmitAnswersForm({
     }
 
     try {
-      const res = await submitAnswers(userId!, competitionId, localAnswers);
+      const res = await submitAnswers(
+        userId!,
+        competitionData.id,
+        localAnswers,
+      );
       console.log("res", res);
       if ("error" in res && res.error) {
         toast.error(res.error);
@@ -49,19 +65,107 @@ export default function SubmitAnswersForm({
     }
   };
 
+  const openRules = () => {
+    setModalUrl(competitionData.rules || "");
+    setModalOpen(true);
+  };
+
+  const openTerms = () => {
+    setModalUrl(
+      siteData.terms ||
+        "https://f005.backblazeb2.com/file/vyctobucket/vycto-com-terms%26conditions....pdf",
+    );
+    setModalOpen(true);
+  };
+
+  const openPrivacy = () => {
+    setModalUrl(
+      siteData.privacypolicy ||
+        "https://f005.backblazeb2.com/file/vyctobucket/vycto-com-privacy-policy....pdf",
+    );
+    setModalOpen(true);
+  };
+
   return (
-    <form action={handleSubmit} className="rounded-lg px-8 pb-8">
-      <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-success-600  p-3">
-        <p className="text-center text-sm  ">
-          Once submitted, you will not be able to edit your answers.
-        </p>
-        <FormButton />
-      </div>
-    </form>
+    <>
+      <form action={handleSubmit} className="rounded-lg px-8 pb-8">
+        <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-success-600 p-3 text-sm">
+          <p className="text-center">
+            Once submitted, you will not be able to edit your answers.
+          </p>
+          <p>
+            <CheckboxGroup
+              defaultValue={["rules-consent", "newsletter-consent"]}
+              className="text-sm"
+            >
+              <Checkbox
+                value="rules-consent"
+                defaultChecked
+                classNames={{
+                  label: "text-xs sm:text-sm",
+                }}
+                onChange={(e) => setHasChecked(e.target.checked)}
+              >
+                Accept to participate in the '{competitionData.title}'
+                competition.
+              </Checkbox>
+              <div>
+                I accept the{" "}
+                {competitionData.rules ? (
+                  <span
+                    onClick={openRules}
+                    className="cursor-pointer text-primary"
+                  >
+                    Rules,
+                  </span>
+                ) : null}{" "}
+                <span
+                  onClick={openTerms}
+                  className="cursor-pointer text-primary"
+                >
+                  Terms
+                </span>
+                , and{" "}
+                <span
+                  onClick={openPrivacy}
+                  className="cursor-pointer text-primary"
+                >
+                  Privacy Policy
+                </span>
+                .
+              </div>
+              <Checkbox
+                value="newsletter-consent"
+                defaultChecked
+                classNames={{
+                  label: "text-xs sm:text-sm",
+                }}
+              >
+                {" "}
+                I would like to join the {siteData.name} Newsletter and receive
+                updates, news, and exclusive offers (Optional).
+              </Checkbox>
+            </CheckboxGroup>
+          </p>
+          <FormButton disabled={!hasChecked} />
+        </div>
+      </form>
+      <Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
+        <ModalBody>
+          <ModalContent>
+            {modalUrl && modalUrl != "" && (
+              <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                <Viewer fileUrl={modalUrl} />
+              </Worker>
+            )}
+          </ModalContent>
+        </ModalBody>
+      </Modal>
+    </>
   );
 }
 
-function FormButton() {
+function FormButton({ disabled }: { disabled: boolean }) {
   const { pending } = useFormStatus();
   const [clicked, setClicked] = useState(false);
 
@@ -73,7 +177,7 @@ function FormButton() {
           ? "cursor-not-allowed "
           : "border-success-600 bg-success-600  bg-transparent hover:text-success-600",
       )}
-      isDisabled={pending}
+      isDisabled={pending || disabled}
       type="submit"
     >
       {pending ? (

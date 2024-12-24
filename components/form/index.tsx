@@ -58,7 +58,7 @@ export default function Form({
     inputAttrs.name === "country" ? inputAttrs.defaultValue : "",
   );
 
-  return inputAttrs.type == "file" ? (
+  return inputAttrs.type == "file" || inputAttrs.type == "generalfile" ? (
     <Uploader
       id={inputAttrs.defaultValue + inputAttrs.placeholder + title + "uploader"}
       key={
@@ -85,6 +85,11 @@ export default function Form({
       }}
       bucketId={bucketId}
       bucketName={bucketName}
+      formatsAccepted={
+        inputAttrs.type === "generalfile"
+          ? "image/*, application/pdf"
+          : "image/*, video/*"
+      }
       size={size}
       circular={circular}
       bordered={bordered}

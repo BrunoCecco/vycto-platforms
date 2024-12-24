@@ -40,7 +40,7 @@ const EditQuestionHeader = ({
   };
 
   return (
-    <div className="relative flex items-center justify-between gap-2">
+    <div className="relative mb-2 flex items-center justify-between gap-2">
       {/* Remove Button */}
       <Button
         onClick={handleRemove}

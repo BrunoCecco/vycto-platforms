@@ -14,14 +14,22 @@ import {
   Volume2,
 } from "lucide-react";
 import { Button } from "@nextui-org/react";
+import { Viewer, Worker } from "@react-pdf-viewer/core";
+
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
 export default function BannerMedia({ src }: { src: string }) {
   const videoFormats = ["mp4", "webm", "mov", "mkv"];
+  const imageFormats = ["jpg", "jpeg", "png", "gif", "svg", "webp", "avif"];
+  const pdfFormats = ["pdf"];
   const [isLoading, setIsLoading] = useState(true);
   const [isMuted, setIsMuted] = useState(true); // State to track mute status
   const [play, setPlay] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const mediaFormat = src.split(".").pop() || "";
+
+  var mediaFormat = src.split(".").pop() || "";
+  mediaFormat = mediaFormat.split("?")[0];
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -35,7 +43,7 @@ export default function BannerMedia({ src }: { src: string }) {
   if (!src || src == undefined) return null;
 
   return src ? (
-    videoFormats.includes(mediaFormat) ? (
+    videoFormats.includes(mediaFormat.toLowerCase()) ? (
       <div className="relative h-full w-full">
         {" "}
         {/* Wrap in a div for positioning */}
@@ -61,14 +69,30 @@ export default function BannerMedia({ src }: { src: string }) {
           {/* Button text based on mute state */}
         </Button>
       </div>
-    ) : (
+    ) : imageFormats.includes(mediaFormat.toLowerCase()) ? (
       <BlurImage
         src={src || "/placeholder.png"}
         blurDataURL={"blur"}
         priority
         alt="Banner Image"
         fill
-        className="object-cover object-center transition-all duration-100 hover:scale-110"
+        className="h-full w-full object-cover object-center transition-all duration-100 hover:scale-110"
+      />
+    ) : pdfFormats.includes(mediaFormat.toLowerCase()) ? (
+      <div className="h-full w-full">
+        {/* Placeholder for unsupported media */}
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+          <Viewer fileUrl={src} />
+        </Worker>
+      </div>
+    ) : (
+      <BlurImage
+        src={src || "/placeholder.png"}
+        blurDataURL={"blur"}
+        priority
+        alt={src}
+        fill
+        className="h-full w-full object-cover object-center transition-all duration-100 hover:scale-110"
       />
     )
   ) : null;

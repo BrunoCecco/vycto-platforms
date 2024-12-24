@@ -15,6 +15,7 @@ import { capitalize } from "@/lib/utils";
 import { Button } from "@nextui-org/react";
 import { PencilIcon, X } from "lucide-react";
 import { Input, Spinner } from "@nextui-org/react";
+import BannerMedia from "../media/bannerMedia";
 
 export default function Uploader({
   id,
@@ -26,6 +27,7 @@ export default function Uploader({
   children,
   bucketId,
   bucketName,
+  formatsAccepted = "image/*, video/*",
   maxFileSize = 50,
   size = "md",
   circular = false,
@@ -40,6 +42,7 @@ export default function Uploader({
   children?: React.ReactNode;
   bucketId?: string;
   bucketName?: string;
+  formatsAccepted?: string;
   maxFileSize?: number;
   size?: "sm" | "md" | "lg";
   circular?: boolean;
@@ -309,17 +312,9 @@ export default function Uploader({
               )}
               {data[name] && !saving && (
                 <div
-                  className={`relative h-full w-full ${circular ? "rounded-full" : "rounded-md"}`}
+                  className={`relative h-full w-full overflow-hidden ${circular ? "rounded-full" : "rounded-md"}`}
                 >
-                  <Image
-                    src={data[name] as string}
-                    alt="Preview"
-                    fill
-                    quality={50}
-                    unoptimized
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className={`h-full w-full object-cover ${circular ? "rounded-full" : "rounded-md"}`}
-                  />
+                  <BannerMedia src={data[name]} />
                 </div>
               )}
               <div className="absolute -bottom-0 -right-0 h-10 w-10 rounded-full border-2 bg-background p-2">
@@ -334,7 +329,7 @@ export default function Uploader({
             key={`${id}-upload-${name}`}
             name={name}
             type="file"
-            accept="image/*, video/*"
+            accept={formatsAccepted}
             className="sr-only hidden"
             onChange={onChangePicture}
           />

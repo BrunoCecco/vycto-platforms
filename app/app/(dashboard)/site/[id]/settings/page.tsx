@@ -58,7 +58,7 @@ export default async function SiteSettingsIndex({
         helpText="Please enter the T&Cs for your site."
         inputAttrs={{
           name: "terms",
-          type: "file",
+          type: "generalfile",
           defaultValue: data?.terms!,
           placeholder: "terms",
         }}
@@ -71,7 +71,7 @@ export default async function SiteSettingsIndex({
         helpText="Please enter the privacy policy for your site."
         inputAttrs={{
           name: "privacypolicy",
-          type: "file",
+          type: "generalfile",
           defaultValue: data?.privacypolicy!,
           placeholder: "privacypolicy",
         }}
