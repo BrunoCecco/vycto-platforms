@@ -28,11 +28,6 @@ export default function BannerMedia({ src }: { src: string | null }) {
   const [play, setPlay] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  if (!src || src == undefined) return null;
-
-  var mediaFormat = src.split(".").pop() || "";
-  mediaFormat = mediaFormat.split("?")[0];
-
   useEffect(() => {
     const videoElement = videoRef.current;
     if (videoElement) {
@@ -41,6 +36,11 @@ export default function BannerMedia({ src }: { src: string | null }) {
       else videoElement.pause();
     }
   }, [src, isMuted, play]); // Run effect when src or isMuted changes
+
+  if (!src || src == undefined) return null;
+
+  var mediaFormat = src.split(".").pop() || "";
+  mediaFormat = mediaFormat.split("?")[0];
 
   if (!src || src == undefined) return null;
 
