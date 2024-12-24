@@ -121,7 +121,7 @@ const CompetitionCard = ({
             {/* Scrolling text */}
             <div className="flex w-2/3 flex-col" ref={containerRef}>
               <h2
-                className="h-10 overflow-auto text-sm font-semibold sm:text-sm"
+                className="text-sm font-semibold sm:text-sm"
                 ref={titleRef}
                 // style={{
                 //   animation: shouldScroll
@@ -130,7 +130,8 @@ const CompetitionCard = ({
                 //   display: "inline-block",
                 // }}
               >
-                {competition.title || "Competition by " + competition.sponsor}
+                {competition.title + " longer longer" ||
+                  "Competition by " + competition.sponsor}
               </h2>
 
               <p
