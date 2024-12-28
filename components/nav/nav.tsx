@@ -20,6 +20,7 @@ import {
   Table2,
   Crown,
   Camera,
+  PersonStanding,
 } from "lucide-react";
 import {
   useParams,
@@ -122,10 +123,10 @@ export default function Nav({
           icon: <Settings width={18} />,
         },
         {
-          name: "Results",
-          href: `/competition/${id}/results`,
-          isActive: segments.includes("results"),
-          icon: <Trophy width={18} />,
+          name: "Participants",
+          href: `/competition/${id}/participants`,
+          isActive: segments.includes("participants"),
+          icon: <PersonStanding width={18} />,
         },
       ];
     }

@@ -5,13 +5,21 @@ import { cn } from "@/lib/utils";
 import { useParams, useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
-import { deleteCompetition, submitAnswers } from "@/lib/actions";
+import {
+  deleteCompetition,
+  submitAnswers,
+  updateUserCompetitionMetadata,
+} from "@/lib/actions";
 import va from "@vercel/analytics";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { usePostHog } from "posthog-js/react";
 import { Button, Checkbox, CheckboxGroup, Spinner } from "@nextui-org/react";
-import { SelectCompetition, SelectSite } from "@/lib/schema";
+import {
+  SelectCompetition,
+  SelectSite,
+  SelectUserCompetition,
+} from "@/lib/schema";
 import Link from "next/link";
 import { Modal, ModalBody, ModalContent } from "@/components/ui/animatedModal";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
@@ -21,12 +29,14 @@ import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
 export default function SubmitAnswersForm({
   userId,
+  userComp,
   competitionData,
   siteData,
   slug,
   localAnswers,
 }: {
   userId: string | null;
+  userComp: SelectUserCompetition | undefined;
   competitionData: SelectCompetition;
   siteData: SelectSite;
   slug: string;
@@ -39,6 +49,24 @@ export default function SubmitAnswersForm({
   const [hasChecked, setHasChecked] = useState(true);
   const [hasCheckedAdditional, setHasCheckedAdditional] = useState(true);
 
+  const updateCompetitionConsent = async () => {
+    if (userComp) {
+      const formData = new FormData();
+      formData.append("additionalConsent", "true");
+      const updated = await updateUserCompetitionMetadata(
+        userId || "",
+        competitionData.id,
+        formData,
+        "additionalConsent",
+      );
+      if (updated) {
+        toast.success("Updated consent");
+      } else {
+        toast.error("Failed to update consent");
+      }
+    }
+  };
+
   const handleSubmit = async (formData: FormData) => {
     if (!session && !userId) {
       // If not logged in, redirect to login page
@@ -47,6 +75,9 @@ export default function SubmitAnswersForm({
     }
 
     try {
+      if (hasCheckedAdditional) {
+        const updatedUserComp = await updateCompetitionConsent();
+      }
       const res = await submitAnswers(
         userId!,
         competitionData.id,

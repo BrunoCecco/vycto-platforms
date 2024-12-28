@@ -125,7 +125,6 @@ export const updateCompetitionMetadata = withCompetitionAuth(
     try {
       let response;
 
-      console.log(value, key, "HERHEHERHERE");
       response = await db
         .update(competitions)
         .set({
@@ -593,6 +592,42 @@ export const updateUserCompetitionStats = async (competitionId: string) => {
     revalidateTag(`${competitionId}-users`);
 
     return updatedCompetitionUsers;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const updateUserCompetitionMetadata = async (
+  userId: string,
+  competitionId: string,
+  formData: FormData,
+  key: string,
+) => {
+  const value = formData.get(key) as string;
+
+  try {
+    let response;
+
+    response = await db
+      .update(userCompetitions)
+      .set({
+        [key]: key === "additionalConsent" ? value === "true" : value,
+      })
+      .where(
+        and(
+          eq(userCompetitions.userId, userId),
+          eq(userCompetitions.competitionId, competitionId),
+        ),
+      )
+      .returning();
+
+    revalidateTag(`${userId}-${competitionId}-comp`);
+    revalidateTag(`${competitionId}-users`);
+    revalidateTag(`${userId}-${competitionId}-answers`);
+
+    return response;
   } catch (error: any) {
     return {
       error: error.message,

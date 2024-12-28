@@ -280,6 +280,7 @@ export default function CompetitionPage({
                 ) : (
                   <SubmitAnswersForm
                     userId={session?.user.id!}
+                    userComp={userComp}
                     competitionData={data}
                     siteData={siteData}
                     slug={slug}

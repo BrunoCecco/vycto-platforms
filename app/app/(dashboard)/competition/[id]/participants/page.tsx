@@ -1,11 +1,11 @@
 import { notFound, redirect } from "next/navigation";
 import db from "@/lib/db";
 import CompetitionWinners from "@/components/competitions/competitionWinners";
-import { getCompetitionWinnerData } from "@/lib/fetchers";
+import { getCompetitionUsers, getCompetitionWinnerData } from "@/lib/fetchers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-export default async function CompetitionResults({
+export default async function CompetitionParticipants({
   params,
 }: {
   params: { id: string };
@@ -34,6 +34,7 @@ export default async function CompetitionResults({
   }
 
   const winnerData = await getCompetitionWinnerData(data.id);
+  const participants = await getCompetitionUsers(data.id);
 
   const url = process.env.NEXT_PUBLIC_VERCEL_ENV
     ? `https://${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/comp/${data.slug}`
@@ -50,6 +51,7 @@ export default async function CompetitionResults({
         <CompetitionWinners
           compData={data}
           winnerData={winnerData}
+          participants={participants}
           url={url}
           adminView={true}
         />

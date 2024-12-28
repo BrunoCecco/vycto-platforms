@@ -44,7 +44,7 @@ const User = ({
           href={`${url}/${user.userId}`}
           target="_blank"
           rel="noreferrer"
-          className="rounded-full bg-blue-100 p-2 px-4 text-purple-800 hover:bg-blue-300"
+          className="bg-blue-100 text-purple-800 hover:bg-blue-300 rounded-full p-2 px-4"
         >
           View
         </Link>
@@ -62,11 +62,13 @@ type Site = {
 export default function CompetitionWinners({
   compData,
   winnerData,
+  participants,
   url,
   adminView,
 }: {
   compData: SelectCompetition & Site;
   winnerData: any;
+  participants: SelectUserCompetition[];
   url: string;
   adminView: boolean;
 }) {
@@ -103,7 +105,7 @@ export default function CompetitionWinners({
     }
   }, [winnerData]);
 
-  const downloadCSVFile = () => {
+  const downloadWinnersCSVFile = () => {
     const data = [
       ["Rank", "Email", "Points", "SubmissionLink"],
       ...rewardWinners.map((user, index) => [
@@ -133,14 +135,40 @@ export default function CompetitionWinners({
     const a = document.createElement("a");
     a.href = url_;
     a.download =
-      compData.title + " winners " + new Date().toDateString() + ".xlsx";
+      compData.title + "-winners-" + new Date().toDateString() + ".xlsx";
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  const downloadAllCSVFile = () => {
+    const data = [
+      ["Rank", "Email", "Points", "SubmissionLink"],
+      ...participants.map((user, index) => [
+        user.ranking,
+        user.email,
+        parseFloat(user.points || "0").toFixed(2),
+        `${url}/${user.userId}`,
+      ]),
+    ];
+    const parser = new Parser({});
+    const csv = parser.parse(data);
+    alert(csv);
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url_ = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url_;
+    a.download =
+      compData.title + "-participants-" + new Date().toDateString() + ".xlsx";
     a.click();
     document.body.removeChild(a);
   };
 
   return (
     <div className="flex  flex-col space-y-12 p-6">
-      <Button onClick={downloadCSVFile}>Download Excel</Button>
+      <Button onClick={downloadWinnersCSVFile}>Download Winners Excel</Button>
+      <Button onClick={downloadAllCSVFile}>
+        Download All Participants Excel
+      </Button>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-6">
           <div className="font-bold">1st Reward Winners</div>
