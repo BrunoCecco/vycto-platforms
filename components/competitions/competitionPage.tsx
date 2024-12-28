@@ -69,7 +69,7 @@ export default function CompetitionPage({
   useEffect(() => {
     const hasEnded =
       data.correctAnswersSubmitted ||
-      new Date(data.date).getTime() < Date.now();
+      new Date(data.date.replace(/\[.*\]$/, "")).getTime() < Date.now();
     setEnded(hasEnded);
 
     const hasSubmitted =

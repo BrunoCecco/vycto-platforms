@@ -61,7 +61,9 @@ const PredictionCard = async ({
         <CardFooter className="absolute bottom-1 z-10 ml-[4px] w-[calc(100%_-_8px)] justify-between overflow-hidden rounded-large bg-black/60 py-1 pr-2 text-white shadow-small before:rounded-xl">
           <div className="flex w-full flex-col gap-1">
             <p className="text-sm sm:text-sm">
-              {new Date(competition.submissionDate).toDateString()}
+              {new Date(
+                competition.submissionDate.replace(/\[.*\]$/, ""),
+              ).toDateString()}
             </p>
             <p className="text-xs sm:text-sm">
               {parseFloat(competition.points || "0").toFixed(2)} Points

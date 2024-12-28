@@ -19,7 +19,8 @@ const EditCompetitionCard = async ({
   let status;
   if (new Date(data.date) > new Date()) {
     const days = Math.ceil(
-      (new Date(data.date).getTime() - new Date().getTime()) /
+      (new Date(data.date.replace(/\[.*\]$/, "")).getTime() -
+        new Date().getTime()) /
         (1000 * 60 * 60 * 24),
     );
     status = days + " Days to go";

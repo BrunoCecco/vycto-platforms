@@ -97,7 +97,9 @@ const AdminTable = () => {
                   </a>
                 </td>
                 <td className="px-4 py-3 ">
-                  {new Date(user.createdAt).toLocaleDateString()}
+                  {new Date(
+                    user.createdAt.replace(/\[.*\]$/, ""),
+                  ).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-3">
                   <UserForm

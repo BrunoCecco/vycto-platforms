@@ -16,6 +16,11 @@ import {
 } from "@/lib/fetchers";
 import Form from "../form";
 import { Spinner } from "@nextui-org/react";
+import {
+  parseAbsolute,
+  parseAbsoluteToLocal,
+  parseZonedDateTime,
+} from "@internationalized/date";
 
 export default function PublishCompetitionButtons({
   competition,
@@ -29,14 +34,17 @@ export default function PublishCompetitionButtons({
   useEffect(() => {
     setCanPublish(
       competition.published ||
-        new Date(competition.date).getTime() >= Date.now(),
+        new Date(competition.date.replace(/\[.*\]$/, "")).getTime() >=
+          Date.now(),
     );
-    console.log(new Date(competition.date));
-    console.log(Date.now());
   }, [competition]);
 
   const submitCorrectAnswers = async () => {
-    if (!(new Date(competition.date).getTime() < Date.now())) {
+    if (
+      !(
+        new Date(competition.date.replace(/\[.*\]$/, "")).getTime() < Date.now()
+      )
+    ) {
       toast.error("Competition has not ended yet.");
       return;
     }
@@ -91,7 +99,7 @@ export default function PublishCompetitionButtons({
           <p>{competition.published ? "Unpublish" : "Publish"}</p>
         )}
       </Button>
-      {new Date(competition.date).getTime() < Date.now() ? (
+      {parseZonedDateTime(competition.date).toDate().getTime() < Date.now() ? (
         competition.correctAnswersSubmitted ? (
           <Button className="my-2" onClick={submitCorrectAnswers}>
             Update Correct Answers

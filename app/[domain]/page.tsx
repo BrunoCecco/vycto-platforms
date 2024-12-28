@@ -60,7 +60,9 @@ export default async function SiteHomePage({
   }
 
   const latestCompetition = competitions.sort(
-    (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    (a: any, b: any) =>
+      new Date(b.date.replace(/\[.*\]$/, "")).getTime() -
+      new Date(a.date.replace(/\[.*\]$/, "")).getTime(),
   )[0];
 
   const session = await getServerSession(authOptions);
@@ -99,22 +101,26 @@ export default async function SiteHomePage({
             competitions
               .filter(
                 (competition: any) =>
-                  new Date(competition.date).getTime() >= Date.now(),
+                  new Date(competition.date.replace(/\[.*\]$/, "")).getTime() >=
+                  Date.now(),
               )
               .sort(
                 (a: any, b: any) =>
-                  new Date(a.date).getTime() - new Date(b.date).getTime(),
+                  new Date(a.date.replace(/\[.*\]$/, "")).getTime() -
+                  new Date(b.date.replace(/\[.*\]$/, "")).getTime(),
               ) as SelectCompetition[]
           }
           pastCompetitions={
             competitions
               .filter(
                 (competition: any) =>
-                  new Date(competition.date).getTime() < Date.now(),
+                  new Date(competition.date.replace(/\[.*\]$/, "")).getTime() <
+                  Date.now(),
               )
               .sort(
                 (a: any, b: any) =>
-                  new Date(a.date).getTime() - new Date(b.date).getTime(),
+                  new Date(a.date.replace(/\[.*\]$/, "")).getTime() -
+                  new Date(b.date.replace(/\[.*\]$/, "")).getTime(),
               ) as SelectCompetition[]
           }
           latestCompetition={latestCompetition}

@@ -58,7 +58,8 @@ const Competitions = ({
   const getStatus = (competition: SelectCompetition) => {
     if (!competition) return;
     const days = Math.ceil(
-      (new Date(competition.date).getTime() - new Date().getTime()) /
+      (new Date(competition.date.replace(/\[.*\]$/, "")).getTime() -
+        new Date().getTime()) /
         (1000 * 60 * 60 * 24),
     );
     return days > 0 ? `${days} Days to go` : `${Math.abs(days)} Days ago`;

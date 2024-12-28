@@ -37,14 +37,14 @@ export default async function EditCompetitions({
 
   const pastCompetitions = competitions.filter(
     (competition: any) =>
-      new Date(competition.date).getTime() < Date.now() &&
-      competition.published,
+      new Date(competition.date.replace(/\[.*\]$/, "")).getTime() <
+        Date.now() && competition.published,
   );
 
   const currentCompetitions = competitions.filter(
     (competition: any) =>
-      new Date(competition.date).getTime() >= Date.now() &&
-      competition.published,
+      new Date(competition.date.replace(/\[.*\]$/, "")).getTime() >=
+        Date.now() && competition.published,
   );
 
   const draftedCompetitions = competitions.filter(

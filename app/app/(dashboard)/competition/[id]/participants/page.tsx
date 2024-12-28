@@ -40,7 +40,7 @@ export default async function CompetitionParticipants({
     ? `https://${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/comp/${data.slug}`
     : `http://${data.site?.subdomain}.localhost:3000/comp/${data.slug}`;
 
-  if (new Date(data.date).getTime() >= Date.now()) {
+  if (new Date(data.date.replace(/\[.*\]$/, "")).getTime() >= Date.now()) {
     return <div className="my-12">Competition has not ended yet</div>;
   }
 

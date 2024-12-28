@@ -56,7 +56,8 @@ const CompetitionCard = ({
       setUsers(usrs);
 
       const days = Math.ceil(
-        (new Date(competition.date).getTime() - new Date().getTime()) /
+        (new Date(competition.date.replace(/\[.*\]$/, "")).getTime() -
+          new Date().getTime()) /
           (1000 * 60 * 60 * 24),
       );
       if (days > COMPETITION_WINDOW) {
@@ -130,8 +131,7 @@ const CompetitionCard = ({
                 //   display: "inline-block",
                 // }}
               >
-                {competition.title ||
-                  "Competition by " + competition.sponsor}
+                {competition.title || "Competition by " + competition.sponsor}
               </h2>
 
               <p

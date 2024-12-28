@@ -98,7 +98,9 @@ export default function CompetitionModal({
               </span>
               <span className="flex items-center">
                 <Timer className="mr-2" />{" "}
-                {new Date(competition.date).toDateString()}
+                {new Date(
+                  competition.date.replace(/\[.*\]$/, ""),
+                ).toDateString()}
               </span>
               {competition.rewardTitle && (
                 <span className="flex items-center">

@@ -87,7 +87,9 @@ export default async function SiteLayout({
   );
 
   const latestCompetition = competitions.sort(
-    (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    (a: any, b: any) =>
+      new Date(b.date.replace(/\[.*\]$/, "")).getTime() -
+      new Date(a.date.replace(/\[.*\]$/, "")).getTime(),
   )[0];
 
   // Optional: Redirect to custom domain if it exists
