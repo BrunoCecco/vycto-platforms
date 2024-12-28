@@ -163,12 +163,45 @@ export default function CompetitionWinners({
     document.body.removeChild(a);
   };
 
+  const downloadNewsletterOptinsCSVFile = () => {
+    const data = [
+      ["Rank", "Email", "Points", "SubmissionLink"],
+      ...participants
+        .filter((p) => p.newsletter == true)
+        .map((user, index) => [
+          user.ranking,
+          user.email,
+          parseFloat(user.points || "0").toFixed(2),
+          `${url}/${user.userId}`,
+        ]),
+    ];
+    const parser = new Parser({});
+    const csv = parser.parse(data);
+    alert(csv);
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url_ = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url_;
+    a.download =
+      compData.title +
+      "-newsletter-optins-" +
+      new Date().toDateString() +
+      ".xlsx";
+    a.click();
+    document.body.removeChild(a);
+  };
+
   return (
-    <div className="flex  flex-col space-y-12 p-6">
-      <Button onClick={downloadWinnersCSVFile}>Download Winners Excel</Button>
-      <Button onClick={downloadAllCSVFile}>
-        Download All Participants Excel
-      </Button>
+    <div className="flex flex-col space-y-12 p-6">
+      <div className="flex gap-2 p-6">
+        <Button onClick={downloadAllCSVFile}>Download All Participants</Button>
+        <Button onClick={downloadWinnersCSVFile}>
+          Download Reward Winners
+        </Button>
+        <Button onClick={downloadNewsletterOptinsCSVFile}>
+          Download Newsletter Opt Ins
+        </Button>
+      </div>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-6">
           <div className="font-bold">1st Reward Winners</div>

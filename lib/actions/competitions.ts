@@ -613,7 +613,7 @@ export const updateUserCompetitionMetadata = async (
     response = await db
       .update(userCompetitions)
       .set({
-        [key]: key === "additionalConsent" ? value === "true" : value,
+        [key]: value,
       })
       .where(
         and(

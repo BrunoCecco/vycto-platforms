@@ -30,7 +30,7 @@ export const users = pgTable("users", {
   birthDate: text("birthDate"),
   fanzoneNotifications: boolean("emailNotifications").default(true),
   prizeNotifications: boolean("prizeNotifications").default(true),
-  newsletter: boolean("newsletter").default(true),
+  newsletter: boolean("newsletter").default(false),
   updatedAt: timestamp("updatedAt", { mode: "date" })
     .notNull()
     .$onUpdate(() => new Date()),
@@ -279,7 +279,7 @@ export const userCompetitions = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    additionalConsent: boolean("additionalConsent").default(false),
+    newsletter: boolean("newsletter").default(false),
     // decimal value
     points: decimal("points", { precision: 7, scale: 4 }).default("0.0000"),
     rewardId: integer("rewardId").default(-1),

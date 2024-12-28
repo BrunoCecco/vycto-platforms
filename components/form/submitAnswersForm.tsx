@@ -7,6 +7,7 @@ import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import {
   deleteCompetition,
+  editUser,
   submitAnswers,
   updateUserCompetitionMetadata,
 } from "@/lib/actions";
@@ -48,21 +49,23 @@ export default function SubmitAnswersForm({
   const [modalUrl, setModalUrl] = useState<string>("");
   const [hasChecked, setHasChecked] = useState(true);
   const [hasCheckedAdditional, setHasCheckedAdditional] = useState(true);
+  const [hasCheckedNewsletter, setHasCheckedNewsletter] = useState(false);
 
-  const updateCompetitionConsent = async () => {
+  const updateNewlsetterConsent = async () => {
     if (userComp) {
       const formData = new FormData();
-      formData.append("additionalConsent", "true");
-      const updated = await updateUserCompetitionMetadata(
+      formData.append("newsletter", "true");
+      const res1 = await editUser(formData, userId || "", "newsletter");
+      const res2 = await updateUserCompetitionMetadata(
         userId || "",
         competitionData.id,
         formData,
-        "additionalConsent",
+        "newsletter",
       );
-      if (updated) {
-        toast.success("Updated consent");
+      if (res1 && res2) {
+        toast.success("Updated newsletter consent");
       } else {
-        toast.error("Failed to update consent");
+        toast.error("Failed to update newsletter consent");
       }
     }
   };
@@ -76,7 +79,7 @@ export default function SubmitAnswersForm({
 
     try {
       if (hasCheckedAdditional) {
-        const updatedUserComp = await updateCompetitionConsent();
+        const updatedUserComp = await updateNewlsetterConsent();
       }
       const res = await submitAnswers(
         userId!,
@@ -188,6 +191,7 @@ export default function SubmitAnswersForm({
                 classNames={{
                   label: "text-xs sm:text-sm",
                 }}
+                onChange={(e) => setHasCheckedNewsletter(e.target.checked)}
               >
                 {" "}
                 I would like to join the {siteData.name} Newsletter and receive
