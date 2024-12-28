@@ -59,7 +59,7 @@ const EditCompetitionDetails = async ({
             {
               name: "date",
               type: "date",
-              defaultValue: new Date(data?.date!).toISOString().split("T")[0],
+              defaultValue: data?.date!,
               placeholder: "Date",
               label: "Competition Date",
             },

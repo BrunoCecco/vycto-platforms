@@ -287,15 +287,19 @@ export default function CombinedForm({
                   <Textarea {...inputAttr} rows={3} />
                 ) : inputAttr.type == "date" ? (
                   // <I18nProvider locale="en-GB">
-                  <DatePicker
-                    {...inputAttr}
-                    defaultValue={
-                      inputAttr.defaultValue.includes("[UTC]")
-                        ? parseZonedDateTime(inputAttr.defaultValue)
-                        : parseDate(inputAttr.defaultValue)
-                    }
-                    showMonthAndYearPickers
-                  />
+                  <>
+                    <DatePicker
+                      {...inputAttr}
+                      defaultValue={
+                        inputAttr.name == "birthDate"
+                          ? parseDate(inputAttr.defaultValue.split("T")[0])
+                          : inputAttr.defaultValue.includes("[UTC]")
+                            ? parseZonedDateTime(inputAttr.defaultValue)
+                            : parseAbsoluteToLocal(inputAttr.defaultValue)
+                      }
+                      showMonthAndYearPickers
+                    />
+                  </>
                 ) : // </I18nProvider>
                 inputAttr.type == "checkbox" ? (
                   <>

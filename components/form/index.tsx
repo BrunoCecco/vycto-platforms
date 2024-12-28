@@ -10,12 +10,19 @@ import va from "@vercel/analytics";
 import { useSession } from "next-auth/react";
 import Uploader from "./uploader";
 import { USER_ROLES } from "@/lib/constants";
-import { Button, Spinner } from "@nextui-org/react";
+import { Button, DateInput, DatePicker, Spinner } from "@nextui-org/react";
 import { Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import CountryPicker from "../settings/countryPicker";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
+import {
+  parseAbsolute,
+  parseAbsoluteToLocal,
+  parseDate,
+  parseDateTime,
+  parseZonedDateTime,
+} from "@internationalized/date";
 
 export default function Form({
   title,
@@ -186,8 +193,16 @@ export default function Form({
           </div>
         ) : inputAttrs.name === "description" || inputAttrs.name === "story" ? (
           <Textarea {...inputAttrs} rows={3} required />
-        ) : inputAttrs.name === "date" ? (
-          <Input {...inputAttrs} type="date" required />
+        ) : inputAttrs.type === "date" ? (
+          <DatePicker
+            {...inputAttrs}
+            defaultValue={
+              inputAttrs.defaultValue.includes("[UTC]")
+                ? parseZonedDateTime(inputAttrs.defaultValue)
+                : parseAbsoluteToLocal(inputAttrs.defaultValue)
+            }
+            showMonthAndYearPickers
+          />
         ) : (
           <Input {...inputAttrs} required />
         )}

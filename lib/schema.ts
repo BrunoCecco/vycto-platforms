@@ -219,7 +219,6 @@ export const competitions = pgTable(
       .notNull()
       .$onUpdate(() => new Date()),
     date: text("date").notNull().default(new Date().toISOString()),
-    time: text("time").notNull().default("00:00"),
     published: boolean("published").default(false).notNull(),
     correctAnswersSubmitted: boolean("correctAnswersSubmitted")
       .default(false)
