@@ -130,7 +130,7 @@ const CompetitionCard = ({
                 //   display: "inline-block",
                 // }}
               >
-                {competition.title + " longer longer" ||
+                {competition.title ||
                   "Competition by " + competition.sponsor}
               </h2>
 
