@@ -82,6 +82,19 @@ export default async function CompetitionSettings({
         />
 
         <Form
+          title="Time"
+          description="The start time of the competition"
+          helpText="Please enter the start time of the competition"
+          inputAttrs={{
+            name: "time",
+            type: "time",
+            defaultValue: data?.time || "13:00",
+            placeholder: "Time",
+          }}
+          handleSubmit={updateCompetitionMetadata}
+        />
+
+        <Form
           title="Competition Guidelines"
           description="The guidelines for the competition."
           helpText="Please enter the specific guidelines for the competition."
