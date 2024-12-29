@@ -20,25 +20,25 @@ import { authOptions } from "@/lib/auth";
 import ColorSchemeToggle from "@/components/ui/colorSchemeToggle";
 import Link from "next/link";
 
-export async function generateStaticParams() {
-  const allSites = await db.query.sites.findMany({
-    columns: {
-      subdomain: true,
-      customDomain: true,
-    },
-  });
+// export async function generateStaticParams() {
+//   const allSites = await db.query.sites.findMany({
+//     columns: {
+//       subdomain: true,
+//       customDomain: true,
+//     },
+//   });
 
-  const allPaths = allSites
-    .flatMap(({ subdomain, customDomain }) => [
-      subdomain && {
-        domain: `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
-      },
-      customDomain && { domain: customDomain },
-    ])
-    .filter(Boolean);
+//   const allPaths = allSites
+//     .flatMap(({ subdomain, customDomain }) => [
+//       subdomain && {
+//         domain: `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
+//       },
+//       customDomain && { domain: customDomain },
+//     ])
+//     .filter(Boolean);
 
-  return allPaths;
-}
+//   return allPaths;
+// }
 
 export default async function SiteHomePage({
   params,

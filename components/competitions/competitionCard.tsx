@@ -71,7 +71,9 @@ const CompetitionCard = ({
       } else if (days > 0) {
         setCompOpen(true);
         setStatus(calculateTimeLeft());
-      } else if (new Date(competition.date) < new Date()) {
+      } else if (
+        new Date(competition.date.replace(/\[.*\]$/, "")) < new Date()
+      ) {
         setStatus(usrs?.length + " Participants");
       } else {
         setStatus("Live");

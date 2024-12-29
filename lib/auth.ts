@@ -154,7 +154,6 @@ export const authOptions: NextAuthOptions = {
         token.name = session?.user?.name || token.name;
         token.email = session?.user?.email || token.email;
         token.picture = session?.user?.image || token.picture;
-        console.log(token);
         return token;
       }
       if (user) {
@@ -163,7 +162,6 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     session: async ({ session, token }) => {
-      console.log(session, token, "SESSION");
       session.user = {
         // @ts-expect-error
         id: token.sub,
@@ -246,7 +244,6 @@ export function withSiteRewardAuth(action: any) {
         error: "Not authenticated",
       };
     }
-    console.log(siteRewardId);
 
     const siteReward = await db.query.siteRewards.findFirst({
       where: (sites, { eq }) => eq(siteRewards.id, siteRewardId),

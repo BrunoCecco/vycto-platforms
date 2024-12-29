@@ -3,7 +3,12 @@
 import { revalidateTag, unstable_cache } from "next/cache";
 import db from "../db";
 import { and, desc, eq, gte, lte, not } from "drizzle-orm";
-import { userCompetitions, competitions, users } from "../schema";
+import {
+  userCompetitions,
+  competitions,
+  users,
+  SelectCompetition,
+} from "../schema";
 import { LeaderboardPeriod, QuestionType } from "../types";
 import { updateUserPoints, updateAnswerPoints } from "../actions";
 import { getAnswersForUser, getQuestionsForCompetition } from "./competitions";
@@ -180,6 +185,7 @@ export async function calculateUserPoints(
 }
 
 export async function calculateCompetitionPoints(competitionId: string) {
+  console.log(competitionId);
   console.log(`Calculating points for competition ${competitionId}`);
   const competitionUsers = await db.query.userCompetitions.findMany({
     where: eq(userCompetitions.competitionId, competitionId),
@@ -200,28 +206,34 @@ export async function calculateCompetitionPoints(competitionId: string) {
   return usersWithPoints;
 }
 
+import { sql } from "drizzle-orm"; // Import raw SQL helper from Drizzle
+
 export async function getCompetitionsForPeriod(
   siteId: string,
   startDate: Date,
   endDate: Date,
 ) {
-  return await unstable_cache(
-    async () => {
-      return await db.query.competitions.findMany({
-        where: and(
-          eq(competitions.siteId, siteId),
-          gte(competitions.createdAt, startDate),
-          lte(competitions.createdAt, endDate),
-        ),
-        orderBy: desc(competitions.createdAt),
-      });
-    },
-    [`${siteId}-${startDate}-${endDate}`],
-    {
-      revalidate: 900,
-      tags: [`${siteId}-${startDate}-${endDate}`],
-    },
-  )();
+  const startDateString = startDate
+    .toISOString()
+    .replace(/\.\d{3}Z$/, "+00:00[UTC]");
+  const endDateString = endDate
+    .toISOString()
+    .replace(/\.\d{3}Z$/, "+00:00[UTC]");
+
+  return await db.query.competitions.findMany({
+    where: and(
+      eq(competitions.siteId, siteId),
+      gte(
+        sql`replace(${competitions.date}, '[UTC]', '')`,
+        sql`replace(${startDateString}, '[UTC]', '')`,
+      ),
+      lte(
+        sql`replace(${competitions.date}, '[UTC]', '')`,
+        sql`replace(${endDateString}, '[UTC]', '')`,
+      ),
+    ),
+    orderBy: desc(competitions.createdAt),
+  });
 }
 
 export async function getLeaderboardData(
@@ -258,7 +270,10 @@ export async function getLeaderboardData(
 
   // await promise for all site competitions and store in array
   const allCompetitionPoints = await Promise.all(
-    comps.map((comp: any) => calculateCompetitionPoints(comp.id)),
+    comps.map(async (comp: SelectCompetition) => {
+      console.log(comp.title, "COMPETITION");
+      return await calculateCompetitionPoints(comp.id);
+    }),
   );
 
   const allUsers = allCompetitionPoints.flat();

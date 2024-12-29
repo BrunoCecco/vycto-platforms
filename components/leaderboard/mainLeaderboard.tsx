@@ -52,7 +52,7 @@ const MainLeaderboard = ({
     const fetchData = async () => {
       setLoading(true);
       const leaderboardData = await getLeaderboardData(siteData.id, rangeType);
-      setData(leaderboardData! as LeaderboardUser[]);
+      setData(leaderboardData as LeaderboardUser[]);
       setLoading(false);
     };
     fetchData();
