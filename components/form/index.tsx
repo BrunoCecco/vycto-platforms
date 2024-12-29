@@ -18,7 +18,6 @@ import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import {
   parseAbsolute,
-  parseAbsoluteToLocal,
   parseDate,
   parseDateTime,
   parseZonedDateTime,
@@ -197,9 +196,16 @@ export default function Form({
           <DatePicker
             {...inputAttrs}
             defaultValue={
-              inputAttrs.defaultValue.includes("[UTC]")
-                ? parseZonedDateTime(inputAttrs.defaultValue)
-                : parseAbsoluteToLocal(inputAttrs.defaultValue)
+              inputAttrs.name == "birthDate"
+                ? parseDate(inputAttrs.defaultValue.split("T")[0])
+                : inputAttrs.defaultValue.includes("[UTC]")
+                  ? parseZonedDateTime(inputAttrs.defaultValue)
+                  : inputAttrs.defaultValue.includes(":")
+                    ? parseAbsolute(inputAttrs.defaultValue, "UTC")
+                    : parseAbsolute(
+                        `${inputAttrs.defaultValue}T18:00:00Z`,
+                        "UTC",
+                      )
             }
             showMonthAndYearPickers
           />

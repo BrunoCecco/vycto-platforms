@@ -27,8 +27,7 @@ import { useFormStatus } from "react-dom";
 import {
   parseDate,
   parseZonedDateTime,
-  getLocalTimeZone,
-  parseAbsoluteToLocal,
+  parseAbsolute,
 } from "@internationalized/date";
 import CombinedFormImage from "./combinedFormImage";
 import Toggle from "@/components/ui/toggle";
@@ -295,7 +294,12 @@ export default function CombinedForm({
                           ? parseDate(inputAttr.defaultValue.split("T")[0])
                           : inputAttr.defaultValue.includes("[UTC]")
                             ? parseZonedDateTime(inputAttr.defaultValue)
-                            : parseAbsoluteToLocal(inputAttr.defaultValue)
+                            : inputAttr.defaultValue.includes(":")
+                              ? parseAbsolute(inputAttr.defaultValue, "UTC")
+                              : parseAbsolute(
+                                  `${inputAttr.defaultValue}T18:00:00Z`,
+                                  "UTC",
+                                )
                       }
                       showMonthAndYearPickers
                     />
