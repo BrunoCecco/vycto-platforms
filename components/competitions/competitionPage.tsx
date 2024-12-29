@@ -227,7 +227,7 @@ export default function CompetitionPage({
 
   return (
     <div className="w-full pb-5 sm:pb-20">
-      <div className="h-max overflow-hidden px-2 py-8 sm:bg-content2 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
+      <div className="h-max px-2 py-8 sm:bg-content2 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
         <CompetitionHeader
           session={session}
           users={users}

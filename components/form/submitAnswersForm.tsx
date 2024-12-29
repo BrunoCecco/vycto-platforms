@@ -78,7 +78,7 @@ export default function SubmitAnswersForm({
     }
 
     try {
-      if (hasCheckedAdditional) {
+      if (hasCheckedNewsletter) {
         const updatedUserComp = await updateNewlsetterConsent();
       }
       const res = await submitAnswers(
@@ -187,7 +187,6 @@ export default function SubmitAnswersForm({
               ) : null}
               <Checkbox
                 value="newsletter-consent"
-                defaultChecked
                 classNames={{
                   label: "text-xs sm:text-sm",
                 }}

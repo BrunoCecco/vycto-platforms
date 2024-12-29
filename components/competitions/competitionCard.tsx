@@ -82,7 +82,7 @@ const CompetitionCard = ({
 
   const calculateTimeLeft = () => {
     const now = new Date();
-    const competitionDate = new Date(competition.date);
+    const competitionDate = new Date(competition.date.replace(/\[.*\]$/, ""));
     const timeDiff = competitionDate.getTime() - now.getTime();
     const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
