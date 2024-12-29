@@ -64,14 +64,14 @@ export default function RewardModal({
                     rotate: 0,
                     zIndex: 100,
                   }}
-                  className="-mr-4 mt-4 flex-shrink-0 overflow-hidden rounded-xl  p-1 "
+                  className="-mr-4 mt-4 flex-shrink-0 overflow-hidden rounded-xl p-1 "
                 >
                   <Image
                     src={image || "/logo.png"}
                     alt="images"
                     width="500"
                     height="500"
-                    className="h-20 w-20 flex-shrink-0 rounded-lg object-cover md:h-40 md:w-40"
+                    className="h-28 w-28 flex-shrink-0 rounded-lg object-cover md:h-40 md:w-40"
                   />
                 </motion.div>
               ))}

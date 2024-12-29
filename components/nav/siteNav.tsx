@@ -212,7 +212,7 @@ export default function SiteNav({
                   </HoverBorderGradient>
                 </div>
               ) : (
-                <div className="flex w-[400px] flex-col items-center gap-4">
+                <div className="flex w-full flex-col items-center gap-4">
                   <Input
                     type="text"
                     placeholder="hi@vycto.com"
