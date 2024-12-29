@@ -35,7 +35,11 @@ export default function PublishCompetitionButtons({
   }, [competition]);
 
   const submitCorrectAnswers = async () => {
-    if (!(new Date(competition.date).getTime() < Date.now())) {
+    if (
+      !(
+        new Date(competition.date.replace(/\[.*\]$/, "")).getTime() < Date.now()
+      )
+    ) {
       toast.error("Competition has not ended yet.");
       return;
     }

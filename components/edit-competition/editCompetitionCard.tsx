@@ -17,14 +17,14 @@ const EditCompetitionCard = async ({
     : `http://${data.site?.subdomain}.localhost:3000/comp/${data.slug}`;
 
   let status;
-  if (new Date(data.date) > new Date()) {
+  if (new Date(data.date.replace(/\[.*\]$/, "")) > new Date()) {
     const days = Math.ceil(
       (new Date(data.date.replace(/\[.*\]$/, "")).getTime() -
         new Date().getTime()) /
         (1000 * 60 * 60 * 24),
     );
     status = days + " Days to go";
-  } else if (new Date(data.date) < new Date()) {
+  } else if (new Date(data.date.replace(/\[.*\]$/, "")) < new Date()) {
     status = users.length + " Participants";
   } else {
     status = "Live";

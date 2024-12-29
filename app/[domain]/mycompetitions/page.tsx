@@ -43,13 +43,19 @@ export default async function MyCompetitions({
   const userCompetitions = await getUserCompetitions(session.user.id, data.id);
   console.log(userCompetitions, "userCompetitions");
 
-  const currentCompetitions = userCompetitions.filter(
-    (comp) => new Date(comp.competition?.date!) >= new Date(),
-  );
+  const currentCompetitions = userCompetitions.filter((comp) => {
+    const compDate = comp.competition?.date
+      ? new Date(comp.competition.date.replace(/\[.*\]$/, ""))
+      : null;
+    return compDate && compDate >= new Date();
+  });
 
-  const pastCompetitions = userCompetitions.filter(
-    (comp) => new Date(comp.competition?.date!) < new Date(),
-  );
+  const pastCompetitions = userCompetitions.filter((comp) => {
+    const compDate = comp.competition?.date
+      ? new Date(comp.competition.date.replace(/\[.*\]$/, ""))
+      : null;
+    return compDate && compDate < new Date();
+  });
 
   return (
     <div className="min-h-screen">
