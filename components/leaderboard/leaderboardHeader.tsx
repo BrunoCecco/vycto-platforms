@@ -13,6 +13,7 @@ const LeaderboardHeader = ({
   selectedReward,
   onClick,
   compTitle,
+  isComp,
 }: {
   siteData: SelectSite;
   rangeType: LeaderboardPeriod;
@@ -21,6 +22,7 @@ const LeaderboardHeader = ({
   selectedReward?: SelectSiteReward;
   onClick?: any;
   compTitle?: string;
+  isComp?: boolean;
 }) => {
   const timeRanges = [
     { key: "last week", label: "Last Week" },
@@ -47,28 +49,30 @@ const LeaderboardHeader = ({
   return (
     <div className="mb-2 flex w-full flex-col items-center justify-between gap-4 sm:flex-row">
       <div className="flex w-full flex-wrap items-center justify-between gap-4 sm:flex-col md:items-start">
-        <div className="flex items-center gap-4 sm:mt-2">
-          <Image
-            src={selectedReward?.image || siteData.logo || "/logo.png"}
-            height={48}
-            width={48}
-            className="w-auto object-contain"
-            alt="logo"
-          />
-          <h1 className="text-lg font-bold">
-            Leaderboard{" "}
-            {rangeType === "monthly"
-              ? new Date().toLocaleString("default", { month: "long" })
-              : rangeType === "season"
-                ? new Date().getFullYear()
-                : compTitle
-                  ? `: ${compTitle}`
-                  : " "}
-          </h1>
-        </div>
+        {isComp ? null : (
+          <div className="flex items-center gap-4 sm:mt-2">
+            <Image
+              src={selectedReward?.image || siteData.logo || "/logo.png"}
+              height={48}
+              width={48}
+              className="w-auto object-contain"
+              alt="logo"
+            />
+            <h1 className="text-lg font-bold">
+              Leaderboard{" "}
+              {rangeType === "monthly"
+                ? new Date().toLocaleString("default", { month: "long" })
+                : rangeType === "season"
+                  ? new Date().getFullYear()
+                  : compTitle
+                    ? `: ${compTitle}`
+                    : " "}
+            </h1>
+          </div>
+        )}
 
         {/* Updated text based on rangeType */}
-        {compTitle ? null : (
+        {isComp ? null : (
           <div
             className="cursor-pointer underline"
             style={{ color: siteData.color2 }}
@@ -85,7 +89,7 @@ const LeaderboardHeader = ({
           startContent={<SearchIcon size={18} />}
           type="search"
         />
-        {compTitle ? null : (
+        {isComp ? null : (
           <Select
             aria-label="Time Range"
             placeholder={rangeType}

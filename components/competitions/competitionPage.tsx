@@ -303,9 +303,7 @@ export default function CompetitionPage({
             <MainLeaderboard
               siteData={siteData}
               session={session}
-              startDate={new Date(data.date.replace(/\[.*\]$/, ""))}
-              endDate={new Date(data.date.replace(/\[.*\]$/, ""))}
-              compTitle={data.title || ""}
+              compDate={new Date(data.date.replace(/\[.*\]$/, ""))}
             />
           </div>
           // <Leaderboard

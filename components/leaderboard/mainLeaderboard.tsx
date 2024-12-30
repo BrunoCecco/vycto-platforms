@@ -34,7 +34,6 @@ const MainLeaderboard = ({
   siteData: SelectSite;
   session: Session | null;
   limit?: number;
-  date?: Date;
   compDate?: Date;
 }) => {
   const [rangeType, setRangeType] = useState<IRangeType>("monthly");
@@ -175,6 +174,7 @@ const MainLeaderboard = ({
         selectedReward={selectedReward}
         onClick={() => setIsOpen(true)}
         compTitle={compTitle}
+        isComp={compDate != undefined}
       />
 
       {/* {data && data?.findIndex((usr) => usr.id === user?.id) > -1 && (
