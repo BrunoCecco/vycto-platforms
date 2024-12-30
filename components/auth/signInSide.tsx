@@ -8,8 +8,9 @@ import { usePostHog } from "posthog-js/react";
 import * as React from "react";
 import { useState } from "react";
 import LoginButton from "./loginButton";
-import { Button, Input } from "@nextui-org/react";
+import { Button, DatePicker, DateValue, Input } from "@nextui-org/react";
 import { useTheme } from "next-themes";
+import { parseDate } from "@internationalized/date";
 
 export default function SignInSide({
   siteData,
@@ -22,6 +23,7 @@ export default function SignInSide({
 }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [birthDate, setBirthDate] = useState<DateValue | null>();
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState(true);
@@ -196,34 +198,33 @@ export default function SignInSide({
                     </div>
                   ) : (
                     <>
-                      <div>
-                        <label className="">
-                          <div>Username</div>
-                        </label>
-                        <Input
-                          id="username"
-                          type="username"
-                          autoComplete="username"
-                          onChange={(e) => setUsername(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <label className="">
-                          <div>Full Name</div>
-                        </label>
-                        <Input
-                          id="fullname"
-                          type="fullname"
-                          autoComplete="fullname"
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </div>
+                      <Input
+                        id="username"
+                        label="Username"
+                        type="username"
+                        autoComplete="username"
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <Input
+                        id="fullname"
+                        label="Full Name"
+                        type="fullname"
+                        autoComplete="fullname"
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      <DatePicker
+                        name="birthDate"
+                        label={"Birth Date"}
+                        showMonthAndYearPickers
+                        onChange={setBirthDate}
+                      />
                     </>
                   )}
                   <div className="mt-2 flex flex-col gap-4">
                     <LoginButton
                       email={email}
                       username={username}
+                      birthDate={birthDate?.toString()}
                       localAnswers={localAnswers}
                       competitionSlug={competitionSlug}
                       name={name}

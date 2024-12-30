@@ -24,7 +24,7 @@ import { useEffect, useState } from "react";
 import Leaderboard from "@/components/leaderboard/leaderboard";
 import GameStats from "@/components/competitions/gameStats";
 import { useRouter, useSearchParams } from "next/navigation";
-import { submitAnswers, updateName, updateUsername } from "@/lib/actions";
+import { submitAnswers, updateUserOnLogin } from "@/lib/actions";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import CompetitionWinners from "@/components/competitions/competitionWinners";
@@ -92,19 +92,32 @@ export default function CompetitionPage({
         //submitExtractedAnswers(extractedAnswers);
       }
     }
-    checkUsername();
+    checkUserDetails();
   }, [session, searchParams, userComp]);
 
-  const checkUsername = async () => {
+  const checkUserDetails = async () => {
     const username = searchParams.get("username");
     if (username) {
-      const res = await updateUsername(username, session.user.email);
+      const res = await updateUserOnLogin(
+        session.user.email,
+        "username",
+        username,
+      );
       toast.success("Username updated");
     }
     const name = searchParams.get("name");
     if (name) {
-      const res = await updateName(name, session.user.email);
+      const res = await updateUserOnLogin(session.user.email, "name", name);
       toast.success("Name updated");
+    }
+    const birthDate = searchParams.get("birthDate");
+    if (birthDate) {
+      const res = await updateUserOnLogin(
+        session.user.email,
+        "birthDate",
+        birthDate,
+      );
+      toast.success("Birthdate updated");
     }
   };
 

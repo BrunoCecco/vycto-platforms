@@ -54,35 +54,21 @@ export const editUser = async (
   }
 };
 
-export const updateName = async (name: string, email: string) => {
+export const updateUserOnLogin = async (
+  email: string,
+  key: string,
+  value: string,
+) => {
   try {
     const [response] = await db
       .update(users)
       .set({
-        name: name,
+        [key]: value,
       })
       .where(eq(users.email, email))
       .returning();
 
-    revalidateTag(`${email}-user`);
-    return response;
-  } catch (error: any) {
-    return {
-      error: error.message,
-    };
-  }
-};
-
-export const updateUsername = async (username: string, email: string) => {
-  try {
-    const [response] = await db
-      .update(users)
-      .set({
-        username: username,
-      })
-      .where(eq(users.email, email))
-      .returning();
-
+    console.log(key, value, "response");
     revalidateTag(`${email}-user`);
     return response;
   } catch (error: any) {

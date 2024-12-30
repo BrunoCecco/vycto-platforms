@@ -22,6 +22,7 @@ export default function LoginButton({
   email,
   setEmailExists,
   username,
+  birthDate,
   localAnswers,
   competitionSlug,
   name,
@@ -29,6 +30,7 @@ export default function LoginButton({
   email: string;
   setEmailExists: (exists: boolean) => void;
   username?: string;
+  birthDate?: string;
   localAnswers?: { [key: string]: string };
   competitionSlug?: string;
   name?: string;
@@ -100,6 +102,9 @@ export default function LoginButton({
     if (name && name?.trim() != "") {
       callbackUrl += `&name=${name}`;
     }
+    if (birthDate && birthDate?.trim() != "") {
+      callbackUrl += `&birthDate=${birthDate}`;
+    }
     try {
       const result = await signIn("email", {
         email,
@@ -120,10 +125,16 @@ export default function LoginButton({
 
   const handleNormalLogin = async () => {
     posthog?.capture("sign-in-email-clicked");
-    var callbackUrl = username ? `/updateuser/${username}` : "";
+    var callbackUrl = username
+      ? `/updateuser?username=${encodeURIComponent(username)}`
+      : "";
     if (name && name?.trim() != "") {
-      callbackUrl += `/${name}`;
+      callbackUrl += `&name=${encodeURIComponent(name)}`;
     }
+    if (birthDate && birthDate?.trim() != "") {
+      callbackUrl += `&birthDate=${encodeURIComponent(birthDate)}`;
+    }
+    alert(callbackUrl);
     try {
       const result = await signIn("email", {
         email,

@@ -87,7 +87,8 @@ export default function UserSettings({ siteData }: { siteData?: SelectSite }) {
               {
                 name: "birthDate",
                 type: "date",
-                defaultValue: user?.birthDate || "2003-01-01",
+                // regex for a YYYY-MM-DD date from the user?.birthDate
+                defaultValue: user?.birthDate || "2003-01-02",
                 label: "Birth Date",
               },
               {

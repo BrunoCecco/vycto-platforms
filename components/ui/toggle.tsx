@@ -2,13 +2,11 @@ import React, { useState } from "react";
 
 const Toggle = ({
   id,
-  key,
   isSelected,
   onToggle,
   label,
 }: {
   id: string;
-  key: string;
   isSelected: boolean;
   onToggle?: (toggled: boolean) => void;
   label?: string;
@@ -27,7 +25,6 @@ const Toggle = ({
     <div className="flex items-center">
       <div
         id={id}
-        key={key}
         className={
           "relative h-[20px] w-[50px] translate-x-1 translate-y-1 cursor-pointer rounded-md bg-foreground"
         }
