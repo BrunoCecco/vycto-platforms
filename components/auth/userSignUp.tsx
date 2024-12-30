@@ -188,7 +188,7 @@ const UserSignUp = ({
                 id="email"
                 type="email"
                 autoComplete="email"
-                placeholder="buzz@lightyear.com"
+                placeholder=""
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
@@ -214,7 +214,7 @@ const UserSignUp = ({
                 <Input
                   id="username"
                   type="username"
-                  placeholder="buzz123"
+                  placeholder=""
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
@@ -228,7 +228,7 @@ const UserSignUp = ({
                 <Input
                   id="fullname"
                   type="text"
-                  placeholder="Buzz Lightyear"
+                  placeholder=""
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
@@ -249,7 +249,7 @@ const UserSignUp = ({
         By continuing you agree to the{" "}
         <a
           className="font-semibold"
-          href="https://vycto.com/terms&conditions"
+          href={siteData?.terms || ""}
           rel="noreferrer"
           target="_blank"
         >
@@ -257,7 +257,7 @@ const UserSignUp = ({
         </a>{" "}
         and{" "}
         <a
-          href="https://vycto.com/privacy-policy"
+          href={siteData?.privacypolicy || ""}
           rel="noreferrer"
           target="_blank"
           className="font-semibold "

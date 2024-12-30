@@ -7,8 +7,9 @@ import { useSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import Loading from "@/components/ui/loading";
 import useUserSession from "@/lib/hooks/useUserSession";
+import { SelectSite } from "@/lib/schema";
 
-export default function UserSettings() {
+export default function UserSettings({ siteData }: { siteData?: SelectSite }) {
   const { user, session, status, update } = useUserSession({
     required: true,
     onUnauthenticated: () => redirect("/login"),
@@ -43,6 +44,8 @@ export default function UserSettings() {
           <CombinedForm
             title={"Profile"}
             helpText="User details"
+            termslink={siteData?.terms || undefined}
+            privacylink={siteData?.privacypolicy || undefined}
             inputAttrs={[
               {
                 name: "image",

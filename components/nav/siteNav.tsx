@@ -233,6 +233,18 @@ export default function SiteNav({
                   </div>
                 </div>
               )}
+
+            <p className="flex items-center gap-4 text-xs text-content4">
+              By clicking &apos;Stay Notified&apos; I confirm that I have read and agree to the 
+              <a href={data.terms || ""} rel="noreferrer" target="_blank">
+                {" "}Terms
+              </a>{" "}
+              and{" "}
+              <a href={data.privacypolicy || ""} rel="noreferrer" target="_blank">
+                Privacy Policy
+              </a>
+            </p>
+          ) : null}
             </div>
           </ModalContent>
         </ModalBody>

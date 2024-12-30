@@ -234,7 +234,7 @@ export default function SignInSide({
                         By continuing you agree to the{" "}
                         <a
                           className="dark: font-semibold "
-                          href="https://vycto.com/terms&conditions"
+                          href={siteData?.terms || ""}
                           rel="noreferrer"
                           target="_blank"
                         >
@@ -242,7 +242,7 @@ export default function SignInSide({
                         </a>{" "}
                         and{" "}
                         <a
-                          href="https://vycto.com/privacy-policy"
+                          href={siteData?.privacypolicy || ""}
                           rel="noreferrer"
                           target="_blank"
                           className="dark: font-semibold "

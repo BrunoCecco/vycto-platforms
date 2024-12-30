@@ -55,6 +55,8 @@ export default function CombinedForm({
   handleSubmit,
   className,
   updateId,
+  termslink,
+  privacylink,
 }: {
   title: String;
   helpText: string;
@@ -62,6 +64,8 @@ export default function CombinedForm({
   handleSubmit: any;
   className?: string;
   updateId?: string;
+  termslink?: string;
+  privacylink?: string;
 }) {
   const form2 = useRef<HTMLFormElement>(null);
   const form2button = useRef<HTMLButtonElement>(null);
@@ -150,7 +154,7 @@ export default function CombinedForm({
     }
     return (
       <div className="w-full px-5 pt-5 sm:w-1/3 sm:pr-0 sm:pt-0">
-        <div className="flex w-full flex-col gap-6 rounded-lg border p-4">
+        <div className="flex w-full flex-col gap-2 rounded-lg border">
           {imageInputAttr && (
             <CombinedFormImage
               name={imageInputAttr.name}
@@ -162,7 +166,7 @@ export default function CombinedForm({
           )}
           <form
             action={formAction}
-            className="flex w-full flex-1 flex-col gap-6"
+            className="flex w-full flex-1 flex-col gap-4 p-4 pt-0"
             ref={form2}
           >
             {usernameInputAttr && (
@@ -215,7 +219,7 @@ export default function CombinedForm({
         {SpecialInputAttrs()}
         <form
           action={formAction}
-          className="flex w-full flex-1 flex-col gap-6 px-5"
+          className="flex w-full flex-1 flex-col gap-4 px-5"
         >
           {inputAttrs.map((inputAttr, index) => {
             if (
@@ -337,6 +341,16 @@ export default function CombinedForm({
               </div>
             );
           })}
+          {termslink && privacylink ? (
+            <p className="flex items-center gap-4 text-xs text-content4">
+              <a href={termslink} rel="noreferrer" target="_blank">
+                Terms of use
+              </a>{" "}
+              <a href={privacylink} rel="noreferrer" target="_blank">
+                Privacy Policy
+              </a>
+            </p>
+          ) : null}
           {!imageInputAttr ? (
             <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t   p-3   sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
               <p className="mr-2 text-sm">{helpText}</p>
