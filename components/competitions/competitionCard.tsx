@@ -157,11 +157,13 @@ const CompetitionCard = ({
                 </PlayButton>
               ) : null
             ) : (
-              <PlayButton color1={siteData.color1} color2={siteData.color2}>
-                <CoolMode options={{ color: siteData.color1 }}>
-                  <div>Play</div>
-                </CoolMode>
-              </PlayButton>
+              <CoolMode options={{ color: siteData.color1 }}>
+                <div className="p-1">
+                  <PlayButton color1={siteData.color1} color2={siteData.color2}>
+                    <div>Play</div>
+                  </PlayButton>
+                </div>
+              </CoolMode>
             )}
           </div>
           <style jsx>{`
