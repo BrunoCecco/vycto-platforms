@@ -58,12 +58,161 @@ const Slider: FC<{
 
   return (
     <div className="w-full">
+      <style>
+        {`
+          input[type="range"]::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 3px;
+            background: ${color};
+            background: -webkit-linear-gradient(
+              left,
+              ${color} 50%,
+              ${color} 100%
+            );
+            background: linear-gradient(
+              to right,
+              ${color} 50%,
+              ${color} 100%
+            );
+            filter: progid:DXImageTransform.Microsoft.gradient(
+              startColorstr="${color}",
+              endColorstr="${color}",
+              GradientType=1
+            );
+          }
+
+          input[type="range"]::-moz-range-track {
+            -moz-appearance: none;
+            appearance: none;
+            height: 3px;
+            background: ${color};
+            background: -moz-linear-gradient(
+              left,
+              ${color} 50%,
+              ${color} 100%
+            );
+            background: linear-gradient(
+              to right,
+              ${color} 50%,
+              ${color} 100%
+            );
+            filter: progid:DXImageTransform.Microsoft.gradient(
+              startColorstr="${color}",
+              endColorstr="${color}",
+              GradientType=1
+            );
+          }
+
+          input[type="range"]::-ms-track {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            height: 3px;
+            background: ${color};
+            background: -moz-linear-gradient(
+              left,
+              ${color} 50%,
+              ${color} 50%,
+              ${color} 100%
+            );
+            background: -webkit-linear-gradient(
+              left,
+              ${color} 50%,
+              ${color} 50%,
+              ${color} 100%
+            );
+            background: linear-gradient(
+              to right,
+              ${color} 50%,
+              ${color} 50%,
+              ${color} 100%
+            );
+            filter: progid:DXImageTransform.Microsoft.gradient(
+              startColorstr="${color}",
+              endColorstr="${color}",
+              GradientType=1
+            );
+          }
+
+          input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            border: 2px solid ${color};
+            border-radius: 50%;
+            height: 25px;
+            width: 25px;
+            position: relative;
+            bottom: 12px;
+            background: #222 center no-repeat;
+            background-size: 100%;
+            box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+            cursor: grab;
+
+            &:active {
+              cursor: grabbing;
+            }
+          }
+
+          input[type="range"]::-moz-range-thumb {
+            -moz-appearance: none;
+            appearance: none;
+            border: 2px solid ${color};
+            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+            position: relative;
+            bottom: 8px;
+            background: #222
+              url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png")
+              center no-repeat;
+            background-size: 50%;
+            box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+            cursor: grab;
+
+            &:active {
+              cursor: grabbing;
+            }
+          }
+
+          input[type="range"]::-ms-thumb {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 2px solid ${color};
+            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+            position: relative;
+            bottom: 8px;
+            background: #222
+              url("http://codemenatalie.com/wp-content/uploads/2019/09/slider-thumb.png")
+              center no-repeat;
+            background-size: 50%;
+            box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.4);
+            cursor: grab;
+
+            &:active {
+              cursor: grabbing;
+            }
+          }
+        `}
+      </style>
       <div className="flex items-center justify-center space-x-4">
         <div
           id={questionId}
           className="flex w-full flex-col items-center justify-center"
         >
           <div className="relative w-full">
+            {/* <input
+              type="range"
+              min={MIN}
+              max={MAX}
+              value={value}
+              onChange={handleChange}
+              disabled={disabled}
+              className="h-3 w-full appearance-none text-xs sm:text-sm"
+            /> */}
             <Input
               type="range"
               min="0"
@@ -76,6 +225,9 @@ const Slider: FC<{
               onMouseUp={handleBlur}
               onDragEnd={handleBlur}
               className="h-3 w-full appearance-none text-xs sm:text-sm"
+              classNames={{
+                input: "appearance-none !px-0",
+              }}
             />
             {/* <NextSlider
               className="sm:text-sm w-full text-xs"

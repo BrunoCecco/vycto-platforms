@@ -17,7 +17,7 @@ const PoweredBadge = () => {
       </div>
 
       {/* Powered by Text */}
-      <div className="relative -top-8">
+      <div className="relative -top-8 text-white">
         <p className="font-semibold">
           Powered by{" "}
           <a href="#" className="underline">
