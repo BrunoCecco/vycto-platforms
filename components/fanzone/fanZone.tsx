@@ -60,7 +60,7 @@ const FanZone = async ({
       {pastCompetitions?.length > 0 ? (
         <Suspense fallback={<Spinner />}>
           <Competitions
-            competitions={pastCompetitions}
+            competitions={pastCompetitions.reverse()}
             siteData={siteData}
             userCompetitions={userCompetitions}
             type="past"

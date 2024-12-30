@@ -11,7 +11,11 @@ import {
 } from "../schema";
 import { LeaderboardPeriod, QuestionType } from "../types";
 import { updateUserPoints, updateAnswerPoints } from "../actions";
-import { getAnswersForUser, getQuestionsForCompetition } from "./competitions";
+import {
+  getAnswersForUser,
+  getCompetitionUsers,
+  getQuestionsForCompetition,
+} from "./competitions";
 
 export async function validateCorrectAnswers(competitionId: string) {
   const questions = await getQuestionsForCompetition(competitionId);
@@ -207,6 +211,7 @@ export async function calculateCompetitionPoints(competitionId: string) {
 }
 
 import { sql } from "drizzle-orm"; // Import raw SQL helper from Drizzle
+import { getUserDataById } from "./users";
 
 export async function getCompetitionsForPeriod(
   siteId: string,
@@ -239,9 +244,14 @@ export async function getCompetitionsForPeriod(
 export async function getLeaderboardData(
   siteId: string,
   period: LeaderboardPeriod,
+  offset: number,
+  limit: number,
+  startDate_?: Date,
+  endDate_?: Date,
 ) {
-  const startDate =
-    period === "last week"
+  const startDate = startDate_
+    ? startDate_
+    : period === "last week"
       ? new Date(
           new Date().getFullYear(),
           new Date().getMonth(),
@@ -252,8 +262,9 @@ export async function getLeaderboardData(
         : period === "season"
           ? new Date(new Date().getFullYear(), 0, 1)
           : new Date(0);
-  const endDate =
-    period === "last week"
+  const endDate = endDate_
+    ? endDate_
+    : period === "last week"
       ? new Date(
           new Date().getFullYear(),
           new Date().getMonth(),
@@ -265,41 +276,60 @@ export async function getLeaderboardData(
           ? new Date(new Date().getFullYear(), 11, 31)
           : new Date();
 
-  // get all competitions for the site within the specified period
-  const comps = await getCompetitionsForPeriod(siteId, startDate, endDate);
+  return await unstable_cache(
+    async () => {
+      // get all competitions for the site within the specified period
+      const comps = await getCompetitionsForPeriod(siteId, startDate, endDate);
 
-  // await promise for all site competitions and store in array
-  const allCompetitionPoints = await Promise.all(
-    comps.map(async (comp: SelectCompetition) => {
-      console.log(comp.title, "COMPETITION");
-      return await calculateCompetitionPoints(comp.id);
-    }),
-  );
+      // await promise for all site competitions and store in array
+      const allCompetitionUsers = await Promise.all(
+        comps.map(async (comp: SelectCompetition) => {
+          console.log(comp.title, "COMPETITION");
+          return await getCompetitionUsers(comp.id);
+        }),
+      );
 
-  const allUsers = allCompetitionPoints.flat();
-  // deduplicate users and sum their points
-  const userPoints = allUsers.reduce((acc: any, user: any) => {
-    if (acc[user.userId]) {
-      acc[user.userId] += user.points;
-    } else {
-      acc[user.userId] = user.points;
-    }
-    return acc;
-  }, {});
+      const allUsers = allCompetitionUsers.flat();
 
-  const leaderboardData = await Promise.all(
-    Object.keys(userPoints).map(async (userId) => {
-      const user = await db.query.users.findFirst({
-        where: eq(users.id, userId),
+      // deduplicate users and sum their points
+      const userPoints = allUsers.reduce((acc: any, user: any) => {
+        if (acc[user.userId]) {
+          acc[user.userId] += user.points;
+        } else {
+          acc[user.userId] = user.points;
+        }
+        return acc;
+      }, {});
+
+      const leaderboardData = await Promise.all(
+        Object.keys(userPoints).map(async (userId) => {
+          const user = await getUserDataById(userId);
+          return {
+            ...user,
+            points: userPoints[userId],
+          };
+        }),
+      );
+
+      var sortedLeaderboardData = leaderboardData.sort(
+        (a, b) => b.points - a.points,
+      );
+
+      sortedLeaderboardData = sortedLeaderboardData.map((user, index) => {
+        return {
+          ...user,
+          rank: index + 1,
+        };
       });
-      return {
-        ...user,
-        points: userPoints[userId],
-      };
-    }),
-  );
 
-  return leaderboardData.sort((a, b) => b.points - a.points);
+      return sortedLeaderboardData.slice(offset, offset + limit);
+    },
+    [`${offset}-${limit}-${period}-leaderboard`],
+    {
+      revalidate: 900,
+      tags: [`${offset}-${limit}-${period}-leaderboard`],
+    },
+  )();
 }
 
 export async function getCompetitionWinnerData(competitionId: string) {

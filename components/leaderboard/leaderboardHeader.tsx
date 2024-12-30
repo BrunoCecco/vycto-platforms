@@ -12,6 +12,7 @@ const LeaderboardHeader = ({
   setQuery,
   selectedReward,
   onClick,
+  compTitle,
 }: {
   siteData: SelectSite;
   rangeType: LeaderboardPeriod;
@@ -19,6 +20,7 @@ const LeaderboardHeader = ({
   setQuery?: any;
   selectedReward?: SelectSiteReward;
   onClick?: any;
+  compTitle?: string;
 }) => {
   const timeRanges = [
     { key: "last week", label: "Last Week" },
@@ -59,17 +61,22 @@ const LeaderboardHeader = ({
               ? new Date().toLocaleString("default", { month: "long" })
               : rangeType === "season"
                 ? new Date().getFullYear()
-                : " "}
+                : compTitle
+                  ? `: ${compTitle}`
+                  : " "}
           </h1>
         </div>
+
         {/* Updated text based on rangeType */}
-        <div
-          className="cursor-pointer underline"
-          style={{ color: siteData.color2 }}
-          onClick={onClick}
-        >
-          {getPrizeText()}
-        </div>
+        {compTitle ? null : (
+          <div
+            className="cursor-pointer underline"
+            style={{ color: siteData.color2 }}
+            onClick={onClick}
+          >
+            {getPrizeText()}
+          </div>
+        )}
       </div>
       <div className="flex w-full gap-4">
         <Input
@@ -78,18 +85,20 @@ const LeaderboardHeader = ({
           startContent={<SearchIcon size={18} />}
           type="search"
         />
-        <Select
-          aria-label="Time Range"
-          placeholder={rangeType}
-          selectedKeys={[rangeType]}
-          variant="flat"
-          className="max-w-xs"
-          onChange={setRangeType}
-        >
-          {timeRanges.map((range) => (
-            <SelectItem key={range.key}>{range.label}</SelectItem>
-          ))}
-        </Select>
+        {compTitle ? null : (
+          <Select
+            aria-label="Time Range"
+            placeholder={rangeType}
+            selectedKeys={[rangeType]}
+            variant="flat"
+            className="max-w-xs"
+            onChange={setRangeType}
+          >
+            {timeRanges.map((range) => (
+              <SelectItem key={range.key}>{range.label}</SelectItem>
+            ))}
+          </Select>
+        )}
       </div>
     </div>
   );

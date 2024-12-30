@@ -4,6 +4,9 @@ import HoverBorderGradient from "../ui/hoverBorderGradient";
 import Image from "next/image";
 import { SelectSite, SelectSiteReward, SelectUser } from "@/lib/schema";
 import {
+  getCompetitionData,
+  getCompetitionFromId,
+  getCompetitionsForPeriod,
   getLeaderboardData,
   getSiteRewardByDate,
   getSiteRewards,
@@ -13,20 +16,26 @@ import Link from "next/link";
 import LoadingDots from "../icons/loadingDots";
 import { motion } from "framer-motion";
 import { LeaderboardPeriod } from "@/lib/types";
-import { Spinner, User } from "@nextui-org/react";
+import { Button, Spinner, User } from "@nextui-org/react";
 import { Session } from "next-auth";
 import RewardModal from "../rewards/rewardsModal";
 import { getLeaderboardName } from "@/lib/utils";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
-type LeaderboardUser = SelectUser & { points: number };
+type LeaderboardUser = SelectUser & { points: number; rank: number };
 type IRangeType = "last week" | "monthly" | "season" | "all time";
 
 const MainLeaderboard = ({
   siteData,
   session,
+  limit = 10,
+  compDate,
 }: {
   siteData: SelectSite;
   session: Session | null;
+  limit?: number;
+  date?: Date;
+  compDate?: Date;
 }) => {
   const [rangeType, setRangeType] = useState<IRangeType>("monthly");
 
@@ -38,6 +47,8 @@ const MainLeaderboard = ({
   const [monthReward, setMonthReward] = useState<SelectSiteReward>();
   const [seasonReward, setSeasonReward] = useState<SelectSiteReward>();
   const [selectedReward, setSelectedReward] = useState<SelectSiteReward>();
+  const [offset, setOffset] = useState(0);
+  const [compTitle, setCompTitle] = useState<string>();
 
   const user = session?.user;
 
@@ -49,9 +60,45 @@ const MainLeaderboard = ({
   }, []);
 
   useEffect(() => {
+    const fetchCompTitle = async () => {
+      if (compDate != undefined || rangeType == "last week") {
+        const lastWeek = new Date(
+          new Date().getFullYear(),
+          new Date().getMonth(),
+          new Date().getDate() - 7,
+        );
+        const comp = await getCompetitionsForPeriod(
+          siteData.id,
+          compDate || lastWeek,
+          compDate || new Date(),
+        );
+        setCompTitle(comp[0].title || undefined);
+      }
+    };
+    fetchCompTitle();
+  }, [compDate, rangeType]);
+
+  useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const leaderboardData = await getLeaderboardData(siteData.id, rangeType);
+      var leaderboardData;
+      if (compDate) {
+        leaderboardData = await getLeaderboardData(
+          siteData.id,
+          rangeType,
+          offset,
+          limit,
+          compDate,
+          compDate,
+        );
+      } else {
+        leaderboardData = await getLeaderboardData(
+          siteData.id,
+          rangeType,
+          offset,
+          limit,
+        );
+      }
       setData(leaderboardData as LeaderboardUser[]);
       setLoading(false);
     };
@@ -63,7 +110,7 @@ const MainLeaderboard = ({
     } else {
       setSelectedReward(seasonReward);
     }
-  }, [rangeType]);
+  }, [rangeType, offset, limit]);
 
   useEffect(() => {
     if (data) {
@@ -110,6 +157,14 @@ const MainLeaderboard = ({
     }
   };
 
+  const handlePrev = () => {
+    setOffset(Math.max(offset - limit, 0));
+  };
+
+  const handleNext = () => {
+    setOffset(offset + limit);
+  };
+
   return (
     <div className="container min-w-full rounded-xl">
       <LeaderboardHeader
@@ -119,6 +174,7 @@ const MainLeaderboard = ({
         setQuery={setQuery}
         selectedReward={selectedReward}
         onClick={() => setIsOpen(true)}
+        compTitle={compTitle}
       />
 
       {/* {data && data?.findIndex((usr) => usr.id === user?.id) > -1 && (
@@ -156,9 +212,7 @@ const MainLeaderboard = ({
                     <tr key={entry.id} className="border-b text-left">
                       <td className="flex w-[200px] items-center justify-start space-x-2 py-4 md:w-[250px] lg:w-[350px]">
                         <span className="table-cell min-w-4 pr-1 sm:hidden">
-                          {filteredData.findIndex(
-                            (usr) => usr.id === entry.id,
-                          ) + 1}
+                          {entry.rank}
                         </span>
                         <User
                           name={getLeaderboardName(entry)}
@@ -184,8 +238,7 @@ const MainLeaderboard = ({
                         ) : null}
                       </td>
                       <td className="hidden py-4 text-center md:table-cell">
-                        {filteredData.findIndex((usr) => usr.id === entry.id) +
-                          1}
+                        {entry.rank}
                       </td>
                       <td className="py-4 text-center">
                         {parseFloat(entry.points.toString() || "0").toFixed(2)}
@@ -202,6 +255,18 @@ const MainLeaderboard = ({
         ) : loading ? (
           <Spinner />
         ) : null}
+        <div className="mt-4 flex w-full items-center justify-end gap-2">
+          {offset > 0 && (
+            <Button className="" onClick={handlePrev}>
+              <ArrowLeft size={16} />
+            </Button>
+          )}
+          {filteredData?.length > 0 && (
+            <Button className="" onClick={handleNext}>
+              <ArrowRight size={16} />
+            </Button>
+          )}
+        </div>
       </div>
 
       <RewardModal

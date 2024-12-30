@@ -86,7 +86,9 @@ export default async function MyCompetitions({
                   Past Competitions
                 </h1>
                 <Predictions
-                  competitions={pastCompetitions.map((comp) => comp.userComp)}
+                  competitions={pastCompetitions
+                    .reverse()
+                    .map((comp) => comp.userComp)}
                 />
               </div>
             )}

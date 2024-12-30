@@ -31,6 +31,7 @@ import CompetitionWinners from "@/components/competitions/competitionWinners";
 import LoginButton from "@/components/auth/loginButton";
 import UserSignUp from "../auth/userSignUp";
 import { TracingBeam } from "../ui/tracingBeam";
+import MainLeaderboard from "../leaderboard/mainLeaderboard";
 
 export default function CompetitionPage({
   session,
@@ -51,7 +52,7 @@ export default function CompetitionPage({
   users: SelectUserCompetition[];
   slug: string;
 }) {
-  const [activeTab, setActiveTab] = useState("Challenge");
+  const [activeTab, setActiveTab] = useState("Leaderboard");
   const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(
     {},
   );
@@ -298,12 +299,21 @@ export default function CompetitionPage({
           </TracingBeam>
         )}
         {activeTab == "Leaderboard" && (
-          <Leaderboard
-            siteData={siteData}
-            competition={data}
-            users={users}
-            session={session}
-          />
+          <div className="mt-4">
+            <MainLeaderboard
+              siteData={siteData}
+              session={session}
+              startDate={new Date(data.date.replace(/\[.*\]$/, ""))}
+              endDate={new Date(data.date.replace(/\[.*\]$/, ""))}
+              compTitle={data.title || ""}
+            />
+          </div>
+          // <Leaderboard
+          //   siteData={siteData}
+          //   competition={data}
+          //   users={users}
+          //   session={session}
+          // />
         )}
       </div>
     </div>

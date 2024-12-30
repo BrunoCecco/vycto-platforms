@@ -200,8 +200,8 @@ export default async function HowToPlayPage({
           Points will be calculated after the event and you will be placed on a
           leaderboard.
         </p>
-        {data && session ? (
-          <MainLeaderboard siteData={data} session={session} />
+        {data ? (
+          <MainLeaderboard siteData={data} session={session} limit={5} />
         ) : (
           <Image
             src={"/leaderboard.png"}
