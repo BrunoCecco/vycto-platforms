@@ -13,6 +13,7 @@ import { LeaderboardPeriod, QuestionType } from "../types";
 import { updateUserPoints, updateAnswerPoints } from "../actions";
 import {
   getAnswersForUser,
+  getCompetitionFromId,
   getCompetitionUsers,
   getQuestionsForCompetition,
 } from "./competitions";
@@ -205,8 +206,20 @@ export async function calculateCompetitionPoints(competitionId: string) {
       points: points,
     });
   }
-  var sortedUsers = usersWithPoints.sort((a, b) => b.points - a.points);
+  const comp = await getCompetitionFromId(competitionId);
+  const siteId = comp?.siteId;
+  const compDate = new Date(comp?.date?.replace(/\[.*\]$/, "") || "");
   revalidateTag(`${competitionId}-users`);
+  [0, 5, 10, 15, 20, 25, 30].forEach((offset) => {
+    revalidateTag(`${offset}-10-${startOfWeek}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-5-${startOfWeek}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-10-${startOfMonth}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-5-${startOfMonth}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-10-${startOfSeason}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-5-${startOfSeason}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-10-${compDate}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-5-${compDate}-${siteId}-leaderboard`);
+  });
   return usersWithPoints;
 }
 
@@ -241,6 +254,34 @@ export async function getCompetitionsForPeriod(
   });
 }
 
+const startOfWeek = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth(),
+  new Date().getDate() - 7,
+);
+
+const endOfWeek = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth(),
+  new Date().getDate(),
+);
+
+const startOfMonth = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth(),
+  1,
+);
+
+const endOfMonth = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth() + 1,
+  0,
+);
+
+const startOfSeason = new Date(new Date().getFullYear(), 0, 1);
+
+const endOfSeason = new Date(new Date().getFullYear(), 11, 31);
+
 export async function getLeaderboardData(
   siteId: string,
   period: LeaderboardPeriod,
@@ -252,28 +293,20 @@ export async function getLeaderboardData(
   const startDate = startDate_
     ? startDate_
     : period === "last week"
-      ? new Date(
-          new Date().getFullYear(),
-          new Date().getMonth(),
-          new Date().getDate() - 7,
-        )
+      ? startOfWeek
       : period === "monthly"
-        ? new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+        ? startOfMonth
         : period === "season"
-          ? new Date(new Date().getFullYear(), 0, 1)
+          ? startOfSeason
           : new Date(0);
   const endDate = endDate_
     ? endDate_
     : period === "last week"
-      ? new Date(
-          new Date().getFullYear(),
-          new Date().getMonth(),
-          new Date().getDate(),
-        )
+      ? endOfWeek
       : period === "monthly"
-        ? new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+        ? endOfMonth
         : period === "season"
-          ? new Date(new Date().getFullYear(), 11, 31)
+          ? endOfSeason
           : new Date();
 
   return await unstable_cache(
@@ -324,10 +357,10 @@ export async function getLeaderboardData(
 
       return sortedLeaderboardData.slice(offset, offset + limit);
     },
-    [`${offset}-${limit}-${period}-leaderboard`],
+    [`${offset}-${limit}-${period}-${siteId}-leaderboard`],
     {
       revalidate: 900,
-      tags: [`${offset}-${limit}-${period}-leaderboard`],
+      tags: [`${offset}-${limit}-${period}-${siteId}-leaderboard`],
     },
   )();
 }
