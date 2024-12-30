@@ -21,6 +21,19 @@ import {
 } from "../schema";
 import { QuestionType } from "../types";
 import { getServerSession } from "next-auth";
+import {
+  getAnswersForUser,
+  getCompetitionFromId,
+  getQuestionsForCompetition,
+} from "../fetchers";
+import {
+  startOfSeason,
+  endOfSeason,
+  endOfMonth,
+  endOfWeek,
+  startOfMonth,
+  startOfWeek,
+} from "../utils";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -329,7 +342,6 @@ export const updateAnswerPoints = async (
   questionId: string,
   points: number,
 ) => {
-  console.log("Updating answer points: ", userId, questionId, points);
   try {
     const [response] = await db
       .update(answers)
@@ -520,6 +532,15 @@ export const updateStatsForUser = async (
       .returning()
       .then((res) => res[0]);
 
+    console.log(
+      "Updated stats for user: ",
+      response,
+      userId,
+      competitionId,
+      rewardId,
+      ranking,
+    );
+
     return response;
   } catch (error: any) {
     return {
@@ -528,43 +549,41 @@ export const updateStatsForUser = async (
   }
 };
 
+interface IUserWithPoints {
+  userId: string;
+  points: string;
+  competitionId: string;
+}
+
 // goes through each user in a competition and assigns their reward id or -1 if they didn't win
-export const updateUserCompetitionStats = async (competitionId: string) => {
+export const updateUserCompetitionStats = async (
+  usersWithPoints: IUserWithPoints[],
+  compData: SelectCompetition,
+) => {
   try {
-    const competitionUsers = await db.query.userCompetitions.findMany({
-      where: eq(userCompetitions.competitionId, competitionId),
-    });
-    const rewardWinnerData = await db.query.competitions.findFirst({
-      where: eq(competitions.id, competitionId),
-      columns: {
-        rewardWinners: true,
-        reward2Winners: true,
-        reward3Winners: true,
-      },
-    });
-    var sortedUsers = competitionUsers.sort((a, b) => {
+    var sortedUsers = usersWithPoints.sort((a, b) => {
       let aPoints = parseFloat(a.points || "0");
       let bPoints = parseFloat(b.points || "0");
       return bPoints - aPoints;
     });
 
-    let reward1Winners = rewardWinnerData?.rewardWinners || 0;
-    let reward2Winners = rewardWinnerData?.reward2Winners
-      ? reward1Winners + rewardWinnerData.reward2Winners
+    let reward1Winners = compData?.rewardWinners || 0;
+    let reward2Winners = compData?.reward2Winners
+      ? reward1Winners + compData.reward2Winners
       : reward1Winners;
-    let reward3Winners = rewardWinnerData?.reward3Winners
-      ? reward2Winners + rewardWinnerData.reward3Winners
+    let reward3Winners = compData?.reward3Winners
+      ? reward2Winners + compData.reward3Winners
       : reward2Winners;
 
-    let totalUsers = competitionUsers.length;
+    let totalUsers = usersWithPoints.length;
     let averagePoints = sortedUsers.reduce(
       (acc, user) => acc + parseFloat(user.points || "0"),
       0,
     );
     averagePoints /= totalUsers;
 
-    for (let i = 0; i < sortedUsers.length; i++) {
-      let user = sortedUsers[i];
+    // change to promise.all
+    const updateStatsPromises = sortedUsers.map(async (user, i) => {
       let rewardId =
         i < reward1Winners
           ? 0
@@ -575,7 +594,7 @@ export const updateUserCompetitionStats = async (competitionId: string) => {
               : -1;
       let ranking = i + 1;
 
-      await updateStatsForUser(
+      return await updateStatsForUser(
         user.userId,
         user.competitionId,
         rewardId,
@@ -583,15 +602,13 @@ export const updateUserCompetitionStats = async (competitionId: string) => {
         totalUsers,
         averagePoints,
       );
-    }
-
-    const updatedCompetitionUsers = await db.query.userCompetitions.findMany({
-      where: eq(userCompetitions.competitionId, competitionId),
     });
 
-    revalidateTag(`${competitionId}-users`);
+    await Promise.all(updateStatsPromises);
 
-    return updatedCompetitionUsers;
+    revalidateTag(`${compData.id}-users`);
+
+    return usersWithPoints;
   } catch (error: any) {
     return {
       error: error.message,
@@ -634,3 +651,130 @@ export const updateUserCompetitionMetadata = async (
     };
   }
 };
+
+export async function calculateUserPoints(
+  userId: string,
+  competitionId: string,
+) {
+  const questions = await getQuestionsForCompetition(competitionId);
+  const answers = await getAnswersForUser(userId, competitionId);
+  var points: number = 0;
+
+  // caclulate the points for each question depending on the question type
+  for (let question of questions) {
+    const questionPoints = question.points || 0;
+    const userAnswer = answers.find(
+      (a) => a.questionId === question.id,
+    )?.answer;
+    if (userAnswer === undefined) continue;
+
+    let pointsToAdd = 0;
+    if (
+      question.correctAnswer === null ||
+      question.correctAnswer === "" ||
+      userAnswer === null ||
+      userAnswer === ""
+    ) {
+      continue;
+    }
+    switch (question.type) {
+      case QuestionType.TrueFalse:
+        if (question.correctAnswer == userAnswer) {
+          pointsToAdd = questionPoints;
+        }
+        break;
+      case QuestionType.WhatMinute:
+        const percentageDifference = Math.abs(
+          parseInt(question.correctAnswer) - parseInt(userAnswer),
+        );
+        pointsToAdd = questionPoints * (1 - percentageDifference / 90);
+        break;
+      case QuestionType.GeneralSelection:
+      case QuestionType.PlayerSelection:
+        if (question.correctAnswer == userAnswer) {
+          pointsToAdd = questionPoints;
+        }
+        break;
+      case QuestionType.MatchOutcome:
+        if (question.correctAnswer == userAnswer) {
+          pointsToAdd = questionPoints;
+        }
+        break;
+      case QuestionType.GuessScore:
+        const correctHome = parseInt(question.correctAnswer.split("-")[0]) || 0;
+        const correctAway = parseInt(question.correctAnswer.split("-")[1]) || 0;
+        const userHome = parseInt(userAnswer.split("-")[0]) || 0;
+        const userAway = parseInt(userAnswer.split("-")[1]) || 0;
+        const homeDifference = Math.abs(correctHome - userHome);
+        pointsToAdd +=
+          (questionPoints / 2) *
+          (1 - homeDifference / Math.max(homeDifference, 10));
+        const awayDifference = Math.abs(correctAway - userAway);
+        pointsToAdd +=
+          (questionPoints / 2) *
+          (1 - awayDifference / Math.max(awayDifference, 10));
+        break;
+      case QuestionType.GeneralNumber:
+        const correctNumber = parseInt(question.correctAnswer) || 0;
+        const userNumber = parseInt(userAnswer) || 0;
+        const numberDifference = Math.abs(correctNumber - userNumber);
+        // set a sensible numerator depending on the correct number
+        const numerator = Math.max(correctNumber, 5);
+        pointsToAdd =
+          questionPoints *
+          (1 - numberDifference / Math.max(numerator, numberDifference));
+        break;
+      default:
+        break;
+    }
+    points += pointsToAdd;
+    await updateAnswerPoints(userId, question.id, pointsToAdd);
+  }
+  // update the user's points in the database
+  await updateUserPoints(userId, competitionId, points);
+  return points;
+}
+
+export async function calculateCompetitionPoints(competitionId: string) {
+  console.log(competitionId);
+  console.log(`Calculating points for competition ${competitionId}`);
+  const competitionUsers = await db.query.userCompetitions.findMany({
+    where: eq(userCompetitions.competitionId, competitionId),
+  });
+
+  var usersWithPoints: IUserWithPoints[] = [];
+  var points;
+  for (let user of competitionUsers) {
+    points = await calculateUserPoints(user.userId, competitionId);
+    usersWithPoints.push({
+      userId: user.userId,
+      points: points.toString(),
+      competitionId: competitionId,
+    });
+  }
+
+  const comp = await getCompetitionFromId(competitionId);
+  const siteId = comp?.siteId;
+  const compDate = new Date(comp?.date?.replace(/\[.*\]$/, "") || "");
+
+  if (!comp) {
+    return {
+      error: "Competition not found",
+    };
+  }
+  // now update the user competition stats
+  await updateUserCompetitionStats(usersWithPoints, comp);
+
+  revalidateTag(`${competitionId}-users`);
+  [0, 5, 10, 15, 20, 25, 30].forEach((offset) => {
+    revalidateTag(`${offset}-10-${startOfWeek}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-5-${startOfWeek}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-10-${startOfMonth}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-5-${startOfMonth}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-10-${startOfSeason}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-5-${startOfSeason}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-10-${compDate}-${siteId}-leaderboard`);
+    revalidateTag(`${offset}-5-${compDate}-${siteId}-leaderboard`);
+  });
+  return usersWithPoints;
+}

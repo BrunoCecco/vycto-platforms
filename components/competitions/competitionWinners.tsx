@@ -83,6 +83,7 @@ export default function CompetitionWinners({
   );
 
   useEffect(() => {
+    console.log(winnerData);
     if (winnerData?.sortedUsers && winnerData) {
       setRewardWinners(
         winnerData.sortedUsers.slice(0, winnerData.rewardWinners!),
@@ -129,7 +130,6 @@ export default function CompetitionWinners({
     ];
     const parser = new Parser({});
     const csv = parser.parse(data);
-    alert(csv);
     const blob = new Blob([csv], { type: "text/csv" });
     const url_ = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -143,16 +143,17 @@ export default function CompetitionWinners({
   const downloadAllCSVFile = () => {
     const data = [
       ["Rank", "Email", "Points", "SubmissionLink"],
-      ...participants.map((user, index) => [
-        user.ranking,
-        user.email,
-        parseFloat(user.points || "0").toFixed(2),
-        `${url}/${user.userId}`,
-      ]),
+      ...participants
+        .sort((a, b) => a.ranking! - b.ranking!)
+        .map((user) => [
+          user.ranking,
+          user.email,
+          parseFloat(user.points || "0").toFixed(2),
+          `${url}/${user.userId}`,
+        ]),
     ];
     const parser = new Parser({});
     const csv = parser.parse(data);
-    alert(csv);
     const blob = new Blob([csv], { type: "text/csv" });
     const url_ = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -168,6 +169,7 @@ export default function CompetitionWinners({
       ["Rank", "Email", "Points", "SubmissionLink"],
       ...participants
         .filter((p) => p.newsletter == true)
+        .sort((a, b) => a.ranking! - b.ranking!)
         .map((user, index) => [
           user.ranking,
           user.email,
@@ -177,7 +179,6 @@ export default function CompetitionWinners({
     ];
     const parser = new Parser({});
     const csv = parser.parse(data);
-    alert(csv);
     const blob = new Blob([csv], { type: "text/csv" });
     const url_ = window.URL.createObjectURL(blob);
     const a = document.createElement("a");

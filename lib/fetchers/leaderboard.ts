@@ -2,7 +2,7 @@
 
 import { revalidateTag, unstable_cache } from "next/cache";
 import db from "../db";
-import { and, desc, eq, gte, lte, not } from "drizzle-orm";
+import { and, desc, eq, gte, lte, not, sql } from "drizzle-orm";
 import {
   userCompetitions,
   competitions,
@@ -17,6 +17,15 @@ import {
   getCompetitionUsers,
   getQuestionsForCompetition,
 } from "./competitions";
+import { getUserDataById } from "./users";
+import {
+  endOfSeason,
+  startOfSeason,
+  endOfMonth,
+  endOfWeek,
+  startOfMonth,
+  startOfWeek,
+} from "../utils";
 
 export async function validateCorrectAnswers(competitionId: string) {
   const questions = await getQuestionsForCompetition(competitionId);
@@ -103,129 +112,6 @@ export async function validateCorrectAnswers(competitionId: string) {
   return true;
 }
 
-export async function calculateUserPoints(
-  userId: string,
-  competitionId: string,
-) {
-  const questions = await getQuestionsForCompetition(competitionId);
-  const answers = await getAnswersForUser(userId, competitionId);
-  var points: number = 0;
-
-  // caclulate the points for each question depending on the question type
-  for (let question of questions) {
-    const questionPoints = question.points || 0;
-    const userAnswer = answers.find(
-      (a) => a.questionId === question.id,
-    )?.answer;
-    if (userAnswer === undefined) continue;
-
-    let pointsToAdd = 0;
-    if (
-      question.correctAnswer === null ||
-      question.correctAnswer === "" ||
-      userAnswer === null ||
-      userAnswer === ""
-    ) {
-      continue;
-    }
-    switch (question.type) {
-      case QuestionType.TrueFalse:
-        if (question.correctAnswer == userAnswer) {
-          pointsToAdd = questionPoints;
-        }
-        break;
-      case QuestionType.WhatMinute:
-        const percentageDifference = Math.abs(
-          parseInt(question.correctAnswer) - parseInt(userAnswer),
-        );
-        pointsToAdd = questionPoints * (1 - percentageDifference / 90);
-        break;
-      case QuestionType.GeneralSelection:
-      case QuestionType.PlayerSelection:
-        if (question.correctAnswer == userAnswer) {
-          pointsToAdd = questionPoints;
-        }
-        break;
-      case QuestionType.MatchOutcome:
-        if (question.correctAnswer == userAnswer) {
-          pointsToAdd = questionPoints;
-        }
-        break;
-      case QuestionType.GuessScore:
-        const correctHome = parseInt(question.correctAnswer.split("-")[0]) || 0;
-        const correctAway = parseInt(question.correctAnswer.split("-")[1]) || 0;
-        const userHome = parseInt(userAnswer.split("-")[0]) || 0;
-        const userAway = parseInt(userAnswer.split("-")[1]) || 0;
-        const homeDifference = Math.abs(correctHome - userHome);
-        pointsToAdd +=
-          (questionPoints / 2) *
-          (1 - homeDifference / Math.max(homeDifference, 10));
-        const awayDifference = Math.abs(correctAway - userAway);
-        pointsToAdd +=
-          (questionPoints / 2) *
-          (1 - awayDifference / Math.max(awayDifference, 10));
-        break;
-      case QuestionType.GeneralNumber:
-        const correctNumber = parseInt(question.correctAnswer) || 0;
-        const userNumber = parseInt(userAnswer) || 0;
-        const numberDifference = Math.abs(correctNumber - userNumber);
-        // set a sensible numerator depending on the correct number
-        const numerator = Math.max(correctNumber, 5);
-        pointsToAdd =
-          questionPoints *
-          (1 - numberDifference / Math.max(numerator, numberDifference));
-        break;
-      default:
-        break;
-    }
-    points += pointsToAdd;
-    await updateAnswerPoints(userId, question.id, pointsToAdd);
-    console.log(
-      `User ${userId} has ${points} points for question ${question.type} (${question.question})`,
-    );
-  }
-  // update the user's points in the database
-  await updateUserPoints(userId, competitionId, points);
-  return points;
-}
-
-export async function calculateCompetitionPoints(competitionId: string) {
-  console.log(competitionId);
-  console.log(`Calculating points for competition ${competitionId}`);
-  const competitionUsers = await db.query.userCompetitions.findMany({
-    where: eq(userCompetitions.competitionId, competitionId),
-  });
-
-  var usersWithPoints = [];
-  var points;
-  for (let user of competitionUsers) {
-    points = await calculateUserPoints(user.userId, competitionId);
-    console.log(`User ${user.userId} has ${points} points`);
-    usersWithPoints.push({
-      userId: user.userId,
-      points: points,
-    });
-  }
-  const comp = await getCompetitionFromId(competitionId);
-  const siteId = comp?.siteId;
-  const compDate = new Date(comp?.date?.replace(/\[.*\]$/, "") || "");
-  revalidateTag(`${competitionId}-users`);
-  [0, 5, 10, 15, 20, 25, 30].forEach((offset) => {
-    revalidateTag(`${offset}-10-${startOfWeek}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-5-${startOfWeek}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-10-${startOfMonth}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-5-${startOfMonth}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-10-${startOfSeason}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-5-${startOfSeason}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-10-${compDate}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-5-${compDate}-${siteId}-leaderboard`);
-  });
-  return usersWithPoints;
-}
-
-import { sql } from "drizzle-orm"; // Import raw SQL helper from Drizzle
-import { getUserDataById } from "./users";
-
 export async function getCompetitionsForPeriod(
   siteId: string,
   startDate: Date,
@@ -253,34 +139,6 @@ export async function getCompetitionsForPeriod(
     orderBy: desc(competitions.createdAt),
   });
 }
-
-const startOfWeek = new Date(
-  new Date().getFullYear(),
-  new Date().getMonth(),
-  new Date().getDate() - 7,
-);
-
-const endOfWeek = new Date(
-  new Date().getFullYear(),
-  new Date().getMonth(),
-  new Date().getDate(),
-);
-
-const startOfMonth = new Date(
-  new Date().getFullYear(),
-  new Date().getMonth(),
-  1,
-);
-
-const endOfMonth = new Date(
-  new Date().getFullYear(),
-  new Date().getMonth() + 1,
-  0,
-);
-
-const startOfSeason = new Date(new Date().getFullYear(), 0, 1);
-
-const endOfSeason = new Date(new Date().getFullYear(), 11, 31);
 
 export async function getLeaderboardData(
   siteId: string,

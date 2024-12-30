@@ -104,3 +104,31 @@ export const getLeaderboardName = (user: any) => {
     "user" + user.userId.substring(0, 3)
   );
 };
+
+export const startOfWeek = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth(),
+  new Date().getDate() - 7,
+);
+
+export const endOfWeek = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth(),
+  new Date().getDate(),
+);
+
+export const startOfMonth = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth(),
+  1,
+);
+
+export const endOfMonth = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth() + 1,
+  0,
+);
+
+export const startOfSeason = new Date(new Date().getFullYear(), 0, 1);
+
+export const endOfSeason = new Date(new Date().getFullYear(), 11, 31);

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  calculateCompetitionPoints,
   updateCompetitionMetadata,
   updateUserCompetitionStats,
 } from "@/lib/actions";
@@ -10,10 +11,7 @@ import { toast } from "sonner";
 import LoadingDots from "../icons/loadingDots";
 import { cn } from "@/lib/utils";
 import { Button } from "@nextui-org/react";
-import {
-  calculateCompetitionPoints,
-  validateCorrectAnswers,
-} from "@/lib/fetchers";
+import { validateCorrectAnswers } from "@/lib/fetchers";
 import Form from "../form";
 import { Spinner } from "@nextui-org/react";
 
@@ -25,6 +23,7 @@ export default function PublishCompetitionButtons({
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
   const [canPublish, setCanPublish] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setCanPublish(
@@ -45,11 +44,10 @@ export default function PublishCompetitionButtons({
     }
     // calculate points
     try {
+      setLoading(true);
       await validateCorrectAnswers(competition.id);
       // now we can calculate the points
       await calculateCompetitionPoints(competition.id);
-      // assign rewards to users and update the competition stats
-      await updateUserCompetitionStats(competition.id);
       const formData = new FormData();
       formData.append("correctAnswersSubmitted", "true");
       await updateCompetitionMetadata(
@@ -57,10 +55,12 @@ export default function PublishCompetitionButtons({
         competition.id,
         "correctAnswersSubmitted",
       );
+      setLoading(false);
       toast.success("Successfully calculated points for the competition.");
       return;
     } catch (e: any) {
       console.error(e);
+      setLoading(false);
       toast.error(e.message);
       return;
     }
@@ -98,12 +98,12 @@ export default function PublishCompetitionButtons({
       Date.now() ? (
         competition.correctAnswersSubmitted ? (
           <Button className="my-2" onClick={submitCorrectAnswers}>
-            Update Correct Answers
+            {loading ? "Loading" : "Update Correct Answers"}
           </Button>
         ) : (
           <div className="">
             <Button onClick={submitCorrectAnswers}>
-              Submit Correct Answers
+              {loading ? "Loading" : "Submit Correct Answers"}
             </Button>
             {/* <p className="mt-2">
               This competition has ended. Please edit and submit the correct
