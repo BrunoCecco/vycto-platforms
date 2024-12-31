@@ -106,6 +106,18 @@ export default function CompetitionWinners({
     }
   }, [winnerData]);
 
+  const downloadExcel = (data: any, fileName: string) => {
+    const parser = new Parser({});
+    const csv = parser.parse(data);
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url_ = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url_;
+    a.download = fileName;
+    a.click();
+    document.body.removeChild(a);
+  };
+
   const downloadWinnersCSVFile = () => {
     const data = [
       ["Rank", "Email", "Points", "SubmissionLink"],
@@ -128,16 +140,10 @@ export default function CompetitionWinners({
         `${url}/${user.userId}`,
       ]),
     ];
-    const parser = new Parser({});
-    const csv = parser.parse(data);
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url_ = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url_;
-    a.download =
-      compData.title + "-winners-" + new Date().toDateString() + ".xlsx";
-    a.click();
-    document.body.removeChild(a);
+    downloadExcel(
+      data,
+      compData.title + "-winners-" + new Date().toDateString() + ".csv",
+    );
   };
 
   const downloadAllCSVFile = () => {
@@ -152,16 +158,10 @@ export default function CompetitionWinners({
           `${url}/${user.userId}`,
         ]),
     ];
-    const parser = new Parser({});
-    const csv = parser.parse(data);
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url_ = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url_;
-    a.download =
-      compData.title + "-participants-" + new Date().toDateString() + ".xlsx";
-    a.click();
-    document.body.removeChild(a);
+    downloadExcel(
+      data,
+      compData.title + "-participants-" + new Date().toDateString() + ".csv",
+    );
   };
 
   const downloadNewsletterOptinsCSVFile = () => {
@@ -177,19 +177,13 @@ export default function CompetitionWinners({
           `${url}/${user.userId}`,
         ]),
     ];
-    const parser = new Parser({});
-    const csv = parser.parse(data);
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url_ = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url_;
-    a.download =
+    downloadExcel(
+      data,
       compData.title +
-      "-newsletter-optins-" +
-      new Date().toDateString() +
-      ".xlsx";
-    a.click();
-    document.body.removeChild(a);
+        "-newsletter-optins-" +
+        new Date().toDateString() +
+        ".csv",
+    );
   };
 
   return (
