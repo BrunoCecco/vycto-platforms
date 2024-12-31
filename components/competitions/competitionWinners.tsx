@@ -7,8 +7,9 @@ import {
   SelectUserCompetition,
 } from "@/lib/schema";
 import { useEffect, useState } from "react";
-import { Button } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { Parser } from "@json2csv/plainjs";
+import { toast } from "sonner";
 
 const User = ({
   user,
@@ -78,6 +79,7 @@ export default function CompetitionWinners({
   const [rewardWinners, setRewardWinners] = useState<any[]>([]);
   const [reward2Winners, setReward2Winners] = useState<any[]>([]);
   const [reward3Winners, setReward3Winners] = useState<any[]>([]);
+  const [passcode, setPasscode] = useState<string>("");
 
   useEffect(() => {
     const fetchWinners = async () => {
@@ -91,6 +93,12 @@ export default function CompetitionWinners({
   }, [winnerData]);
 
   const downloadCSV = (data: any, fileName: string) => {
+    const correctpasscode =
+      process.env.NEXT_PUBLIC_CSV_DOWNLOAD_PASSCODE || "1930";
+    if (passcode !== correctpasscode) {
+      toast.error("Invalid passcode");
+      return;
+    }
     const parser = new Parser({});
     const csv = parser.parse(data);
     const blob = new Blob([csv], { type: "text/csv" });
@@ -103,7 +111,6 @@ export default function CompetitionWinners({
   };
 
   const getData = (users: any[]) => {
-    alert(users);
     return [
       [
         "Rank",
@@ -171,6 +178,12 @@ export default function CompetitionWinners({
         <Button onClick={downloadNewsletterOptinsCSVFile}>
           Download Newsletter Opt Ins
         </Button>
+        <Input
+          name="magiccode"
+          placeholder="Enter passcode to download"
+          type="password"
+          onChange={(e) => setPasscode(e.target.value)}
+        />
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-6">
