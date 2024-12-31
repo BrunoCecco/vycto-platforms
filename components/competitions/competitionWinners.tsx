@@ -9,7 +9,6 @@ import {
 import { useEffect, useState } from "react";
 import { Button } from "@nextui-org/react";
 import { Parser } from "@json2csv/plainjs";
-import { head } from "@vercel/blob";
 
 const User = ({
   user,

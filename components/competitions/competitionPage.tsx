@@ -52,7 +52,7 @@ export default function CompetitionPage({
   users: SelectUserCompetition[];
   slug: string;
 }) {
-  const [activeTab, setActiveTab] = useState("Leaderboard");
+  const [activeTab, setActiveTab] = useState("Challenge");
   const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(
     {},
   );
