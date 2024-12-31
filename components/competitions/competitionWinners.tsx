@@ -26,7 +26,7 @@ const User = ({
       key={user.userId}
       className="flex w-full flex-col items-center gap-2 rounded-lg border-b bg-content3 p-2 shadow-md"
     >
-      <div className="pr-2 ">{user.ranking}</div>
+      <div className="pr-2 ">Overall rank: {user.ranking}</div>
       <div className="flex items-center">
         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
           <Image
@@ -47,7 +47,7 @@ const User = ({
           href={`${url}/${user.userId}`}
           target="_blank"
           rel="noreferrer"
-          className="bg-blue-100 text-purple-800 hover:bg-blue-300 rounded-full p-2 px-4"
+          className="rounded-full bg-content4 p-2 px-4 hover:bg-content3"
         >
           View
         </Link>
