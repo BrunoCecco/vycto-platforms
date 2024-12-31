@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { Button } from "@nextui-org/react";
 import { Parser } from "@json2csv/plainjs";
+import { head } from "@vercel/blob";
 
 const User = ({
   user,
@@ -71,45 +72,26 @@ export default function CompetitionWinners({
 }: {
   compData: SelectCompetition & Site;
   winnerData: any;
-  participants: SelectUserCompetition[];
+  participants: any[];
   url: string;
   adminView: boolean;
 }) {
-  const [rewardWinners, setRewardWinners] = useState<SelectUserCompetition[]>(
-    [],
-  );
-  const [reward2Winners, setReward2Winners] = useState<SelectUserCompetition[]>(
-    [],
-  );
-  const [reward3Winners, setReward3Winners] = useState<SelectUserCompetition[]>(
-    [],
-  );
+  const [rewardWinners, setRewardWinners] = useState<any[]>([]);
+  const [reward2Winners, setReward2Winners] = useState<any[]>([]);
+  const [reward3Winners, setReward3Winners] = useState<any[]>([]);
 
   useEffect(() => {
-    console.log(winnerData);
-    if (winnerData?.sortedUsers && winnerData) {
-      setRewardWinners(
-        winnerData.sortedUsers.slice(0, winnerData.rewardWinners!),
-      );
-      console.log(winnerData.sortedUsers.slice(0, winnerData.rewardWinners!));
-      setReward2Winners(
-        winnerData.sortedUsers.slice(
-          winnerData.rewardWinners!,
-          winnerData.rewardWinners! + winnerData.reward2Winners!,
-        ),
-      );
-      setReward3Winners(
-        winnerData.sortedUsers.slice(
-          winnerData.rewardWinners! + winnerData.reward2Winners!,
-          winnerData.rewardWinners! +
-            winnerData.reward2Winners! +
-            winnerData.reward3Winners!,
-        ),
-      );
-    }
+    const fetchWinners = async () => {
+      if (winnerData) {
+        setRewardWinners(winnerData.rewardWinners);
+        setReward2Winners(winnerData.reward2Winners);
+        setReward3Winners(winnerData.reward3Winners);
+      }
+    };
+    fetchWinners();
   }, [winnerData]);
 
-  const downloadExcel = (data: any, fileName: string) => {
+  const downloadCSV = (data: any, fileName: string) => {
     const parser = new Parser({});
     const csv = parser.parse(data);
     const blob = new Blob([csv], { type: "text/csv" });
@@ -121,66 +103,57 @@ export default function CompetitionWinners({
     document.body.removeChild(a);
   };
 
-  const downloadWinnersCSVFile = () => {
-    const data = [
-      ["Rank", "Email", "Points", "SubmissionLink"],
-      ...rewardWinners.map((user, index) => [
+  const getData = (users: any[]) => {
+    alert(users);
+    return [
+      [
+        "Rank",
+        "Username",
+        "Name",
+        "Email",
+        "Points",
+        "SubmissionLink",
+        "Newsletter Consent",
+        "Prize Notifications Consent",
+        "Fanzone Notifications Consent",
+      ],
+      ...users.map((user, index) => [
         user.ranking,
+        user.username,
+        user.name,
         user.email,
         parseFloat(user.points || "0").toFixed(2),
         `${url}/${user.userId}`,
-      ]),
-      ...reward2Winners.map((user, index) => [
-        user.ranking,
-        user.email,
-        parseFloat(user.points || "0").toFixed(2),
-        `${url}/${user.userId}`,
-      ]),
-      ...reward3Winners.map((user, index) => [
-        user.ranking,
-        user.email,
-        parseFloat(user.points || "0").toFixed(2),
-        `${url}/${user.userId}`,
+        user.newsletter ? "Yes" : "No",
+        user.prizeNotifications ? "Yes" : "No",
+        user.fanzoneNotifications ? "Yes" : "No",
       ]),
     ];
-    downloadExcel(
+  };
+
+  const downloadWinnersCSVFile = () => {
+    const data = getData([
+      ...rewardWinners,
+      ...reward2Winners,
+      ...reward3Winners,
+    ]);
+    downloadCSV(
       data,
       compData.title + "-winners-" + new Date().toDateString() + ".csv",
     );
   };
 
   const downloadAllCSVFile = () => {
-    const data = [
-      ["Rank", "Email", "Points", "SubmissionLink"],
-      ...participants
-        .sort((a, b) => a.ranking! - b.ranking!)
-        .map((user) => [
-          user.ranking,
-          user.email,
-          parseFloat(user.points || "0").toFixed(2),
-          `${url}/${user.userId}`,
-        ]),
-    ];
-    downloadExcel(
+    const data = getData(participants);
+    downloadCSV(
       data,
       compData.title + "-participants-" + new Date().toDateString() + ".csv",
     );
   };
 
   const downloadNewsletterOptinsCSVFile = () => {
-    const data = [
-      ["Rank", "Email", "Points", "SubmissionLink"],
-      ...participants
-        .filter((p) => p.newsletter == true)
-        .sort((a, b) => a.ranking! - b.ranking!)
-        .map((user, index) => [
-          user.ranking,
-          user.email,
-          parseFloat(user.points || "0").toFixed(2),
-          `${url}/${user.userId}`,
-        ]),
-    ];
-    downloadExcel(
+    const data = getData(participants.filter((user) => user.newsletter));
+    downloadCSV(
       data,
       compData.title +
         "-newsletter-optins-" +

@@ -8,6 +8,7 @@ import {
   competitions,
   users,
   SelectCompetition,
+  SelectUserCompetition,
 } from "../schema";
 import { LeaderboardPeriod, QuestionType } from "../types";
 import { updateUserPoints, updateAnswerPoints } from "../actions";
@@ -237,17 +238,47 @@ export async function getCompetitionWinnerData(competitionId: string) {
       },
     });
 
-    var sortedUsers = competitionUsers.sort((a, b) => {
+    var unrichedSortedUsers = competitionUsers.sort((a, b) => {
       let aPoints = parseFloat(a.points || "0");
       let bPoints = parseFloat(b.points || "0");
       return bPoints - aPoints;
     });
 
+    const sortedUsers = await Promise.all(
+      unrichedSortedUsers.map(async (u: SelectUserCompetition) => {
+        const user = await getUserDataById(u.userId);
+        return {
+          ...u,
+          name: user?.name || u.name,
+          username: user?.username || u.username,
+          newsletter: user?.newsletter || false,
+          prizeNotifications: user?.prizeNotifications || false,
+          fanzoneNotifications: user?.fanzoneNotifications || false,
+        };
+      }),
+    );
+
+    if (
+      !numWinnerData ||
+      !numWinnerData.rewardWinners ||
+      !numWinnerData.reward2Winners ||
+      !numWinnerData.reward3Winners
+    ) {
+      throw new Error("Competition not found");
+    }
+
     return {
-      sortedUsers: sortedUsers,
-      rewardWinners: numWinnerData?.rewardWinners || 0,
-      reward2Winners: numWinnerData?.reward2Winners || 0,
-      reward3Winners: numWinnerData?.reward3Winners || 0,
+      rewardWinners: sortedUsers.slice(0, numWinnerData.rewardWinners),
+      reward2Winners: sortedUsers.slice(
+        numWinnerData.rewardWinners,
+        numWinnerData.rewardWinners + numWinnerData.reward2Winners,
+      ),
+      reward3Winners: sortedUsers.slice(
+        numWinnerData.rewardWinners + numWinnerData.reward2Winners,
+        numWinnerData.rewardWinners +
+          numWinnerData.reward2Winners +
+          numWinnerData.reward3Winners,
+      ),
     };
   } catch (error) {
     console.log(error);
