@@ -22,9 +22,12 @@ const User = ({
   adminView: boolean;
 }) => {
   return (
-    <div key={user.userId} className="flex w-full items-center gap-4 border-b">
-      <div className="pr-2 ">{index + 1}</div>
-      <div className="flex items-center py-4">
+    <div
+      key={user.userId}
+      className="flex w-full flex-col items-center gap-2 rounded-lg border-b bg-content3 p-2 shadow-md"
+    >
+      <div className="pr-2 ">{user.ranking}</div>
+      <div className="flex items-center">
         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
           <Image
             src={`https://avatar.vercel.sh/${user.username || user.email}`}
@@ -34,12 +37,12 @@ const User = ({
             className="overflow-hidden rounded-full object-cover"
           />
         </div>
-        <span className="ml-2 font-bold ">
+        <span className="ml-2 break-all font-bold">
           {adminView ? user.email : user.username}
         </span>
       </div>
-      <div className="py-4 ">{parseFloat(user.points || "0").toFixed(2)}</div>
-      <div className="py-4">
+      <div className="">{parseFloat(user.points || "0").toFixed(2)}</div>
+      <div className="">
         <Link
           href={`${url}/${user.userId}`}
           target="_blank"
@@ -187,8 +190,8 @@ export default function CompetitionWinners({
   };
 
   return (
-    <div className="flex flex-col space-y-12 p-6">
-      <div className="flex gap-2 p-6">
+    <div className="flex flex-col space-y-12 p-2 sm:p-6">
+      <div className="flex flex-col gap-2">
         <Button onClick={downloadAllCSVFile}>Download All Participants</Button>
         <Button onClick={downloadWinnersCSVFile}>
           Download Reward Winners
