@@ -93,6 +93,7 @@ export default async function SiteHomePage({
           {capitalize(addFanzoneToString(data.name || ""))}
         </h1>
       </div>
+
       {/* Use the FanZoneHeader component */}
       <Suspense fallback={<Loading data={data} />}>
         <FanZone

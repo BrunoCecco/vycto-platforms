@@ -73,6 +73,10 @@ export default function CompetitionPage({
       new Date(data.date.replace(/\[.*\]$/, "")).getTime() < Date.now();
     setEnded(hasEnded);
 
+    if (hasEnded) {
+      setActiveTab("Leaderboard");
+    }
+
     const hasSubmitted =
       (userComp && "submitted" in userComp && userComp.submitted) || false;
     setSubmitted(hasSubmitted);

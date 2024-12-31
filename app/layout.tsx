@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 import ColorSchemeToggle from "@/components/ui/colorSchemeToggle";
+import CookieBanner from "@/components/settings/cookieBanner";
 
 const PostHogPageView = dynamic(() => import("./postHogPageView"), {
   ssr: false,
@@ -47,18 +48,15 @@ export default function RootLayout({
           "bg-background text-foreground",
         )}
       >
-        {/* <Script
-          defer
-          src="https://unpkg.com/@tinybirdco/flock.js"
-          data-host="https://api.eu-central-1.aws.tinybird.co"
-          data-token="p.eyJ1IjogIjllOGNmNTViLTRhOTQtNGU0MC1hZDM1LWU3YjYxMzRkMTJlNyIsICJpZCI6ICIxY2YxNjgyNS0yZDQ3LTQzOTEtYTg2My01NWI2MDcxMDAwY2IiLCAiaG9zdCI6ICJhd3MtZXUtY2VudHJhbC0xIn0.nIz77lsApRDOdpKjlQhXJTHWhbX8u9wN4vWUDsUtgGY"
-        /> */}
         <Providers>
           <PostHogPageView />
           <Analytics />
           {children}
           <div className="fixed right-0 top-0 z-50 sm:right-2 sm:top-2">
             <ColorSchemeToggle />
+          </div>
+          <div className="absolute bottom-0 left-0 z-50">
+            <CookieBanner />
           </div>
         </Providers>
       </body>
