@@ -214,15 +214,26 @@ const MainLeaderboard = ({
                         <span className="table-cell min-w-4 pr-1 sm:hidden">
                           {entry.rank}
                         </span>
-                        <User
-                          name={getLeaderboardName(entry)}
-                          className="break-words"
-                          avatarProps={{
-                            src:
-                              entry.image ||
-                              `https://avatar.vercel.sh/${entry.email}`,
-                          }}
-                        />
+                        <div
+                       
+                     
+    <div className="flex items-center space-x-2">
+      {/* Circular Image */}
+      <div className="w-12 h-12">
+        <Image
+          src={entry.image || `https://avatar.vercel.sh/${entry.email}`}
+          alt={name}
+          fill
+          className="w-full h-full object-cover rounded-full"
+        />
+      </div>
+      {/* User Name */}
+      <div className="flex-1">
+        <p className="break-words line-clamp-2">
+          {getLeaderboardName(entry)}
+        </p>
+      </div>
+    </div>
                         {user && user.id == entry.id ? (
                           <div className="flex w-0 flex-1 items-center text-sm font-bold">
                             <HoverBorderGradient
