@@ -222,7 +222,7 @@ const MainLeaderboard = ({
       <div className="w-12 h-12">
         <Image
           src={entry.image || `https://avatar.vercel.sh/${entry.email}`}
-          alt={name}
+          alt={"user image"}
           fill
           className="w-full h-full object-cover rounded-full"
         />
