@@ -78,7 +78,7 @@ const GeneralSelection = ({ ...props }) => {
               </Submit>
             ))}
           </div>
-          {props.correctAnswer?.length > 0 ? (
+          {props.correctAnswer?.length > 0 && props.hasEnded ? (
             <QuestionResultBlock
               correctAnswer={props.correctAnswer}
               pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}

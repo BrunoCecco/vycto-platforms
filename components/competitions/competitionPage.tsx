@@ -171,6 +171,7 @@ export default function CompetitionPage({
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
             color={siteData.color1}
+            hasEnded={ended}
           />
         );
       case QuestionType.WhatMinute:
@@ -182,6 +183,7 @@ export default function CompetitionPage({
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
             color={siteData.color1}
+            hasEnded={ended}
           />
         );
       case QuestionType.PlayerSelection:
@@ -193,6 +195,7 @@ export default function CompetitionPage({
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
             color={siteData.color1}
+            hasEnded={ended}
           />
         );
       case QuestionType.MatchOutcome:
@@ -204,6 +207,7 @@ export default function CompetitionPage({
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
             color={siteData.color1}
+            hasEnded={ended}
           />
         );
       case QuestionType.GuessScore:
@@ -215,6 +219,7 @@ export default function CompetitionPage({
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
             color={siteData.color1}
+            hasEnded={ended}
           />
         );
       case QuestionType.GeneralSelection:
@@ -226,6 +231,7 @@ export default function CompetitionPage({
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
             color={siteData.color1}
+            hasEnded={ended}
           />
         );
       case QuestionType.GeneralNumber:
@@ -237,6 +243,7 @@ export default function CompetitionPage({
             disabled={disabled}
             onLocalAnswer={handleLocalAnswer}
             color={siteData.color1}
+            hasEnded={ended}
           />
         );
       default:

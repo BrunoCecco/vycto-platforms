@@ -19,7 +19,7 @@ export default async function LoginPage() {
   const siteData = host ? await getSiteData(host) : undefined;
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading data={siteData} />}>
       <SignInSide siteData={siteData} />
     </Suspense>
   );
