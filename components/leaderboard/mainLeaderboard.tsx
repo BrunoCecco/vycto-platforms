@@ -214,7 +214,7 @@ const MainLeaderboard = ({
                         <span className="table-cell min-w-4 pr-1 sm:hidden">
                           {entry.rank}
                         </span>
-                        <div
+                        
                        
                      
     <div className="flex items-center space-x-2">
