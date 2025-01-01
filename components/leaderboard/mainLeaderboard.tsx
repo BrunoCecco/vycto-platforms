@@ -216,7 +216,7 @@ const MainLeaderboard = ({
                         </span>
                         <User
                           name={getLeaderboardName(entry)}
-                          className="break-all"
+                          className="break-words"
                           avatarProps={{
                             src:
                               entry.image ||
