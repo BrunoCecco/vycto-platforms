@@ -33,6 +33,7 @@ declare module "next-auth" {
       email: string;
       image: string;
       name: string;
+      birthDate: string;
     };
   }
 }
@@ -173,6 +174,8 @@ export const authOptions: NextAuthOptions = {
         email: token?.user?.email || session.user.email,
         // @ts-expect-error
         role: token?.user?.role || session.user.role,
+        // @ts-expect-error
+        birthDate: token?.user?.birthDate || session.user.birthDate,
       };
       return session;
     },

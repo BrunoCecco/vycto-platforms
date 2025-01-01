@@ -33,6 +33,7 @@ import UserSignUp from "../auth/userSignUp";
 import { TracingBeam } from "../ui/tracingBeam";
 import MainLeaderboard from "../leaderboard/mainLeaderboard";
 import SignInSide from "../auth/signInSide";
+import { Session } from "next-auth";
 
 export default function CompetitionPage({
   session,
@@ -44,7 +45,7 @@ export default function CompetitionPage({
   users,
   slug,
 }: {
-  session: any;
+  session: Session | null;
   data: SelectCompetition;
   siteData: any;
   questions: SelectQuestion[] | undefined;
@@ -101,8 +102,11 @@ export default function CompetitionPage({
   }, [session, searchParams, userComp]);
 
   const checkUserDetails = async () => {
+    if (!session) {
+      return;
+    }
     const username = searchParams.get("username");
-    if (username) {
+    if (username && session.user.username != username) {
       const res = await updateUserOnLogin(
         session.user.email,
         "username",
@@ -111,12 +115,12 @@ export default function CompetitionPage({
       toast.success("Username updated");
     }
     const name = searchParams.get("name");
-    if (name) {
+    if (name && session.user.name != name) {
       const res = await updateUserOnLogin(session.user.email, "name", name);
       toast.success("Name updated");
     }
     const birthDate = searchParams.get("birthDate");
-    if (birthDate) {
+    if (birthDate && session.user.birthDate != birthDate) {
       const res = await updateUserOnLogin(
         session.user.email,
         "birthDate",
