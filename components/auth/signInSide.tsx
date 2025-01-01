@@ -11,6 +11,7 @@ import LoginButton from "./loginButton";
 import { Button, DatePicker, DateValue, Input } from "@nextui-org/react";
 import { useTheme } from "next-themes";
 import { parseDate } from "@internationalized/date";
+import { toast } from "sonner";
 
 export default function SignInSide({
   siteData,
@@ -27,6 +28,7 @@ export default function SignInSide({
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState(true);
+  const [signInMethod, setSignInMethod] = useState("email");
   const { systemTheme, theme, setTheme } = useTheme();
 
   const posthog = usePostHog();
@@ -71,8 +73,6 @@ export default function SignInSide({
       });
       console.log("User signed in: ", res);
     } catch (error: any) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
       console.error("Error during sign in with Google: ", error);
     } finally {
       setLoading(false);
@@ -89,16 +89,27 @@ export default function SignInSide({
       });
       console.log("User signed in: ", res);
     } catch (error: any) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The credential that was used.
-      const credential = OAuthProvider.credentialFromError(error);
       console.error("Error during sign in with Apple: ", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleOAuthProvider = async (provider: string) => {
+    const isInstagramBrowser = navigator.userAgent.includes("Instagram");
+
+    if (isInstagramBrowser && provider == "google") {
+      // Construct the safari redirect URL with the current page
+      const currentUrl = window.location.href;
+      const safariRedirectUrl = `x-safari-${currentUrl}`;
+
+      // Redirect to safari
+      window.location.href = safariRedirectUrl;
+      return;
+    }
+    setSignInMethod(provider);
+    setEmailExists(false);
+    toast.info("Welcome! Please enter a username to continue.");
   };
 
   return (
@@ -145,7 +156,7 @@ export default function SignInSide({
                 </div>
                 {emailExists && (
                   <>
-                    <Button onClick={() => handleGoogleSignin()}>
+                    <Button onClick={() => handleOAuthProvider("google")}>
                       <Image
                         alt="google"
                         src={"/googleIcon.svg"}
@@ -155,7 +166,7 @@ export default function SignInSide({
                       />
                       <div className="text-sm ">Continue with Google</div>
                     </Button>
-                    <Button onClick={() => handleAppleSignin()}>
+                    <Button onClick={() => handleOAuthProvider("apple")}>
                       <Image
                         alt="apple"
                         src={"/appleIcon.svg"}
@@ -229,6 +240,7 @@ export default function SignInSide({
                       competitionSlug={competitionSlug}
                       name={name}
                       setEmailExists={setEmailExists}
+                      signInMethod={signInMethod}
                     />
                     {emailExists && (
                       <p className="text-xs">

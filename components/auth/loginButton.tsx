@@ -26,6 +26,7 @@ export default function LoginButton({
   localAnswers,
   competitionSlug,
   name,
+  signInMethod = "email",
 }: {
   email: string;
   setEmailExists: (exists: boolean) => void;
@@ -34,6 +35,7 @@ export default function LoginButton({
   localAnswers?: { [key: string]: string };
   competitionSlug?: string;
   name?: string;
+  signInMethod?: string;
 }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -51,6 +53,10 @@ export default function LoginButton({
 
   const checkEmail = async () => {
     setLoading(true);
+    if (signInMethod != "email") {
+      await handleLogin();
+      return;
+    }
     if (!validateEmail(email)) {
       // toast.error("Invalid email, please try again");
       setLoading(false);
@@ -87,7 +93,7 @@ export default function LoginButton({
   };
 
   const handleLoginToSubmit = async () => {
-    posthog?.capture("sign-in-email-competition-page-clicked");
+    posthog?.capture(`sign-in-${signInMethod}-competition-page-clicked`);
 
     const answersQuery = Object.entries(localAnswers || {})
       .map(
@@ -106,16 +112,16 @@ export default function LoginButton({
       callbackUrl += `&birthDate=${birthDate}`;
     }
     try {
-      const result = await signIn("email", {
+      const result = await signIn(signInMethod, {
         email,
         callbackUrl,
         redirect: false,
       });
 
-      if (result && result.ok) {
+      if (result && result.ok && signInMethod == "email") {
         setMessage("Email sent - check your inbox to confirm your answers!");
         toast.success("Email sent - check your inbox to confirm your answers!");
-      } else {
+      } else if (signInMethod == "email") {
         setError(`Error sending email ${result?.error} - try again?`);
       }
     } catch (error) {
@@ -124,7 +130,7 @@ export default function LoginButton({
   };
 
   const handleNormalLogin = async () => {
-    posthog?.capture("sign-in-email-clicked");
+    posthog?.capture(`sign-in-${signInMethod}-clicked`);
     var callbackUrl = username
       ? `/updateuser?username=${encodeURIComponent(username)}`
       : "";
@@ -134,19 +140,18 @@ export default function LoginButton({
     if (birthDate && birthDate?.trim() != "") {
       callbackUrl += `&birthDate=${encodeURIComponent(birthDate)}`;
     }
-    alert(callbackUrl);
     try {
-      const result = await signIn("email", {
+      const result = await signIn(signInMethod, {
         email,
         callbackUrl,
         redirect: false,
       });
 
       console.log(result);
-      if (result && result.ok) {
+      if (result && result.ok && signInMethod == "email") {
         setMessage("Email sent - check your inbox to start playing!");
         toast.success("Email sent - check your inbox to start playing!");
-      } else {
+      } else if (signInMethod == "email") {
         setError(`Error sending email ${result?.error} - try again?`);
       }
     } catch (error) {

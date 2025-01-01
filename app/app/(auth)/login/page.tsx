@@ -3,6 +3,8 @@ import { getSiteData } from "@/lib/fetchers";
 import { headers } from "next/headers";
 import B2BSignUp from "@/components/auth/b2BSignUp";
 import SignInSide from "@/components/auth/signInSide";
+import { Suspense } from "react";
+import Loading from "@/components/ui/loading";
 
 export default async function LoginPage() {
   const heads = headers();
@@ -16,9 +18,9 @@ export default async function LoginPage() {
   console.log(host, host1);
   const siteData = host ? await getSiteData(host) : undefined;
 
-  return host?.includes("app.") ? (
-    <B2BSignUp />
-  ) : (
-    <SignInSide siteData={siteData} />
+  return (
+    <Suspense fallback={<Loading />}>
+      <SignInSide siteData={siteData} />
+    </Suspense>
   );
 }
