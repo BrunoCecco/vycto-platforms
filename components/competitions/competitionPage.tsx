@@ -90,7 +90,7 @@ export default function CompetitionPage({
       });
       const extractedAnswers: { [key: string]: string } = {};
       searchParams.forEach(async (value, key) => {
-        if (key != "username") {
+        if (key != "username" && key != "name" && key != "birthDate") {
           extractedAnswers[key] = value;
         }
       });
