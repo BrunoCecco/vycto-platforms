@@ -62,7 +62,8 @@ export default function CompetitionPage({
   const [username, setUsername] = useState("");
   const [ended, setEnded] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
+  const [hasUpdatedDetails, setHasUpdatedDetails] = useState(false);
+  
   const searchParams = useSearchParams();
   const router = useRouter();
   const posthog = usePostHog();
@@ -98,7 +99,9 @@ export default function CompetitionPage({
         //submitExtractedAnswers(extractedAnswers);
       }
     }
-    checkUserDetails();
+    if (!hasUpdatedDetails) {
+        checkUserDetails();
+    }
   }, [session, searchParams, userComp]);
 
   const checkUserDetails = async () => {
@@ -128,6 +131,7 @@ export default function CompetitionPage({
       );
       toast.success("Birthdate updated");
     }
+    setHasUpdatedDetails(true);
   };
 
   const submitExtractedAnswers = async (extractedAnswers: {
