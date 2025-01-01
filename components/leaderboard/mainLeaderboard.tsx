@@ -219,7 +219,7 @@ const MainLeaderboard = ({
                      
     <div className="flex items-center space-x-2">
       {/* Circular Image */}
-      <div className="w-12 h-12">
+      <div className="w-12 relative h-12">
         <Image
           src={entry.image || `https://avatar.vercel.sh/${entry.email}`}
           alt={"user image"}
