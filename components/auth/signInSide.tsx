@@ -8,10 +8,18 @@ import { usePostHog } from "posthog-js/react";
 import * as React from "react";
 import { useState } from "react";
 import LoginButton from "./loginButton";
-import { Button, DatePicker, DateValue, Input } from "@nextui-org/react";
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  DatePicker,
+  DateValue,
+  Input,
+} from "@nextui-org/react";
 import { useTheme } from "next-themes";
 import { parseDate } from "@internationalized/date";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 
 export default function SignInSide({
   siteData,
@@ -28,6 +36,7 @@ export default function SignInSide({
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState(true);
+  const [hasAccount, setHasAccount] = useState(false);
   const [signInMethod, setSignInMethod] = useState("email");
   const { systemTheme, theme, setTheme } = useTheme();
 
@@ -107,196 +116,227 @@ export default function SignInSide({
       window.location.href = safariRedirectUrl;
       return;
     }
+    if (hasAccount) {
+      if (provider == "google") {
+        handleGoogleSignin();
+      }
+      if (provider == "apple") {
+        handleAppleSignin();
+      }
+      return;
+    }
     setSignInMethod(provider);
     setEmailExists(false);
     toast.info("Welcome! Please enter a username to continue.");
   };
 
   return (
-    <div className="h-screen">
-      <div className="">
+    <div className={`${competitionSlug ? `` : `h-screen`}`}>
+      <div
+        className="relative z-10 flex w-full justify-end transition-all delay-100 duration-500 md:w-[50vw]"
+        style={{ backdropFilter: "blur(12px)" }}
+      >
         <div
-          className="relative z-10 flex w-full justify-end transition-all delay-100 duration-500 md:w-[50vw]"
-          style={{ backdropFilter: "blur(12px)" }}
+          className={`flex ${competitionSlug ? `` : `min-h-[100vh]`} w-full flex-col px-2`}
         >
-          <div className="flex min-h-[100vh] w-full flex-col px-2">
+          <div
+            className="m-auto pb-2 "
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+              width: 400,
+              maxWidth: "100%",
+              borderRadius: "sm",
+            }}
+          >
+            <div className="flex justify-center pb-4">
+              <Image
+                src={siteData?.logo || "/logo.png"}
+                width={100}
+                height={100}
+                alt="Site Logo"
+                className="flex h-32 w-32 object-contain"
+              />
+            </div>
             <div
-              className="m-auto pb-2 "
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 1,
-                width: 400,
-                maxWidth: "100%",
-                borderRadius: "sm",
-              }}
+              className={`flex flex-col gap-3 ${emailExists ? "mb-2" : "mb-0"}`}
             >
-              <div className="flex justify-center pb-4">
-                <Image
-                  src={siteData?.logo || "/logo.png"}
-                  width={100}
-                  height={100}
-                  alt="Site Logo"
-                  className="flex h-32 w-32 object-contain"
-                />
-              </div>
-              <div
-                className={`flex flex-col gap-3 ${emailExists ? "mb-2" : "mb-0"}`}
-              >
-                <div className="gap-1">
-                  {emailExists ? (
-                    <h1 className="text-2xl font-bold ">
-                      <div>Sign In & Play </div>
-                    </h1>
-                  ) : (
-                    <h1 className="mb-2 ">
-                      <div>Bravo&nbsp;🎉 &nbsp;Let the Competition begin!</div>
-                    </h1>
-                  )}
-                </div>
-                {emailExists && (
-                  <>
-                    <Button onClick={() => handleOAuthProvider("google")}>
-                      <Image
-                        alt="google"
-                        src={"/googleIcon.svg"}
-                        width={18}
-                        height={18}
-                        className="dark: mr-2 text-2xl "
-                      />
-                      <div className="text-sm ">Continue with Google</div>
-                    </Button>
-                    <Button onClick={() => handleOAuthProvider("apple")}>
-                      <Image
-                        alt="apple"
-                        src={"/appleIcon.svg"}
-                        width={20}
-                        height={20}
-                        className="dark: mr-2 text-2xl "
-                      />
-                      <div className="e text-sm">Continue with Apple</div>
-                    </Button>
-                  </>
+              <div className="gap-1">
+                {emailExists ? (
+                  <div className="flex flex-col gap-2">
+                    <h1 className="text-2xl font-bold ">Sign In & Play</h1>
+                    <CheckboxGroup defaultValue={[]}>
+                      <Checkbox
+                        value="has-account"
+                        classNames={{
+                          label: "text-xs sm:text-sm",
+                        }}
+                        onChange={(e) => setHasAccount(e.target.checked)}
+                      >
+                        I already have a Vycto account
+                      </Checkbox>
+                    </CheckboxGroup>
+                  </div>
+                ) : (
+                  <h1 className="mb-2 ">
+                    <div>Bravo&nbsp;🎉 &nbsp;Let the Competition begin!</div>
+                  </h1>
                 )}
               </div>
-
-              {emailExists ? (
-                <div className="text-center ">
-                  <div>or</div>
-                </div>
-              ) : (
-                <div className="mb-2 text-sm ">
-                  Choose a username. This is what people will see on the
-                  leaderboard when you enter competitions.
-                </div>
-              )}
-
-              <div
-                className={`flex flex-col gap-4 ${emailExists ? "mt-2" : "mt-0"}`}
-              >
-                <form className="flex flex-col gap-2">
-                  {emailExists ? (
-                    <div>
-                      <label className="">
-                        <div>Email</div>
-                      </label>
-                      <Input
-                        id="email"
-                        type="email"
-                        autoComplete="email"
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </div>
-                  ) : (
-                    <>
-                      <Input
-                        id="username"
-                        label="Username"
-                        type="username"
-                        autoComplete="username"
-                        onChange={(e) => setUsername(e.target.value)}
-                      />
-                      <Input
-                        id="fullname"
-                        label="Full Name"
-                        type="fullname"
-                        autoComplete="fullname"
-                        onChange={(e) => setName(e.target.value)}
-                      />
-                      <DatePicker
-                        name="birthDate"
-                        label={"Birth Date"}
-                        showMonthAndYearPickers
-                        onChange={setBirthDate}
-                      />
-                    </>
-                  )}
-                  <div className="mt-2 flex flex-col gap-4">
-                    <LoginButton
-                      email={email}
-                      username={username}
-                      birthDate={birthDate?.toString()}
-                      localAnswers={localAnswers}
-                      competitionSlug={competitionSlug}
-                      name={name}
-                      setEmailExists={setEmailExists}
-                      signInMethod={signInMethod}
+              {emailExists && (
+                <>
+                  <Button onClick={() => handleOAuthProvider("google")}>
+                    <Image
+                      alt="google"
+                      src={"/googleIcon.svg"}
+                      width={18}
+                      height={18}
+                      className="dark: mr-2 text-2xl "
                     />
-                    {emailExists && (
-                      <p className="text-xs">
-                        By continuing you agree to the{" "}
-                        <a
-                          className="dark: font-semibold "
-                          href={siteData?.terms || ""}
-                          rel="noreferrer"
-                          target="_blank"
-                        >
-                          Terms of use
-                        </a>{" "}
-                        and{" "}
-                        <a
-                          href={siteData?.privacypolicy || ""}
-                          rel="noreferrer"
-                          target="_blank"
-                          className="dark: font-semibold "
-                        >
-                          Privacy Policy
-                        </a>
-                      </p>
-                    )}
+                    <div className="text-sm ">Continue with Google</div>
+                  </Button>
+                  <Button onClick={() => handleOAuthProvider("apple")}>
+                    <Image
+                      alt="apple"
+                      src={"/appleIcon.svg"}
+                      width={20}
+                      height={20}
+                      className="dark: mr-2 text-2xl "
+                    />
+                    <div className="e text-sm">Continue with Apple</div>
+                  </Button>
+                </>
+              )}
+            </div>
+
+            {emailExists ? (
+              <div className="text-center ">
+                <div>or</div>
+              </div>
+            ) : (
+              <div className="mb-2 text-sm ">
+                Choose a username. This is what people will see on the
+                leaderboard when you enter competitions.
+              </div>
+            )}
+
+            <div
+              className={`flex flex-col gap-4 ${emailExists ? "mt-2" : "mt-0"}`}
+            >
+              <form className="flex flex-col gap-2">
+                {emailExists ? (
+                  <div>
+                    <label className="">
+                      <div>Email</div>
+                    </label>
+                    <Input
+                      id="email"
+                      type="email"
+                      autoComplete="email"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
-                </form>
+                ) : (
+                  <>
+                    <Input
+                      id="username"
+                      label="Username"
+                      type="username"
+                      autoComplete="username"
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <Input
+                      id="fullname"
+                      label="Full Name"
+                      type="fullname"
+                      autoComplete="fullname"
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <DatePicker
+                      name="birthDate"
+                      label={"Birth Date"}
+                      showMonthAndYearPickers
+                      onChange={setBirthDate}
+                    />
+                  </>
+                )}
+                <div className="mt-2 flex flex-col gap-4">
+                  <LoginButton
+                    email={email}
+                    username={username}
+                    birthDate={birthDate?.toString()}
+                    localAnswers={localAnswers}
+                    competitionSlug={competitionSlug}
+                    name={name}
+                    setEmailExists={setEmailExists}
+                    signInMethod={signInMethod}
+                  />
+                  {!emailExists && (
+                    <div
+                      className="flex w-min cursor-pointer items-center gap-1 text-xs hover:opacity-75"
+                      onClick={() => setEmailExists(true)}
+                    >
+                      <ArrowLeft size={16} />
+                      <div>Back</div>
+                    </div>
+                  )}
+                  {emailExists && (
+                    <p className="text-xs">
+                      By continuing you agree to the{" "}
+                      <a
+                        className="dark: font-semibold "
+                        href={siteData?.terms || ""}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        Terms of use
+                      </a>{" "}
+                      and{" "}
+                      <a
+                        href={siteData?.privacypolicy || ""}
+                        rel="noreferrer"
+                        target="_blank"
+                        className="dark: font-semibold "
+                      >
+                        Privacy Policy
+                      </a>
+                    </p>
+                  )}
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className="py-3">
+            <div className="text-center">
+              <div className="flex items-center justify-center">
+                <div className="font-space pr-1.5">powered by</div>
+                <div className="relative h-8 w-12">
+                  {/* White logo for dark mode */}
+                  <Image
+                    src="/vyctoLogoWhite.png"
+                    alt="Vycto Logo"
+                    layout="fill"
+                    objectFit="contain"
+                    className="hidden h-full w-full dark:block"
+                    priority
+                  />
+                  {/* Blue logo for light mode */}
+                  <Image
+                    src="/vyctoLogoBlue.png"
+                    alt="Vycto Logo"
+                    layout="fill"
+                    objectFit="contain"
+                    className="h-full w-full dark:hidden"
+                    priority
+                  />
+                </div>
               </div>
             </div>
-            <footer className="py-3 ">
-              <div className="text-center">
-                <div className="flex items-center justify-center">
-                  <div className="font-space pr-1.5">powered by</div>
-                  <div className="relative h-8 w-12">
-                    {/* White logo for dark mode */}
-                    <Image
-                      src="/vyctoLogoWhite.png"
-                      alt="Vycto Logo"
-                      layout="fill"
-                      objectFit="contain"
-                      className="hidden h-full w-full dark:block"
-                      priority
-                    />
-                    {/* Blue logo for light mode */}
-                    <Image
-                      src="/vyctoLogoBlue.png"
-                      alt="Vycto Logo"
-                      layout="fill"
-                      objectFit="contain"
-                      className="h-full w-full dark:hidden"
-                      priority
-                    />
-                  </div>
-                </div>
-              </div>
-            </footer>
           </div>
         </div>
+      </div>
+      {competitionSlug ? null : (
         <div
           className={`fixed bottom-0 right-0 top-0 flex h-full w-full bg-cover bg-center bg-no-repeat object-cover transition-all delay-100 duration-500 md:w-[50vw]`}
           style={{
@@ -308,7 +348,7 @@ export default function SignInSide({
             })`,
           }}
         />
-      </div>
+      )}
     </div>
   );
 }

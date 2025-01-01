@@ -32,6 +32,7 @@ import LoginButton from "@/components/auth/loginButton";
 import UserSignUp from "../auth/userSignUp";
 import { TracingBeam } from "../ui/tracingBeam";
 import MainLeaderboard from "../leaderboard/mainLeaderboard";
+import SignInSide from "../auth/signInSide";
 
 export default function CompetitionPage({
   session,
@@ -245,7 +246,7 @@ export default function CompetitionPage({
 
   return (
     <div className="w-full pb-5 sm:pb-20">
-      <div className="h-max px-2 py-8 sm:bg-content2 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
+      <div className="h-max px-2 py-8 sm:overflow-hidden sm:bg-content2 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
         <CompetitionHeader
           session={session}
           users={users}
@@ -306,7 +307,7 @@ export default function CompetitionPage({
                   />
                 )
               ) : (
-                <UserSignUp
+                <SignInSide
                   siteData={siteData}
                   localAnswers={localAnswers}
                   competitionSlug={slug}
