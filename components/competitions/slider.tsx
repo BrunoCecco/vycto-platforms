@@ -225,6 +225,9 @@ const Slider: FC<{
               onMouseUp={handleBlur}
               onDragEnd={handleBlur}
               onBlur={handleBlur}
+              onFocusChange={(focused) => {
+                if (!focused) handleBlur();
+              }}
               className="h-3 w-full appearance-none text-xs sm:text-sm"
               classNames={{
                 input: "appearance-none !px-0",
