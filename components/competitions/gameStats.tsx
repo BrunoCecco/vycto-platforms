@@ -44,7 +44,7 @@ const GameStats: FC<GameStatsProps> = ({
             Submitted Prediction:{" "}
             {new Date(
               userComp.submissionDate.replace(/\[.*\]$/, ""),
-            ).toDateString()}
+            ).toLocaleDateString()}
           </p>
           {/* <span className="ml-1" role="img" aria-label="tick">
             ✅

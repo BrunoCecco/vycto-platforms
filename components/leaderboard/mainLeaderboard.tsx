@@ -2,7 +2,12 @@
 import React, { useState, useEffect } from "react";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
 import Image from "next/image";
-import { SelectSite, SelectSiteReward, SelectUser } from "@/lib/schema";
+import {
+  SelectCompetition,
+  SelectSite,
+  SelectSiteReward,
+  SelectUser,
+} from "@/lib/schema";
 import {
   getCompetitionData,
   getCompetitionFromId,
@@ -30,11 +35,13 @@ const MainLeaderboard = ({
   session,
   limit = 10,
   compDate,
+  compData,
 }: {
   siteData: SelectSite;
   session: Session | null;
   limit?: number;
   compDate?: Date;
+  compData?: SelectCompetition;
 }) => {
   const [rangeType, setRangeType] = useState<IRangeType>("monthly");
 
@@ -78,29 +85,6 @@ const MainLeaderboard = ({
   }, [compDate, rangeType]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      var leaderboardData;
-      if (compDate) {
-        leaderboardData = await getLeaderboardData(
-          siteData.id,
-          rangeType,
-          offset,
-          limit,
-          compDate,
-          compDate,
-        );
-      } else {
-        leaderboardData = await getLeaderboardData(
-          siteData.id,
-          rangeType,
-          offset,
-          limit,
-        );
-      }
-      setData(leaderboardData as LeaderboardUser[]);
-      setLoading(false);
-    };
     fetchData();
     if (rangeType === "season") {
       setSelectedReward(seasonReward);
@@ -124,6 +108,30 @@ const MainLeaderboard = ({
     }
   }, [query, data]);
 
+  const fetchData = async () => {
+    setLoading(true);
+    var leaderboardData;
+    if (compDate) {
+      leaderboardData = await getLeaderboardData(
+        siteData.id,
+        rangeType,
+        offset,
+        limit,
+        compDate,
+        compDate,
+      );
+    } else {
+      leaderboardData = await getLeaderboardData(
+        siteData.id,
+        rangeType,
+        offset,
+        limit,
+      );
+    }
+    setData(leaderboardData as LeaderboardUser[]);
+    setLoading(false);
+  };
+
   const getModalRewards = async () => {
     const date = new Date();
     const month = date.getMonth() + 1;
@@ -141,6 +149,7 @@ const MainLeaderboard = ({
   };
 
   const calculateBg = (index: number) => {
+    if (!compData?.correctAnswersSubmitted) return "";
     if (index > 2) return "";
     switch (index) {
       case 0:
@@ -201,9 +210,11 @@ const MainLeaderboard = ({
                 <span className="hidden sm:block">Points</span>
                 <span className="block sm:hidden">Pts</span>
               </th>
-              {/* <th className="py-3 text-right text-xs font-medium uppercase">
-                  Submissions
-                </th> */}
+              {compData?.slug && (
+                <th className="py-3 text-right text-xs font-medium uppercase">
+                  Submission
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -256,6 +267,19 @@ const MainLeaderboard = ({
                       <td className="py-4 text-center">
                         {parseFloat(entry.points.toString() || "0").toFixed(2)}
                       </td>
+                      {compData?.slug && (
+                        <td className="justify-end py-4 text-right">
+                          <Link
+                            href={`/comp/${compData?.slug}/${entry.id}`}
+                            className="rounded-lg bg-content3 p-2 px-4 text-sm shadow-md transition-all duration-200 hover:shadow-none"
+                            style={{
+                              backgroundImage: calculateBg(entry.rank),
+                            }}
+                          >
+                            View
+                          </Link>
+                        </td>
+                      )}
                       {/* Display the points for the signed-in user */}
                     </tr>
                   );

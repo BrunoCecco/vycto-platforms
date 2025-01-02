@@ -79,7 +79,7 @@ export default function CompetitionPage({
       new Date(data.date.replace(/\[.*\]$/, "")).getTime() < Date.now();
     setEnded(hasEnded);
 
-    if (hasEnded) {
+    if (hasEnded && userComp?.userId == session?.user.id) {
       setActiveTab("Leaderboard");
     }
 
@@ -353,6 +353,7 @@ export default function CompetitionPage({
               siteData={siteData}
               session={session}
               compDate={new Date(data.date.replace(/\[.*\]$/, ""))}
+              compData={data}
             />
           </div>
           // <Leaderboard
