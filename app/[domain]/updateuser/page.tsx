@@ -38,6 +38,18 @@ export default function UpdateUser() {
         router.replace("/");
       });
     }
+    if (
+      session?.user.username != null &&
+      session?.user.name != null &&
+      session?.user.birthDate != null
+    ) {
+      if (redirectUrl) {
+        router.push(redirectUrl);
+      } else {
+        router.replace("/");
+      }
+      return;
+    }
   }, [session]);
 
   const updateUser = async () => {
