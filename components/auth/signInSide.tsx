@@ -130,7 +130,7 @@ export default function SignInSide({
     const answersQuery = Object.entries(localAnswers || {})
       .map(([questionId, answer]) => `${questionId}=${answer}`)
       .join("&");
-    var callbackUrl = `/updateuser?redirecttwo=/comp/${competitionSlug}?${answersQuery}`;
+    var callbackUrl = `/updateuser?redirecttwo=${encodeURIComponent(`/comp/${competitionSlug}?${answersQuery}`)}`;
     try {
       const result = await signIn(provider, {
         email,
