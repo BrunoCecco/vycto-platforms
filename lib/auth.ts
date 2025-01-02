@@ -40,7 +40,6 @@ declare module "next-auth" {
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
-  debug: true,
   providers: [
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID!,

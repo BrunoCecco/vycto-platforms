@@ -21,10 +21,8 @@ const Submit = ({
   const handleSubmit = async (data: FormData) => {
     if (userId) {
       await answerQuestion(data);
-      toast.success("Answer updated!");
     } else {
       onLocalAnswer(questionId, answer);
-      toast.success("Answer saved!");
     }
   };
 

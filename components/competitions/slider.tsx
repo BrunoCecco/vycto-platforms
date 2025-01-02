@@ -67,10 +67,8 @@ const Slider: FC<{
       data.append("answer", val);
       data.append("competitionId", competitionId);
       await answerQuestion(data);
-      toast.success("Answer saved!");
     } else if (onLocalAnswer) {
       onLocalAnswer(questionId, val);
-      toast.success("Answer saved locally!");
     }
   };
 

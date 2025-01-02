@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/ui/loading";
 import { updateUserOnLogin } from "@/lib/actions";
 import { parseDate } from "@internationalized/date";
 import {
@@ -14,6 +15,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function UpdateUser() {
   const searchParams = useSearchParams();
@@ -31,21 +33,30 @@ export default function UpdateUser() {
   );
   const [name, setName] = useState(searchParams.get("name"));
   const [hasUpdated, setHasUpdated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!hasUpdated && session && session.user && username && !redirectUrl) {
-      updateUser().then((res) => {
-        router.replace("/");
-      });
-    }
     if (!session || !session.user) {
       router.replace("/login");
       return;
     }
-    if (
+
+    if (!hasUpdated && session && session.user && username && !redirectUrl) {
+      updateUser()
+        .then((res) => {
+          router.replace("/");
+        })
+        .catch((error) => {
+          console.error("An unexpected error occurred", error);
+          setLoading(false);
+        });
+    } else if (
       session?.user.username != null &&
       session?.user.name != null &&
-      session?.user.birthDate != null
+      session?.user.birthDate != null &&
+      !username &&
+      !name &&
+      !birthDate
     ) {
       if (redirectUrl) {
         router.push(redirectUrl);
@@ -53,27 +64,17 @@ export default function UpdateUser() {
         router.replace("/");
       }
       return;
+    } else {
+      setLoading(false);
     }
   }, [session]);
 
   const updateUser = async () => {
+    if (!session || !session.user) {
+      router.replace("/login");
+      return;
+    }
     try {
-      if (!session || !session.user) {
-        router.replace("/login");
-        return;
-      }
-      if (
-        session.user.username != null &&
-        session.user.name != null &&
-        session.user.birthDate != null
-      ) {
-        if (redirectUrl) {
-          router.push(redirectUrl);
-        } else {
-          router.replace("/");
-        }
-        return;
-      }
       if (
         username &&
         username.trim().length > 0 &&
@@ -118,7 +119,10 @@ export default function UpdateUser() {
   };
 
   const handleLogin = async () => {
-    console.log(redirectUrl);
+    if (username == null || username.trim() == "") {
+      toast.error("Please enter a username");
+      return;
+    }
     setUpdating(true);
     if (redirectUrl) {
       await handleLoginToSubmit();
@@ -150,10 +154,8 @@ export default function UpdateUser() {
     router.replace("/");
   };
 
-  return searchParams.get("username") &&
-    searchParams.get("username") != null &&
-    !searchParams.get("redirecttwo") ? (
-    <Spinner />
+  return loading ? (
+    <Loading />
   ) : (
     <div className="h-full">
       <div
