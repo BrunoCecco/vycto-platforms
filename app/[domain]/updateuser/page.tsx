@@ -42,7 +42,22 @@ export default function UpdateUser() {
 
   const updateUser = async () => {
     try {
-      if (!session || !session.user) return;
+      if (!session || !session.user) {
+        router.replace("/login");
+        return;
+      }
+      if (
+        session.user.username != null &&
+        session.user.name != null &&
+        session.user.birthDate != null
+      ) {
+        if (redirectUrl) {
+          router.push(redirectUrl);
+        } else {
+          router.replace("/");
+        }
+        return;
+      }
       if (
         username &&
         username.trim().length > 0 &&
