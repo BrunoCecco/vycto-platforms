@@ -133,7 +133,7 @@ export default function SignInSide({
           `${encodeURIComponent(questionId)}=${encodeURIComponent(answer)}`,
       )
       .join("&");
-    var callbackUrl = `/updateuser?redirect=${encodeURIComponent(`/comp/${competitionSlug}?${answersQuery}`)}`;
+    var callbackUrl = `/updateuser?redirect=${encodeURIComponent(`/comp/${competitionSlug}?${decodeURIComponent(answersQuery)}`)}`;
     try {
       const result = await signIn(provider, {
         email,
