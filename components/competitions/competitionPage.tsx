@@ -105,12 +105,12 @@ export default function CompetitionPage({
   }, [session, searchParams, userComp]);
 
   useEffect(() => {
-    if (localAnswers && Object.keys(localAnswers).length > 0) {
-      window.scrollTo({
-        top: questionComp.current?.offsetTop,
-        behavior: "smooth",
-      });
-    }
+    // if (localAnswers && Object.keys(localAnswers).length > 0) {
+    //   window.scrollTo({
+    //     top: questionComp.current?.offsetBottom,
+    //     behavior: "smooth",
+    //   });
+    // }
   }, [localAnswers]);
 
   const checkUserDetails = async () => {
