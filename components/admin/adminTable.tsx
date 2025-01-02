@@ -27,6 +27,7 @@ const AdminTable = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ role: selectedRole, offset, limit }),
+          cache: "no-store",
         });
         const data = await users.json();
         setCurrentUsers(data);
