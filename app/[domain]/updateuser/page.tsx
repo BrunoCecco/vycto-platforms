@@ -38,6 +38,10 @@ export default function UpdateUser() {
         router.replace("/");
       });
     }
+    if (!session || !session.user) {
+      router.replace("/login");
+      return;
+    }
     if (
       session?.user.username != null &&
       session?.user.name != null &&
@@ -54,10 +58,6 @@ export default function UpdateUser() {
 
   const updateUser = async () => {
     try {
-      if (!session || !session.user) {
-        router.replace("/login");
-        return;
-      }
       if (
         session.user.username != null &&
         session.user.name != null &&
