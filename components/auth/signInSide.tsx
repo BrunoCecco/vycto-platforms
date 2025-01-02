@@ -43,9 +43,23 @@ export default function SignInSide({
 
   React.useEffect(() => {
     const isInstagramBrowser = navigator.userAgent.includes("Instagram");
+    const device = getMobileOperatingSystem();
 
-    if (!isInstagramBrowser && window.location.href.includes("fbclid=")) {
-      handleGoogleSignin();
+    if (isInstagramBrowser) {
+      // redirect to default browser (safari or chrome)
+      const currentUrl = window.location.href;
+      if (device === "iOS") {
+        const safariRedirectUrl = `x-safari-${currentUrl}`;
+        // Redirect to safari
+        window.location.href = safariRedirectUrl;
+      } else if (device === "Android") {
+        // const chromeRedirectUrl = `googlechrome://${currentUrl}`;
+        // Redirect to chrome
+        // window.location.href = chromeRedirectUrl;
+        window.open("googlechrome://navigate?url=" + currentUrl, "_system");
+      } else {
+        console.error("Unknown device");
+      }
     }
   }, []);
 
@@ -58,50 +72,25 @@ export default function SignInSide({
     }
   }, []);
 
-  const handleGoogleSignin = async () => {
-    // Check if the user is on the Instagram browser
-    const isInstagramBrowser = navigator.userAgent.includes("Instagram");
+  function getMobileOperatingSystem() {
+    var userAgent = navigator.userAgent;
 
-    if (isInstagramBrowser) {
-      // Construct the safari redirect URL with the current page
-      const currentUrl = window.location.href;
-      const safariRedirectUrl = `x-safari-${currentUrl}`;
-
-      // Redirect to safari
-      window.location.href = safariRedirectUrl;
-      return;
+    // Windows Phone must come first because its UA also contains "Android"
+    if (/windows phone/i.test(userAgent)) {
+      return "Windows Phone";
     }
 
-    setLoading(true);
-    posthog?.capture("google-sign-in-clicked");
-
-    try {
-      const res = await signIn("google", {
-        redirect: false,
-      });
-      console.log("User signed in: ", res);
-    } catch (error: any) {
-      console.error("Error during sign in with Google: ", error);
-    } finally {
-      setLoading(false);
+    if (/android/i.test(userAgent)) {
+      return "Android";
     }
-  };
 
-  const handleAppleSignin = async () => {
-    setLoading(true);
-    posthog?.capture("apple-sign-in-clicked");
-
-    try {
-      const res = await signIn("apple", {
-        is_private_email: false,
-      });
-      console.log("User signed in: ", res);
-    } catch (error: any) {
-      console.error("Error during sign in with Apple: ", error);
-    } finally {
-      setLoading(false);
+    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/.test(userAgent)) {
+      return "iOS";
     }
-  };
+
+    return "unknown";
+  }
 
   const handleLogin = async (provider: string) => {
     // Check if the user is on the Instagram browser
@@ -133,7 +122,6 @@ export default function SignInSide({
     var callbackUrl = `/updateuser?redirecttwo=${encodeURIComponent(`/comp/${competitionSlug}?${answersQuery}`)}`;
     try {
       const result = await signIn(provider, {
-        email,
         callbackUrl,
       });
     } catch (error) {
@@ -146,7 +134,6 @@ export default function SignInSide({
     var callbackUrl = "/updateuser";
     try {
       const result = await signIn(provider, {
-        email,
         callbackUrl,
       });
     } catch (error) {
