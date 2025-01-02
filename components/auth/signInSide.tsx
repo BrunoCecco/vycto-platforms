@@ -128,17 +128,13 @@ export default function SignInSide({
     posthog?.capture(`sign-in-${provider}-competition-page-clicked`);
 
     const answersQuery = Object.entries(localAnswers || {})
-      .map(
-        ([questionId, answer]) =>
-          `${encodeURIComponent(questionId)}=${encodeURIComponent(answer)}`,
-      )
+      .map(([questionId, answer]) => `${questionId}=${answer}`)
       .join("&");
-    var callbackUrl = `/updateuser?redirect=${encodeURIComponent(`/comp/${competitionSlug}?${decodeURIComponent(answersQuery)}`)}`;
+    var callbackUrl = `/updateuser?redirecttwo=/comp/${competitionSlug}?${answersQuery}`;
     try {
       const result = await signIn(provider, {
         email,
         callbackUrl,
-        redirect: false,
       });
     } catch (error) {
       console.error("Error during sign in with Apple: ", error);
@@ -152,7 +148,6 @@ export default function SignInSide({
       const result = await signIn(provider, {
         email,
         callbackUrl,
-        redirect: false,
       });
     } catch (error) {
       console.error("An unexpected error occurred");

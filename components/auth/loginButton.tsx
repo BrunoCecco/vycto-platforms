@@ -96,10 +96,7 @@ export default function LoginButton({
     posthog?.capture(`sign-in-${signInMethod}-competition-page-clicked`);
 
     const answersQuery = Object.entries(localAnswers || {})
-      .map(
-        ([questionId, answer]) =>
-          `${encodeURIComponent(questionId)}=${encodeURIComponent(answer)}`,
-      )
+      .map(([questionId, answer]) => `${questionId}=${answer}`)
       .join("&");
     var callbackUrl = `/comp/${competitionSlug}?${answersQuery}`;
     if (username && username?.trim() != "") {
@@ -131,14 +128,12 @@ export default function LoginButton({
 
   const handleNormalLogin = async () => {
     posthog?.capture(`sign-in-${signInMethod}-clicked`);
-    var callbackUrl = username
-      ? `/updateuser?username=${encodeURIComponent(username)}`
-      : "";
+    var callbackUrl = username ? `/updateuser?username=${username}` : "";
     if (name && name?.trim() != "") {
-      callbackUrl += `&name=${encodeURIComponent(name)}`;
+      callbackUrl += `&name=${name}`;
     }
     if (birthDate && birthDate?.trim() != "") {
-      callbackUrl += `&birthDate=${encodeURIComponent(birthDate)}`;
+      callbackUrl += `&birthDate=${birthDate}`;
     }
     try {
       const result = await signIn(signInMethod, {

@@ -20,7 +20,7 @@ export default function UpdateUser() {
   const router = useRouter();
 
   const bdate = searchParams.get("birthDate");
-  const redirectUrl = searchParams.get("redirect");
+  const redirectUrl = searchParams.get("redirecttwo");
   const { data: session, status, update } = useSession();
   const [updating, setUpdating] = useState(false);
   const [username, setUsername] = useState(searchParams.get("username"));
@@ -152,7 +152,7 @@ export default function UpdateUser() {
 
   return searchParams.get("username") &&
     searchParams.get("username") != null &&
-    !searchParams.get("redirect") ? (
+    !searchParams.get("redirecttwo") ? (
     <Spinner />
   ) : (
     <div className="h-full">
