@@ -15,6 +15,7 @@ import {
   DatePicker,
   DateValue,
   Input,
+  Spinner,
 } from "@nextui-org/react";
 import { useTheme } from "next-themes";
 import { parseDate } from "@internationalized/date";
@@ -36,8 +37,6 @@ export default function SignInSide({
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState(true);
-  const [hasAccount, setHasAccount] = useState(false);
-  const [signInMethod, setSignInMethod] = useState("email");
   const { systemTheme, theme, setTheme } = useTheme();
 
   const posthog = usePostHog();
@@ -104,10 +103,11 @@ export default function SignInSide({
     }
   };
 
-  const handleOAuthProvider = async (provider: string) => {
+  const handleLogin = async (provider: string) => {
+    // Check if the user is on the Instagram browser
     const isInstagramBrowser = navigator.userAgent.includes("Instagram");
 
-    if (isInstagramBrowser && provider == "google") {
+    if (isInstagramBrowser && provider === "google") {
       // Construct the safari redirect URL with the current page
       const currentUrl = window.location.href;
       const safariRedirectUrl = `x-safari-${currentUrl}`;
@@ -116,18 +116,47 @@ export default function SignInSide({
       window.location.href = safariRedirectUrl;
       return;
     }
-    if (hasAccount) {
-      if (provider == "google") {
-        handleGoogleSignin();
-      }
-      if (provider == "apple") {
-        handleAppleSignin();
-      }
-      return;
+
+    if (localAnswers || competitionSlug) {
+      await handleLoginToSubmit(provider);
+    } else {
+      await handleNormalLogin(provider);
     }
-    setSignInMethod(provider);
-    setEmailExists(false);
-    toast.info("Welcome! Please enter a username to continue.");
+  };
+
+  const handleLoginToSubmit = async (provider: string) => {
+    posthog?.capture(`sign-in-${provider}-competition-page-clicked`);
+
+    const answersQuery = Object.entries(localAnswers || {})
+      .map(
+        ([questionId, answer]) =>
+          `${encodeURIComponent(questionId)}=${encodeURIComponent(answer)}`,
+      )
+      .join("&");
+    var callbackUrl = `/updateuser?redirect=${encodeURIComponent(`/comp/${competitionSlug}?${answersQuery}`)}`;
+    try {
+      const result = await signIn(provider, {
+        email,
+        callbackUrl,
+        redirect: false,
+      });
+    } catch (error) {
+      console.error("Error during sign in with Apple: ", error);
+    }
+  };
+
+  const handleNormalLogin = async (provider: string) => {
+    posthog?.capture(`sign-in-${provider}-clicked`);
+    var callbackUrl = "/updateuser";
+    try {
+      const result = await signIn(provider, {
+        email,
+        callbackUrl,
+        redirect: false,
+      });
+    } catch (error) {
+      console.error("An unexpected error occurred");
+    }
   };
 
   return (
@@ -166,17 +195,6 @@ export default function SignInSide({
                 {emailExists ? (
                   <div className="flex flex-col gap-2">
                     <h1 className="text-2xl font-bold ">Sign In & Play</h1>
-                    <CheckboxGroup defaultValue={[]}>
-                      <Checkbox
-                        value="has-account"
-                        classNames={{
-                          label: "text-xs sm:text-sm",
-                        }}
-                        onChange={(e) => setHasAccount(e.target.checked)}
-                      >
-                        I already have a Vycto account
-                      </Checkbox>
-                    </CheckboxGroup>
                   </div>
                 ) : (
                   <h1 className="mb-2 ">
@@ -186,7 +204,7 @@ export default function SignInSide({
               </div>
               {emailExists && (
                 <>
-                  <Button onClick={() => handleOAuthProvider("google")}>
+                  <Button onClick={() => handleLogin("google")}>
                     <Image
                       alt="google"
                       src={"/googleIcon.svg"}
@@ -194,9 +212,13 @@ export default function SignInSide({
                       height={18}
                       className="dark: mr-2 text-2xl "
                     />
-                    <div className="text-sm ">Continue with Google</div>
+                    {loading ? (
+                      <Spinner />
+                    ) : (
+                      <div className="text-sm ">Continue with Google</div>
+                    )}
                   </Button>
-                  <Button onClick={() => handleOAuthProvider("apple")}>
+                  <Button onClick={() => handleLogin("apple")}>
                     <Image
                       alt="apple"
                       src={"/appleIcon.svg"}
@@ -204,7 +226,11 @@ export default function SignInSide({
                       height={20}
                       className="dark: mr-2 text-2xl "
                     />
-                    <div className="e text-sm">Continue with Apple</div>
+                    {loading ? (
+                      <Spinner />
+                    ) : (
+                      <div className="e text-sm">Continue with Apple</div>
+                    )}
                   </Button>
                 </>
               )}
@@ -270,7 +296,6 @@ export default function SignInSide({
                     competitionSlug={competitionSlug}
                     name={name}
                     setEmailExists={setEmailExists}
-                    signInMethod={signInMethod}
                   />
                   {!emailExists && (
                     <div

@@ -18,7 +18,9 @@ export default async function LoginPage() {
   console.log(host, host1);
   const siteData = host ? await getSiteData(host) : undefined;
 
-  return (
+  return host?.includes("app.") ? (
+    <B2BSignUp />
+  ) : (
     <Suspense fallback={<Loading data={siteData} />}>
       <SignInSide siteData={siteData} />
     </Suspense>
