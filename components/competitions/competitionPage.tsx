@@ -58,6 +58,9 @@ export default function CompetitionPage({
   const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(
     {},
   );
+  const [browserAnswers, setBrowserAnswers] = useState<{
+    [key: string]: string;
+  }>({});
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [ended, setEnded] = useState(false);
@@ -96,6 +99,7 @@ export default function CompetitionPage({
       });
       if (Object.keys(extractedAnswers).length > 0) {
         setLocalAnswers(extractedAnswers);
+        setBrowserAnswers(extractedAnswers);
         //submitExtractedAnswers(extractedAnswers);
       }
     }
@@ -105,13 +109,13 @@ export default function CompetitionPage({
   }, [session, searchParams, userComp]);
 
   useEffect(() => {
-    // if (localAnswers && Object.keys(localAnswers).length > 0) {
-    //   window.scrollTo({
-    //     top: questionComp.current?.offsetBottom,
-    //     behavior: "smooth",
-    //   });
-    // }
-  }, [localAnswers]);
+    if (browserAnswers && Object.keys(browserAnswers).length > 2) {
+      window.scrollTo({
+        top: (questionComp.current?.offsetHeight || 0) + 200,
+        behavior: "smooth",
+      });
+    }
+  }, [browserAnswers]);
 
   const checkUserDetails = async () => {
     if (!session) {

@@ -71,7 +71,7 @@ const MainLeaderboard = ({
           compDate || lastWeek,
           compDate || new Date(),
         );
-        setCompTitle(comp[0].title || undefined);
+        setCompTitle(comp[0]?.title || undefined);
       }
     };
     fetchCompTitle();
