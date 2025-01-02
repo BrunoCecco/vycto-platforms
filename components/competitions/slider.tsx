@@ -1,5 +1,5 @@
 "use client";
-import { useState, FC, useRef, useEffect } from "react";
+import { useState, FC, useRef, useEffect, useCallback } from "react";
 import { answerQuestion } from "@/lib/actions";
 import { toast } from "sonner";
 import { Input, Slider as NextSlider, SliderValue } from "@nextui-org/react";
@@ -34,24 +34,42 @@ const Slider: FC<{
     );
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+  var slideInput: NodeJS.Timeout;
+  let timerId: ReturnType<typeof setTimeout> | null = null;
 
-  const handleBlur = async () => {
-    if (onBlur) onBlur(parseInt(value));
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+
+    // Update the value immediately
+    setValue(newValue);
+
+    // Clear any existing timer
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+
+    // Set a new timer to call handleBlur after user stops sliding
+    timerId = setTimeout(() => {
+      console.log("Timer triggered:", newValue);
+      handleBlur(newValue); // Ensure this is only called once
+      timerId = null; // Reset timerId
+    }, 1000);
+  }, []);
+
+  const handleBlur = async (val: string) => {
+    if (onBlur) onBlur(parseInt(val));
     if (!competitionId) return;
 
     if (userId) {
       const data = new FormData();
       data.append("userId", userId);
       data.append("questionId", questionId);
-      data.append("answer", value);
+      data.append("answer", val);
       data.append("competitionId", competitionId);
       await answerQuestion(data);
       toast.success("Answer saved!");
     } else if (onLocalAnswer) {
-      onLocalAnswer(questionId, value);
+      onLocalAnswer(questionId, val);
       toast.success("Answer saved locally!");
     }
   };
@@ -222,12 +240,6 @@ const Slider: FC<{
               defaultValue={initialValue || "0"}
               disabled={disabled}
               onChange={handleChange}
-              onMouseUp={handleBlur}
-              onDragEnd={handleBlur}
-              onBlur={handleBlur}
-              onFocusChange={(focused) => {
-                if (!focused) handleBlur();
-              }}
               className="h-3 w-full appearance-none text-xs sm:text-sm"
               classNames={{
                 input: "appearance-none !px-0",
