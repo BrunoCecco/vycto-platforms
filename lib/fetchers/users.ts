@@ -54,10 +54,10 @@ export async function getAllUsers(role: string, offset: number, limit: number) {
         .limit(limit)
         .offset(offset);
     },
-    ["all-users"],
+    [`all-users-${role}-${offset}-${limit}`],
     {
-      revalidate: 60, // Cache for 1 minute
-      tags: ["all-users"],
+      revalidate: 900, // Cache for 1 minute
+      tags: [`all-users-${role}-${offset}-${limit}`],
     },
   )();
 }
