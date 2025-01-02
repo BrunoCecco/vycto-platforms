@@ -8,26 +8,33 @@ import UserForm from "../form/updateuser";
 import { USER, USER_ROLES } from "@/lib/constants";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getAllAdmins, getAllSuperAdmins, getAllUsers } from "@/lib/fetchers";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Select, SelectItem, Spinner } from "@nextui-org/react";
 
 const AdminTable = () => {
   const [selectedRole, setSelectedRole] = useState(USER);
   const [currentUsers, setCurrentUsers] = useState<SelectUser[]>();
   const [limit, setLimit] = useState(20);
   const [offset, setOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const users = await fetch("/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ role: selectedRole, offset, limit }),
-      });
-      const data = await users.json();
-
-      setCurrentUsers(data);
+      setLoading(true);
+      try {
+        const users = await fetch("/api/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ role: selectedRole, offset, limit }),
+        });
+        const data = await users.json();
+        setCurrentUsers(data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
     };
     fetchUsers();
   }, [selectedRole, offset, limit]);
@@ -71,7 +78,10 @@ const AdminTable = () => {
           </tr>
         </thead>
         <tbody className="">
-          {currentUsers &&
+          {loading ? (
+            <Spinner />
+          ) : (
+            currentUsers &&
             currentUsers.map((user, index) => (
               <tr key={user.id}>
                 <td className="flex items-center px-4 py-5">
@@ -111,7 +121,8 @@ const AdminTable = () => {
                   />
                 </td>
               </tr>
-            ))}
+            ))
+          )}
         </tbody>
       </table>
     </div>
