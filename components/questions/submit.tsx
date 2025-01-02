@@ -24,7 +24,7 @@ const Submit = ({
       toast.success("Answer updated!");
     } else {
       onLocalAnswer(questionId, answer);
-      toast.success("Answer saved locally!");
+      toast.success("Answer saved!");
     }
   };
 
