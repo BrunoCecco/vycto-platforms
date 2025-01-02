@@ -224,6 +224,7 @@ const Slider: FC<{
               onChange={handleChange}
               onMouseUp={handleBlur}
               onDragEnd={handleBlur}
+              onBlur={handleBlur}
               className="h-3 w-full appearance-none text-xs sm:text-sm"
               classNames={{
                 input: "appearance-none !px-0",

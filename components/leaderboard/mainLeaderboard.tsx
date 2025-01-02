@@ -133,6 +133,7 @@ const MainLeaderboard = ({
     const seasonRew = await getSiteRewardByDate(siteData.id, -1, year);
     setSeasonReward(seasonRew[0]);
     setSelectedReward(monthRew[0]);
+    console.log(monthRew, seasonRew);
   };
 
   const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -214,26 +215,27 @@ const MainLeaderboard = ({
                         <span className="table-cell min-w-4 pr-1 sm:hidden">
                           {entry.rank}
                         </span>
-                        
-                       
-                     
-    <div className="flex items-center space-x-2">
-      {/* Circular Image */}
-      <div className="w-12 relative h-12">
-        <Image
-          src={entry.image || `https://avatar.vercel.sh/${entry.email}`}
-          alt={"user image"}
-          fill
-          className="w-full h-full object-cover rounded-full"
-        />
-      </div>
-      {/* User Name */}
-      <div className="flex-1">
-        <p className="break-words line-clamp-2">
-          {getLeaderboardName(entry)}
-        </p>
-      </div>
-    </div>
+
+                        <div className="flex items-center space-x-2">
+                          {/* Circular Image */}
+                          <div className="relative h-12 w-12">
+                            <Image
+                              src={
+                                entry.image ||
+                                `https://avatar.vercel.sh/${entry.email}`
+                              }
+                              alt={"user image"}
+                              fill
+                              className="h-full w-full rounded-full object-cover"
+                            />
+                          </div>
+                          {/* User Name */}
+                          <div className="flex-1">
+                            <p className="line-clamp-2 break-words">
+                              {getLeaderboardName(entry)}
+                            </p>
+                          </div>
+                        </div>
                         {user && user.id == entry.id ? (
                           <div className="flex w-0 flex-1 items-center text-sm font-bold">
                             <HoverBorderGradient

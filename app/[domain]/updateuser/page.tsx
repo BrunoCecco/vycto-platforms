@@ -12,103 +12,126 @@ import {
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { redirect, useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function UpdateUser() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const bdate = searchParams.get("birthDate");
   const redirectUrl = searchParams.get("redirect");
   const { data: session, status, update } = useSession();
-  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
   const [username, setUsername] = useState(searchParams.get("username"));
   const [birthDate, setBirthDate] = useState<DateValue | null>(
-    parseDate(searchParams.get("birthDate") || ""),
+    bdate != null && bdate != "" && bdate != undefined
+      ? parseDate(bdate)
+      : null,
   );
   const [name, setName] = useState(searchParams.get("name"));
+  const [hasUpdated, setHasUpdated] = useState(false);
 
   useEffect(() => {
-    updateUser();
+    if (!hasUpdated && session && session.user && username && !redirectUrl) {
+      updateUser().then((res) => {
+        router.replace("/");
+      });
+    }
   }, [session]);
 
-  useEffect(() => {
-    if (!loading && username && name) {
-      redirect("/");
-    }
-  }, [loading]);
-
   const updateUser = async () => {
-    if (!session || !session.user) return;
-    if (username && username.trim().length > 0) {
-      await updateUserOnLogin(
-        session?.user.email as string,
-        "username",
-        username || "",
-      );
+    try {
+      if (!session || !session.user) return;
+      if (
+        username &&
+        username.trim().length > 0 &&
+        username !== session.user.username
+      ) {
+        await updateUserOnLogin(
+          session?.user.email as string,
+          "username",
+          username || "",
+        );
+      }
+      if (name && name.trim().length > 0 && name !== session.user.name) {
+        await updateUserOnLogin(
+          session?.user.email as string,
+          "name",
+          name || "",
+        );
+      }
+      if (
+        birthDate &&
+        birthDate?.toString()?.trim().length > 0 &&
+        birthDate?.toString() !== session.user.birthDate
+      ) {
+        await updateUserOnLogin(
+          session?.user.email as string,
+          "birthDate",
+          birthDate.toString() || "",
+        );
+      }
+      await update({
+        user: {
+          ...session.user,
+          username: username || session.user.username,
+          name: name || session.user.name,
+          birthDate: birthDate?.toString() || session.user.birthDate,
+        },
+      });
+      setHasUpdated(true);
+    } catch (error) {
+      console.error("An unexpected error");
     }
-    if (name && name.trim().length > 0) {
-      await updateUserOnLogin(
-        session?.user.email as string,
-        "name",
-        name || "",
-      );
-    }
-    if (birthDate && birthDate?.toString()?.trim().length > 0) {
-      await updateUserOnLogin(
-        session?.user.email as string,
-        "birthDate",
-        birthDate.toString() || "",
-      );
-    }
-    await update({
-      user: {
-        ...session.user,
-        username: username || session.user.username,
-        name: name || session.user.name,
-        birthDate: birthDate?.toString() || session.user.birthDate,
-      },
-    });
-    setLoading(false);
   };
 
   const handleLogin = async () => {
+    console.log(redirectUrl);
+    setUpdating(true);
     if (redirectUrl) {
       await handleLoginToSubmit();
     } else {
       await handleNormalLogin();
     }
+    setUpdating(false);
   };
 
   const handleLoginToSubmit = async () => {
     try {
       await updateUser();
-      if (redirectUrl) {
-        redirect(redirectUrl);
-      } else {
-        redirect("/");
-      }
     } catch (error) {
       console.error("Error: ", error);
+    }
+    if (redirectUrl) {
+      router.push(redirectUrl);
+    } else {
+      router.replace("/");
     }
   };
 
   const handleNormalLogin = async () => {
     try {
       await updateUser();
-      redirect("/");
     } catch (error) {
-      console.error("An unexpected error occurred");
+      console.error("An unexpected error occurred", error);
     }
+    router.replace("/");
   };
 
-  return loading ? (
+  return searchParams.get("username") &&
+    searchParams.get("username") != null &&
+    !searchParams.get("redirect") ? (
     <Spinner />
   ) : (
-    <div>
+    <div className="h-full">
       <div
-        className="relative z-10 flex w-full justify-end transition-all delay-100 duration-500 md:w-[50vw]"
+        className="relative z-10 m-auto flex h-full w-full items-center justify-center transition-all delay-100 duration-500 md:w-[50vw]"
         style={{ backdropFilter: "blur(12px)" }}
       >
-        <div className={`flex w-full flex-col px-2`}>
+        <div
+          className={`flex h-full w-full flex-col items-center justify-center px-2`}
+        >
           <div
             className="m-auto pb-2 "
             style={{
@@ -134,7 +157,7 @@ export default function UpdateUser() {
             </div>
 
             <div className={`flex flex-col gap-4`}>
-              <form className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2">
                 <>
                   <Input
                     id="username"
@@ -158,11 +181,13 @@ export default function UpdateUser() {
                   />
                 </>
                 <div className="mt-2 flex flex-col gap-4">
-                  <Button onClick={handleLogin} type="submit">
-                    Let&apos;s Go!
-                  </Button>
+                  {updating ? (
+                    <Button isDisabled>Updating ...</Button>
+                  ) : (
+                    <Button onClick={handleLogin}>Let&apos;s Go!</Button>
+                  )}
                 </div>
-              </form>
+              </div>
             </div>
           </div>
           <div className="py-3">
