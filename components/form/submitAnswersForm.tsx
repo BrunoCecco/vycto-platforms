@@ -225,8 +225,8 @@ function FormButton({ disabled }: { disabled: boolean }) {
       className={cn(
         "flex items-center justify-center space-x-2 rounded-full border p-4 text-sm transition-all focus:outline-none sm:h-10",
         pending
-          ? "cursor-not-allowed "
-          : "border-success-600 bg-success-600  bg-transparent hover:text-success-600",
+          ? "cursor-not-allowed"
+          : "border-success-600 bg-success-600 bg-transparent hover:text-success-600",
       )}
       isDisabled={pending || disabled}
       type="submit"

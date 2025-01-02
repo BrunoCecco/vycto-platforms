@@ -20,7 +20,7 @@ import TabSelector from "@/components/competitions/tabSelector";
 import SubmitAnswersForm from "@/components/form/submitAnswersForm";
 import GeneralNumber from "@/components/questions/generalNumber";
 import Rewards from "@/components/competitions/rewards";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Leaderboard from "@/components/leaderboard/leaderboard";
 import GameStats from "@/components/competitions/gameStats";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -63,12 +63,12 @@ export default function CompetitionPage({
   const [ended, setEnded] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [hasUpdatedDetails, setHasUpdatedDetails] = useState(false);
-  
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const posthog = usePostHog();
 
-  console.log(answers);
+  const questionComp = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const hasEnded =
@@ -100,9 +100,18 @@ export default function CompetitionPage({
       }
     }
     if (!hasUpdatedDetails) {
-        checkUserDetails();
+      checkUserDetails();
     }
   }, [session, searchParams, userComp]);
+
+  useEffect(() => {
+    if (localAnswers && Object.keys(localAnswers).length > 0) {
+      window.scrollTo({
+        top: questionComp.current?.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  }, [localAnswers]);
 
   const checkUserDetails = async () => {
     if (!session) {
@@ -274,7 +283,10 @@ export default function CompetitionPage({
         )}
         {activeTab == "Challenge" && (
           <TracingBeam color1={siteData.color1} color2={siteData.color2}>
-            <div className="mx-auto flex w-full flex-col justify-center gap-12 py-12 md:gap-20 md:rounded-3xl">
+            <div
+              ref={questionComp}
+              className="mx-auto flex w-full flex-col justify-center gap-12 py-12 md:gap-20 md:rounded-3xl"
+            >
               {submitted && userComp ? (
                 <GameStats
                   competitionTitle={data.title!}
