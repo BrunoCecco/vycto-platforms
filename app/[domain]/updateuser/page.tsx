@@ -22,7 +22,7 @@ export default function UpdateUser() {
   const router = useRouter();
 
   const bdate = searchParams.get("birthDate");
-  const redirectUrl = searchParams.get("redirecttwo");
+  const compslug = searchParams.get("compslug");
   const { data: session, status, update } = useSession();
   const [updating, setUpdating] = useState(false);
   const [username, setUsername] = useState(searchParams.get("username"));
@@ -41,7 +41,7 @@ export default function UpdateUser() {
       return;
     }
 
-    if (!hasUpdated && session && session.user && username && !redirectUrl) {
+    if (!hasUpdated && session && session.user && username && !compslug) {
       updateUser()
         .then((res) => {
           router.replace("/");
@@ -58,13 +58,8 @@ export default function UpdateUser() {
       !name &&
       !birthDate
     ) {
-      if (redirectUrl) {
-        router.push(
-          decodeURIComponent(redirectUrl.replaceAll("QMark", "?")).replaceAll(
-            "AAmp",
-            "&",
-          ),
-        );
+      if (compslug) {
+        router.push(constructRedirectUrl());
       } else {
         router.replace("/");
       }
@@ -73,6 +68,16 @@ export default function UpdateUser() {
       setLoading(false);
     }
   }, [session]);
+
+  const constructRedirectUrl = () => {
+    var redirectUrl = `/comp/${compslug}?`;
+    searchParams.forEach(async (value, key) => {
+      if (key != "compslug") {
+        redirectUrl += `${key}=${value}&`;
+      }
+    });
+    return redirectUrl;
+  };
 
   const updateUser = async () => {
     if (!session || !session.user) {
@@ -129,13 +134,8 @@ export default function UpdateUser() {
       return;
     }
     setUpdating(true);
-    if (redirectUrl) {
-      await handleLoginToSubmit(
-        decodeURIComponent(redirectUrl.replaceAll("QMark", "?")).replaceAll(
-          "AAmp",
-          "&",
-        ),
-      );
+    if (compslug) {
+      await handleLoginToSubmit(constructRedirectUrl());
     } else {
       await handleNormalLogin();
     }
