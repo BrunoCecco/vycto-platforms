@@ -67,4 +67,9 @@ export interface DomainVerificationResponse {
   }[];
 }
 
-export type LeaderboardPeriod = "last week" | "monthly" | "season" | "all time";
+export enum LeaderboardPeriod {
+  Weekly = "Weekly",
+  Monthly = "Monthly",
+  Season = "Season",
+  All = "All",
+}

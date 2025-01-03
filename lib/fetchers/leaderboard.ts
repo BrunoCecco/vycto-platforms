@@ -2,7 +2,7 @@
 
 import { revalidateTag, unstable_cache } from "next/cache";
 import db from "../db";
-import { and, desc, eq, gte, lte, not, sql } from "drizzle-orm";
+import { and, desc, eq, gte, inArray, lte, not, sql } from "drizzle-orm";
 import {
   userCompetitions,
   competitions,
@@ -144,82 +144,61 @@ export async function getCompetitionsForPeriod(
 export async function getLeaderboardData(
   siteId: string,
   period: LeaderboardPeriod,
-  offset: number,
-  limit: number,
+  compId?: string,
   startDate_?: Date,
   endDate_?: Date,
 ) {
   const startDate = startDate_
     ? startDate_
-    : period === "last week"
+    : period === LeaderboardPeriod.Weekly
       ? startOfWeek
-      : period === "monthly"
+      : period === LeaderboardPeriod.Monthly
         ? startOfMonth
-        : period === "season"
+        : period === LeaderboardPeriod.Season
           ? startOfSeason
           : new Date(0);
   const endDate = endDate_
     ? endDate_
-    : period === "last week"
+    : period === LeaderboardPeriod.Weekly
       ? endOfWeek
-      : period === "monthly"
+      : period === LeaderboardPeriod.Monthly
         ? endOfMonth
-        : period === "season"
+        : period === LeaderboardPeriod.Season
           ? endOfSeason
           : new Date();
 
   return await unstable_cache(
     async () => {
-      // get all competitions for the site within the specified period
       const comps = await getCompetitionsForPeriod(siteId, startDate, endDate);
+      const competitionIds = comps.map((comp) => comp.id);
 
-      // await promise for all site competitions and store in array
-      const allCompetitionUsers = await Promise.all(
-        comps.map(async (comp: SelectCompetition) => {
-          console.log(comp.title, "COMPETITION");
-          return await getCompetitionUsers(comp.id);
-        }),
-      );
+      const data = await db
+        .select({
+          id: users.id,
+          name: users.name,
+          email: users.email,
+          emailVerified: users.emailVerified,
+          image: users.image,
+          username: users.username,
+          role: users.role,
+          birthDate: users.birthDate,
+          createdAt: users.createdAt,
+          updatedAt: users.updatedAt,
+          points: sql`SUM(CAST(${userCompetitions.points} AS TEXT)::float)`,
+          rank: sql`ROW_NUMBER() OVER (ORDER BY SUM(CAST(${userCompetitions.points} AS TEXT)::float) DESC)`,
+        })
+        .from(userCompetitions)
+        .leftJoin(users, eq(userCompetitions.userId, users.id))
+        .where(inArray(userCompetitions.competitionId, competitionIds))
+        .groupBy(users.id)
+        .orderBy(desc(sql`SUM(${userCompetitions.points})`));
 
-      const allUsers = allCompetitionUsers.flat();
-
-      // deduplicate users and sum their points
-      const userPoints = allUsers.reduce((acc: any, user: any) => {
-        if (acc[user.userId]) {
-          acc[user.userId] += user.points;
-        } else {
-          acc[user.userId] = user.points;
-        }
-        return acc;
-      }, {});
-
-      const leaderboardData = await Promise.all(
-        Object.keys(userPoints).map(async (userId) => {
-          const user = await getUserDataById(userId);
-          return {
-            ...user,
-            points: userPoints[userId],
-          };
-        }),
-      );
-
-      var sortedLeaderboardData = leaderboardData.sort(
-        (a, b) => b.points - a.points,
-      );
-
-      sortedLeaderboardData = sortedLeaderboardData.map((user, index) => {
-        return {
-          ...user,
-          rank: index + 1,
-        };
-      });
-
-      return sortedLeaderboardData.slice(offset, offset + limit);
+      return data;
     },
-    [`${offset}-${limit}-${period}-${siteId}-leaderboard`],
+    [`${compId || period}-leaderboard`],
     {
       revalidate: 900,
-      tags: [`${offset}-${limit}-${period}-${siteId}-leaderboard`],
+      tags: [`${compId || period}-leaderboard`],
     },
   )();
 }

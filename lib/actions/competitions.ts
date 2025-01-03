@@ -19,7 +19,7 @@ import {
   SelectUser,
   SelectUserCompetition,
 } from "../schema";
-import { QuestionType } from "../types";
+import { LeaderboardPeriod, QuestionType } from "../types";
 import { getServerSession } from "next-auth";
 import {
   getAnswersForUser,
@@ -244,6 +244,10 @@ export const enterUserToCompetition = async (
     revalidateTag(`${userId}-${siteId}-comps`);
     revalidateTag(`${competitionId}-users`);
     revalidateTag(`${userId}-${competitionId}-answers`);
+    revalidateTag(`${competitionId}-leaderboard`);
+    revalidateTag(`${LeaderboardPeriod.Weekly}-leaderboard`);
+    revalidateTag(`${LeaderboardPeriod.Monthly}-leaderboard`);
+    revalidateTag(`${LeaderboardPeriod.Season}-leaderboard`);
 
     return response;
   } catch (error: any) {
@@ -766,15 +770,10 @@ export async function calculateCompetitionPoints(competitionId: string) {
   await updateUserCompetitionStats(usersWithPoints, comp);
 
   revalidateTag(`${competitionId}-users`);
-  [0, 5, 10, 15, 20, 25, 30].forEach((offset) => {
-    revalidateTag(`${offset}-10-${startOfWeek}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-5-${startOfWeek}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-10-${startOfMonth}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-5-${startOfMonth}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-10-${startOfSeason}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-5-${startOfSeason}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-10-${compDate}-${siteId}-leaderboard`);
-    revalidateTag(`${offset}-5-${compDate}-${siteId}-leaderboard`);
-  });
+  revalidateTag(`${competitionId}-leaderboard`);
+  revalidateTag(`${LeaderboardPeriod.Weekly}-leaderboard`);
+  revalidateTag(`${LeaderboardPeriod.Monthly}-leaderboard`);
+  revalidateTag(`${LeaderboardPeriod.Season}-leaderboard`);
+
   return usersWithPoints;
 }

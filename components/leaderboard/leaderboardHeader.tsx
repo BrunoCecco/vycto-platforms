@@ -25,22 +25,22 @@ const LeaderboardHeader = ({
   isComp?: boolean;
 }) => {
   const timeRanges = [
-    { key: "last week", label: "Last Week" },
-    { key: "monthly", label: "Monthly" },
-    { key: "season", label: "Season" },
-    // { key: "all time", label: "All Time" },
+    { key: LeaderboardPeriod.Weekly, label: "Last Week" },
+    { key: LeaderboardPeriod.Monthly, label: "Monthly" },
+    { key: LeaderboardPeriod.Season, label: "Season" },
+    // { key: LeaderboardPeriod.All, label: "All Time" },
   ];
 
   // Function to dynamically set the prize text based on rangeType
   const getPrizeText = () => {
-    if (rangeType === "all time") {
+    if (rangeType === LeaderboardPeriod.All) {
       return "Season Prizes";
-    } else if (rangeType === "monthly") {
+    } else if (rangeType === LeaderboardPeriod.Weekly) {
       const currentMonth = new Date().toLocaleString("default", {
         month: "long",
       });
       return `${currentMonth}'s Prizes`; // e.g., "December's Prize"
-    } else if (rangeType === "season") {
+    } else if (rangeType === LeaderboardPeriod.Season) {
       return "Season's Prizes";
     }
     return "";
@@ -60,9 +60,9 @@ const LeaderboardHeader = ({
             />
             <h1 className="text-lg font-bold">
               Leaderboard{" "}
-              {rangeType === "monthly"
+              {rangeType === LeaderboardPeriod.Monthly
                 ? new Date().toLocaleString("default", { month: "long" })
-                : rangeType === "season"
+                : rangeType === LeaderboardPeriod.Season
                   ? new Date().getFullYear()
                   : compTitle
                     ? `: ${compTitle}`

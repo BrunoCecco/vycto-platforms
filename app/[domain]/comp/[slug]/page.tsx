@@ -22,6 +22,8 @@ import {
 import CompetitionPage from "@/components/competitions/competitionPage";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { Suspense } from "react";
+import { Spinner } from "@nextui-org/react";
 
 // export async function generateMetadata({
 //   params,
@@ -130,7 +132,7 @@ export default async function SiteCompetitionPage({
   const users = await getCompetitionUsers(data!.id);
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
   return (
-    <div>
+    <Suspense fallback={<Spinner />}>
       <CompetitionPage
         session={session}
         data={data}
@@ -161,6 +163,6 @@ export default async function SiteCompetitionPage({
           ))}
         </div>
       )} */}
-    </div>
+    </Suspense>
   );
 }

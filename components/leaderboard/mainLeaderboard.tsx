@@ -28,7 +28,6 @@ import { getLeaderboardName } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 type LeaderboardUser = SelectUser & { points: number; rank: number };
-type IRangeType = "last week" | "monthly" | "season" | "all time";
 
 const MainLeaderboard = ({
   siteData,
@@ -43,7 +42,9 @@ const MainLeaderboard = ({
   compDate?: Date;
   compData?: SelectCompetition;
 }) => {
-  const [rangeType, setRangeType] = useState<IRangeType>("monthly");
+  const [rangeType, setRangeType] = useState<LeaderboardPeriod>(
+    LeaderboardPeriod.Monthly,
+  );
 
   const [data, setData] = useState<LeaderboardUser[]>([]);
   const [filteredData, setFilteredData] = useState<LeaderboardUser[]>([]);
@@ -67,7 +68,7 @@ const MainLeaderboard = ({
 
   useEffect(() => {
     const fetchCompTitle = async () => {
-      if (compDate != undefined || rangeType == "last week") {
+      if (compDate != undefined || rangeType == LeaderboardPeriod.Weekly) {
         const lastWeek = new Date(
           new Date().getFullYear(),
           new Date().getMonth(),
@@ -86,27 +87,29 @@ const MainLeaderboard = ({
 
   useEffect(() => {
     fetchData();
-    if (rangeType === "season") {
+    if (rangeType === LeaderboardPeriod.Season) {
       setSelectedReward(seasonReward);
-    } else if (rangeType === "monthly") {
+    } else if (rangeType === LeaderboardPeriod.Monthly) {
       setSelectedReward(monthReward);
     } else {
       setSelectedReward(seasonReward);
     }
-  }, [rangeType, offset, limit]);
+  }, [rangeType]);
 
   useEffect(() => {
     if (data) {
       setFilteredData(
-        data.filter(
-          (user: LeaderboardUser) =>
-            user.username?.toLowerCase().includes(query?.toLowerCase()) ||
-            user.email?.toLowerCase().includes(query?.toLowerCase()) ||
-            user.name?.toLowerCase().includes(query?.toLowerCase()),
-        ),
+        data
+          .filter(
+            (user: LeaderboardUser) =>
+              user.username?.toLowerCase().includes(query?.toLowerCase()) ||
+              user.email?.toLowerCase().includes(query?.toLowerCase()) ||
+              user.name?.toLowerCase().includes(query?.toLowerCase()),
+          )
+          .slice(offset, offset + limit),
       );
     }
-  }, [query, data]);
+  }, [query, data, offset, limit]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -115,8 +118,7 @@ const MainLeaderboard = ({
       leaderboardData = await getLeaderboardData(
         siteData.id,
         rangeType,
-        offset,
-        limit,
+        compData?.id || rangeType,
         compDate,
         compDate,
       );
@@ -124,8 +126,7 @@ const MainLeaderboard = ({
       leaderboardData = await getLeaderboardData(
         siteData.id,
         rangeType,
-        offset,
-        limit,
+        compData?.id || rangeType,
       );
     }
     setData(leaderboardData as LeaderboardUser[]);
