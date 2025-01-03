@@ -184,7 +184,7 @@ export async function getLeaderboardData(
           birthDate: users.birthDate,
           createdAt: users.createdAt,
           updatedAt: users.updatedAt,
-          points: sql`SUM(CAST(${userCompetitions.points} AS TEXT)::float)`,
+          points: sql`ROUND(SUM(CAST(${userCompetitions.points} AS TEXT)::float)::numeric, 2)`,
           rank: sql`ROW_NUMBER() OVER (ORDER BY SUM(CAST(${userCompetitions.points} AS TEXT)::float) DESC)`,
         })
         .from(userCompetitions)

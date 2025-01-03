@@ -27,7 +27,7 @@ import RewardModal from "../rewards/rewardsModal";
 import { getLeaderboardName } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-type LeaderboardUser = SelectUser & { points: number; rank: number };
+type LeaderboardUser = SelectUser & { points: string; rank: string };
 
 const MainLeaderboard = ({
   siteData,
@@ -149,21 +149,27 @@ const MainLeaderboard = ({
     setRangeType(e.target.value as LeaderboardPeriod);
   };
 
-  const calculateBg = (index: number) => {
-    if (!compData?.correctAnswersSubmitted) return "";
-    if (index > 3) return "";
-    switch (index) {
-      case 1:
-        // return gold gradient dark to light
-        return "linear-gradient(90deg, #FFA700 0%, #FFDF00 100%)";
-      case 2:
-        // return silver gradient dark to light
-        return "linear-gradient(90deg, #A0A0A0 0%, #D3D3D3 100%)";
-      case 3:
-        // return bronze gradient dark to light
-        return "linear-gradient(90deg, #CD7F32 0%, #8B4513 100%)";
-      default:
-        return "";
+  const calculateBg = (index: string) => {
+    try {
+      const rank = parseInt(index);
+      if (!compData?.correctAnswersSubmitted) return "";
+      if (rank > 3) return "";
+      switch (rank) {
+        case 1:
+          // return gold gradient dark to light
+          return "linear-gradient(90deg, #FFA700 0%, #FFDF00 100%)";
+        case 2:
+          // return silver gradient dark to light
+          return "linear-gradient(90deg, #A0A0A0 0%, #D3D3D3 100%)";
+        case 3:
+          // return bronze gradient dark to light
+          return "linear-gradient(90deg, #CD7F32 0%, #8B4513 100%)";
+        default:
+          return "";
+      }
+    } catch (e) {
+      console.error(e);
+      return "";
     }
   };
 
@@ -266,7 +272,7 @@ const MainLeaderboard = ({
                         {entry.rank}
                       </td>
                       <td className="py-4 text-center">
-                        {parseFloat(entry.points.toString() || "0").toFixed(2)}
+                        {entry.points || "0"}
                       </td>
                       {compData?.slug && (
                         <td className="justify-end py-4 text-right">
