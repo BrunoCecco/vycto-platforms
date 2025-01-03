@@ -24,7 +24,7 @@ const PlayerComponent = ({
     <Card
       isFooterBlurred
       className={`relative flex h-[140px] w-[100px] overflow-hidden rounded-lg shadow-sm transition duration-200 md:h-[220px] md:w-[180px] ${
-        selectedPlayer?.trim() == name.trim()
+        selectedPlayer?.trim() == name?.trim()
           ? "border-yellow-500 border-2"
           : "border-none"
       }`}

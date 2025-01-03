@@ -10,7 +10,7 @@ import { TextGenerateEffect } from "../ui/textGenerateEffect";
 
 const MatchOutcome = ({ ...props }) => {
   const [selectedOutcome, setSelectedOutcome] = useState(
-    props.answer.answer.trim() || "",
+    props.answer.answer?.trim() || "",
   );
   const textEncoder = new TextEncoder();
 
@@ -38,7 +38,7 @@ const MatchOutcome = ({ ...props }) => {
             <Card isFooterBlurred>
               <Button
                 className={`relative h-[140px] w-[100px] items-center justify-center overflow-hidden text-center md:h-[250px] md:w-[180px] ${
-                  selectedOutcome == props.answer1.trim()
+                  selectedOutcome == props.answer1?.trim()
                     ? "opacity-100"
                     : "opacity-25"
                 }`}
@@ -81,7 +81,7 @@ const MatchOutcome = ({ ...props }) => {
             <Card isFooterBlurred>
               <Button
                 className={`relative h-[140px] w-[100px] items-center justify-center overflow-hidden text-center md:h-[250px] md:w-[180px] ${
-                  selectedOutcome == props.answer2.trim()
+                  selectedOutcome == props.answer2?.trim()
                     ? "opacity-100"
                     : "opacity-25"
                 }`}

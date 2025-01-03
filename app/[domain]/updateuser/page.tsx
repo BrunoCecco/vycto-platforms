@@ -77,7 +77,7 @@ export default function UpdateUser() {
     try {
       if (
         username &&
-        username.trim().length > 0 &&
+        username?.trim().length > 0 &&
         username !== session.user.username
       ) {
         await updateUserOnLogin(
@@ -86,7 +86,7 @@ export default function UpdateUser() {
           username || "",
         );
       }
-      if (name && name.trim().length > 0 && name !== session.user.name) {
+      if (name && name?.trim().length > 0 && name !== session.user.name) {
         await updateUserOnLogin(
           session?.user.email as string,
           "name",

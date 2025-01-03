@@ -68,7 +68,7 @@ export default function LoginButton({
       } else {
         // Email does not exist, prompt for username
         setEmailExists(false);
-        if (username && username.trim() !== "") {
+        if (username && username?.trim() !== "") {
           await handleLogin();
           return;
         }
