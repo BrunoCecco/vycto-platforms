@@ -118,7 +118,7 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
     const compSlug = compCallbackUrl.split("?")[0].split("/").pop();
     const compSearchParams = compCallbackUrl.split("?")[1];
 
-    var callbackUrl = `/updateuser?compslug=${compSlug}&${compSearchParams}`;
+    var callbackUrl = `/updateuser?compslug=${compSlug}&${decodeURIComponent(compSearchParams)}`;
     try {
       const result = await signIn(provider, {
         callbackUrl,
