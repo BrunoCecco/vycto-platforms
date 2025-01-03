@@ -325,6 +325,10 @@ export default function CompetitionPage({
                   users={users}
                   color={siteData.color1}
                   compFinished={data.correctAnswersSubmitted}
+                  totalPoints={questions?.reduce(
+                    (acc, q) => acc + (q.points || 0),
+                    0,
+                  )}
                 />
               ) : null}
               {questions &&

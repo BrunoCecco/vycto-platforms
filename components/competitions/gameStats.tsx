@@ -9,6 +9,7 @@ interface GameStatsProps {
   users: SelectUserCompetition[];
   color: string;
   compFinished: boolean;
+  totalPoints?: number;
 }
 
 const GameStats: FC<GameStatsProps> = ({
@@ -17,6 +18,7 @@ const GameStats: FC<GameStatsProps> = ({
   users,
   color,
   compFinished,
+  totalPoints,
 }) => {
   var sortedUsers = users.sort((a: any, b: any) => b.points - a.points);
   const rank =
@@ -57,7 +59,8 @@ const GameStats: FC<GameStatsProps> = ({
           <div className="grid grid-cols-1 items-center justify-center gap-4 text-center text-sm sm:grid-cols-3">
             <div className="rounded-md bg-background p-2">
               <p className="font-semibol pb-2" style={{ color: color }}>
-                {parseFloat(userComp.points || "0").toFixed(2)} / 100
+                {parseFloat(userComp.points || "0").toFixed(2)}{" "}
+                {totalPoints ? "/ " + totalPoints : ""}
               </p>
               <p className="text-xs">total points</p>
             </div>
