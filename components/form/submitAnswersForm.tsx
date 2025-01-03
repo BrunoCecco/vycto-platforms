@@ -49,7 +49,7 @@ export default function SubmitAnswersForm({
   const [modalUrl, setModalUrl] = useState<string>("");
   const [hasChecked, setHasChecked] = useState(true);
   const [hasCheckedAdditional, setHasCheckedAdditional] = useState(true);
-  const [hasCheckedNewsletter, setHasCheckedNewsletter] = useState(false);
+  const [hasCheckedNewsletter, setHasCheckedNewsletter] = useState(true);
 
   const router = useRouter();
 
