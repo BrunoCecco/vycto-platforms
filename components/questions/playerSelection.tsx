@@ -33,7 +33,7 @@ const PlayerComponent = ({
         disabled={disabled}
         type="submit"
         onClick={() => {
-          setSelectedPlayer(name);
+          setSelectedPlayer(name?.trim());
         }}
         className="relative h-full w-full rounded-none bg-none p-0"
       >

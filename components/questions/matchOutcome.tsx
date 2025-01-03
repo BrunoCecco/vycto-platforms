@@ -12,7 +12,15 @@ const MatchOutcome = ({ ...props }) => {
   const [selectedOutcome, setSelectedOutcome] = useState(
     props.answer.answer?.trim() || "",
   );
-  const textEncoder = new TextEncoder();
+
+  useEffect(() => {
+    console.log(
+      "MatchOutcome: ",
+      selectedOutcome,
+      props.answer1,
+      props.answer2,
+    );
+  }, [selectedOutcome]);
 
   return (
     <div className="flex w-full items-center justify-center">
@@ -44,7 +52,7 @@ const MatchOutcome = ({ ...props }) => {
                 }`}
                 type="submit"
                 isDisabled={props.disabled}
-                onClick={() => setSelectedOutcome(props.answer1)}
+                onClick={() => setSelectedOutcome(props.answer1?.trim())}
               >
                 <Image
                   src={props.image1 || "/placeholder.png"}
@@ -87,7 +95,7 @@ const MatchOutcome = ({ ...props }) => {
                 }`}
                 type="submit"
                 isDisabled={props.disabled}
-                onClick={() => setSelectedOutcome(props.answer2)}
+                onClick={() => setSelectedOutcome(props.answer2?.trim())}
               >
                 <Image
                   src={props.image2 || "/placeholder.png"}
