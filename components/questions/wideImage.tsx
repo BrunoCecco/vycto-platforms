@@ -1,7 +1,13 @@
 import Image from "next/image";
 import { makeTransparent } from "@/lib/utils";
 
-export const WideImage = ({ src, color }: { src: string; color: string }) => {
+export const WideImage = ({
+  src,
+  color,
+}: {
+  src: string | null;
+  color: string;
+}) => {
   return (
     <div
       className="relative mb-4 flex h-24 w-full items-center justify-center overflow-hidden rounded-lg sm:h-44"

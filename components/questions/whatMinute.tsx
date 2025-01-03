@@ -5,8 +5,9 @@ import PointsBadge from "../competitions/pointsBadge";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import { WideImage } from "./wideImage";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
+import { IQuestionProps } from "@/lib/types";
 
-const WhatMinute = ({ ...props }) => {
+const WhatMinute = ({ ...props }: IQuestionProps) => {
   return (
     <div className="flex w-full items-center justify-center">
       <div className="relative h-full w-full rounded-lg p-4 shadow-xl md:shadow-2xl">
@@ -21,7 +22,7 @@ const WhatMinute = ({ ...props }) => {
 
         <div className="flex items-center justify-center">
           <Slider
-            initialValue={props.answer.answer}
+            initialValue={props.answer?.answer}
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
@@ -30,7 +31,11 @@ const WhatMinute = ({ ...props }) => {
             color={props.color}
           />
         </div>
-        {props.correctAnswer?.length > 0 && props.hasEnded ? (
+        {props.answer &&
+        "points" in props.answer &&
+        props.correctAnswer?.length &&
+        props.correctAnswer?.length > 0 &&
+        props.hasEnded ? (
           <QuestionResultBlock
             correctAnswer={props.correctAnswer}
             pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}

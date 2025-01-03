@@ -7,11 +7,12 @@ import QuestionResultBlock from "../competitions/questionResultBlock";
 import { Button } from "@nextui-org/react";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
 import Counter from "./counter";
+import { IQuestionProps } from "@/lib/types";
 
-const GuessScore = ({ ...props }) => {
+const GuessScore = ({ ...props }: IQuestionProps) => {
   const [scores, setScores] = useState({
-    home: parseInt(props.answer.answer?.split("-")[0] || "0", 10),
-    away: parseInt(props.answer.answer?.split("-")[1] || "0", 10),
+    home: parseInt(props.answer?.answer?.split("-")[0] || "0", 10),
+    away: parseInt(props.answer?.answer?.split("-")[1] || "0", 10),
   });
   const [lastClickTime, setLastClickTime] = useState(0);
   const minTimeBetweenClicks = 200; // 200ms between clicks
@@ -100,7 +101,11 @@ const GuessScore = ({ ...props }) => {
             Submit
           </Button>
         </Submit>
-        {props.correctAnswer?.length > 0 && props.hasEnded ? (
+        {props.answer &&
+        "points" in props.answer &&
+        props.correctAnswer?.length &&
+        props.correctAnswer?.length > 0 &&
+        props.hasEnded ? (
           <QuestionResultBlock
             correctAnswer={props.correctAnswer}
             pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}

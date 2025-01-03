@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 interface PointsBadgeProps {
-  points: number;
+  points: number | null;
   color?: string;
 }
 

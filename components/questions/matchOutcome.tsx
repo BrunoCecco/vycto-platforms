@@ -7,10 +7,11 @@ import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import { Button, Card, CardFooter } from "@nextui-org/react";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
+import { IQuestionProps } from "@/lib/types";
 
-const MatchOutcome = ({ ...props }) => {
-  const [selectedOutcome, setSelectedOutcome] = useState(
-    props.answer.answer?.trim() || "",
+const MatchOutcome = ({ ...props }: IQuestionProps) => {
+  const [selectedOutcome, setSelectedOutcome] = useState<string | undefined>(
+    props.answer?.answer?.trim() || "",
   );
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const MatchOutcome = ({ ...props }) => {
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
-            answer={props.answer1}
+            answer={props.answer1 || ""}
             onLocalAnswer={props.onLocalAnswer}
           >
             <Card isFooterBlurred>
@@ -71,7 +72,7 @@ const MatchOutcome = ({ ...props }) => {
           {/* VS */}
           <div className="text-center">
             <div
-              className="rounded-full border-2 p-1 pr-1.5 text-sm text-xs font-bold italic sm:p-2 sm:pr-3 sm:text-xl"
+              className="rounded-full border-2 p-1 pr-1.5 text-xs font-bold italic sm:p-2 sm:pr-3 sm:text-xl"
               style={{ borderColor: props.color, color: props.color }}
             >
               VS
@@ -83,7 +84,7 @@ const MatchOutcome = ({ ...props }) => {
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
-            answer={props.answer2}
+            answer={props.answer2 || ""}
             onLocalAnswer={props.onLocalAnswer}
           >
             <Card isFooterBlurred>
@@ -135,7 +136,11 @@ const MatchOutcome = ({ ...props }) => {
             </Button>
           </Submit>
         </div>
-        {props.correctAnswer?.length > 0 && props.hasEnded ? (
+        {props.answer &&
+        "points" in props.answer &&
+        props.correctAnswer?.length &&
+        props.correctAnswer?.length > 0 &&
+        props.hasEnded ? (
           <QuestionResultBlock
             correctAnswer={props.correctAnswer}
             pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}

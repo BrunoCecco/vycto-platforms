@@ -6,6 +6,7 @@ import { useState } from "react";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import { WideImage } from "./wideImage";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
+import { IQuestionProps } from "@/lib/types";
 
 const Button = ({
   children,
@@ -37,8 +38,8 @@ const Button = ({
   );
 };
 
-const TrueFalse = ({ ...props }) => {
-  const [selected, setSelected] = useState(props.answer.answer || "");
+const TrueFalse = ({ ...props }: IQuestionProps) => {
+  const [selected, setSelected] = useState(props.answer?.answer || "");
 
   return (
     <div className="flex w-full items-center justify-center">
@@ -86,7 +87,11 @@ const TrueFalse = ({ ...props }) => {
             </Button>
           </Submit>
         </div>
-        {props.correctAnswer?.length > 0 && props.hasEnded ? (
+        {props.answer &&
+        "points" in props.answer &&
+        props.correctAnswer?.length &&
+        props.correctAnswer?.length > 0 &&
+        props.hasEnded ? (
           <QuestionResultBlock
             correctAnswer={props.correctAnswer}
             pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}

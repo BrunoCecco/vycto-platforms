@@ -80,7 +80,10 @@ export default async function HowToPlayPage({
             {...question}
             answer={answer}
             disabled={disabled}
-            color={data?.color1}
+            color={data?.color1 || "#000"}
+            userId=""
+            onLocalAnswer={() => {}}
+            hasEnded={false}
           />
         );
       case QuestionType.WhatMinute:
@@ -89,7 +92,10 @@ export default async function HowToPlayPage({
             {...question}
             answer={answer}
             disabled={disabled}
-            color={data?.color1}
+            color={data?.color1 || "#000"}
+            userId=""
+            onLocalAnswer={() => {}}
+            hasEnded={false}
           />
         );
       case QuestionType.PlayerSelection:
@@ -98,7 +104,10 @@ export default async function HowToPlayPage({
             {...question}
             answer={answer}
             disabled={disabled}
-            color={data?.color1}
+            color={data?.color1 || "#000"}
+            userId=""
+            onLocalAnswer={() => {}}
+            hasEnded={false}
           />
         );
       case QuestionType.MatchOutcome:
@@ -107,7 +116,10 @@ export default async function HowToPlayPage({
             {...question}
             answer={answer}
             disabled={disabled}
-            color={data?.color1}
+            color={data?.color1 || "#000"}
+            userId=""
+            onLocalAnswer={() => {}}
+            hasEnded={false}
           />
         );
       case QuestionType.GuessScore:
@@ -116,7 +128,10 @@ export default async function HowToPlayPage({
             {...question}
             answer={answer}
             disabled={disabled}
-            color={data?.color1}
+            color={data?.color1 || "#000"}
+            userId=""
+            onLocalAnswer={() => {}}
+            hasEnded={false}
           />
         );
       case QuestionType.GeneralSelection:
@@ -125,7 +140,10 @@ export default async function HowToPlayPage({
             {...question}
             answer={answer}
             disabled={disabled}
-            color={data?.color1}
+            color={data?.color1 || "#000"}
+            userId=""
+            onLocalAnswer={() => {}}
+            hasEnded={false}
           />
         );
       case QuestionType.GeneralNumber:
@@ -134,7 +152,10 @@ export default async function HowToPlayPage({
             {...question}
             answer={answer}
             disabled={disabled}
-            color={data?.color1}
+            color={data?.color1 || "#000"}
+            userId=""
+            onLocalAnswer={() => {}}
+            hasEnded={false}
           />
         );
       default:

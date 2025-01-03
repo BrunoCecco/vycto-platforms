@@ -61,6 +61,9 @@ export default function CompetitionPage({
   const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(
     {},
   );
+  const [sliderValues, setSliderValues] = useState<{ [key: string]: number }>(
+    {},
+  );
   const [ended, setEnded] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [hasUpdatedDetails, setHasUpdatedDetails] = useState(false);
@@ -199,6 +202,7 @@ export default function CompetitionPage({
   const handleLocalAnswer = (questionId: string, answer: string) => {
     const newLocalAnswers = { ...localAnswers, [questionId]: answer };
     setLocalAnswers(newLocalAnswers);
+    console.log(newLocalAnswers);
   };
 
   const getQuestionType = (

@@ -8,9 +8,10 @@ import { Button, Input } from "@nextui-org/react";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
 import { WideImage } from "./wideImage";
+import { IQuestionProps } from "@/lib/types";
 
-const GeneralNumber = ({ ...props }) => {
-  const [answer, setAnswer] = useState<string>(props.answer.answer || "0");
+const GeneralNumber = ({ ...props }: IQuestionProps) => {
+  const [answer, setAnswer] = useState<string>(props.answer?.answer || "0");
 
   const submitButton = useRef<HTMLButtonElement | null>(null);
 
@@ -52,7 +53,11 @@ const GeneralNumber = ({ ...props }) => {
           />
           <Button className="hidden" type="submit" ref={submitButton}></Button>
         </Submit>
-        {props.correctAnswer?.length > 0 && props.hasEnded ? (
+        {props.answer &&
+        "points" in props.answer &&
+        props.correctAnswer?.length &&
+        props.correctAnswer?.length > 0 &&
+        props.hasEnded ? (
           <QuestionResultBlock
             correctAnswer={props.correctAnswer}
             pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}

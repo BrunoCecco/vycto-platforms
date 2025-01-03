@@ -14,14 +14,14 @@ const Submit = ({
   userId: string | null;
   questionId: string;
   competitionId: string;
-  answer: string;
+  answer: string | null;
   onLocalAnswer: (questionId: string, answer: string) => void;
   children: React.ReactNode;
 }) => {
   const handleSubmit = async (data: FormData) => {
     if (userId) {
       await answerQuestion(data);
-    } else {
+    } else if (answer) {
       onLocalAnswer(questionId, answer);
     }
   };
@@ -36,7 +36,7 @@ const Submit = ({
       {userId && <input type="hidden" hidden name="userId" value={userId} />}
       <input type="hidden" hidden name="questionId" value={questionId} />
       <input type="hidden" hidden name="competitionId" value={competitionId} />
-      <input type="hidden" hidden name="answer" value={answer} />
+      <input type="hidden" hidden name="answer" value={answer || ""} />
       {children}
     </form>
   );

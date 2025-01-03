@@ -6,6 +6,7 @@ import Submit from "./submit";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import { Button, Card, CardFooter } from "@nextui-org/react";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
+import { IQuestionProps } from "@/lib/types";
 
 const PlayerComponent = ({
   name,
@@ -14,10 +15,10 @@ const PlayerComponent = ({
   setSelectedPlayer,
   disabled,
 }: {
-  name: string;
-  image: string;
-  selectedPlayer: string | null;
-  setSelectedPlayer: (player: string) => void;
+  name: string | null;
+  image: string | null;
+  selectedPlayer?: string | null;
+  setSelectedPlayer: (player: string | undefined) => void;
   disabled?: boolean;
 }) => {
   return (
@@ -39,7 +40,7 @@ const PlayerComponent = ({
       >
         <Image
           src={image || "/player.png"}
-          alt={name}
+          alt={name || "Player"}
           unoptimized
           fill
           className={`rounded-md object-cover object-center ${
@@ -54,10 +55,10 @@ const PlayerComponent = ({
   );
 };
 
-const PlayerSelection = ({ ...props }) => {
-  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(
-    props.answer?.answer,
-  );
+const PlayerSelection = ({ ...props }: IQuestionProps) => {
+  const [selectedPlayer, setSelectedPlayer] = useState<
+    string | undefined | null
+  >(props.answer?.answer);
 
   return (
     <div className="flex w-full items-center justify-center">
@@ -133,7 +134,11 @@ const PlayerSelection = ({ ...props }) => {
             />
           </Submit>
         </div>
-        {props.correctAnswer?.length > 0 && props.hasEnded ? (
+        {props.answer &&
+        "points" in props.answer &&
+        props.correctAnswer?.length &&
+        props.correctAnswer?.length > 0 &&
+        props.hasEnded ? (
           <QuestionResultBlock
             correctAnswer={props.correctAnswer}
             pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}

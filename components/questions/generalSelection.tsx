@@ -10,10 +10,12 @@ import { WideImage } from "./wideImage";
 import { Button } from "@nextui-org/react";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
 import { makeTransparent } from "@/lib/utils";
+import { SelectAnswer, SelectQuestion } from "@/lib/schema";
+import { IQuestionProps } from "@/lib/types";
 
-const GeneralSelection = ({ ...props }) => {
+const GeneralSelection = ({ ...props }: IQuestionProps) => {
   const [selectedOption, setSelectedOption] = useState(
-    props.answer.answer || "",
+    props.answer?.answer || "",
   );
   const goalOptions = [];
   if (props.answer1 && props.answer1 != "") goalOptions.push(props.answer1);
@@ -23,12 +25,14 @@ const GeneralSelection = ({ ...props }) => {
 
   useEffect(() => {
     const updateAnswer = async () => {
-      const formData = new FormData();
-      formData.append("answer", selectedOption);
-      formData.append("questionId", props.questionId);
-      formData.append("competitionId", props.competitionId);
-      formData.append("userId", props.userId);
-      await answerQuestion(formData);
+      if (props.answer && "questionId" in props.answer) {
+        const formData = new FormData();
+        formData.append("answer", selectedOption);
+        formData.append("questionId", props.answer?.questionId);
+        formData.append("competitionId", props.competitionId);
+        formData.append("userId", props.userId);
+        await answerQuestion(formData);
+      }
     };
     if (selectedOption != "") {
       updateAnswer();
@@ -78,7 +82,11 @@ const GeneralSelection = ({ ...props }) => {
               </Submit>
             ))}
           </div>
-          {props.correctAnswer?.length > 0 && props.hasEnded ? (
+          {props.answer &&
+          "points" in props.answer &&
+          props.correctAnswer?.length &&
+          props.correctAnswer?.length > 0 &&
+          props.hasEnded ? (
             <QuestionResultBlock
               correctAnswer={props.correctAnswer}
               pointsEarned={parseFloat(props.answer?.points || "0").toFixed(2)}

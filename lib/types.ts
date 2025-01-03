@@ -1,3 +1,5 @@
+import { SelectAnswer, SelectQuestion } from "./schema";
+
 export enum QuestionType {
   GuessScore = "GuessScore",
   MatchOutcome = "MatchOutcome",
@@ -72,4 +74,13 @@ export enum LeaderboardPeriod {
   Monthly = "Monthly",
   Season = "Season",
   All = "All",
+}
+
+export interface IQuestionProps extends SelectQuestion {
+  userId: string;
+  answer: SelectAnswer | { answer: string | null } | undefined;
+  disabled: boolean;
+  onLocalAnswer: (questionId: string, answer: string) => void;
+  color: string;
+  hasEnded: boolean;
 }

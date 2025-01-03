@@ -7,7 +7,7 @@ import { Input, Slider as NextSlider, SliderValue } from "@nextui-org/react";
 const Slider: FC<{
   userId?: string;
   questionId: string;
-  initialValue: string;
+  initialValue?: string | null;
   competitionId?: string;
   disabled: boolean;
   color?: string;
@@ -27,34 +27,29 @@ const Slider: FC<{
   const MIN = 0;
   const MAX = 90;
 
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--input-track-color",
-      color || "#000",
-    );
-  }, []);
+  let timerId: NodeJS.Timeout | null = null;
 
-  var slideInput: NodeJS.Timeout;
-  let timerId: ReturnType<typeof setTimeout> | null = null;
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
+      // Update the value immediately
+      setValue(newValue);
 
-    // Update the value immediately
-    setValue(newValue);
+      // Clear any existing timer
+      if (timerId) {
+        clearTimeout(timerId);
+      }
 
-    // Clear any existing timer
-    if (timerId) {
-      clearTimeout(timerId);
-    }
-
-    // Set a new timer to call handleBlur after user stops sliding
-    timerId = setTimeout(() => {
-      console.log("Timer triggered:", newValue);
-      handleBlur(newValue); // Ensure this is only called once
-      timerId = null; // Reset timerId
-    }, 1000);
-  }, []);
+      // Set a new timer to call handleBlur after user stops sliding
+      timerId = setTimeout(() => {
+        console.log("Timer triggered:", newValue);
+        handleBlur(newValue); // Ensure this is only called once
+        timerId = null; // Reset timerId
+      }, 1000);
+    },
+    [onLocalAnswer],
+  );
 
   const handleBlur = async (val: string) => {
     if (onBlur) onBlur(parseInt(val));
@@ -230,6 +225,7 @@ const Slider: FC<{
               className="h-3 w-full appearance-none text-xs sm:text-sm"
             /> */}
             <Input
+              id={questionId}
               type="range"
               min="0"
               max="90"
