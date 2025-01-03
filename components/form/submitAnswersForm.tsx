@@ -51,6 +51,8 @@ export default function SubmitAnswersForm({
   const [hasCheckedAdditional, setHasCheckedAdditional] = useState(true);
   const [hasCheckedNewsletter, setHasCheckedNewsletter] = useState(false);
 
+  const router = useRouter();
+
   const updateNewlsetterConsent = async () => {
     if (userComp) {
       const formData = new FormData();
@@ -72,8 +74,13 @@ export default function SubmitAnswersForm({
 
   const handleSubmit = async (formData: FormData) => {
     if (!session && !userId) {
-      // If not logged in, redirect to login page
-      signIn(undefined, { callbackUrl: `/comp/${slug}` });
+      // If not logged in, redirect to login page with answers in query
+
+      const answersQuery = Object.entries(localAnswers || {})
+        .map(([questionId, answer]) => `${questionId}=${answer}`)
+        .join("&");
+      var callbackUrl = `/comp/${slug}?${answersQuery}&newsletter=${hasCheckedNewsletter}&submit=true`;
+      router.push(`/login?compCallback=${encodeURIComponent(callbackUrl)}`);
       return;
     }
 
@@ -128,76 +135,73 @@ export default function SubmitAnswersForm({
           <p className="text-center">
             Once submitted, you will not be able to edit your answers.
           </p>
-          <p>
-            <CheckboxGroup
-              defaultValue={[
-                "rules-consent",
-                "consent-additional",
-                "newsletter-consent",
-              ]}
-              className="text-sm"
+          <CheckboxGroup
+            defaultValue={[
+              "rules-consent",
+              "consent-additional",
+              "newsletter-consent",
+            ]}
+            classNames={{
+              wrapper: "flex flex-col gap-4 text-sm",
+            }}
+          >
+            <Checkbox
+              value="rules-consent"
+              defaultChecked
+              classNames={{
+                label: "text-xs sm:text-sm",
+              }}
+              onChange={(e) => setHasChecked(e.target.checked)}
             >
+              Accept to participate in the &apos;{competitionData.title}&apos;
+              competition.
+            </Checkbox>
+            <div>
+              I accept the{" "}
+              {competitionData.rules ? (
+                <span
+                  onClick={openRules}
+                  className="cursor-pointer text-primary"
+                >
+                  Rules,
+                </span>
+              ) : null}{" "}
+              <span onClick={openTerms} className="cursor-pointer text-primary">
+                Terms
+              </span>
+              , and{" "}
+              <span
+                onClick={openPrivacy}
+                className="cursor-pointer text-primary"
+              >
+                Privacy Policy
+              </span>
+              .
+            </div>
+            {competitionData.consent ? (
               <Checkbox
-                value="rules-consent"
+                value="consent-additional"
                 defaultChecked
                 classNames={{
                   label: "text-xs sm:text-sm",
                 }}
-                onChange={(e) => setHasChecked(e.target.checked)}
+                onChange={(e) => setHasCheckedAdditional(e.target.checked)}
               >
-                Accept to participate in the &apos;{competitionData.title}&apos;
-                competition.
+                {competitionData.consent}
               </Checkbox>
-              <div>
-                I accept the{" "}
-                {competitionData.rules ? (
-                  <span
-                    onClick={openRules}
-                    className="cursor-pointer text-primary"
-                  >
-                    Rules,
-                  </span>
-                ) : null}{" "}
-                <span
-                  onClick={openTerms}
-                  className="cursor-pointer text-primary"
-                >
-                  Terms
-                </span>
-                , and{" "}
-                <span
-                  onClick={openPrivacy}
-                  className="cursor-pointer text-primary"
-                >
-                  Privacy Policy
-                </span>
-                .
-              </div>
-              {competitionData.consent ? (
-                <Checkbox
-                  value="consent-additional"
-                  defaultChecked
-                  classNames={{
-                    label: "text-xs sm:text-sm",
-                  }}
-                  onChange={(e) => setHasCheckedAdditional(e.target.checked)}
-                >
-                  {competitionData.consent}
-                </Checkbox>
-              ) : null}
-              <Checkbox
-                value="newsletter-consent"
-                classNames={{
-                  label: "text-xs sm:text-sm",
-                }}
-                onChange={(e) => setHasCheckedNewsletter(e.target.checked)}
-              >
-                {" "}
-                I would like to join the {siteData.name} Newsletter and receive
-                updates, news, and exclusive offers (Optional).
-              </Checkbox>
-            </CheckboxGroup>
-          </p>
+            ) : null}
+            <Checkbox
+              value="newsletter-consent"
+              classNames={{
+                label: "text-xs sm:text-sm",
+              }}
+              onChange={(e) => setHasCheckedNewsletter(e.target.checked)}
+            >
+              {" "}
+              I would like to join the {siteData.name} Newsletter and receive
+              updates, news, and exclusive offers (Optional).
+            </Checkbox>
+          </CheckboxGroup>
           <FormButton disabled={!hasChecked || !hasCheckedAdditional} />
         </div>
       </form>

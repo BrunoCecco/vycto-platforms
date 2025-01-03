@@ -23,8 +23,7 @@ export default function LoginButton({
   setEmailExists,
   username,
   birthDate,
-  localAnswers,
-  competitionSlug,
+  compCallback,
   name,
   signInMethod = "email",
 }: {
@@ -32,8 +31,7 @@ export default function LoginButton({
   setEmailExists: (exists: boolean) => void;
   username?: string;
   birthDate?: string;
-  localAnswers?: { [key: string]: string };
-  competitionSlug?: string;
+  compCallback?: string;
   name?: string;
   signInMethod?: string;
 }) {
@@ -85,20 +83,18 @@ export default function LoginButton({
   };
 
   const handleLogin = async () => {
-    if (localAnswers || competitionSlug) {
-      await handleLoginToSubmit();
+    if (compCallback) {
+      await handleLoginToSubmit(compCallback);
     } else {
       await handleNormalLogin();
     }
   };
 
-  const handleLoginToSubmit = async () => {
+  const handleLoginToSubmit = async (compCallbackUrl: string) => {
     posthog?.capture(`sign-in-${signInMethod}-competition-page-clicked`);
 
-    const answersQuery = Object.entries(localAnswers || {})
-      .map(([questionId, answer]) => `${questionId}=${answer}`)
-      .join("&");
-    var callbackUrl = `/comp/${competitionSlug}?${answersQuery}`;
+    var callbackUrl = decodeURIComponent(compCallbackUrl);
+
     if (username && username?.trim() != "") {
       callbackUrl += `&username=${username}`;
     }

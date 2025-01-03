@@ -21,16 +21,9 @@ import { useTheme } from "next-themes";
 import { parseDate } from "@internationalized/date";
 import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
-export default function SignInSide({
-  siteData,
-  localAnswers,
-  competitionSlug,
-}: {
-  siteData?: SelectSite;
-  localAnswers?: { [key: string]: string };
-  competitionSlug?: string;
-}) {
+export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [birthDate, setBirthDate] = useState<DateValue | null>();
@@ -38,6 +31,8 @@ export default function SignInSide({
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState(true);
   const { systemTheme, theme, setTheme } = useTheme();
+
+  const searchParams = useSearchParams();
 
   const posthog = usePostHog();
 
@@ -106,20 +101,21 @@ export default function SignInSide({
       return;
     }
 
-    if (localAnswers || competitionSlug) {
-      await handleLoginToSubmit(provider);
+    const compCallback = searchParams.get("compCallback");
+    if (compCallback) {
+      await handleLoginToSubmit(provider, compCallback);
     } else {
       await handleNormalLogin(provider);
     }
   };
 
-  const handleLoginToSubmit = async (provider: string) => {
+  const handleLoginToSubmit = async (
+    provider: string,
+    compCallbackUrl: string,
+  ) => {
     posthog?.capture(`sign-in-${provider}-competition-page-clicked`);
 
-    const answersQuery = Object.entries(localAnswers || {})
-      .map(([questionId, answer]) => `${questionId}=${answer}`)
-      .join("&");
-    var callbackUrl = `/updateuser?redirecttwo=${encodeURIComponent(`/comp/${competitionSlug}?${answersQuery}`)}`;
+    var callbackUrl = `/updateuser?redirecttwo=${compCallbackUrl}`;
     try {
       const result = await signIn(provider, {
         callbackUrl,
@@ -142,14 +138,12 @@ export default function SignInSide({
   };
 
   return (
-    <div className={`${competitionSlug ? `` : `h-screen`}`}>
+    <div className="h-screen">
       <div
         className="relative z-10 flex w-full justify-end transition-all delay-100 duration-500 md:w-[50vw]"
         style={{ backdropFilter: "blur(12px)" }}
       >
-        <div
-          className={`flex ${competitionSlug ? `` : `min-h-[100vh]`} w-full flex-col px-2`}
-        >
+        <div className={`flex min-h-[100vh] w-full flex-col px-2`}>
           <div
             className="m-auto pb-2 "
             style={{
@@ -274,8 +268,7 @@ export default function SignInSide({
                     email={email}
                     username={username}
                     birthDate={birthDate?.toString()}
-                    localAnswers={localAnswers}
-                    competitionSlug={competitionSlug}
+                    compCallback={searchParams.get("compCallback") || undefined}
                     name={name}
                     setEmailExists={setEmailExists}
                   />
@@ -343,19 +336,17 @@ export default function SignInSide({
           </div>
         </div>
       </div>
-      {competitionSlug ? null : (
-        <div
-          className={`fixed bottom-0 right-0 top-0 flex h-full w-full bg-cover bg-center bg-no-repeat object-cover transition-all delay-100 duration-500 md:w-[50vw]`}
-          style={{
-            transition: "background-image 0.4s, left 0.4s",
-            backgroundImage: `url(${
-              theme == "light"
-                ? siteData?.loginBanner! || "/loginBanner.png"
-                : siteData?.loginBannerDark! || "/loginBannerDark.png"
-            })`,
-          }}
-        />
-      )}
+      <div
+        className={`fixed bottom-0 right-0 top-0 flex h-full w-full bg-cover bg-center bg-no-repeat object-cover transition-all delay-100 duration-500 md:w-[50vw]`}
+        style={{
+          transition: "background-image 0.4s, left 0.4s",
+          backgroundImage: `url(${
+            theme == "light"
+              ? siteData?.loginBanner! || "/loginBanner.png"
+              : siteData?.loginBannerDark! || "/loginBannerDark.png"
+          })`,
+        }}
+      />
     </div>
   );
 }

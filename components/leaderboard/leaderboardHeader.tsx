@@ -35,7 +35,7 @@ const LeaderboardHeader = ({
   const getPrizeText = () => {
     if (rangeType === LeaderboardPeriod.All) {
       return "Season Prizes";
-    } else if (rangeType === LeaderboardPeriod.Weekly) {
+    } else if (rangeType === LeaderboardPeriod.Monthly) {
       const currentMonth = new Date().toLocaleString("default", {
         month: "long",
       });

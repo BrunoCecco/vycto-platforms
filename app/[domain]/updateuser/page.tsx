@@ -59,7 +59,7 @@ export default function UpdateUser() {
       !birthDate
     ) {
       if (redirectUrl) {
-        router.push(redirectUrl);
+        router.push(decodeURIComponent(redirectUrl));
       } else {
         router.replace("/");
       }
@@ -125,33 +125,33 @@ export default function UpdateUser() {
     }
     setUpdating(true);
     if (redirectUrl) {
-      await handleLoginToSubmit();
+      await handleLoginToSubmit(decodeURIComponent(redirectUrl));
     } else {
       await handleNormalLogin();
     }
     setUpdating(false);
   };
 
-  const handleLoginToSubmit = async () => {
-    try {
-      await updateUser();
-    } catch (error) {
-      console.error("Error: ", error);
-    }
-    if (redirectUrl) {
-      router.push(redirectUrl);
-    } else {
-      router.replace("/");
-    }
+  const handleLoginToSubmit = async (redirectUrl: string) => {
+    updateUser()
+      .then(() => {
+        router.push(redirectUrl);
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        router.push(redirectUrl);
+      });
   };
 
   const handleNormalLogin = async () => {
-    try {
-      await updateUser();
-    } catch (error) {
-      console.error("An unexpected error occurred", error);
-    }
-    router.replace("/");
+    updateUser()
+      .then(() => {
+        router.replace("/");
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        router.replace("/");
+      });
   };
 
   return loading ? (

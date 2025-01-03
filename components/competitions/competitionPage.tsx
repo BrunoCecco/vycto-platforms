@@ -23,13 +23,19 @@ import Rewards from "@/components/competitions/rewards";
 import { useEffect, useRef, useState } from "react";
 import GameStats from "@/components/competitions/gameStats";
 import { useRouter, useSearchParams } from "next/navigation";
-import { submitAnswers, updateUserOnLogin } from "@/lib/actions";
+import {
+  editUser,
+  submitAnswers,
+  updateUserCompetitionMetadata,
+  updateUserOnLogin,
+} from "@/lib/actions";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
 import { TracingBeam } from "../ui/tracingBeam";
 import MainLeaderboard from "../leaderboard/mainLeaderboard";
 import SignInSide from "../auth/signInSide";
 import { Session } from "next-auth";
+import Loading from "../ui/loading";
 
 export default function CompetitionPage({
   session,
@@ -54,20 +60,24 @@ export default function CompetitionPage({
   const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(
     {},
   );
-  const [browserAnswers, setBrowserAnswers] = useState<{
-    [key: string]: string;
-  }>({});
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [ended, setEnded] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [hasUpdatedDetails, setHasUpdatedDetails] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const posthog = usePostHog();
 
   const questionComp = useRef<HTMLDivElement>(null);
+
+  const nonQuestionSearchParamKeys = [
+    "username",
+    "name",
+    "birthDate",
+    "submit",
+    "newsletter",
+  ];
 
   useEffect(() => {
     const hasEnded =
@@ -89,14 +99,12 @@ export default function CompetitionPage({
       });
       const extractedAnswers: { [key: string]: string } = {};
       searchParams.forEach(async (value, key) => {
-        if (key != "username" && key != "name" && key != "birthDate") {
+        if (!nonQuestionSearchParamKeys.includes(key)) {
           extractedAnswers[key] = value;
         }
       });
       if (Object.keys(extractedAnswers).length > 0) {
         setLocalAnswers(extractedAnswers);
-        setBrowserAnswers(extractedAnswers);
-        //submitExtractedAnswers(extractedAnswers);
       }
     }
     if (!hasUpdatedDetails) {
@@ -105,13 +113,15 @@ export default function CompetitionPage({
   }, [session, searchParams, userComp]);
 
   useEffect(() => {
-    if (browserAnswers && Object.keys(browserAnswers).length > 2) {
-      window.scrollTo({
-        top: (questionComp.current?.offsetHeight || 0) + 200,
-        behavior: "smooth",
-      });
+    const submit = searchParams.get("submit");
+    if (
+      localAnswers &&
+      Object.keys(localAnswers).length > 0 &&
+      submit == "true"
+    ) {
+      submitExtractedAnswers(localAnswers);
     }
-  }, [browserAnswers]);
+  }, [localAnswers, searchParams]);
 
   const checkUserDetails = async () => {
     if (!session) {
@@ -140,6 +150,22 @@ export default function CompetitionPage({
       );
       toast.success("Birthdate updated");
     }
+    const newsletter = searchParams.get("newsletter");
+    if (newsletter) {
+      const res = await updateUserOnLogin(
+        session.user.email,
+        "newsletter",
+        newsletter,
+      );
+      const formData = new FormData();
+      formData.append("newsletter", newsletter);
+      const res2 = await updateUserCompetitionMetadata(
+        session.user.id || "",
+        data.id,
+        formData,
+        "newsletter",
+      );
+    }
     setHasUpdatedDetails(true);
   };
 
@@ -147,6 +173,7 @@ export default function CompetitionPage({
     [key: string]: string;
   }) => {
     if (session?.user?.id) {
+      setLoading(true);
       try {
         const res = await submitAnswers(
           session.user.id,
@@ -160,8 +187,10 @@ export default function CompetitionPage({
           router.push(`/comp/${slug}/${session.user.id}`);
           toast.success(`Successfully submitted answers!`);
         }
+        setLoading(false);
       } catch (error) {
         toast.error("Failed to submit answers.");
+        setLoading(false);
       }
     }
   };
@@ -268,7 +297,9 @@ export default function CompetitionPage({
     }
   };
 
-  return (
+  return loading ? (
+    <Loading data={siteData} />
+  ) : (
     <div className="w-full pb-5 sm:pb-20">
       <div className="h-max px-2 py-8 sm:overflow-hidden sm:bg-content2 md:rounded-xl md:px-24 md:py-20 md:shadow-2xl">
         <CompetitionHeader
@@ -297,7 +328,7 @@ export default function CompetitionPage({
                 />
               ) : null}
               {questions &&
-                questions.map((question: any, index: number) => {
+                questions.map((question: SelectQuestion, index: number) => {
                   const answer = answers?.find(
                     (a: any) => a.questionId === question.id,
                   ) || { answer: searchParams.get(question.id) };
@@ -315,29 +346,21 @@ export default function CompetitionPage({
                   );
                 })}
               {ended ? (
-                <div className="mx-auto rounded-xl border-danger-600 bg-danger-400 p-4 text-sm">
+                <div className="mx-auto rounded-xl bg-danger-200 p-4 text-sm">
                   Competition Ended
                 </div>
-              ) : session ? (
-                submitted ? (
-                  <div className="mx-auto rounded-xl border-success-600 bg-success-400 p-4 text-sm">
-                    Answers Submitted
-                  </div>
-                ) : (
-                  <SubmitAnswersForm
-                    userId={session?.user.id!}
-                    userComp={userComp}
-                    competitionData={data}
-                    siteData={siteData}
-                    slug={slug}
-                    localAnswers={localAnswers}
-                  />
-                )
+              ) : submitted ? (
+                <div className="mx-auto rounded-xl bg-success-200 p-4 text-sm">
+                  Answers Submitted
+                </div>
               ) : (
-                <SignInSide
+                <SubmitAnswersForm
+                  userId={session?.user.id!}
+                  userComp={userComp}
+                  competitionData={data}
                   siteData={siteData}
+                  slug={slug}
                   localAnswers={localAnswers}
-                  competitionSlug={slug}
                 />
               )}
             </div>
