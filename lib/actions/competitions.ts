@@ -709,14 +709,18 @@ export async function calculateUserPoints(
         const correctAway = parseInt(question.correctAnswer.split("-")[1]) || 0;
         const userHome = parseInt(userAnswer.split("-")[0]) || 0;
         const userAway = parseInt(userAnswer.split("-")[1]) || 0;
-        const homeDifference = Math.abs(correctHome - userHome);
-        pointsToAdd +=
-          (questionPoints / 2) *
-          (1 - homeDifference / Math.max(homeDifference, 10));
-        const awayDifference = Math.abs(correctAway - userAway);
-        pointsToAdd +=
-          (questionPoints / 2) *
-          (1 - awayDifference / Math.max(awayDifference, 10));
+        //const homeDifference = Math.abs(correctHome - userHome);
+        //pointsToAdd +=
+          //(questionPoints / 2) *
+          //(1 - homeDifference / Math.max(homeDifference, 10));
+        //const awayDifference = Math.abs(correctAway - userAway);
+        //pointsToAdd +=
+         // (questionPoints / 2) *
+         // (1 - awayDifference / Math.max(awayDifference, 10));
+
+        if (correctHome == userHome && correctAway == userAway) {
+            pointsToAdd += questionPoints;
+        }
         break;
       case QuestionType.GeneralNumber:
         const correctNumber = parseInt(question.correctAnswer) || 0;

@@ -14,7 +14,7 @@ import HoverBorderGradient from "../ui/hoverBorderGradient";
 import { Card, CardFooter, CardHeader } from "@nextui-org/react";
 import { CoolMode } from "../ui/coolMode";
 
-const COMPETITION_WINDOW = 10;
+const COMPETITION_WINDOW = 5;
 
 const CompetitionCard = ({
   competition,
