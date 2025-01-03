@@ -101,24 +101,20 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
       return;
     }
 
-    const compCallback = searchParams.get("compCallback");
-    if (compCallback) {
-      await handleLoginToSubmit(provider, compCallback);
+    const compslug = searchParams.get("compslug");
+    if (compslug) {
+      await handleLoginToSubmit(provider);
     } else {
       await handleNormalLogin(provider);
     }
   };
 
-  const handleLoginToSubmit = async (
-    provider: string,
-    compCallbackUrl: string,
-  ) => {
+  const handleLoginToSubmit = async (provider: string) => {
     posthog?.capture(`sign-in-${provider}-competition-page-clicked`);
 
-    const compSlug = compCallbackUrl.split("?")[0].split("/").pop();
-    const compSearchParams = compCallbackUrl.split("?")[1];
+    const params = new URLSearchParams(searchParams.toString());
 
-    var callbackUrl = `/updateuser?compslug=${compSlug}&${decodeURIComponent(compSearchParams)}`;
+    var callbackUrl = `/updateuser?${params.toString()}`;
     try {
       const result = await signIn(provider, {
         callbackUrl,

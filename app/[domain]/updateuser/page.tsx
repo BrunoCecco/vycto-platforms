@@ -76,6 +76,7 @@ export default function UpdateUser() {
         redirectUrl += `${key}=${value}&`;
       }
     });
+    redirectUrl = redirectUrl.slice(0, -1); // remove last &
     return redirectUrl;
   };
 

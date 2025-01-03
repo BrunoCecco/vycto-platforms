@@ -79,8 +79,9 @@ export default function SubmitAnswersForm({
       const answersQuery = Object.entries(localAnswers || {})
         .map(([questionId, answer]) => `${questionId}=${answer}`)
         .join("&");
-      var callbackUrl = `/comp/${slug}?${answersQuery}&newsletter=${hasCheckedNewsletter}&submit=true`;
-      router.push(`/login?compCallback=${encodeURIComponent(callbackUrl)}`);
+      router.push(
+        `/login?compslug=${slug}&${answersQuery}&newsletter=${hasCheckedNewsletter}&submit=true`,
+      );
       return;
     }
 
