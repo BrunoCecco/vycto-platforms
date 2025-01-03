@@ -25,6 +25,7 @@ import {
   getAnswersForUser,
   getCompetitionFromId,
   getQuestionsForCompetition,
+  getUserDataById,
 } from "../fetchers";
 import {
   startOfSeason,
@@ -317,7 +318,6 @@ export const updateUserPoints = async (
   points: number,
 ) => {
   try {
-    console.log("Updating user points: ", userId, competitionId, points);
     const [response] = await db
       .update(userCompetitions)
       .set({
@@ -748,18 +748,22 @@ export async function calculateCompetitionPoints(competitionId: string) {
 
   var usersWithPoints: IUserWithPoints[] = [];
   var points;
-  for (let user of competitionUsers) {
-    points = await calculateUserPoints(user.userId, competitionId);
-    usersWithPoints.push({
+
+  const calculateUserPointsPromise = competitionUsers.map(async (user) => {
+    const points = await calculateUserPoints(user.userId, competitionId);
+    console.log(`User ${user.email} has ${points} points`);
+    return {
       userId: user.userId,
       points: points.toString(),
-      competitionId: competitionId,
-    });
-  }
+      competitionId: user.competitionId,
+    };
+  });
+
+  var usersWithPoints: IUserWithPoints[] = await Promise.all(
+    calculateUserPointsPromise,
+  );
 
   const comp = await getCompetitionFromId(competitionId);
-  const siteId = comp?.siteId;
-  const compDate = new Date(comp?.date?.replace(/\[.*\]$/, "") || "");
 
   if (!comp) {
     return {
@@ -767,7 +771,7 @@ export async function calculateCompetitionPoints(competitionId: string) {
     };
   }
   // now update the user competition stats
-  await updateUserCompetitionStats(usersWithPoints, comp);
+  const res = await updateUserCompetitionStats(usersWithPoints, comp);
 
   revalidateTag(`${competitionId}-users`);
   revalidateTag(`${competitionId}-leaderboard`);
