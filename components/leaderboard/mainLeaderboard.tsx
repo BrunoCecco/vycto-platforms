@@ -254,19 +254,6 @@ const MainLeaderboard = ({
                             </p>
                           </div>
                         </div>
-                        {user && user.id == entry.id ? (
-                          <div className="flex w-0 flex-1 items-center text-sm font-bold">
-                            <HoverBorderGradient
-                              containerClassName="ml-2 mr-auto w-min"
-                              className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
-                              color={siteData.color1}
-                            >
-                              <span style={{ color: siteData.color1 }}>
-                                You
-                              </span>
-                            </HoverBorderGradient>
-                          </div>
-                        ) : null}
                       </td>
                       <td className="hidden py-4 text-center md:table-cell">
                         {entry.rank}
@@ -274,7 +261,17 @@ const MainLeaderboard = ({
                       <td className="py-4 text-center">
                         {entry.points || "0"}
                       </td>
-                      {compData?.slug && (
+                      {user && user.id == entry.id ? (
+                        <td className="flex w-0 flex-1 items-center text-sm font-bold">
+                          <HoverBorderGradient
+                            containerClassName="ml-2 mr-auto w-min"
+                            className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
+                            color={siteData.color1}
+                          >
+                            <span style={{ color: siteData.color1 }}>You</span>
+                          </HoverBorderGradient>
+                        </td>
+                      ) : compData?.slug ? (
                         <td className="justify-end py-4 text-right">
                           <Link
                             href={`/comp/${compData?.slug}/${entry.id}`}
@@ -286,7 +283,7 @@ const MainLeaderboard = ({
                             View
                           </Link>
                         </td>
-                      )}
+                      ) : null}
                       {/* Display the points for the signed-in user */}
                     </tr>
                   );

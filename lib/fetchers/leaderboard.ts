@@ -172,6 +172,10 @@ export async function getLeaderboardData(
       const comps = await getCompetitionsForPeriod(siteId, startDate, endDate);
       const competitionIds = comps.map((comp) => comp.id);
 
+      if (competitionIds.length === 0) {
+        return [];
+      }
+
       const data = await db
         .select({
           id: users.id,
