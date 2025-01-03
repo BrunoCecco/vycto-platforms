@@ -59,7 +59,12 @@ export default function UpdateUser() {
       !birthDate
     ) {
       if (redirectUrl) {
-        router.push(decodeURIComponent(redirectUrl));
+        router.push(
+          decodeURIComponent(redirectUrl.replaceAll("QMark", "?")).replaceAll(
+            "AAmp",
+            "&",
+          ),
+        );
       } else {
         router.replace("/");
       }
@@ -125,7 +130,12 @@ export default function UpdateUser() {
     }
     setUpdating(true);
     if (redirectUrl) {
-      await handleLoginToSubmit(decodeURIComponent(redirectUrl));
+      await handleLoginToSubmit(
+        decodeURIComponent(redirectUrl.replaceAll("QMark", "?")).replaceAll(
+          "AAmp",
+          "&",
+        ),
+      );
     } else {
       await handleNormalLogin();
     }

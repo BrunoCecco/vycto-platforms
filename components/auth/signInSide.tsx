@@ -115,7 +115,12 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
   ) => {
     posthog?.capture(`sign-in-${provider}-competition-page-clicked`);
 
-    var callbackUrl = `/updateuser?redirecttwo=${compCallbackUrl}`;
+    const decodedCallback = decodeURIComponent(compCallbackUrl);
+    const customCallback = decodedCallback
+      .replaceAll("?", "QMark")
+      .replaceAll("&", "AAmp");
+
+    var callbackUrl = `/updateuser?redirecttwo=${encodeURIComponent(customCallback)}`;
     try {
       const result = await signIn(provider, {
         callbackUrl,
