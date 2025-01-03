@@ -36,6 +36,7 @@ import MainLeaderboard from "../leaderboard/mainLeaderboard";
 import SignInSide from "../auth/signInSide";
 import { Session } from "next-auth";
 import Loading from "../ui/loading";
+import { decodeAnswer } from "@/lib/utils";
 
 export default function CompetitionPage({
   session,
@@ -100,7 +101,7 @@ export default function CompetitionPage({
       const extractedAnswers: { [key: string]: string } = {};
       searchParams.forEach(async (value, key) => {
         if (!nonQuestionSearchParamKeys.includes(key)) {
-          extractedAnswers[key] = value;
+          extractedAnswers[key] = decodeAnswer(value);
         }
       });
       if (Object.keys(extractedAnswers).length > 0) {

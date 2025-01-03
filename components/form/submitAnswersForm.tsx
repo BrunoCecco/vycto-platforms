@@ -1,7 +1,7 @@
 "use client";
 
 import LoadingDots from "@/components/icons/loadingDots";
-import { cn } from "@/lib/utils";
+import { cn, encodeAnswer } from "@/lib/utils";
 import { useParams, useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
@@ -77,8 +77,9 @@ export default function SubmitAnswersForm({
       // If not logged in, redirect to login page with answers in query
 
       const answersQuery = Object.entries(localAnswers || {})
-        .map(([questionId, answer]) => `${questionId}=${answer}`)
+        .map(([questionId, answer]) => `${questionId}=${encodeAnswer(answer)}`)
         .join("&");
+      // alert(answersQuery);
       router.push(
         `/login?compslug=${slug}&${answersQuery}&newsletter=${hasCheckedNewsletter}&submit=true`,
       );

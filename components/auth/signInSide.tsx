@@ -34,6 +34,8 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
 
   const searchParams = useSearchParams();
 
+  const compslug = searchParams.get("compslug");
+
   const posthog = usePostHog();
 
   React.useEffect(() => {
@@ -101,7 +103,6 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
       return;
     }
 
-    const compslug = searchParams.get("compslug");
     if (compslug) {
       await handleLoginToSubmit(provider);
     } else {
@@ -112,9 +113,7 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
   const handleLoginToSubmit = async (provider: string) => {
     posthog?.capture(`sign-in-${provider}-competition-page-clicked`);
 
-    const params = new URLSearchParams(searchParams.toString());
-
-    var callbackUrl = `/updateuser?${params.toString()}`;
+    var callbackUrl = `/updateuser?${searchParams.toString()}`;
     try {
       const result = await signIn(provider, {
         callbackUrl,
@@ -134,6 +133,17 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
     } catch (error) {
       console.error("An unexpected error occurred");
     }
+  };
+
+  const constructRedirectUrl = () => {
+    var redirectUrl = `/comp/${compslug}?`;
+    searchParams.forEach(async (value, key) => {
+      if (key != "compslug") {
+        redirectUrl += `${key}=${value}&`;
+      }
+    });
+    redirectUrl = redirectUrl.slice(0, -1); // remove last &
+    return redirectUrl;
   };
 
   return (
@@ -267,7 +277,7 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
                     email={email}
                     username={username}
                     birthDate={birthDate?.toString()}
-                    compCallback={searchParams.get("compCallback") || undefined}
+                    compCallback={constructRedirectUrl()}
                     name={name}
                     setEmailExists={setEmailExists}
                   />

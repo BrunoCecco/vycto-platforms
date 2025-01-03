@@ -132,3 +132,38 @@ export const endOfMonth = new Date(
 export const startOfSeason = new Date(new Date().getFullYear(), 0, 1);
 
 export const endOfSeason = new Date(new Date().getFullYear(), 11, 31);
+
+export const encodeAnswer = (answer: string) => {
+  // replace + with PLUS and other characters that would be encoded with encodeURIComponent with their names
+  return answer
+    .replace(/\+/g, "plusss")
+    .replace(/\s/g, "spaceee")
+    .replace(/!/g, "exclamation")
+    .replace(/'/g, "apostrophe")
+    .replace(/\(/g, "leftparen")
+    .replace(/\)/g, "rightparen")
+    .replace(/\*/g, "asterisk")
+    .replace(/,/g, "commaaa")
+    .replace(/\//g, "slashhh")
+    .replace(/:/g, "colonn")
+    .replace(/;/g, "semicolon")
+    .replace(/\[/g, "leftbracket")
+    .replace(/\]/g, "rightbracket");
+};
+
+export const decodeAnswer = (answer: string) => {
+  return answer
+    .replace(/plusss/g, "+")
+    .replace(/spaceee/g, " ")
+    .replace(/exclamation/g, "!")
+    .replace(/apostrophe/g, "'")
+    .replace(/leftparen/g, "(")
+    .replace(/rightparen/g, ")")
+    .replace(/asterisk/g, "*")
+    .replace(/commaaa/g, ",")
+    .replace(/slashhh/g, "/")
+    .replace(/colonn/g, ":")
+    .replace(/semicolon/g, ";")
+    .replace(/leftbracket/g, "[")
+    .replace(/rightbracket/g, "]");
+};
