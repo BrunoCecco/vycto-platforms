@@ -150,15 +150,15 @@ const MainLeaderboard = ({
 
   const calculateBg = (index: number) => {
     if (!compData?.correctAnswersSubmitted) return "";
-    if (index > 2) return "";
+    if (index > 3) return "";
     switch (index) {
-      case 0:
+      case 1:
         // return gold gradient dark to light
         return "linear-gradient(90deg, #FFA700 0%, #FFDF00 100%)";
-      case 1:
+      case 2:
         // return silver gradient dark to light
         return "linear-gradient(90deg, #A0A0A0 0%, #D3D3D3 100%)";
-      case 2:
+      case 3:
         // return bronze gradient dark to light
         return "linear-gradient(90deg, #CD7F32 0%, #8B4513 100%)";
       default:
