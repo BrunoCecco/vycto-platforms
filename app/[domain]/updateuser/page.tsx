@@ -37,11 +37,15 @@ export default function UpdateUser() {
 
   useEffect(() => {
     if (!session || !session.user) {
+      toast.error("no user")
       router.replace("/login");
       return;
     }
 
-    if (!hasUpdated && session && session.user && username && !compslug) {
+      const compslug1 = searchParams.get("compslug");
+
+    if (!hasUpdated && session && session.user && username && !compslug1) {
+      toast.success("Updating")
       updateUser()
         .then((res) => {
           router.replace("/");
@@ -58,8 +62,8 @@ export default function UpdateUser() {
       !name &&
       !birthDate
     ) {
-      toast.success(compslug + "comp")
-      if (compslug) {
+      toast.success(compslug1 + "comp")
+      if (compslug1) {
         router.push(constructRedirectUrl());
       } else {
         router.replace("/");
@@ -68,7 +72,7 @@ export default function UpdateUser() {
     } else {
       setLoading(false);
     }
-  }, [session]);
+  }, [session, searchParams]);
 
   const constructRedirectUrl = () => {
     var redirectUrl = `/comp/${compslug}?`;
