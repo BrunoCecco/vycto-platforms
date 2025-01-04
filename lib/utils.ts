@@ -136,7 +136,7 @@ export const endOfSeason = new Date(new Date().getFullYear(), 11, 31);
 export const encodeAnswer = (answer: string) => {
   // replace + with PLUS and other characters that would be encoded with encodeURIComponent with their names
   return answer
-    .replace(/\+/g, "vctoplusss")
+    .replace(/\+/g, "plusss")
     .replace(/\s/g, "spaceee")
     .replace(/!/g, "exclamation")
     .replace(/'/g, "apostrophe")
