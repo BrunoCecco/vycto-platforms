@@ -36,17 +36,14 @@ export default function UpdateUser() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!session || !session.user) {
-      toast.error("no user")
-      router.replace("/login");
-      return;
-    }
+    //if (!session || !session.user) {
+     // router.replace("/login");
+     // return;
+   // }
 
-      const compslug1 = searchParams.get("compslug");
-
-    if (!hasUpdated && session && session.user && username && !compslug1) {
-      toast.success("Updating")
-      updateUser()
+    if (!hasUpdated && session && session.user && username && !compslug) {
+      
+     updateUser()
         .then((res) => {
           router.replace("/");
         })
@@ -62,8 +59,8 @@ export default function UpdateUser() {
       !name &&
       !birthDate
     ) {
-      toast.success(compslug1 + "comp")
-      if (compslug1) {
+      
+      if (compslug) {
         router.push(constructRedirectUrl());
       } else {
         router.replace("/");
