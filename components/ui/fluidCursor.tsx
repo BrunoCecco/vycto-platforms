@@ -1,11 +1,11 @@
 "use client";
 import { useEffect } from "react";
 
-import useFluidCursor from "@/lib/hooks/useFluidCursor";
+import fluidCursor from "@/lib/hooks/useFluidCursor";
 
 const FluidCursor = () => {
   useEffect(() => {
-    useFluidCursor();
+    fluidCursor();
   }, []);
 
   return (
