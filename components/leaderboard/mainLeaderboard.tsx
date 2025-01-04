@@ -262,9 +262,9 @@ const MainLeaderboard = ({
                         {entry.points || "0"}
                       </td>
                       {user && user.id == entry.id ? (
-                        <td className="flex w-0 flex-1 items-center text-sm font-bold">
+                        <td className="justify-end text-right text-sm font-bold">
                           <HoverBorderGradient
-                            containerClassName="ml-2 mr-auto w-min"
+                            containerClassName="w-min"
                             className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
                             color={siteData.color1}
                           >
