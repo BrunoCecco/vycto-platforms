@@ -80,7 +80,7 @@ export interface IQuestionProps extends SelectQuestion {
   userId: string;
   answer: SelectAnswer | { answer: string | null } | undefined;
   disabled: boolean;
-  onLocalAnswer: (questionId: string, answer: string) => void;
+  onLocalAnswer?: (questionId: string, answer: string) => void;
   color: string;
   hasEnded: boolean;
 }

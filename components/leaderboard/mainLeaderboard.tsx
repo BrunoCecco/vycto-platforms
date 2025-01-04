@@ -251,8 +251,34 @@ const MainLeaderboard = ({
                           <div className="flex-1">
                             <p className="line-clamp-2 break-words">
                               {getLeaderboardName(entry)}
+                              {user && user.id == entry.id && (
+                                <div className="block text-sm font-bold sm:hidden">
+                                  <HoverBorderGradient
+                                    containerClassName="w-min"
+                                    className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
+                                    color={siteData.color1}
+                                  >
+                                    <span style={{ color: siteData.color1 }}>
+                                      You
+                                    </span>
+                                  </HoverBorderGradient>
+                                </div>
+                              )}
                             </p>
                           </div>
+                          {user && user.id == entry.id && (
+                            <div className="hidden text-sm font-bold sm:block">
+                              <HoverBorderGradient
+                                containerClassName="w-min"
+                                className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
+                                color={siteData.color1}
+                              >
+                                <span style={{ color: siteData.color1 }}>
+                                  You
+                                </span>
+                              </HoverBorderGradient>
+                            </div>
+                          )}
                         </div>
                       </td>
                       <td className="hidden py-4 text-center md:table-cell">
@@ -261,17 +287,7 @@ const MainLeaderboard = ({
                       <td className="py-4 text-center">
                         {entry.points || "0"}
                       </td>
-                      {user && user.id == entry.id ? (
-                        <td className="justify-end text-right text-sm font-bold">
-                          <HoverBorderGradient
-                            containerClassName="w-min"
-                            className={`hover: w-min flex-1 truncate p-1 px-2 text-sm font-bold transition-all duration-400`}
-                            color={siteData.color1}
-                          >
-                            <span style={{ color: siteData.color1 }}>You</span>
-                          </HoverBorderGradient>
-                        </td>
-                      ) : compData?.slug ? (
+                      {compData?.slug ? (
                         <td className="justify-end py-4 text-right">
                           <Link
                             href={`/comp/${compData?.slug}/${entry.id}`}

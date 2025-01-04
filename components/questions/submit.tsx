@@ -15,13 +15,13 @@ const Submit = ({
   questionId: string;
   competitionId: string;
   answer: string | null;
-  onLocalAnswer: (questionId: string, answer: string) => void;
+  onLocalAnswer?: (questionId: string, answer: string) => void;
   children: React.ReactNode;
 }) => {
   const handleSubmit = async (data: FormData) => {
     if (userId) {
       await answerQuestion(data);
-    } else if (answer) {
+    } else if (answer && onLocalAnswer) {
       onLocalAnswer(questionId, answer);
     }
   };

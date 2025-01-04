@@ -73,6 +73,7 @@ export default async function HowToPlayPage({
     answer: SelectAnswer | { answer: string | null } | undefined,
     disabled: boolean,
   ) => {
+    "use client";
     switch (question.type) {
       case QuestionType.TrueFalse:
         return (
@@ -82,7 +83,6 @@ export default async function HowToPlayPage({
             disabled={disabled}
             color={data?.color1 || "#000"}
             userId=""
-            onLocalAnswer={() => {}}
             hasEnded={false}
           />
         );
@@ -94,7 +94,6 @@ export default async function HowToPlayPage({
             disabled={disabled}
             color={data?.color1 || "#000"}
             userId=""
-            onLocalAnswer={() => {}}
             hasEnded={false}
           />
         );
@@ -106,7 +105,6 @@ export default async function HowToPlayPage({
             disabled={disabled}
             color={data?.color1 || "#000"}
             userId=""
-            onLocalAnswer={() => {}}
             hasEnded={false}
           />
         );
@@ -118,7 +116,6 @@ export default async function HowToPlayPage({
             disabled={disabled}
             color={data?.color1 || "#000"}
             userId=""
-            onLocalAnswer={() => {}}
             hasEnded={false}
           />
         );
@@ -130,7 +127,6 @@ export default async function HowToPlayPage({
             disabled={disabled}
             color={data?.color1 || "#000"}
             userId=""
-            onLocalAnswer={() => {}}
             hasEnded={false}
           />
         );
@@ -142,7 +138,6 @@ export default async function HowToPlayPage({
             disabled={disabled}
             color={data?.color1 || "#000"}
             userId=""
-            onLocalAnswer={() => {}}
             hasEnded={false}
           />
         );
@@ -154,7 +149,6 @@ export default async function HowToPlayPage({
             disabled={disabled}
             color={data?.color1 || "#000"}
             userId=""
-            onLocalAnswer={() => {}}
             hasEnded={false}
           />
         );
