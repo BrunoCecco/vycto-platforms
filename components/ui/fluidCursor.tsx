@@ -3,9 +3,9 @@ import { useEffect } from "react";
 
 import fluidCursor from "@/lib/hooks/useFluidCursor";
 
-const FluidCursor = () => {
+const FluidCursor = ({ color }: { color: string }) => {
   useEffect(() => {
-    fluidCursor();
+    fluidCursor(color);
   }, []);
 
   return (

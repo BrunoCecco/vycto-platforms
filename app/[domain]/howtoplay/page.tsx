@@ -160,7 +160,6 @@ export default async function HowToPlayPage({
 
   return (
     <div className="flex flex-col gap-8">
-      <FluidCursor />
       <h1 className="mb-6 text-3xl font-bold">How to Play</h1>
 
       <HelpCard color={data?.color1}>
@@ -257,6 +256,8 @@ export default async function HowToPlayPage({
           />
         )}
       </HelpCard>
+
+      <FluidCursor color={data?.color1 || "#123456"} />
     </div>
   );
 }
