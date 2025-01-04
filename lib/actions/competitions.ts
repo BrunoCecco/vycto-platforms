@@ -344,6 +344,7 @@ export const updateUserPoints = async (
 export const updateAnswerPoints = async (
   userId: string,
   questionId: string,
+  competitionId: string,
   points: number,
 ) => {
   try {
@@ -356,6 +357,8 @@ export const updateAnswerPoints = async (
         and(eq(answers.userId, userId), eq(answers.questionId, questionId)),
       )
       .returning();
+
+    revalidateTag(`${userId}-${competitionId}-answers`);
 
     return response;
   } catch (error: any) {
@@ -536,15 +539,6 @@ export const updateStatsForUser = async (
       .returning()
       .then((res) => res[0]);
 
-    console.log(
-      "Updated stats for user: ",
-      response,
-      userId,
-      competitionId,
-      rewardId,
-      ranking,
-    );
-
     return response;
   } catch (error: any) {
     return {
@@ -709,17 +703,8 @@ export async function calculateUserPoints(
         const correctAway = parseInt(question.correctAnswer.split("-")[1]) || 0;
         const userHome = parseInt(userAnswer.split("-")[0]) || 0;
         const userAway = parseInt(userAnswer.split("-")[1]) || 0;
-        //const homeDifference = Math.abs(correctHome - userHome);
-        //pointsToAdd +=
-          //(questionPoints / 2) *
-          //(1 - homeDifference / Math.max(homeDifference, 10));
-        //const awayDifference = Math.abs(correctAway - userAway);
-        //pointsToAdd +=
-         // (questionPoints / 2) *
-         // (1 - awayDifference / Math.max(awayDifference, 10));
-
         if (correctHome == userHome && correctAway == userAway) {
-            pointsToAdd += questionPoints;
+          pointsToAdd += questionPoints;
         }
         break;
       case QuestionType.GeneralNumber:
@@ -736,7 +721,7 @@ export async function calculateUserPoints(
         break;
     }
     points += pointsToAdd;
-    await updateAnswerPoints(userId, question.id, pointsToAdd);
+    await updateAnswerPoints(userId, question.id, competitionId, pointsToAdd);
   }
   // update the user's points in the database
   await updateUserPoints(userId, competitionId, points);
@@ -744,7 +729,6 @@ export async function calculateUserPoints(
 }
 
 export async function calculateCompetitionPoints(competitionId: string) {
-  console.log(competitionId);
   console.log(`Calculating points for competition ${competitionId}`);
   const competitionUsers = await db.query.userCompetitions.findMany({
     where: eq(userCompetitions.competitionId, competitionId),
