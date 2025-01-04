@@ -10,6 +10,7 @@ import WhatMinute from "@/components/questions/whatMinute";
 import ClaimRewardsCard from "@/components/rewards/claimRewardsCard";
 import UserSettings from "@/components/settings/userSettings";
 import { CardSpotlight } from "@/components/ui/cardSpotlight";
+import FluidCursor from "@/components/ui/fluidCursor";
 import { authOptions } from "@/lib/auth";
 import {
   getLatestCompetitionForSite,
@@ -36,12 +37,12 @@ const HelpCard = ({
   color?: string;
   children: React.ReactNode;
 }) => (
-  <CardSpotlight
-    className="flex flex-col items-center rounded-lg p-6 shadow-lg"
-    color={color}
+  <div
+    className="flex flex-col items-center rounded-lg border bg-content1 p-6 shadow-lg"
+    // color={color}
   >
     {children}
-  </CardSpotlight>
+  </div>
 );
 
 export default async function HowToPlayPage({
@@ -159,6 +160,7 @@ export default async function HowToPlayPage({
 
   return (
     <div className="flex flex-col gap-8">
+      <FluidCursor />
       <h1 className="mb-6 text-3xl font-bold">How to Play</h1>
 
       <HelpCard color={data?.color1}>
