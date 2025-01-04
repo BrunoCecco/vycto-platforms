@@ -58,6 +58,7 @@ export default function UpdateUser() {
       !name &&
       !birthDate
     ) {
+      toast.success(compslug + "comp")
       if (compslug) {
         router.push(constructRedirectUrl());
       } else {
