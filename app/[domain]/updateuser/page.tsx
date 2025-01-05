@@ -66,7 +66,7 @@ export default function UpdateUser() {
         router.replace("/");
       }
       return;
-    } else if (session && !session?.username) {
+    } else if (session && !session?.user.username) {
       setLoading(false);
     }
   }, [session, searchParams]);
