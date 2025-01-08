@@ -11,6 +11,7 @@ import {
   sites,
   users,
   SelectCompetition,
+  adminSites,
 } from "../schema";
 
 export async function getAllCompetitions() {
@@ -303,6 +304,28 @@ export const getCompetitionDataWithSite = async (id: string) => {
     {
       revalidate: 900,
       tags: [`${id}-competition-with-site`],
+    },
+  )();
+};
+
+export const getAdminCompetitions = async (email: string, limit?: number) => {
+  return await unstable_cache(
+    async () => {
+      const response = await db
+        .select()
+        .from(competitions)
+        .leftJoin(sites, eq(competitions.siteId, sites.id))
+        .leftJoin(adminSites, eq(sites.id, adminSites.siteId))
+        .where(eq(adminSites.email, email))
+        .orderBy(desc(competitions.createdAt))
+        .limit(limit || 10);
+
+      return response.map((comp) => comp.competitions);
+    },
+    [`${email}-admin-comps`],
+    {
+      revalidate: 900,
+      tags: [`${email}-admin-comps`],
     },
   )();
 };

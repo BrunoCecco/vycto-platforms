@@ -13,11 +13,13 @@ import db from "../db";
 import {
   SelectSite,
   SelectSiteReward,
+  adminSites,
   competitions,
   siteRewards,
   sites,
 } from "../schema";
 import { getServerSession } from "next-auth";
+import { getSiteAdmins, getUserData } from "../fetchers";
 
 export const createSite = async (formData: FormData) => {
   const session = await getServerSession(authOptions);
@@ -29,7 +31,6 @@ export const createSite = async (formData: FormData) => {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const subdomain = formData.get("subdomain") as string;
-  const admin = formData.get("admin") as string;
 
   try {
     let headers = {
@@ -54,8 +55,7 @@ export const createSite = async (formData: FormData) => {
         description,
         subdomain,
         userId: session.user.id,
-        admin: admin || session.user.email,
-        senderGroup: data.data.id || "",
+        senderGroup: data?.data?.id || "",
       })
       .returning();
 
@@ -287,4 +287,85 @@ export const getSiteFromCompetitionId = async (competitionId: string) => {
   });
 
   return competition?.siteId;
+};
+
+export const createSiteAdmin = async (
+  siteId: string,
+  email: string,
+  verify: boolean = true,
+) => {
+  const session = await getServerSession(authOptions);
+  if (!session?.user.id) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+  const siteAdmins = await getSiteAdmins(siteId);
+
+  if (verify && !siteAdmins.some((admin) => admin.userId === session.user.id)) {
+    return {
+      error: "You are not authorized to add admins to this site",
+    };
+  }
+
+  const user = await getUserData(email);
+
+  if (!user) {
+    return {
+      error: "User not found",
+    };
+  }
+
+  try {
+    const [response] = await db
+      .insert(adminSites)
+      .values({
+        email: email,
+        siteId,
+        userId: user.id,
+      })
+      .returning();
+
+    revalidateTag(`${email}-admin-sites`);
+    revalidateTag(`site-admins-${siteId}`);
+    revalidateTag(`admin-sites-${email}`);
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
+};
+
+export const deleteSiteAdmin = async (siteId: string, email: string) => {
+  const session = await getServerSession(authOptions);
+  if (!session?.user.id) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+  const siteAdmins = await db.query.adminSites.findMany({
+    where: eq(adminSites.siteId, siteId),
+  });
+  if (!siteAdmins.some((admin) => admin.userId === session.user.id)) {
+    return {
+      error: "You are not authorized to remove admins from this site",
+    };
+  }
+
+  try {
+    const [response] = await db
+      .delete(adminSites)
+      .where(eq(adminSites.email, email))
+      .returning();
+
+    revalidateTag(`${email}-admin-sites`);
+    revalidateTag(`site-admins-${siteId}`);
+    revalidateTag(`admin-sites-${email}`);
+    return response;
+  } catch (error: any) {
+    return {
+      error: error.message,
+    };
+  }
 };

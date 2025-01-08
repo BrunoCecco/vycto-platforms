@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import SiteCard from "./siteCard";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { getAdminSitesData } from "@/lib/fetchers";
 
 export default async function Sites({ limit }: { limit?: number }) {
   const session = await getServerSession(authOptions);
@@ -11,16 +12,7 @@ export default async function Sites({ limit }: { limit?: number }) {
     redirect("/login");
   }
 
-  const sites = await db.query.sites.findMany({
-    // either sites.userId === session.user.id or sites.admin === session.user.email
-    where: (sites, { or, eq }) =>
-      or(
-        eq(sites.userId, session.user.id),
-        eq(sites.admin, session.user.email),
-      ),
-    orderBy: (sites, { asc }) => asc(sites.createdAt),
-    ...(limit ? { limit } : {}),
-  });
+  const sites = await getAdminSitesData(session.user.email);
 
   return sites.length > 0 ? (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">

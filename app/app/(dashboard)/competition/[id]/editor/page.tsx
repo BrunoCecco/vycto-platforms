@@ -5,6 +5,7 @@ import {
   getCompetitionData,
   getQuestionsForCompetition,
   getCompetitionDataWithSite,
+  getSiteAdmins,
 } from "@/lib/fetchers";
 import CompetitionCreator from "@/components/competition-creation";
 import EditCompetitionDetails from "@/components/edit-competition/editCompetitionDetails";
@@ -26,10 +27,16 @@ export default async function CompetitionPage({
     decodeURIComponent(params.id),
   );
 
+  if (!competitionData?.site) {
+    notFound();
+  }
+
+  const siteAdmins = await getSiteAdmins(competitionData?.site.id);
+
   if (
     !competitionData ||
     (competitionData.userId !== session.user.id &&
-      competitionData.admin != session.user.email)
+      !siteAdmins.find((admin) => admin.email === session.user.email))
   ) {
     notFound();
   }

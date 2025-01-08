@@ -1,7 +1,12 @@
 import { notFound, redirect } from "next/navigation";
 import db from "@/lib/db";
 import CompetitionWinners from "@/components/competitions/competitionWinners";
-import { getCompetitionUsers, getCompetitionWinnerData } from "@/lib/fetchers";
+import {
+  getCompetitionDataWithSite,
+  getCompetitionUsers,
+  getCompetitionWinnerData,
+  getSiteAdmins,
+} from "@/lib/fetchers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
@@ -14,21 +19,18 @@ export default async function CompetitionParticipants({
   if (!session) {
     redirect("/login");
   }
-  const data = await db.query.competitions.findFirst({
-    where: (competitions, { eq }) =>
-      eq(competitions.id, decodeURIComponent(params.id)),
-    with: {
-      site: {
-        columns: {
-          subdomain: true,
-        },
-      },
-    },
-  });
+  const data = await getCompetitionDataWithSite(decodeURIComponent(params.id));
+
+  if (!data?.site) {
+    notFound();
+  }
+
+  const siteAdmins = await getSiteAdmins(data?.site.id);
 
   if (
     !data ||
-    (data.userId !== session.user.id && data.admin != session.user.email)
+    (data.userId !== session.user.id &&
+      !siteAdmins.find((admin) => admin.email === session.user.email))
   ) {
     notFound();
   }

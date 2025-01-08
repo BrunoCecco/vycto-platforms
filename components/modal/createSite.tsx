@@ -1,7 +1,7 @@
 "use client";
 
 import { toast } from "sonner";
-import { createSite } from "@/lib/actions";
+import { createSite, createSiteAdmin } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { cn } from "@/lib/utils";
@@ -10,6 +10,7 @@ import { useModal } from "./provider";
 import va from "@vercel/analytics";
 import { useEffect, useState } from "react";
 import { Input, Spinner, Button, Textarea } from "@nextui-org/react";
+import { e } from "@vercel/blob/dist/put-96a1f07e";
 
 export default function CreateSiteModal() {
   const router = useRouter();
@@ -19,8 +20,9 @@ export default function CreateSiteModal() {
     name: "",
     subdomain: "",
     description: "",
-    admin: "",
   });
+
+  const [admin, setAdmin] = useState("");
 
   useEffect(() => {
     setData((prev) => ({
@@ -35,16 +37,22 @@ export default function CreateSiteModal() {
   return (
     <form
       action={async (data: FormData) =>
-        createSite(data).then((res: any) => {
-          if (res.error) {
-            toast.error(res.error);
+        createSite(data).then((siteRes) => {
+          if ("error" in siteRes) {
+            toast.error(siteRes.error + ": Error creating site");
           } else {
-            va.track("Created Site");
-            const { id } = res;
-            router.refresh();
-            router.push(`/site/${id}`);
-            modal?.hide();
-            toast.success(`Successfully created site!`);
+            createSiteAdmin(siteRes.id, admin, false).then((res: any) => {
+              if (res.error) {
+                toast.error(res.error + ": Error creating site admin");
+              } else {
+                va.track("Created Site");
+                const { id } = siteRes;
+                router.refresh();
+                router.push(`/site/${id}`);
+                modal?.hide();
+                toast.success(`Successfully created site!`);
+              }
+            });
           }
         })
       }
@@ -97,8 +105,8 @@ export default function CreateSiteModal() {
           <Textarea
             name="admin"
             placeholder="johndoe@mail.com"
-            value={data.admin}
-            onChange={(e) => setData({ ...data, admin: e.target.value })}
+            value={admin}
+            onChange={(e) => setAdmin(e.target.value)}
             maxLength={40}
           />
         </div>

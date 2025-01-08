@@ -3,7 +3,7 @@
 import { unstable_cache } from "next/cache";
 import db from "../db";
 import { and, desc, eq, gte, lte, not } from "drizzle-orm";
-import { users } from "../schema";
+import { adminSites, users } from "../schema";
 import { ADMIN, SUPER_ADMIN } from "../constants";
 
 export async function getUserData(email: string) {
@@ -36,7 +36,7 @@ export async function getUserDataById(userId: string) {
   )();
 }
 
-export async function getAllUsers(role: string, offset: number, limit: number) {
+export async function getAllUsers(offset: number, limit: number) {
   return await unstable_cache(
     async () => {
       return await db
@@ -49,39 +49,14 @@ export async function getAllUsers(role: string, offset: number, limit: number) {
           username: users.username,
         })
         .from(users)
-        .where(eq(users.role, role))
         .orderBy(desc(users.createdAt))
         .limit(limit)
         .offset(offset);
     },
-    [`all-users-${role}-${offset}-${limit}`],
+    [`all-users-${offset}-${limit}`],
     {
       revalidate: 900, // Cache for 1 minute
-      tags: [`all-users-${role}-${offset}-${limit}`],
-    },
-  )();
-}
-
-export async function getAllSuperAdmins() {
-  return await unstable_cache(
-    async () => {
-      return await db
-        .select({
-          id: users.id,
-          email: users.email,
-          role: users.role,
-          createdAt: users.createdAt,
-          updatedAt: users.updatedAt,
-          username: users.username,
-        })
-        .from(users)
-        .where(eq(users.role, SUPER_ADMIN))
-        .orderBy(desc(users.createdAt));
-    },
-    ["all-super-admins"],
-    {
-      revalidate: 60, // Cache for 1 minute
-      tags: ["all-super-admins"],
+      tags: [`all-users-${offset}-${limit}`],
     },
   )();
 }
@@ -106,6 +81,59 @@ export async function getAllAdmins() {
     {
       revalidate: 60, // Cache for 1 minute
       tags: ["all-admins"],
+    },
+  )();
+}
+
+export async function getAdminSites(email: string) {
+  // return await unstable_cache(
+  //   async () => {
+  return await db.query.adminSites.findMany({
+    where: eq(adminSites.email, email),
+  });
+  //   },
+  //   [`admin-sites-${email}`],
+  //   {
+  //     revalidate: 60, // Cache for 1 minute
+  //     tags: [`admin-sites-${email}`],
+  //   },
+  // )();
+}
+
+export async function getSiteAdmins(siteId: string) {
+  return await unstable_cache(
+    async () => {
+      return await db.query.adminSites.findMany({
+        where: eq(adminSites.siteId, siteId),
+      });
+    },
+    [`site-admins-${siteId}`],
+    {
+      revalidate: 60, // Cache for 1 minute
+      tags: [`site-admins-${siteId}`],
+    },
+  )();
+}
+
+export async function getAllSiteAdmins() {
+  return await unstable_cache(
+    async () => {
+      return await db
+        .select({
+          id: users.id,
+          email: users.email,
+          role: users.role,
+          createdAt: users.createdAt,
+          updatedAt: users.updatedAt,
+          username: users.username,
+        })
+        .from(users)
+        .leftJoin(adminSites, eq(adminSites.email, users.email));
+    },
+    ["all-site-admins"],
+    {
+      revalidate: 60, // Cache for 1 minute
+      tags: ["all-site-admins"],
     },
   )();
 }

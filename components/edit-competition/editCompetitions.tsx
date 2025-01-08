@@ -6,6 +6,7 @@ import CreateCompetitionButton from "./createCompetitionButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { or } from "drizzle-orm";
+import { getAdminCompetitions } from "@/lib/fetchers";
 
 export default async function EditCompetitions({
   siteId,
@@ -19,31 +20,23 @@ export default async function EditCompetitions({
     redirect("/login");
   }
 
-  const competitions = await db.query.competitions.findMany({
-    where: (competitions, { and, eq }) =>
-      and(
-        or(
-          eq(competitions.userId, session.user.id),
-          eq(competitions.admin, session.user.email),
-        ),
-        siteId ? eq(competitions.siteId, siteId) : undefined,
-      ),
-    with: {
-      site: true,
-    },
-    orderBy: (competitions, { desc }) => desc(competitions.updatedAt),
-    ...(limit ? { limit } : {}),
-  });
+  const competitions = await getAdminCompetitions(session.user.email, limit);
+
+  if (!competitions) {
+    return null;
+  }
+
+  console.log("Competitions: ", competitions);
 
   const pastCompetitions = competitions.filter(
     (competition: any) =>
-      new Date(competition.date.replace(/\[.*\]$/, "")).getTime() <
+      new Date(competition.date?.replace(/\[.*\]$/, "")).getTime() <
         Date.now() && competition.published,
   );
 
   const currentCompetitions = competitions.filter(
     (competition: any) =>
-      new Date(competition.date.replace(/\[.*\]$/, "")).getTime() >=
+      new Date(competition.date?.replace(/\[.*\]$/, "")).getTime() >=
         Date.now() && competition.published,
   );
 

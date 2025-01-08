@@ -12,7 +12,7 @@ const SignUpWrapper = ({
 }) => {
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
-      <div className="relative z-30 mx-auto flex h-screen w-full max-w-lg flex-col items-center justify-center bg-[rgba(255,255,255,0.5)] p-8 backdrop-blur-2xl backdrop-opacity-100 md:w-1/2">
+      <div className="relative z-30 mx-auto flex h-screen w-full max-w-lg flex-col items-center justify-center p-8 backdrop-blur-2xl backdrop-opacity-100 md:w-1/2">
         {children}
       </div>
 

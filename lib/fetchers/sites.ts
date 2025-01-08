@@ -3,7 +3,7 @@
 
 import { unstable_cache } from "next/cache";
 import db from "../db";
-import { siteRewards, sites } from "../schema";
+import { adminSites, siteRewards, sites } from "../schema";
 import { and, desc, eq } from "drizzle-orm";
 
 async function getSiteIdByDomain(domain: string) {
@@ -116,3 +116,24 @@ export async function getSiteRewardByDate(
     },
   )();
 }
+
+export const getAdminSitesData = async (email: string) => {
+  return await unstable_cache(
+    async () => {
+      // join adminSites with sites
+      const adminSites_ = await db
+        .select()
+        .from(sites)
+        .leftJoin(adminSites, eq(adminSites.siteId, sites.id))
+        .where(eq(adminSites.email, email))
+        .orderBy(desc(sites.createdAt));
+
+      return adminSites_.map((site) => site.sites);
+    },
+    [`${email}-admin-sites`],
+    {
+      revalidate: 900,
+      tags: [`${email}-admin-sites`],
+    },
+  )();
+};

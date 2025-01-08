@@ -1,28 +1,46 @@
 import Form from "@/components/form";
-import { updateSite } from "@/lib/actions";
+import { createSiteAdmin, deleteSiteAdmin, updateSite } from "@/lib/actions";
 import DeleteSiteForm from "@/components/form/deleteSiteForm";
 import db from "@/lib/db";
-import { getSiteDataById } from "@/lib/fetchers";
+import { getSiteAdmins, getSiteDataById } from "@/lib/fetchers";
+import { Button } from "@nextui-org/react";
+import { notFound } from "next/navigation";
 
 export default async function SiteSettingsIndex({
   params,
 }: {
   params: { id: string };
 }) {
-  const data = await getSiteDataById(decodeURIComponent(params.id));
+  const siteAdmins = await getSiteAdmins(decodeURIComponent(params.id));
+  const siteData = await getSiteDataById(decodeURIComponent(params.id));
+  if (!siteData) {
+    notFound();
+  }
   return (
     <div className="flex flex-col space-y-6">
+      {siteAdmins.map((admin) => (
+        <div key={admin.email} className="flex items-center space-x-2">
+          <div>{admin.email}</div>
+          <form
+            action={async (data: FormData) => {
+              await deleteSiteAdmin(siteData.id, admin.email);
+            }}
+          >
+            <Button type="submit">Delete</Button>
+          </form>
+        </div>
+      ))}
       <Form
-        title="Sponsor Admin"
+        title="Website Admin"
         description="The admin from the sponsor - they will be given access to edit the site."
         helpText="Please make sure the email is correct."
         inputAttrs={{
           name: "admin",
           type: "text",
-          defaultValue: data?.admin!,
+          defaultValue: "",
           placeholder: "johndoe@gmail.com",
         }}
-        handleSubmit={updateSite}
+        handleSubmit={createSiteAdmin}
       />
 
       <Form
@@ -32,7 +50,7 @@ export default async function SiteSettingsIndex({
         inputAttrs={{
           name: "name",
           type: "text",
-          defaultValue: data?.name!,
+          defaultValue: siteData?.name!,
           placeholder: "My Awesome Site",
           maxLength: 32,
         }}
@@ -59,7 +77,7 @@ export default async function SiteSettingsIndex({
         inputAttrs={{
           name: "terms",
           type: "generalfile",
-          defaultValue: data?.terms!,
+          defaultValue: siteData?.terms!,
           placeholder: "terms",
         }}
         handleSubmit={updateSite}
@@ -72,13 +90,13 @@ export default async function SiteSettingsIndex({
         inputAttrs={{
           name: "privacypolicy",
           type: "generalfile",
-          defaultValue: data?.privacypolicy!,
+          defaultValue: siteData?.privacypolicy!,
           placeholder: "privacypolicy",
         }}
         handleSubmit={updateSite}
       />
 
-      <DeleteSiteForm siteName={data?.name!} />
+      <DeleteSiteForm siteName={siteData?.name!} />
     </div>
   );
 }

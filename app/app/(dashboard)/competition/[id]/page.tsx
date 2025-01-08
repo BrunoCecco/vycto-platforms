@@ -3,6 +3,12 @@ import db from "@/lib/db";
 import CompetitionCreator from "@/components/competition-creation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import {
+  getAdminSites,
+  getCompetitionDataWithSite,
+  getCompetitionFromId,
+  getSiteAdmins,
+} from "@/lib/fetchers";
 
 export default async function CompetitionPage({
   params,
@@ -14,21 +20,16 @@ export default async function CompetitionPage({
     redirect("/login");
   }
 
-  const data = await db.query.competitions.findFirst({
-    where: (competitions, { eq }) =>
-      eq(competitions.id, decodeURIComponent(params.id)),
-    with: {
-      site: {
-        columns: {
-          subdomain: true,
-        },
-      },
-    },
-  });
+  const data = await getCompetitionDataWithSite(decodeURIComponent(params.id));
+  if (!data?.site) {
+    notFound();
+  }
+  const siteAdmins = await getSiteAdmins(data?.site.id);
 
   if (
     !data ||
-    (data.userId !== session.user.id && data.admin != session.user.email)
+    (data.userId !== session.user.id &&
+      !siteAdmins.find((admin) => admin.email === session.user.email))
   ) {
     notFound();
   }

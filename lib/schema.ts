@@ -36,12 +36,34 @@ export const users = pgTable("users", {
     .$onUpdate(() => new Date()),
 });
 
-export const superAdmins = pgTable("superAdmins", {
-  userId: text("userId")
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  email: text("email").notNull().unique(),
-});
+export const adminSites = pgTable(
+  "adminSites",
+  {
+    userId: text("userId").references(() => users.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+    email: text("email")
+      .notNull()
+      .references(() => users.email, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    siteId: text("siteId")
+      .notNull()
+      .references(() => sites.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+  },
+  (table) => {
+    return {
+      compositePk: primaryKey({
+        columns: [table.email, table.siteId],
+      }),
+    };
+  },
+);
 
 export const sessions = pgTable(
   "sessions",
@@ -151,10 +173,6 @@ export const sites = pgTable(
       onDelete: "cascade",
       onUpdate: "cascade",
     }),
-    admin: text("admin").references(() => users.email, {
-      onDelete: "no action",
-      onUpdate: "no action",
-    }),
   },
   (table) => {
     return {
@@ -247,10 +265,6 @@ export const competitions = pgTable(
     userId: text("userId").references(() => users.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
-    }),
-    admin: text("admin").references(() => users.email, {
-      onDelete: "no action",
-      onUpdate: "no action",
     }),
   },
   (table) => {
@@ -372,10 +386,6 @@ export const competitionsRelations = relations(
   ({ one, many }) => ({
     site: one(sites, { references: [sites.id], fields: [competitions.siteId] }),
     user: one(users, { references: [users.id], fields: [competitions.userId] }),
-    siteadmin: one(users, {
-      references: [users.email],
-      fields: [competitions.admin],
-    }),
     questions: many(questions),
     userCompetitions: many(userCompetitions),
   }),
@@ -418,7 +428,6 @@ export const userCompetitionsRelations = relations(
 export const sitesRelations = relations(sites, ({ one, many }) => ({
   competitions: many(competitions),
   user: one(users, { references: [users.id], fields: [sites.userId] }),
-  siteadmin: one(users, { references: [users.email], fields: [sites.admin] }),
   siteRewards: many(siteRewards),
 }));
 
@@ -435,10 +444,6 @@ export const userRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
   sites: many(sites),
   competitions: many(competitions),
-}));
-
-export const superAdminsRelations = relations(superAdmins, ({ one }) => ({
-  user: one(users, { references: [users.id], fields: [superAdmins.userId] }),
 }));
 
 export type SelectSite = typeof sites.$inferSelect;

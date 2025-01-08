@@ -7,11 +7,10 @@ import { updateUser } from "@/lib/actions";
 import UserForm from "../form/updateuser";
 import { USER, USER_ROLES } from "@/lib/constants";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { getAllAdmins, getAllSuperAdmins, getAllUsers } from "@/lib/fetchers";
+import { getAllAdmins, getAllUsers } from "@/lib/fetchers";
 import { Select, SelectItem, Spinner } from "@nextui-org/react";
 
 const AdminTable = () => {
-  const [selectedRole, setSelectedRole] = useState(USER);
   const [currentUsers, setCurrentUsers] = useState<SelectUser[]>();
   const [limit, setLimit] = useState(20);
   const [offset, setOffset] = useState(0);
@@ -26,7 +25,7 @@ const AdminTable = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ role: selectedRole, offset, limit }),
+          body: JSON.stringify({ offset, limit }),
           cache: "no-store",
         });
         const data = await users.json();
@@ -38,7 +37,7 @@ const AdminTable = () => {
       }
     };
     fetchUsers();
-  }, [selectedRole, offset, limit]);
+  }, [offset, limit]);
 
   const prevPage = () => {
     if (offset === 0) return;
@@ -61,21 +60,6 @@ const AdminTable = () => {
             <th className="px-4 py-2">User</th>
             <th className="px-4 py-2">Email</th>
             <th className="px-4 py-2">Joined</th>
-            <th className="px-4 py-2">
-              <span>Role: </span>
-              <Select
-                aria-label="Role Selector"
-                placeholder={selectedRole}
-                selectedKeys={[selectedRole]}
-                onChange={(e) => setSelectedRole(e.target.value)}
-              >
-                {USER_ROLES.map((role) => (
-                  <SelectItem key={role} value={role}>
-                    {role}
-                  </SelectItem>
-                ))}
-              </Select>
-            </th>
           </tr>
         </thead>
         <tbody className="">
@@ -109,17 +93,6 @@ const AdminTable = () => {
                 </td>
                 <td className="px-4 py-3 ">
                   {new Date(user.createdAt).toLocaleDateString()}
-                </td>
-                <td className="px-4 py-3">
-                  <UserForm
-                    inputAttrs={{
-                      name: "role",
-                      type: "text",
-                      defaultValue: user.role!,
-                    }}
-                    userId={user.id}
-                    handleSubmit={updateUser}
-                  />
                 </td>
               </tr>
             ))

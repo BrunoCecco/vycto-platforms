@@ -194,12 +194,6 @@ export function withSuperAdminAuth(action: any) {
       };
     }
 
-    if (session.user.role != SUPER_ADMIN) {
-      return {
-        error: "Not authorized",
-      };
-    }
-
     return action(formData, userId, key);
   };
 }
@@ -221,9 +215,14 @@ export function withSiteAuth(action: any) {
       where: (sites, { eq }) => eq(sites.id, siteId),
     });
 
+    const siteAdmins = await db.query.adminSites.findMany({
+      where: (adminSites, { eq }) => eq(adminSites.siteId, siteId),
+    });
+
     if (
       !site ||
-      (site.userId !== session.user.id && site.admin != session.user.email)
+      (site.userId !== session.user.id &&
+        !siteAdmins.find((admin) => admin.email === session.user.email))
     ) {
       return {
         error: "Not authorized",
@@ -263,9 +262,14 @@ export function withSiteRewardAuth(action: any) {
       where: (sites, { eq }) => eq(sites.id, siteRewardSiteId),
     });
 
+    const siteAdmins = await db.query.adminSites.findMany({
+      where: (adminSites, { eq }) => eq(adminSites.siteId, siteRewardSiteId),
+    });
+
     if (
       !site ||
-      (site.userId !== session.user.id && site.admin != session.user.email)
+      (site.userId !== session.user.id &&
+        !siteAdmins.find((admin) => admin.email === session.user.email))
     ) {
       return {
         error: "Not authorized",
@@ -296,10 +300,22 @@ export function withCompetitionAuth(action: any) {
       },
     });
 
+    const site = competition?.site;
+
+    if (!site) {
+      return {
+        error: "Competition not found",
+      };
+    }
+
+    const siteAdmins = await db.query.adminSites.findMany({
+      where: (adminSites, { eq }) => eq(adminSites.siteId, site.id),
+    });
+
     if (
       !competition ||
       (competition.userId !== session.user.id &&
-        competition.admin != session.user.email)
+        !siteAdmins.find((admin) => admin.email === session.user.email))
     ) {
       return {
         error: "Competition not found",
@@ -314,8 +330,8 @@ async function sendVerificationRequest(params: SendVerificationRequestParams) {
   const { identifier, url, provider, theme } = params;
   const { host } = new URL(url);
 
-  const superAdmins = await db.query.superAdmins.findFirst({
-    where: (superAdmins, { eq }) => eq(superAdmins.email, identifier),
+  const adminSites = await db.query.adminSites.findFirst({
+    where: (adminSites, { eq }) => eq(adminSites.email, identifier),
     columns: {
       email: true,
     },
@@ -323,7 +339,7 @@ async function sendVerificationRequest(params: SendVerificationRequestParams) {
 
   if (
     host.startsWith("app") &&
-    (superAdmins == undefined || superAdmins.email == undefined)
+    (adminSites == undefined || adminSites.email == undefined)
   ) {
     throw new Error(
       `UNAUTHORIZED ACCOUNT: You do not have permissions to access the vycto admin dashboard`,

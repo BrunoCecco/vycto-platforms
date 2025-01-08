@@ -56,7 +56,6 @@ export const createCompetition = withSiteAuth(
         siteId: site.id,
         userId: session.user.id,
         sponsor: site.name,
-        admin: session.user.email,
         date: new Date().toISOString(),
         color1: site.color1,
         color2: site.color2,

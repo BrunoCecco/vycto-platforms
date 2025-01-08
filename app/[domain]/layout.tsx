@@ -15,6 +15,7 @@ import PlayButton from "@/components/buttons/playButton";
 import { toast } from "sonner";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { SelectCompetition } from "@/lib/schema";
 
 export async function generateMetadata({
   params,
@@ -82,15 +83,22 @@ export default async function SiteLayout({
 
   const compData = await getCompetitionsForSite(domain);
 
-  const competitions = compData.map(
+  const competitions: SelectCompetition[] = compData.map(
     (competition: any) => competition.competition,
   );
 
-  const latestCompetition = competitions.sort(
+  const currentComps = competitions.filter(
+    (competition: any) =>
+      new Date(competition.date.replace(/\[.*\]$/, "")).getTime() >= Date.now(),
+  );
+
+  const sortedCurrentComps = currentComps.sort(
     (a: any, b: any) =>
-      new Date(b.date.replace(/\[.*\]$/, "")).getTime() -
-      new Date(a.date.replace(/\[.*\]$/, "")).getTime(),
-  )[0];
+      new Date(a.date.replace(/\[.*\]$/, "")).getTime() -
+      new Date(b.date.replace(/\[.*\]$/, "")).getTime(),
+  );
+
+  const earliestCurrentComp = sortedCurrentComps[0];
 
   // Optional: Redirect to custom domain if it exists
   if (
@@ -106,7 +114,9 @@ export default async function SiteLayout({
       <div className="relative z-50 w-0 sm:w-1/5">
         <SiteNav
           data={data}
-          latestCompetitionUrl={`/comp/${latestCompetition?.slug}`}
+          latestCompetitionUrl={
+            earliestCurrentComp ? `/comp/${earliestCurrentComp?.slug}` : "/"
+          }
           session={session}
         >
           <Profile />

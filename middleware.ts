@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import db from "./lib/db";
+import { eq } from "drizzle-orm";
+import { getAdminSites } from "./lib/fetchers";
 
 export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
@@ -32,7 +35,15 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    // Allow access for super admins
+    if (session && session.email) {
+      // Allow access for super admins only
+      const adminSites = await getAdminSites(session.email);
+
+      if (adminSites == undefined || adminSites.length == 0) {
+        return NextResponse.error();
+      }
+    }
+
     return NextResponse.rewrite(new URL(`/app${path}`, req.url));
   }
 

@@ -139,7 +139,7 @@ export default function LoginButton({
       });
 
       console.log(result);
-      if (result && result.ok && signInMethod == "email") {
+      if (result && result.ok && !result.error && signInMethod == "email") {
         setMessage("Email sent - check your inbox to start playing!");
         toast.success("Email sent - check your inbox to start playing!");
       } else if (signInMethod == "email") {
