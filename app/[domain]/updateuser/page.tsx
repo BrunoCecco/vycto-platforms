@@ -66,10 +66,12 @@ export default function UpdateUser() {
         router.replace("/");
       }
       return;
-    } else {
+    } else if (session && !session?.user.username) {
       setLoading(false);
     }
   }, [session, searchParams]);
+
+  
 
   const constructRedirectUrl = () => {
     var redirectUrl = `/comp/${compslug}?`;
