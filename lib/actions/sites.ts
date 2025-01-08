@@ -303,6 +303,12 @@ export const createSiteAdmin = async (
   const siteAdmins = await getSiteAdmins(siteId);
 
   if (verify && !siteAdmins.some((admin) => admin.userId === session.user.id)) {
+    console.log(
+      "User is not an admin of this site",
+      siteAdmins,
+      session.user.id,
+      siteId,
+    );
     return {
       error: "You are not authorized to add admins to this site",
     };

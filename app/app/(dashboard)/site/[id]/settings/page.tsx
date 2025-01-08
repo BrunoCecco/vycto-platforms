@@ -3,9 +3,10 @@ import { createSiteAdmin, deleteSiteAdmin, updateSite } from "@/lib/actions";
 import DeleteSiteForm from "@/components/form/deleteSiteForm";
 import db from "@/lib/db";
 import { getSiteAdmins, getSiteDataById } from "@/lib/fetchers";
-import { Button } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { notFound } from "next/navigation";
 import DeleteAdminButton from "./deleteAdminButton";
+import CreateAdminForm from "./createAdminForm";
 
 export default async function SiteSettingsIndex({
   params,
@@ -30,18 +31,7 @@ export default async function SiteSettingsIndex({
           <DeleteAdminButton email={admin.email} siteId={siteData.id} />
         </div>
       ))}
-      <Form
-        title="Website Admin"
-        description="The admin from the sponsor - they will be given access to edit the site."
-        helpText="Please make sure the email is correct."
-        inputAttrs={{
-          name: "admin",
-          type: "text",
-          defaultValue: "",
-          placeholder: "johndoe@gmail.com",
-        }}
-        handleSubmit={createSiteAdmin}
-      />
+      <CreateAdminForm siteId={siteData.id} />
 
       <Form
         title="Name"
