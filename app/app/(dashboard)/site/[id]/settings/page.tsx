@@ -5,6 +5,7 @@ import db from "@/lib/db";
 import { getSiteAdmins, getSiteDataById } from "@/lib/fetchers";
 import { Button } from "@nextui-org/react";
 import { notFound } from "next/navigation";
+import DeleteAdminButton from "./deleteAdminButton";
 
 export default async function SiteSettingsIndex({
   params,
@@ -12,22 +13,21 @@ export default async function SiteSettingsIndex({
   params: { id: string };
 }) {
   const siteAdmins = await getSiteAdmins(decodeURIComponent(params.id));
+  console.log(siteAdmins, "siteAdmins");
   const siteData = await getSiteDataById(decodeURIComponent(params.id));
   if (!siteData) {
     notFound();
   }
   return (
     <div className="flex flex-col space-y-6">
+      <h1 className="text-3xl font-bold">Site Admins</h1>
       {siteAdmins.map((admin) => (
-        <div key={admin.email} className="flex items-center space-x-2">
+        <div
+          key={admin.email}
+          className="flex items-center space-x-2 bg-content1"
+        >
           <div>{admin.email}</div>
-          <form
-            action={async (data: FormData) => {
-              await deleteSiteAdmin(siteData.id, admin.email);
-            }}
-          >
-            <Button type="submit">Delete</Button>
-          </form>
+          <DeleteAdminButton email={admin.email} siteId={siteData.id} />
         </div>
       ))}
       <Form
