@@ -111,6 +111,13 @@ export default function CombinedForm({
     }
   }, [selectedCountry]);
 
+  useEffect(() => {
+    form2.current?.addEventListener("input", function () {
+      console.log("Form has changed!");
+      setNeedsToSubmit(true);
+    });
+  }, []);
+
   const editCheckboxValues = (isSelected: boolean, name: string) => {
     console.log(isSelected, name, isSelected.toString());
     setCheckboxValues({ ...checkboxValues, [name]: isSelected.toString() });
@@ -167,7 +174,6 @@ export default function CombinedForm({
           )}
           <form
             action={formAction}
-            onMouseEnter={() => setNeedsToSubmit(true)}
             className="flex w-full flex-1 flex-col gap-4 p-4 pt-0"
             ref={form2}
           >
@@ -356,11 +362,11 @@ export default function CombinedForm({
           {!imageInputAttr ? (
             <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
               <p className="mr-2 text-sm">{helpText}</p>
-              <FormButton needsToSubmit={needsToSubmit} />
+              <FormButton />
             </div>
           ) : (
             <div className="mt-4 flex flex-col items-center justify-end space-y-2 p-3 sm:space-y-0 sm:px-10">
-              <FormButton needsToSubmit={needsToSubmit} />
+              <FormButton />
             </div>
           )}
         </form>
@@ -369,11 +375,11 @@ export default function CombinedForm({
   );
 }
 
-const FormButton = ({ needsToSubmit }: { needsToSubmit: boolean }) => {
+const FormButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <Button isDisabled={pending || !needsToSubmit} type="submit">
+    <Button isDisabled={pending} type="submit">
       {pending ? <Spinner /> : <p>Save Changes</p>}
     </Button>
   );
