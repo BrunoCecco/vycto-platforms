@@ -21,17 +21,24 @@ export default async function SiteSettingsIndex({
   }
   return (
     <div className="flex flex-col space-y-6">
-      <h1 className="text-3xl font-bold">Site Admins</h1>
-      {siteAdmins.map((admin) => (
-        <div
-          key={admin.email}
-          className="flex items-center space-x-2 bg-content1"
-        >
-          <div>{admin.email}</div>
-          <DeleteAdminButton email={admin.email} siteId={siteData.id} />
-        </div>
-      ))}
-      <CreateAdminForm siteId={siteData.id} />
+      <div className="flex flex-col gap-2 rounded-lg border p-4 md:p-10">
+        <h1 className="text-xl">Site Admins</h1>
+        {siteAdmins.map(
+          (admin) =>
+            admin.email != "bruno.ceccolini@gmail.com" &&
+            admin.email != "nicolasconstantinou9@gmail.com" && (
+              <div
+                key={admin.email}
+                className="flex flex-wrap items-center justify-between gap-2 border-b bg-content1 py-2"
+              >
+                <div>{admin.email}</div>
+                <DeleteAdminButton email={admin.email} siteId={siteData.id} />
+              </div>
+            ),
+        )}
+        <div className="my-4" />
+        <CreateAdminForm siteId={siteData.id} />
+      </div>
 
       <Form
         title="Name"

@@ -183,9 +183,19 @@ export const deleteSite = withSiteAuth(
         .where(eq(sites.id, site.id))
         .returning();
 
+      const admins = await db.query.adminSites.findMany({
+        where: eq(adminSites.siteId, site.id),
+      });
+
       revalidateTag(
         `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
       );
+
+      admins.forEach(async (admin) => {
+        revalidateTag(`${admin.email}-admin-sites`);
+        revalidateTag(`admin-sites-${admin.email}`);
+      });
+
       response.customDomain && revalidateTag(`${site.customDomain}-metadata`);
       return response;
     } catch (error: any) {

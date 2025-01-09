@@ -98,6 +98,7 @@ export default function CombinedForm({
   const [favouritePlayerInputAttr, setFavouritePlayerInputAttr] = useState(
     inputAttrs.find((inputAttr) => inputAttr.name === "favouritePlayer"),
   );
+  const [needsToSubmit, setNeedsToSubmit] = useState(false);
 
   useEffect(() => {
     if (
@@ -166,6 +167,7 @@ export default function CombinedForm({
           )}
           <form
             action={formAction}
+            onMouseEnter={() => setNeedsToSubmit(true)}
             className="flex w-full flex-1 flex-col gap-4 p-4 pt-0"
             ref={form2}
           >
@@ -352,13 +354,13 @@ export default function CombinedForm({
             </p>
           ) : null}
           {!imageInputAttr ? (
-            <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t   p-3   sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
+            <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
               <p className="mr-2 text-sm">{helpText}</p>
-              <FormButton />
+              <FormButton needsToSubmit={needsToSubmit} />
             </div>
           ) : (
             <div className="mt-4 flex flex-col items-center justify-end space-y-2 p-3 sm:space-y-0 sm:px-10">
-              <FormButton />
+              <FormButton needsToSubmit={needsToSubmit} />
             </div>
           )}
         </form>
@@ -367,11 +369,11 @@ export default function CombinedForm({
   );
 }
 
-const FormButton = () => {
+const FormButton = ({ needsToSubmit }: { needsToSubmit: boolean }) => {
   const { pending } = useFormStatus();
 
   return (
-    <Button isDisabled={pending} type="submit">
+    <Button isDisabled={pending || !needsToSubmit} type="submit">
       {pending ? <Spinner /> : <p>Save Changes</p>}
     </Button>
   );

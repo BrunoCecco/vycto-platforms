@@ -277,7 +277,7 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
                     email={email}
                     username={username}
                     birthDate={birthDate?.toString()}
-                    compCallback={constructRedirectUrl()}
+                    compCallback={compslug ? constructRedirectUrl() : undefined}
                     name={name}
                     setEmailExists={setEmailExists}
                   />

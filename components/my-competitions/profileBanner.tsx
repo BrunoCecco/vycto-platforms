@@ -7,6 +7,7 @@ import Image from "next/image";
 import ReactFlagsSelect from "react-flags-select";
 import MovingGradient from "../ui/movingGradient";
 import { CardSpotlight } from "../ui/cardSpotlight";
+import { getLeaderboardName } from "@/lib/utils";
 
 export default function ProfileBanner({
   user,
@@ -17,11 +18,11 @@ export default function ProfileBanner({
 }) {
   return (
     <div
-      className="relative flex h-28 w-full items-center overflow-hidden rounded-md border-b-2 bg-transparent p-4 md:h-40 md:p-8"
+      className="relative flex h-auto w-full flex-col items-center overflow-hidden rounded-md border-b-2 bg-transparent p-4 md:h-40 md:flex-row md:p-8"
       style={{ borderBottomColor: siteData.color1 }}
     >
       {/* <div className="absolute left-0 right-0 z-0 mx-auto h-80 w-80 rounded-full bg-background/20" /> */}
-      <div className="relative z-20 h-12 w-20 min-w-20 overflow-hidden rounded-full md:h-32 md:w-32">
+      <div className="relative z-20 h-20 w-20 overflow-hidden rounded-full md:h-32 md:w-32">
         <Image
           alt="Profile Picture"
           className="h-full w-full object-cover"
@@ -34,7 +35,7 @@ export default function ProfileBanner({
           {user.name || user.email}
         </h1>
         <p className="w-fit rounded-md text-xs md:text-sm">
-          @{user.username || user.email}
+          @{getLeaderboardName(user)}
         </p>
       </div>
       <div className="z-20 ml-auto flex flex-col gap-2 pl-2">
@@ -51,7 +52,7 @@ export default function ProfileBanner({
         ) : null}
         {user.favouritePlayer ? (
           <h2 className="hidden break-words text-xs sm:block md:text-lg">
-            Favourite Player: <br />{" "}
+            Favourite Player: <br className="md:hidden" />{" "}
             <span className="font-semibold">{user.favouritePlayer}</span>
           </h2>
         ) : null}

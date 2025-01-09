@@ -2,11 +2,21 @@
 import { createSiteAdmin } from "@/lib/actions";
 import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const CreateAdminForm = ({ siteId }: { siteId: string }) => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const handleCreate = async () => {
+    setLoading(true);
     const res = await createSiteAdmin(siteId, email);
+    if ("error" in res) {
+      toast.error(res.error);
+      setEmail("");
+    } else {
+      setEmail("");
+    }
+    setLoading(false);
   };
 
   return (
@@ -14,11 +24,13 @@ const CreateAdminForm = ({ siteId }: { siteId: string }) => {
       <Input
         name="email"
         type="email"
-        placeholder="Email"
+        placeholder="New Admin Email"
         onChange={(e) => setEmail(e.target.value)}
       />
       <Input name="siteId" type="hidden" value={siteId} />
-      <Button onClick={handleCreate}>Create</Button>
+      <Button isDisabled={loading} onClick={handleCreate}>
+        {loading ? "Creating..." : "Create"}
+      </Button>
     </div>
   );
 };

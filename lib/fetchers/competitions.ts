@@ -13,6 +13,7 @@ import {
   SelectCompetition,
   adminSites,
 } from "../schema";
+import { getAdminSites } from "./users";
 
 export async function getAllCompetitions() {
   return await unstable_cache(
@@ -308,24 +309,42 @@ export const getCompetitionDataWithSite = async (id: string) => {
   )();
 };
 
-export const getAdminCompetitions = async (email: string, limit?: number) => {
-  return await unstable_cache(
-    async () => {
-      const response = await db
-        .select()
-        .from(competitions)
-        .leftJoin(sites, eq(competitions.siteId, sites.id))
-        .leftJoin(adminSites, eq(sites.id, adminSites.siteId))
-        .where(eq(adminSites.email, email))
-        .orderBy(desc(competitions.createdAt))
-        .limit(limit || 10);
+export const getAdminCompetitions = async (
+  email: string,
+  siteId?: string,
+  limit?: number,
+) => {
+  // return await unstable_cache(
+  //   async () => {
+  let response;
+  if (!siteId) {
+    response = await db
+      .select()
+      .from(competitions)
+      .leftJoin(sites, eq(competitions.siteId, sites.id))
+      .leftJoin(adminSites, eq(sites.id, adminSites.siteId))
+      .where(eq(adminSites.email, email))
+      .orderBy(desc(competitions.createdAt));
+  } else {
+    response = await db
+      .select()
+      .from(competitions)
+      .leftJoin(sites, eq(competitions.siteId, sites.id))
+      .leftJoin(adminSites, eq(sites.id, adminSites.siteId))
+      .where(and(eq(adminSites.email, email), eq(competitions.siteId, siteId)))
+      .orderBy(desc(competitions.createdAt));
+  }
 
-      return response.map((comp) => comp.competitions);
-    },
-    [`${email}-admin-comps`],
-    {
-      revalidate: 900,
-      tags: [`${email}-admin-comps`],
-    },
-  )();
+  if (limit) {
+    return response.map((comp) => comp.competitions).slice(0, limit);
+  } else {
+    return response.map((comp) => comp.competitions);
+  }
+  //   },
+  //   [`${email}-${siteId}-${limit}-admin-comps`],
+  //   {
+  //     revalidate: false,
+  //     tags: [`${email}-${siteId}-${limit}-admin-comps`],
+  //   },
+  // )();
 };

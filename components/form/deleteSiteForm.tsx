@@ -7,6 +7,7 @@ import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import { deleteSite } from "@/lib/actions";
 import va from "@vercel/analytics";
+import { Input } from "@nextui-org/react";
 
 export default function DeleteSiteForm({ siteName }: { siteName: string }) {
   const { id } = useParams() as { id: string };
@@ -37,13 +38,12 @@ export default function DeleteSiteForm({ siteName }: { siteName: string }) {
           name of your site <b>{siteName}</b> to confirm.
         </p>
 
-        <input
+        <Input
           name="confirm"
           type="text"
           required
           pattern={siteName}
           placeholder={siteName}
-          className="w-full max-w-md rounded-md border "
         />
       </div>
 

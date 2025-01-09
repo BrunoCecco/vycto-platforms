@@ -72,20 +72,20 @@ export default async function CompetitionRewards({
 
         <CombinedForm
           title="Reward #2"
-          helpText="Please enter the details for the secondary reward."
+          helpText="Please enter the details for the second reward."
           inputAttrs={[
             {
               name: "reward2Title",
               type: "text",
               defaultValue: data?.reward2Title!,
-              placeholder: "Title secondary",
-              label: "Title of the secondary reward for this competition.",
+              placeholder: "Title second",
+              label: "Title of the second reward for this competition.",
             },
             {
               name: "reward2Description",
               type: "text",
               defaultValue: data?.reward2Description!,
-              placeholder: "Description secondary",
+              placeholder: "Description second",
               label: "Description",
             },
             {
@@ -93,12 +93,47 @@ export default async function CompetitionRewards({
               type: "number",
               min: "0",
               defaultValue: data?.reward2Winners?.toString() || "1",
-              label: "Number of winners for the secondary reward.",
+              label: "Number of winners for the second reward.",
             },
             {
               name: "reward2Image",
               type: "file",
               defaultValue: data?.reward2Image!,
+              label: "The thumbnail image for the second reward.",
+            },
+          ]}
+          handleSubmit={updateCompetitionMetadata}
+        />
+
+        <CombinedForm
+          title="Reward #3"
+          helpText="Please enter the details for the third reward."
+          inputAttrs={[
+            {
+              name: "reward3Title",
+              type: "text",
+              defaultValue: data?.reward3Title!,
+              placeholder: "Title secondary",
+              label: "Title of the secondary reward for this competition.",
+            },
+            {
+              name: "reward3Description",
+              type: "text",
+              defaultValue: data?.reward3Description!,
+              placeholder: "Description secondary",
+              label: "Description",
+            },
+            {
+              name: "reward3Winners",
+              type: "number",
+              min: "0",
+              defaultValue: data?.reward3Winners?.toString() || "1",
+              label: "Number of winners for the secondary reward.",
+            },
+            {
+              name: "reward3Image",
+              type: "file",
+              defaultValue: data?.reward3Image!,
               label: "The thumbnail image for the secondary reward.",
             },
           ]}

@@ -133,7 +133,7 @@ export default function SubmitAnswersForm({
   return (
     <>
       <form action={handleSubmit} className="rounded-lg px-8 pb-8">
-        <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-success-600 p-3 text-sm">
+        <div className="flex flex-col items-center justify-center gap-4 space-y-2 rounded-lg border border-success-600 p-3 text-sm text-xs sm:text-sm">
           <p className="text-center">
             Once submitted, you will not be able to edit your answers.
           </p>
@@ -144,7 +144,7 @@ export default function SubmitAnswersForm({
               "newsletter-consent",
             ]}
             classNames={{
-              wrapper: "flex flex-col gap-4 text-sm",
+              wrapper: "flex flex-col gap-4 text-xs sm:text-sm",
             }}
           >
             <Checkbox

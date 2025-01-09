@@ -68,7 +68,7 @@ export default async function MyCompetitions({
           <div className="w-full">
             {currentCompetitions && currentCompetitions?.length > 0 && (
               <div className="mb-12 w-full">
-                <h1 className="mb-4 flex items-center text-2xl font-semibold">
+                <h1 className="mb-4 flex items-center text-lg font-semibold sm:text-2xl">
                   <MedalIcon color={data.color1} size={24} className="mr-2" />
                   Current Competitions
                 </h1>
@@ -81,7 +81,7 @@ export default async function MyCompetitions({
             )}
             {pastCompetitions && pastCompetitions?.length > 0 && (
               <div className="w-full">
-                <h1 className="mb-4 flex items-center text-2xl font-semibold">
+                <h1 className="mb-4 flex items-center text-lg font-semibold sm:text-2xl">
                   <ClockIcon color={data.color1} size={24} className="mr-2" />
                   Past Competitions
                 </h1>

@@ -20,7 +20,11 @@ export default async function EditCompetitions({
     redirect("/login");
   }
 
-  const competitions = await getAdminCompetitions(session.user.email, limit);
+  const competitions = await getAdminCompetitions(
+    session.user.email,
+    siteId,
+    limit,
+  );
 
   if (!competitions) {
     return null;
