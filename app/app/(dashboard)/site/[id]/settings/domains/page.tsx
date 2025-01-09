@@ -25,7 +25,7 @@ export default async function SiteSettingsDomains({
         }}
         handleSubmit={updateSite}
       />
-      <Form
+      {/* <Form
         title="Custom Domain"
         description="The custom domain for your site."
         helpText="Please enter a valid domain."
@@ -38,7 +38,7 @@ export default async function SiteSettingsDomains({
           pattern: "^[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}$",
         }}
         handleSubmit={updateSite}
-      />
+      /> */}
     </div>
   );
 }
