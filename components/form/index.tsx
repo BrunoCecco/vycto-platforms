@@ -170,10 +170,8 @@ export default function Form({
             <SelectItem key="font-lora">Lora</SelectItem>
             <SelectItem key="font-work">Work Sans</SelectItem>
           </Select>
-        ) : inputAttrs.name === "color1" ||
-          inputAttrs.name === "color2" ||
-          inputAttrs.name === "color3" ? (
-          <Input {...inputAttrs} type="color" className="h-12 w-12 text-sm" />
+        ) : inputAttrs.name.includes("color") ? (
+          <Input {...inputAttrs} type="color" className="h-28 w-28 text-sm" />
         ) : inputAttrs.name === "subdomain" ? (
           <div className="flex w-full max-w-md">
             <Input {...inputAttrs} required />
