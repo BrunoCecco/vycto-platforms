@@ -11,6 +11,7 @@ import { placeholderBlurhash, random } from "@/lib/utils";
 import PlayButton from "../buttons/playButton";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
 import { Card, CardFooter, CardHeader } from "@nextui-org/react";
+import { getTranslations } from "next-intl/server";
 
 const Predictions = ({
   competitions,
@@ -33,6 +34,7 @@ const PredictionCard = async ({
 }: {
   competition: SelectUserCompetition;
 }) => {
+  const t = await getTranslations();
   const compData = await getCompetitionFromId(competition.competitionId);
 
   const siteId = compData?.siteId;
@@ -74,7 +76,7 @@ const PredictionCard = async ({
               color1={compSiteData.color1}
               color2={compSiteData.color2}
             >
-              View
+              {t("view")}
             </PlayButton>
           </Link>
         </CardFooter>

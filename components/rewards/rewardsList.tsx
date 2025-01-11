@@ -1,14 +1,17 @@
+"use client";
 import { SelectCompetition, SelectUserCompetition } from "@/lib/schema";
 import UserCompListing from "../competitions/userCompListing";
+import { useTranslations } from "next-intl";
 
-export default async function RewardsList({
+export default function RewardsList({
   userCompetitions,
 }: {
   userCompetitions: SelectUserCompetition[];
 }) {
+  const t = useTranslations();
   return (
     <div>
-      <h2 className="mb-4 text-2xl font-bold">Your Rewards</h2>
+      <h2 className="mb-4 text-2xl font-bold">{t("yourrewards")}</h2>
       <div className="overflow-scroll rounded-lg">
         <table className="w-full rounded-lg">
           <thead>

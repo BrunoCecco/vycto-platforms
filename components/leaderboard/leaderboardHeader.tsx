@@ -4,6 +4,7 @@ import { Crown, SearchIcon } from "lucide-react";
 import { Select, SelectItem, Input } from "@nextui-org/react";
 import { LeaderboardPeriod } from "@/lib/types";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const LeaderboardHeader = ({
   siteData,
@@ -24,6 +25,7 @@ const LeaderboardHeader = ({
   compTitle?: string;
   isComp?: boolean;
 }) => {
+  const t = useTranslations();
   const timeRanges = [
     { key: LeaderboardPeriod.Weekly, label: "Last Week" },
     { key: LeaderboardPeriod.Monthly, label: "Monthly" },
@@ -59,9 +61,13 @@ const LeaderboardHeader = ({
               alt="logo"
             />
             <h1 className="text-lg font-bold">
-              Leaderboard{" "}
+              {t("leaderboard")}{" "}
               {rangeType === LeaderboardPeriod.Monthly
-                ? new Date().toLocaleString("default", { month: "long" })
+                ? t(
+                    new Date()
+                      .toLocaleString("default", { month: "long" })
+                      .toLowerCase(),
+                  )
                 : rangeType === LeaderboardPeriod.Season
                   ? new Date().getFullYear()
                   : compTitle

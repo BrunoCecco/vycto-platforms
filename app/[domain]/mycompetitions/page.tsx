@@ -11,6 +11,7 @@ import {
 import { SelectCompetition, SelectUserCompetition } from "@/lib/schema";
 import { ClockIcon, MedalIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
+import { getTranslations } from "next-intl/server";
 import { notFound, redirect } from "next/navigation";
 
 export default async function MyCompetitions({
@@ -23,6 +24,7 @@ export default async function MyCompetitions({
   if (!session) {
     redirect("/login");
   }
+  const t = await getTranslations();
 
   const user = await getUserData(session.user.email);
 
@@ -41,7 +43,6 @@ export default async function MyCompetitions({
   }
 
   const userCompetitions = await getUserCompetitions(session.user.id, data.id);
-  console.log(userCompetitions, "userCompetitions");
 
   const currentCompetitions = userCompetitions.filter((comp) => {
     const compDate = comp.competition?.date
@@ -62,7 +63,7 @@ export default async function MyCompetitions({
       {/* Main Container */}
       <div className="mx-auto pt-3">
         <div className="flex flex-col gap-8">
-          <div className="text-2xl">My Competitions</div>
+          <div className="text-2xl">{t("mycompetitions")}</div>
           <ProfileBanner user={user} siteData={data} />
           {/* Right Stats and Top Predictions */}
           <div className="w-full">
@@ -70,7 +71,7 @@ export default async function MyCompetitions({
               <div className="mb-12 w-full">
                 <h1 className="mb-4 flex items-center text-lg font-semibold sm:text-2xl">
                   <MedalIcon color={data.color1} size={24} className="mr-2" />
-                  Current Competitions
+                  {t("currentcompetitions")}
                 </h1>
                 <Predictions
                   competitions={currentCompetitions.map(
@@ -83,7 +84,7 @@ export default async function MyCompetitions({
               <div className="w-full">
                 <h1 className="mb-4 flex items-center text-lg font-semibold sm:text-2xl">
                   <ClockIcon color={data.color1} size={24} className="mr-2" />
-                  Past Competitions
+                  {t("pastcompetitions")}
                 </h1>
                 <Predictions
                   competitions={pastCompetitions

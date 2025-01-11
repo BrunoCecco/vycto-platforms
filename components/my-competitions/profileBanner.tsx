@@ -8,6 +8,7 @@ import ReactFlagsSelect from "react-flags-select";
 import MovingGradient from "../ui/movingGradient";
 import { CardSpotlight } from "../ui/cardSpotlight";
 import { getLeaderboardName } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export default function ProfileBanner({
   user,
@@ -16,6 +17,7 @@ export default function ProfileBanner({
   user: SelectUser;
   siteData: SelectSite;
 }) {
+  const t = useTranslations();
   return (
     <div
       className="relative flex h-auto w-full flex-col items-center overflow-hidden rounded-md border-b-2 bg-transparent p-4 md:h-40 md:flex-row md:p-8"
@@ -52,7 +54,7 @@ export default function ProfileBanner({
         ) : null}
         {user.favouritePlayer ? (
           <h2 className="hidden break-words text-xs sm:block md:text-lg">
-            Favourite Player: <br className="md:hidden" />{" "}
+            {t("favouriteplayer")}: <br className="md:hidden" />{" "}
             <span className="font-semibold">{user.favouritePlayer}</span>
           </h2>
         ) : null}

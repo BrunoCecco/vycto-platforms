@@ -228,7 +228,7 @@ export default function Uploader({
               htmlFor={`${id}-upload-${name}`}
               className={`group relative mt-2 flex cursor-pointer flex-col items-center justify-center border shadow-sm transition-all                 
                 ${size == "sm" ? "h-28 w-28 lg:h-40 lg:w-40" : "h-64 lg:h-80"}
-                ${circular ? "mx-auto !h-[100px] !w-[100px] rounded-full sm:h-[150px] sm:w-[150px]" : "rounded-md"}`}
+                ${circular ? "mx-auto !h-[100px] !w-[100px] rounded-full sm:!h-[150px] sm:!w-[150px]" : "rounded-md"}`}
             >
               <div
                 className="absolute z-[5] h-full w-full rounded-md"

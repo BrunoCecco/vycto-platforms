@@ -1,0 +1,50 @@
+{
+  "home": "Home",
+  "howtoplay": {
+    "title": "How to Play",
+    "enter": {
+      "title": "Enter a Competition",
+      "description": "Browse our active competitions and click 'Play.'"
+    },
+    "answer": {
+      "title": "Answer Questions",
+      "description": "Submit you answers!"
+    },
+    "earn": {
+      "title": "Earn Points",
+      "description": "Earn points for correct answers and climb the leaderboard!"
+    },
+    "win": {
+      "title": "Win Prizes",
+      "description": "Top performers have a chance to win exciting rewards!",
+      "description2": "Check the competition details for more information."
+    }
+  },
+  "view": "View",
+  "play": "Play",
+  "favouriteplayer": "Favourite Player",
+  "comingsoon": "Coming Soon",
+  "profile": "Profile",
+  "fanzone": "FANZONE",
+  "mycompetitions": "My Competitions",
+  "myrewards": "My Rewards",
+  "yourrewards": "Your Rewards",
+  "settings": "Settings",
+  "staynotified": "Stay Notified",
+  "poweredby": "Powered by",
+  "currentcompetitions": "Current Competitions",
+  "pastcompetitions": "Past Competitions",
+  "leaderboard": "Leaderboard",
+  "january": "January",
+  "february": "February",
+  "march": "March",
+  "april": "April",
+  "may": "May",
+  "june": "June",
+  "july": "July",
+  "august": "August",
+  "september": "September",
+  "october": "October",
+  "november": "November",
+  "december": "December"
+}

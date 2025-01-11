@@ -15,6 +15,7 @@ import {
 } from "@/lib/fetchers";
 import { getLeaderboardName, makeTransparent } from "@/lib/utils";
 import { getServerSession } from "next-auth";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 
@@ -23,6 +24,7 @@ export default async function Rewards({
 }: {
   params: { domain: string };
 }) {
+  const t = await getTranslations();
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -71,7 +73,7 @@ export default async function Rewards({
         color5={makeTransparent(data.color1, 0.7)}
       >
         <div className="flex h-full w-full items-center rounded-lg bg-content3 p-2 font-bold">
-          Coming soon!
+          {t("comingsoon")}
         </div>
       </BackgroundGradient>
       <div className="relative mx-auto mb-4 mt-8 flex h-20 w-20 justify-center">
@@ -85,7 +87,7 @@ export default async function Rewards({
           alt="Profile Image"
         />
       </div>
-      <TextGenerateEffect words="Your Rewards" className="mb-2 text-2xl" />
+      <TextGenerateEffect words={t("yourrewards")} className="mb-2 text-2xl" />
       <div className="mx-auto mb-8 text-center">
         @{getLeaderboardName(session.user)}
       </div>

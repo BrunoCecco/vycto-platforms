@@ -2,6 +2,10 @@
 //   enabled: process.env.ANALYZE === "true",
 // });
 
+const createNextIntlPlugin = require("next-intl/plugin");
+
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
+
 const nextConfig = {
   reactStrictMode: false,
   webpack: (config) => {
@@ -42,4 +46,4 @@ const nextConfig = {
 /**
  * @type {import('next').NextConfig}
  */
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

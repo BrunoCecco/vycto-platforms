@@ -74,7 +74,7 @@ export async function getLatestCompetitionForSite(domain: string) {
   return await unstable_cache(
     async () => {
       // select all competitions (all fields) for the site
-      return await db
+      const comps = await db
         .select({
           competition: competitions,
         })
@@ -90,6 +90,7 @@ export async function getLatestCompetitionForSite(domain: string) {
         )
         .orderBy(desc(competitions.date))
         .limit(1);
+      return comps.map((comp) => comp.competition);
     },
     [`${domain}-latest-competition`],
     {

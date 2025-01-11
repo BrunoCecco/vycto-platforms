@@ -8,8 +8,10 @@ import React, { useEffect } from "react";
 import Loading from "@/components/ui/loading";
 import useUserSession from "@/lib/hooks/useUserSession";
 import { SelectSite } from "@/lib/schema";
+import { useTranslations } from "next-intl";
 
 export default function UserSettings({ siteData }: { siteData?: SelectSite }) {
+  const t = useTranslations();
   const { user, session, status, update } = useUserSession({
     required: true,
     onUnauthenticated: () => redirect("/login"),
@@ -39,10 +41,10 @@ export default function UserSettings({ siteData }: { siteData?: SelectSite }) {
   ) : (
     <div className="flex flex-col space-y-12">
       <div className="flex flex-col space-y-6">
-        <h1 className="font-cal text-3xl font-bold">Settings</h1>
+        <h1 className="font-cal text-3xl font-bold">{t("settings")}</h1>
         <div className="w-full rounded-lg border border-content3">
           <CombinedForm
-            title={"Profile"}
+            title={t("profile")}
             helpText="User details"
             termslink={siteData?.terms || undefined}
             privacylink={siteData?.privacypolicy || undefined}
@@ -90,6 +92,12 @@ export default function UserSettings({ siteData }: { siteData?: SelectSite }) {
                 // regex for a YYYY-MM-DD date from the user?.birthDate
                 defaultValue: user?.birthDate || "2003-01-02",
                 label: "Birth Date",
+              },
+              {
+                name: "locale",
+                type: "text",
+                defaultValue: user?.locale || "",
+                label: "Language",
               },
               {
                 name: "divider",

@@ -1,0 +1,50 @@
+{
+  "home": "Acasă",
+  "howtoplay": {
+    "title": "Cum să Joci",
+    "enter": {
+      "title": "Intră într-o Competiție",
+      "description": "Răsfoiește competițiile active și apasă pe „Joacă“."
+    },
+    "answer": {
+      "title": "Răspunde la Întrebări",
+      "description": "Trimite răspunsurile tale! Cu cât te apropii mai mult, cu atât obții mai multe puncte."
+    },
+    "earn": {
+      "title": "Câștigă Puncte",
+      "description": "Punctele vor fi calculate după eveniment, iar tu vei fi plasat pe un clasament."
+    },
+    "win": {
+      "title": "Câștigă Recompense",
+      "description": "Cei mai buni participanți din fiecare competiție au șansa de a câștiga recompense interesante!",
+      "description2": "Verifică detaliile competiției pentru mai multe informații."
+    }
+  },
+  "view": "Vezi",
+  "play": "Joacă",
+  "favouriteplayer": "Jucător Favorit",
+  "comingsoon": "În Curând!",
+  "profile": "Profil",
+  "fanzone": "FANZONE",
+  "mycompetitions": "Competițiile Mele",
+  "myrewards": "Recompensele Mele",
+  "yourrewards": "Recompensele Tale",
+  "settings": "Setări",
+  "staynotified": "Rămâi notificat",
+  "poweredby": "Creat de",
+  "currentcompetitions": "Competiții Active",
+  "pastcompetitions": "Competiții Trecute",
+  "leaderboard": "Clasament",
+  "january": "Ianuarie",
+  "february": "Februarie",
+  "march": "Martie",
+  "april": "Aprilie",
+  "may": "Mai",
+  "june": "Iunie",
+  "july": "Iulie",
+  "august": "August",
+  "september": "Septembrie",
+  "october": "Octombrie",
+  "november": "Noiembrie",
+  "december": "Decembrie"
+}

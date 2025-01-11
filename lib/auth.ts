@@ -34,6 +34,7 @@ declare module "next-auth" {
       image: string;
       name: string;
       birthDate: string;
+      locale: string;
     };
   }
 }
@@ -175,6 +176,8 @@ export const authOptions: NextAuthOptions = {
         role: token?.user?.role || session.user.role,
         // @ts-expect-error
         birthDate: token?.user?.birthDate || session.user.birthDate,
+        // @ts-expect-error
+        locale: token?.user?.locale || session.user.locale,
       };
       return session;
     },

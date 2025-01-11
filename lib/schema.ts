@@ -18,6 +18,7 @@ export const users = pgTable("users", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
+  locale: text("locale"),
   name: text("name"),
   username: text("username"),
   email: text("email").notNull().unique(),
@@ -142,6 +143,7 @@ export const sites = pgTable(
       .primaryKey()
       .$defaultFn(() => createId()),
     name: text("name"),
+    locale: text("locale").default("en"),
     description: text("description"),
     logo: text("logo"),
     loginBanner: text("loginBanner"),

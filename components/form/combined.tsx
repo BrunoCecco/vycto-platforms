@@ -75,6 +75,9 @@ export default function CombinedForm({
   const [selectedCountry, setSelectedCountry] = useState(
     inputAttrs.find((inputAttr) => inputAttr.name === "country")?.defaultValue,
   );
+  const [selectedLocale, setSelectedLocale] = useState(
+    inputAttrs.find((inputAttr) => inputAttr.name === "locale")?.defaultValue,
+  );
   const [checkboxValues, setCheckboxValues] = useState<ICheckboxValues>({
     fanzoneNotifications:
       inputAttrs.find((inputAttr) => inputAttr.name == "fanzoneNotifications")
@@ -98,7 +101,9 @@ export default function CombinedForm({
   const [favouritePlayerInputAttr, setFavouritePlayerInputAttr] = useState(
     inputAttrs.find((inputAttr) => inputAttr.name === "favouritePlayer"),
   );
-  const [needsToSubmit, setNeedsToSubmit] = useState(false);
+  const [langaugeAttr, setLanguageAttr] = useState(
+    inputAttrs.find((inputAttr) => inputAttr.name === "locale"),
+  );
 
   useEffect(() => {
     if (
@@ -112,11 +117,15 @@ export default function CombinedForm({
   }, [selectedCountry]);
 
   useEffect(() => {
-    form2.current?.addEventListener("input", function () {
-      console.log("Form has changed!");
-      setNeedsToSubmit(true);
-    });
-  }, []);
+    if (
+      form2button.current &&
+      selectedLocale !=
+        inputAttrs.find((inputAttr) => inputAttr.name === "locale")
+          ?.defaultValue
+    ) {
+      form2button.current.click();
+    }
+  }, [selectedLocale]);
 
   const editCheckboxValues = (isSelected: boolean, name: string) => {
     console.log(isSelected, name, isSelected.toString());
@@ -213,6 +222,27 @@ export default function CombinedForm({
                 onBlur={submitForm2}
               />
             )}
+            {langaugeAttr && (
+              <Select
+                aria-label="locale"
+                name="locale"
+                label="Language"
+                defaultSelectedKeys={[langaugeAttr.defaultValue]}
+                onChange={(e) => {
+                  setSelectedLocale(e.target.value);
+                }}
+              >
+                <SelectItem key="en" value="en">
+                  English
+                </SelectItem>
+                <SelectItem key="el-CY" value="el-CY">
+                  Greek
+                </SelectItem>
+                <SelectItem key="ro-RO" value="ro-RO">
+                  Romanian
+                </SelectItem>
+              </Select>
+            )}
             <button type="submit" hidden ref={form2button}></button>
           </form>
         </div>
@@ -231,7 +261,7 @@ export default function CombinedForm({
         >
           {inputAttrs.map((inputAttr, index) => {
             if (
-              ["favouritePlayer", "username", "country"].includes(
+              ["favouritePlayer", "username", "country", "locale"].includes(
                 inputAttr.name,
               )
             ) {

@@ -13,6 +13,7 @@ import CompetitionModal from "./competitionModal";
 import HoverBorderGradient from "../ui/hoverBorderGradient";
 import { Card, CardFooter, CardHeader } from "@nextui-org/react";
 import { CoolMode } from "../ui/coolMode";
+import { useTranslations } from "next-intl";
 
 const COMPETITION_WINDOW = 5;
 
@@ -29,6 +30,7 @@ const CompetitionCard = ({
   played?: boolean;
   onClick?: () => void; // Define onClick type
 }) => {
+  const t = useTranslations();
   const [users, setUsers] = useState<any[]>([]);
   const [status, setStatus] = useState<string>();
   const [compOpen, setCompOpen] = useState(true);
@@ -153,14 +155,18 @@ const CompetitionCard = ({
                   color2={siteData.color2}
                   onClick={onClick}
                 >
-                  {played ? "View" : type === "current" ? "Play" : "View"}
+                  {played
+                    ? t("view")
+                    : type === "current"
+                      ? t("play")
+                      : t("view")}
                 </PlayButton>
               ) : null
             ) : (
               <CoolMode options={{ color: siteData.color1 }}>
                 <div className="p-1">
                   <PlayButton color1={siteData.color1} color2={siteData.color2}>
-                    <div>Play</div>
+                    <div>{t("play")}</div>
                   </PlayButton>
                 </div>
               </CoolMode>

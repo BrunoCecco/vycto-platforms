@@ -8,6 +8,10 @@ import Script from "next/script";
 import dynamic from "next/dynamic";
 import ColorSchemeToggle from "@/components/ui/colorSchemeToggle";
 import CookieBanner from "@/components/settings/cookieBanner";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, setRequestLocale } from "next-intl/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 const PostHogPageView = dynamic(() => import("./postHogPageView"), {
   ssr: false,
@@ -34,13 +38,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={cn(
           cal.variable,
@@ -51,13 +61,15 @@ export default function RootLayout({
         <Providers>
           <PostHogPageView />
           <Analytics />
-          {children}
-          <div className="fixed right-0 top-0 z-50 sm:right-2 sm:top-2">
-            <ColorSchemeToggle />
-          </div>
-          <div className="absolute bottom-0 left-0 z-50">
-            <CookieBanner />
-          </div>
+          <NextIntlClientProvider messages={messages}>
+            {children}
+            <div className="fixed right-0 top-0 z-50 sm:right-2 sm:top-2">
+              <ColorSchemeToggle />
+            </div>
+            <div className="absolute bottom-0 left-0 z-50">
+              <CookieBanner />
+            </div>
+          </NextIntlClientProvider>
         </Providers>
       </body>
     </html>

@@ -14,6 +14,7 @@ import Loading from "@/components/ui/loading";
 import { Story } from "./story";
 import { Spinner } from "@nextui-org/react";
 import { Session } from "next-auth";
+import { getTranslations } from "next-intl/server";
 
 const FanZone = async ({
   siteData,
@@ -30,6 +31,7 @@ const FanZone = async ({
   session: Session | null;
   userCompetitions?: SelectUserCompetition[];
 }) => {
+  const t = await getTranslations();
   return (
     <div className="w-full">
       <Suspense fallback={<Loading data={siteData} />}>
@@ -37,7 +39,7 @@ const FanZone = async ({
       </Suspense>
       <h2 className="flex items-center py-6 text-lg font-semibold sm:text-2xl">
         <Medal className="mr-2" style={{ color: siteData.color1 }} />
-        Current Competitions
+        {t("currentcompetitions")}
       </h2>
       {currentCompetitions?.length > 0 ? (
         <Suspense fallback={<Spinner />}>
@@ -55,7 +57,7 @@ const FanZone = async ({
       )}
       <h2 className="flex items-center py-6 text-lg font-semibold sm:text-2xl">
         <ClockIcon className="mr-2" style={{ color: siteData.color1 }} />
-        Past Competitions
+        {t("pastcompetitions")}
       </h2>
       {pastCompetitions?.length > 0 ? (
         <Suspense fallback={<Spinner />}>

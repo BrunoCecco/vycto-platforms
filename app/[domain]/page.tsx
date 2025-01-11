@@ -19,6 +19,7 @@ import Loading from "../../components/ui/loading";
 import { authOptions } from "@/lib/auth";
 import ColorSchemeToggle from "@/components/ui/colorSchemeToggle";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 // export async function generateStaticParams() {
 //   const allSites = await db.query.sites.findMany({
@@ -45,6 +46,7 @@ export default async function SiteHomePage({
 }: {
   params: { domain: string };
 }) {
+  const t = await getTranslations();
   const domain = decodeURIComponent(params.domain);
   const [data, compData] = await Promise.all([
     getSiteData(domain),
@@ -74,7 +76,7 @@ export default async function SiteHomePage({
 
   const addFanzoneToString = (str: string) => {
     if (str?.includes("fanzone")) return str;
-    return str + " FANZONE";
+    return str + " " + t("fanzone");
   };
 
   return (

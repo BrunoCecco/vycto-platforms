@@ -14,6 +14,7 @@ import { SelectCompetition, SelectSite } from "../../lib/schema";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Crown, Trophy, Rocket, Sparkle, Timer } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function CompetitionModal({
   type,
@@ -34,6 +35,7 @@ export default function CompetitionModal({
   status?: string;
   users?: any[];
 }) {
+  const t = useTranslations();
   const images = [
     competition?.image,
     competition?.image2 || siteData?.logo,
@@ -135,7 +137,7 @@ export default function CompetitionModal({
           <ModalFooter className="gap-4">
             <Link href={"/comp/" + competition?.slug}>
               <PlayButton color1={siteData?.color1} color2={siteData?.color2}>
-                {type === "current" ? "Let's Go →" : "View →"}
+                {type === "current" ? t("letsgo") + " →" : t("view") + " →"}
               </PlayButton>
             </Link>
           </ModalFooter>

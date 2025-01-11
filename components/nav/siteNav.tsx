@@ -20,6 +20,7 @@ import HoverBorderGradient from "../ui/hoverBorderGradient";
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { makeTransparent } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export default function SiteNav({
   data,
@@ -32,6 +33,7 @@ export default function SiteNav({
   session: any;
   children?: ReactNode;
 }) {
+  const t = useTranslations();
   const segments = useSelectedLayoutSegments();
   const { id } = useParams() as { id?: string };
 
@@ -41,31 +43,31 @@ export default function SiteNav({
   const tabs = useMemo(() => {
     return [
       {
-        name: "Home",
+        name: t("home"),
         href: "/",
         isActive: segments.length === 0,
         icon: <Home width={18} />,
       },
       {
-        name: "How To Play",
+        name: t("howtoplay.title"),
         href: "/howtoplay",
         isActive: segments[0] === "howtoplay",
         icon: <Book width={18} />,
       },
       {
-        name: "My Competitions",
+        name: t("mycompetitions"),
         href: "/mycompetitions",
         isActive: segments[0] === "mycompetitions",
         icon: <Flag width={18} />,
       },
       {
-        name: "My Rewards",
+        name: t("myrewards"),
         href: "/rewards",
         isActive: segments[0] === "rewards",
         icon: <Crown width={18} />,
       },
       {
-        name: "Settings",
+        name: t("settings"),
         href: "/settings",
         isActive: segments[0] === "settings",
         icon: <Settings width={18} />,
@@ -138,7 +140,7 @@ export default function SiteNav({
               </Link>
               <Link href={latestCompetitionUrl}>
                 <PlayButton color1={data.color1} color2={data.color2}>
-                  Play
+                  {t("play")}
                 </PlayButton>
               </Link>
             </div>
@@ -166,7 +168,9 @@ export default function SiteNav({
                   className={`relative mt-12 flex cursor-pointer items-center space-x-3 rounded-lg px-2 py-1.5 transition-all duration-150  ease-in-out hover:bg-content3 `}
                 >
                   <Bell width={18} />
-                  <span className="text-sm font-medium">Stay Notified</span>
+                  <span className="text-sm font-medium">
+                    {t("staynotified")}
+                  </span>
                 </div>
               </CoolMode>
             </div>
