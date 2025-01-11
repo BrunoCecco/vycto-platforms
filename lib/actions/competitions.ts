@@ -58,9 +58,6 @@ export const createCompetition = withSiteAuth(
         userId: session.user.id,
         sponsor: site.name,
         date: new Date().toISOString(),
-        color1: site.color1,
-        color2: site.color2,
-        color3: site.color3,
       })
       .returning();
 
@@ -767,4 +764,92 @@ export async function calculateCompetitionPoints(competitionId: string) {
   revalidateTag(`${LeaderboardPeriod.Season}-leaderboard`);
 
   return usersWithPoints;
+}
+
+export async function duplicateCompetition(competitionId: string) {
+  const competition = await db.query.competitions.findFirst({
+    where: eq(competitions.id, competitionId),
+    with: {
+      site: true,
+    },
+  });
+
+  if (!competition) {
+    return {
+      error: "Competition not found",
+    };
+  }
+
+  const qs = await db.query.questions.findMany({
+    where: eq(questions.competitionId, competitionId),
+  });
+
+  const newCompetition = await db
+    .insert(competitions)
+    .values({
+      siteId: competition.siteId,
+      userId: competition.userId,
+      title: competition.title + " (Copy)",
+      description: competition.description,
+      content: competition.content,
+      sponsor: competition.sponsor,
+      slug: competition.slug + "-copy",
+      image: competition.image,
+      imageBlurhash: competition.imageBlurhash,
+      image1: competition.image1,
+      image2: competition.image2,
+      image3: competition.image3,
+      image4: competition.image4,
+      date: competition.date,
+      published: false,
+      correctAnswersSubmitted: false,
+      rewardTitle: competition.rewardTitle,
+      rewardDescription: competition.rewardDescription,
+      rewardImage: competition.rewardImage,
+      reward2Title: competition.reward2Title,
+      reward2Description: competition.reward2Description,
+      reward2Image: competition.reward2Image,
+      reward3Title: competition.reward3Title,
+      reward3Description: competition.reward3Description,
+      reward3Image: competition.reward3Image,
+      rewardWinners: competition.rewardWinners,
+      reward2Winners: competition.reward2Winners,
+      reward3Winners: competition.reward3Winners,
+      rules: competition.rules,
+      consent: competition.consent,
+    })
+    .returning()
+    .then((res) => res[0]);
+
+  const newQuestions = qs.map((q) => {
+    return db
+      .insert(questions)
+      .values({
+        id: nanoid(),
+        competitionId: newCompetition.id,
+        type: q.type,
+        answer1: q.answer1,
+        answer2: q.answer2,
+        answer3: q.answer3,
+        answer4: q.answer4,
+        correctAnswer: q.correctAnswer,
+        points: q.points,
+        image1: q.image1,
+        image2: q.image2,
+        image3: q.image3,
+        image4: q.image4,
+        question: q.question,
+      })
+      .returning()
+      .then((res) => res[0]);
+  });
+
+  await Promise.all(newQuestions);
+
+  revalidateTag(
+    `${competition.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-competitions`,
+  );
+  revalidateTag("all-competitions");
+
+  return newCompetition;
 }

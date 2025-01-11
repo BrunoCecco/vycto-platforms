@@ -255,9 +255,6 @@ export const competitions = pgTable(
     reward3Winners: integer("reward3Winners").default(1),
     rules: text("guidelines"),
     consent: text("consent"),
-    color1: text("color1").default("gray").notNull(),
-    color2: text("color2").default("black").notNull(),
-    color3: text("color3").default("white").notNull(),
     siteId: text("siteId").references(() => sites.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
