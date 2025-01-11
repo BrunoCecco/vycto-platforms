@@ -7,11 +7,13 @@ import { useTranslations } from "next-intl";
 
 export function Story({ siteData }: { siteData: SelectSite }) {
   const t = useTranslations();
+  const joinTitle = t("joinfamily");
+  const title = joinTitle.replace("<site>",siteData.name||"")
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center overflow-auto rounded-md antialiased">
       <div className="mx-auto p-4">
         <h1 className="relative z-10 bg-gradient-to-b from-default-400 to-default-600  bg-clip-text p-2 text-center font-sans text-2xl  font-bold text-transparent md:text-6xl">
-          {t("joinfamily").replace("<site>",siteData.name||"")}
+          {title}
         </h1>
         <TextGenerateEffect words={siteData.story || ""} />
       </div>
