@@ -27,23 +27,25 @@ const LeaderboardHeader = ({
 }) => {
   const t = useTranslations();
   const timeRanges = [
-    { key: LeaderboardPeriod.Weekly, label: "Last Week" },
-    { key: LeaderboardPeriod.Monthly, label: "Monthly" },
-    { key: LeaderboardPeriod.Season, label: "Season" },
+    { key: LeaderboardPeriod.Weekly, label: t("lastweek") },
+    { key: LeaderboardPeriod.Monthly, label: t("monthly") },
+    { key: LeaderboardPeriod.Season, label: t("season") },
     // { key: LeaderboardPeriod.All, label: "All Time" },
   ];
 
   // Function to dynamically set the prize text based on rangeType
   const getPrizeText = () => {
     if (rangeType === LeaderboardPeriod.All) {
-      return "Season Prizes";
+      return t("season") + " Prizes";
     } else if (rangeType === LeaderboardPeriod.Monthly) {
-      const currentMonth = new Date().toLocaleString("default", {
-        month: "long",
-      });
-      return `${currentMonth}'s Prizes`; // e.g., "December's Prize"
+      const currentMonth = new Date()
+        .toLocaleString("default", {
+          month: "long",
+        })
+        .toLowerCase();
+      return `${t(currentMonth)} Prizes`; // e.g., "December's Prize"
     } else if (rangeType === LeaderboardPeriod.Season) {
-      return "Season's Prizes";
+      return t("season") + " Prizes";
     }
     return "";
   };
@@ -90,7 +92,7 @@ const LeaderboardHeader = ({
       </div>
       <div className="flex w-full gap-4">
         <Input
-          placeholder="Search..."
+          placeholder={t("search") + "..."}
           onValueChange={setQuery}
           startContent={<SearchIcon size={18} />}
           type="search"

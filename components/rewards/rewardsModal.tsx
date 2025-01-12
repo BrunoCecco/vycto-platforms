@@ -19,6 +19,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Crown, Trophy, Rocket, Sparkle, Timer } from "lucide-react";
 import { MONTHS } from "@/lib/constants";
+import { useTranslations } from "next-intl";
 
 export default function RewardModal({
   reward,
@@ -31,6 +32,7 @@ export default function RewardModal({
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 }) {
+  const t = useTranslations();
   const images = [
     reward?.image1 || reward?.image,
     reward?.image2 || siteData?.logo,
@@ -44,7 +46,12 @@ export default function RewardModal({
         <ModalBody>
           <ModalContent>
             <h4 className="mb-8 text-center text-lg font-bold md:text-2xl">
-              {MONTHS.find((m) => m.value === reward.month)?.label} Challenge
+              {t(
+                MONTHS.find(
+                  (m) => m.value === reward.month,
+                )?.label.toLowerCase(),
+              )}{" "}
+              {t("challenge")}
             </h4>
             <div className="mb-8 flex items-center justify-center">
               {" "}
