@@ -72,7 +72,7 @@ const Counter = ({
           onClick={() => counter("decrease")}
           disabled={disabled}
           className={cn(
-            "bg-box flex h-6 w-6 items-center justify-center rounded-full text-xl active:scale-90 sm:h-24 sm:w-24",
+            "bg-box flex h-6 w-6 items-center justify-center rounded-full text-xl active:scale-90 sm:h-20 sm:w-20",
             num === 0 && "opacity-50",
           )}
         >
@@ -102,7 +102,7 @@ const Counter = ({
           onClick={() => counter("increase")}
           disabled={disabled}
           className={cn(
-            "bg-box flex h-6 w-6 items-center justify-center rounded-full text-xl active:scale-90 sm:h-24 sm:w-24",
+            "bg-box flex h-6 w-6 items-center justify-center rounded-full text-xl active:scale-90 sm:h-20 sm:w-20",
             num === 20 && "opacity-50",
           )}
         >
