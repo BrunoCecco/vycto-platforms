@@ -4,7 +4,7 @@
     "title": "Cum să Joci",
     "enter": {
       "title": "Intră într-o Competiție",
-      "description": "Răsfoiește competițiile active și apasă pe „Joacă“."
+      "description": "Explora competițiile active și apasă pe „Joacă“."
     },
     "answer": {
       "title": "Răspunde la Întrebări",
@@ -15,8 +15,8 @@
       "description": "Punctele vor fi calculate după eveniment, iar tu vei fi plasat pe un clasament."
     },
     "win": {
-      "title": "Câștigă Recompense",
-      "description": "Cei mai buni participanți din fiecare competiție au șansa de a câștiga recompense interesante!",
+      "title": "Câștigă Premii",
+      "description": "Cei mai buni participanți din fiecare competiție au șansa de a câștiga premii interesante!",
       "description2": "Verifică detaliile competiției pentru mai multe informații."
     }
   },
@@ -27,8 +27,8 @@
   "profile": "Profil",
   "fanzone": "FANZONE",
   "mycompetitions": "Competițiile Mele",
-  "myrewards": "Recompensele Mele",
-  "yourrewards": "Recompensele Tale",
+  "myrewards": "Premiile Mele",
+  "yourrewards": "Premiile Tale",
   "settings": "Setări",
   "staynotified": "Rămâi notificat",
   "poweredby": "Creat de",
@@ -47,5 +47,5 @@
   "october": "Octombrie",
   "november": "Noiembrie",
   "december": "Decembrie",
-  "joinfamily": "Alătură-te revoluției <site>"
+  "joinfamily": "Alătură-te revoluției replacetext"
 }

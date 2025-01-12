@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 export function Story({ siteData }: { siteData: SelectSite }) {
   const t = useTranslations();
   const joinTitle = t("joinfamily");
-  const title = joinTitle.replace("<site>",siteData.name||"")
+  const title = joinTitle.replace("replacetext", siteData.name || "");
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center overflow-auto rounded-md antialiased">
       <div className="mx-auto p-4">

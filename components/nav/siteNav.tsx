@@ -211,7 +211,7 @@ export default function SiteNav({
                     className="group relative flex items-center gap-2 px-8 py-2 transition-all duration-200 hover:scale-105 hover:bg-transparent"
                     color={data.color1}
                   >
-                    Stay Notified
+                    {t("staynotified")}
                     <Bell width={18} />
                   </HoverBorderGradient>
                 </div>
@@ -231,7 +231,7 @@ export default function SiteNav({
                       className="group relative flex items-center gap-2 px-8 py-2 transition-all duration-200 hover:scale-105 hover:bg-transparent"
                       color={data.color1}
                     >
-                      Stay Notified
+                      {t("staynotified")}
                       <Bell width={18} />
                     </HoverBorderGradient>
                   </div>
@@ -239,8 +239,8 @@ export default function SiteNav({
               )}
 
               <p className="text-center text-xs text-content4">
-                By clicking &apos;Stay Notified&apos; I confirm that I have read
-                and agree to the
+                By clicking &apos;{t("staynotified")}&apos; I confirm that I
+                have read and agree to the
                 <a
                   href={data.terms || ""}
                   className="text-foreground-100"
