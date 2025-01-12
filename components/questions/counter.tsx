@@ -91,7 +91,7 @@ const Counter = ({
                   animate="visible"
                   exit="exit"
                   custom={direction}
-                  className="inline-block text-lg sm:text-4xl"
+                  className="inline-block text-lg sm:text-2xl"
                 >
                   {value}
                 </motion.span>
