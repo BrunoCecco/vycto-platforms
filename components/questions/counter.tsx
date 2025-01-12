@@ -72,11 +72,11 @@ const Counter = ({
           onClick={() => counter("decrease")}
           disabled={disabled}
           className={cn(
-            "bg-box flex h-4 w-4 items-center justify-center rounded-full text-xl active:scale-90 sm:h-14 sm:w-14",
+            "bg-box flex h-6 w-6 items-center justify-center rounded-full text-xl active:scale-90 sm:h-24 sm:w-24",
             num === 0 && "opacity-50",
           )}
         >
-          <Minus />
+          <Minus size={48} />
         </button>
         <h3 className="w-4 text-center">
           <AnimatePresence mode="popLayout" custom={direction}>
@@ -91,7 +91,7 @@ const Counter = ({
                   animate="visible"
                   exit="exit"
                   custom={direction}
-                  className="inline-block "
+                  className="inline-block text-lg sm:text-4xl"
                 >
                   {value}
                 </motion.span>
@@ -102,11 +102,11 @@ const Counter = ({
           onClick={() => counter("increase")}
           disabled={disabled}
           className={cn(
-            "bg-box flex h-4 w-4 items-center justify-center rounded-full text-xl active:scale-90 sm:h-14 sm:w-14",
+            "bg-box flex h-6 w-6 items-center justify-center rounded-full text-xl active:scale-90 sm:h-24 sm:w-24",
             num === 20 && "opacity-50",
           )}
         >
-          <Plus />
+          <Plus size={48} />
         </button>
       </div>
     </div>

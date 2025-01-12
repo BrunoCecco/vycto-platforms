@@ -8,6 +8,7 @@ import { Button } from "@nextui-org/react";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
 import Counter from "./counter";
 import { IQuestionProps } from "@/lib/types";
+import Image from "next/image";
 
 const GuessScore = ({ ...props }: IQuestionProps) => {
   const [scores, setScores] = useState({
@@ -52,10 +53,21 @@ const GuessScore = ({ ...props }: IQuestionProps) => {
           onLocalAnswer={props.onLocalAnswer}
         >
           <div
-            className="flex w-full justify-around gap-4 py-4 text-center md:justify-around md:px-4"
+            className="flex w-full items-center justify-around gap-4 py-4 text-center md:justify-around md:px-4"
             onBlur={() => submitButton?.current?.click()}
           >
             <div className="flex basis-1/3 flex-col items-center gap-4">
+              <div
+                className={`relative h-[80px] w-[80px] items-center justify-center text-center md:h-[150px] md:w-[150px]`}
+              >
+                <Image
+                  src={props.image1 || "/placeholder.png"}
+                  alt="Option 1 Image"
+                  fill
+                  unoptimized
+                  className="h-full w-full object-contain"
+                />
+              </div>
               <div className="flex items-center gap-2 md:gap-8">
                 <Counter
                   disabled={props.disabled}
@@ -80,6 +92,17 @@ const GuessScore = ({ ...props }: IQuestionProps) => {
             </div>
 
             <div className="flex basis-1/3 flex-col items-center gap-4">
+              <div
+                className={`relative h-[80px] w-[80px] items-center justify-center text-center md:h-[150px] md:w-[150px]`}
+              >
+                <Image
+                  src={props.image2 || "/placeholder.png"}
+                  alt="Option 2 Image"
+                  fill
+                  unoptimized
+                  className="h-full w-full object-contain"
+                />
+              </div>
               <div className="flex items-center gap-2 md:gap-8">
                 <Counter
                   disabled={props.disabled}

@@ -9,6 +9,7 @@ import { Button, Input } from "@nextui-org/react";
 import { X } from "lucide-react";
 import EditQuestionHeader from "./editQuestionHeader";
 import { QuestionType } from "@/lib/types";
+import Form from "../form";
 
 const EditGuessScore = ({
   question,
@@ -20,6 +21,8 @@ const EditGuessScore = ({
   const [homeTeam, setHomeTeam] = useState(question.answer1 || "Home Team");
   const [awayTeam, setAwayTeam] = useState(question.answer2 || "Away Team");
   const [points, setPoints] = useState(question.points || 0);
+  const [image1, setImage1] = useState(question.image1 || "/placeholder.png");
+  const [image2, setImage2] = useState(question.image2 || "/placeholder.png");
 
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
     question.correctAnswer || "",
@@ -61,6 +64,30 @@ const EditGuessScore = ({
     setEditedCorrectAnswer(e.target.value);
   };
 
+  const handleImage1Change = async (
+    formData: FormData,
+    id: string,
+    name: string,
+  ) => {
+    const key = name;
+    const value = formData.get(name) as string;
+    setImage1(value);
+    const res = await updateQuestion(key, value);
+    return res;
+  };
+
+  const handleImage2Change = async (
+    formData: FormData,
+    id: string,
+    name: string,
+  ) => {
+    const key = name;
+    const value = formData.get(name) as string;
+    setImage2(value);
+    const res = await updateQuestion(key, value);
+    return res;
+  };
+
   return (
     <div className="flex items-center justify-center">
       <div className="relative w-full rounded-lg  p-4 shadow-xl md:p-10">
@@ -76,6 +103,20 @@ const EditGuessScore = ({
         {/* Teams */}
         <div className="flex w-full flex-col items-center justify-between gap-4 py-4 md:justify-around md:px-4">
           <div className="flex flex-col items-center gap-4 ">
+            <Form
+              title=""
+              description=""
+              helpText=""
+              inputAttrs={{
+                name: "image1",
+                type: "file",
+                defaultValue: image1,
+                placeholder: "",
+              }}
+              handleSubmit={handleImage1Change}
+              bordered={false}
+              size="sm"
+            />
             <div className="flex items-center gap-4 md:gap-8">
               <Button onClick={() => setScoreHome(Math.max(scoreHome - 1, 0))}>
                 <MinusCircle />
@@ -96,12 +137,25 @@ const EditGuessScore = ({
 
           {/* VS */}
           <div className="text-center">
-            <div className="rounded-full border-2 border-blue-600 p-2 text-sm font-bold italic text-blue-600 md:text-xl">
+            <div className="border-blue-600 text-blue-600 rounded-full border-2 p-2 text-sm font-bold italic md:text-xl">
               VS
             </div>
           </div>
-
           <div className="flex flex-col items-center gap-4 ">
+            <Form
+              title=""
+              description=""
+              helpText=""
+              inputAttrs={{
+                name: "image2",
+                type: "file",
+                defaultValue: image2,
+                placeholder: "",
+              }}
+              handleSubmit={handleImage2Change}
+              bordered={false}
+              size="sm"
+            />
             <div className="flex items-center gap-4 md:gap-8">
               <Button onClick={() => setScoreAway(Math.max(scoreAway - 1, 0))}>
                 <MinusCircle />

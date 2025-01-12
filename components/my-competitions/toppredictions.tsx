@@ -63,39 +63,42 @@ const PredictionCard = async ({
     <HoverBorderGradient
       containerClassName="group h-[275px] w-[240px] sm:h-[350px] sm:w-[300px] relative rounded-xl overflow-hidden"
       className="hover: relative h-full w-full transition-all duration-400"
-      // color={compSiteData.color1}
+      color={comp?.color1 || "#000"}
     >
       <Card isFooterBlurred radius="md" className="h-full w-full border-none">
         <BlurImage
           alt={"Card thumbnail"}
-          className="h-full w-full rounded-xl object-cover transition-all duration-100 group-hover:scale-110"
+          className="h-full w-full rounded-xl object-cover opacity-75 transition-all duration-100 group-hover:scale-110"
           src={comp?.image || "/vLogo.png"}
           placeholder="blur"
           fill
           blurDataURL={placeholderBlurhash}
         />
         <div className="absolute left-0 top-0 z-10 flex w-full items-center justify-between gap-2 p-4">
-          <div className="flex w-full flex-col gap-1">
-            <p className="text-xl font-bold sm:text-4xl">
-              {prediction.answer?.answer}
-            </p>
+          <p className="text-xl font-bold sm:text-4xl">
+            {prediction.answer?.answer}
+          </p>
+          <div className="flex items-center gap-1">
+            <div className="relative h-8 w-8">
+              <Image
+                src={prediction.question?.image1 || "/vLogo.png"}
+                alt="Card thumbnail"
+                className="object-contain transition-all duration-100 group-hover:scale-110"
+                fill
+                unoptimized
+              />
+            </div>
+            <div className="text-sm font-bold text-foreground">VS</div>
+            <div className="relative h-8 w-8">
+              <Image
+                src={prediction.question?.image2 || "/vLogo.png"}
+                alt="Card thumbnail"
+                className="object-contain transition-all duration-100 group-hover:scale-110"
+                fill
+                unoptimized
+              />
+            </div>
           </div>
-          <Image
-            src={prediction.question?.image1 || "/vLogo.png"}
-            alt="Card thumbnail"
-            className="object-cover transition-all duration-100 group-hover:scale-110"
-            height={40}
-            width={40}
-            unoptimized
-          />
-          <Image
-            src={prediction.question?.image2 || "/vLogo.png"}
-            alt="Card thumbnail"
-            className="object-cover transition-all duration-100 group-hover:scale-110"
-            height={40}
-            width={40}
-            unoptimized
-          />
         </div>
       </Card>
     </HoverBorderGradient>
