@@ -6,6 +6,7 @@ import { authOptions } from "@/lib/auth";
 import {
   getCompetitionsForSite,
   getSiteData,
+  getTopPredictions,
   getUserCompetitions,
   getUserData,
 } from "@/lib/fetchers";
@@ -59,6 +60,8 @@ export default async function MyCompetitions({
     return compDate && compDate < new Date();
   });
 
+  const predictions = await getTopPredictions(session.user.id, data.id);
+
   return (
     <div className="min-h-screen">
       {/* Main Container */}
@@ -68,17 +71,18 @@ export default async function MyCompetitions({
           <ProfileBanner user={user} siteData={data} />
           {/* Right Stats and Top Predictions */}
           <div className="w-full">
-            {/* <div className="mb-12 w-full">
-              <h1 className="mb-4 flex items-center text-lg font-semibold sm:text-2xl">
-                <MedalIcon color={data.color1} size={24} className="mr-2" />
-                Top Predictions
-              </h1>
-              <TopPredictions
-                compData={compData.map((comp) => comp.competition)}
-                userId={session.user.id}
-                siteId={data.id}
-              />
-            </div> */}
+            {predictions && predictions?.length > 0 && (
+              <div className="mb-12 w-full">
+                <h1 className="mb-4 flex items-center text-lg font-semibold sm:text-2xl">
+                  <MedalIcon color={data.color1} size={24} className="mr-2" />
+                  Top Predictions
+                </h1>
+                <TopPredictions
+                  compData={compData.map((comp) => comp.competition)}
+                  predictions={predictions}
+                />
+              </div>
+            )}
             {userCompetitions && userCompetitions?.length == 0 && (
               <div className="text-center text-lg">
                 No competitions found. Please enter a competition to get

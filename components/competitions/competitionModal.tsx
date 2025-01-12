@@ -137,7 +137,7 @@ export default function CompetitionModal({
           <ModalFooter className="gap-4">
             <Link href={"/comp/" + competition?.slug}>
               <PlayButton color1={siteData?.color1} color2={siteData?.color2}>
-                {type === "current" ? t("letsgo") + " →" : t("view") + " →"}
+                {type === "current" ? t("letsgo") + "! →" : t("view") + " →"}
               </PlayButton>
             </Link>
           </ModalFooter>

@@ -30,14 +30,11 @@ interface IPrediction {
 
 const TopPredictions = async ({
   compData,
-  userId,
-  siteId,
+  predictions,
 }: {
-  compData?: SelectCompetition[];
-  userId: string;
-  siteId: string;
+  compData: SelectCompetition[];
+  predictions: IPrediction[];
 }) => {
-  const predictions = await getTopPredictions(userId, siteId);
   return (
     <div className="flex w-full">
       <Carousel
