@@ -28,11 +28,11 @@ interface SearchResult {
 }
 
 export default function SearchPage({
-  compId,
   siteId,
+  compId,
 }: {
-  compId: string;
   siteId: string;
+  compId: string;
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -51,6 +51,11 @@ export default function SearchPage({
 
     if (compId === undefined) {
       console.error("Competition ID not found");
+      return;
+    }
+
+    if (!siteId || siteId === undefined) {
+      console.error("Site ID not found");
       return;
     }
 
@@ -143,10 +148,11 @@ export default function SearchPage({
               >
                 <div className="relative mr-2 h-8 w-8 overflow-hidden rounded-full">
                   <Image
-                    src={`https://api.sofascore.com/api/v1/${result.type}/${result.id}/image?w=200&h=75`}
+                    src={`https://api.sofascore.com/api/v1/${result.type}/${result.id}/image`}
                     className="h-full w-full object-cover"
                     alt={result.name}
-                    fill={true}
+                    unoptimized
+                    fill
                     //   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
