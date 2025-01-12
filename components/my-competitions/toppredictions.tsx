@@ -68,18 +68,18 @@ const PredictionCard = async ({
       <Card isFooterBlurred radius="md" className="h-full w-full border-none">
         <BlurImage
           alt={"Card thumbnail"}
-          className="h-full w-full rounded-xl object-cover opacity-75 transition-all duration-100 group-hover:scale-110"
+          className="h-full w-full rounded-xl object-cover opacity-60 transition-all duration-100 group-hover:scale-110"
           src={comp?.image || "/vLogo.png"}
           placeholder="blur"
           fill
           blurDataURL={placeholderBlurhash}
         />
         <div className="absolute left-0 top-0 z-10 flex w-full items-center justify-between gap-2 p-4">
-          <p className="text-xl font-bold sm:text-4xl">
+          <p className="text-xl font-bold [text-shadow:_0_2px_0_rgb(0_0_0_/_40%)] sm:text-4xl">
             {prediction.answer?.answer}
           </p>
           <div className="flex items-center gap-1">
-            <div className="relative h-8 w-8">
+            <div className="relative h-8 w-8 shadow-md">
               <Image
                 src={prediction.question?.image1 || "/vLogo.png"}
                 alt="Card thumbnail"
@@ -88,8 +88,10 @@ const PredictionCard = async ({
                 unoptimized
               />
             </div>
-            <div className="text-sm font-bold text-foreground">VS</div>
-            <div className="relative h-8 w-8">
+            <div className="text-sm font-bold text-foreground [text-shadow:_0_2px_0_rgb(0_0_0_/_40%)]">
+              VS
+            </div>
+            <div className="relative h-8 w-8 ">
               <Image
                 src={prediction.question?.image2 || "/vLogo.png"}
                 alt="Card thumbnail"
