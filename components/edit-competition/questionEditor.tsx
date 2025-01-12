@@ -11,9 +11,11 @@ type CompetitionWithSite = SelectCompetition & {
 };
 
 export default function QuestionEditor({
+  siteId,
   competition,
   initialQuestions,
 }: {
+  siteId: string;
   competition: CompetitionWithSite;
   initialQuestions: SelectQuestion[];
 }) {
@@ -38,6 +40,7 @@ export default function QuestionEditor({
         )}
       </div>
       <QuestionBuilder
+        siteId={siteId}
         competitionId={competition.id}
         initialQuestions={initialQuestions}
       />

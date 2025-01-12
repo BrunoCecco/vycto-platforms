@@ -16,9 +16,11 @@ import { Button, Spinner } from "@nextui-org/react";
 import EditQuestion from "../edit-questions/editQuestion";
 
 const QuestionBuilder = ({
+  siteId,
   competitionId,
   initialQuestions,
 }: {
+  siteId: string;
   competitionId: string;
   initialQuestions: SelectQuestion[];
 }) => {
@@ -119,6 +121,7 @@ const QuestionBuilder = ({
     try {
       setLoading(true);
       const question = await createQuestion({
+        siteId,
         competitionId,
         type: questionType,
       });

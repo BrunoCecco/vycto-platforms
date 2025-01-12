@@ -342,6 +342,12 @@ export const questions = pgTable(
     image4: text("image4"),
     points: integer("points").default(1),
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+    siteId: text("siteId")
+      .notNull()
+      .references(() => sites.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
   },
   (table) => {
     return {
@@ -371,8 +377,15 @@ export const answers = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
+    siteId: text("siteId")
+      .notNull()
+      .references(() => sites.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
     answer: text("answer"),
     points: decimal("points", { precision: 7, scale: 4 }).default("0.0000"),
+    correctAnswer: text("correctAnswer"),
   },
   (table) => {
     return {

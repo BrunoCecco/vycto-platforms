@@ -59,6 +59,7 @@ const GeneralSelection = ({ ...props }: IQuestionProps) => {
                 key={"option" + index}
                 userId={props.userId}
                 competitionId={props.competitionId}
+                siteId={props.siteId}
                 questionId={props.id}
                 answer={option}
                 onLocalAnswer={props.onLocalAnswer}

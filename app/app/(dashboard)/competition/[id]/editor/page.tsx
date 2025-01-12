@@ -47,6 +47,7 @@ export default async function CompetitionPage({
     <div>
       <EditCompetitionDetails data={competitionData} />
       <QuestionEditor
+        siteId={competitionData.site.id}
         competition={competitionData}
         initialQuestions={initialQuestions}
       />

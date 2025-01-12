@@ -27,7 +27,13 @@ interface SearchResult {
   id: number;
 }
 
-export default function SearchPage() {
+export default function SearchPage({
+  compId,
+  siteId,
+}: {
+  compId: string;
+  siteId: string;
+}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,31 +49,29 @@ export default function SearchPage() {
     );
     const data = response.data[result.type];
 
-    // get current site url for competitionId
-    const url = window.location.href;
-    const competitionId = url.split("/").pop();
-
-    if (competitionId === undefined) {
+    if (compId === undefined) {
       console.error("Competition ID not found");
       return;
     }
 
     const entityQuestions = await createQuestions({
       entityId: data.id,
-      competitionId: competitionId,
+      competitionId: compId,
+      siteId: siteId,
       type: result.type,
     });
 
     await Promise.all(
       entityQuestions.map(async (q: SelectQuestion) => {
         await createQuestion({
+          siteId: siteId,
           competitionId: q.competitionId,
           type: q.type as QuestionType,
           question: q,
         });
       }),
     );
-    router.push(`/competition/${competitionId}/editor`);
+    router.push(`/competition/${compId}/editor`);
   };
 
   const handleSearch = async (data: FormData) => {

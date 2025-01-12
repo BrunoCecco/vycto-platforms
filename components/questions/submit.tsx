@@ -7,6 +7,7 @@ const Submit = ({
   userId,
   questionId,
   competitionId,
+  siteId,
   answer,
   onLocalAnswer,
   children,
@@ -14,6 +15,7 @@ const Submit = ({
   userId: string | null;
   questionId: string;
   competitionId: string;
+  siteId: string;
   answer: string | null;
   onLocalAnswer?: (questionId: string, answer: string) => void;
   children: React.ReactNode;
@@ -36,6 +38,7 @@ const Submit = ({
       {userId && <input type="hidden" hidden name="userId" value={userId} />}
       <input type="hidden" hidden name="questionId" value={questionId} />
       <input type="hidden" hidden name="competitionId" value={competitionId} />
+      <input type="hidden" hidden name="siteId" value={siteId} />
       <input type="hidden" hidden name="answer" value={answer || ""} />
       {children}
     </form>

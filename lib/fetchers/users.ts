@@ -2,9 +2,10 @@
 
 import { unstable_cache } from "next/cache";
 import db from "../db";
-import { and, desc, eq, gte, lte, not } from "drizzle-orm";
-import { adminSites, users } from "../schema";
+import { and, desc, eq, gte, lte, not, or } from "drizzle-orm";
+import { adminSites, answers, questions, users } from "../schema";
 import { ADMIN, SUPER_ADMIN } from "../constants";
+import { QuestionType } from "../types";
 
 export async function getUserData(email: string) {
   return await unstable_cache(
@@ -134,6 +135,35 @@ export async function getAllSiteAdmins() {
     {
       revalidate: 60, // Cache for 1 minute
       tags: ["all-site-admins"],
+    },
+  )();
+}
+
+export async function getTopPredictions(userId: string, siteId: string) {
+  return await unstable_cache(
+    async () => {
+      return await db
+        .select({
+          question: questions,
+          answer: answers,
+        })
+        .from(questions)
+        .leftJoin(
+          answers,
+          and(eq(answers.userId, userId), eq(answers.questionId, questions.id)),
+        )
+        .where(
+          and(
+            eq(questions.siteId, siteId),
+            eq(questions.correctAnswer, answers.answer),
+            eq(questions.type, QuestionType.GuessScore),
+          ),
+        );
+    },
+    [`${userId}-${siteId}-top-predictions`],
+    {
+      revalidate: 900,
+      tags: [`${userId}-${siteId}-top-predictions`],
     },
   )();
 }

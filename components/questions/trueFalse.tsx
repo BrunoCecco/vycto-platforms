@@ -57,6 +57,7 @@ const TrueFalse = ({ ...props }: IQuestionProps) => {
           <Submit
             userId={props.userId}
             competitionId={props.competitionId}
+            siteId={props.siteId}
             questionId={props.id}
             answer="True"
             onLocalAnswer={props.onLocalAnswer}
@@ -73,6 +74,7 @@ const TrueFalse = ({ ...props }: IQuestionProps) => {
           <Submit
             userId={props.userId}
             competitionId={props.competitionId}
+            siteId={props.siteId}
             questionId={props.id}
             answer="False"
             onLocalAnswer={props.onLocalAnswer}

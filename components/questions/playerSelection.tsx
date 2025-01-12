@@ -77,6 +77,7 @@ const PlayerSelection = ({ ...props }: IQuestionProps) => {
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
+            siteId={props.siteId}
             answer={props.answer1}
             onLocalAnswer={props.onLocalAnswer}
           >
@@ -92,6 +93,7 @@ const PlayerSelection = ({ ...props }: IQuestionProps) => {
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
+            siteId={props.siteId}
             answer={props.answer2}
             onLocalAnswer={props.onLocalAnswer}
           >
@@ -107,6 +109,7 @@ const PlayerSelection = ({ ...props }: IQuestionProps) => {
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
+            siteId={props.siteId}
             answer={props.answer3}
             onLocalAnswer={props.onLocalAnswer}
           >
@@ -122,6 +125,7 @@ const PlayerSelection = ({ ...props }: IQuestionProps) => {
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
+            siteId={props.siteId}
             answer={props.answer4}
             onLocalAnswer={props.onLocalAnswer}
           >

@@ -36,7 +36,7 @@ export default async function CompetitionPage({
 
   return (
     <div>
-      <CompetitionCreator />
+      <CompetitionCreator siteId={data.site.id} compId={data.id} />
     </div>
   );
 }

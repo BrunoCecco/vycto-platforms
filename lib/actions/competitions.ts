@@ -257,6 +257,7 @@ export const enterUserToCompetition = async (
 export const submitAnswers = async (
   userId: string,
   competitionId: string,
+  siteId: string,
   localAnswers: { [key: string]: string },
 ) => {
   //const session = await getServerSession(authOptions);
@@ -274,6 +275,7 @@ export const submitAnswers = async (
         .values({
           userId,
           competitionId,
+          siteId,
           questionId,
           answer,
         })
@@ -342,12 +344,14 @@ export const updateAnswerPoints = async (
   questionId: string,
   competitionId: string,
   points: number,
+  correctAnswer: string,
 ) => {
   try {
     const [response] = await db
       .update(answers)
       .set({
         points: points.toString(),
+        correctAnswer,
       })
       .where(
         and(eq(answers.userId, userId), eq(answers.questionId, questionId)),
@@ -365,10 +369,12 @@ export const updateAnswerPoints = async (
 };
 
 export const createQuestion = async ({
+  siteId,
   competitionId,
   type,
   question,
 }: {
+  siteId: string;
   competitionId: string;
   type: QuestionType;
   question?: SelectQuestion;
@@ -378,6 +384,7 @@ export const createQuestion = async ({
       .insert(questions)
       .values({
         id: question?.id || nanoid(),
+        siteId: siteId || question?.siteId!,
         competitionId: competitionId || question?.competitionId!,
         type: type || question?.type,
         answer1:
@@ -466,6 +473,7 @@ export const answerQuestion = async (formData: FormData) => {
     const userId = formData.get("userId") as string;
     const questionId = formData.get("questionId") as string;
     const competitionId = formData.get("competitionId") as string;
+    const siteId = formData.get("siteId") as string;
     const answer = formData.get("answer") as string;
 
     // first check if the user has already answered this question
@@ -497,6 +505,7 @@ export const answerQuestion = async (formData: FormData) => {
         userId,
         questionId,
         competitionId,
+        siteId,
         answer,
       })
       .returning();
@@ -717,7 +726,13 @@ export async function calculateUserPoints(
         break;
     }
     points += pointsToAdd;
-    await updateAnswerPoints(userId, question.id, competitionId, pointsToAdd);
+    await updateAnswerPoints(
+      userId,
+      question.id,
+      competitionId,
+      pointsToAdd,
+      question.correctAnswer,
+    );
   }
   // update the user's points in the database
   await updateUserPoints(userId, competitionId, points);
@@ -826,6 +841,7 @@ export async function duplicateCompetition(competitionId: string) {
       .insert(questions)
       .values({
         id: nanoid(),
+        siteId: q.siteId,
         competitionId: newCompetition.id,
         type: q.type,
         answer1: q.answer1,

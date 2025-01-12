@@ -1,6 +1,7 @@
 import Competitions from "@/components/competitions/competitions";
 import Predictions from "@/components/my-competitions/predictions";
 import ProfileBanner from "@/components/my-competitions/profileBanner";
+import TopPredictions from "@/components/my-competitions/toppredictions";
 import { authOptions } from "@/lib/auth";
 import {
   getCompetitionsForSite,
@@ -67,6 +68,23 @@ export default async function MyCompetitions({
           <ProfileBanner user={user} siteData={data} />
           {/* Right Stats and Top Predictions */}
           <div className="w-full">
+            {/* <div className="mb-12 w-full">
+              <h1 className="mb-4 flex items-center text-lg font-semibold sm:text-2xl">
+                <MedalIcon color={data.color1} size={24} className="mr-2" />
+                Top Predictions
+              </h1>
+              <TopPredictions
+                compData={compData.map((comp) => comp.competition)}
+                userId={session.user.id}
+                siteId={data.id}
+              />
+            </div> */}
+            {userCompetitions && userCompetitions?.length == 0 && (
+              <div className="text-center text-lg">
+                No competitions found. Please enter a competition to get
+                started.
+              </div>
+            )}
             {currentCompetitions && currentCompetitions?.length > 0 && (
               <div className="mb-12 w-full">
                 <h1 className="mb-4 flex items-center text-lg font-semibold sm:text-2xl">

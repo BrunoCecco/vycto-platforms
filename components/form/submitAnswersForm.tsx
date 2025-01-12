@@ -93,6 +93,7 @@ export default function SubmitAnswersForm({
       const res = await submitAnswers(
         userId!,
         competitionData.id,
+        siteData.id,
         localAnswers,
       );
       console.log("res", res);

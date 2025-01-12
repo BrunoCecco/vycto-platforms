@@ -33,6 +33,7 @@ const GeneralNumber = ({ ...props }: IQuestionProps) => {
           userId={props.userId}
           questionId={props.id}
           competitionId={props.competitionId}
+          siteId={props.siteId}
           answer={answer.toString()}
           onLocalAnswer={props.onLocalAnswer}
         >

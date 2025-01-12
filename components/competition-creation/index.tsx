@@ -2,7 +2,13 @@
 import { useState } from "react";
 import SearchPage from "./searchPage";
 
-const CompetitionCreator = () => {
+const CompetitionCreator = ({
+  siteId,
+  compId,
+}: {
+  siteId: string;
+  compId: string;
+}) => {
   const [selectedPlayerTeam, setSelectedPlayerTeam] = useState(null);
 
   const handleSelect = (result: any) => {
@@ -11,7 +17,7 @@ const CompetitionCreator = () => {
 
   return (
     <div className="p-8 pt-12 sm:pt-0">
-      <SearchPage />
+      <SearchPage siteId={siteId} compId={compId} />
     </div>
   );
 };

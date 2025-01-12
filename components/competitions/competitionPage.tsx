@@ -182,6 +182,7 @@ export default function CompetitionPage({
         const res = await submitAnswers(
           session.user.id,
           data.id,
+          siteData.id,
           extractedAnswers,
         );
         if ("error" in res && res.error) {

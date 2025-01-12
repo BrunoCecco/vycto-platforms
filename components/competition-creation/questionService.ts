@@ -33,12 +33,14 @@ export const createFootballQuestions = async ({
   teamId,
   name,
   competitionId,
+  siteId,
 }: {
   type: string;
   playerId: number | null;
   teamId: number;
   name: string;
   competitionId: string;
+  siteId: string;
 }): Promise<SelectQuestion[]> => {
   // Fetch team events
   const eventsResponse = await axios.get(
@@ -73,6 +75,7 @@ export const createFootballQuestions = async ({
   questionTemplates.football.forEach((template) => {
     questions.push({
       id: createId(),
+      siteId: siteId,
       competitionId: competitionId,
       question: template.question
         .replace("<insert_team1>", nextEvent.homeTeam.name)
@@ -120,10 +123,12 @@ export const createFootballQuestions = async ({
 export const createQuestions = async ({
   entityId,
   competitionId,
+  siteId,
   type,
 }: {
   entityId: number;
   competitionId: string;
+  siteId: string;
   type: string;
 }): Promise<SelectQuestion[]> => {
   // Fetch entity information (including their team ID)
@@ -149,6 +154,7 @@ export const createQuestions = async ({
     teamId,
     name,
     competitionId,
+    siteId,
   });
   //   break;
   //     default:

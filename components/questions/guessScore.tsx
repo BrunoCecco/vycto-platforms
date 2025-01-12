@@ -47,6 +47,7 @@ const GuessScore = ({ ...props }: IQuestionProps) => {
           userId={props.userId}
           questionId={props.id}
           competitionId={props.competitionId}
+          siteId={props.siteId}
           answer={`${scores.home}-${scores.away}`}
           onLocalAnswer={props.onLocalAnswer}
         >

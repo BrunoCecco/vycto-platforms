@@ -41,6 +41,7 @@ const MatchOutcome = ({ ...props }: IQuestionProps) => {
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
+            siteId={props.siteId}
             answer={props.answer1 || ""}
             onLocalAnswer={props.onLocalAnswer}
           >
@@ -84,6 +85,7 @@ const MatchOutcome = ({ ...props }: IQuestionProps) => {
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
+            siteId={props.siteId}
             answer={props.answer2 || ""}
             onLocalAnswer={props.onLocalAnswer}
           >
@@ -120,6 +122,7 @@ const MatchOutcome = ({ ...props }: IQuestionProps) => {
             userId={props.userId}
             questionId={props.id}
             competitionId={props.competitionId}
+            siteId={props.siteId}
             answer="Draw"
             onLocalAnswer={props.onLocalAnswer}
           >
