@@ -1,3 +1,4 @@
+"use server";
 import db from "@/lib/db";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -6,7 +7,10 @@ import CreateCompetitionButton from "./createCompetitionButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { or } from "drizzle-orm";
-import { getAdminCompetitions } from "@/lib/fetchers";
+import { getAdminCompetitions, getCompetitionUsers } from "@/lib/fetchers";
+import DraftedCompetitions from "./draftedCompetitions";
+import { Suspense } from "react";
+import { Spinner } from "@nextui-org/react";
 
 export default async function EditCompetitions({
   siteId,
@@ -53,12 +57,7 @@ export default async function EditCompetitions({
       {draftedCompetitions && draftedCompetitions?.length > 0 && (
         <h1 className="my-4 text-2xl ">Drafted Competitions</h1>
       )}
-      <div className="grid grid-cols-1 gap-4 pb-4 sm:grid-cols-2 xl:grid-cols-4">
-        <CreateCompetitionButton />
-        {draftedCompetitions.map((competition: any) => (
-          <CompetitionCard key={competition.id} data={competition} />
-        ))}
-      </div>
+      <DraftedCompetitions data={draftedCompetitions} />
 
       {currentCompetitions && currentCompetitions?.length > 0 && (
         <h2 className="my-4 text-2xl">
@@ -69,9 +68,16 @@ export default async function EditCompetitions({
         </h2>
       )}
       <div className="grid grid-cols-1 gap-4 pb-4 sm:grid-cols-2 xl:grid-cols-4">
-        {currentCompetitions.reverse().map((competition: any) => (
-          <CompetitionCard key={competition.id} data={competition} />
-        ))}
+        {currentCompetitions.reverse().map(async (competition: any) => {
+          const users = await getCompetitionUsers(competition.id);
+          return (
+            <CompetitionCard
+              key={competition.id}
+              data={competition}
+              users={users}
+            />
+          );
+        })}
       </div>
 
       {pastCompetitions && pastCompetitions?.length > 0 && (
@@ -83,9 +89,16 @@ export default async function EditCompetitions({
         </h1>
       )}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {pastCompetitions.map((competition: any) => (
-          <CompetitionCard key={competition.id} data={competition} />
-        ))}
+        {pastCompetitions.map(async (competition: any) => {
+          const users = await getCompetitionUsers(competition.id);
+          return (
+            <CompetitionCard
+              key={competition.id}
+              data={competition}
+              users={users}
+            />
+          );
+        })}
       </div>
     </div>
   );

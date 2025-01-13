@@ -1,35 +1,47 @@
+"use client";
 import BlurImage from "@/components/media/blurImage";
-import { getCompetitionUsers } from "@/lib/fetchers";
-import type { SelectCompetition, SelectSite } from "@/lib/schema";
+import type {
+  SelectCompetition,
+  SelectSite,
+  SelectUserCompetition,
+} from "@/lib/schema";
 import { placeholderBlurhash } from "@/lib/utils";
 import { Link } from "@nextui-org/react";
 import { ExternalLink, LinkIcon, Pencil } from "lucide-react";
 import Options from "./options";
+import { useEffect, useState } from "react";
 
-const EditCompetitionCard = async ({
+const EditCompetitionCard = ({
   data,
+  users,
 }: {
   data: SelectCompetition & { site: SelectSite | null };
+  users?: SelectUserCompetition[];
 }) => {
-  const users = await getCompetitionUsers(data.slug);
+  const [url, setUrl] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
 
-  const url = process.env.NEXT_PUBLIC_VERCEL_ENV
-    ? `https://${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/comp/${data.slug}`
-    : `http://${data.site?.subdomain}.localhost:3000/comp/${data.slug}`;
+  useEffect(() => {
+    const URL = process.env.NEXT_PUBLIC_VERCEL_ENV
+      ? `https://${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/comp/${data.slug}`
+      : `http://${data.site?.subdomain}.localhost:3000/comp/${data.slug}`;
+    setUrl(URL);
 
-  let status;
-  if (new Date(data.date.replace(/\[.*\]$/, "")) > new Date()) {
-    const days = Math.ceil(
-      (new Date(data.date.replace(/\[.*\]$/, "")).getTime() -
-        new Date().getTime()) /
-        (1000 * 60 * 60 * 24),
-    );
-    status = days + " Days to go";
-  } else if (new Date(data.date.replace(/\[.*\]$/, "")) < new Date()) {
-    status = users.length + " Participants";
-  } else {
-    status = "Live";
-  }
+    let status_;
+    if (new Date(data.date.replace(/\[.*\]$/, "")) > new Date()) {
+      const days = Math.ceil(
+        (new Date(data.date.replace(/\[.*\]$/, "")).getTime() -
+          new Date().getTime()) /
+          (1000 * 60 * 60 * 24),
+      );
+      status_ = days + " Days to go";
+    } else if (new Date(data.date.replace(/\[.*\]$/, "")) < new Date()) {
+      status_ = users?.length + " Participants";
+    } else {
+      status_ = "Live";
+    }
+    setStatus(status_);
+  }, [data]);
 
   return (
     <div className="rounded-lg border shadow-md transition-all hover:shadow-xl">
@@ -69,7 +81,7 @@ const EditCompetitionCard = async ({
             style={{ color: data.site?.color2 || "#000" }}
           >
             <p>{status}</p>
-            {data.published && (
+            {data.published && url && (
               <a
                 href={url}
                 target="_blank"
