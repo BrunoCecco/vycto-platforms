@@ -325,7 +325,7 @@ export const getAdminCompetitions = async (
       .leftJoin(sites, eq(competitions.siteId, sites.id))
       .leftJoin(adminSites, eq(sites.id, adminSites.siteId))
       .where(eq(adminSites.email, email))
-      .orderBy(desc(competitions.createdAt));
+      .orderBy(desc(competitions.date));
   } else {
     response = await db
       .select()
@@ -333,7 +333,7 @@ export const getAdminCompetitions = async (
       .leftJoin(sites, eq(competitions.siteId, sites.id))
       .leftJoin(adminSites, eq(sites.id, adminSites.siteId))
       .where(and(eq(adminSites.email, email), eq(competitions.siteId, siteId)))
-      .orderBy(desc(competitions.createdAt));
+      .orderBy(desc(competitions.date));
   }
 
   if (limit) {

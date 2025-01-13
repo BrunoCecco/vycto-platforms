@@ -75,7 +75,7 @@ const EditCompetitionCard = async ({
           </div>
           <Link
             href={`/competition/${data.id}/editor`}
-            className="w-24 rounded-lg p-2 text-center hover:opacity-75"
+            className="rounded-lg bg-content3 px-4 py-2 text-center text-foreground hover:opacity-75"
           >
             Edit
           </Link>
