@@ -1,4 +1,5 @@
 import Competitions from "@/components/competitions/competitions";
+import AdaptiveImage from "@/components/media/adaptiveImage";
 import Predictions from "@/components/my-competitions/predictions";
 import ProfileBanner from "@/components/my-competitions/profileBanner";
 import TopPredictions from "@/components/my-competitions/toppredictions";
@@ -6,6 +7,7 @@ import { authOptions } from "@/lib/auth";
 import {
   getCompetitionsForSite,
   getSiteData,
+  getSiteRewardByDate,
   getTopPredictions,
   getUserCompetitions,
   getUserData,
@@ -14,6 +16,7 @@ import { SelectCompetition, SelectUserCompetition } from "@/lib/schema";
 import { ClockIcon, MedalIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 
 export default async function MyCompetitions({
@@ -62,6 +65,12 @@ export default async function MyCompetitions({
 
   const predictions = await getTopPredictions(session.user.id, data.id);
 
+  const siteRewards = await getSiteRewardByDate(
+    data.id,
+    new Date().getMonth() + 1,
+    new Date().getFullYear(),
+  );
+
   return (
     <div className="min-h-screen">
       {/* Main Container */}
@@ -73,9 +82,22 @@ export default async function MyCompetitions({
           <div className="w-full">
             {predictions && predictions?.length > 0 && (
               <div className="mb-12 w-full">
-                <h1 className="mb-4 flex items-center text-lg font-semibold sm:text-2xl">
-                  <MedalIcon color={data.color1} size={24} className="mr-2" />
-                  Top Predictions
+                <h1 className="mb-4 flex items-center gap-4 text-lg font-semibold sm:text-2xl">
+                  <div className="flex items-center">
+                    <MedalIcon color={data.color1} size={24} className="mr-2" />
+                    Top Predictions
+                  </div>
+                  <span className="text-gray-500 text-xs text-foreground-100">
+                    {" "}
+                    powered by
+                  </span>
+                  <div>
+                    <AdaptiveImage
+                      src={siteRewards[0]?.image || "/logo.png"}
+                      alt="Logo"
+                      height={50}
+                    />
+                  </div>
                 </h1>
                 <TopPredictions
                   compData={compData.map((comp) => comp.competition)}

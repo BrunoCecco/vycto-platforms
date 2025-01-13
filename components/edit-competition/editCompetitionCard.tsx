@@ -3,7 +3,8 @@ import { getCompetitionUsers } from "@/lib/fetchers";
 import type { SelectCompetition, SelectSite } from "@/lib/schema";
 import { placeholderBlurhash } from "@/lib/utils";
 import { Link } from "@nextui-org/react";
-import { ExternalLink, LinkIcon } from "lucide-react";
+import { ExternalLink, LinkIcon, Pencil } from "lucide-react";
+import Options from "./options";
 
 const EditCompetitionCard = async ({
   data,
@@ -46,6 +47,12 @@ const EditCompetitionCard = async ({
             Draft
           </span>
         )}
+        <Link
+          href={`/competition/${data.id}/editor`}
+          className="absolute right-2 top-2 rounded-lg bg-content3 p-2 text-center text-foreground hover:opacity-75"
+        >
+          <Pencil size={20} />
+        </Link>
       </div>
 
       <div className="flex h-32 flex-col justify-between px-4 pb-4 pt-2 text-left">
@@ -73,12 +80,7 @@ const EditCompetitionCard = async ({
               </a>
             )}
           </div>
-          <Link
-            href={`/competition/${data.id}/editor`}
-            className="rounded-lg bg-content3 px-4 py-2 text-center text-foreground hover:opacity-75"
-          >
-            Edit
-          </Link>
+          <Options competition={data} />
         </div>
       </div>
     </div>

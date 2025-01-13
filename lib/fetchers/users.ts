@@ -160,10 +160,10 @@ export async function getTopPredictions(userId: string, siteId: string) {
           ),
         );
     },
-    [`${userId}-${siteId}-top-predictions`],
+    [`${userId}-${siteId}1-top-predictions`],
     {
       revalidate: 900,
-      tags: [`${userId}-${siteId}-top-predictions`],
+      tags: [`${userId}-${siteId}1-top-predictions`],
     },
   )();
 }
