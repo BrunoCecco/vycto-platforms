@@ -94,7 +94,7 @@ const MainLeaderboard = ({
     } else {
       setSelectedReward(seasonReward);
     }
-  }, [rangeType]);
+  }, [rangeType, siteData, compData]);
 
   useEffect(() => {
     if (data) {
