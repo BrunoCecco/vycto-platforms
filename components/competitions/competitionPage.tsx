@@ -371,6 +371,7 @@ export default function CompetitionPage({
                   siteData={siteData}
                   slug={slug}
                   localAnswers={localAnswers}
+                  questions={questions}
                 />
               )}
             </div>

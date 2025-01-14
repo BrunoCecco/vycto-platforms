@@ -18,6 +18,7 @@ import { usePostHog } from "posthog-js/react";
 import { Button, Checkbox, CheckboxGroup, Spinner } from "@nextui-org/react";
 import {
   SelectCompetition,
+  SelectQuestion,
   SelectSite,
   SelectUserCompetition,
 } from "@/lib/schema";
@@ -35,6 +36,7 @@ export default function SubmitAnswersForm({
   siteData,
   slug,
   localAnswers,
+  questions,
 }: {
   userId: string | null;
   userComp: SelectUserCompetition | undefined;
@@ -42,6 +44,7 @@ export default function SubmitAnswersForm({
   siteData: SelectSite;
   slug: string;
   localAnswers: { [key: string]: string };
+  questions?: SelectQuestion[];
 }) {
   const { data: session } = useSession();
   const posthog = usePostHog();
@@ -73,6 +76,11 @@ export default function SubmitAnswersForm({
   };
 
   const handleSubmit = async (formData: FormData) => {
+    // if (questions.length !== Object.keys(localAnswers).length) {
+    //   toast.error("Please answer all questions before submitting.");
+    //   return;
+    // }
+
     if (!session && !userId) {
       // If not logged in, redirect to login page with answers in query
 
