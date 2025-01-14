@@ -30,12 +30,10 @@ const animation: Variants = {
 
 const Counter = ({
   disabled,
-  team,
   defaultValue,
   onChange,
 }: {
   disabled: boolean;
-  team: "home" | "away";
   defaultValue: number;
   onChange: (value: 1 | -1) => void;
 }) => {

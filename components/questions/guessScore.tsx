@@ -68,17 +68,17 @@ const GuessScore = ({ ...props }: IQuestionProps) => {
                   className="h-full w-full object-contain"
                 />
               </div>
+
+              <p className="break-words text-sm font-semibold">
+                {props.answer1}
+              </p>
               <div className="flex items-center gap-2 md:gap-8">
                 <Counter
                   disabled={props.disabled}
-                  team="home"
                   defaultValue={scores.home}
                   onChange={(val: 1 | -1) => updateScore("home", val === 1)}
                 />
               </div>
-              <p className="break-words text-sm font-semibold">
-                {props.answer1}
-              </p>
             </div>
 
             {/* VS */}
@@ -103,17 +103,17 @@ const GuessScore = ({ ...props }: IQuestionProps) => {
                   className="h-full w-full object-contain"
                 />
               </div>
+
+              <p className="break-words text-sm font-semibold">
+                {props.answer2}
+              </p>
               <div className="flex items-center gap-2 md:gap-8">
                 <Counter
                   disabled={props.disabled}
-                  team="away"
                   defaultValue={scores.away}
                   onChange={(val: 1 | -1) => updateScore("away", val === 1)}
                 />
               </div>
-              <p className="break-words text-sm font-semibold">
-                {props.answer2}
-              </p>
             </div>
           </div>
           <Button

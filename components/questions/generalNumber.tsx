@@ -2,18 +2,25 @@
 import Image from "next/image";
 import PointsBadge from "../competitions/pointsBadge";
 import Submit from "./submit";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import { Button, Input } from "@nextui-org/react";
 import QuestionResultBlock from "../competitions/questionResultBlock";
 import { TextGenerateEffect } from "../ui/textGenerateEffect";
 import { WideImage } from "./wideImage";
 import { IQuestionProps } from "@/lib/types";
+import Counter from "./counter";
 
 const GeneralNumber = ({ ...props }: IQuestionProps) => {
   const [answer, setAnswer] = useState<string>(props.answer?.answer || "0");
 
   const submitButton = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (submitButton.current) {
+      submitButton.current.click();
+    }
+  }, [answer]);
 
   return (
     <div className="flex w-full items-center justify-center">
@@ -37,7 +44,7 @@ const GeneralNumber = ({ ...props }: IQuestionProps) => {
           answer={answer.toString()}
           onLocalAnswer={props.onLocalAnswer}
         >
-          <Input
+          {/* <Input
             type="number"
             min={0}
             isDisabled={props.disabled}
@@ -51,6 +58,19 @@ const GeneralNumber = ({ ...props }: IQuestionProps) => {
               inputWrapper: "bg-content4",
             }}
             onBlur={() => submitButton?.current?.click()}
+          /> */}
+          <input
+            type="submit"
+            className="hidden"
+            name="answer"
+            value={answer}
+          />
+          <Counter
+            disabled={props.disabled}
+            defaultValue={0}
+            onChange={(val: 1 | -1) =>
+              setAnswer((prev) => (parseInt(prev) + val).toString())
+            }
           />
           <Button className="hidden" type="submit" ref={submitButton}></Button>
         </Submit>
