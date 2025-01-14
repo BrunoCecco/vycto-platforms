@@ -29,9 +29,9 @@ export default async function SiteSettingsIndex({
             admin.email != "nicolasconstantinou9@gmail.com" && (
               <div
                 key={admin.email}
-                className="flex flex-wrap items-center justify-between gap-2 border-b bg-content1 py-2"
+                className="flex flex-wrap items-center justify-between gap-2 rounded-lg border-b bg-content1 p-2"
               >
-                <div>{admin.email}</div>
+                <div className="px-2">{admin.email}</div>
                 <DeleteAdminButton email={admin.email} siteId={siteData.id} />
               </div>
             ),
