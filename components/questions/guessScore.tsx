@@ -55,6 +55,7 @@ const GuessScore = ({ ...props }: IQuestionProps) => {
           <div
             className="flex w-full items-center justify-around gap-4 py-4 text-center md:justify-around md:px-4"
             onBlur={() => submitButton?.current?.click()}
+            onMouseOut={() => submitButton?.current?.click()}
           >
             <div className="flex basis-1/3 flex-col items-center gap-4">
               <div

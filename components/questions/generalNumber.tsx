@@ -67,7 +67,7 @@ const GeneralNumber = ({ ...props }: IQuestionProps) => {
           />
           <Counter
             disabled={props.disabled}
-            defaultValue={0}
+            defaultValue={parseInt(answer)}
             onChange={(val: 1 | -1) =>
               setAnswer((prev) => (parseInt(prev) + val).toString())
             }

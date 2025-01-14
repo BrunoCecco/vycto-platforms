@@ -44,9 +44,17 @@ const GameStats: FC<GameStatsProps> = ({
         <div className="flex flex-col items-center justify-center text-center">
           <p className="text-sm">
             Submitted Prediction:{" "}
-            {new Date(
-              userComp.submissionDate.replace(/\[.*\]$/, ""),
-            ).toLocaleDateString()}
+            {
+              // format dd-mm, hh:mm
+              new Date(
+                userComp.submissionDate.replace(/\[.*\]$/, ""),
+              ).toLocaleString("UTC", {
+                day: "numeric",
+                month: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })
+            }
           </p>
           {/* <span className="ml-1" role="img" aria-label="tick">
             ✅

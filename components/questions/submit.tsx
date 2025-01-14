@@ -22,6 +22,7 @@ const Submit = ({
 }) => {
   const handleSubmit = async (data: FormData) => {
     if (userId) {
+      console.log("Answering question: ", data.get("answer"));
       await answerQuestion(data);
     } else if (answer && onLocalAnswer) {
       onLocalAnswer(questionId, answer);

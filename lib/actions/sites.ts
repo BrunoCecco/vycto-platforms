@@ -312,7 +312,10 @@ export const createSiteAdmin = async (
   }
   const siteAdmins = await getSiteAdmins(siteId);
 
-  if (verify && !siteAdmins.some((admin) => admin.userId === session.user.id)) {
+  if (
+    verify &&
+    !siteAdmins.some((admin) => admin.email === session.user.email)
+  ) {
     console.log(
       "User is not an admin of this site",
       siteAdmins,
@@ -324,21 +327,12 @@ export const createSiteAdmin = async (
     };
   }
 
-  const user = await getUserData(email);
-
-  if (!user) {
-    return {
-      error: "User not found",
-    };
-  }
-
   try {
     const [response] = await db
       .insert(adminSites)
       .values({
         email: email,
         siteId,
-        userId: user.id,
       })
       .returning();
 
@@ -363,7 +357,7 @@ export const deleteSiteAdmin = async (siteId: string, email: string) => {
   const siteAdmins = await db.query.adminSites.findMany({
     where: eq(adminSites.siteId, siteId),
   });
-  if (!siteAdmins.some((admin) => admin.userId === session.user.id)) {
+  if (!siteAdmins.some((admin) => admin.email === session.user.email)) {
     return {
       error: "You are not authorized to remove admins from this site",
     };
