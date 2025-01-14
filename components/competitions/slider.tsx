@@ -263,7 +263,7 @@ const Slider: FC<{
           </div>
         </div>
       </div>
-      <div className="pointer-events-none mt-4 transform text-center text-xs font-extrabold sm:text-lg ">
+      <div className="pointer-events-none mt-8 transform text-center text-lg font-extrabold sm:text-2xl">
         {value}
       </div>
     </div>

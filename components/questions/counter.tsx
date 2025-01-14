@@ -74,7 +74,7 @@ const Counter = ({
             num === 0 && "opacity-50",
           )}
         >
-          <Minus size={48} />
+          <Minus size={44} />
         </button>
         <h3 className="w-4 text-center">
           <AnimatePresence mode="popLayout" custom={direction}>
@@ -104,7 +104,7 @@ const Counter = ({
             num === 20 && "opacity-50",
           )}
         >
-          <Plus size={48} />
+          <Plus size={44} />
         </button>
       </div>
     </div>
