@@ -40,10 +40,7 @@ export const users = pgTable("users", {
 export const adminSites = pgTable(
   "adminSites",
   {
-    userId: text("userId").references(() => users.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    }),
+    userId: text("userId"),
     email: text("email")
       .notNull()
       .references(() => users.email, {
