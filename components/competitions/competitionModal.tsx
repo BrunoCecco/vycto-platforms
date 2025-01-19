@@ -116,12 +116,6 @@ export default function CompetitionModal({
                   {competition.reward2Title}
                 </span>
               )}
-              {competition.reward3Title && (
-                <span className="flex items-center">
-                  <Trophy className="mr-2" />
-                  {competition.reward3Title}
-                </span>
-              )}
               <span className="flex items-center">
                 <Rocket className="mr-2" /> {numQuestions} Questions
               </span>
