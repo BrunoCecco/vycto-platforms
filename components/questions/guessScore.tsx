@@ -42,7 +42,7 @@ const GuessScore = ({ ...props }: IQuestionProps) => {
         {/* Points Badge */}
         <PointsBadge points={props.points} color={props.color} />
 
-        <TextGenerateEffect words={"Guess the score"} color={props.color} />
+        <TextGenerateEffect words={props.question || "Guess The Score"} color={props.color} />
         {/* Teams */}
         <Submit
           userId={props.userId}
