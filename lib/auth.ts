@@ -392,7 +392,7 @@ function html(params: { url: string; host: string; theme: Theme }) {
     <tr>
       <td align="center"
         style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-        <img src="https://app.vyctorewards.com/logo.png" alt="VYCTO" width="100" height="100" />
+        <img src="https://app.vycto.com/logo.png" alt="VYCTO" width="100" height="100" />
       </td>      
     </tr>
     <tr>    
