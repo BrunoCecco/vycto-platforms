@@ -203,7 +203,7 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
                       <div className="text-sm ">Continue with Google</div>
                     )}
                   </Button>
-                  <Button onClick={() => handleLogin("apple")}>
+                  {/*<Button onClick={() => handleLogin("apple")}>
                     <Image
                       alt="apple"
                       src={"/appleIcon.svg"}
@@ -216,7 +216,7 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
                     ) : (
                       <div className="e text-sm">Continue with Apple</div>
                     )}
-                  </Button>
+                  </Button>*/}
                 </>
               )}
             </div>
