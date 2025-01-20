@@ -23,6 +23,9 @@ const EditGuessScore = ({
   const [points, setPoints] = useState(question.points || 0);
   const [image1, setImage1] = useState(question.image1 || "/placeholder.png");
   const [image2, setImage2] = useState(question.image2 || "/placeholder.png");
+  const [editedQuestion, setEditedQuestion] = useState(
+    question.question || "Guess The Score",
+  );
 
   const [editedCorrectAnswer, setEditedCorrectAnswer] = useState(
     question.correctAnswer || "",
@@ -51,6 +54,12 @@ const EditGuessScore = ({
     const res = await updateQuestionMetadata(formData, question, key);
     toast.success("Question updated successfully");
     return res;
+  };
+
+  const handleQuestionInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setEditedQuestion(e.target.value);
   };
 
   const handleInputBlur = async (key: string, value: string) => {
@@ -98,7 +107,15 @@ const EditGuessScore = ({
           updateQuestion={updateQuestion}
         />
 
-        <h2 className="mb-12 text-xl font-semibold ">Guess the score 🔥</h2>
+        <div className="mb-1 text-center">
+          <Input
+            type="text"
+            value={editedQuestion}
+            onChange={handleQuestionInputChange}
+            onBlur={() => handleInputBlur("question", editedQuestion)}
+          />
+        </div>
+
 
         {/* Teams */}
         <div className="flex w-full flex-col items-center justify-between gap-4 py-4 md:justify-around md:px-4">
