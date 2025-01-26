@@ -66,7 +66,7 @@ const MainLeaderboard = ({
       await getModalRewards();
     };
     fetchRewards();
-  }, []);
+  }, [siteData]);
 
   useEffect(() => {
     const fetchCompTitle = async () => {
@@ -85,7 +85,7 @@ const MainLeaderboard = ({
       }
     };
     fetchCompTitle();
-  }, [compDate, rangeType]);
+  }, [compDate, rangeType, siteData]);
 
   useEffect(() => {
     fetchData();
@@ -111,7 +111,7 @@ const MainLeaderboard = ({
           .slice(offset, offset + limit),
       );
     }
-  }, [query, data, offset, limit]);
+  }, [query, data, offset, limit, siteData]);
 
   const fetchData = async () => {
     setLoading(true);
