@@ -49,13 +49,13 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      images: [data.image],
+      images: [siteData.loginBanner],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [data.image],
+      images: [siteData.loginBanner],
     },
     icons: [data.image],
     // Optional: Set canonical URL to custom domain if it exists

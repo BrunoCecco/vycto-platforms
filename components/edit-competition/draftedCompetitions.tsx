@@ -15,7 +15,9 @@ const DraftedCompetitions = ({ data }: { data: SelectCompetition[] }) => {
   );
 
   useEffect(() => {
-    setDraftedCompetitions(fetchCompetitionsByMonth(parseInt(selectedMonth)));
+    setDraftedCompetitions(
+      fetchCompetitionsByMonth(parseInt(selectedMonth) - 1),
+    );
   }, [selectedMonth, data]);
 
   const fetchCompetitionsByMonth = (month: number) => {

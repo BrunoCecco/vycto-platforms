@@ -51,7 +51,10 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={cn("bg-background text-foreground", fontMapper[font])}>
+      <body
+        className={cn("bg-background text-foreground", fontMapper[font])}
+        style={{ fontFamily: `var(--${font})` }}
+      >
         <Providers>
           <PostHogPageView />
           <Analytics />

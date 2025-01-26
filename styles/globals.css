@@ -1,10 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 * {
   font-family: var(--font-space);
-}
+} */
 
 @layer utilities {
   .overflow-hidden {

@@ -34,13 +34,13 @@ export async function generateMetadata({
     openGraph: {
       title: data.name || "",
       description: data.description || "",
-      images: [data.logo || "/logo.png"],
+      images: [data.loginBanner || "/logo.png"],
     },
     twitter: {
       card: "summary_large_image",
       title: data.name || "",
       description: data.description || "",
-      images: [data.logo || "/logo.png"],
+      images: [data.loginBanner || "/logo.png"],
     },
     icons: [data.logo || "/logo.png"],
     metadataBase: new URL(`https://${domain}`),
