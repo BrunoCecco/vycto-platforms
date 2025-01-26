@@ -5,6 +5,7 @@ import { Select, SelectItem } from "@nextui-org/react";
 import CreateCompetitionButton from "./createCompetitionButton";
 import CompetitionCard from "./editCompetitionCard";
 import { useEffect, useState } from "react";
+import router from "next/navigation";
 
 const DraftedCompetitions = ({ data }: { data: SelectCompetition[] }) => {
   const [draftedCompetitions, setDraftedCompetitions] =
@@ -14,14 +15,8 @@ const DraftedCompetitions = ({ data }: { data: SelectCompetition[] }) => {
   );
 
   useEffect(() => {
-    const currentMonth = new Date().getMonth();
-    setSelectedMonth(currentMonth.toString());
-    setDraftedCompetitions(fetchCompetitionsByMonth(currentMonth));
-  }, []);
-
-  useEffect(() => {
     setDraftedCompetitions(fetchCompetitionsByMonth(parseInt(selectedMonth)));
-  }, [selectedMonth]);
+  }, [selectedMonth, data]);
 
   const fetchCompetitionsByMonth = (month: number) => {
     if (month === -1) return data;
@@ -42,7 +37,12 @@ const DraftedCompetitions = ({ data }: { data: SelectCompetition[] }) => {
         onChange={(e) => setSelectedMonth(e.target.value)}
       >
         {MONTHS.map((month) => (
-          <SelectItem key={month.value.toString()}>{month.label}</SelectItem>
+          <SelectItem
+            key={month.value.toString()}
+            value={month.value.toString()}
+          >
+            {month.label}
+          </SelectItem>
         ))}
       </Select>
       <div className="grid grid-cols-1 gap-4 pb-4 sm:grid-cols-2 xl:grid-cols-4">

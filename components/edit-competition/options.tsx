@@ -23,13 +23,15 @@ import {
   Button,
 } from "@nextui-org/react";
 import { CircleEllipsis } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-export default function DuplicateButton({
+export default function Options({
   competition,
 }: {
   competition: SelectCompetition & { site: any };
 }) {
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
+  const router = useRouter();
 
   const items = [
     {
@@ -46,6 +48,7 @@ export default function DuplicateButton({
     startTransitionPublishing(async () => {
       await duplicateCompetition(competition.id).then(() => {
         toast.success(`Successfully duplicated your competition.`);
+        router.refresh();
       });
     });
   };
@@ -59,6 +62,7 @@ export default function DuplicateButton({
             toast.error(res.error);
           } else {
             toast.success(`Successfully deleted competition!`);
+            router.refresh();
           }
         });
       });

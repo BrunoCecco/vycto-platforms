@@ -806,7 +806,6 @@ export async function duplicateCompetition(competitionId: string) {
       description: competition.description,
       content: competition.content,
       sponsor: competition.sponsor,
-      slug: competition.slug + "-copy",
       image: competition.image,
       imageBlurhash: competition.imageBlurhash,
       image1: competition.image1,
@@ -834,8 +833,9 @@ export async function duplicateCompetition(competitionId: string) {
     .returning()
     .then((res) => res[0]);
 
-  const newQuestions = qs.map((q) => {
-    return db
+  for (const q of qs) {
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    await db
       .insert(questions)
       .values({
         id: nanoid(),
@@ -856,13 +856,13 @@ export async function duplicateCompetition(competitionId: string) {
       })
       .returning()
       .then((res) => res[0]);
-  });
-
-  await Promise.all(newQuestions);
+  }
 
   revalidateTag(
     `${competition.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-competitions`,
   );
+  revalidateTag(`${competition.site?.subdomain}.localhost:3000-competitions`);
+  revalidateTag(`${competition.site?.subdomain}-competitions`);
   revalidateTag("all-competitions");
 
   return newCompetition;
