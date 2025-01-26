@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { cal, inter } from "@/styles/fonts";
+import { cal, inter, fira, fontMapper } from "@/styles/fonts";
 import { Analytics } from "@vercel/analytics/react";
 import { Providers } from "./providers";
 import { Metadata } from "next";
@@ -10,8 +10,6 @@ import ColorSchemeToggle from "@/components/ui/colorSchemeToggle";
 import CookieBanner from "@/components/settings/cookieBanner";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, setRequestLocale } from "next-intl/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 
 const PostHogPageView = dynamic(() => import("./postHogPageView"), {
   ssr: false,
@@ -49,15 +47,11 @@ export default async function RootLayout({
   // side is the easiest way to get started
   const messages = await getMessages();
 
+  const font = locale == "el-CY" ? "font-fira" : "font-space";
+
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body
-        className={cn(
-          cal.variable,
-          inter.variable,
-          "bg-background text-foreground",
-        )}
-      >
+      <body className={cn("bg-background text-foreground", fontMapper[font])}>
         <Providers>
           <PostHogPageView />
           <Analytics />

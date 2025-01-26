@@ -12,7 +12,6 @@ import { getServerSession } from "next-auth";
 import SettingsButton from "@/components/settings/settingsButton";
 import Image from "next/image";
 import { capitalize } from "@/lib/utils";
-import { fontMapper } from "@/styles/fonts";
 import { Suspense } from "react";
 import LoadingDots from "@/components/icons/loadingDots";
 import Loading from "../../components/ui/loading";

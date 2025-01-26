@@ -26,6 +26,7 @@ import { Session } from "next-auth";
 import RewardModal from "../rewards/rewardsModal";
 import { getLeaderboardName } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type LeaderboardUser = SelectUser & { points: string; rank: string };
 
@@ -42,6 +43,7 @@ const MainLeaderboard = ({
   compDate?: Date;
   compData?: SelectCompetition;
 }) => {
+  const t = useTranslations();
   const [rangeType, setRangeType] = useState<LeaderboardPeriod>(
     LeaderboardPeriod.Monthly,
   );
@@ -208,18 +210,18 @@ const MainLeaderboard = ({
           <thead className="pb-4">
             <tr className="pb-4">
               <th className="py-3 text-left text-xs font-medium uppercase">
-                Name
+                {t("name")}
               </th>
               <th className="hidden py-3 text-center text-xs font-medium uppercase md:table-cell">
-                Rank
+                {t("rank")}
               </th>
               <th className="text-wrap py-3 text-center text-xs font-medium uppercase">
-                <span className="hidden sm:block">Points</span>
+                <span className="hidden sm:block">{t("points")}</span>
                 <span className="block sm:hidden">Pts</span>
               </th>
               {compData?.slug && (
                 <th className="py-3 text-right text-xs font-medium uppercase">
-                  Submission
+                  {t("submission")}
                 </th>
               )}
             </tr>

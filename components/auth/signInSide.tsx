@@ -319,7 +319,7 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
           <div className="py-3">
             <div className="text-center">
               <div className="flex items-center justify-center">
-                <div className="font-space pr-1.5">powered by</div>
+                <div className="pr-1.5">powered by</div>
                 <div className="relative h-8 w-12">
                   {/* White logo for dark mode */}
                   <Image

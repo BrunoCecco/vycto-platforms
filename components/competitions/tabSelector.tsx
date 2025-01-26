@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 const TabSelector = ({
@@ -10,10 +11,11 @@ const TabSelector = ({
   setActiveTab: any;
 }) => {
   console.log("activeTab", activeTab);
+  const t = useTranslations();
   return (
     <div className="mx-auto flex w-full flex-col items-center justify-center">
       <div className="flex w-full overflow-hidden border-b-2">
-        {["Challenge", "Rewards", "Leaderboard"].map((tab) => (
+        {[t("challenge"), t("rewards"), t("leaderboard")].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}

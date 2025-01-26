@@ -36,16 +36,16 @@ const LeaderboardHeader = ({
   // Function to dynamically set the prize text based on rangeType
   const getPrizeText = () => {
     if (rangeType === LeaderboardPeriod.All) {
-      return t("season") + " Prizes";
+      return t("season") + " " + t("prizes.title");
     } else if (rangeType === LeaderboardPeriod.Monthly) {
       const currentMonth = new Date()
         .toLocaleString("default", {
           month: "long",
         })
         .toLowerCase();
-      return `${t(currentMonth)} Prizes`; // e.g., "December's Prize"
+      return t(`prizes.${currentMonth}`); // e.g., "December's Prize"
     } else if (rangeType === LeaderboardPeriod.Season) {
-      return t("season") + " Prizes";
+      return t("season") + " " + t("prizes.title");
     }
     return "";
   };

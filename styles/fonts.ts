@@ -20,12 +20,31 @@ export const cal = localFont({
   preload: true,
 });
 
-export const calTitle = localFont({
-  src: "./CalSans-SemiBold.otf",
-  variable: "--font-title",
-  weight: "600",
-  display: "swap",
+export const fira = localFont({
+  variable: "--font-fira",
   preload: true,
+  src: [
+    {
+      path: "./FiraSansCondensed-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./FiraSansCondensed-Italic.ttf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "./FiraSansCondensed-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "./FiraSansCondensed-BoldItalic.ttf",
+      weight: "700",
+      style: "italic",
+    },
+  ],
 });
 
 export const lora = Lora({
@@ -44,7 +63,8 @@ export const work = Work_Sans({
 });
 
 export const fontMapper = {
-  "font-cal": calTitle.variable,
+  "font-cal": cal.variable,
+  "font-fira": fira.variable,
   "font-lora": lora.variable,
   "font-work": work.variable,
   "font-space": spaceGrotesk.variable,

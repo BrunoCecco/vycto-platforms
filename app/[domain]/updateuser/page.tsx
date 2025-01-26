@@ -37,13 +37,12 @@ export default function UpdateUser() {
 
   useEffect(() => {
     //if (!session || !session.user) {
-     // router.replace("/login");
-     // return;
-   // }
+    // router.replace("/login");
+    // return;
+    // }
 
     if (!hasUpdated && session && session.user && username && !compslug) {
-      
-     updateUser()
+      updateUser()
         .then((res) => {
           router.replace("/");
         })
@@ -59,7 +58,6 @@ export default function UpdateUser() {
       !name &&
       !birthDate
     ) {
-      
       if (compslug) {
         router.push(constructRedirectUrl());
       } else {
@@ -70,8 +68,6 @@ export default function UpdateUser() {
       setLoading(false);
     }
   }, [session, searchParams]);
-
-  
 
   const constructRedirectUrl = () => {
     var redirectUrl = `/comp/${compslug}?`;
@@ -241,7 +237,7 @@ export default function UpdateUser() {
           <div className="py-3">
             <div className="text-center">
               <div className="flex items-center justify-center">
-                <div className="font-space pr-1.5">powered by</div>
+                <div className="pr-1.5">powered by</div>
                 <div className="relative h-8 w-12">
                   {/* White logo for dark mode */}
                   <Image

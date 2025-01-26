@@ -61,7 +61,7 @@ export default function CompetitionModal({
                   your favourite {siteData.name} prizes
                 </span>
               ) : (
-                "View competition results"
+                t("view") + " " + t("competition") + " " + t("results")
               )}
             </h4>
             <div className="mb-8 flex items-center justify-center">

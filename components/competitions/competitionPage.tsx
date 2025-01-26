@@ -37,6 +37,7 @@ import SignInSide from "../auth/signInSide";
 import { Session } from "next-auth";
 import Loading from "../ui/loading";
 import { decodeAnswer } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export default function CompetitionPage({
   session,
@@ -57,7 +58,8 @@ export default function CompetitionPage({
   users: SelectUserCompetition[];
   slug: string;
 }) {
-  const [activeTab, setActiveTab] = useState("Challenge");
+  const t = useTranslations();
+  const [activeTab, setActiveTab] = useState(t("challenge"));
   const [localAnswers, setLocalAnswers] = useState<{ [key: string]: string }>(
     {},
   );
@@ -90,7 +92,7 @@ export default function CompetitionPage({
     setEnded(hasEnded);
 
     if (hasEnded && userComp?.userId == session?.user.id) {
-      setActiveTab("Leaderboard");
+      setActiveTab(t("leaderboard"));
     }
 
     const hasSubmitted =
@@ -315,10 +317,10 @@ export default function CompetitionPage({
           siteData={siteData}
         />
         <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
-        {activeTab == "Rewards" && (
+        {activeTab == t("rewards") && (
           <Rewards siteData={siteData} competition={data} users={users} />
         )}
-        {activeTab == "Challenge" && (
+        {activeTab == t("challenge") && (
           <TracingBeam color1={siteData.color1} color2={siteData.color2}>
             <div
               ref={questionComp}
@@ -377,7 +379,7 @@ export default function CompetitionPage({
             </div>
           </TracingBeam>
         )}
-        {activeTab == "Leaderboard" && (
+        {activeTab == t("leaderboard") && (
           <div className="mt-4">
             <MainLeaderboard
               siteData={siteData}
