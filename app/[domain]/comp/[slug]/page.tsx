@@ -24,46 +24,49 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Suspense } from "react";
 import { Spinner } from "@nextui-org/react";
+import { icons } from "lucide-react";
 
-// export async function generateMetadata({
-//   params,
-// }: {
-//   params: { domain: string; slug: string };
-// }) {
-//   const domain = decodeURIComponent(params.domain);
-//   const slug = decodeURIComponent(params.slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: { domain: string; slug: string };
+}) {
+  const domain = decodeURIComponent(params.domain);
+  const slug = decodeURIComponent(params.slug);
 
-//   const [data, siteData] = await Promise.all([
-//     getCompetitionData(domain, slug),
-//     getSiteData(domain),
-//   ]);
-//   if (!data || !siteData) {
-//     return null;
-//   }
-//   const { title, description } = data;
+  const [data, siteData] = await Promise.all([
+    getCompetitionData(domain, slug),
+    getSiteData(domain),
+  ]);
+  if (!data || !siteData) {
+    return null;
+  }
+  const { title, description } = data;
 
-//   return {
-//     title,
-//     description,
-//     openGraph: {
-//       title,
-//       description,
-//     },
-//     twitter: {
-//       card: "summary_large_image",
-//       title,
-//       description,
-//       creator: "@vercel",
-//     },
-//     // Optional: Set canonical URL to custom domain if it exists
-//     // ...(params.domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
-//     //   siteData.customDomain && {
-//     //     alternates: {
-//     //       canonical: `https://${siteData.customDomain}/${params.slug}`,
-//     //     },
-//     //   }),
-//   };
-// }
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [data.image],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [data.image],
+    },
+    icons: [data.image],
+    // Optional: Set canonical URL to custom domain if it exists
+    // ...(params.domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
+    //   siteData.customDomain && {
+    //     alternates: {
+    //       canonical: `https://${siteData.customDomain}/${params.slug}`,
+    //     },
+    //   }),
+  };
+}
 
 // export async function generateStaticParams() {
 //   const allCompetitions = await db

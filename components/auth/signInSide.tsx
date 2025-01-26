@@ -291,7 +291,7 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
                     </div>
                   )}
                   {emailExists && (
-                    <p className="text-xs">
+                    <div className="text-xs">
                       By continuing you agree to the{" "}
                       <a
                         className="dark: font-semibold "
@@ -310,7 +310,7 @@ export default function SignInSide({ siteData }: { siteData?: SelectSite }) {
                       >
                         Privacy Policy
                       </a>
-                    </p>
+                    </div>
                   )}
                 </div>
               </form>

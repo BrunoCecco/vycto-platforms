@@ -27,34 +27,22 @@ export async function generateMetadata({
   if (!data) {
     return null;
   }
-  const {
-    name: title,
-    description,
-    image,
-    logo,
-  } = data as {
-    name: string;
-    description: string;
-    image: string;
-    logo: string;
-  };
 
   return {
-    title,
-    description,
+    title: data.name,
+    description: data.description,
     openGraph: {
-      title,
-      description,
-      images: [image],
+      title: data.name || "",
+      description: data.description || "",
+      images: [data.logo || "/logo.png"],
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
-      images: [image],
-      creator: "@vercel",
+      title: data.name || "",
+      description: data.description || "",
+      images: [data.logo || "/logo.png"],
     },
-    icons: [logo],
+    icons: [data.logo || "/logo.png"],
     metadataBase: new URL(`https://${domain}`),
     // Optional: Set canonical URL to custom domain if it exists
     // ...(params.domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&

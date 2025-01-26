@@ -22,7 +22,7 @@ const image = "/logo.png";
 export const metadata: Metadata = {
   title,
   description,
-  icons: ["/favicon.ico"],
+  icons: [image],
   openGraph: {
     title,
     description,

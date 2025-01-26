@@ -251,7 +251,7 @@ const MainLeaderboard = ({
                           </div>
                           {/* User Name */}
                           <div className="flex-1">
-                            <p className="line-clamp-2 break-words">
+                            <div className="line-clamp-2 break-words">
                               {getLeaderboardName(entry)}
                               {user && user.id == entry.id && (
                                 <div className="block text-sm font-bold sm:hidden">
@@ -266,7 +266,7 @@ const MainLeaderboard = ({
                                   </HoverBorderGradient>
                                 </div>
                               )}
-                            </p>
+                            </div>
                           </div>
                           {user && user.id == entry.id && (
                             <div className="hidden text-sm font-bold sm:block">
