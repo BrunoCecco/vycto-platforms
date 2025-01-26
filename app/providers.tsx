@@ -18,6 +18,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
       api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
       person_profiles: "always",
+      capture_pageview: false, // Disable automatic pageview capture, as we capture manually
       capture_pageleave: true,
       persistence:
         cookieConsentGiven() === "yes" ? "localStorage+cookie" : "memory",
