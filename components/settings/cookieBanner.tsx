@@ -4,52 +4,60 @@ import { useEffect, useState } from "react";
 import { usePostHog } from "posthog-js/react";
 import { Button } from "@nextui-org/react";
 
-export function cookieConsentGiven() {
-  if (!localStorage.getItem("cookie_consent")) {
+export function optionalCookieConsentGiven() {
+  if (!localStorage.getItem("optional_cookie_consent")) {
     return "undecided";
   }
-  return localStorage.getItem("cookie_consent");
+  return localStorage.getItem("optional_cookie_consent");
 }
 
 export default function CookieBanner() {
-  const [consentGiven, setConsentGiven] = useState("");
+  const [optionalConsentGiven, setOptionalConsentGiven] = useState("");
   const posthog = usePostHog();
 
   useEffect(() => {
     // We want this to only run once the client loads
     // or else it causes a hydration error
-    setConsentGiven(cookieConsentGiven() || "undecided");
+    setOptionalConsentGiven(optionalCookieConsentGiven() || "undecided");
   }, []);
 
   useEffect(() => {
-    if (consentGiven !== "") {
+    if (optionalConsentGiven !== "") {
       posthog.set_config({
-        persistence: consentGiven === "yes" ? "localStorage+cookie" : "memory",
+        persistence:
+          optionalConsentGiven === "yes" ? "localStorage+cookie" : "memory",
       });
     }
-  }, [consentGiven]);
+  }, [optionalConsentGiven]);
 
-  const handleAcceptCookies = () => {
-    localStorage.setItem("cookie_consent", "yes");
-    setConsentGiven("yes");
+  const handleAcceptOptionalCookies = () => {
+    localStorage.setItem("optional_cookie_consent", "yes");
+    setOptionalConsentGiven("yes");
   };
 
-  const handleDeclineCookies = () => {
-    localStorage.setItem("cookie_consent", "no");
-    setConsentGiven("no");
+  const handleDeclineOptionalCookies = () => {
+    localStorage.setItem("optional_cookie_consent", "no");
+    setOptionalConsentGiven("no");
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-4">
-      {consentGiven === "undecided" && (
-        <div className="flex flex-col gap-2 rounded-lg bg-background p-4 shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 flex flex-col gap-2 rounded-lg bg-background p-4">
+      <p>
+        We use mandatory cookies for authentication and handling your sessions.
+      </p>
+      {optionalConsentGiven === "undecided" && (
+        <div className="flex flex-col gap-2 shadow-lg">
           <p>
-            We use tracking cookies to understand how you use the product and
-            help us improve it.
+            We also use optional analytics cookies to improve your experience
+            and help us understand how we can improve our product.
           </p>
           <div className="flex items-center gap-2">
-            <Button onClick={handleAcceptCookies}>Accept cookies</Button>
-            <Button onClick={handleDeclineCookies}>Decline cookies</Button>
+            <Button onClick={handleAcceptOptionalCookies}>
+              Accept Optional Cookies
+            </Button>
+            <Button onClick={handleDeclineOptionalCookies}>
+              Decline Cookies
+            </Button>
           </div>
         </div>
       )}
