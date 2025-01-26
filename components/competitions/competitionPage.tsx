@@ -100,9 +100,6 @@ export default function CompetitionPage({
     setSubmitted(hasSubmitted);
 
     if (session && searchParams) {
-      posthog?.identify(session?.user?.id!, {
-        email: session?.user?.email,
-      });
       const extractedAnswers: { [key: string]: string } = {};
       searchParams.forEach(async (value, key) => {
         if (!nonQuestionSearchParamKeys.includes(key)) {

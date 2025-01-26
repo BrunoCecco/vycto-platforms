@@ -15,7 +15,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+    posthog.init(process.env.POSTHOG_KEY!, {
       api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
       person_profiles: "always",
       capture_pageleave: true,

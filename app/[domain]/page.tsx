@@ -19,6 +19,7 @@ import { authOptions } from "@/lib/auth";
 import ColorSchemeToggle from "@/components/ui/colorSchemeToggle";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import posthog from "posthog-js";
 
 // export async function generateStaticParams() {
 //   const allSites = await db.query.sites.findMany({
@@ -67,6 +68,8 @@ export default async function SiteHomePage({
   )[0];
 
   const session = await getServerSession(authOptions);
+
+  if (session?.user) posthog.identify(session?.user.id);
 
   const userCompetitions = await getUserCompetitions(
     session?.user.id || "",
