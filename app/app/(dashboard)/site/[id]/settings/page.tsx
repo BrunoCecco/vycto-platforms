@@ -70,7 +70,7 @@ export default async function SiteSettingsIndex({
       <Form
         title="Terms & Conditions"
         description="The terms and conditions for your site."
-        helpText="Please enter the T&Cs for your site."
+        helpText="Please upload the T&Cs for your site."
         inputAttrs={{
           name: "terms",
           type: "generalfile",
@@ -83,12 +83,25 @@ export default async function SiteSettingsIndex({
       <Form
         title="Privacy Policy"
         description="The privacy policy for your site."
-        helpText="Please enter the privacy policy for your site."
+        helpText="Please upload the privacy policy for your site."
         inputAttrs={{
           name: "privacypolicy",
           type: "generalfile",
           defaultValue: siteData?.privacypolicy!,
           placeholder: "privacypolicy",
+        }}
+        handleSubmit={updateSite}
+      />
+
+      <Form
+        title="Cookie Policy"
+        description="The cookie policy for your site."
+        helpText="Please upload the cookie policy for your site."
+        inputAttrs={{
+          name: "cookiepolicy",
+          type: "generalfile",
+          defaultValue: siteData?.cookiepolicy!,
+          placeholder: "cookiepolicy",
         }}
         handleSubmit={updateSite}
       />

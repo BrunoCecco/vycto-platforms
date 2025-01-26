@@ -57,6 +57,7 @@ export default function CombinedForm({
   updateId,
   termslink,
   privacylink,
+  cookielink,
 }: {
   title: String;
   helpText: string;
@@ -66,6 +67,7 @@ export default function CombinedForm({
   updateId?: string;
   termslink?: string;
   privacylink?: string;
+  cookielink?: string;
 }) {
   const form2 = useRef<HTMLFormElement>(null);
   const form2button = useRef<HTMLButtonElement>(null);
@@ -379,16 +381,23 @@ export default function CombinedForm({
               </div>
             );
           })}
-          {termslink && privacylink ? (
-            <p className="flex items-center gap-4 text-xs text-content4">
+          <div className="flex items-center gap-4 text-xs text-content4">
+            {termslink && (
               <a href={termslink} rel="noreferrer" target="_blank">
                 Terms of use
-              </a>{" "}
+              </a>
+            )}{" "}
+            {privacylink && (
               <a href={privacylink} rel="noreferrer" target="_blank">
                 Privacy Policy
               </a>
-            </p>
-          ) : null}
+            )}
+            {cookielink && (
+              <a href={cookielink} rel="noreferrer" target="_blank">
+                Cookie Policy
+              </a>
+            )}
+          </div>
           {!imageInputAttr ? (
             <div className="mt-4 flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10">
               <p className="mr-2 text-sm">{helpText}</p>

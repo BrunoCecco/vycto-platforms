@@ -48,6 +48,7 @@ export default function UserSettings({ siteData }: { siteData?: SelectSite }) {
             helpText="User details"
             termslink={siteData?.terms || undefined}
             privacylink={siteData?.privacypolicy || undefined}
+            cookielink={siteData?.cookiepolicy || undefined}
             inputAttrs={[
               {
                 name: "image",
