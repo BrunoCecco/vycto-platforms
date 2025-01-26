@@ -4,40 +4,39 @@ import { useEffect, useState } from "react";
 import { usePostHog } from "posthog-js/react";
 import { Button } from "@nextui-org/react";
 
-export function optionalCookieConsentGiven() {
-  if (!localStorage.getItem("optional_cookie_consent")) {
+export function cookieConsentGiven() {
+  if (!localStorage.getItem("cookie_consent")) {
     return "undecided";
   }
-  return localStorage.getItem("optional_cookie_consent");
+  return localStorage.getItem("cookie_consent");
 }
 
 export default function CookieBanner() {
-  const [optionalConsentGiven, setOptionalConsentGiven] = useState("");
+  const [consentGiven, setConsentGiven] = useState("");
   const posthog = usePostHog();
 
   useEffect(() => {
     // We want this to only run once the client loads
     // or else it causes a hydration error
-    setOptionalConsentGiven(optionalCookieConsentGiven() || "undecided");
+    setConsentGiven(cookieConsentGiven() || "undecided");
   }, []);
 
   useEffect(() => {
-    if (optionalConsentGiven !== "") {
+    if (consentGiven !== "") {
       posthog.set_config({
-        persistence:
-          optionalConsentGiven === "yes" ? "localStorage+cookie" : "memory",
+        persistence: consentGiven === "yes" ? "localStorage+cookie" : "memory",
       });
     }
-  }, [optionalConsentGiven]);
+  }, [consentGiven]);
 
   const handleAcceptOptionalCookies = () => {
-    localStorage.setItem("optional_cookie_consent", "yes");
-    setOptionalConsentGiven("yes");
+    localStorage.setItem("cookie_consent", "yes");
+    setConsentGiven("yes");
   };
 
   const handleDeclineOptionalCookies = () => {
-    localStorage.setItem("optional_cookie_consent", "no");
-    setOptionalConsentGiven("no");
+    localStorage.setItem("cookie_consent", "no");
+    setConsentGiven("no");
   };
 
   return (
@@ -45,7 +44,7 @@ export default function CookieBanner() {
       <p>
         We use mandatory cookies for authentication and handling your sessions.
       </p>
-      {optionalConsentGiven === "undecided" && (
+      {consentGiven === "undecided" && (
         <div className="flex flex-col gap-2 shadow-lg">
           <p>
             We also use optional analytics cookies to improve your experience
