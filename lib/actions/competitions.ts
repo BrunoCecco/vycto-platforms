@@ -795,9 +795,7 @@ export async function duplicateCompetition(competitionId: string) {
     };
   }
 
-  const qs = await db.query.questions.findMany({
-    where: eq(questions.competitionId, competitionId),
-  });
+  const qs = await getQuestionsForCompetition(competitionId);
 
   const newCompetition = await db
     .insert(competitions)
