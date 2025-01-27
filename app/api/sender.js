@@ -3,7 +3,7 @@ export const runtime = "edge";
 const SENDER_API_KEY = process.env.SENDER_API_KEY;
 
 export async function POST(request: Request) {
-  const { groupId, emails } = await request.json();
+  const { group, emails, campaignId } = await request.json();
 
   if (!action || !SENDER_API_KEY) {
     return new Response("Missing required parameters", { status: 400 });
@@ -33,12 +33,12 @@ export async function POST(request: Request) {
       }
 
       case "replaceSubscribers": {
-        if (!groupId || !emails || !Array.isArray(emails)) {
+        if (!group || !emails || !Array.isArray(emails)) {
           return new Response("Missing or invalid groupId/emails", { status: 400 });
         }
 
         // Clear existing subscribers from the group
-        const subsResponse = await fetch(`https://api.sender.net/v2/groups/${groupId}/subscribers`, {
+        const subsResponse = await fetch(`https://api.sender.net/v2/groups/${group}/subscribers`, {
           method: "GET",
           headers,
         });
@@ -53,7 +53,14 @@ export async function POST(request: Request) {
         })});
 
         const subResonse = emails.data.map((sub) => {
-          await fetch(`https://api.sender.net/v2/subscribers/${email}`, {
+          const sub = await fetch(`/api/subscribe/`, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            email: sub.email,
+            group: group
+          })
+          const activate = await fetch(`https://api.sender.net/v2/subscribers/${email}`, {
           method: "PATCH",
           headers,
           body: JSON.stringify({
