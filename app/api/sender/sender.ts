@@ -3,7 +3,7 @@ export const runtime = "edge";
 const SENDER_API_KEY = process.env.SENDER_API_KEY;
 
 export async function POST(request: Request) {
-  const { group, emails, campaignId } = await request.json();
+  const { action, group, emails, campaignId } = await request.json();
 
   if (!action || !SENDER_API_KEY) {
     return new Response("Missing required parameters", { status: 400 });
@@ -34,45 +34,61 @@ export async function POST(request: Request) {
 
       case "replaceSubscribers": {
         if (!group || !emails || !Array.isArray(emails)) {
-          return new Response("Missing or invalid groupId/emails", { status: 400 });
+          return new Response("Missing or invalid groupId/emails", {
+            status: 400,
+          });
         }
 
         // Clear existing subscribers from the group
-        const subsResponse = await fetch(`https://api.sender.net/v2/groups/${group}/subscribers`, {
-          method: "GET",
-          headers,
+        const subsResponse = await fetch(
+          `https://api.sender.net/v2/groups/${group}/subscribers`,
+          {
+            method: "GET",
+            headers,
+          },
+        );
+
+        const subData = await subsResponse.json();
+
+        const unsubResonse = subData.map(async (sub: any) => {
+          await fetch(`https://api.sender.net/v2/subscribers/${sub.email}`, {
+            method: "PATCH",
+            headers,
+            body: JSON.stringify({
+              transactional_email_status: "UNSUBSCRIBED",
+            }),
+          });
         });
 
-        const unsubResonse = subsResponse.data.map((sub) => {
-          await fetch(`https://api.sender.net/v2/subscribers/${sub.email}`, {
-          method: "PATCH",
-          headers,
-          body: JSON.stringify({
-            transactional_email_status: "UNSUBSCRIBED",
-          })
-        })});
+        const subResonse = emails.map(async (email) => {
+          const subRes = await fetch(`/api/subscribe/`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({
+              email: email,
+              group: group,
+            }),
+          });
 
-        const subResonse = emails.data.map((sub) => {
-          const sub = await fetch(`/api/subscribe/`, {
-          method: "POST",
-          headers,
-          body: JSON.stringify({
-            email: sub.email,
-            group: group
-          })
-          const activate = await fetch(`https://api.sender.net/v2/subscribers/${email}`, {
-          method: "PATCH",
-          headers,
-          body: JSON.stringify({
-            transactional_email_status: "ACTIVE",
-          })
-        })});
-        
-        if (!response.ok) {
+          const activate = await fetch(
+            `https://api.sender.net/v2/subscribers/${email}`,
+            {
+              method: "PATCH",
+              headers,
+              body: JSON.stringify({
+                transactional_email_status: "ACTIVE",
+              }),
+            },
+          );
+        });
+
+        if (!unsubResonse.ok) {
           return new Response("Failed to add subscribers", { status: 500 });
         }
 
-        return new Response("Subscribers updated successfully", { status: 200 });
+        return new Response("Subscribers updated successfully", {
+          status: 200,
+        });
       }
 
       case "sendCampaign": {
@@ -86,7 +102,7 @@ export async function POST(request: Request) {
           {
             method: "POST",
             headers,
-          }
+          },
         );
 
         if (!response.ok) {

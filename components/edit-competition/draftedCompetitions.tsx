@@ -15,6 +15,10 @@ const DraftedCompetitions = ({ data }: { data: SelectCompetition[] }) => {
   );
 
   useEffect(() => {
+    if (selectedMonth == "all") {
+      setDraftedCompetitions(data);
+      return;
+    }
     setDraftedCompetitions(
       fetchCompetitionsByMonth(parseInt(selectedMonth) - 1),
     );
@@ -38,14 +42,19 @@ const DraftedCompetitions = ({ data }: { data: SelectCompetition[] }) => {
         variant="bordered"
         onChange={(e) => setSelectedMonth(e.target.value)}
       >
-        {MONTHS.map((month) => (
-          <SelectItem
-            key={month.value.toString()}
-            value={month.value.toString()}
-          >
-            {month.label}
+        <>
+          <SelectItem key={"all"} value={"all"}>
+            All
           </SelectItem>
-        ))}
+          {MONTHS.map((month) => (
+            <SelectItem
+              key={month.value.toString()}
+              value={month.value.toString()}
+            >
+              {month.label}
+            </SelectItem>
+          ))}
+        </>
       </Select>
       <div className="grid grid-cols-1 gap-4 pb-4 sm:grid-cols-2 xl:grid-cols-4">
         <CreateCompetitionButton />
