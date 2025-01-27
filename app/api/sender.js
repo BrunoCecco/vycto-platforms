@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
   try {
     switch (action) {
-      case "getCampaigns": {
+      case "campaigns": {
         // Fetch all campaigns
         const response = await fetch("https://api.sender.net/v2/campaigns", {
           method: "GET",
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
           headers,
           body: JSON.stringify({
             transactional_email_status: "UNSUBSCRIBED",
-          }),
+          })
         })});
 
         const subResonse = emails.data.map((sub) => {
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
           headers,
           body: JSON.stringify({
             transactional_email_status: "ACTIVE",
-          }),
+          })
         })});
         
         if (!response.ok) {
