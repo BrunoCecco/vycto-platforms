@@ -78,7 +78,7 @@ const EditCompetitionCard = ({
         <div className="flex items-center justify-between">
           <div
             className="flex items-center text-sm"
-            style={{ color: data.site?.color2 || "#000" }}
+            style={{ color: data.site?.color2 }}
           >
             <p>{status}</p>
             {data.published && url && (

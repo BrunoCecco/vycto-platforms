@@ -221,7 +221,7 @@ const MainLeaderboard = ({
                 <span className="hidden sm:block">{t("points")}</span>
                 <span className="block sm:hidden">Pts</span>
               </th>
-              {compData?.slug && hasEnded ? (
+              {compData?.slug ? (
                 <th className="py-3 text-right text-xs font-medium uppercase">
                   {t("submission")}
                 </th>
@@ -291,7 +291,7 @@ const MainLeaderboard = ({
                       <td className="py-4 text-center">
                         {entry.points || "0"}
                       </td>
-                      {compData?.slug && hasEnded ? (
+                      {compData?.slug ? (
                         <td className="justify-end py-4 text-right">
                           <Link
                             href={`/comp/${compData?.slug}/${entry.id}`}
