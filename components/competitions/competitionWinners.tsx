@@ -79,6 +79,7 @@ export default function CompetitionWinners({
   const [rewardWinners, setRewardWinners] = useState<any[]>([]);
   const [reward2Winners, setReward2Winners] = useState<any[]>([]);
   const [reward3Winners, setReward3Winners] = useState<any[]>([]);
+  const [campaigns, setCampaigns] = useState<any[]>([]);
   const [passcode, setPasscode] = useState<string>("");
 
   useEffect(() => {
@@ -91,6 +92,15 @@ export default function CompetitionWinners({
     };
     fetchWinners();
   }, [winnerData]);
+
+    useEffect(() => {
+    const fetchSenderCampaigns = async () => {
+      const res = await fetch('/api/sender/campaigns').then(res => res.json());
+      alert('fetched campaigns: ' + JSON.stringify(res));
+      setCampaigns(res.data);
+    };
+    fetchSenderCampaigns();
+  }, [compData]);
 
   const downloadCSV = (data: any, fileName: string) => {
     const correctpasscode =
