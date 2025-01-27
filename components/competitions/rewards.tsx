@@ -40,12 +40,14 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
   ];
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) => Math.max((prevIndex - 1) % 3, 0));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % 3);
   };
+
+  console.log(rewards);
 
   return competition?.rewardTitle || competition?.reward2Title ? (
     <div className="relative mx-auto w-full max-w-2xl pb-12 pt-6 md:py-20">
