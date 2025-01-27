@@ -79,11 +79,11 @@ export const validateEmail = (email: string) => {
 };
 
 export const getSiteDomain = (siteData: SelectSite) => {
-  // if (siteData.customDomain) {
-  //   return siteData.customDomain;
-  // }
+  if (siteData.customDomain) {
+    return siteData.customDomain;
+  }
   return (
-    "http://" + siteData.subdomain + "." + process.env.NEXT_PUBLIC_ROOT_DOMAIN
+    "https://" + siteData.subdomain + "." + process.env.NEXT_PUBLIC_ROOT_DOMAIN
   );
 };
 
