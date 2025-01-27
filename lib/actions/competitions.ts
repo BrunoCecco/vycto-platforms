@@ -241,10 +241,10 @@ export const enterUserToCompetition = async (
     revalidateTag(`${userId}-${siteId}-comps`);
     revalidateTag(`${competitionId}-users`);
     revalidateTag(`${userId}-${competitionId}-answers`);
-    revalidateTag(`${competitionId}-leaderboard`);
-    revalidateTag(`${LeaderboardPeriod.Weekly}-leaderboard`);
-    revalidateTag(`${LeaderboardPeriod.Monthly}-leaderboard`);
-    revalidateTag(`${LeaderboardPeriod.Season}-leaderboard`);
+    revalidateTag(`${siteId}-${competitionId}-leaderboard`);
+    revalidateTag(`${siteId}-${LeaderboardPeriod.Weekly}-leaderboard`);
+    revalidateTag(`${siteId}-${LeaderboardPeriod.Monthly}-leaderboard`);
+    revalidateTag(`${siteId}-${LeaderboardPeriod.Season}-leaderboard`);
 
     return response;
   } catch (error: any) {

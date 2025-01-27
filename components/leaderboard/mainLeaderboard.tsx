@@ -36,12 +36,14 @@ const MainLeaderboard = ({
   limit = 10,
   compDate,
   compData,
+  hasEnded,
 }: {
   siteData: SelectSite;
   session: Session | null;
   limit?: number;
   compDate?: Date;
   compData?: SelectCompetition;
+  hasEnded?: boolean;
 }) => {
   const t = useTranslations();
   const [rangeType, setRangeType] = useState<LeaderboardPeriod>(
@@ -66,7 +68,7 @@ const MainLeaderboard = ({
       await getModalRewards();
     };
     fetchRewards();
-  }, [siteData]);
+  }, [siteData, compData]);
 
   useEffect(() => {
     const fetchCompTitle = async () => {
@@ -85,7 +87,7 @@ const MainLeaderboard = ({
       }
     };
     fetchCompTitle();
-  }, [compDate, rangeType, siteData]);
+  }, [compDate, rangeType, siteData, compData]);
 
   useEffect(() => {
     fetchData();
@@ -111,7 +113,7 @@ const MainLeaderboard = ({
           .slice(offset, offset + limit),
       );
     }
-  }, [query, data, offset, limit, siteData]);
+  }, [query, data, offset, limit, siteData, compData]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -219,11 +221,11 @@ const MainLeaderboard = ({
                 <span className="hidden sm:block">{t("points")}</span>
                 <span className="block sm:hidden">Pts</span>
               </th>
-              {compData?.slug && (
+              {compData?.slug && hasEnded ? (
                 <th className="py-3 text-right text-xs font-medium uppercase">
                   {t("submission")}
                 </th>
-              )}
+              ) : null}
             </tr>
           </thead>
           <tbody>
@@ -289,7 +291,7 @@ const MainLeaderboard = ({
                       <td className="py-4 text-center">
                         {entry.points || "0"}
                       </td>
-                      {compData?.slug ? (
+                      {compData?.slug && hasEnded ? (
                         <td className="justify-end py-4 text-right">
                           <Link
                             href={`/comp/${compData?.slug}/${entry.id}`}

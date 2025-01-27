@@ -199,10 +199,10 @@ export async function getLeaderboardData(
 
       return data;
     },
-    [`${compId || period}-leaderboard`],
+    [`${siteId}-${compId || period}-leaderboard`],
     {
       revalidate: 900,
-      tags: [`${compId || period}-leaderboard`],
+      tags: [`${siteId}-${compId || period}-leaderboard`],
     },
   )();
 }

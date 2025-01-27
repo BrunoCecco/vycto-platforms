@@ -383,6 +383,7 @@ export default function CompetitionPage({
               session={session}
               compDate={new Date(data.date.replace(/\[.*\]$/, ""))}
               compData={data}
+              hasEnded={ended}
             />
           </div>
           // <Leaderboard
