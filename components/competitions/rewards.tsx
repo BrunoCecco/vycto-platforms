@@ -80,6 +80,19 @@ const Rewards: React.FC<RewardsProps> = ({ siteData, competition, users }) => {
               />
             </div>
           ) : null}
+          {competition?.reward3Title ? (
+            <div className="flex min-w-full items-center justify-center overflow-hidden rounded-lg">
+              <BlurImage
+                alt={`Slide ${2}`}
+                width={1200}
+                height={630}
+                className="h-full w-full rounded-lg object-cover"
+                placeholder="blur"
+                blurDataURL={rewards[2].src || placeholderBlurhash}
+                src={rewards[2].src || "/placeholder.png"}
+              />
+            </div>
+          ) : null}
         </div>
         <button
           onClick={handlePrev}
