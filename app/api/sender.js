@@ -3,7 +3,7 @@ export const runtime = "edge";
 const SENDER_API_KEY = process.env.SENDER_API_KEY;
 
 export async function POST(request: Request) {
-  const { action, groupId, subscribers, campaignId } = await request.json();
+  const { groupId, emails } = await request.json();
 
   if (!action || !SENDER_API_KEY) {
     return new Response("Missing required parameters", { status: 400 });
@@ -33,8 +33,8 @@ export async function POST(request: Request) {
       }
 
       case "replaceSubscribers": {
-        if (!groupId || !subscribers || !Array.isArray(subscribers)) {
-          return new Response("Missing or invalid groupId/subscribers", { status: 400 });
+        if (!groupId || !emails || !Array.isArray(emails)) {
+          return new Response("Missing or invalid groupId/emails", { status: 400 });
         }
 
         // Clear existing subscribers from the group
@@ -43,25 +43,24 @@ export async function POST(request: Request) {
           headers,
         });
 
-        const currentSubs = subsResponse.data.map((sub) => sub.id);
-
-        // Add new subscribers to the group
-        const deleteResponses = await fetch(`https://api.sender.net/v2/subscribers/groups/${groupId}` + groupId, {
-          method: "DELETE",
+        const unsubResonse = subsResponse.data.map((sub) => {
+          await fetch(`https://api.sender.net/v2/subscribers/${sub.email}`, {
+          method: "PATCH",
           headers,
           body: JSON.stringify({
-            subscribers: currentSubs,
+            transactional_email_status: "UNSUBSCRIBED",
           }),
-        });
+        })});
 
-        const addResponses = await fetch(`https://api.sender.net/v2/subscribers/groups/${groupId}` + groupId, {
-          method: "DELETE",
+        const subResonse = emails.data.map((sub) => {
+          await fetch(`https://api.sender.net/v2/subscribers/${email}`, {
+          method: "PATCH",
           headers,
           body: JSON.stringify({
-            subscribers: currentSubs,
+            transactional_email_status: "ACTIVE",
           }),
-        });
-
+        })});
+        
         if (!response.ok) {
           return new Response("Failed to add subscribers", { status: 500 });
         }
