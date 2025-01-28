@@ -60,6 +60,7 @@ const MainLeaderboard = ({
   const [selectedReward, setSelectedReward] = useState<SelectSiteReward>();
   const [offset, setOffset] = useState(0);
   const [compTitle, setCompTitle] = useState<string>();
+  const [countdown, setCountdown] = useState<string>();
 
   const user = session?.user;
 
@@ -114,6 +115,24 @@ const MainLeaderboard = ({
       );
     }
   }, [query, data, offset, limit, siteData, compData]);
+
+  useEffect(() => {
+    if (!hasEnded) {
+      if (compData) {
+        const endDate = new Date(compData.date.replace(/\[.*\]$/, ""));
+        const now = new Date();
+        const diff = endDate.getTime() - now.getTime();
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+        setCountdown(`${days}d ${hours}h ${minutes}m`);
+      }
+    }
+  }, [hasEnded, compData]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -215,14 +234,23 @@ const MainLeaderboard = ({
               <th className="py-3 text-left text-xs font-medium uppercase">
                 {t("name")}
               </th>
-              <th className="hidden py-3 text-center text-xs font-medium uppercase md:table-cell">
-                {t("rank")}
-              </th>
-              <th className="text-wrap py-3 text-center text-xs font-medium uppercase">
-                <span className="hidden sm:block">{t("points")}</span>
-                <span className="block sm:hidden">Pts</span>
-              </th>
-              {compData?.slug ? (
+              {!hasEnded && (
+                <th className="text-wrap py-3 text-center text-xs font-medium uppercase">
+                  {countdown} {t("remaining")}
+                </th>
+              )}
+              {hasEnded && (
+                <th className="hidden py-3 text-center text-xs font-medium uppercase md:table-cell">
+                  {t("rank")}
+                </th>
+              )}
+              {hasEnded && (
+                <th className="text-wrap py-3 text-center text-xs font-medium uppercase">
+                  <span className="hidden sm:block">{t("points")}</span>
+                  <span className="block sm:hidden">Pts</span>
+                </th>
+              )}
+              {compData?.slug && hasEnded ? (
                 <th className="py-3 text-right text-xs font-medium uppercase">
                   {t("submission")}
                 </th>
@@ -286,13 +314,17 @@ const MainLeaderboard = ({
                           )}
                         </div>
                       </td>
-                      <td className="hidden py-4 text-center md:table-cell">
-                        {entry.rank}
-                      </td>
-                      <td className="py-4 text-center">
-                        {entry.points || "0"}
-                      </td>
-                      {compData?.slug ? (
+                      {hasEnded && (
+                        <td className="hidden py-4 text-center md:table-cell">
+                          {entry.rank}
+                        </td>
+                      )}
+                      {hasEnded && (
+                        <td className="py-4 text-center">
+                          {entry.points || "0"}
+                        </td>
+                      )}
+                      {compData?.slug && hasEnded ? (
                         <td className="justify-end py-4 text-right">
                           <Link
                             href={`/comp/${compData?.slug}/${entry.id}`}

@@ -216,7 +216,12 @@ export default function HelpCards({
           {t("howtoplay.earn.description")}
         </p>
         {data ? (
-          <MainLeaderboard siteData={data} session={session} limit={5} />
+          <MainLeaderboard
+            siteData={data}
+            session={session}
+            limit={5}
+            hasEnded
+          />
         ) : (
           <Image
             src={"/leaderboard.png"}

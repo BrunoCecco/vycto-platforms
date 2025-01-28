@@ -48,9 +48,7 @@ const CompetitionHeader: React.FC<CompetitionHeaderProps> = ({
           by <span className="font-bold italic">{data.site?.name}</span>
         </div>
         <div className="m-auto w-10/12 pt-4 text-sm font-light md:text-base">
-          {DateTime.fromISO(data.date)
-            .setLocale("en-UK")
-            .toLocaleString(DateTime.DATE_FULL)}
+          {new Date(data.date.replace(/\[.*\]$/, "")).toUTCString()}
         </div>
       </div>
 

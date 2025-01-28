@@ -74,7 +74,7 @@ const FanZone = async ({
         </h2>
       )}
       <div className="my-14" />
-      <MainLeaderboard siteData={siteData} session={session} />
+      <MainLeaderboard siteData={siteData} session={session} hasEnded />
     </div>
   );
 };
