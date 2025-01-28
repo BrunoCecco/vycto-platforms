@@ -126,6 +126,7 @@ const MainLeaderboard = ({
         compDate,
         compDate,
       );
+      console.log(leaderboardData);
     } else {
       leaderboardData = await getLeaderboardData(
         siteData.id,

@@ -5,7 +5,7 @@ import { usePostHog } from "posthog-js/react";
 import { Button } from "@nextui-org/react";
 
 export function cookieConsentGiven() {
-  if (!localStorage.getItem("cookie_consent")) {
+  if (localStorage && !localStorage.getItem("cookie_consent")) {
     return "undecided";
   }
   return localStorage.getItem("cookie_consent");

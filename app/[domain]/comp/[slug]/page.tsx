@@ -57,7 +57,7 @@ export async function generateMetadata({
       description,
       images: [siteData.loginBanner],
     },
-    icons: [siteData.logo],
+    icons: [siteData.logo], // this is the favicon
     // Optional: Set canonical URL to custom domain if it exists
     // ...(params.domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
     //   siteData.customDomain && {
