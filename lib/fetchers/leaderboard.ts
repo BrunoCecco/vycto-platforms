@@ -171,43 +171,43 @@ export async function getLeaderboardData(
           ? endOfSeason
           : new Date();
 
-  // return await unstable_cache(
-  //   async () => {
-  const comps = await getCompetitionsForPeriod(siteId, startDate, endDate);
-  const competitionIds = comps.map((comp) => comp.id);
+  return await unstable_cache(
+    async () => {
+      const comps = await getCompetitionsForPeriod(siteId, startDate, endDate);
+      const competitionIds = comps.map((comp) => comp.id);
 
-  if (competitionIds.length === 0) {
-    return [];
-  }
+      if (competitionIds.length === 0) {
+        return [];
+      }
 
-  const data = await db
-    .select({
-      id: users.id,
-      name: users.name,
-      email: users.email,
-      emailVerified: users.emailVerified,
-      image: users.image,
-      username: users.username,
-      role: users.role,
-      birthDate: users.birthDate,
-      createdAt: users.createdAt,
-      updatedAt: users.updatedAt,
-      points: sql`ROUND(SUM(CAST(${userCompetitions.points} AS TEXT)::float)::numeric, 2)`,
-      rank: sql`ROW_NUMBER() OVER (ORDER BY SUM(CAST(${userCompetitions.points} AS TEXT)::float) DESC)`,
-    })
-    .from(userCompetitions)
-    .leftJoin(users, eq(userCompetitions.userId, users.id))
-    .where(inArray(userCompetitions.competitionId, competitionIds))
-    .groupBy(users.id)
-    .orderBy(desc(sql`SUM(${userCompetitions.points})`));
-  return data;
-  //   },
-  //   [`${siteId}-${compId || period}-leaderboard`],
-  //   {
-  //     revalidate: 900,
-  //     tags: [`${siteId}-${compId || period}-leaderboard`],
-  //   },
-  // )();
+      const data = await db
+        .select({
+          id: users.id,
+          name: users.name,
+          email: users.email,
+          emailVerified: users.emailVerified,
+          image: users.image,
+          username: users.username,
+          role: users.role,
+          birthDate: users.birthDate,
+          createdAt: users.createdAt,
+          updatedAt: users.updatedAt,
+          points: sql`ROUND(SUM(CAST(${userCompetitions.points} AS TEXT)::float)::numeric, 2)`,
+          rank: sql`ROW_NUMBER() OVER (ORDER BY SUM(CAST(${userCompetitions.points} AS TEXT)::float) DESC)`,
+        })
+        .from(userCompetitions)
+        .leftJoin(users, eq(userCompetitions.userId, users.id))
+        .where(inArray(userCompetitions.competitionId, competitionIds))
+        .groupBy(users.id)
+        .orderBy(desc(sql`SUM(${userCompetitions.points})`));
+      return data;
+    },
+    [`${siteId}-${compId || period}-leaderboard`],
+    {
+      revalidate: 900,
+      tags: [`${siteId}-${compId || period}-leaderboard`],
+    },
+  )();
 }
 
 export async function getCompetitionWinnerData(competitionId: string) {
