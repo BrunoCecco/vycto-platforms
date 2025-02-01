@@ -37,6 +37,7 @@ export default function SubmitAnswersForm({
   slug,
   localAnswers,
   questions,
+  subscribe,
 }: {
   userId: string | null;
   userComp: SelectUserCompetition | undefined;
@@ -45,6 +46,7 @@ export default function SubmitAnswersForm({
   slug: string;
   localAnswers: { [key: string]: string };
   questions?: SelectQuestion[];
+  subscribe: () => Promise<void>;
 }) {
   const { data: session } = useSession();
   const posthog = usePostHog();
@@ -97,6 +99,7 @@ export default function SubmitAnswersForm({
     try {
       if (hasCheckedNewsletter) {
         const updatedUserComp = await updateNewlsetterConsent();
+        const subRes = await subscribe();
       }
       const res = await submitAnswers(
         userId!,

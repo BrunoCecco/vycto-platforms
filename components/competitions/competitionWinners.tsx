@@ -57,11 +57,15 @@ const User = ({
   );
 };
 
-type Site = {
-  site: {
-    subdomain: string | null;
-  } | null;
-};
+interface CompWithSite extends SelectCompetition {
+  site: SelectSite | null;
+}
+
+interface WinnerData {
+  rewardWinners: any[];
+  reward2Winners: any[];
+  reward3Winners: any[];
+}
 
 export default function CompetitionWinners({
   compData,
@@ -70,8 +74,8 @@ export default function CompetitionWinners({
   url,
   adminView,
 }: {
-  compData: SelectCompetition & Site;
-  winnerData: any;
+  compData: CompWithSite;
+  winnerData?: WinnerData;
   participants: any[];
   url: string;
   adminView: boolean;
@@ -93,11 +97,20 @@ export default function CompetitionWinners({
     fetchWinners();
   }, [winnerData]);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchSenderCampaigns = async () => {
-      const res = await fetch('/api/sender/campaigns').then(res => res.json());
-      alert('fetched campaigns: ' + JSON.stringify(res));
-      setCampaigns(res.data);
+      const res = await fetch("/api/sender", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "campaigns",
+          group: compData.site?.senderGroup,
+        }),
+      }).then((res) => res.json());
+      console.log(res);
+      setCampaigns(res);
     };
     fetchSenderCampaigns();
   }, [compData]);
@@ -178,6 +191,22 @@ export default function CompetitionWinners({
     );
   };
 
+  const sendCampaign = async (id: string) => {
+    const res = await fetch("/api/sender", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        action: "replaceSubscribers",
+        campaignId: id,
+        group: compData.site?.senderGroup,
+        emails: winnerData?.rewardWinners.map((user) => user.email),
+      }),
+    }).then((res) => res.text());
+    console.log(res);
+  };
+
   return (
     <div className="flex flex-col space-y-12 p-2 sm:p-6">
       <div className="flex flex-col gap-2">
@@ -191,7 +220,7 @@ export default function CompetitionWinners({
         <Input
           name="magiccode"
           placeholder="Enter passcode to download"
-          type="password"
+          type="text"
           onChange={(e) => setPasscode(e.target.value)}
         />
       </div>
@@ -207,6 +236,23 @@ export default function CompetitionWinners({
               adminView={adminView}
             />
           ))}
+          <div className="flex items-center gap-2 overflow-y-scroll">
+            {campaigns.map((campaign) => (
+              <div key={campaign.id}>
+                <div>{campaign.title}</div>
+                <div>Subject: {campaign.subject}</div>
+                <Image
+                  src={campaign.html.thumbnail_url}
+                  alt="Campaign Thumbnail"
+                  width={200}
+                  height={300}
+                />
+                <Button onClick={() => sendCampaign(campaign.id)}>
+                  Send to 1st Winners
+                </Button>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="flex flex-col gap-6">
@@ -220,6 +266,23 @@ export default function CompetitionWinners({
               adminView={adminView}
             />
           ))}
+          <div className="flex items-center gap-2 overflow-y-scroll">
+            {campaigns.map((campaign) => (
+              <div key={campaign.id + "reward2"}>
+                <div>{campaign.title}</div>
+                <div>Subject: {campaign.subject}</div>
+                <Image
+                  src={campaign.html.thumbnail_url}
+                  alt="Campaign Thumbnail"
+                  width={200}
+                  height={300}
+                />
+                <Button onClick={() => sendCampaign(campaign.id)}>
+                  Send to 2nd Winners
+                </Button>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="flex flex-col gap-6">

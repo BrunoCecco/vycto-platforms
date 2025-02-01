@@ -49,16 +49,16 @@ export default async function RootLayout({
 
   const font = locale == "el-CY" ? "font-fira" : "font-space";
 
-  return (
-    <html lang={locale} suppressHydrationWarning>
-      <body
-        className={cn("bg-background text-foreground", fontMapper[font])}
-        style={{ fontFamily: `var(--${font})` }}
-      >
-        <Providers>
-          <PostHogPageView />
-          <Analytics />
+  return (    
+      <html lang={locale} suppressHydrationWarning>
+        <body
+          className={cn("bg-background text-foreground", fontMapper[font])}
+          style={{ fontFamily: `var(--${font})` }}
+        >
           <NextIntlClientProvider messages={messages}>
+          <Providers>
+            <PostHogPageView />
+            <Analytics />
             {children}
             <div className="fixed right-0 top-0 z-50 sm:right-2 sm:top-2">
               <ColorSchemeToggle />
@@ -66,9 +66,9 @@ export default async function RootLayout({
             <div className="absolute bottom-0 left-0 z-50">
               <CookieBanner />
             </div>
+          </Providers>
           </NextIntlClientProvider>
-        </Providers>
-      </body>
-    </html>
+        </body>
+      </html>    
   );
 }

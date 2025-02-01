@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation";
-import AnalyticsMockup from "@/components/analytics/analytics";
+import Analytics from "@/components/analytics/analytics";
 import db from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { getSiteDomain } from "@/lib/utils";
@@ -36,7 +36,7 @@ export default async function SiteAnalytics({
           </Link>
         </div>
       </div>
-      <AnalyticsMockup />
+      <Analytics posthogSrc={data.posthogSrc} />
     </>
   );
 }

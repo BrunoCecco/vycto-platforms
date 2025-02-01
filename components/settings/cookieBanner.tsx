@@ -5,10 +5,11 @@ import { usePostHog } from "posthog-js/react";
 import { Button } from "@nextui-org/react";
 
 export function cookieConsentGiven() {
-  if (localStorage && !localStorage.getItem("cookie_consent")) {
+  if (typeof window === "undefined") return "undecided";
+  if (window.localStorage && !window.localStorage.getItem("cookie_consent")) {
     return "undecided";
   }
-  return localStorage.getItem("cookie_consent");
+  return window.localStorage.getItem("cookie_consent");
 }
 
 export default function CookieBanner() {

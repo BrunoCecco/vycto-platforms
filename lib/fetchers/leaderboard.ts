@@ -35,7 +35,6 @@ export async function validateCorrectAnswers(competitionId: string) {
     (question) =>
       question.correctAnswer === null || question.correctAnswer === "",
   );
-  console.log(questions);
   if (questionsEmpty) {
     console.log(
       questions.find((q) => q.correctAnswer === null || q.correctAnswer === ""),
@@ -126,8 +125,6 @@ export async function getCompetitionsForPeriod(
     .toISOString()
     .replace(/\.\d{3}Z$/, "+00:00[UTC]")
     .replace(/T.*$/, "T23:59:59.999+00:00[UTC]");
-
-  console.log(startDateString, endDateString, "dates");
 
   return await db.query.competitions.findMany({
     where: and(

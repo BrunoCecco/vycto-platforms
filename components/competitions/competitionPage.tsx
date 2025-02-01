@@ -155,6 +155,7 @@ export default function CompetitionPage({
     }
     const newsletter = searchParams.get("newsletter");
     if (newsletter) {
+      const subRes = await subscribe();
       const res = await updateUserOnLogin(
         session.user.email,
         "newsletter",
@@ -170,6 +171,23 @@ export default function CompetitionPage({
       );
     }
     setHasUpdatedDetails(true);
+  };
+
+  const subscribe = async () => {
+    fetch("/api/subscribe", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        email: session?.user?.email,
+        group: siteData.senderGroup,
+      }),
+    })
+      .then(async (res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const submitExtractedAnswers = async (extractedAnswers: {
@@ -371,6 +389,7 @@ export default function CompetitionPage({
                   slug={slug}
                   localAnswers={localAnswers}
                   questions={questions}
+                  subscribe={subscribe}
                 />
               )}
             </div>

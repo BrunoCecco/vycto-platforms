@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import AnalyticsPage from "./analyticsPage";
 
 const chartdata = [
@@ -74,17 +75,31 @@ const categories = [
   },
 ];
 
-export default function AnalyticsMockup() {
+export default function Analytics({ posthogSrc }: { posthogSrc: string }) {
+  useEffect(() => {
+    window.addEventListener("message", (event) => {
+      if (event.data.event === "posthog:dimensions") {
+        // set posthogEmbed dimensions
+        if (posthogEmbed.current) {
+          posthogEmbed.current.style.height = `${event.data.height}px`;
+        }
+      }
+    });
+  }, []);
+
+  const posthogEmbed = useRef<HTMLIFrameElement>(null);
+
   return (
-    <div className="">
-      {/* <iframe
-        src="https://analytics.tinybird.co/?token=p.eyJ1IjogIjllOGNmNTViLTRhOTQtNGU0MC1hZDM1LWU3YjYxMzRkMTJlNyIsICJpZCI6ICJiY2JmZmJlMC0wOWYxLTQ0N2ItODE1ZS01NDQ4MWY5MGRjYWUiLCAiaG9zdCI6ICJhd3MtZXUtY2VudHJhbC0xIn0.0Vl_qdLoLNKWAd-vqMy1u-vS4FC9EApa_vEgEI8G7Xg&host=https%3A%2F%2Fapi.eu-central-1.aws.tinybird.co&kpi=bounce_rate"
-        // src="https://vercel.com/matthew-charkes-projects/vycto-platforms/analytics"
-        className="h-screen w-full"
-        title="Tinybird Analytics"
+    <div className="h-screen w-full">
+      <iframe
+        ref={posthogEmbed}
+        width="100%"
+        height="400"
+        frameBorder="0"
         allowFullScreen
-      ></iframe> */}
-      <AnalyticsPage />
+        src={posthogSrc}
+      ></iframe>
+      {/* <AnalyticsPage /> */}
     </div>
   );
 }

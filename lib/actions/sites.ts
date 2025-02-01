@@ -59,6 +59,15 @@ export const createSite = async (formData: FormData) => {
       })
       .returning();
 
+    // create site admin
+    await db
+      .insert(adminSites)
+      .values({
+        email: session.user.email,
+        siteId: response.id,
+      })
+      .returning();
+
     revalidateTag(
       `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
     );
