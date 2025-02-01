@@ -75,7 +75,11 @@ const categories = [
   },
 ];
 
-export default function Analytics({ posthogSrc }: { posthogSrc: string }) {
+export default function Analytics({
+  posthogSrc,
+}: {
+  posthogSrc: string | null;
+}) {
   useEffect(() => {
     window.addEventListener("message", (event) => {
       if (event.data.event === "posthog:dimensions") {
@@ -97,7 +101,7 @@ export default function Analytics({ posthogSrc }: { posthogSrc: string }) {
         height="400"
         frameBorder="0"
         allowFullScreen
-        src={posthogSrc}
+        src={posthogSrc || ""}
       ></iframe>
       {/* <AnalyticsPage /> */}
     </div>
