@@ -93,24 +93,43 @@ export async function POST(request: Request) {
           },
         );
 
-        const subData = await subsResponse.json();
+        let subData = await subsResponse.json();
 
-        console.log(subData.data.length);
+        let subs = subData.data?.map((sub: any) => sub.email);
 
-        const unsubResonse = subData.data.map(async (sub: any) => {
-          let res = await fetch(
-            `https://api.sender.net/v2/subscribers/${sub.email}`,
+        while (subData && subData?.links?.next && subData?.links?.next !== "") {
+          const nextResponse = await fetch(subData?.links?.next, {
+            method: "GET",
+            headers,
+          });
+
+          subData = await nextResponse.json();
+          subs = subs.concat(subData.data?.map((sub: any) => sub.email));
+        }
+
+        if (subs && subs.length > 0) {
+          const deleteResponse = await fetch(
+            `https://api.sender.net/v2/subscribers/groups/${group}`,
             {
-              method: "PATCH",
+              method: "DELETE",
               headers,
               body: JSON.stringify({
-                transactional_email_status: "UNSUBSCRIBED",
+                groupId: group,
+                subscribers: subs,
               }),
             },
           );
-        });
 
-        const subResonse = emails.map(async (email) => {
+          if (!deleteResponse.ok) {
+            const error = await deleteResponse.json();
+            console.error("Failed to delete subscribers", error);
+            return new Response("Failed to delete subscribers", {
+              status: 500,
+            });
+          }
+        }
+
+        const subAllResponse = await emails.map(async (email: string) => {
           const subscriber = await fetch(
             "https://api.sender.net/v2/subscribers/" + email,
             {
@@ -145,23 +164,17 @@ export async function POST(request: Request) {
             });
           }
 
-          const activate = await fetch(
-            `https://api.sender.net/v2/subscribers/${email}`,
+          const subResonse = await fetch(
+            "https://api.sender.net/v2/subscribers/groups/" + group,
             {
-              method: "PATCH",
+              method: "POST",
               headers,
               body: JSON.stringify({
-                transactional_email_status: "ACTIVE",
+                subscribers: emails,
               }),
             },
           );
-          const resp = await response.json();
-          console.log(resp);
         });
-
-        if (!unsubResonse.ok) {
-          return new Response("Failed to add subscribers", { status: 500 });
-        }
 
         return new Response("Subscribers updated successfully", {
           status: 200,

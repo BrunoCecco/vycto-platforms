@@ -7,7 +7,17 @@ import {
   SelectUserCompetition,
 } from "@/lib/schema";
 import { useEffect, useState } from "react";
-import { Button, Input } from "@nextui-org/react";
+import {
+  Accordion,
+  AccordionItem,
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownSection,
+  DropdownTrigger,
+  Input,
+} from "@nextui-org/react";
 import { Parser } from "@json2csv/plainjs";
 import { toast } from "sonner";
 
@@ -23,11 +33,8 @@ const User = ({
   adminView: boolean;
 }) => {
   return (
-    <div
-      key={user.userId}
-      className="flex w-full flex-col items-center gap-2 rounded-lg border-b bg-content3 p-2 shadow-md"
-    >
-      <div className="pr-2 ">Overall rank: {user.ranking}</div>
+    <div className="flex w-full items-center gap-2 rounded-lg border-b bg-content3 p-2 shadow-md">
+      <div className="pr-2 ">{user.ranking}</div>
       <div className="flex items-center">
         <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
           <Image
@@ -191,7 +198,8 @@ export default function CompetitionWinners({
     );
   };
 
-  const sendCampaign = async (id: string) => {
+  const sendCampaign = async (id: string, winners: any[]) => {
+    console.log("Sending campaign", compData.site?.senderGroup);
     const res = await fetch("/api/sender", {
       method: "POST",
       headers: {
@@ -201,7 +209,7 @@ export default function CompetitionWinners({
         action: "replaceSubscribers",
         campaignId: id,
         group: compData.site?.senderGroup,
-        emails: winnerData?.rewardWinners.map((user) => user.email),
+        emails: winners.map((user) => user.email),
       }),
     }).then((res) => res.text());
     console.log(res);
@@ -209,17 +217,18 @@ export default function CompetitionWinners({
 
   return (
     <div className="flex flex-col space-y-12 p-2 sm:p-6">
-      <div className="flex flex-col gap-2">
-        <Button onClick={downloadAllCSVFile}>Download All Participants</Button>
-        <Button onClick={downloadWinnersCSVFile}>
-          Download Reward Winners
-        </Button>
-        <Button onClick={downloadNewsletterOptinsCSVFile}>
-          Download Newsletter Opt Ins
-        </Button>
+      <div className="flex flex-col items-center gap-2">
+        <div className="flex items-center gap-2">
+          <Button onClick={downloadAllCSVFile}>Download Participants</Button>
+          <Button onClick={downloadWinnersCSVFile}>Download Winners</Button>
+          <Button onClick={downloadNewsletterOptinsCSVFile}>
+            Download Newsletter Opt Ins
+          </Button>
+        </div>
         <Input
           name="magiccode"
-          placeholder="Enter passcode to download"
+          className="w-fit"
+          placeholder="Passcode"
           type="text"
           onChange={(e) => setPasscode(e.target.value)}
         />
@@ -236,25 +245,43 @@ export default function CompetitionWinners({
               adminView={adminView}
             />
           ))}
-          <div className="flex items-center gap-2 overflow-y-scroll">
-            {campaigns.map((campaign) => (
-              <div key={campaign.id}>
-                <div>{campaign.title}</div>
-                <div>Subject: {campaign.subject}</div>
-                <Image
-                  src={campaign.html.thumbnail_url}
-                  alt="Campaign Thumbnail"
-                  width={200}
-                  height={300}
-                />
-                <Button onClick={() => sendCampaign(campaign.id)}>
-                  Send to 1st Winners
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
 
+          <Accordion variant="splitted">
+            <AccordionItem
+              key="1"
+              aria-label="Send Email 1st"
+              title="Send Email"
+            >
+              <div className="flex items-center justify-start gap-4 overflow-x-scroll">
+                {campaigns.map((campaign) => (
+                  <div
+                    key={campaign.id + campaign.title}
+                    className="flex h-max flex-col justify-between gap-1 text-sm"
+                  >
+                    <div className="flex h-12 flex-col justify-end">
+                      <div className="line-clamp-1">{campaign.title}</div>
+                      <div className="line-clamp-1">
+                        Subject: {campaign.subject}
+                      </div>
+                    </div>
+                    <Image
+                      src={campaign.html.thumbnail_url}
+                      alt="Campaign Thumbnail"
+                      width={200}
+                      height={300}
+                      className="rounded-md"
+                    />
+                    <Button
+                      onClick={() => sendCampaign(campaign.id, rewardWinners)}
+                    >
+                      Send to 1st Winners
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </AccordionItem>
+          </Accordion>
+        </div>
         <div className="flex flex-col gap-6">
           <div className="font-bold">2nd Reward Winners</div>
           {reward2Winners.map((user, index) => (
@@ -266,23 +293,42 @@ export default function CompetitionWinners({
               adminView={adminView}
             />
           ))}
-          <div className="flex items-center gap-2 overflow-y-scroll">
-            {campaigns.map((campaign) => (
-              <div key={campaign.id + "reward2"}>
-                <div>{campaign.title}</div>
-                <div>Subject: {campaign.subject}</div>
-                <Image
-                  src={campaign.html.thumbnail_url}
-                  alt="Campaign Thumbnail"
-                  width={200}
-                  height={300}
-                />
-                <Button onClick={() => sendCampaign(campaign.id)}>
-                  Send to 2nd Winners
-                </Button>
+
+          <Accordion variant="splitted">
+            <AccordionItem
+              key="1"
+              aria-label="Send Email 1st"
+              title="Send Email"
+            >
+              <div className="flex items-center justify-start gap-4 overflow-x-scroll">
+                {campaigns.map((campaign) => (
+                  <div
+                    key={campaign.id + campaign.title}
+                    className="flex h-max flex-col justify-between gap-1 text-sm"
+                  >
+                    <div className="flex h-12 flex-col justify-end">
+                      <div className="line-clamp-1">{campaign.title}</div>
+                      <div className="line-clamp-1">
+                        Subject: {campaign.subject}
+                      </div>
+                    </div>
+                    <Image
+                      src={campaign.html.thumbnail_url}
+                      alt="Campaign Thumbnail"
+                      width={200}
+                      height={300}
+                      className="rounded-md"
+                    />
+                    <Button
+                      onClick={() => sendCampaign(campaign.id, reward2Winners)}
+                    >
+                      Send to 2nd Winners
+                    </Button>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </AccordionItem>
+          </Accordion>
         </div>
 
         <div className="flex flex-col gap-6">
