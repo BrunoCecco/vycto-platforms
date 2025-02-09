@@ -201,10 +201,10 @@ export const deleteSite = withSiteAuth(
         `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
       );
 
-      admins.forEach(async (admin) => {
+      for (const admin of admins) {
         revalidateTag(`${admin.email}-admin-sites`);
         revalidateTag(`admin-sites-${admin.email}`);
-      });
+      }
 
       response.customDomain && revalidateTag(`${site.customDomain}-metadata`);
       return response;

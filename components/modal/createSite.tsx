@@ -40,7 +40,7 @@ export default function CreateSiteModal() {
         createSite(data).then((siteRes) => {
           if ("error" in siteRes) {
             toast.error(siteRes.error + ": Error creating site");
-          } else {
+          } else if (admin && admin !== "") {
             createSiteAdmin(siteRes.id, admin, false).then((res: any) => {
               if (res.error) {
                 toast.error(res.error + ": Error creating site admin");

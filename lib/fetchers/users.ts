@@ -2,7 +2,7 @@
 
 import { unstable_cache } from "next/cache";
 import db from "../db";
-import { and, desc, eq, gte, lte, not, or } from "drizzle-orm";
+import { and, desc, eq, gte, like, lte, not, or } from "drizzle-orm";
 import { adminSites, answers, questions, users } from "../schema";
 import { ADMIN, SUPER_ADMIN } from "../constants";
 import { QuestionType } from "../types";
@@ -157,6 +157,8 @@ export async function getTopPredictions(userId: string, siteId: string) {
             eq(questions.siteId, siteId),
             eq(questions.correctAnswer, answers.answer),
             eq(questions.type, QuestionType.GuessScore),
+            not(like(questions.question, "% Half %")),
+            not(like(questions.question, "% half %")),
           ),
         );
     },
