@@ -138,7 +138,7 @@ export default function Nav({
         icon: <LayoutDashboard width={18} />,
       },
       {
-        name: "Sites",
+        name: "Playgrounds",
         href: "/sites",
         isActive: segments[0] === "sites",
         icon: <Globe width={18} />,
