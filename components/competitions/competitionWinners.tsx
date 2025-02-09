@@ -206,12 +206,12 @@ export default function CompetitionWinners({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        action: "replaceSubscribers",
+        action: "sendCampaign",
         campaignId: id,
         group: compData.site?.senderGroup,
         emails: winners.map((user) => user.email),
       }),
-    }).then((res) => res.text());
+    });
     console.log(res);
   };
 

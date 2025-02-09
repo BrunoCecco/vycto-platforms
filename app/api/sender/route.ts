@@ -77,8 +77,8 @@ export async function POST(request: Request) {
         return new Response(JSON.stringify(res), { status: 200 });
       }
 
-      case "replaceSubscribers": {
-        if (!group || !emails || !Array.isArray(emails)) {
+      case "sendCampaign": {
+        if (!group || !emails || !Array.isArray(emails) || !campaignId) {
           return new Response("Missing or invalid groupId/emails", {
             status: 400,
           });
@@ -176,16 +176,6 @@ export async function POST(request: Request) {
           );
         });
 
-        return new Response("Subscribers updated successfully", {
-          status: 200,
-        });
-      }
-
-      case "sendCampaign": {
-        if (!campaignId) {
-          return new Response("Missing campaignId", { status: 400 });
-        }
-
         // Trigger campaign send
         const response = await fetch(
           `https://api.sender.net/v2/campaigns/${campaignId}/send`,
@@ -195,11 +185,9 @@ export async function POST(request: Request) {
           },
         );
 
-        if (!response.ok) {
-          return new Response("Failed to send campaign", { status: 500 });
-        }
-
-        return new Response("Campaign sent successfully", { status: 200 });
+        return new Response("Subscribers updated successfully", {
+          status: 200,
+        });
       }
 
       default:

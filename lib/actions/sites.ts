@@ -71,6 +71,7 @@ export const createSite = async (formData: FormData) => {
     revalidateTag(
       `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
     );
+    revalidateTag(`${session.user.email}-admin-sites`);
     return response;
   } catch (error: any) {
     if (error.code === "P2002") {

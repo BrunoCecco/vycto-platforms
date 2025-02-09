@@ -13,7 +13,7 @@ const B2BSignUp: React.FC = () => {
 
   return (
     <SignUpWrapper>
-      <div className="mx-auto w-full max-w-md">
+      <div className="mx-auto w-full">
         <h2 className="mb-6 text-3xl font-bold ">Sign In</h2>
         {/* <p className="mb-8 ">
             Enter your email and password to sign in!
@@ -45,7 +45,7 @@ const B2BSignUp: React.FC = () => {
                 autoComplete="email"
                 placeholder="mail@simple.com"
                 required
-                className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="border-gray-300 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 block w-full appearance-none rounded-lg border px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
               />
             </div>
             {!emailExists && (
@@ -67,7 +67,7 @@ const B2BSignUp: React.FC = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="user123"
                     required
-                    className="block w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                    className="border-gray-300 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 block w-full appearance-none rounded-lg border px-3 py-2 shadow-sm focus:outline-none sm:text-sm"
                   />
                 </div>
               </div>
